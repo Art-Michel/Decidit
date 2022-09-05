@@ -7,10 +7,15 @@ public class FirstPersonCamera : MonoBehaviour
 {
     PlayerInputMap _inputs;
     [SerializeField] Transform _head;
+
+    private float targetYRotation;
+    private float targetXRotation;
+
     [SerializeField] float _mouseSensitivityX;
     [SerializeField] float _mouseSensitivityY;
-    [SerializeField] int _mouseXInverted; ///1 is No, -1 is Yes
-    [SerializeField] int _mouseYInverted; ///1 is No, -1 is Yes
+    [SerializeField] float _cameraSmoothness;
+    [SerializeField] int _mouseXInverted; ///1 is Normal, -1 is Inverted
+    [SerializeField] int _mouseYInverted; ///1 is Normal, -1 is Inverted
 
     void Awake()
     {
@@ -26,15 +31,19 @@ public class FirstPersonCamera : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         #endregion
     }
-    void Update()
+
+    private void Update()
     {
         Vector2 mouseMovement = _inputs.FirstPersonCamera.Rotate.ReadValue<Vector2>() * Time.deltaTime;
-        float cameraMovementX = mouseMovement.x * _mouseSensitivityY * _mouseYInverted;
-        float cameraMovementY = -mouseMovement.y * _mouseSensitivityX * _mouseXInverted;
+        targetYRotation = Mathf.Repeat(targetYRotation, 360);
+        targetYRotation += mouseMovement.x * _mouseSensitivityX * _mouseXInverted;
+        targetXRotation -= mouseMovement.y * _mouseSensitivityY * _mouseYInverted;
 
-        transform.Rotate(0f, cameraMovementX, 0f);
-        _head.Rotate(cameraMovementY, 0f, 0f);
-        _head.localEulerAngles = new Vector3(Mathf.Clamp(_head.rotation.x, -90, 90), _head.rotation.y, _head.rotation.z);
+        targetXRotation = Mathf.Clamp(targetXRotation, -90, 90);
+
+        var targetRotation = Quaternion.Euler(Vector3.up * targetYRotation) * Quaternion.Euler(Vector3.right * targetXRotation);
+
+        _head.rotation = Quaternion.Lerp(_head.rotation, targetRotation, _cameraSmoothness * Time.deltaTime);
     }
 
     void OnEnable()
