@@ -11,11 +11,17 @@ public class FirstPersonCamera : MonoBehaviour
     private float targetYRotation;
     private float targetXRotation;
 
-    [SerializeField] float _mouseSensitivityX;
-    [SerializeField] float _mouseSensitivityY;
+    [Range(0.1f, 100)][SerializeField] float _mouseSensitivityX;
+    [Range(0.1f, 100)][SerializeField] float _mouseSensitivityY;
+    [Range(-1, 1)][Tooltip("1 is Normal, -1 is Inverted")][SerializeField] int _mouseXInverted;
+    [Range(-1, 1)][Tooltip("1 is Normal, -1 is Inverted")][SerializeField] int _mouseYInverted;
+
+    [Range(0.1f, 100)][SerializeField] float _stickSensitivityX;
+    [Range(0.1f, 100)][SerializeField] float _stickSensitivityY;
+    [Range(-1, 1)][Tooltip("1 is Normal, -1 is Inverted")][SerializeField] int _controllerCameraXInverted;
+    [Range(-1, 1)][Tooltip("1 is Normal, -1 is Inverted")][SerializeField] int _controllerCameraYInverted;
+
     [SerializeField] float _cameraSmoothness;
-    [SerializeField] int _mouseXInverted; ///1 is Normal, -1 is Inverted
-    [SerializeField] int _mouseYInverted; ///1 is Normal, -1 is Inverted
 
     void Awake()
     {
@@ -34,6 +40,12 @@ public class FirstPersonCamera : MonoBehaviour
 
     private void Update()
     {
+        MoveCameraWithRightStick();
+        MoveCameraWithMouse();
+    }
+
+    private void MoveCameraWithMouse()
+    {
         Vector2 mouseMovement = _inputs.FirstPersonCamera.Rotate.ReadValue<Vector2>() * Time.deltaTime;
         targetYRotation = Mathf.Repeat(targetYRotation, 360);
         targetYRotation += mouseMovement.x * _mouseSensitivityX * _mouseXInverted;
@@ -46,6 +58,22 @@ public class FirstPersonCamera : MonoBehaviour
         _head.rotation = Quaternion.Lerp(_head.rotation, targetRotation, _cameraSmoothness * Time.deltaTime);
     }
 
+    private void MoveCameraWithRightStick()
+    {
+        float RStickMovementX = _inputs.FirstPersonCamera.RotateX.ReadValue<float>() * Time.deltaTime;
+        float RStickMovementY = _inputs.FirstPersonCamera.RotateY.ReadValue<float>() * Time.deltaTime;
+        targetYRotation = Mathf.Repeat(targetYRotation, 360);
+        targetYRotation += RStickMovementX * _stickSensitivityX * 10 * _controllerCameraXInverted;
+        targetXRotation -= RStickMovementY * _stickSensitivityY * 10 * _controllerCameraYInverted;
+
+        targetXRotation = Mathf.Clamp(targetXRotation, -90, 90);
+
+        var targetRotation = Quaternion.Euler(Vector3.up * targetYRotation) * Quaternion.Euler(Vector3.right * targetXRotation);
+
+        _head.rotation = Quaternion.Lerp(_head.rotation, targetRotation, _cameraSmoothness * Time.deltaTime);
+    }
+
+    #region Enable Disable Inputs
     void OnEnable()
     {
         _inputs.Enable();
@@ -55,4 +83,5 @@ public class FirstPersonCamera : MonoBehaviour
     {
         _inputs.Disable();
     }
+    #endregion
 }
