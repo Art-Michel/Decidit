@@ -62,6 +62,15 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                     ""processors"": ""ScaleVector2"",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""e8c5941d-1200-4941-bc3b-817e5b007793"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -163,6 +172,28 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""77fc58e2-2d83-4eb6-82bb-34fddb55ecb1"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard Mouse"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""66918b5e-f08d-4bfa-a899-792cc5d57090"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -213,6 +244,7 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
         m_FirstPersonCamera_RotateX = m_FirstPersonCamera.FindAction("RotateX", throwIfNotFound: true);
         m_FirstPersonCamera_RotateY = m_FirstPersonCamera.FindAction("RotateY", throwIfNotFound: true);
         m_FirstPersonCamera_Move = m_FirstPersonCamera.FindAction("Move", throwIfNotFound: true);
+        m_FirstPersonCamera_Jump = m_FirstPersonCamera.FindAction("Jump", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -276,6 +308,7 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
     private readonly InputAction m_FirstPersonCamera_RotateX;
     private readonly InputAction m_FirstPersonCamera_RotateY;
     private readonly InputAction m_FirstPersonCamera_Move;
+    private readonly InputAction m_FirstPersonCamera_Jump;
     public struct FirstPersonCameraActions
     {
         private @PlayerInputMap m_Wrapper;
@@ -284,6 +317,7 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
         public InputAction @RotateX => m_Wrapper.m_FirstPersonCamera_RotateX;
         public InputAction @RotateY => m_Wrapper.m_FirstPersonCamera_RotateY;
         public InputAction @Move => m_Wrapper.m_FirstPersonCamera_Move;
+        public InputAction @Jump => m_Wrapper.m_FirstPersonCamera_Jump;
         public InputActionMap Get() { return m_Wrapper.m_FirstPersonCamera; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -305,6 +339,9 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                 @Move.started -= m_Wrapper.m_FirstPersonCameraActionsCallbackInterface.OnMove;
                 @Move.performed -= m_Wrapper.m_FirstPersonCameraActionsCallbackInterface.OnMove;
                 @Move.canceled -= m_Wrapper.m_FirstPersonCameraActionsCallbackInterface.OnMove;
+                @Jump.started -= m_Wrapper.m_FirstPersonCameraActionsCallbackInterface.OnJump;
+                @Jump.performed -= m_Wrapper.m_FirstPersonCameraActionsCallbackInterface.OnJump;
+                @Jump.canceled -= m_Wrapper.m_FirstPersonCameraActionsCallbackInterface.OnJump;
             }
             m_Wrapper.m_FirstPersonCameraActionsCallbackInterface = instance;
             if (instance != null)
@@ -321,6 +358,9 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
+                @Jump.started += instance.OnJump;
+                @Jump.performed += instance.OnJump;
+                @Jump.canceled += instance.OnJump;
             }
         }
     }
@@ -349,5 +389,6 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
         void OnRotateX(InputAction.CallbackContext context);
         void OnRotateY(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
     }
 }

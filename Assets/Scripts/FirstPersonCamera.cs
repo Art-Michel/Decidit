@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,10 +6,13 @@ using UnityEngine.InputSystem;
 
 public class FirstPersonCamera : MonoBehaviour
 {
+    #region references
     PlayerInputMap _inputs;
     Rigidbody _rigidbody;
     [SerializeField] Transform _head;
+    #endregion
 
+    #region camera rotation
     private float targetYRotation;
     private float targetXRotation;
 
@@ -23,6 +27,21 @@ public class FirstPersonCamera : MonoBehaviour
     [Range(-1, 1)][Tooltip("1 is Normal, -1 is Inverted")][SerializeField] int _controllerCameraYInverted;
 
     [SerializeField] float _cameraSmoothness;
+    #endregion
+
+    #region Jumping and Falling
+    private bool _isGrounded;
+
+    private float _verticalVelocity;
+    [Range(0, 10)][SerializeField] private float _drag;
+    private const float _gravity = 9.81f;
+
+    private bool _canJump;
+    private bool _isJumping;
+    private float _jumpCooldown;
+    private float _coyoteTime;
+    private const float _coyoteMaxTime = 0.15f;
+    #endregion
 
     [Range(0, 100)][SerializeField] float _movementSpeed;
 
@@ -30,13 +49,16 @@ public class FirstPersonCamera : MonoBehaviour
     {
         _inputs = new PlayerInputMap();
         _rigidbody = GetComponent<Rigidbody>();
+        _inputs.FirstPersonCamera.Jump.started += _ => Jump();
     }
 
     void Start()
     {
         transform.rotation = Quaternion.identity;
 
-        #region à mettre dans le gamestatemanager
+        Land();
+
+        #region curseurs, à mettre dans le gamestatemanager
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         #endregion
@@ -44,10 +66,24 @@ public class FirstPersonCamera : MonoBehaviour
 
     private void Update()
     {
+        #region Cooldowns
+        if (_coyoteTime > 0f)
+            _coyoteTime -= Time.deltaTime;
+        if (!_canJump)
+        {
+            _jumpCooldown -= Time.deltaTime;
+            if (_jumpCooldown <= 0) _canJump = true;
+        }
+
+
+        #endregion
+
         MoveCameraWithRightStick();
         MoveCameraWithMouse();
 
+        CheckGround();
         Move();
+        if (!_isGrounded) ApplyGravity();
     }
 
     private void MoveCameraWithMouse()
@@ -93,9 +129,65 @@ public class FirstPersonCamera : MonoBehaviour
         Vector3 rightRelative = inputDirection.x * right;
         Vector3 forwardRelative = inputDirection.y * forward;
 
-        Vector3 cameraRelativeMovement = (forwardRelative + rightRelative)* Time.deltaTime * _movementSpeed;
+        Vector3 cameraRelativeMovement = (forwardRelative + rightRelative) * Time.deltaTime * _movementSpeed;
 
+        //if (!CollisionCheck(cameraRelativeMovement.normalized, cameraRelativeMovement.magnitude))
         transform.position += cameraRelativeMovement;
+    }
+
+    /*private bool CollisionCheck(Vector3 direction, float distance)
+    {
+        return Physics.SphereCast(transform.position, 0.5f, direction, out RaycastHit hitInfo, distance);
+    }*/
+
+    private void CheckGround()
+    {
+        if (Physics.SphereCast(transform.position, 0.2f, -transform.up, out RaycastHit hitInfo, 1.3f))
+        {
+            if (!_isGrounded && _canJump)
+                Land();
+
+            //* Snap on top of grounds slightly above player
+            if ((transform.position.y - 1.1f) - hitInfo.point.y < 0.4f)
+                transform.position += new Vector3(0, (0.4f - (transform.position.y - 1.1f - hitInfo.point.y)), 0);
+        }
+        else
+        {
+            if (_isGrounded)
+                TakeOff();
+        }
+    }
+
+    private void Land()
+    {
+        _isGrounded = true;
+        _verticalVelocity = 0f;
+        _isJumping = false;
+        _coyoteTime = -1f;
+    }
+
+    private void TakeOff()
+    {
+        _isGrounded = false;
+        _coyoteTime = _coyoteMaxTime;
+    }
+
+    private void Jump()
+    {
+        if (_isGrounded || _coyoteTime > 0f && !_isJumping)
+        {
+            _isGrounded = false;
+            _verticalVelocity = 8f;
+            _isJumping = true;
+            _canJump = false;
+            _jumpCooldown = 0.1f;
+        }
+    }
+
+    private void ApplyGravity()
+    {
+        transform.position += transform.up * _verticalVelocity * Time.deltaTime;
+        _verticalVelocity -= _drag * _gravity * Time.deltaTime;
     }
 
     #region Enable Disable Inputs
