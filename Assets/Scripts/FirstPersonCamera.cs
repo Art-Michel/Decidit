@@ -6,45 +6,6 @@ using UnityEngine.InputSystem;
 
 public class FirstPersonCamera : MonoBehaviour
 {
-    #region references
-    PlayerInputMap _inputs;
-    Rigidbody _rigidbody;
-    [SerializeField] Transform _head;
-    #endregion
-
-    #region camera rotation
-    private float targetYRotation;
-    private float targetXRotation;
-
-    [Range(0.001f, 2)][SerializeField] float _mouseSensitivityX;
-    [Range(0.001f, 2)][SerializeField] float _mouseSensitivityY;
-    [Range(-1, 1)][Tooltip("1 is Normal, -1 is Inverted")][SerializeField] int _mouseXInverted;
-    [Range(-1, 1)][Tooltip("1 is Normal, -1 is Inverted")][SerializeField] int _mouseYInverted;
-
-    [Range(0.1f, 100)][SerializeField] float _stickSensitivityX;
-    [Range(0.1f, 100)][SerializeField] float _stickSensitivityY;
-    [Range(-1, 1)][Tooltip("1 is Normal, -1 is Inverted")][SerializeField] int _controllerCameraXInverted;
-    [Range(-1, 1)][Tooltip("1 is Normal, -1 is Inverted")][SerializeField] int _controllerCameraYInverted;
-
-    [SerializeField] float _cameraSmoothness;
-    #endregion
-
-    #region Jumping and Falling
-    private bool _isGrounded;
-
-    private float _verticalVelocity;
-    [Range(0, 10)][SerializeField] private float _drag;
-    private const float _gravity = 9.81f;
-
-    private bool _canJump;
-    private bool _isJumping;
-    private float _jumpCooldown;
-    private float _coyoteTime;
-    private const float _coyoteMaxTime = 0.15f;
-    #endregion
-
-    [Range(0, 100)][SerializeField] float _movementSpeed;
-
     void Awake()
     {
         _inputs = new PlayerInputMap();
@@ -74,17 +35,42 @@ public class FirstPersonCamera : MonoBehaviour
             _jumpCooldown -= Time.deltaTime;
             if (_jumpCooldown <= 0) _canJump = true;
         }
-
-
         #endregion
 
         MoveCameraWithRightStick();
         MoveCameraWithMouse();
 
         CheckGround();
-        Move();
+        MoveCharacter(GetCameraRelativeMovement(_inputs.FirstPersonCamera.Move.ReadValue<Vector2>()));
         if (!_isGrounded) ApplyGravity();
     }
+
+    #region References
+    PlayerInputMap _inputs;
+    Rigidbody _rigidbody;
+    [SerializeField] Transform _head;
+    #endregion
+
+    #region Character Properties
+    private const float _characterRadius = 0.5f;
+
+    #endregion
+
+    #region Camera rotation
+    private float targetYRotation;
+    private float targetXRotation;
+
+    [Range(0.001f, 2)][SerializeField] float _mouseSensitivityX;
+    [Range(0.001f, 2)][SerializeField] float _mouseSensitivityY;
+    [Range(-1, 1)][Tooltip("1 is Normal, -1 is Inverted")][SerializeField] int _mouseXInverted;
+    [Range(-1, 1)][Tooltip("1 is Normal, -1 is Inverted")][SerializeField] int _mouseYInverted;
+
+    [Range(0.1f, 100)][SerializeField] float _stickSensitivityX;
+    [Range(0.1f, 100)][SerializeField] float _stickSensitivityY;
+    [Range(-1, 1)][Tooltip("1 is Normal, -1 is Inverted")][SerializeField] int _controllerCameraXInverted;
+    [Range(-1, 1)][Tooltip("1 is Normal, -1 is Inverted")][SerializeField] int _controllerCameraYInverted;
+
+    [SerializeField] float _cameraSmoothness;
 
     private void MoveCameraWithMouse()
     {
@@ -108,48 +94,37 @@ public class FirstPersonCamera : MonoBehaviour
         targetYRotation += RStickMovementX * _stickSensitivityX * 10 * _controllerCameraXInverted;
         targetXRotation -= RStickMovementY * _stickSensitivityY * 10 * _controllerCameraYInverted;
 
-        targetXRotation = Mathf.Clamp(targetXRotation, -90, 90);
+        targetXRotation = Mathf.Clamp(targetXRotation, -90, 90f);
 
         var targetRotation = Quaternion.Euler(Vector3.up * targetYRotation) * Quaternion.Euler(Vector3.right * targetXRotation);
 
         _head.rotation = Quaternion.Lerp(_head.rotation, targetRotation, _cameraSmoothness * Time.deltaTime);
     }
 
-    private void Move()
-    {
-        Vector2 inputDirection = _inputs.FirstPersonCamera.Move.ReadValue<Vector2>();
+    #endregion
 
-        Vector3 forward = _head.forward;
-        Vector3 right = _head.right;
-        forward.y = 0;
-        right.y = 0;
-        forward = forward.normalized;
-        right = right.normalized;
+    #region Jumping and Falling and Ground Detection
+    private bool _isGrounded;
 
-        Vector3 rightRelative = inputDirection.x * right;
-        Vector3 forwardRelative = inputDirection.y * forward;
+    private float _verticalVelocity;
+    [Range(0, 10)][SerializeField] private float _drag;
+    private const float _gravity = 9.81f;
 
-        Vector3 cameraRelativeMovement = (forwardRelative + rightRelative) * Time.deltaTime * _movementSpeed;
-
-        //if (!CollisionCheck(cameraRelativeMovement.normalized, cameraRelativeMovement.magnitude))
-        transform.position += cameraRelativeMovement;
-    }
-
-    /*private bool CollisionCheck(Vector3 direction, float distance)
-    {
-        return Physics.SphereCast(transform.position, 0.5f, direction, out RaycastHit hitInfo, distance);
-    }*/
+    [SerializeField] private float _jumpStrength;
+    RaycastHit _groundStoodOn;
+    private bool _canJump;
+    private bool _isJumping;
+    private float _jumpCooldown;
+    private float _coyoteTime;
+    private const float _coyoteMaxTime = 0.15f;
 
     private void CheckGround()
     {
-        if (Physics.SphereCast(transform.position, 0.2f, -transform.up, out RaycastHit hitInfo, 1.3f))
+        Debug.DrawLine(transform.position, transform.position - transform.up * 1.8f, Color.red);
+        if (Physics.Raycast(transform.position, -transform.up, out _groundStoodOn, 1.8f))
         {
             if (!_isGrounded && _canJump)
                 Land();
-
-            //* Snap on top of grounds slightly above player
-            if ((transform.position.y - 1.1f) - hitInfo.point.y < 0.4f)
-                transform.position += new Vector3(0, (0.4f - (transform.position.y - 1.1f - hitInfo.point.y)), 0);
         }
         else
         {
@@ -177,18 +152,53 @@ public class FirstPersonCamera : MonoBehaviour
         if (_isGrounded || _coyoteTime > 0f && !_isJumping)
         {
             _isGrounded = false;
-            _verticalVelocity = 8f;
+            _verticalVelocity = _jumpStrength;
             _isJumping = true;
             _canJump = false;
-            _jumpCooldown = 0.1f;
+            _jumpCooldown = 0.1f; //min time allowed between two jumps, to avoid mashing jump up slopes and so we dont check for a ground before the character actually jumps.
         }
     }
 
     private void ApplyGravity()
     {
-        transform.position += transform.up * _verticalVelocity * Time.deltaTime;
+        MoveCharacter(transform.up * _verticalVelocity * Time.deltaTime);
         _verticalVelocity -= _drag * _gravity * Time.deltaTime;
     }
+
+    #endregion
+
+    #region Shmovement
+    [Range(0, 100)][SerializeField] float _movementSpeed;
+    [Range(0, 1)][SerializeField] float _maxStepHeight;
+
+    private Vector3 GetCameraRelativeMovement(Vector2 inputDirection)
+    {
+        Vector3 forward = _head.forward;
+        Vector3 right = _head.right;
+        forward.y = 0;
+        right.y = 0;
+        forward = forward.normalized;
+        right = right.normalized;
+
+        Vector3 rightRelative = inputDirection.x * right;
+        Vector3 forwardRelative = inputDirection.y * forward;
+
+        Vector3 cameraRelativeMovement = (forwardRelative + rightRelative) * Time.deltaTime * _movementSpeed;
+
+        return cameraRelativeMovement;
+    }
+
+    private void MoveCharacter(Vector3 direction)
+    {
+        //Move along slopes
+        direction = (direction - (Vector3.Dot(direction, _groundStoodOn.normal)) * _groundStoodOn.normal);
+        Debug.Log(direction);
+        //direction = Vector3.ProjectOnPlane(direction, _groundStoodOn.normal);
+
+        //Actually move
+        transform.position += direction;
+    }
+    #endregion
 
     #region Enable Disable Inputs
     void OnEnable()
