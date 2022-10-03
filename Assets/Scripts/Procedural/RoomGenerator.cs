@@ -5,6 +5,7 @@ using UnityEngine;
 public class RoomGenerator : MonoBehaviour
 {
     [SerializeField] List<GameObject> rooms = new List<GameObject>();
+    [SerializeField] List<GameObject> roomsOrder = new List<GameObject>();
     List<Vector3> roomsPlaced = new List<Vector3>();
     [SerializeField] int roomsCount;
     [SerializeField] float roomsDist;
@@ -19,6 +20,9 @@ public class RoomGenerator : MonoBehaviour
         Generate();
     }
 
+    /// <summary>
+    /// generate rooms & collidors
+    /// </summary>
     void Generate()
     {
         previousRoom = transform.position;
@@ -47,6 +51,7 @@ public class RoomGenerator : MonoBehaviour
 
                             Vector3 SpawnPos1b = new Vector3(previousRoom.x + roomsDist, previousRoom.y, previousRoom.z);
                             GameObject roomInstance1 = Instantiate(rooms[0], SpawnPos1b, Quaternion.identity);
+                            roomsOrder.Add(roomInstance1);
                             roomsPlaced.Add(roomInstance1.transform.position);
                             previousRoom = roomInstance1.transform.position;
                             roomsCount--;
@@ -63,6 +68,7 @@ public class RoomGenerator : MonoBehaviour
                         if (CanSpawn(SpawnPos2))
                         {
                             GameObject roomInstance2 = Instantiate(rooms[0], SpawnPos2, Quaternion.identity);
+                            roomsOrder.Add(roomInstance2);
                             roomsPlaced.Add(roomInstance2.transform.position);
                             previousRoom = roomInstance2.transform.position;
                             roomsCount--;
@@ -88,6 +94,7 @@ public class RoomGenerator : MonoBehaviour
 
                             Vector3 SpawnPos3b = new Vector3(previousRoom.x, previousRoom.y, previousRoom.z + roomsDist);
                             GameObject roomInstance3 = Instantiate(rooms[0], SpawnPos3b, Quaternion.identity);
+                            roomsOrder.Add(roomInstance3);
                             roomsPlaced.Add(roomInstance3.transform.position);
                             previousRoom = roomInstance3.transform.position;
                             roomsCount--;
@@ -113,6 +120,7 @@ public class RoomGenerator : MonoBehaviour
 
                             Vector3 SpawnPos4b = new Vector3(previousRoom.x, previousRoom.y, previousRoom.z - roomsDist);
                             GameObject roomInstance4 = Instantiate(rooms[0], SpawnPos4b, Quaternion.identity);
+                            roomsOrder.Add(roomInstance4);
                             roomsPlaced.Add(roomInstance4.transform.position);
                             previousRoom = roomInstance4.transform.position;
                             roomsCount--;
@@ -138,6 +146,7 @@ public class RoomGenerator : MonoBehaviour
 
                             Vector3 SpawnPos5b = new Vector3(previousRoom.x - roomsDist, previousRoom.y, previousRoom.z);
                             GameObject roomInstance5 = Instantiate(rooms[0], SpawnPos5b, Quaternion.identity);
+                            roomsOrder.Add(roomInstance5);
                             roomsPlaced.Add(roomInstance5.transform.position);
                             previousRoom = roomInstance5.transform.position;
                             roomsCount--;
@@ -154,6 +163,7 @@ public class RoomGenerator : MonoBehaviour
                         if (CanSpawn(SpawnPos6))
                         {
                             GameObject roomInstance6 = Instantiate(rooms[0], SpawnPos6, Quaternion.identity);
+                            roomsOrder.Add(roomInstance6);
                             roomsPlaced.Add(roomInstance6.transform.position);
                             previousRoom = roomInstance6.transform.position;
                             roomsCount--;
@@ -166,6 +176,26 @@ public class RoomGenerator : MonoBehaviour
                 }
 
                 previousRandAxe = randAxe;
+            }
+        }
+    }
+
+    private void Update()
+    {
+        for (int i = 0; i < roomsOrder.Count; i++)
+        {
+            if(roomsOrder.Count > i+1)
+            {
+                if (roomsOrder[i].transform.position.y > roomsOrder[i + 1].transform.position.y)
+                {
+                    roomsOrder[i+1].gameObject.GetComponentInChildren<GroundStates>().SpawnStairs();
+                    roomsOrder[i].gameObject.GetComponentInChildren<GroundStates>().UnlockStairs();
+                }
+                else if (roomsOrder[i].transform.position.y < roomsOrder[i + 1].transform.position.y)
+                {
+                    roomsOrder[i].gameObject.GetComponentInChildren<GroundStates>().SpawnStairs();
+                    roomsOrder[i+1].gameObject.GetComponentInChildren<GroundStates>().UnlockStairs();
+                }
             }
         }
     }
@@ -186,54 +216,4 @@ public class RoomGenerator : MonoBehaviour
         }
 
         return true;
-    }
-
-    int ChooseRoomDir(Vector3 prevPos, Vector3 pos)
-    {
-        if (prevPos.x == pos.x)
-        {
-            if (prevPos.y == pos.y)
-            {
-                if (prevPos.z == pos.z)
-                {
-                    return 1;
-                }
-                else
-                {
-                    if (prevPos.z > pos.z)
-                    {
-                        return 2;
-                    }
-                    else if (prevPos.z < pos.z)
-                    {
-                        return 3;
-                    }
-                }
-            }
-            else
-            {
-                if (prevPos.y > pos.y)
-                {
-                    return 1;
-                }
-                else if (prevPos.y < pos.y)
-                {
-                    return 5;
-                }
-            }
-        }
-        else
-        {
-            if (prevPos.x > pos.x)
-            {
-                return 0;
-            }
-            else if (prevPos.x < pos.x)
-            {
-                return 4;
-            }
-        }
-
-        return 1;
-    }
-}
+    }}

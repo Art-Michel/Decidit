@@ -8,6 +8,7 @@ public class WallStates : MonoBehaviour
 
     private void Update()
     {
+        #region create door if detect collidor
         if (canChangeWallState)
         {
             Collider[] hit = Physics.OverlapSphere(transform.position, 1f);
@@ -20,5 +21,6 @@ public class WallStates : MonoBehaviour
                 }
             }
         }
+        #endregion
     }
 }
