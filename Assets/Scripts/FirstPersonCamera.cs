@@ -46,6 +46,7 @@ public class FirstPersonCamera : MonoBehaviour
     }
 
     #region References
+    [Header("References")]
     PlayerInputMap _inputs;
     Rigidbody _rigidbody;
     [SerializeField] Transform _head;
@@ -53,24 +54,27 @@ public class FirstPersonCamera : MonoBehaviour
 
     #region Character Properties
     private const float _characterRadius = 0.5f;
-
     #endregion
 
     #region Camera rotation
+    [Header("Camera Settings")]
+    //Mouse
+    [Range(0.001f, 2)][SerializeField] float _mouseSensitivityX = 0.1f;
+    [Range(0.001f, 2)][SerializeField] float _mouseSensitivityY = 0.1f;
+    [Range(-1, 1)][Tooltip("1 is Normal, -1 is Inverted, please don't put anything in between.")][SerializeField] int _mouseXInverted = 1;
+    [Range(-1, 1)][Tooltip("1 is Normal, -1 is Inverted, please don't put anything in between.")][SerializeField] int _mouseYInverted = 1;
+
+    //Controller
+    [Range(0.1f, 100)][SerializeField] float _stickSensitivityX = 15f;
+    [Range(0.1f, 100)][SerializeField] float _stickSensitivityY = 15f;
+    [Range(-1, 1)][Tooltip("1 is Normal, -1 is Inverted, please don't put anything in between.")][SerializeField] int _controllerCameraXInverted = 1;
+    [Range(-1, 1)][Tooltip("1 is Normal, -1 is Inverted, please don't put anything in between.")][SerializeField] int _controllerCameraYInverted = 1;
+
+    //General
+    [SerializeField] float _cameraSmoothness = 100000;
+
     private float targetYRotation;
     private float targetXRotation;
-
-    [Range(0.001f, 2)][SerializeField] float _mouseSensitivityX;
-    [Range(0.001f, 2)][SerializeField] float _mouseSensitivityY;
-    [Range(-1, 1)][Tooltip("1 is Normal, -1 is Inverted")][SerializeField] int _mouseXInverted;
-    [Range(-1, 1)][Tooltip("1 is Normal, -1 is Inverted")][SerializeField] int _mouseYInverted;
-
-    [Range(0.1f, 100)][SerializeField] float _stickSensitivityX;
-    [Range(0.1f, 100)][SerializeField] float _stickSensitivityY;
-    [Range(-1, 1)][Tooltip("1 is Normal, -1 is Inverted")][SerializeField] int _controllerCameraXInverted;
-    [Range(-1, 1)][Tooltip("1 is Normal, -1 is Inverted")][SerializeField] int _controllerCameraYInverted;
-
-    [SerializeField] float _cameraSmoothness;
 
     private void MoveCameraWithMouse()
     {
@@ -104,13 +108,14 @@ public class FirstPersonCamera : MonoBehaviour
     #endregion
 
     #region Jumping and Falling and Ground Detection
-    private bool _isGrounded;
+    [Header("Jumping Settings")]
+    [Range(0, 10)][SerializeField] private float _drag = 1f;
+    [Range(0, 50)][SerializeField] private float _jumpStrength = 8f;
 
+    private bool _isGrounded;
     private float _verticalVelocity;
-    [Range(0, 10)][SerializeField] private float _drag;
     private const float _gravity = 9.81f;
 
-    [SerializeField] private float _jumpStrength;
     RaycastHit _groundStoodOn;
     private bool _canJump;
     private bool _isJumping;
@@ -168,8 +173,9 @@ public class FirstPersonCamera : MonoBehaviour
     #endregion
 
     #region Shmovement
-    [Range(0, 100)][SerializeField] float _movementSpeed;
-    [Range(0, 1)][SerializeField] float _maxStepHeight;
+    [Header("Movement Settings")]
+    [Range(0, 100)][SerializeField] float _movementSpeed = 9f;
+    [Range(0, 1)][SerializeField] float _maxStepHeight = 0.2f;
 
     private Vector3 GetCameraRelativeMovement(Vector2 inputDirection)
     {
