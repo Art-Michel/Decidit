@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 using UnityEngine.InputSystem;
 
 public class FirstPersonCamera : MonoBehaviour
@@ -123,9 +124,15 @@ public class FirstPersonCamera : MonoBehaviour
     private float _coyoteTime;
     private const float _coyoteMaxTime = 0.15f;
 
+    #if UNITY_EDITOR
+    void OnDrawGizmos()
+    {
+        Handles.DrawAAPolyLine(EditorGUIUtility.whiteTexture, 3, transform.position, transform.position - transform.up * 1.8f);
+    }
+    #endif
+
     private void CheckGround()
     {
-        Debug.DrawLine(transform.position, transform.position - transform.up * 1.8f, Color.red);
         if (Physics.Raycast(transform.position, -transform.up, out _groundStoodOn, 1.8f))
         {
             if (!_isGrounded && _canJump)
