@@ -58,7 +58,7 @@ public class FirstPersonCamera : MonoBehaviour
 
     #region Movement Variables
     [Header("Movement Settings")]
-    Vector2 _inputMovement;
+    Vector3 _inputMovement;
     Vector3 _globalMomentum;
     [Range(0, 100)][SerializeField] float _movementSpeed = 9f;
     [Range(0, 1)][SerializeField] float _maxStepHeight = 0.2f;
@@ -77,8 +77,6 @@ public class FirstPersonCamera : MonoBehaviour
         _inputMovement = Vector2.zero;
         _globalMomentum = Vector3.zero;
 
-        Land();
-
         #region curseurs, à mettre dans le gamestatemanager
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -87,7 +85,7 @@ public class FirstPersonCamera : MonoBehaviour
 
     private void Update()
     {
-        #region Cooldowns
+        // Cooldowns
         if (_coyoteTime > 0f)
             _coyoteTime -= Time.deltaTime;
         if (!_canJump)
@@ -95,13 +93,17 @@ public class FirstPersonCamera : MonoBehaviour
             _jumpCooldown -= Time.deltaTime;
             if (_jumpCooldown <= 0) _canJump = true;
         }
-        #endregion
 
+        //Camera
         MoveCameraWithRightStick();
         MoveCameraWithMouse();
 
+        UpdateInputDirection(_inputs.FirstPersonCamera.Move.ReadValue<Vector2>());
+        UpdateGlobalMomentum();
+        MoveCharacter(_inputMovement + _globalMomentum);
+
+        //Verticality
         CheckGround();
-        MoveCharacter(GetCameraRelativeMovement(_inputs.FirstPersonCamera.Move.ReadValue<Vector2>()));
         if (!_isGrounded) ApplyGravity();
     }
 
@@ -140,7 +142,7 @@ public class FirstPersonCamera : MonoBehaviour
 #if UNITY_EDITOR
     void OnDrawGizmos()
     {
-        Debug.DrawLine(transform.position, transform.position - transform.up * 1.8f, Color.white);
+        Debug.DrawLine(transform.position, transform.position - transform.up * 1.8f, Color.white, 0f, false);
     }
 #endif
 
@@ -195,7 +197,7 @@ public class FirstPersonCamera : MonoBehaviour
 
     #region Shmovement Functions
 
-    private Vector3 GetCameraRelativeMovement(Vector2 inputDirection)
+    private void UpdateInputDirection(Vector2 inputDirection)
     {
         Vector3 forward = _head.forward;
         Vector3 right = _head.right;
@@ -207,9 +209,12 @@ public class FirstPersonCamera : MonoBehaviour
         Vector3 rightRelative = inputDirection.x * right;
         Vector3 forwardRelative = inputDirection.y * forward;
 
-        Vector3 cameraRelativeMovement = (forwardRelative + rightRelative) * Time.deltaTime * _movementSpeed;
+        _inputMovement = (forwardRelative + rightRelative) * Time.deltaTime * _movementSpeed;
+    }
 
-        return cameraRelativeMovement;
+    void UpdateGlobalMomentum()
+    {
+        // ouais ouais on verra
     }
 
     private void MoveCharacter(Vector3 direction)
