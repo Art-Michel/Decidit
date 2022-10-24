@@ -10,12 +10,8 @@ public class FirstPersonCamera : MonoBehaviour
     #region References
     [Header("References")]
     PlayerInputMap _inputs;
-    Rigidbody _rigidbody;
+    CharacterController _charaCon;
     [SerializeField] Transform _head;
-    #endregion
-
-    #region Character Physical Properties
-    private const float _characterRadius = 0.5f;
     #endregion
 
     #region Camera rotation variables
@@ -45,10 +41,10 @@ public class FirstPersonCamera : MonoBehaviour
     [Range(0, 50)][SerializeField] private float _jumpStrength = 8f;
 
     private bool _isGrounded;
-    private float _verticalVelocity;
     private const float _gravity = 9.81f;
 
     RaycastHit _groundStoodOn;
+    private const float _groundRaycastLength = 1.2f; // _charaCon.height / 2
     private bool _canJump;
     private bool _isJumping;
     private float _jumpCooldown;
@@ -61,13 +57,12 @@ public class FirstPersonCamera : MonoBehaviour
     Vector3 _inputMovement;
     Vector3 _globalMomentum;
     [Range(0, 100)][SerializeField] float _movementSpeed = 9f;
-    [Range(0, 1)][SerializeField] float _maxStepHeight = 0.2f;
     #endregion
 
     private void Awake()
     {
         _inputs = new PlayerInputMap();
-        _rigidbody = GetComponent<Rigidbody>();
+        _charaCon = GetComponent<CharacterController>();
         _inputs.FirstPersonCamera.Jump.started += _ => Jump();
     }
 
@@ -100,11 +95,11 @@ public class FirstPersonCamera : MonoBehaviour
 
         UpdateInputDirection(_inputs.FirstPersonCamera.Move.ReadValue<Vector2>());
         UpdateGlobalMomentum();
-        MoveCharacter(_inputMovement + _globalMomentum);
+        MoveCharacter(_inputMovement);
+        MoveCharacter(_globalMomentum * Time.deltaTime);
 
         //Verticality
         CheckGround();
-        if (!_isGrounded) ApplyGravity();
     }
 
     #region Camera Functions
@@ -115,7 +110,7 @@ public class FirstPersonCamera : MonoBehaviour
         _cameraTargetYRotation += mouseMovement.x * _mouseSensitivityX * _mouseXInverted;
         _cameraTargetXRotation -= mouseMovement.y * _mouseSensitivityY * _mouseYInverted;
 
-        _cameraTargetXRotation = Mathf.Clamp(_cameraTargetXRotation, -90, 90);
+        _cameraTargetXRotation = Mathf.Clamp(_cameraTargetXRotation, -85, 85);
 
         var targetRotation = Quaternion.Euler(Vector3.up * _cameraTargetYRotation) * Quaternion.Euler(Vector3.right * _cameraTargetXRotation);
 
@@ -130,7 +125,7 @@ public class FirstPersonCamera : MonoBehaviour
         _cameraTargetYRotation += RStickMovementX * _stickSensitivityX * 10 * _controllerCameraXInverted;
         _cameraTargetXRotation -= RStickMovementY * _stickSensitivityY * 10 * _controllerCameraYInverted;
 
-        _cameraTargetXRotation = Mathf.Clamp(_cameraTargetXRotation, -90, 90f);
+        _cameraTargetXRotation = Mathf.Clamp(_cameraTargetXRotation, -85, 85f);
 
         var targetRotation = Quaternion.Euler(Vector3.up * _cameraTargetYRotation) * Quaternion.Euler(Vector3.right * _cameraTargetXRotation);
 
@@ -142,13 +137,13 @@ public class FirstPersonCamera : MonoBehaviour
 #if UNITY_EDITOR
     void OnDrawGizmos()
     {
-        Debug.DrawLine(transform.position, transform.position - transform.up * 1.8f, Color.white, 0f, false);
+        Debug.DrawLine(transform.position, transform.position - transform.up * _groundRaycastLength, Color.white, 0f, false);
     }
 #endif
 
     private void CheckGround()
     {
-        if (Physics.Raycast(transform.position, -transform.up, out _groundStoodOn, 1.8f))
+        if (Physics.Raycast(transform.position, -transform.up, out _groundStoodOn, _groundRaycastLength))
         {
             if (!_isGrounded && _canJump)
                 Land();
@@ -158,12 +153,16 @@ public class FirstPersonCamera : MonoBehaviour
             if (_isGrounded)
                 TakeOff();
         }
+
+        /*if (_isGrounded && ((transform.position - _groundStoodOn.point).magnitude < _groundRaycastLength -0.1f))
+            _globalMomentum += Vector3.up * Time.deltaTime;*/
+            //!Faire remonter le controller quand un peu dedans le sol
     }
 
     private void Land()
     {
         _isGrounded = true;
-        _verticalVelocity = 0f;
+        _globalMomentum.y = 0f;
         _isJumping = false;
         _coyoteTime = -1f;
     }
@@ -181,17 +180,11 @@ public class FirstPersonCamera : MonoBehaviour
         if (_isGrounded || _coyoteTime > 0f && !_isJumping)
         {
             _isGrounded = false;
-            _verticalVelocity = _jumpStrength;
+            _globalMomentum.y += _jumpStrength;
             _isJumping = true;
             _canJump = false;
             _jumpCooldown = 0.1f; //min time allowed between two jumps, to avoid mashing jump up slopes and so we dont check for a ground before the character actually jumps.
         }
-    }
-
-    private void ApplyGravity()
-    {
-        MoveCharacter(transform.up * _verticalVelocity * Time.deltaTime);
-        _verticalVelocity -= _drag * _gravity * Time.deltaTime;
     }
     #endregion
 
@@ -214,18 +207,20 @@ public class FirstPersonCamera : MonoBehaviour
 
     void UpdateGlobalMomentum()
     {
-        // ouais ouais on verra
+        if (!_isGrounded) _globalMomentum.y -= _drag * _gravity * Time.deltaTime;
     }
 
     private void MoveCharacter(Vector3 direction)
     {
         //Move along slopes
-        direction = (direction - (Vector3.Dot(direction, _groundStoodOn.normal)) * _groundStoodOn.normal);
-        Debug.Log(direction);
-        //direction = Vector3.ProjectOnPlane(direction, _groundStoodOn.normal);
+        if (_isGrounded)
+        {
+            if (Vector3.Dot(transform.up, _groundStoodOn.normal) > Mathf.InverseLerp(90, 0, _charaCon.slopeLimit)) //! Suboptimal, lerp in awake instead when we sure we aint gon be changing slopelimit no more
+                direction = (direction - (Vector3.Dot(direction, _groundStoodOn.normal)) * _groundStoodOn.normal);
+        }
 
         //Actually move
-        transform.position += direction;
+        _charaCon.Move(direction);
     }
 
     #endregion
