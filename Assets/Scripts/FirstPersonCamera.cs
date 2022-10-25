@@ -79,11 +79,6 @@ public class FirstPersonCamera : MonoBehaviour
         transform.rotation = Quaternion.identity;
         _movementInputs = Vector2.zero;
         _globalMomentum = Vector3.zero;
-
-        #region curseurs, à mettre dans le gamestatemanager
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        #endregion
     }
 
     private void Update()
@@ -101,25 +96,25 @@ public class FirstPersonCamera : MonoBehaviour
         MoveCameraWithRightStick();
         MoveCameraWithMouse();
 
+        CheckGround();
+
+        //Update Movement Vectors
         _movementInputs = MakeDirectionCameraRelative(_inputs.FirstPersonCamera.Move.ReadValue<Vector2>());
         UpdateGlobalMomentum();
-        Debugs();
-        if (_isGrounded)
-        {
-            MoveCharacter(_movementInputs * Time.deltaTime * _movementSpeed);
-            MoveCharacter(_globalMomentum * Time.deltaTime);
-        }
-        else
-        {
-            MoveCharacter(_globalMomentum * Time.deltaTime + _movementInputs * Time.deltaTime * _movementSpeed);
-        }
 
-        //Verticality
-        CheckGround();
+        //ApplyGravity
+        if (!_isGrounded) ApplyGravity();
+
+        //Debug Stuff
+        UpdateDebugTexts();
+
+        //Apply Movement
+        ApplyMovementsToCharacter(_globalMomentum * Time.deltaTime + _movementInputs * Time.deltaTime * _movementSpeed);
+
     }
 
     #region Debugs
-    private void Debugs()
+    private void UpdateDebugTexts()
     {
 #if UNITY_EDITOR
         _debugGroundedText.text = ("Is Grounded: " + _isGrounded);
@@ -217,6 +212,11 @@ public class FirstPersonCamera : MonoBehaviour
             _jumpCooldown = 0.1f; //min time allowed between two jumps, to avoid mashing jump up slopes and so we dont check for a ground before the character actually jumps.
         }
     }
+
+    private void ApplyGravity()
+    {
+        _globalMomentum.y -= _gravity * _drag * Time.deltaTime;
+    }
     #endregion
 
     #region Shmovement Functions
@@ -238,53 +238,33 @@ public class FirstPersonCamera : MonoBehaviour
 
     void UpdateGlobalMomentum()
     {
-        if (!_isGrounded)
-        {
-            // float _yVelocity = _globalMomentum.y;
-            // _globalMomentum = MakeDirectionCameraRelative(new Vector2 (_globalMomentum.x, _globalMomentum.z));
-            // _globalMomentum.y = _yVelocity;
+        //Add Input Vector to Momentum
+        _globalMomentum += _movementInputs * Time.deltaTime * _movementSpeed;
 
-            //Add Input Vector to Momentum
-            _globalMomentum += _movementInputs * Time.deltaTime * _movementSpeed;
+        float velocityDecreaseRate;
 
-            //Apply Gravity each frame (gravity * _drag)
-            _globalMomentum.y -= _drag * _gravity * Time.deltaTime;
-
-            //DecreaseMomentum Each Frame slower when airborne
-            if (_globalMomentum.x < -0.01f)
-                _globalMomentum.x += _momentumAirborneReductionSpeed * Time.deltaTime;
-            else if (_globalMomentum.x > 0.01f)
-                _globalMomentum.x -= _momentumAirborneReductionSpeed * Time.deltaTime;
-
-            if (_globalMomentum.z < -0.01f)
-                _globalMomentum.z += _momentumAirborneReductionSpeed * Time.deltaTime;
-            else if (_globalMomentum.z > 0.01f)
-                _globalMomentum.z -= _momentumAirborneReductionSpeed * Time.deltaTime;
-            else
-                _globalMomentum.z = 0;
-        }
-
+        if (_isGrounded)
+            velocityDecreaseRate = _momentumReductionSpeed;
         else
-        {
-            //DecreaseMomentum Each Frame faster on the ground
-            if (_globalMomentum.x < -0.01f)
-                _globalMomentum.x += _momentumReductionSpeed * Time.deltaTime;
-            else if (_globalMomentum.x > 0.01f)
-                _globalMomentum.x -= _momentumReductionSpeed * Time.deltaTime;
-            else
-                _globalMomentum.x = 0;
+            velocityDecreaseRate = _momentumAirborneReductionSpeed;
 
-            if (_globalMomentum.z < -0.01f)
-                _globalMomentum.z += _momentumReductionSpeed * Time.deltaTime;
-            else if (_globalMomentum.z > 0.01f)
-                _globalMomentum.z -= _momentumReductionSpeed * Time.deltaTime;
-            else
-                _globalMomentum.z = 0;
+        //DecreaseMomentum Each Frame slower when airborne and faster when grounded, round to 0 when close so it doesnt jiggle around
+        if (_globalMomentum.x < -0.01f)
+            _globalMomentum.x += velocityDecreaseRate * Time.deltaTime;
+        else if (_globalMomentum.x > 0.01f)
+            _globalMomentum.x -= velocityDecreaseRate * Time.deltaTime;
+        else
+            _globalMomentum.x = 0;
 
-        }
+        if (_globalMomentum.z < -0.01f)
+            _globalMomentum.z += velocityDecreaseRate * Time.deltaTime;
+        else if (_globalMomentum.z > 0.01f)
+            _globalMomentum.z -= velocityDecreaseRate * Time.deltaTime;
+        else
+            _globalMomentum.z = 0;
     }
 
-    private void MoveCharacter(Vector3 direction)
+    private void ApplyMovementsToCharacter(Vector3 direction)
     {
         //Move along slopes
         if (_isGrounded)

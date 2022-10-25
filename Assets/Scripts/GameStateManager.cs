@@ -5,28 +5,38 @@ using UnityEngine;
 public class GameStateManager : MonoBehaviour
 {
     float _cooldown = 3f;
-    bool is30 = false;
+    bool _is30fps = false;
+    [SerializeField] bool _debugFramerate;
+
+    void Start()
+    {
+        #region curseurs
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        #endregion
+    }
 
     void Update()
     {
-        _cooldown -= Time.deltaTime;
-        if (_cooldown <= 0)
+        if (_debugFramerate)
         {
-            ChangeTime();
+            _cooldown -= Time.deltaTime;
+            if (_cooldown <= 0)
+                ChangeFramerate();
         }
     }
 
-    void ChangeTime()
+    void ChangeFramerate()
     {
         _cooldown = 3f;
-        if (is30)
+        if (_is30fps)
         {
-            is30 = false;
+            _is30fps = false;
             Application.targetFrameRate = 180;
         }
         else
         {
-            is30 = true;
+            _is30fps = true;
             Application.targetFrameRate = 30;
         }
     }
