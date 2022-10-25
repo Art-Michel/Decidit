@@ -40,7 +40,6 @@ public class DungeonGenerator : MonoBehaviour
     {
         Doors lastDoor = null;
 
-        int index = 0;
         foreach (Room room in roomGen)
         {
             Room instance = Instantiate(room, Vector3.zero, Quaternion.identity, transform);
