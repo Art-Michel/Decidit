@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using UnityEditor;
 using UnityEngine.InputSystem;
 
@@ -12,6 +13,8 @@ public class FirstPersonCamera : MonoBehaviour
     PlayerInputMap _inputs;
     CharacterController _charaCon;
     [SerializeField] Transform _head;
+    [SerializeField] TextMeshProUGUI _debugVelocityText;
+    [SerializeField] TextMeshProUGUI _debugGroundedText;
     #endregion
 
     #region Camera rotation variables
@@ -40,21 +43,26 @@ public class FirstPersonCamera : MonoBehaviour
     [Range(0, 10)][SerializeField] private float _drag = 1f;
     [Range(0, 50)][SerializeField] private float _jumpStrength = 8f;
 
+    [Range(0, 50)][SerializeField] private float _slideForceOnSlopes = 20f;
+    [Range(0, 50)][SerializeField] private float _momentumAirborneReductionSpeed = 15f;
+    [Range(0, 50)][SerializeField] private float _momentumReductionSpeed = 25f;
+
     private bool _isGrounded;
     private const float _gravity = 9.81f;
 
     RaycastHit _groundStoodOn;
-    private const float _groundRaycastLength = 1.2f; // _charaCon.height / 2
+    private const float _groundRaycastLength = .7f; // _charaCon.height / 2 -0.5f
     private bool _canJump;
     private bool _isJumping;
     private float _jumpCooldown;
     private float _coyoteTime;
     private const float _coyoteMaxTime = 0.15f;
+
     #endregion
 
     #region Movement Variables
     [Header("Movement Settings")]
-    Vector3 _inputMovement;
+    Vector3 _movementInputs;
     Vector3 _globalMomentum;
     [Range(0, 100)][SerializeField] float _movementSpeed = 9f;
     #endregion
@@ -69,7 +77,7 @@ public class FirstPersonCamera : MonoBehaviour
     private void Start()
     {
         transform.rotation = Quaternion.identity;
-        _inputMovement = Vector2.zero;
+        _movementInputs = Vector2.zero;
         _globalMomentum = Vector3.zero;
 
         #region curseurs, à mettre dans le gamestatemanager
@@ -93,14 +101,41 @@ public class FirstPersonCamera : MonoBehaviour
         MoveCameraWithRightStick();
         MoveCameraWithMouse();
 
-        UpdateInputDirection(_inputs.FirstPersonCamera.Move.ReadValue<Vector2>());
+        _movementInputs = MakeDirectionCameraRelative(_inputs.FirstPersonCamera.Move.ReadValue<Vector2>());
         UpdateGlobalMomentum();
-        MoveCharacter(_inputMovement);
-        MoveCharacter(_globalMomentum * Time.deltaTime);
+        Debugs();
+        if (_isGrounded)
+        {
+            MoveCharacter(_movementInputs * Time.deltaTime * _movementSpeed);
+            MoveCharacter(_globalMomentum * Time.deltaTime);
+        }
+        else
+        {
+            MoveCharacter(_globalMomentum * Time.deltaTime + _movementInputs * Time.deltaTime * _movementSpeed);
+        }
 
         //Verticality
         CheckGround();
     }
+
+    #region Debugs
+    private void Debugs()
+    {
+#if UNITY_EDITOR
+        _debugGroundedText.text = ("Is Grounded: " + _isGrounded);
+        if (_debugVelocityText)
+            _debugVelocityText.text = ("Input Velocity:\nx=" + _movementInputs.x.ToString("F2") + "\nz=" + _movementInputs.z.ToString("F2") + "\n\nMomentum Velocity:\nx=" + _globalMomentum.x.ToString("F2") + "\ny=" + _globalMomentum.y.ToString("F2") + "\nz=" + _globalMomentum.z.ToString("F2"));
+#endif
+    }
+    void OnDrawGizmos()
+    {
+#if UNITY_EDITOR
+        Debug.DrawLine(transform.position, transform.position - transform.up * _groundRaycastLength, Color.green, 0f, false);
+        Gizmos.DrawSphere(_groundStoodOn.point + transform.up * 0.26f, 0.26f);
+
+#endif
+    }
+    #endregion
 
     #region Camera Functions
     private void MoveCameraWithMouse()
@@ -134,37 +169,33 @@ public class FirstPersonCamera : MonoBehaviour
     #endregion
 
     #region Ground Detection Functions
-#if UNITY_EDITOR
-    void OnDrawGizmos()
-    {
-        Debug.DrawLine(transform.position, transform.position - transform.up * _groundRaycastLength, Color.white, 0f, false);
-    }
-#endif
 
     private void CheckGround()
     {
-        if (Physics.Raycast(transform.position, -transform.up, out _groundStoodOn, _groundRaycastLength))
+        if (Physics.SphereCast(transform.position, _charaCon.radius + 0.01f, -transform.up, out _groundStoodOn, _groundRaycastLength))
         {
             if (!_isGrounded && _canJump)
-                Land();
+                if (Vector3.Dot(transform.up, _groundStoodOn.normal) < Mathf.InverseLerp(90, 0, _charaCon.slopeLimit)) //! Suboptimal
+                {
+                    _globalMomentum += (Vector3.down + _groundStoodOn.normal).normalized * _slideForceOnSlopes * Time.deltaTime;
+                }
+                else
+                    Land();
         }
         else
         {
             if (_isGrounded)
                 TakeOff();
         }
-
-        /*if (_isGrounded && ((transform.position - _groundStoodOn.point).magnitude < _groundRaycastLength -0.1f))
-            _globalMomentum += Vector3.up * Time.deltaTime;*/
-            //!Faire remonter le controller quand un peu dedans le sol
     }
 
     private void Land()
     {
+        _globalMomentum.y = 0;
         _isGrounded = true;
-        _globalMomentum.y = 0f;
         _isJumping = false;
         _coyoteTime = -1f;
+        if (_inputs.FirstPersonCamera.Jump.IsPressed()) Jump();
     }
 
     private void TakeOff()
@@ -190,7 +221,7 @@ public class FirstPersonCamera : MonoBehaviour
 
     #region Shmovement Functions
 
-    private void UpdateInputDirection(Vector2 inputDirection)
+    private Vector3 MakeDirectionCameraRelative(Vector2 inputDirection)
     {
         Vector3 forward = _head.forward;
         Vector3 right = _head.right;
@@ -202,12 +233,55 @@ public class FirstPersonCamera : MonoBehaviour
         Vector3 rightRelative = inputDirection.x * right;
         Vector3 forwardRelative = inputDirection.y * forward;
 
-        _inputMovement = (forwardRelative + rightRelative) * Time.deltaTime * _movementSpeed;
+        return (forwardRelative + rightRelative);
     }
 
     void UpdateGlobalMomentum()
     {
-        if (!_isGrounded) _globalMomentum.y -= _drag * _gravity * Time.deltaTime;
+        if (!_isGrounded)
+        {
+            // float _yVelocity = _globalMomentum.y;
+            // _globalMomentum = MakeDirectionCameraRelative(new Vector2 (_globalMomentum.x, _globalMomentum.z));
+            // _globalMomentum.y = _yVelocity;
+
+            //Add Input Vector to Momentum
+            _globalMomentum += _movementInputs * Time.deltaTime * _movementSpeed;
+
+            //Apply Gravity each frame (gravity * _drag)
+            _globalMomentum.y -= _drag * _gravity * Time.deltaTime;
+
+            //DecreaseMomentum Each Frame slower when airborne
+            if (_globalMomentum.x < -0.01f)
+                _globalMomentum.x += _momentumAirborneReductionSpeed * Time.deltaTime;
+            else if (_globalMomentum.x > 0.01f)
+                _globalMomentum.x -= _momentumAirborneReductionSpeed * Time.deltaTime;
+
+            if (_globalMomentum.z < -0.01f)
+                _globalMomentum.z += _momentumAirborneReductionSpeed * Time.deltaTime;
+            else if (_globalMomentum.z > 0.01f)
+                _globalMomentum.z -= _momentumAirborneReductionSpeed * Time.deltaTime;
+            else
+                _globalMomentum.z = 0;
+        }
+
+        else
+        {
+            //DecreaseMomentum Each Frame faster on the ground
+            if (_globalMomentum.x < -0.01f)
+                _globalMomentum.x += _momentumReductionSpeed * Time.deltaTime;
+            else if (_globalMomentum.x > 0.01f)
+                _globalMomentum.x -= _momentumReductionSpeed * Time.deltaTime;
+            else
+                _globalMomentum.x = 0;
+
+            if (_globalMomentum.z < -0.01f)
+                _globalMomentum.z += _momentumReductionSpeed * Time.deltaTime;
+            else if (_globalMomentum.z > 0.01f)
+                _globalMomentum.z -= _momentumReductionSpeed * Time.deltaTime;
+            else
+                _globalMomentum.z = 0;
+
+        }
     }
 
     private void MoveCharacter(Vector3 direction)
