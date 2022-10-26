@@ -10,13 +10,13 @@ public class FirstPersonCamera : MonoBehaviour
 {
     #region References
     [Header("References")]
-    PlayerInputMap _inputs;
-    CharacterController _charaCon;
-    [SerializeField] Transform _head;
     [SerializeField] TextMeshProUGUI _debugInputVelocityText;
     [SerializeField] TextMeshProUGUI _debugGlobalVelocityText;
     [SerializeField] TextMeshProUGUI _debugGravityText;
     [SerializeField] TextMeshProUGUI _debugGroundedText;
+    [SerializeField] Transform _head;
+    PlayerInputMap _inputs;
+    CharacterController _charaCon;
     #endregion
 
     #region Camera rotation variables
@@ -25,16 +25,16 @@ public class FirstPersonCamera : MonoBehaviour
 
     [Header("Camera Settings")]
     //Mouse
-    [Range(0.001f, 2)][SerializeField] float _mouseSensitivityX = 0.1f;
-    [Range(0.001f, 2)][SerializeField] float _mouseSensitivityY = 0.1f;
-    [Range(-1, 1)][Tooltip("1 is Normal, -1 is Inverted, please don't put anything in between.")][SerializeField] int _mouseXInverted = 1;
-    [Range(-1, 1)][Tooltip("1 is Normal, -1 is Inverted, please don't put anything in between.")][SerializeField] int _mouseYInverted = 1;
+    [Range(0.001f, 2)][SerializeField] private float _mouseSensitivityX = 0.1f;
+    [Range(0.001f, 2)][SerializeField] private float _mouseSensitivityY = 0.1f;
+    [Range(-1, 1)][Tooltip("1 is Normal, -1 is Inverted, please don't put anything in between.")][SerializeField] private int _mouseXInverted = 1;
+    [Range(-1, 1)][Tooltip("1 is Normal, -1 is Inverted, please don't put anything in between.")][SerializeField] private int _mouseYInverted = 1;
 
     //Joysticks
-    [Range(0.1f, 100)][SerializeField] float _stickSensitivityX = 15f;
-    [Range(0.1f, 100)][SerializeField] float _stickSensitivityY = 15f;
-    [Range(-1, 1)][Tooltip("1 is Normal, -1 is Inverted, please don't put anything in between.")][SerializeField] int _controllerCameraXInverted = 1;
-    [Range(-1, 1)][Tooltip("1 is Normal, -1 is Inverted, please don't put anything in between.")][SerializeField] int _controllerCameraYInverted = 1;
+    [Range(0.1f, 100)][SerializeField] private float _stickSensitivityX = 15f;
+    [Range(0.1f, 100)][SerializeField] private float _stickSensitivityY = 15f;
+    [Range(-1, 1)][Tooltip("1 is Normal, -1 is Inverted, please don't put anything in between.")][SerializeField] private int _controllerCameraXInverted = 1;
+    [Range(-1, 1)][Tooltip("1 is Normal, -1 is Inverted, please don't put anything in between.")][SerializeField] private int _controllerCameraYInverted = 1;
 
     //General
     [SerializeField] float _cameraSmoothness = 100000;
@@ -42,33 +42,33 @@ public class FirstPersonCamera : MonoBehaviour
 
     #region Jumping, Falling and Ground Detection variables
     [Header("Jumping Settings")]
-    [Range(0, 10)][SerializeField] private float _drag = 1f;
     [Range(0, 50)][SerializeField] private float _jumpStrength = 8f;
-
-    [Range(0, 50)][SerializeField] private float _slideForceOnSlopes = 350f;
-    [Range(0, 100)][SerializeField] private float _momentumAirborneReductionSpeed = 8f;
-    [Range(0, 100)][SerializeField] private float _momentumGroundedReductionSpeed = 50f;
+    [Range(0, 10)][SerializeField] private float _drag = 2f;
 
     private bool _isGrounded;
     private const float _gravity = 9.81f;
     private float _currentlyAppliedGravity;
 
-    RaycastHit _groundStoodOn;
+    private RaycastHit _groundStoodOn;
     private const float _groundRaycastLength = .85f; // 1.8 - (_charaCon.height / 2) - 0.25
     private const float _groundSphereCastRadius = 0.25f;
     private bool _canJump;
     private bool _isJumping;
     private float _jumpCooldown;
     private float _coyoteTime;
-    private const float _coyoteMaxTime = 0.15f;
+    private const float _coyoteMaxTime = 0.3f;
 
     #endregion
 
     #region Movement Variables
     [Header("Movement Settings")]
-    Vector3 _movementInputs;
-    Vector3 _globalMomentum;
-    [Range(0, 100)][SerializeField] float _movementSpeed = 9f;
+    [Range(0, 100)][SerializeField] private float _movementSpeed = 9f;
+    [Range(0, 100)][SerializeField] private float _slideForceOnSlopes = 40f;
+    [Range(0, 100)][SerializeField] private float _airborneFriction = 2f;
+    [Range(0, 100)][SerializeField] private float _groundedFriction = 50f;
+    [Range(0, 100)][SerializeField] private float _slidingFriction = 2f;
+    private Vector3 _movementInputs;
+    private Vector3 _globalMomentum;
     #endregion
 
     private void Awake()
@@ -86,6 +86,13 @@ public class FirstPersonCamera : MonoBehaviour
         _currentlyAppliedGravity = 0;
     }
 
+    //!MISSING
+    //! Not Instantaneous max speed when WASDing
+    //! Slope Behaviour, only when sliding
+    //! Snap when slightly inside ground
+    //! Momentum Conservation when turning?
+    //! Walljump?
+
     private void Update()
     {
         // Cooldowns
@@ -101,6 +108,7 @@ public class FirstPersonCamera : MonoBehaviour
         MoveCameraWithRightStick();
         MoveCameraWithMouse();
 
+        //Ground Spherecast and Storage of its normal
         CheckGround();
 
         //Update Movement Vectors
@@ -134,14 +142,14 @@ public class FirstPersonCamera : MonoBehaviour
             ("Input Velocity:\nx= " + (_movementInputs.x / Time.deltaTime).ToString("F2") +
             "\nz= " + (_movementInputs.z / Time.deltaTime).ToString("F2"));
         }
-        if(_debugGlobalVelocityText)
+        if (_debugGlobalVelocityText)
         {
             _debugGlobalVelocityText.text =
             ("Momentum Velocity:\nx= " + (_globalMomentum.x / Time.deltaTime).ToString("F2") +
             "\ny= " + (_globalMomentum.y / Time.deltaTime).ToString("F2") +
             "\nz= " + (_globalMomentum.z / Time.deltaTime).ToString("F2"));
         }
-        if(_debugGravityText)
+        if (_debugGravityText)
         {
             _debugGravityText.text = ("Gravity:\n   " + _currentlyAppliedGravity);
         }
@@ -270,9 +278,9 @@ public class FirstPersonCamera : MonoBehaviour
         //Decrease Momentum Each Frame slower when airborne and faster when grounded
         float velocityDecreaseRate;
         if (_isGrounded)
-            velocityDecreaseRate = _momentumGroundedReductionSpeed;
+            velocityDecreaseRate = _groundedFriction;
         else
-            velocityDecreaseRate = _momentumAirborneReductionSpeed;
+            velocityDecreaseRate = _airborneFriction;
 
         //Store last frame's direction inside a variable
         var lastFrameXVelocitySign = Mathf.Sign(_globalMomentum.x);
@@ -281,8 +289,8 @@ public class FirstPersonCamera : MonoBehaviour
         _globalMomentum = _globalMomentum.normalized * (_globalMomentum.magnitude - velocityDecreaseRate * Time.deltaTime);
 
         //If last frame's direction was opposite, snap to 0
-        if(Mathf.Sign(_globalMomentum.x) != lastFrameXVelocitySign) _globalMomentum.x = 0;
-        if(Mathf.Sign(_globalMomentum.z) != lastFrameZVelocitySign) _globalMomentum.z = 0;
+        if (Mathf.Sign(_globalMomentum.x) != lastFrameXVelocitySign) _globalMomentum.x = 0;
+        if (Mathf.Sign(_globalMomentum.z) != lastFrameZVelocitySign) _globalMomentum.z = 0;
     }
 
     private void ApplyMovementsToCharacter(Vector3 direction)
