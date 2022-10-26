@@ -4,10 +4,17 @@ using UnityEngine;
 
 public class GameStateManager : MonoBehaviour
 {
+    PlayerInputMap _inputs;
+    bool isFocused;
     float _cooldown = 3f;
     bool _is30fps = false;
     [SerializeField] bool _debugFramerate;
 
+    private void Awake()
+    {
+        _inputs = new PlayerInputMap();
+        _inputs.FirstPersonCamera.Unfocus.started += _ => FocusUnfocus();
+    }
     void Start()
     {
         #region curseurs
@@ -40,4 +47,32 @@ public class GameStateManager : MonoBehaviour
             Application.targetFrameRate = 30;
         }
     }
+
+    void FocusUnfocus()
+    {
+        if (isFocused)
+        {
+            isFocused = false;
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            isFocused = true;
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+    }
+    
+    #region Enable Disable Inputs
+    void OnEnable()
+    {
+        _inputs.Enable();
+    }
+
+    void OnDisable()
+    {
+        _inputs.Disable();
+    }
+    #endregion
 }

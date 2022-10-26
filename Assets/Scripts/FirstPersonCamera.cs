@@ -13,7 +13,9 @@ public class FirstPersonCamera : MonoBehaviour
     PlayerInputMap _inputs;
     CharacterController _charaCon;
     [SerializeField] Transform _head;
-    [SerializeField] TextMeshProUGUI _debugVelocityText;
+    [SerializeField] TextMeshProUGUI _debugInputVelocityText;
+    [SerializeField] TextMeshProUGUI _debugGlobalVelocityText;
+    [SerializeField] TextMeshProUGUI _debugGravityText;
     [SerializeField] TextMeshProUGUI _debugGroundedText;
     #endregion
 
@@ -43,15 +45,17 @@ public class FirstPersonCamera : MonoBehaviour
     [Range(0, 10)][SerializeField] private float _drag = 1f;
     [Range(0, 50)][SerializeField] private float _jumpStrength = 8f;
 
-    [Range(0, 50)][SerializeField] private float _slideForceOnSlopes = 20f;
-    [Range(0, 50)][SerializeField] private float _momentumAirborneReductionSpeed = 15f;
-    [Range(0, 50)][SerializeField] private float _momentumReductionSpeed = 25f;
+    [Range(0, 50)][SerializeField] private float _slideForceOnSlopes = 350f;
+    [Range(0, 100)][SerializeField] private float _momentumAirborneReductionSpeed = 8f;
+    [Range(0, 100)][SerializeField] private float _momentumGroundedReductionSpeed = 50f;
 
     private bool _isGrounded;
     private const float _gravity = 9.81f;
+    private float _currentlyAppliedGravity;
 
     RaycastHit _groundStoodOn;
-    private const float _groundRaycastLength = .7f; // _charaCon.height / 2 -0.5f
+    private const float _groundRaycastLength = .85f; // 1.8 - (_charaCon.height / 2) - 0.25
+    private const float _groundSphereCastRadius = 0.25f;
     private bool _canJump;
     private bool _isJumping;
     private float _jumpCooldown;
@@ -79,6 +83,7 @@ public class FirstPersonCamera : MonoBehaviour
         transform.rotation = Quaternion.identity;
         _movementInputs = Vector2.zero;
         _globalMomentum = Vector3.zero;
+        _currentlyAppliedGravity = 0;
     }
 
     private void Update()
@@ -100,6 +105,7 @@ public class FirstPersonCamera : MonoBehaviour
 
         //Update Movement Vectors
         _movementInputs = MakeDirectionCameraRelative(_inputs.FirstPersonCamera.Move.ReadValue<Vector2>());
+        _movementInputs *= Time.deltaTime * _movementSpeed;
         UpdateGlobalMomentum();
 
         //ApplyGravity
@@ -109,7 +115,7 @@ public class FirstPersonCamera : MonoBehaviour
         UpdateDebugTexts();
 
         //Apply Movement
-        ApplyMovementsToCharacter(_globalMomentum * Time.deltaTime + _movementInputs * Time.deltaTime * _movementSpeed);
+        ApplyMovementsToCharacter((_globalMomentum * Time.deltaTime) + (_movementInputs) + (Vector3.up * _currentlyAppliedGravity * Time.deltaTime));
 
     }
 
@@ -117,16 +123,36 @@ public class FirstPersonCamera : MonoBehaviour
     private void UpdateDebugTexts()
     {
 #if UNITY_EDITOR
-        _debugGroundedText.text = ("Is Grounded: " + _isGrounded);
-        if (_debugVelocityText)
-            _debugVelocityText.text = ("Input Velocity:\nx=" + _movementInputs.x.ToString("F2") + "\nz=" + _movementInputs.z.ToString("F2") + "\n\nMomentum Velocity:\nx=" + _globalMomentum.x.ToString("F2") + "\ny=" + _globalMomentum.y.ToString("F2") + "\nz=" + _globalMomentum.z.ToString("F2"));
+        if (_debugGroundedText)
+        {
+            _debugGroundedText.text = ("Is Grounded: " + _isGrounded);
+        }
+
+        if (_debugInputVelocityText)
+        {
+            _debugInputVelocityText.text =
+            ("Input Velocity:\nx= " + (_movementInputs.x / Time.deltaTime).ToString("F2") +
+            "\nz= " + (_movementInputs.z / Time.deltaTime).ToString("F2"));
+        }
+        if(_debugGlobalVelocityText)
+        {
+            _debugGlobalVelocityText.text =
+            ("Momentum Velocity:\nx= " + (_globalMomentum.x / Time.deltaTime).ToString("F2") +
+            "\ny= " + (_globalMomentum.y / Time.deltaTime).ToString("F2") +
+            "\nz= " + (_globalMomentum.z / Time.deltaTime).ToString("F2"));
+        }
+        if(_debugGravityText)
+        {
+            _debugGravityText.text = ("Gravity:\n   " + _currentlyAppliedGravity);
+        }
 #endif
     }
     void OnDrawGizmos()
     {
 #if UNITY_EDITOR
-        Debug.DrawLine(transform.position, transform.position - transform.up * _groundRaycastLength, Color.green, 0f, false);
-        Gizmos.DrawSphere(_groundStoodOn.point + transform.up * 0.26f, 0.26f);
+        Gizmos.color = Color.blue;
+        Debug.DrawLine(transform.position, transform.position - transform.up * _groundRaycastLength, Color.blue, 0f, false);
+        Gizmos.DrawSphere(_groundStoodOn.point + transform.up * _groundSphereCastRadius, _groundSphereCastRadius);
 
 #endif
     }
@@ -164,13 +190,12 @@ public class FirstPersonCamera : MonoBehaviour
     #endregion
 
     #region Ground Detection Functions
-
     private void CheckGround()
     {
         if (Physics.SphereCast(transform.position, _charaCon.radius + 0.01f, -transform.up, out _groundStoodOn, _groundRaycastLength))
         {
             if (!_isGrounded && _canJump)
-                if (Vector3.Dot(transform.up, _groundStoodOn.normal) < Mathf.InverseLerp(90, 0, _charaCon.slopeLimit)) //! Suboptimal
+                if (Vector3.Angle(transform.up, _groundStoodOn.normal) > _charaCon.slopeLimit)
                 {
                     _globalMomentum += (Vector3.down + _groundStoodOn.normal).normalized * _slideForceOnSlopes * Time.deltaTime;
                 }
@@ -186,6 +211,7 @@ public class FirstPersonCamera : MonoBehaviour
 
     private void Land()
     {
+        _currentlyAppliedGravity = 0;
         _globalMomentum.y = 0;
         _isGrounded = true;
         _isJumping = false;
@@ -206,7 +232,7 @@ public class FirstPersonCamera : MonoBehaviour
         if (_isGrounded || _coyoteTime > 0f && !_isJumping)
         {
             _isGrounded = false;
-            _globalMomentum.y += _jumpStrength;
+            _currentlyAppliedGravity += _jumpStrength;
             _isJumping = true;
             _canJump = false;
             _jumpCooldown = 0.1f; //min time allowed between two jumps, to avoid mashing jump up slopes and so we dont check for a ground before the character actually jumps.
@@ -215,7 +241,7 @@ public class FirstPersonCamera : MonoBehaviour
 
     private void ApplyGravity()
     {
-        _globalMomentum.y -= _gravity * _drag * Time.deltaTime;
+        _currentlyAppliedGravity -= _gravity * _drag * Time.deltaTime;
     }
     #endregion
 
@@ -236,32 +262,27 @@ public class FirstPersonCamera : MonoBehaviour
         return (forwardRelative + rightRelative);
     }
 
-    void UpdateGlobalMomentum()
+    private void UpdateGlobalMomentum()
     {
         //Add Input Vector to Momentum
-        _globalMomentum += _movementInputs * Time.deltaTime * _movementSpeed;
+        _globalMomentum += _movementInputs;
 
+        //Decrease Momentum Each Frame slower when airborne and faster when grounded
         float velocityDecreaseRate;
-
         if (_isGrounded)
-            velocityDecreaseRate = _momentumReductionSpeed;
+            velocityDecreaseRate = _momentumGroundedReductionSpeed;
         else
             velocityDecreaseRate = _momentumAirborneReductionSpeed;
 
-        //DecreaseMomentum Each Frame slower when airborne and faster when grounded, round to 0 when close so it doesnt jiggle around
-        if (_globalMomentum.x < -0.01f)
-            _globalMomentum.x += velocityDecreaseRate * Time.deltaTime;
-        else if (_globalMomentum.x > 0.01f)
-            _globalMomentum.x -= velocityDecreaseRate * Time.deltaTime;
-        else
-            _globalMomentum.x = 0;
+        //Store last frame's direction inside a variable
+        var lastFrameXVelocitySign = Mathf.Sign(_globalMomentum.x);
+        var lastFrameZVelocitySign = Mathf.Sign(_globalMomentum.z);
 
-        if (_globalMomentum.z < -0.01f)
-            _globalMomentum.z += velocityDecreaseRate * Time.deltaTime;
-        else if (_globalMomentum.z > 0.01f)
-            _globalMomentum.z -= velocityDecreaseRate * Time.deltaTime;
-        else
-            _globalMomentum.z = 0;
+        _globalMomentum = _globalMomentum.normalized * (_globalMomentum.magnitude - velocityDecreaseRate * Time.deltaTime);
+
+        //If last frame's direction was opposite, snap to 0
+        if(Mathf.Sign(_globalMomentum.x) != lastFrameXVelocitySign) _globalMomentum.x = 0;
+        if(Mathf.Sign(_globalMomentum.z) != lastFrameZVelocitySign) _globalMomentum.z = 0;
     }
 
     private void ApplyMovementsToCharacter(Vector3 direction)
@@ -269,7 +290,7 @@ public class FirstPersonCamera : MonoBehaviour
         //Move along slopes
         if (_isGrounded)
         {
-            if (Vector3.Dot(transform.up, _groundStoodOn.normal) > Mathf.InverseLerp(90, 0, _charaCon.slopeLimit)) //! Suboptimal, lerp in awake instead when we sure we aint gon be changing slopelimit no more
+            if (Vector3.Angle(transform.up, _groundStoodOn.normal) < _charaCon.slopeLimit)
                 direction = (direction - (Vector3.Dot(direction, _groundStoodOn.normal)) * _groundStoodOn.normal);
         }
 

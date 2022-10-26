@@ -71,6 +71,15 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Unfocus"",
+                    ""type"": ""Button"",
+                    ""id"": ""708f576c-3aa6-48e7-880f-1674575f9ffc"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -194,6 +203,17 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b84646fc-17be-4ce1-9c00-4534fcdc3a46"",
+                    ""path"": ""<Mouse>/middleButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard Mouse"",
+                    ""action"": ""Unfocus"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -245,6 +265,7 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
         m_FirstPersonCamera_RotateY = m_FirstPersonCamera.FindAction("RotateY", throwIfNotFound: true);
         m_FirstPersonCamera_Move = m_FirstPersonCamera.FindAction("Move", throwIfNotFound: true);
         m_FirstPersonCamera_Jump = m_FirstPersonCamera.FindAction("Jump", throwIfNotFound: true);
+        m_FirstPersonCamera_Unfocus = m_FirstPersonCamera.FindAction("Unfocus", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -309,6 +330,7 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
     private readonly InputAction m_FirstPersonCamera_RotateY;
     private readonly InputAction m_FirstPersonCamera_Move;
     private readonly InputAction m_FirstPersonCamera_Jump;
+    private readonly InputAction m_FirstPersonCamera_Unfocus;
     public struct FirstPersonCameraActions
     {
         private @PlayerInputMap m_Wrapper;
@@ -318,6 +340,7 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
         public InputAction @RotateY => m_Wrapper.m_FirstPersonCamera_RotateY;
         public InputAction @Move => m_Wrapper.m_FirstPersonCamera_Move;
         public InputAction @Jump => m_Wrapper.m_FirstPersonCamera_Jump;
+        public InputAction @Unfocus => m_Wrapper.m_FirstPersonCamera_Unfocus;
         public InputActionMap Get() { return m_Wrapper.m_FirstPersonCamera; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -342,6 +365,9 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                 @Jump.started -= m_Wrapper.m_FirstPersonCameraActionsCallbackInterface.OnJump;
                 @Jump.performed -= m_Wrapper.m_FirstPersonCameraActionsCallbackInterface.OnJump;
                 @Jump.canceled -= m_Wrapper.m_FirstPersonCameraActionsCallbackInterface.OnJump;
+                @Unfocus.started -= m_Wrapper.m_FirstPersonCameraActionsCallbackInterface.OnUnfocus;
+                @Unfocus.performed -= m_Wrapper.m_FirstPersonCameraActionsCallbackInterface.OnUnfocus;
+                @Unfocus.canceled -= m_Wrapper.m_FirstPersonCameraActionsCallbackInterface.OnUnfocus;
             }
             m_Wrapper.m_FirstPersonCameraActionsCallbackInterface = instance;
             if (instance != null)
@@ -361,6 +387,9 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
+                @Unfocus.started += instance.OnUnfocus;
+                @Unfocus.performed += instance.OnUnfocus;
+                @Unfocus.canceled += instance.OnUnfocus;
             }
         }
     }
@@ -390,5 +419,6 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
         void OnRotateY(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnUnfocus(InputAction.CallbackContext context);
     }
 }
