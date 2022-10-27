@@ -6,40 +6,32 @@ public class GameStateManager : MonoBehaviour
 {
     PlayerInputMap _inputs;
     bool isFocused;
-    float _cooldown = 3f;
-    bool _is30fps = false;
-    [SerializeField] bool _debugFramerate;
+    bool _is30fps;
 
     private void Awake()
     {
         _inputs = new PlayerInputMap();
-        _inputs.FirstPersonCamera.Unfocus.started += _ => FocusUnfocus();
+#if UNITY_EDITOR
+        _inputs.Debugging.Unfocus.started += _ => FocusUnfocus();
+        _inputs.Debugging.ChangeFramerate.started += _ => ChangeFramerate();
+#endif
     }
     void Start()
     {
-        #region curseurs
+        // curseurs
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        #endregion
-    }
 
-    void Update()
-    {
-        if (_debugFramerate)
-        {
-            _cooldown -= Time.deltaTime;
-            if (_cooldown <= 0)
-                ChangeFramerate();
-        }
+        //Framerate
+        _is30fps = false;
     }
 
     void ChangeFramerate()
     {
-        _cooldown = 3f;
         if (_is30fps)
         {
             _is30fps = false;
-            Application.targetFrameRate = 180;
+            Application.targetFrameRate = 144;
         }
         else
         {
@@ -63,7 +55,7 @@ public class GameStateManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
         }
     }
-    
+
     #region Enable Disable Inputs
     void OnEnable()
     {

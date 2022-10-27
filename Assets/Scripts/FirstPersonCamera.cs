@@ -63,12 +63,19 @@ public class FirstPersonCamera : MonoBehaviour
     #region Movement Variables
     [Header("Movement Settings")]
     [Range(0, 100)][SerializeField] private float _movementSpeed = 9f;
+    [Range(0, 10)][SerializeField] private float _movementEasingSpeed;
+    [Range(0, 1)][SerializeField] private float _movementEaseInMaxResetTime;
+    [Range(0, 1)][SerializeField] private float _movementEaseOutMaxResetTime;
     [Range(0, 100)][SerializeField] private float _slideForceOnSlopes = 40f;
-    [Range(0, 100)][SerializeField] private float _airborneFriction = 2f;
+    [Range(0, 100)][SerializeField] private float _airborneFriction = 8f;
     [Range(0, 100)][SerializeField] private float _groundedFriction = 50f;
-    [Range(0, 100)][SerializeField] private float _slidingFriction = 2f;
-    private Vector3 _movementInputs;
+    [Range(0, 100)][SerializeField] private float _slidingFriction = 5f;
+    private Vector3 _movementInputs; // X is Left-Right and Z is Backward-Forward
     private Vector3 _globalMomentum;
+    private float _movementEasing;
+    private float _movementEaseInResetTime;
+    private float _movementEaseOutResetTime;
+    private bool _isPressingADirection;
     #endregion
 
     private void Awake()
@@ -84,6 +91,7 @@ public class FirstPersonCamera : MonoBehaviour
         _movementInputs = Vector2.zero;
         _globalMomentum = Vector3.zero;
         _currentlyAppliedGravity = 0;
+        _movementEasing = 0;
     }
 
     //!MISSING
@@ -95,7 +103,7 @@ public class FirstPersonCamera : MonoBehaviour
 
     private void Update()
     {
-        // Cooldowns
+        //Cooldowns
         if (_coyoteTime > 0f)
             _coyoteTime -= Time.deltaTime;
         if (!_canJump)
@@ -112,8 +120,7 @@ public class FirstPersonCamera : MonoBehaviour
         CheckGround();
 
         //Update Movement Vectors
-        _movementInputs = MakeDirectionCameraRelative(_inputs.FirstPersonCamera.Move.ReadValue<Vector2>());
-        _movementInputs *= Time.deltaTime * _movementSpeed;
+        UpdateMovement();
         UpdateGlobalMomentum();
 
         //ApplyGravity
@@ -124,7 +131,6 @@ public class FirstPersonCamera : MonoBehaviour
 
         //Apply Movement
         ApplyMovementsToCharacter((_globalMomentum * Time.deltaTime) + (_movementInputs) + (Vector3.up * _currentlyAppliedGravity * Time.deltaTime));
-
     }
 
     #region Debugs
@@ -140,7 +146,8 @@ public class FirstPersonCamera : MonoBehaviour
         {
             _debugInputVelocityText.text =
             ("Input Velocity:\nx= " + (_movementInputs.x / Time.deltaTime).ToString("F2") +
-            "\nz= " + (_movementInputs.z / Time.deltaTime).ToString("F2"));
+            "\nz= " + (_movementInputs.z / Time.deltaTime).ToString("F2") + 
+            "\n\n Acceleration= " + _movementEasing.ToString("F2"));
         }
         if (_debugGlobalVelocityText)
         {
@@ -268,6 +275,34 @@ public class FirstPersonCamera : MonoBehaviour
         Vector3 forwardRelative = inputDirection.y * forward;
 
         return (forwardRelative + rightRelative);
+    }
+
+    private void UpdateMovement()
+    {
+        //Register movement input
+        Vector3 _newMovementInputs = MakeDirectionCameraRelative(_inputs.FirstPersonCamera.Move.ReadValue<Vector2>());
+        _isPressingADirection = _newMovementInputs.x != 0 || _newMovementInputs.z != 0;
+        if (_isPressingADirection) _movementInputs = _newMovementInputs;
+        _movementInputs *= Time.deltaTime * _movementSpeed;
+
+        HandleMovementEasing();
+    }
+
+    private void HandleMovementEasing()
+    {
+        if (!_isPressingADirection)
+        {
+            if (_movementEasing > 0f)
+                _movementEasing = Mathf.Clamp01(_movementEasing -= Time.deltaTime / _movementEasingSpeed);
+        }
+
+        if (_isPressingADirection)
+        {
+            _movementEaseInResetTime = _movementEaseInMaxResetTime;
+            if (_movementEasing < 1f)
+                _movementEasing = Mathf.Clamp01(_movementEasing += Time.deltaTime / _movementEasingSpeed);
+        }
+        _movementInputs *= _movementEasing;
     }
 
     private void UpdateGlobalMomentum()

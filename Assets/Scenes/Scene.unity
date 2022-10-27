@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 3194.5715, g: 2955.5571, b: 3085.3203, a: 1}
+  m_IndirectSpecularColor: {r: 2336.9048, g: 2109.7632, b: 2270.8926, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1670,7 +1670,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 550.09, y: -0.28}
+  m_SizeDelta: {x: 550.09, y: 76.51}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &999543556
 MonoBehaviour:
@@ -1696,7 +1696,12 @@ MonoBehaviour:
 
     x=0
 
-    z=0'
+    z=0
+
+
+    Acceleration= 0
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fd99addec75aca046a366e7fa5291529, type: 2}
   m_sharedMaterial: {fileID: 7523974611133944435, guid: fd99addec75aca046a366e7fa5291529,
@@ -3007,8 +3012,11 @@ MonoBehaviour:
   _jumpStrength: 10
   _drag: 2
   _movementSpeed: 8
+  _movementEasingSpeed: 0.2
+  _movementEaseInMaxResetTime: 0.2
+  _movementEaseOutMaxResetTime: 0.2
   _slideForceOnSlopes: 40
-  _airborneFriction: 2
+  _airborneFriction: 8
   _groundedFriction: 50
   _slidingFriction: 2
 --- !u!143 &1685271680
@@ -3873,7 +3881,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 910b37a7c1900c749b72f13024736180, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _debugFramerate: 1
 --- !u!4 &2007368074
 Transform:
   m_ObjectHideFlags: 0
