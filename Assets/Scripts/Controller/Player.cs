@@ -6,7 +6,7 @@ using TMPro;
 using UnityEditor;
 using UnityEngine.InputSystem;
 
-public class FirstPersonCamera : MonoBehaviour
+public class Player : MonoBehaviour
 {
     #region References
     [Header("References")]
@@ -25,16 +25,21 @@ public class FirstPersonCamera : MonoBehaviour
 
     [Header("Camera Settings")]
     //Mouse
-    [Range(0.001f, 2)][SerializeField] private float _mouseSensitivityX = 0.1f;
-    [Range(0.001f, 2)][SerializeField] private float _mouseSensitivityY = 0.1f;
-    [Range(-1, 1)][Tooltip("1 is Normal, -1 is Inverted, please don't put anything in between.")][SerializeField] private int _mouseXInverted = 1;
-    [Range(-1, 1)][Tooltip("1 is Normal, -1 is Inverted, please don't put anything in between.")][SerializeField] private int _mouseYInverted = 1;
+    [Range(0.1f, 100)][SerializeField] private float _mouseSensitivityX = 10f;
+    [Range(0.1f, 100)][SerializeField] private float _mouseSensitivityY = 10f;
+    [SerializeField] private bool _mouseXInverted = false;
+    [SerializeField] private bool _mouseYInverted = false;
 
     //Joysticks
-    [Range(0.1f, 100)][SerializeField] private float _stickSensitivityX = 15f;
-    [Range(0.1f, 100)][SerializeField] private float _stickSensitivityY = 15f;
-    [Range(-1, 1)][Tooltip("1 is Normal, -1 is Inverted, please don't put anything in between.")][SerializeField] private int _controllerCameraXInverted = 1;
-    [Range(-1, 1)][Tooltip("1 is Normal, -1 is Inverted, please don't put anything in between.")][SerializeField] private int _controllerCameraYInverted = 1;
+    [Range(1f, 100)][SerializeField] private float _stickSensitivityX = 15f;
+    [Range(1f, 100)][SerializeField] private float _stickSensitivityY = 15f;
+    [SerializeField] private bool _controllerCameraXInverted = false;
+    [SerializeField] private bool _controllerCameraYInverted = false;
+
+    int _mouseXInvertedValue;
+    int _mouseYInvertedValue;
+    int _controllerCameraXInvertedValue;
+    int _controllerCameraYInvertedValue;
 
     //General
     [SerializeField] float _cameraSmoothness = 100000;
@@ -42,7 +47,7 @@ public class FirstPersonCamera : MonoBehaviour
 
     #region Jumping, Falling and Ground Detection variables
     [Header("Jumping Settings")]
-    [Range(0, 50)][SerializeField] private float _jumpStrength = 8f;
+    [Range(0, 50)][SerializeField] private float _jumpStrength = 10f;
     [Range(0, 10)][SerializeField] private float _drag = 2f;
 
     private bool _isGrounded;
@@ -62,19 +67,15 @@ public class FirstPersonCamera : MonoBehaviour
 
     #region Movement Variables
     [Header("Movement Settings")]
-    [Range(0, 100)][SerializeField] private float _movementSpeed = 9f;
-    [Range(0, 10)][SerializeField] private float _movementEasingSpeed;
-    [Range(0, 1)][SerializeField] private float _movementEaseInMaxResetTime;
-    [Range(0, 1)][SerializeField] private float _movementEaseOutMaxResetTime;
+    [Range(0, 20)][SerializeField] private float _movementSpeed = 9f;
+    [Range(0, 1)][SerializeField] private float _movementEasingSpeed = 0.1f;
     [Range(0, 100)][SerializeField] private float _slideForceOnSlopes = 40f;
     [Range(0, 100)][SerializeField] private float _airborneFriction = 8f;
     [Range(0, 100)][SerializeField] private float _groundedFriction = 50f;
-    [Range(0, 100)][SerializeField] private float _slidingFriction = 5f;
+    //[Range(0, 100)][SerializeField] private float _slidingFriction = 5f;
     private Vector3 _movementInputs; // X is Left-Right and Z is Backward-Forward
     private Vector3 _globalMomentum;
     private float _movementEasing;
-    private float _movementEaseInResetTime;
-    private float _movementEaseOutResetTime;
     private bool _isPressingADirection;
     #endregion
 
@@ -92,6 +93,7 @@ public class FirstPersonCamera : MonoBehaviour
         _globalMomentum = Vector3.zero;
         _currentlyAppliedGravity = 0;
         _movementEasing = 0;
+        SetCameraInvert();
     }
 
     //!MISSING
@@ -145,20 +147,20 @@ public class FirstPersonCamera : MonoBehaviour
         if (_debugInputVelocityText)
         {
             _debugInputVelocityText.text =
-            ("Input Velocity:\nx= " + (_movementInputs.x / Time.deltaTime).ToString("F2") +
-            "\nz= " + (_movementInputs.z / Time.deltaTime).ToString("F2") + 
-            "\n\n Acceleration= " + _movementEasing.ToString("F2"));
+            ("Input Velocity:\nx= " + (_movementInputs.x / Time.deltaTime).ToString("F1") +
+            "\nz= " + (_movementInputs.z / Time.deltaTime).ToString("F1") +
+            "\n\n Acceleration= " + _movementEasing.ToString("F1"));
         }
         if (_debugGlobalVelocityText)
         {
             _debugGlobalVelocityText.text =
-            ("Momentum Velocity:\nx= " + (_globalMomentum.x / Time.deltaTime).ToString("F2") +
-            "\ny= " + (_globalMomentum.y / Time.deltaTime).ToString("F2") +
-            "\nz= " + (_globalMomentum.z / Time.deltaTime).ToString("F2"));
+            ("Momentum Velocity:\nx= " + (_globalMomentum.x / Time.deltaTime).ToString("F1") +
+            "\ny= " + (_globalMomentum.y / Time.deltaTime).ToString("F1") +
+            "\nz= " + (_globalMomentum.z / Time.deltaTime).ToString("F1"));
         }
         if (_debugGravityText)
         {
-            _debugGravityText.text = ("Gravity:\n   " + _currentlyAppliedGravity);
+            _debugGravityText.text = ("Gravity:\n   " + _currentlyAppliedGravity.ToString("F1"));
         }
 #endif
     }
@@ -174,12 +176,27 @@ public class FirstPersonCamera : MonoBehaviour
     #endregion
 
     #region Camera Functions
+    private void SetCameraInvert()
+    {
+        if (_mouseXInverted) _mouseXInvertedValue = -1;
+        else _mouseXInvertedValue = 1;
+
+        if (_mouseYInverted) _mouseYInvertedValue = -1;
+        else _mouseYInvertedValue = 1;
+
+        if (_controllerCameraXInverted) _controllerCameraXInvertedValue = -1;
+        else _controllerCameraXInvertedValue = 1;
+
+        if (_controllerCameraYInverted) _controllerCameraYInvertedValue = -1;
+        else _controllerCameraYInvertedValue = 1;
+    }
+
     private void MoveCameraWithMouse()
     {
         Vector2 mouseMovement = _inputs.FirstPersonCamera.Rotate.ReadValue<Vector2>()/* * Time.deltaTime */;
         _cameraTargetYRotation = Mathf.Repeat(_cameraTargetYRotation, 360);
-        _cameraTargetYRotation += mouseMovement.x * _mouseSensitivityX * _mouseXInverted;
-        _cameraTargetXRotation -= mouseMovement.y * _mouseSensitivityY * _mouseYInverted;
+        _cameraTargetYRotation += mouseMovement.x * _mouseSensitivityX * 0.01f * _mouseXInvertedValue;
+        _cameraTargetXRotation -= mouseMovement.y * _mouseSensitivityY * 0.01f * _mouseYInvertedValue;
 
         _cameraTargetXRotation = Mathf.Clamp(_cameraTargetXRotation, -85, 85);
 
@@ -193,8 +210,8 @@ public class FirstPersonCamera : MonoBehaviour
         float RStickMovementX = _inputs.FirstPersonCamera.RotateX.ReadValue<float>() * Time.deltaTime;
         float RStickMovementY = _inputs.FirstPersonCamera.RotateY.ReadValue<float>() * Time.deltaTime;
         _cameraTargetYRotation = Mathf.Repeat(_cameraTargetYRotation, 360);
-        _cameraTargetYRotation += RStickMovementX * _stickSensitivityX * 10 * _controllerCameraXInverted;
-        _cameraTargetXRotation -= RStickMovementY * _stickSensitivityY * 10 * _controllerCameraYInverted;
+        _cameraTargetYRotation += RStickMovementX * _stickSensitivityX * 10 * _controllerCameraXInvertedValue;
+        _cameraTargetXRotation -= RStickMovementY * _stickSensitivityY * 10 * _controllerCameraYInvertedValue;
 
         _cameraTargetXRotation = Mathf.Clamp(_cameraTargetXRotation, -85, 85f);
 
@@ -298,7 +315,6 @@ public class FirstPersonCamera : MonoBehaviour
 
         if (_isPressingADirection)
         {
-            _movementEaseInResetTime = _movementEaseInMaxResetTime;
             if (_movementEasing < 1f)
                 _movementEasing = Mathf.Clamp01(_movementEasing += Time.deltaTime / _movementEasingSpeed);
         }
