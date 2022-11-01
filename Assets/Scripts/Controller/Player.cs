@@ -70,6 +70,7 @@ public class Player : MonoBehaviour
     [Header("Movement Settings")]
     [Range(0, 20)][SerializeField] private float _movementSpeed = 9f;
     [Range(0, 1)][SerializeField] private float _movementAccelerationSpeed = 0.0666f; //Approx 4 frames
+    [Range(0, 1)][SerializeField] private float _movementDecelerationSpeed = 0.0666f; //Approx 4 frames
     [Range(0, 100)][SerializeField] private float _slideForceOnSlopes = 40f;
     [Range(0, 100)][Tooltip("if lower than movement speed, you will accelerate when airborne")][SerializeField] private float _airborneFriction = 9f;
     [Range(0, 100)][SerializeField] private float _groundedFriction = 50f;
@@ -321,7 +322,7 @@ public class Player : MonoBehaviour
     private void HandleMovementAcceleration()
     {
         if (!_isPressingADirection)
-            _movementAcceleration = Mathf.Clamp01(_movementAcceleration -= Time.deltaTime / _movementAccelerationSpeed);
+            _movementAcceleration = Mathf.Clamp01(_movementAcceleration -= Time.deltaTime / _movementDecelerationSpeed);
 
         else
             _movementAcceleration = Mathf.Clamp01(_movementAcceleration += Time.deltaTime / _movementAccelerationSpeed);
