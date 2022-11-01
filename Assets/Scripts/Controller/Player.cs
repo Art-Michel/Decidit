@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     [SerializeField] TextMeshProUGUI _debugGlobalVelocityText;
     [SerializeField] TextMeshProUGUI _debugGravityText;
     [SerializeField] TextMeshProUGUI _debugGroundedText;
+    [SerializeField] TextMeshProUGUI _debugSpeedText;
     [SerializeField] Transform _head;
     PlayerInputMap _inputs;
     CharacterController _charaCon;
@@ -68,15 +69,18 @@ public class Player : MonoBehaviour
     #region Movement Variables
     [Header("Movement Settings")]
     [Range(0, 20)][SerializeField] private float _movementSpeed = 9f;
-    [Range(0, 1)][SerializeField] private float _movementEasingSpeed = 0.1f;
+    [Range(0, 1)][SerializeField] private float _movementAccelerationSpeed = 0.0666f; //Approx 4 frames
     [Range(0, 100)][SerializeField] private float _slideForceOnSlopes = 40f;
-    [Range(0, 100)][SerializeField] private float _airborneFriction = 8f;
+    [Range(0, 100)][Tooltip("if lower than movement speed, you will accelerate when airborne")][SerializeField] private float _airborneFriction = 9f;
     [Range(0, 100)][SerializeField] private float _groundedFriction = 50f;
     //[Range(0, 100)][SerializeField] private float _slidingFriction = 5f;
     private Vector3 _movementInputs; // X is Left-Right and Z is Backward-Forward
+    private Vector3 _lastFrameMovementInputs;
     private Vector3 _globalMomentum;
-    private float _movementEasing;
+    private float _movementAcceleration;
     private bool _isPressingADirection;
+
+    private Vector3 _finalMovement;
     #endregion
 
     private void Awake()
@@ -92,16 +96,18 @@ public class Player : MonoBehaviour
         _movementInputs = Vector2.zero;
         _globalMomentum = Vector3.zero;
         _currentlyAppliedGravity = 0;
-        _movementEasing = 0;
+        _movementAcceleration = 0;
         SetCameraInvert();
     }
 
     //!MISSING
-    //! Not Instantaneous max speed when WASDing
-    //! Slope Behaviour, only when sliding
-    //! Snap when slightly inside ground
-    //! Momentum Conservation when turning?
-    //! Walljump?
+    //* DONE // Movement Acceleration when inputting a direction
+    //* DONE // Movement Deceleration when not inputting a direction anymore
+    //TODO FIRST // Remove spherecast and just use charactercontroller.isgrounded
+    //TODO // Stop being slower when going up and down slopes
+    //TODO // Gain speed up steep slopes only when sliding
+    //TODO // Snap when slightly inside ground MAY NOT BE NEEDED ONCE SPHERECAST IS REMOVED
+    //? Walljump?
 
     private void Update()
     {
@@ -125,14 +131,17 @@ public class Player : MonoBehaviour
         UpdateMovement();
         UpdateGlobalMomentum();
 
-        //ApplyGravity
+        //Gravity
         if (!_isGrounded) ApplyGravity();
 
-        //Debug Stuff
+        //Final Movement Formula
+        _finalMovement = (_globalMomentum * Time.deltaTime) + (_movementInputs) + (Vector3.up * _currentlyAppliedGravity * Time.deltaTime);
+
+        //Debug Values on screen
         UpdateDebugTexts();
 
         //Apply Movement
-        ApplyMovementsToCharacter((_globalMomentum * Time.deltaTime) + (_movementInputs) + (Vector3.up * _currentlyAppliedGravity * Time.deltaTime));
+        ApplyMovementsToCharacter(_finalMovement);
     }
 
     #region Debugs
@@ -140,30 +149,29 @@ public class Player : MonoBehaviour
     {
 #if UNITY_EDITOR
         if (_debugGroundedText)
-        {
             _debugGroundedText.text = ("Is Grounded: " + _isGrounded);
-        }
 
         if (_debugInputVelocityText)
-        {
             _debugInputVelocityText.text =
             ("Input Velocity:\nx= " + (_movementInputs.x / Time.deltaTime).ToString("F1") +
             "\nz= " + (_movementInputs.z / Time.deltaTime).ToString("F1") +
-            "\n\n Acceleration= " + _movementEasing.ToString("F1"));
-        }
+            "\n\n Acceleration:\n  " + _movementAcceleration.ToString("F1"));
+
         if (_debugGlobalVelocityText)
-        {
             _debugGlobalVelocityText.text =
-            ("Momentum Velocity:\nx= " + (_globalMomentum.x / Time.deltaTime).ToString("F1") +
-            "\ny= " + (_globalMomentum.y / Time.deltaTime).ToString("F1") +
-            "\nz= " + (_globalMomentum.z / Time.deltaTime).ToString("F1"));
-        }
+            ("Momentum Velocity:\nx= " + (_globalMomentum.x).ToString("F1") +
+            "\ny= " + (_globalMomentum.y).ToString("F1") +
+            "\nz= " + (_globalMomentum.z).ToString("F1"));
+
         if (_debugGravityText)
-        {
             _debugGravityText.text = ("Gravity:\n   " + _currentlyAppliedGravity.ToString("F1"));
-        }
+
+        if (_debugSpeedText)
+            _debugSpeedText.text = ("Total Speed:\n   " + (_finalMovement.magnitude / Time.deltaTime).ToString("F3"));
+
 #endif
     }
+
     void OnDrawGizmos()
     {
 #if UNITY_EDITOR
@@ -299,26 +307,26 @@ public class Player : MonoBehaviour
         //Register movement input
         Vector3 _newMovementInputs = MakeDirectionCameraRelative(_inputs.FirstPersonCamera.Move.ReadValue<Vector2>());
         _isPressingADirection = _newMovementInputs.x != 0 || _newMovementInputs.z != 0;
-        if (_isPressingADirection) _movementInputs = _newMovementInputs;
+        if (_isPressingADirection)
+            _movementInputs = _newMovementInputs;
+        else
+            _movementInputs = _lastFrameMovementInputs;
+
+        _lastFrameMovementInputs = _movementInputs;
         _movementInputs *= Time.deltaTime * _movementSpeed;
 
-        HandleMovementEasing();
+        HandleMovementAcceleration();
     }
 
-    private void HandleMovementEasing()
+    private void HandleMovementAcceleration()
     {
         if (!_isPressingADirection)
-        {
-            if (_movementEasing > 0f)
-                _movementEasing = Mathf.Clamp01(_movementEasing -= Time.deltaTime / _movementEasingSpeed);
-        }
+            _movementAcceleration = Mathf.Clamp01(_movementAcceleration -= Time.deltaTime / _movementAccelerationSpeed);
 
-        if (_isPressingADirection)
-        {
-            if (_movementEasing < 1f)
-                _movementEasing = Mathf.Clamp01(_movementEasing += Time.deltaTime / _movementEasingSpeed);
-        }
-        _movementInputs *= _movementEasing;
+        else
+            _movementAcceleration = Mathf.Clamp01(_movementAcceleration += Time.deltaTime / _movementAccelerationSpeed);
+
+        _movementInputs *= _movementAcceleration;
     }
 
     private void UpdateGlobalMomentum()
