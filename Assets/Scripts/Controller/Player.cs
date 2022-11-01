@@ -74,7 +74,8 @@ public class Player : MonoBehaviour
     [Range(0, 100)][SerializeField] private float _slideForceOnSlopes = 40f;
     [Range(0, 100)][Tooltip("if lower than movement speed, you will accelerate when airborne")][SerializeField] private float _airborneFriction = 9f;
     [Range(0, 100)][SerializeField] private float _groundedFriction = 50f;
-    //[Range(0, 100)][SerializeField] private float _slidingFriction = 5f;
+    //// ADD LATER [Range(0, 100)][SerializeField] private float _slidingFriction = 5f;
+
     private Vector3 _movementInputs; // X is Left-Right and Z is Backward-Forward
     private Vector3 _lastFrameMovementInputs;
     private Vector3 _globalMomentum;
@@ -101,14 +102,16 @@ public class Player : MonoBehaviour
         SetCameraInvert();
     }
 
-    //!MISSING
-    //* DONE // Movement Acceleration when inputting a direction
-    //* DONE // Movement Deceleration when not inputting a direction anymore
-    //TODO FIRST // Remove spherecast and just use charactercontroller.isgrounded
+    //!To Do list
+    //// Movement Acceleration when inputting a direction
+    //// Movement Deceleration when not inputting a direction anymore
+    //TODO make ceilings work
+    //? Walljump? when airborne, Raycast towards inputDirection and if wall we be wallriding
+    //? jump again when wallriding to walljump => add jumpStrength to gravity; reset momentum; and add wall's normal to momentum
+    //TODO // Remove spherecast and just use charactercontroller.isgrounded
     //TODO // Stop being slower when going up and down slopes
     //TODO // Gain speed up steep slopes only when sliding
     //TODO // Snap when slightly inside ground MAY NOT BE NEEDED ONCE SPHERECAST IS REMOVED
-    //? Walljump?
 
     private void Update()
     {
@@ -130,12 +133,13 @@ public class Player : MonoBehaviour
 
         //Update Movement Vectors
         UpdateMovement();
+        HandleMovementAcceleration();
         UpdateGlobalMomentum();
 
         //Gravity
         if (!_isGrounded) ApplyGravity();
 
-        //Final Movement Formula
+        //Final Movement Formula //I got lost with the deltatime stuff but i swear it works perfectly
         _finalMovement = (_globalMomentum * Time.deltaTime) + (_movementInputs) + (Vector3.up * _currentlyAppliedGravity * Time.deltaTime);
 
         //Debug Values on screen
@@ -233,30 +237,35 @@ public class Player : MonoBehaviour
     #region Ground Detection Functions
     private void CheckGround()
     {
+        //if there is ground below
         if (Physics.SphereCast(transform.position, _charaCon.radius + 0.01f, -transform.up, out _groundStoodOn, _groundRaycastLength))
         {
             if (!_isGrounded && _canJump)
-                if (Vector3.Angle(transform.up, _groundStoodOn.normal) > _charaCon.slopeLimit)
-                {
-                    _globalMomentum += (Vector3.down + _groundStoodOn.normal).normalized * _slideForceOnSlopes * Time.deltaTime;
-                }
-                else
+            {
+                //and ground is flat enough: Land
+                if (Vector3.Angle(transform.up, _groundStoodOn.normal) < _charaCon.slopeLimit)
                     Land();
+                //if ground is too steep: Slide
+                else
+                    _globalMomentum += (Vector3.down + _groundStoodOn.normal).normalized * _slideForceOnSlopes * Time.deltaTime;
+            }
         }
-        else
-        {
-            if (_isGrounded)
-                TakeOff();
-        }
+        // if there is no ground below and we're grounded, then we are not anymore
+        else if (_isGrounded)
+            TakeOff();
+
     }
 
     private void Land()
     {
+        //Reset many values when landing
         _currentlyAppliedGravity = 0;
         _globalMomentum.y = 0;
         _isGrounded = true;
         _isJumping = false;
         _coyoteTime = -1f;
+
+        //Jump immediately if player is pressing jump
         if (_inputs.FirstPersonCamera.Jump.IsPressed()) Jump();
     }
 
@@ -305,18 +314,21 @@ public class Player : MonoBehaviour
 
     private void UpdateMovement()
     {
-        //Register movement input
+        //Register new movement input
         Vector3 _newMovementInputs = MakeDirectionCameraRelative(_inputs.FirstPersonCamera.Move.ReadValue<Vector2>());
+
+        //only use new movement input if it is not null
         _isPressingADirection = _newMovementInputs.x != 0 || _newMovementInputs.z != 0;
         if (_isPressingADirection)
             _movementInputs = _newMovementInputs;
+        //else, we use last frame's movement input again
         else
             _movementInputs = _lastFrameMovementInputs;
 
+        //Store this frame's input
         _lastFrameMovementInputs = _movementInputs;
-        _movementInputs *= Time.deltaTime * _movementSpeed;
 
-        HandleMovementAcceleration();
+        _movementInputs *= Time.deltaTime * _movementSpeed;
     }
 
     private void HandleMovementAcceleration()
