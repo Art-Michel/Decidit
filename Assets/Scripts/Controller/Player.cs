@@ -56,7 +56,8 @@ public class Player : MonoBehaviour
     private float _currentlyAppliedGravity;
 
     private RaycastHit _groundStoodOn;
-    private const float _groundRaycastLength = .9f; // 1.8 - (_charaCon.height / 2)
+    private const float _groundSpherecastLength = .65f; // _charaCon.height/2 - _charaCon.radius
+    private const float _groundSpherecastRadius = .35f; // _charaCon.radius + 0.1f to mitigate skin width
     private bool _canJump;
     private bool _isJumping;
     private float _jumpCooldown;
@@ -180,11 +181,10 @@ public class Player : MonoBehaviour
     {
 #if UNITY_EDITOR
         Gizmos.color = Color.blue;
-        Debug.DrawLine(transform.position, transform.position - transform.up * _groundRaycastLength, Color.blue, 0f, false);
+        Debug.DrawLine(transform.position, transform.position - transform.up * (_groundSpherecastLength), Color.blue, 0f, false);
         RaycastHit debugGroundcast;
-        if (Physics.SphereCast(transform.position, _charaCon.radius + 0.1f, -transform.up, out debugGroundcast, _groundRaycastLength - _charaCon.radius)) // should be the sane as CheckGround()'s
-            Gizmos.DrawSphere(new Vector3(transform.position.x, debugGroundcast.point.y, transform.position.z) + transform.up * _charaCon.radius, _charaCon.radius);
-
+        if (Physics.SphereCast(transform.position, _groundSpherecastRadius, -transform.up, out debugGroundcast, _groundSpherecastLength)) // should be the same as CheckGround()'s
+            Gizmos.DrawSphere(new Vector3(transform.position.x, (debugGroundcast.point.y + _groundSpherecastRadius), transform.position.z), (_groundSpherecastRadius));
 #endif
     }
     #endregion
@@ -239,8 +239,9 @@ public class Player : MonoBehaviour
     private void CheckGround()
     {
         //if there is ground below
-        if (Physics.SphereCast(transform.position, _charaCon.radius + 0.1f, -transform.up, out _groundStoodOn, _groundRaycastLength - _charaCon.radius + 0.1f))
+        if (Physics.SphereCast(transform.position, _groundSpherecastRadius, -transform.up, out _groundStoodOn, _groundSpherecastLength)) //! The cast is perfect and should not be touched
         {
+            Debug.Log(Vector3.Angle(transform.up, _groundStoodOn.normal));
             if (!_isGrounded && _canJump)
             {
                 //and ground is flat enough: Land
@@ -248,7 +249,7 @@ public class Player : MonoBehaviour
                     Land();
                 //if ground is too steep: Slide
                 else
-                    _globalMomentum += (Vector3.down + _groundStoodOn.normal).normalized * _slideForceOnSlopes * Time.deltaTime;
+                   _globalMomentum += (Vector3.down + _groundStoodOn.normal).normalized * _slideForceOnSlopes * Time.deltaTime;
             }
         }
         // if there is no ground below and we're grounded, then we are not anymore
