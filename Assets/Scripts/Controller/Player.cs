@@ -54,6 +54,7 @@ public class Player : MonoBehaviour
     private bool _isGrounded;
     private const float _gravity = 9.81f;
     private float _currentlyAppliedGravity;
+    private Vector3 _steepSlopesMovement;
 
     private RaycastHit _groundStoodOn;
     private const float _groundSpherecastLength = .65f; // _charaCon.height/2 - _charaCon.radius
@@ -105,7 +106,7 @@ public class Player : MonoBehaviour
     //// Movement Acceleration when inputting a direction
     //// Movement Deceleration when not inputting a direction anymore
     //TODO make ceilings work
-    //? Walljump? when airborne, Raycast towards inputDirection and if wall we be wallriding
+    //? when airborne, Raycast towards inputDirection and if wall we be wallriding
     //? jump again when wallriding to walljump => add jumpStrength to gravity; reset momentum; and add wall's normal to momentum
     //// Remove spherecast and just use charactercontroller.isgrounded
     //nevermind, charactercontroller.isgrounded sucks ass
@@ -140,7 +141,7 @@ public class Player : MonoBehaviour
         if (!_isGrounded) ApplyGravity();
 
         //Final Movement Formula //I got lost with the deltatime stuff but i swear it works perfectly
-        _finalMovement = (_globalMomentum * Time.deltaTime) + (_movementInputs) + (Vector3.up * _currentlyAppliedGravity * Time.deltaTime);
+        _finalMovement = (_globalMomentum * Time.deltaTime) + (_movementInputs) + (Vector3.up * _currentlyAppliedGravity * Time.deltaTime) + (_steepSlopesMovement * Time.deltaTime);
 
         //Debug Values on screen
         UpdateDebugTexts();
@@ -173,18 +174,21 @@ public class Player : MonoBehaviour
 
         if (_debugSpeedText)
             _debugSpeedText.text = ("Total Speed:\n   " + (_finalMovement.magnitude / Time.deltaTime).ToString("F3"));
-
 #endif
     }
 
     void OnDrawGizmos()
     {
 #if UNITY_EDITOR
+        //ground cast
         Gizmos.color = Color.blue;
         Debug.DrawLine(transform.position, transform.position - transform.up * (_groundSpherecastLength), Color.blue, 0f, false);
         RaycastHit debugGroundcast;
         if (Physics.SphereCast(transform.position, _groundSpherecastRadius, -transform.up, out debugGroundcast, _groundSpherecastLength)) // should be the same as CheckGround()'s
             Gizmos.DrawSphere(new Vector3(transform.position.x, (debugGroundcast.point.y + _groundSpherecastRadius), transform.position.z), (_groundSpherecastRadius));
+
+        //vector
+        Debug.DrawLine(transform.position, transform.position + _finalMovement /Time.deltaTime * 0.5f, Color.red, 0f);
 #endif
     }
     #endregion
@@ -241,15 +245,14 @@ public class Player : MonoBehaviour
         //if there is ground below
         if (Physics.SphereCast(transform.position, _groundSpherecastRadius, -transform.up, out _groundStoodOn, _groundSpherecastLength)) //! The cast is perfect and should not be touched
         {
-            Debug.Log(Vector3.Angle(transform.up, _groundStoodOn.normal));
             if (!_isGrounded && _canJump)
             {
                 //and ground is flat enough: Land
                 if (Vector3.Angle(transform.up, _groundStoodOn.normal) < _charaCon.slopeLimit)
                     Land();
-                //if ground is too steep: Slide
+                //if ground is too steep: Slide along
                 else
-                   _globalMomentum += (Vector3.down + _groundStoodOn.normal).normalized * _slideForceOnSlopes * Time.deltaTime;
+                    _steepSlopesMovement = (Vector3.down + _groundStoodOn.normal).normalized * _slideForceOnSlopes * -_currentlyAppliedGravity;
             }
         }
         // if there is no ground below and we're grounded, then we are not anymore
@@ -261,6 +264,7 @@ public class Player : MonoBehaviour
     {
         //Reset many values when landing
         _currentlyAppliedGravity = 0;
+        _steepSlopesMovement = Vector3.zero;
         _globalMomentum.y = 0;
         _isGrounded = true;
         _isJumping = false;
