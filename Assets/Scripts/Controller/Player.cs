@@ -16,8 +16,8 @@ public class Player : MonoBehaviour
     [SerializeField] TextMeshProUGUI _debugGroundedText;
     [SerializeField] TextMeshProUGUI _debugSpeedText;
     [SerializeField] Transform _head;
+    [SerializeField] CharacterController _charaCon;
     PlayerInputMap _inputs;
-    CharacterController _charaCon;
     #endregion
 
     #region Camera rotation variables
@@ -56,8 +56,7 @@ public class Player : MonoBehaviour
     private float _currentlyAppliedGravity;
 
     private RaycastHit _groundStoodOn;
-    private const float _groundRaycastLength = .85f; // 1.8 - (_charaCon.height / 2) - 0.25
-    private const float _groundSphereCastRadius = 0.25f;
+    private const float _groundRaycastLength = .9f; // 1.8 - (_charaCon.height / 2)
     private bool _canJump;
     private bool _isJumping;
     private float _jumpCooldown;
@@ -88,7 +87,6 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         _inputs = new PlayerInputMap();
-        _charaCon = GetComponent<CharacterController>();
         _inputs.FirstPersonCamera.Jump.started += _ => Jump();
     }
 
@@ -108,10 +106,11 @@ public class Player : MonoBehaviour
     //TODO make ceilings work
     //? Walljump? when airborne, Raycast towards inputDirection and if wall we be wallriding
     //? jump again when wallriding to walljump => add jumpStrength to gravity; reset momentum; and add wall's normal to momentum
-    //TODO // Remove spherecast and just use charactercontroller.isgrounded
+    //// Remove spherecast and just use charactercontroller.isgrounded
+    //nevermind, charactercontroller.isgrounded sucks ass
     //TODO // Stop being slower when going up and down slopes
     //TODO // Gain speed up steep slopes only when sliding
-    //TODO // Snap when slightly inside ground MAY NOT BE NEEDED ONCE SPHERECAST IS REMOVED
+    //// Snap when slightly inside ground
 
     private void Update()
     {
@@ -182,7 +181,9 @@ public class Player : MonoBehaviour
 #if UNITY_EDITOR
         Gizmos.color = Color.blue;
         Debug.DrawLine(transform.position, transform.position - transform.up * _groundRaycastLength, Color.blue, 0f, false);
-        Gizmos.DrawSphere(_groundStoodOn.point + transform.up * _groundSphereCastRadius, _groundSphereCastRadius);
+        RaycastHit debugGroundcast;
+        if (Physics.SphereCast(transform.position, _charaCon.radius + 0.1f, -transform.up, out debugGroundcast, _groundRaycastLength - _charaCon.radius)) // should be the sane as CheckGround()'s
+            Gizmos.DrawSphere(new Vector3(transform.position.x, debugGroundcast.point.y, transform.position.z) + transform.up * _charaCon.radius, _charaCon.radius);
 
 #endif
     }
@@ -238,7 +239,7 @@ public class Player : MonoBehaviour
     private void CheckGround()
     {
         //if there is ground below
-        if (Physics.SphereCast(transform.position, _charaCon.radius + 0.01f, -transform.up, out _groundStoodOn, _groundRaycastLength))
+        if (Physics.SphereCast(transform.position, _charaCon.radius + 0.1f, -transform.up, out _groundStoodOn, _groundRaycastLength - _charaCon.radius + 0.1f))
         {
             if (!_isGrounded && _canJump)
             {
@@ -253,7 +254,6 @@ public class Player : MonoBehaviour
         // if there is no ground below and we're grounded, then we are not anymore
         else if (_isGrounded)
             TakeOff();
-
     }
 
     private void Land()
