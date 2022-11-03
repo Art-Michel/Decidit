@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     [SerializeField] TextMeshProUGUI _debugGravityText;
     [SerializeField] TextMeshProUGUI _debugGroundedText;
     [SerializeField] TextMeshProUGUI _debugSpeedText;
+    [SerializeField] Mesh _debugCapsuleMesh;
     [SerializeField] Transform _head;
     [SerializeField] CharacterController _charaCon;
     PlayerInputMap _inputs;
@@ -48,8 +49,8 @@ public class Player : MonoBehaviour
 
     #region Jumping, Falling and Ground Detection variables
     [Header("Jumping Settings")]
-    [Range(0, 50)][SerializeField] private float _jumpStrength = 10f;
-    [Range(0, 10)][SerializeField] private float _drag = 2f;
+    [Range(0, 50)][SerializeField] private float _jumpStrength = 14f;
+    [Range(0, 10)][SerializeField] private float _drag = 3f;
 
     private bool _isGrounded;
     private const float _gravity = 9.81f;
@@ -58,7 +59,8 @@ public class Player : MonoBehaviour
 
     private RaycastHit _groundStoodOn;
     private const float _groundSpherecastLength = .65f; // _charaCon.height/2 - _charaCon.radius
-    private const float _groundSpherecastRadius = .35f; // _charaCon.radius + 0.1f to mitigate skin width
+    private const float _ceilingRaycastLength = 1f; // _charaCon.height/2 + 0.1f margin to mitigate skin width
+    private const float _groundSpherecastRadius = .35f; // _charaCon.radius + 0.1f margin to mitigate skin width
     private bool _canJump;
     private bool _isJumping;
     private float _jumpCooldown;
@@ -72,7 +74,7 @@ public class Player : MonoBehaviour
     [Range(0, 20)][SerializeField] private float _movementSpeed = 9f;
     [Range(0, 1)][SerializeField] private float _movementAccelerationSpeed = 0.0666f; //Approx 4 frames
     [Range(0, 1)][SerializeField] private float _movementDecelerationSpeed = 0.0666f; //Approx 4 frames
-    [Range(0, 100)][SerializeField] private float _slideForceOnSlopes = 40f;
+    [Range(0, 100)][SerializeField] private float _slideForceOnSlopes = 1f;
     [Range(0, 100)][Tooltip("if lower than movement speed, you will accelerate when airborne")][SerializeField] private float _airborneFriction = 9f;
     [Range(0, 100)][SerializeField] private float _groundedFriction = 50f;
     //// ADD LATER [Range(0, 100)][SerializeField] private float _slidingFriction = 5f;
@@ -105,7 +107,7 @@ public class Player : MonoBehaviour
     //!To Do list
     //// Movement Acceleration when inputting a direction
     //// Movement Deceleration when not inputting a direction anymore
-    //TODO make ceilings work
+    //// make ceilings work
     //? when airborne, Raycast towards inputDirection and if wall we be wallriding
     //? jump again when wallriding to walljump => add jumpStrength to gravity; reset momentum; and add wall's normal to momentum
     //// Remove spherecast and just use charactercontroller.isgrounded
@@ -138,7 +140,7 @@ public class Player : MonoBehaviour
         UpdateGlobalMomentum();
 
         //Gravity
-        if (!_isGrounded) ApplyGravity();
+        ApplyGravity();
 
         //Final Movement Formula //I got lost with the deltatime stuff but i swear it works perfectly
         _finalMovement = (_globalMomentum * Time.deltaTime) + (_movementInputs) + (Vector3.up * _currentlyAppliedGravity * Time.deltaTime) + (_steepSlopesMovement * Time.deltaTime);
@@ -185,10 +187,19 @@ public class Player : MonoBehaviour
         Debug.DrawLine(transform.position, transform.position - transform.up * (_groundSpherecastLength), Color.blue, 0f, false);
         RaycastHit debugGroundcast;
         if (Physics.SphereCast(transform.position, _groundSpherecastRadius, -transform.up, out debugGroundcast, _groundSpherecastLength)) // should be the same as CheckGround()'s
-            Gizmos.DrawSphere(new Vector3(transform.position.x, (debugGroundcast.point.y + _groundSpherecastRadius), transform.position.z), (_groundSpherecastRadius));
+            Gizmos.DrawWireSphere(new Vector3(transform.position.x, (debugGroundcast.point.y + _groundSpherecastRadius), transform.position.z), (_groundSpherecastRadius));
 
-        //vector
-        Debug.DrawLine(transform.position, transform.position + _finalMovement /Time.deltaTime * 0.5f, Color.red, 0f);
+        //Direction Vector
+        Debug.DrawLine(transform.position, transform.position + _finalMovement / Time.deltaTime * 0.3f, Color.red, 0f);
+
+        //Ceiling Cast
+        Debug.DrawLine(transform.position, transform.position + (transform.up * (_ceilingRaycastLength)), Color.cyan, 0f);
+
+        if(_debugCapsuleMesh)
+        {
+            Gizmos.color = Color.white;
+            Gizmos.DrawWireMesh(_debugCapsuleMesh,transform.position, Quaternion.identity, new Vector3(.5f, .9f, .5f));
+        }
 #endif
     }
     #endregion
@@ -251,8 +262,8 @@ public class Player : MonoBehaviour
                 if (Vector3.Angle(transform.up, _groundStoodOn.normal) < _charaCon.slopeLimit)
                     Land();
                 //if ground is too steep: Slide along
-                else
-                    _steepSlopesMovement = (Vector3.down + _groundStoodOn.normal).normalized * _slideForceOnSlopes * -_currentlyAppliedGravity;
+                //else
+                    //_steepSlopesMovement = (Vector3.down + _groundStoodOn.normal).normalized * _slideForceOnSlopes * -_currentlyAppliedGravity;
             }
         }
         // if there is no ground below and we're grounded, then we are not anymore
@@ -296,7 +307,12 @@ public class Player : MonoBehaviour
 
     private void ApplyGravity()
     {
-        _currentlyAppliedGravity -= _gravity * _drag * Time.deltaTime;
+        if (!_isGrounded)
+        {
+            _currentlyAppliedGravity -= _gravity * _drag * Time.deltaTime;
+            if (Physics.Raycast(transform.position, transform.up, _ceilingRaycastLength) && _currentlyAppliedGravity > 0)
+            _currentlyAppliedGravity = 0f;
+        }
     }
     #endregion
 
