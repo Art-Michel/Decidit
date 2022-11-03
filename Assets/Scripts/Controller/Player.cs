@@ -108,13 +108,11 @@ public class Player : MonoBehaviour
     //// Movement Acceleration when inputting a direction
     //// Movement Deceleration when not inputting a direction anymore
     //// make ceilings work
-    //? when airborne, Raycast towards inputDirection and if wall we be wallriding
-    //? jump again when wallriding to walljump => add jumpStrength to gravity; reset momentum; and add wall's normal to momentum
-    //// Remove spherecast and just use charactercontroller.isgrounded
-    //nevermind, charactercontroller.isgrounded sucks ass
-    //TODO // Stop being slower when going up and down slopes
-    //TODO // Gain speed up steep slopes only when sliding
+    //// Remove spherecast and just use charactercontroller.isgrounded => nevermind, charactercontroller.isgrounded sucks ass
     //// Snap when slightly inside ground
+    //TODO // Slopes behaviours
+    //? when airborne, Raycast towards inputDirection and, if wall, and if Vector3.Dot(inputdirection, wall.normal) ~= -1, wallride
+    //? jump again when wallriding to walljump => add jumpStrength to gravity; reset momentum; and add wall's normal to momentum
 
     private void Update()
     {
