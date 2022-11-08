@@ -21,6 +21,17 @@ public class Player : MonoBehaviour
     PlayerInputMap _inputs;
     #endregion
 
+    #region StateMachine
+    enum _playerState
+    {
+        Grounded,
+        Airborne,
+        FallingDownSlope,
+        Sliding
+    }
+    _playerState _currentState;
+    #endregion
+
     #region Camera rotation variables
     private float _cameraTargetYRotation;
     private float _cameraTargetXRotation;
@@ -52,7 +63,6 @@ public class Player : MonoBehaviour
     [Range(0, 50)][SerializeField] private float _jumpStrength = 14f;
     [Range(0, 10)][SerializeField] private float _drag = 3f;
 
-    private bool _isGrounded;
     private const float _gravity = 9.81f;
     private float _currentlyAppliedGravity;
     private Vector3 _steepSlopesMovement;
@@ -97,6 +107,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         transform.rotation = Quaternion.identity;
+        _currentState = _playerState.Grounded;
         _movementInputs = Vector2.zero;
         _globalMomentum = Vector3.zero;
         _currentlyAppliedGravity = 0;
@@ -104,13 +115,8 @@ public class Player : MonoBehaviour
         SetCameraInvert();
     }
 
-    //!To Do list
-    //// Movement Acceleration when inputting a direction
-    //// Movement Deceleration when not inputting a direction anymore
-    //// make ceilings work
-    //// Remove spherecast and just use charactercontroller.isgrounded => nevermind, charactercontroller.isgrounded sucks ass
-    //// Snap when slightly inside ground
     //TODO // Slopes behaviours
+    //TODO Walljump?
     //? when airborne, Raycast towards inputDirection and, if wall, and if Vector3.Dot(inputdirection, wall.normal) ~= -1, wallride
     //? jump again when wallriding to walljump => add jumpStrength to gravity; reset momentum; and add wall's normal to momentum
 
@@ -155,7 +161,7 @@ public class Player : MonoBehaviour
     {
 #if UNITY_EDITOR
         if (_debugGroundedText)
-            _debugGroundedText.text = ("Is Grounded: " + _isGrounded);
+            _debugGroundedText.text = _currentState.ToString();
 
         if (_debugInputVelocityText)
             _debugInputVelocityText.text =
@@ -193,10 +199,10 @@ public class Player : MonoBehaviour
         //Ceiling Cast
         Debug.DrawLine(transform.position, transform.position + (transform.up * (_ceilingRaycastLength)), Color.cyan, 0f);
 
-        if(_debugCapsuleMesh)
+        if (_debugCapsuleMesh)
         {
             Gizmos.color = Color.white;
-            Gizmos.DrawWireMesh(_debugCapsuleMesh,transform.position, Quaternion.identity, new Vector3(.5f, .9f, .5f));
+            Gizmos.DrawWireMesh(_debugCapsuleMesh, transform.position, Quaternion.identity, new Vector3(.5f, .9f, .5f));
         }
 #endif
     }
@@ -254,48 +260,67 @@ public class Player : MonoBehaviour
         //if there is ground below
         if (Physics.SphereCast(transform.position, _groundSpherecastRadius, -transform.up, out _groundStoodOn, _groundSpherecastLength)) //! The cast is perfect and should not be touched
         {
-            if (!_isGrounded && _canJump)
+            if (_currentState != _playerState.Grounded && _canJump)
             {
                 //and ground is flat enough: Land
                 if (Vector3.Angle(transform.up, _groundStoodOn.normal) < _charaCon.slopeLimit)
                     Land();
                 //if ground is too steep: Slide along
-                //else
-                    //_steepSlopesMovement = (Vector3.down + _groundStoodOn.normal).normalized * _slideForceOnSlopes * -_currentlyAppliedGravity;
+                else if (_currentlyAppliedGravity < 0f)
+                {
+                    if (_currentState != _playerState.FallingDownSlope)
+                        _currentState = _playerState.FallingDownSlope;
+                }
             }
         }
-        // if there is no ground below and we're grounded, then we are not anymore
-        else if (_isGrounded)
-            TakeOff();
+
+        //reset gravity if we were falling down a slope
+        else if ((_currentState == _playerState.FallingDownSlope))
+        {
+            _currentlyAppliedGravity = _currentlyAppliedGravity + _steepSlopesMovement.magnitude * Time.deltaTime;
+            _steepSlopesMovement = Vector3.zero;
+            StartFalling();
+        }
+
+        // if there is no ground below and we're grounded, then we are not grounded anymore
+        else if ((_currentState == _playerState.Grounded))
+            StartFalling();
     }
 
     private void Land()
     {
         //Reset many values when landing
+        _currentState = _playerState.Grounded;
         _currentlyAppliedGravity = 0;
         _steepSlopesMovement = Vector3.zero;
         _globalMomentum.y = 0;
-        _isGrounded = true;
         _isJumping = false;
+        _steepSlopesMovement = Vector3.zero;
         _coyoteTime = -1f;
 
         //Jump immediately if player is pressing jump
         if (_inputs.FirstPersonCamera.Jump.IsPressed()) Jump();
     }
 
-    private void TakeOff()
+    private void StartFalling()
     {
-        _isGrounded = false;
+        _currentState = _playerState.Airborne;
         _coyoteTime = _coyoteMaxTime;
     }
+
+    private void StartFallingDownSlope()
+    {
+
+    }
+
     #endregion
 
     #region Jumping and Falling Functions
     private void Jump()
     {
-        if (_isGrounded || _coyoteTime > 0f && !_isJumping)
+        if (_currentState == _playerState.Grounded || _coyoteTime > 0f && !_isJumping)
         {
-            _isGrounded = false;
+            _currentState = _playerState.Airborne;
             _currentlyAppliedGravity += _jumpStrength;
             _isJumping = true;
             _canJump = false;
@@ -305,11 +330,19 @@ public class Player : MonoBehaviour
 
     private void ApplyGravity()
     {
-        if (!_isGrounded)
+        if (_currentState == _playerState.FallingDownSlope || _currentState == _playerState.Airborne)
         {
             _currentlyAppliedGravity -= _gravity * _drag * Time.deltaTime;
             if (Physics.Raycast(transform.position, transform.up, _ceilingRaycastLength) && _currentlyAppliedGravity > 0)
-            _currentlyAppliedGravity = 0f;
+                _currentlyAppliedGravity = 0f;
+
+            if (_currentState == _playerState.FallingDownSlope)
+            {
+                Vector3 temp = Vector3.Cross(_groundStoodOn.normal, Vector3.down);
+                Vector3 groundSlopeDir = Vector3.Cross(temp, _groundStoodOn.normal);
+                _steepSlopesMovement = (groundSlopeDir + Vector3.down) * -_currentlyAppliedGravity * -(Vector3.Dot(_movementInputs.normalized, groundSlopeDir) - 1);
+                _movementInputs *= (Vector3.Dot(_movementInputs.normalized, _groundStoodOn.normal.normalized + groundSlopeDir.normalized)+1);
+            }
         }
     }
     #endregion
@@ -368,7 +401,7 @@ public class Player : MonoBehaviour
 
         //Decrease Momentum Each Frame slower when airborne and faster when grounded
         float velocityDecreaseRate;
-        if (_isGrounded)
+        if (_currentState == _playerState.Grounded)
             velocityDecreaseRate = _groundedFriction;
         else
             velocityDecreaseRate = _airborneFriction;
@@ -387,7 +420,7 @@ public class Player : MonoBehaviour
     private void ApplyMovementsToCharacter(Vector3 direction)
     {
         //Move along slopes
-        if (_isGrounded)
+        if (_currentState == _playerState.Grounded)
         {
             if (Vector3.Angle(transform.up, _groundStoodOn.normal) < _charaCon.slopeLimit)
                 direction = (direction - (Vector3.Dot(direction, _groundStoodOn.normal)) * _groundStoodOn.normal);
