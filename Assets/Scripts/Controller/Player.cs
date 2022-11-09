@@ -19,17 +19,7 @@ public class Player : MonoBehaviour
     [SerializeField] Transform _head;
     [SerializeField] CharacterController _charaCon;
     PlayerInputMap _inputs;
-    #endregion
-
-    #region StateMachine
-    enum _playerState
-    {
-        Grounded,
-        Airborne,
-        FallingDownSlope,
-        Sliding
-    }
-    _playerState _currentState;
+    PlayerFSM _fsm;
     #endregion
 
     #region Camera rotation variables
@@ -87,7 +77,7 @@ public class Player : MonoBehaviour
     [Range(0, 100)][SerializeField] private float _slideForceOnSlopes = 1f;
     [Range(0, 100)][Tooltip("if lower than movement speed, you will accelerate when airborne")][SerializeField] private float _airborneFriction = 9f;
     [Range(0, 100)][SerializeField] private float _groundedFriction = 50f;
-    //// ADD LATER [Range(0, 100)][SerializeField] private float _slidingFriction = 5f;
+    // ADD LATER [Range(0, 100)][SerializeField] private float _slidingFriction = 5f;
 
     private Vector3 _movementInputs; // X is Left-Right and Z is Backward-Forward
     private Vector3 _lastFrameMovementInputs;
@@ -100,6 +90,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+        _fsm = GetComponent<PlayerFSM>();
         _inputs = new PlayerInputMap();
         _inputs.FirstPersonCamera.Jump.started += _ => Jump();
     }
@@ -107,7 +98,6 @@ public class Player : MonoBehaviour
     private void Start()
     {
         transform.rotation = Quaternion.identity;
-        _currentState = _playerState.Grounded;
         _movementInputs = Vector2.zero;
         _globalMomentum = Vector3.zero;
         _currentlyAppliedGravity = 0;
