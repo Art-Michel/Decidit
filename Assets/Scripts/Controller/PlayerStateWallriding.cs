@@ -16,12 +16,14 @@ public class PlayerStateWallriding : PlayerState
 
     public override void StateUpdate()
     {
-
+        _player.CheckForNoGround();
+        _player.CheckForSteepSlope();
+        _player.CheckForGround();
     }
 
     public override void Exit()
     {
-        
+
     }
 
 }

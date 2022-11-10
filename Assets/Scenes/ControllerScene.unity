@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 2336.9048, g: 2109.7026, b: 2270.7812, a: 1}
+  m_IndirectSpecularColor: {r: 2337.0103, g: 2110.1455, b: 2271.7578, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6189,6 +6189,7 @@ GameObject:
   - component: {fileID: 1685271677}
   - component: {fileID: 1685271678}
   - component: {fileID: 1685271680}
+  - component: {fileID: 1685271681}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -6230,7 +6231,7 @@ MonoBehaviour:
   _debugGravityText: {fileID: 118401737}
   _debugGroundedText: {fileID: 889849263}
   _debugSpeedText: {fileID: 967495651}
-  _debugCapsuleMesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  _debugCapsuleMesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 3}
   _head: {fileID: 1108476467}
   _charaCon: {fileID: 1685271680}
   _mouseSensitivityX: 10
@@ -6243,7 +6244,8 @@ MonoBehaviour:
   _controllerCameraYInverted: 0
   _cameraSmoothness: 100000
   _jumpStrength: 14
-  _drag: 3
+  _airborneDrag: 3
+  _jumpingDrag: 3
   _movementSpeed: 9
   _movementAccelerationSpeed: 0.0666
   _movementDecelerationSpeed: 0.0666
@@ -6268,6 +6270,18 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1685271681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1685271676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5b2d0a46ede0854c837b5d9d2f31316, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!43 &1745603280
 Mesh:
   m_ObjectHideFlags: 0

@@ -11,12 +11,14 @@ public class PlayerStateWalljumping : PlayerState
 
     public override void Begin()
     {
-
+        
     }
 
     public override void StateUpdate()
     {
-
+        _player.CheckForGround();
+        _player.ApplyJumpingGravity();
+        _player.CheckForCeiling();
     }
 
     public override void Exit()

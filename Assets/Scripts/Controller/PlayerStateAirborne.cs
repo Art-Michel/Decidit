@@ -11,17 +11,19 @@ public class PlayerStateAirborne : PlayerState
 
     public override void Begin()
     {
-
+        _player.StartFalling();
     }
 
     public override void StateUpdate()
     {
-
+        _player.CheckForGround();
+        _player.ApplyAirborneGravity();
+        _player.CheckForCeiling();
     }
 
     public override void Exit()
     {
-        
+
     }
 
 }

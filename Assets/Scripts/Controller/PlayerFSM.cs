@@ -5,14 +5,14 @@ using UnityEngine;
 public class PlayerFSM : MonoBehaviour
 {
     private Dictionary<string, PlayerState> states;
+    Player _player;
 
     public PlayerState currentState { get; private set; }
     public PlayerState previousState { get; private set; }
 
-    public Transform Body;
-
     void Awake()
     {
+        _player = GetComponent<Player>();
         states = new Dictionary<string, PlayerState>();
     }
 
@@ -31,6 +31,7 @@ public class PlayerFSM : MonoBehaviour
     public void AddState(PlayerState state)
     {
         state._fsm = this;
+        state._player = this._player;
         states[state.Name] = state;
     }
 

@@ -51,7 +51,8 @@ public class Player : MonoBehaviour
     #region Jumping, Falling and Ground Detection variables
     [Header("Jumping Settings")]
     [Range(0, 50)][SerializeField] private float _jumpStrength = 14f;
-    [Range(0, 10)][SerializeField] private float _drag = 3f;
+    [Range(0, 10)][SerializeField] private float _airborneDrag = 3f;
+    [Range(0, 10)][SerializeField] private float _jumpingDrag = 3f;
 
     private const float _gravity = 9.81f;
     private float _currentlyAppliedGravity;
@@ -61,8 +62,7 @@ public class Player : MonoBehaviour
     private const float _groundSpherecastLength = .65f; // _charaCon.height/2 - _charaCon.radius
     private const float _ceilingRaycastLength = 1f; // _charaCon.height/2 + 0.1f margin to mitigate skin width
     private const float _groundSpherecastRadius = .35f; // _charaCon.radius + 0.1f margin to mitigate skin width
-    private bool _canJump;
-    private bool _isJumping;
+    private bool _justJumped;
     private float _jumpCooldown;
     private float _coyoteTime;
     private const float _coyoteMaxTime = 0.3f;
@@ -71,13 +71,27 @@ public class Player : MonoBehaviour
 
     #region Movement Variables
     [Header("Movement Settings")]
-    [Range(0, 20)][SerializeField] private float _movementSpeed = 9f;
-    [Range(0, 1)][SerializeField] private float _movementAccelerationSpeed = 0.0666f; //Approx 4 frames
-    [Range(0, 1)][SerializeField] private float _movementDecelerationSpeed = 0.0666f; //Approx 4 frames
-    [Range(0, 100)][SerializeField] private float _slideForceOnSlopes = 1f;
-    [Range(0, 100)][Tooltip("if lower than movement speed, you will accelerate when airborne")][SerializeField] private float _airborneFriction = 9f;
-    [Range(0, 100)][SerializeField] private float _groundedFriction = 50f;
+    [Range(0, 20)]
+    [SerializeField]
+    private float _movementSpeed = 9f;
+    [Range(0, 1)]
+    [SerializeField]
+    private float _movementAccelerationSpeed = 0.0666f; //Approx 4 frames
+    [Range(0, 1)]
+    [SerializeField]
+    private float _movementDecelerationSpeed = 0.0666f; //Approx 4 frames
+    [Range(0, 100)]
+    [SerializeField]
+    private float _slideForceOnSlopes = 1f;
+    [Range(0, 100)]
+    [Tooltip("if lower than movement speed, you will accelerate when airborne")]
+    [SerializeField]
+    private float _airborneFriction = 9f;
+    [Range(0, 100)]
+    [SerializeField]
+    private float _groundedFriction = 50f;
     // ADD LATER [Range(0, 100)][SerializeField] private float _slidingFriction = 5f;
+    private float _currentFriction;
 
     private Vector3 _movementInputs; // X is Left-Right and Z is Backward-Forward
     private Vector3 _lastFrameMovementInputs;
@@ -92,7 +106,7 @@ public class Player : MonoBehaviour
     {
         _fsm = GetComponent<PlayerFSM>();
         _inputs = new PlayerInputMap();
-        _inputs.FirstPersonCamera.Jump.started += _ => Jump();
+        _inputs.FirstPersonCamera.Jump.started += _ => PressJump();
     }
 
     private void Start()
@@ -110,31 +124,28 @@ public class Player : MonoBehaviour
     //? when airborne, Raycast towards inputDirection and, if wall, and if Vector3.Dot(inputdirection, wall.normal) ~= -1, wallride
     //? jump again when wallriding to walljump => add jumpStrength to gravity; reset momentum; and add wall's normal to momentum
 
-    private void Update()
+    private void Update() //Things that are StateMachine-unrelated
     {
         //Cooldowns
         if (_coyoteTime > 0f)
             _coyoteTime -= Time.deltaTime;
-        if (!_canJump)
+        if (!_justJumped)
         {
             _jumpCooldown -= Time.deltaTime;
-            if (_jumpCooldown <= 0) _canJump = true;
+            if (_jumpCooldown <= 0) _justJumped = false;
         }
 
         //Camera
         MoveCameraWithRightStick();
         MoveCameraWithMouse();
 
-        //Ground Spherecast and Storage of its normal
-        CheckGround();
+        //Ground Spherecast and Storage of its values
+        Physics.SphereCast(transform.position, _groundSpherecastRadius, -transform.up, out _groundStoodOn, _groundSpherecastLength);
 
         //Update Movement Vectors
         UpdateMovement();
         HandleMovementAcceleration();
         UpdateGlobalMomentum();
-
-        //Gravity
-        ApplyGravity();
 
         //Final Movement Formula //I got lost with the deltatime stuff but i swear it works perfectly
         _finalMovement = (_globalMomentum * Time.deltaTime) + (_movementInputs) + (Vector3.up * _currentlyAppliedGravity * Time.deltaTime) + (_steepSlopesMovement * Time.deltaTime);
@@ -151,7 +162,7 @@ public class Player : MonoBehaviour
     {
 #if UNITY_EDITOR
         if (_debugGroundedText)
-            _debugGroundedText.text = _currentState.ToString();
+            _debugGroundedText.text = _fsm.currentState.Name;
 
         if (_debugInputVelocityText)
             _debugInputVelocityText.text =
@@ -245,96 +256,93 @@ public class Player : MonoBehaviour
     #endregion
 
     #region Ground Detection Functions
-    private void CheckGround()
+
+    public void CheckForGround()
     {
-        //if there is ground below
-        if (Physics.SphereCast(transform.position, _groundSpherecastRadius, -transform.up, out _groundStoodOn, _groundSpherecastLength)) //! The cast is perfect and should not be touched
+        if (_groundStoodOn.transform != null)
         {
-            if (_currentState != _playerState.Grounded && _canJump)
-            {
-                //and ground is flat enough: Land
-                if (Vector3.Angle(transform.up, _groundStoodOn.normal) < _charaCon.slopeLimit)
-                    Land();
-                //if ground is too steep: Slide along
-                else if (_currentlyAppliedGravity < 0f)
-                {
-                    if (_currentState != _playerState.FallingDownSlope)
-                        _currentState = _playerState.FallingDownSlope;
-                }
-            }
+            if (Vector3.Angle(transform.up, _groundStoodOn.normal) < _charaCon.slopeLimit && !_justJumped)
+                _fsm.ChangeState(PlayerStatesList.GROUNDED);
         }
-
-        //reset gravity if we were falling down a slope
-        else if ((_currentState == _playerState.FallingDownSlope))
-        {
-            _currentlyAppliedGravity = _currentlyAppliedGravity + _steepSlopesMovement.magnitude * Time.deltaTime;
-            _steepSlopesMovement = Vector3.zero;
-            StartFalling();
-        }
-
-        // if there is no ground below and we're grounded, then we are not grounded anymore
-        else if ((_currentState == _playerState.Grounded))
-            StartFalling();
     }
 
-    private void Land()
+    public void CheckForSteepSlope()
+    {
+        if (_groundStoodOn.transform != null)
+        {
+            if (Vector3.Angle(transform.up, _groundStoodOn.normal) > _charaCon.slopeLimit)
+                _fsm.ChangeState(PlayerStatesList.AIRBORNE);
+        }
+    }
+
+    public void CheckForNoGround()
+    {
+        if (_groundStoodOn.transform == null)
+            _fsm.ChangeState(PlayerStatesList.AIRBORNE);
+    }
+
+
+    public void Land()
     {
         //Reset many values when landing
-        _currentState = _playerState.Grounded;
+        _currentFriction = _groundedFriction;
         _currentlyAppliedGravity = 0;
         _steepSlopesMovement = Vector3.zero;
         _globalMomentum.y = 0;
-        _isJumping = false;
         _steepSlopesMovement = Vector3.zero;
         _coyoteTime = -1f;
 
         //Jump immediately if player is pressing jump
-        if (_inputs.FirstPersonCamera.Jump.IsPressed()) Jump();
+        if (_inputs.FirstPersonCamera.Jump.IsPressed()) PressJump();
     }
 
-    private void StartFalling()
+    public void StartFalling()
     {
-        _currentState = _playerState.Airborne;
+        _currentFriction = _airborneFriction;
         _coyoteTime = _coyoteMaxTime;
-    }
-
-    private void StartFallingDownSlope()
-    {
-
     }
 
     #endregion
 
     #region Jumping and Falling Functions
-    private void Jump()
+    private void PressJump()
     {
-        if (_currentState == _playerState.Grounded || _coyoteTime > 0f && !_isJumping)
-        {
-            _currentState = _playerState.Airborne;
-            _currentlyAppliedGravity += _jumpStrength;
-            _isJumping = true;
-            _canJump = false;
-            _jumpCooldown = 0.1f; //min time allowed between two jumps, to avoid mashing jump up slopes and so we dont check for a ground before the character actually jumps.
-        }
+        if (_fsm.currentState.Name == PlayerStatesList.GROUNDED || (_fsm.currentState.Name == PlayerStatesList.AIRBORNE && _coyoteTime > 0f))
+            _fsm.ChangeState(PlayerStatesList.JUMPING);
     }
 
-    private void ApplyGravity()
+    public void StartJumping()
     {
-        if (_currentState == _playerState.FallingDownSlope || _currentState == _playerState.Airborne)
-        {
-            _currentlyAppliedGravity -= _gravity * _drag * Time.deltaTime;
-            if (Physics.Raycast(transform.position, transform.up, _ceilingRaycastLength) && _currentlyAppliedGravity > 0)
-                _currentlyAppliedGravity = 0f;
-
-            if (_currentState == _playerState.FallingDownSlope)
-            {
-                Vector3 temp = Vector3.Cross(_groundStoodOn.normal, Vector3.down);
-                Vector3 groundSlopeDir = Vector3.Cross(temp, _groundStoodOn.normal);
-                _steepSlopesMovement = (groundSlopeDir + Vector3.down) * -_currentlyAppliedGravity * -(Vector3.Dot(_movementInputs.normalized, groundSlopeDir) - 1);
-                _movementInputs *= (Vector3.Dot(_movementInputs.normalized, _groundStoodOn.normal.normalized + groundSlopeDir.normalized)+1);
-            }
-        }
+        _currentlyAppliedGravity += _jumpStrength;
+        _justJumped = true;
+        _currentFriction = _airborneFriction;
+        _jumpCooldown = 0.1f; //min time allowed between two jumps, to avoid mashing jump up slopes and so we
+                              //dont check for a ground before the character actually jumps.
     }
+
+    public void CheckForCeiling()
+    {
+        if (Physics.Raycast(transform.position, transform.up, _ceilingRaycastLength) && _currentlyAppliedGravity > 0)
+            _currentlyAppliedGravity = 0f;
+    }
+
+    public void ApplyJumpingGravity()
+    {
+        _currentlyAppliedGravity -= _gravity * _jumpingDrag * Time.deltaTime;
+    }
+
+    public void ApplyAirborneGravity()
+    {
+        _currentlyAppliedGravity -= _gravity * _airborneDrag * Time.deltaTime;
+        // if (_currentState == _playerState.FallingDownSlope)
+        // {
+        //     Vector3 temp = Vector3.Cross(_groundStoodOn.normal, Vector3.down);
+        //     Vector3 groundSlopeDir = Vector3.Cross(temp, _groundStoodOn.normal);
+        //     _steepSlopesMovement = (groundSlopeDir + Vector3.down) * -_currentlyAppliedGravity * -(Vector3.Dot(_movementInputs.normalized, groundSlopeDir) - 1);
+        //     _movementInputs *= (Vector3.Dot(_movementInputs.normalized, _groundStoodOn.normal.normalized + groundSlopeDir.normalized) + 1);
+        // }
+    }
+
     #endregion
 
     #region Shmovement Functions
@@ -389,18 +397,11 @@ public class Player : MonoBehaviour
         //Add Input Vector to Momentum
         _globalMomentum += _movementInputs;
 
-        //Decrease Momentum Each Frame slower when airborne and faster when grounded
-        float velocityDecreaseRate;
-        if (_currentState == _playerState.Grounded)
-            velocityDecreaseRate = _groundedFriction;
-        else
-            velocityDecreaseRate = _airborneFriction;
-
         //Store last frame's direction inside a variable
         var lastFrameXVelocitySign = Mathf.Sign(_globalMomentum.x);
         var lastFrameZVelocitySign = Mathf.Sign(_globalMomentum.z);
 
-        _globalMomentum = _globalMomentum.normalized * (_globalMomentum.magnitude - velocityDecreaseRate * Time.deltaTime);
+        _globalMomentum = _globalMomentum.normalized * (_globalMomentum.magnitude - _currentFriction * Time.deltaTime);
 
         //If last frame's direction was opposite, snap to 0
         if (Mathf.Sign(_globalMomentum.x) != lastFrameXVelocitySign) _globalMomentum.x = 0;
@@ -410,7 +411,7 @@ public class Player : MonoBehaviour
     private void ApplyMovementsToCharacter(Vector3 direction)
     {
         //Move along slopes
-        if (_currentState == _playerState.Grounded)
+        if (_fsm.currentState.Name == PlayerStatesList.GROUNDED || _fsm.currentState.Name == PlayerStatesList.SLIDING)
         {
             if (Vector3.Angle(transform.up, _groundStoodOn.normal) < _charaCon.slopeLimit)
                 direction = (direction - (Vector3.Dot(direction, _groundStoodOn.normal)) * _groundStoodOn.normal);

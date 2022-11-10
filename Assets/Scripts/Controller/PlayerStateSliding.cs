@@ -16,7 +16,8 @@ public class PlayerStateSliding : PlayerState
 
     public override void StateUpdate()
     {
-
+        _player.CheckForNoGround();
+        _player.CheckForSteepSlope();
     }
 
     public override void Exit()
