@@ -58,8 +58,6 @@ public class PlayerFSM : MonoBehaviour
         previousState = currentState;
         currentState = nextState;
         currentState.Begin();
-
-        Debug.Log(currentState.Name + " started");
     }
 
     private void Update()

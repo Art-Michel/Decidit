@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PlayerStatesList : MonoBehaviour
 {
-    public const string GROUNDED = "StateGrounded";
-    public const string JUMPING = "StateJumping";
-    public const string AIRBORNE = "StateAirborne";
-    public const string SLIDING = "StateSliding";
-    public const string WALLRIDING = "StateWallriding";
-    public const string WALLJUMPING = "StateWalljumping";
+    public const string GROUNDED = "GRO";
+    public const string JUMPING = "JUM";
+    public const string AIRBORNE = "AIR";
+    public const string SLIDING = "SLI";
+    public const string WALLRIDING = "WRI";
+    public const string WALLJUMPING = "WJU";
 }

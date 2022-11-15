@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ public class Player : MonoBehaviour
     [SerializeField] TextMeshProUGUI _debugInputVelocityText;
     [SerializeField] TextMeshProUGUI _debugGlobalVelocityText;
     [SerializeField] TextMeshProUGUI _debugGravityText;
-    [SerializeField] TextMeshProUGUI _debugGroundedText;
+    [SerializeField] TextMeshProUGUI _debugStateText;
     [SerializeField] TextMeshProUGUI _debugSpeedText;
     [SerializeField] Mesh _debugCapsuleMesh;
     [SerializeField] Transform _head;
@@ -129,7 +130,7 @@ public class Player : MonoBehaviour
         //Cooldowns
         if (_coyoteTime > 0f)
             _coyoteTime -= Time.deltaTime;
-        if (!_justJumped)
+        if (_justJumped)
         {
             _jumpCooldown -= Time.deltaTime;
             if (_jumpCooldown <= 0) _justJumped = false;
@@ -161,8 +162,8 @@ public class Player : MonoBehaviour
     private void UpdateDebugTexts()
     {
 #if UNITY_EDITOR
-        if (_debugGroundedText)
-            _debugGroundedText.text = _fsm.currentState.Name;
+        if (_debugStateText)
+            _debugStateText.text = _fsm.currentState.Name;
 
         if (_debugInputVelocityText)
             _debugInputVelocityText.text =
@@ -299,7 +300,8 @@ public class Player : MonoBehaviour
     public void StartFalling()
     {
         _currentFriction = _airborneFriction;
-        _coyoteTime = _coyoteMaxTime;
+        if (_fsm.previousState.Name != PlayerStatesList.JUMPING)
+            _coyoteTime = _coyoteMaxTime;
     }
 
     #endregion
@@ -313,7 +315,7 @@ public class Player : MonoBehaviour
 
     public void StartJumping()
     {
-        _currentlyAppliedGravity += _jumpStrength;
+        _currentlyAppliedGravity = _jumpStrength;
         _justJumped = true;
         _currentFriction = _airborneFriction;
         _jumpCooldown = 0.1f; //min time allowed between two jumps, to avoid mashing jump up slopes and so we
@@ -329,6 +331,8 @@ public class Player : MonoBehaviour
     public void ApplyJumpingGravity()
     {
         _currentlyAppliedGravity -= _gravity * _jumpingDrag * Time.deltaTime;
+        if (_currentlyAppliedGravity <= 0)
+            _fsm.ChangeState(PlayerStatesList.AIRBORNE);
     }
 
     public void ApplyAirborneGravity()
