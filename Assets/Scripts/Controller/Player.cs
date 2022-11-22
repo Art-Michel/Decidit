@@ -274,7 +274,9 @@ public class Player : MonoBehaviour
     {
         if (_groundStoodOn.transform != null)
         {
-            if (Vector3.Angle(transform.up, _groundStoodOn.normal) > _charaCon.slopeLimit)
+            float angle = Vector3.Angle(transform.up, _groundStoodOn.normal);
+            Debug.Log(angle);
+            if (angle > _charaCon.slopeLimit &&  angle < 90)
                 _fsm.ChangeState(PlayerStatesList.FALLINGDOWNSLOPE);
         }
     }
@@ -358,7 +360,6 @@ public class Player : MonoBehaviour
         // Nullify movement input towards wall
         Vector3 slopeHorizontalDir = new Vector3(slopeDir.x, 0, slopeDir.z).normalized;
         float movementDot = Vector3.Dot(slopeHorizontalDir, _movementInputs.normalized);
-        Debug.Log(movementDot);
         if (movementDot < 0)
             _movementInputs += (slopeHorizontalDir * _currentSpeed * -movementDot * Time.deltaTime);
     }
