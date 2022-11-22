@@ -25,6 +25,7 @@ public class PlayerFSM : MonoBehaviour
         AddState(new PlayerStateWallriding());
         AddState(new PlayerStateWalljumping());
         AddState(new PlayerStateFallingDownSlope());
+        AddState(new PlayerStateJumpingUpSlope());
 
         ChangeState(PlayerStatesList.GROUNDED);
     }

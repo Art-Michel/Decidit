@@ -48,8 +48,8 @@ public class GameStateManager : MonoBehaviour
     void ChangeTimeScale()
     {
         var direction = _inputs.Debugging.ChangeTimeScale.ReadValue<float>();
-        if (Mathf.Sign(direction) > 0) Time.timeScale += 0.1f;
-        else if (Mathf.Sign(direction) < 0) Time.timeScale -= 0.1f;
+        if (Mathf.Sign(direction) > 0) Time.timeScale = Mathf.Clamp(Time.timeScale + .1f, 0.01f, 10);
+        else if (Mathf.Sign(direction) < 0) Time.timeScale = Mathf.Clamp(Time.timeScale - .1f, 0.01f, 10);
 
         if (_TimescaleDebugUi)
             _TimescaleDebugUi.text = ("TimeScale: " + Time.timeScale.ToString("F1"));

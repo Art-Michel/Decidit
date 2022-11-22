@@ -14,9 +14,9 @@ public class Player : MonoBehaviour
     [SerializeField] TextMeshProUGUI _debugInputVelocityText;
     [SerializeField] TextMeshProUGUI _debugGlobalVelocityText;
     [SerializeField] TextMeshProUGUI _debugGravityText;
+    [SerializeField] TextMeshProUGUI _debugSlopeText;
     [SerializeField] TextMeshProUGUI _debugStateText;
     [SerializeField] TextMeshProUGUI _debugSpeedText;
-    [SerializeField] Mesh _debugCapsuleMesh;
     [SerializeField] Transform _head;
     [SerializeField] CharacterController _charaCon;
     PlayerInputMap _inputs;
@@ -60,7 +60,8 @@ public class Player : MonoBehaviour
     private float _currentlyAppliedGravity;
     private Vector3 _steepSlopesMovement;
 
-    private RaycastHit _groundStoodOn;
+    private RaycastHit _groundHit;
+    private RaycastHit _ceilingHit;
     private const float _groundSpherecastLength = .65f; // _charaCon.height/2 - _charaCon.radius
     private const float _ceilingRaycastLength = 1f; // _charaCon.height/2 + 0.1f margin to mitigate skin width
     private const float _groundSpherecastRadius = .35f; // _charaCon.radius + 0.1f margin to mitigate skin width
@@ -145,7 +146,9 @@ public class Player : MonoBehaviour
         MoveCameraWithMouse();
 
         //Ground Spherecast and Storage of its values
-        Physics.SphereCast(transform.position, _groundSpherecastRadius, -transform.up, out _groundStoodOn, _groundSpherecastLength);
+        Physics.SphereCast(transform.position, _groundSpherecastRadius, -transform.up, out _groundHit, _groundSpherecastLength);
+        //Ceiling Spherecast and Storage of its values
+        Physics.SphereCast(transform.position, _ceilingSpherecastRadius, transform.up, out _ceilingHit, _ceilingRaycastLength);
 
         //Update Movement Vectors
         UpdateMovement();
@@ -190,6 +193,9 @@ public class Player : MonoBehaviour
 
         if (_debugGravityText)
             _debugGravityText.text = ("Gravity:\n   " + _currentlyAppliedGravity.ToString("F1"));
+
+        if (_debugSlopeText)
+            _debugSlopeText.text = ("Slope Velocity:\n   " + _steepSlopesMovement.ToString("F1"));
 
         if (_debugSpeedText)
             _debugSpeedText.text = ("Total Speed:\n   " + (_finalMovement.magnitude / Time.deltaTime).ToString("F3"));
@@ -265,25 +271,25 @@ public class Player : MonoBehaviour
 
     public void CheckForGround()
     {
-        if (_groundStoodOn.transform != null)
+        if (_groundHit.transform != null)
         {
-            if (Vector3.Angle(transform.up, _groundStoodOn.normal) < _charaCon.slopeLimit && !_justJumped)
+            if (Vector3.Angle(transform.up, _groundHit.normal) < _charaCon.slopeLimit && !_justJumped)
                 _fsm.ChangeState(PlayerStatesList.GROUNDED);
         }
     }
 
     public void CheckForSteepSlope()
     {
-        if (_groundStoodOn.transform != null)
+        if (_groundHit.transform != null)
         {
-            if (Vector3.Angle(transform.up, _groundStoodOn.normal) > _charaCon.slopeLimit)
+            if (Vector3.Angle(transform.up, _groundHit.normal) > _charaCon.slopeLimit)
                 _fsm.ChangeState(PlayerStatesList.FALLINGDOWNSLOPE);
         }
     }
 
     public void CheckForNoGround()
     {
-        if (_groundStoodOn.transform == null)
+        if (_groundHit.transform == null)
             _fsm.ChangeState(PlayerStatesList.AIRBORNE);
     }
 
@@ -292,9 +298,7 @@ public class Player : MonoBehaviour
         //Reset many values when landing
         _currentFriction = _groundedFriction;
         _currentlyAppliedGravity = 0;
-        _steepSlopesMovement = Vector3.zero;
         _globalMomentum.y = 0;
-        _steepSlopesMovement = Vector3.zero;
         _coyoteTime = -1f;
 
         //Jump immediately if player is pressing jump
@@ -328,11 +332,44 @@ public class Player : MonoBehaviour
                               //dont check for a ground before the character actually jumps.
     }
 
+    public void ResetSlopeMovement()
+    {
+        _steepSlopesMovement = Vector3.zero;
+    }
+
     public void CheckForCeiling()
     {
-        if (Physics.SphereCast(transform.position, _ceilingSpherecastRadius, transform.up, out RaycastHit hit, _ceilingRaycastLength))
-            if (Vector3.Angle(Vector3.down, hit.normal) < _maxCeilingAngle)
+        if (_ceilingHit.transform != null)
+        {
+            //ceiling is pretty horizontal -> bonk
+            if (Vector3.Angle(Vector3.down, _ceilingHit.normal) < _maxCeilingAngle)
                 _currentlyAppliedGravity = 0f;
+
+            // ceiling is slopey -> slide along
+            else
+                _fsm.ChangeState(PlayerStatesList.JUMPINGUPSLOPE);
+        }
+    }
+
+    public void CheckForNoCeiling()
+    {
+        if (_ceilingHit.transform == null)
+            _fsm.ChangeState(PlayerStatesList.AIRBORNE);
+    }
+
+    public void JumpSlideUpSlope()
+    {
+        // Create slope variables
+        Vector3 temp = Vector3.Cross(_ceilingHit.normal, Vector3.up);
+        Vector3 slopeDir = Vector3.Cross(temp, _ceilingHit.normal);
+
+        _steepSlopesMovement = (slopeDir + Vector3.up) * _currentlyAppliedGravity * -(Vector3.Dot(_movementInputs.normalized, slopeDir) - 1);
+
+        // Nullify movement input towards wall
+        Vector3 ceilingHorizontalDir = new Vector3(slopeDir.x, 0, slopeDir.z).normalized;
+        float movementDot = Vector3.Dot(ceilingHorizontalDir, _movementInputs.normalized);
+        if (movementDot < 0)
+            _movementInputs += (ceilingHorizontalDir * _currentSpeed * -movementDot * Time.deltaTime);
     }
 
     public void ApplyJumpingGravity()
@@ -350,8 +387,8 @@ public class Player : MonoBehaviour
     public void FallDownSlope()
     {
         // Create slope variables
-        Vector3 temp = Vector3.Cross(_groundStoodOn.normal, Vector3.down);
-        Vector3 slopeDir = Vector3.Cross(temp, _groundStoodOn.normal);
+        Vector3 temp = Vector3.Cross(_groundHit.normal, Vector3.down);
+        Vector3 slopeDir = Vector3.Cross(temp, _groundHit.normal);
 
         //Add gravity in the right direction
         _currentlyAppliedGravity -= _gravity * _airborneDrag * Time.deltaTime;
@@ -434,8 +471,8 @@ public class Player : MonoBehaviour
         //Move along slopes
         if (_fsm.currentState.Name == PlayerStatesList.GROUNDED || _fsm.currentState.Name == PlayerStatesList.SLIDING)
         {
-            if (Vector3.Angle(transform.up, _groundStoodOn.normal) < _charaCon.slopeLimit)
-                direction = (direction - (Vector3.Dot(direction, _groundStoodOn.normal)) * _groundStoodOn.normal);
+            if (Vector3.Angle(transform.up, _groundHit.normal) < _charaCon.slopeLimit)
+                direction = (direction - (Vector3.Dot(direction, _groundHit.normal)) * _groundHit.normal);
         }
 
         //Actually move

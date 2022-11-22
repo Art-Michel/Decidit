@@ -10,5 +10,6 @@ public class PlayerStatesList : MonoBehaviour
     public const string SLIDING = "SLI";
     public const string WALLRIDING = "WRI";
     public const string WALLJUMPING = "WJU";
-    public const string FALLINGDOWNSLOPE = "SLP";
+    public const string FALLINGDOWNSLOPE = "FSL";
+    public const string JUMPINGUPSLOPE = "JSL";
 }
