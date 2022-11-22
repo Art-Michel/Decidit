@@ -54,6 +54,7 @@ public class Player : MonoBehaviour
     [Range(0, 50)][SerializeField] private float _jumpStrength = 14f;
     [Range(0, 10)][SerializeField] private float _airborneDrag = 3f;
     [Range(0, 10)][SerializeField] private float _jumpingDrag = 3f;
+    [Range(0, 90)][SerializeField] private float _maxCeilingAngle = 30f;
 
     private const float _gravity = 9.81f;
     private float _currentlyAppliedGravity;
@@ -63,6 +64,7 @@ public class Player : MonoBehaviour
     private const float _groundSpherecastLength = .65f; // _charaCon.height/2 - _charaCon.radius
     private const float _ceilingRaycastLength = 1f; // _charaCon.height/2 + 0.1f margin to mitigate skin width
     private const float _groundSpherecastRadius = .35f; // _charaCon.radius + 0.1f margin to mitigate skin width
+    private const float _ceilingSpherecastRadius = .25f; // _charaCon.radius
     private bool _justJumped;
     private float _jumpCooldown;
     private float _coyoteTime;
@@ -274,9 +276,7 @@ public class Player : MonoBehaviour
     {
         if (_groundStoodOn.transform != null)
         {
-            float angle = Vector3.Angle(transform.up, _groundStoodOn.normal);
-            Debug.Log(angle);
-            if (angle > _charaCon.slopeLimit &&  angle < 90)
+            if (Vector3.Angle(transform.up, _groundStoodOn.normal) > _charaCon.slopeLimit)
                 _fsm.ChangeState(PlayerStatesList.FALLINGDOWNSLOPE);
         }
     }
@@ -330,8 +330,9 @@ public class Player : MonoBehaviour
 
     public void CheckForCeiling()
     {
-        if (Physics.Raycast(transform.position, transform.up, _ceilingRaycastLength) && _currentlyAppliedGravity > 0)
-            _currentlyAppliedGravity = 0f;
+        if (Physics.SphereCast(transform.position, _ceilingSpherecastRadius, transform.up, out RaycastHit hit, _ceilingRaycastLength))
+            if (Vector3.Angle(Vector3.down, hit.normal) < _maxCeilingAngle)
+                _currentlyAppliedGravity = 0f;
     }
 
     public void ApplyJumpingGravity()
@@ -348,7 +349,6 @@ public class Player : MonoBehaviour
 
     public void FallDownSlope()
     {
-
         // Create slope variables
         Vector3 temp = Vector3.Cross(_groundStoodOn.normal, Vector3.down);
         Vector3 slopeDir = Vector3.Cross(temp, _groundStoodOn.normal);
