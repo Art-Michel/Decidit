@@ -24,6 +24,7 @@ public class PlayerFSM : MonoBehaviour
         AddState(new PlayerStateSliding());
         AddState(new PlayerStateWallriding());
         AddState(new PlayerStateWalljumping());
+        AddState(new PlayerStateFallingDownSlope());
 
         ChangeState(PlayerStatesList.GROUNDED);
     }
@@ -58,11 +59,5 @@ public class PlayerFSM : MonoBehaviour
         previousState = currentState;
         currentState = nextState;
         currentState.Begin();
-    }
-
-    private void Update()
-    {
-        if (currentState != null)
-            currentState.StateUpdate();
     }
 }

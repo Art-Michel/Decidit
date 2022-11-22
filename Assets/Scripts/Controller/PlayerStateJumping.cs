@@ -16,9 +16,9 @@ public class PlayerStateJumping : PlayerState
 
     public override void StateUpdate()
     {
-        _player.CheckForGround();
         _player.ApplyJumpingGravity();
         _player.CheckForCeiling();
+        _player.CheckForGround();
     }
 
     public override void Exit()

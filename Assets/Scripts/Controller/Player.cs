@@ -74,7 +74,7 @@ public class Player : MonoBehaviour
     [Header("Movement Settings")]
     [Range(0, 20)]
     [SerializeField]
-    private float _movementSpeed = 9f;
+    private float _baseSpeed = 9f;
     [Range(0, 1)]
     [SerializeField]
     private float _movementAccelerationSpeed = 0.0666f; //Approx 4 frames
@@ -94,6 +94,7 @@ public class Player : MonoBehaviour
     // ADD LATER [Range(0, 100)][SerializeField] private float _slidingFriction = 5f;
     private float _currentFriction;
 
+    private float _currentSpeed;
     private Vector3 _movementInputs; // X is Left-Right and Z is Backward-Forward
     private Vector3 _lastFrameMovementInputs;
     private Vector3 _globalMomentum;
@@ -115,6 +116,7 @@ public class Player : MonoBehaviour
         transform.rotation = Quaternion.identity;
         _movementInputs = Vector2.zero;
         _globalMomentum = Vector3.zero;
+        _currentSpeed = _baseSpeed;
         _currentlyAppliedGravity = 0;
         _movementAcceleration = 0;
         SetCameraInvert();
@@ -148,12 +150,19 @@ public class Player : MonoBehaviour
         HandleMovementAcceleration();
         UpdateGlobalMomentum();
 
+        //State update
+        if (_fsm.currentState != null)
+            _fsm.currentState.StateUpdate();
+
         //Final Movement Formula //I got lost with the deltatime stuff but i swear it works perfectly
         _finalMovement = (_globalMomentum * Time.deltaTime) + (_movementInputs) + (Vector3.up * _currentlyAppliedGravity * Time.deltaTime) + (_steepSlopesMovement * Time.deltaTime);
 
         //Debug Values on screen
         UpdateDebugTexts();
+    }
 
+    void LateUpdate()
+    {
         //Apply Movement
         ApplyMovementsToCharacter(_finalMovement);
     }
@@ -200,12 +209,6 @@ public class Player : MonoBehaviour
 
         //Ceiling Cast
         Debug.DrawLine(transform.position, transform.position + (transform.up * (_ceilingRaycastLength)), Color.cyan, 0f);
-
-        if (_debugCapsuleMesh)
-        {
-            Gizmos.color = Color.white;
-            Gizmos.DrawWireMesh(_debugCapsuleMesh, transform.position, Quaternion.identity, new Vector3(.5f, .9f, .5f));
-        }
 #endif
     }
     #endregion
@@ -272,7 +275,7 @@ public class Player : MonoBehaviour
         if (_groundStoodOn.transform != null)
         {
             if (Vector3.Angle(transform.up, _groundStoodOn.normal) > _charaCon.slopeLimit)
-                _fsm.ChangeState(PlayerStatesList.AIRBORNE);
+                _fsm.ChangeState(PlayerStatesList.FALLINGDOWNSLOPE);
         }
     }
 
@@ -281,7 +284,6 @@ public class Player : MonoBehaviour
         if (_groundStoodOn.transform == null)
             _fsm.ChangeState(PlayerStatesList.AIRBORNE);
     }
-
 
     public void Land()
     {
@@ -302,6 +304,8 @@ public class Player : MonoBehaviour
         _currentFriction = _airborneFriction;
         if (_fsm.previousState.Name != PlayerStatesList.JUMPING)
             _coyoteTime = _coyoteMaxTime;
+        if (_fsm.previousState.Name != PlayerStatesList.FALLINGDOWNSLOPE)
+            _currentlyAppliedGravity *= 0.8f;
     }
 
     #endregion
@@ -309,7 +313,7 @@ public class Player : MonoBehaviour
     #region Jumping and Falling Functions
     private void PressJump()
     {
-        if (_fsm.currentState.Name == PlayerStatesList.GROUNDED || (_fsm.currentState.Name == PlayerStatesList.AIRBORNE && _coyoteTime > 0f))
+        if (_fsm.currentState.Name == PlayerStatesList.GROUNDED || (_fsm.currentState.Name == PlayerStatesList.AIRBORNE && _coyoteTime > 0f) || (_fsm.currentState.Name == PlayerStatesList.FALLINGDOWNSLOPE && _coyoteTime > 0f))
             _fsm.ChangeState(PlayerStatesList.JUMPING);
     }
 
@@ -338,13 +342,25 @@ public class Player : MonoBehaviour
     public void ApplyAirborneGravity()
     {
         _currentlyAppliedGravity -= _gravity * _airborneDrag * Time.deltaTime;
-        // if (_currentState == _playerState.FallingDownSlope)
-        // {
-        //     Vector3 temp = Vector3.Cross(_groundStoodOn.normal, Vector3.down);
-        //     Vector3 groundSlopeDir = Vector3.Cross(temp, _groundStoodOn.normal);
-        //     _steepSlopesMovement = (groundSlopeDir + Vector3.down) * -_currentlyAppliedGravity * -(Vector3.Dot(_movementInputs.normalized, groundSlopeDir) - 1);
-        //     _movementInputs *= (Vector3.Dot(_movementInputs.normalized, _groundStoodOn.normal.normalized + groundSlopeDir.normalized) + 1);
-        // }
+    }
+
+    public void FallDownSlope()
+    {
+
+        // Create slope variables
+        Vector3 temp = Vector3.Cross(_groundStoodOn.normal, Vector3.down);
+        Vector3 slopeDir = Vector3.Cross(temp, _groundStoodOn.normal);
+
+        //Add gravity in the right direction
+        _currentlyAppliedGravity -= _gravity * _airborneDrag * Time.deltaTime;
+        _steepSlopesMovement = (slopeDir + Vector3.down) * -_currentlyAppliedGravity * -(Vector3.Dot(_movementInputs.normalized, slopeDir) - 1);
+
+        // Nullify movement input towards wall
+        Vector3 slopeHorizontalDir = new Vector3(slopeDir.x, 0, slopeDir.z).normalized;
+        float movementDot = Vector3.Dot(slopeHorizontalDir, _movementInputs.normalized);
+        Debug.Log(movementDot);
+        if (movementDot < 0)
+            _movementInputs += (slopeHorizontalDir * _currentSpeed * -movementDot * Time.deltaTime);
     }
 
     #endregion
@@ -382,7 +398,7 @@ public class Player : MonoBehaviour
         //Store this frame's input
         _lastFrameMovementInputs = _movementInputs;
 
-        _movementInputs *= Time.deltaTime * _movementSpeed;
+        _movementInputs *= Time.deltaTime * _currentSpeed;
     }
 
     private void HandleMovementAcceleration()

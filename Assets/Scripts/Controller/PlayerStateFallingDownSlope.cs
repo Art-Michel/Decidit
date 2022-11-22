@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStateAirborne : PlayerState
+public class PlayerStateFallingDownSlope : PlayerState
 {
-    public PlayerStateAirborne() : base(PlayerStatesList.AIRBORNE)
+    public PlayerStateFallingDownSlope() : base(PlayerStatesList.FALLINGDOWNSLOPE)
     {
 
     }
@@ -16,8 +16,7 @@ public class PlayerStateAirborne : PlayerState
 
     public override void StateUpdate()
     {
-        _player.ApplyAirborneGravity();
-        _player.CheckForSteepSlope();
+        _player.FallDownSlope();
         _player.CheckForGround();
     }
 
