@@ -1,11 +1,6 @@
-using System.Runtime.InteropServices;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEditor;
-using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
@@ -133,8 +128,6 @@ public class Player : MonoBehaviour
     private void Update() //Things that are StateMachine-unrelated
     {
         //Cooldowns
-        if (_coyoteTime > 0f)
-            _coyoteTime -= Time.deltaTime;
         if (_justJumped)
         {
             _jumpCooldown -= Time.deltaTime;
@@ -299,7 +292,7 @@ public class Player : MonoBehaviour
         _currentFriction = _groundedFriction;
         _currentlyAppliedGravity = 0;
         _globalMomentum.y = 0;
-        _coyoteTime = -1f;
+        _coyoteTime = _coyoteMaxTime;
 
         //Jump immediately if player is pressing jump
         if (_inputs.FirstPersonCamera.Jump.IsPressed()) PressJump();
@@ -308,8 +301,6 @@ public class Player : MonoBehaviour
     public void StartFalling()
     {
         _currentFriction = _airborneFriction;
-        if (_fsm.previousState.Name != PlayerStatesList.JUMPING)
-            _coyoteTime = _coyoteMaxTime;
         if (_fsm.previousState.Name != PlayerStatesList.FALLINGDOWNSLOPE)
             _currentlyAppliedGravity *= 0.8f;
     }
@@ -319,7 +310,11 @@ public class Player : MonoBehaviour
     #region Jumping and Falling Functions
     private void PressJump()
     {
-        if (_fsm.currentState.Name == PlayerStatesList.GROUNDED || (_fsm.currentState.Name == PlayerStatesList.AIRBORNE && _coyoteTime > 0f) || (_fsm.currentState.Name == PlayerStatesList.FALLINGDOWNSLOPE && _coyoteTime > 0f))
+        bool jumpCondition;
+        jumpCondition = _fsm.currentState.Name == PlayerStatesList.GROUNDED;
+        jumpCondition = jumpCondition || (_fsm.currentState.Name == PlayerStatesList.AIRBORNE && _coyoteTime > 0f);
+        jumpCondition = jumpCondition || (_fsm.currentState.Name == PlayerStatesList.FALLINGDOWNSLOPE && _coyoteTime > 0f);
+        if (jumpCondition)
             _fsm.ChangeState(PlayerStatesList.JUMPING);
     }
 
@@ -327,9 +322,16 @@ public class Player : MonoBehaviour
     {
         _currentlyAppliedGravity = _jumpStrength;
         _justJumped = true;
+        _coyoteTime = -1f;
         _currentFriction = _airborneFriction;
         _jumpCooldown = 0.1f; //min time allowed between two jumps, to avoid mashing jump up slopes and so we
                               //dont check for a ground before the character actually jumps.
+    }
+
+    public void UpdateCoyoteTime()
+    {
+        if (_coyoteTime > 0f)
+            _coyoteTime -= Time.deltaTime;
     }
 
     public void ResetSlopeMovement()

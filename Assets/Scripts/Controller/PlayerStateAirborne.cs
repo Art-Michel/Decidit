@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class PlayerStateAirborne : PlayerState
 {
@@ -17,6 +14,7 @@ public class PlayerStateAirborne : PlayerState
     public override void StateUpdate()
     {
         _player.ApplyAirborneGravity();
+        _player.UpdateCoyoteTime();
         _player.CheckForSteepSlope();
         _player.CheckForGround();
     }

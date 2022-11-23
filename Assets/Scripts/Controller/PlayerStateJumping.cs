@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class PlayerStateJumping : PlayerState
 {
@@ -11,7 +8,8 @@ public class PlayerStateJumping : PlayerState
 
     public override void Begin()
     {
-        _player.StartJumping();
+        if (_fsm.previousState.Name != PlayerStatesList.JUMPINGUPSLOPE)
+            _player.StartJumping();
     }
 
     public override void StateUpdate()
@@ -23,7 +21,7 @@ public class PlayerStateJumping : PlayerState
 
     public override void Exit()
     {
-        
+
     }
 
 }

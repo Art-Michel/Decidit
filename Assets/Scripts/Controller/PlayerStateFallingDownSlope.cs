@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class PlayerStateFallingDownSlope : PlayerState
 {
@@ -17,6 +14,7 @@ public class PlayerStateFallingDownSlope : PlayerState
     public override void StateUpdate()
     {
         _player.FallDownSlope();
+        _player.UpdateCoyoteTime();
         _player.CheckForGround();
         _player.CheckForNoGround();
     }

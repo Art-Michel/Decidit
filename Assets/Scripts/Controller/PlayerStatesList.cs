@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class PlayerStatesList : MonoBehaviour
+public class PlayerStatesList
 {
     public const string GROUNDED = "GRO";
     public const string JUMPING = "JUM";
