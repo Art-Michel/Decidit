@@ -14,7 +14,7 @@ public class PlayerStateAirborne : PlayerState
     public override void StateUpdate()
     {
         _player.ApplyAirborneGravity();
-        _player.UpdateCoyoteTime();
+        _player.CoyoteTimeCooldown();
         _player.CheckForSteepSlope();
         _player.CheckForGround();
     }

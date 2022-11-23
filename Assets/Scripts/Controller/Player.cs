@@ -127,13 +127,6 @@ public class Player : MonoBehaviour
 
     private void Update() //Things that are StateMachine-unrelated
     {
-        //Cooldowns
-        if (_justJumped)
-        {
-            _jumpCooldown -= Time.deltaTime;
-            if (_jumpCooldown <= 0) _justJumped = false;
-        }
-
         //Camera
         MoveCameraWithRightStick();
         MoveCameraWithMouse();
@@ -328,7 +321,16 @@ public class Player : MonoBehaviour
                               //dont check for a ground before the character actually jumps.
     }
 
-    public void UpdateCoyoteTime()
+    public void JumpCooldown()
+    {
+        if (_justJumped)
+        {
+            _jumpCooldown -= Time.deltaTime;
+            if (_jumpCooldown <= 0) _justJumped = false;
+        }
+    }
+
+    public void CoyoteTimeCooldown()
     {
         if (_coyoteTime > 0f)
             _coyoteTime -= Time.deltaTime;

@@ -14,6 +14,7 @@ public class PlayerStateJumping : PlayerState
 
     public override void StateUpdate()
     {
+        _player.JumpCooldown();
         _player.ApplyJumpingGravity();
         _player.CheckForCeiling();
         _player.CheckForGround();
