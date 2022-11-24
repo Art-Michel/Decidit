@@ -16,7 +16,6 @@ public class PlayerStateJumpingUpSlope : PlayerState
         _player.ApplyJumpingGravity();
         _player.JumpSlideUpSlope();
         _player.CheckForNoCeiling();
-        _player.CheckForGround();
     }
 
     public override void Exit()

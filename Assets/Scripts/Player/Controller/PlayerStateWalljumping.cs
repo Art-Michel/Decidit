@@ -14,7 +14,6 @@ public class PlayerStateWalljumping : PlayerState
     public override void StateUpdate()
     {
         _player.ApplyJumpingGravity();
-        _player.CheckForGround();
         _player.CheckForCeiling();
     }
 
