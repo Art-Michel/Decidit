@@ -3,15 +3,14 @@ using UnityEngine.UI;
 
 public class PlayerHealth : Health
 {
-    [SerializeField] Image _HpCursor;
+    [SerializeField] Image _hpCursor;
+    [SerializeField] RectTransform _hpBarStart;
+    [SerializeField] RectTransform _hpBarEnd;
 
     protected override void DisplayHealth()
     {
         base.DisplayHealth();
-        if (_HpCursor)
-        {
-            float x = 0; //TODO calculer ça
-            _HpCursor.rectTransform.position = new Vector3(x , _hpUi.rectTransform.position.y, 0);
-        }
+        if (_hpCursor)
+            _hpCursor.rectTransform.anchoredPosition = Vector2.Lerp(_hpBarStart.anchoredPosition,_hpBarEnd.anchoredPosition, _hpUi.fillAmount);
     }
 }
