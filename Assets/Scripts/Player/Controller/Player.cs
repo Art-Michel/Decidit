@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using TMPro;
 
-public class Player : MonoBehaviour
+public class Player : LocalManager<Player>
 {
     #region References
     [Header("References")]
@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     [SerializeField] CharacterController _charaCon;
     PlayerInputMap _inputs;
     PlayerFSM _fsm;
+    PlayerHealth _playerHealth;
     #endregion
 
     #region Camera rotation variables
@@ -102,9 +103,11 @@ public class Player : MonoBehaviour
     private Vector3 _finalMovement;
     #endregion
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         _fsm = GetComponent<PlayerFSM>();
+        _playerHealth = GetComponent<PlayerHealth>();
         _inputs = new PlayerInputMap();
         _inputs.FirstPersonCamera.Jump.started += _ => PressJump();
     }

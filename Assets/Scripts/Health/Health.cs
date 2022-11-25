@@ -12,7 +12,7 @@ public class Health : MonoBehaviour
     [Header("Stats")]
     [Range(1, 300)][SerializeField] protected float _maxHp = 100;
     [Range(0, 3)][SerializeField] float _probationMaxStartup = 1;
-    [Range(0.1f, 20)][SerializeField] float _probationSpeed = 1;
+    [Range(0.1f, 60)][SerializeField] float _probationSpeed = 15;
 
     protected float _hp;
     protected float _probHp;
@@ -20,7 +20,7 @@ public class Health : MonoBehaviour
     protected float _probationStartup;
 
 
-    protected void Start()
+    protected virtual void Start()
     {
         _hp = _maxHp;
         _probHp = _hp;
@@ -29,7 +29,7 @@ public class Health : MonoBehaviour
         DisplayProbHealth();
     }
 
-    void Update()
+    protected virtual void Update()
     {
         if (_hasProbation)
             UpdateProbHealth();
