@@ -53,7 +53,7 @@ public class Revolver : MonoBehaviour
     void Debugging()
     {
 #if UNITY_EDITOR
-        if (_debugStateText &&  _fsm.currentState!=null)
+        if (_debugStateText && _fsm.currentState != null)
             _debugStateText.text = ("Revolver state: " + _fsm.currentState.Name);
 #endif
     }
