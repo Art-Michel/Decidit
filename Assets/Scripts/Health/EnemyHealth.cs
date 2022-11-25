@@ -17,6 +17,8 @@ public class EnemyHealth : Health
     [SerializeField][Range(0.0001f, 10f)] float _lookStrictness = 0.99f;
     [SerializeField][Range(0.5f, 10f)] float _appearSpeed = 9f;
     [SerializeField][Range(0.5f, 10f)] float _disappearSpeed = 1f;
+    [SerializeField][Range(0f, 2f)] float _disappearMaxStartup = 1f;
+    float _disappearStartup;
     float _appearT;
     bool _isVisible;
 
@@ -68,11 +70,18 @@ public class EnemyHealth : Health
         {
             _appearT = Mathf.Clamp01(_appearT + Time.deltaTime * _appearSpeed);
             _canvasGroup.alpha = Mathf.Lerp(0, 1, _appearT);
+            _disappearStartup = _disappearMaxStartup;
         }
 
         //progressively undisplay healthbar
         if (!_isVisible && _appearT > 0)
         {
+            if (_disappearStartup > 0f)
+            {
+                _disappearStartup -= Time.deltaTime;
+                return;
+            }
+
             _appearT = Mathf.Clamp01(_appearT - Time.deltaTime * _disappearSpeed);
             _canvasGroup.alpha = Mathf.Lerp(0, 1, _appearT);
         }
