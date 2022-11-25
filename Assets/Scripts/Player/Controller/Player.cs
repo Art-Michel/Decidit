@@ -123,11 +123,6 @@ public class Player : LocalManager<Player>
         SetCameraInvert();
     }
 
-    //TODO // Slopes behaviours
-    //TODO Walljump?
-    //? when airborne, Raycast towards inputDirection and, if wall, and if Vector3.Dot(inputdirection, wall.normal) ~= -1, wallride
-    //? jump again when wallriding to walljump => add jumpStrength to gravity; reset momentum; and add wall's normal to momentum
-
     private void Update() //Things that are StateMachine-unrelated
     {
         //jump cooldown
@@ -173,7 +168,7 @@ public class Player : LocalManager<Player>
     {
 #if UNITY_EDITOR
         if (_debugStateText)
-            _debugStateText.text = _fsm.currentState.Name;
+            _debugStateText.text = ("Character state: " + _fsm.currentState.Name);
 
         if (_debugInputVelocityText)
             _debugInputVelocityText.text =

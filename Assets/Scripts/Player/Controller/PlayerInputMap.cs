@@ -227,13 +227,85 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Gun1"",
+                    ""type"": ""Button"",
+                    ""id"": ""7a3fe3ba-8f39-4ff1-9069-9971672ecf10"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Gun2"",
+                    ""type"": ""Button"",
+                    ""id"": ""caf670af-a360-4211-8380-ed6c19ac7441"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Gun3"",
+                    ""type"": ""Button"",
+                    ""id"": ""1347b817-829a-41df-bc09-1a7619e91ca4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Gun4"",
+                    ""type"": ""Button"",
+                    ""id"": ""1f13490c-f1b2-4b18-b076-86c0f710b1dc"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Skill1"",
+                    ""type"": ""Button"",
+                    ""id"": ""56556aed-9db0-490a-b82a-f9948e2c0f46"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Skill2"",
+                    ""type"": ""Button"",
+                    ""id"": ""f5cc94f5-c99c-41f5-a255-5daea5aab0a3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Skill3"",
+                    ""type"": ""Button"",
+                    ""id"": ""9606d852-5015-4058-ae40-9ffcff58a95c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Skill4"",
+                    ""type"": ""Button"",
+                    ""id"": ""ea9c3391-0e30-4a72-8253-5fda05854f03"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
                 {
                     ""name"": """",
                     ""id"": ""f92afc97-45de-41b0-9214-83ad78ee8cd3"",
-                    ""path"": ""<Keyboard>/1"",
+                    ""path"": ""<Keyboard>/z"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -244,7 +316,7 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""3513621d-be26-4cd5-a0bd-223721c8c63a"",
-                    ""path"": ""<Keyboard>/2"",
+                    ""path"": ""<Keyboard>/x"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard Mouse"",
@@ -284,6 +356,252 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                     ""action"": ""ChangeTimeScale"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6552b25d-ac5c-46a6-998f-090d25298ebd"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard Mouse"",
+                    ""action"": ""Gun1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b5658256-a918-43d1-a029-50e6a9392522"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard Mouse"",
+                    ""action"": ""Gun2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e98f0ec5-d10c-49bc-b370-6eff3328cf78"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard Mouse"",
+                    ""action"": ""Gun4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""67d43327-56d0-42f2-abfd-c7668864536b"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard Mouse"",
+                    ""action"": ""Gun3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""One Modifier"",
+                    ""id"": ""c55672cc-ae17-4d63-88c4-f3c50a3452b5"",
+                    ""path"": ""OneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Skill1"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""c2b33dd3-4127-44f9-99f1-9f98cd22ad1a"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Skill1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""binding"",
+                    ""id"": ""759f5c9a-240d-4d96-9f00-5b6ef422c972"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Skill1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""One Modifier"",
+                    ""id"": ""16409ffd-1f01-4671-92fb-875f4c093feb"",
+                    ""path"": ""OneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Skill2"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""323ab590-92f1-4f16-9394-f0e5767efe2f"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Skill2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""binding"",
+                    ""id"": ""69b975b2-2b20-49ab-b08d-929f96136b97"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Skill2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""One Modifier"",
+                    ""id"": ""af9f9d0e-807d-41a7-8465-a454c5676218"",
+                    ""path"": ""OneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Skill3"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""14b48b3b-4325-444d-bb69-a99831e91f69"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Skill3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""binding"",
+                    ""id"": ""028f1854-403c-422d-9fb6-406b2fe1c060"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Skill3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""One Modifier"",
+                    ""id"": ""b36b4943-bea8-435f-95be-da938eec2e73"",
+                    ""path"": ""OneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Skill4"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""5c0df695-9f5d-4c63-a3d7-9073db4ccee6"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Skill4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""binding"",
+                    ""id"": ""b5d0b018-68e4-4142-a0de-4f70eb995baa"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Skill4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                }
+            ]
+        },
+        {
+            ""name"": ""Shooting"",
+            ""id"": ""e3b37b3a-b7dc-4ab7-8ee8-56df17f48a01"",
+            ""actions"": [
+                {
+                    ""name"": ""Shoot"",
+                    ""type"": ""Button"",
+                    ""id"": ""ed3f7bf0-e61c-40fc-b550-9084afb34fa1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Reload"",
+                    ""type"": ""Button"",
+                    ""id"": ""59da80fd-13d6-4907-9c2e-4ee298da4015"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""c7cbbe7a-b738-4bb9-bea4-50f7b85a692e"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard Mouse"",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a45691b2-d916-4c0c-8c71-7f4adb5f6fea"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2c4704de-213a-49fa-9eb0-f14979c2e3a1"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard Mouse"",
+                    ""action"": ""Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7dea034c-c1fb-44df-8133-2a715b1129e3"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -340,6 +658,18 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
         m_Debugging_ChangeFramerate = m_Debugging.FindAction("ChangeFramerate", throwIfNotFound: true);
         m_Debugging_Unfocus = m_Debugging.FindAction("Unfocus", throwIfNotFound: true);
         m_Debugging_ChangeTimeScale = m_Debugging.FindAction("ChangeTimeScale", throwIfNotFound: true);
+        m_Debugging_Gun1 = m_Debugging.FindAction("Gun1", throwIfNotFound: true);
+        m_Debugging_Gun2 = m_Debugging.FindAction("Gun2", throwIfNotFound: true);
+        m_Debugging_Gun3 = m_Debugging.FindAction("Gun3", throwIfNotFound: true);
+        m_Debugging_Gun4 = m_Debugging.FindAction("Gun4", throwIfNotFound: true);
+        m_Debugging_Skill1 = m_Debugging.FindAction("Skill1", throwIfNotFound: true);
+        m_Debugging_Skill2 = m_Debugging.FindAction("Skill2", throwIfNotFound: true);
+        m_Debugging_Skill3 = m_Debugging.FindAction("Skill3", throwIfNotFound: true);
+        m_Debugging_Skill4 = m_Debugging.FindAction("Skill4", throwIfNotFound: true);
+        // Shooting
+        m_Shooting = asset.FindActionMap("Shooting", throwIfNotFound: true);
+        m_Shooting_Shoot = m_Shooting.FindAction("Shoot", throwIfNotFound: true);
+        m_Shooting_Reload = m_Shooting.FindAction("Reload", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -467,6 +797,14 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
     private readonly InputAction m_Debugging_ChangeFramerate;
     private readonly InputAction m_Debugging_Unfocus;
     private readonly InputAction m_Debugging_ChangeTimeScale;
+    private readonly InputAction m_Debugging_Gun1;
+    private readonly InputAction m_Debugging_Gun2;
+    private readonly InputAction m_Debugging_Gun3;
+    private readonly InputAction m_Debugging_Gun4;
+    private readonly InputAction m_Debugging_Skill1;
+    private readonly InputAction m_Debugging_Skill2;
+    private readonly InputAction m_Debugging_Skill3;
+    private readonly InputAction m_Debugging_Skill4;
     public struct DebuggingActions
     {
         private @PlayerInputMap m_Wrapper;
@@ -474,6 +812,14 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
         public InputAction @ChangeFramerate => m_Wrapper.m_Debugging_ChangeFramerate;
         public InputAction @Unfocus => m_Wrapper.m_Debugging_Unfocus;
         public InputAction @ChangeTimeScale => m_Wrapper.m_Debugging_ChangeTimeScale;
+        public InputAction @Gun1 => m_Wrapper.m_Debugging_Gun1;
+        public InputAction @Gun2 => m_Wrapper.m_Debugging_Gun2;
+        public InputAction @Gun3 => m_Wrapper.m_Debugging_Gun3;
+        public InputAction @Gun4 => m_Wrapper.m_Debugging_Gun4;
+        public InputAction @Skill1 => m_Wrapper.m_Debugging_Skill1;
+        public InputAction @Skill2 => m_Wrapper.m_Debugging_Skill2;
+        public InputAction @Skill3 => m_Wrapper.m_Debugging_Skill3;
+        public InputAction @Skill4 => m_Wrapper.m_Debugging_Skill4;
         public InputActionMap Get() { return m_Wrapper.m_Debugging; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -492,6 +838,30 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                 @ChangeTimeScale.started -= m_Wrapper.m_DebuggingActionsCallbackInterface.OnChangeTimeScale;
                 @ChangeTimeScale.performed -= m_Wrapper.m_DebuggingActionsCallbackInterface.OnChangeTimeScale;
                 @ChangeTimeScale.canceled -= m_Wrapper.m_DebuggingActionsCallbackInterface.OnChangeTimeScale;
+                @Gun1.started -= m_Wrapper.m_DebuggingActionsCallbackInterface.OnGun1;
+                @Gun1.performed -= m_Wrapper.m_DebuggingActionsCallbackInterface.OnGun1;
+                @Gun1.canceled -= m_Wrapper.m_DebuggingActionsCallbackInterface.OnGun1;
+                @Gun2.started -= m_Wrapper.m_DebuggingActionsCallbackInterface.OnGun2;
+                @Gun2.performed -= m_Wrapper.m_DebuggingActionsCallbackInterface.OnGun2;
+                @Gun2.canceled -= m_Wrapper.m_DebuggingActionsCallbackInterface.OnGun2;
+                @Gun3.started -= m_Wrapper.m_DebuggingActionsCallbackInterface.OnGun3;
+                @Gun3.performed -= m_Wrapper.m_DebuggingActionsCallbackInterface.OnGun3;
+                @Gun3.canceled -= m_Wrapper.m_DebuggingActionsCallbackInterface.OnGun3;
+                @Gun4.started -= m_Wrapper.m_DebuggingActionsCallbackInterface.OnGun4;
+                @Gun4.performed -= m_Wrapper.m_DebuggingActionsCallbackInterface.OnGun4;
+                @Gun4.canceled -= m_Wrapper.m_DebuggingActionsCallbackInterface.OnGun4;
+                @Skill1.started -= m_Wrapper.m_DebuggingActionsCallbackInterface.OnSkill1;
+                @Skill1.performed -= m_Wrapper.m_DebuggingActionsCallbackInterface.OnSkill1;
+                @Skill1.canceled -= m_Wrapper.m_DebuggingActionsCallbackInterface.OnSkill1;
+                @Skill2.started -= m_Wrapper.m_DebuggingActionsCallbackInterface.OnSkill2;
+                @Skill2.performed -= m_Wrapper.m_DebuggingActionsCallbackInterface.OnSkill2;
+                @Skill2.canceled -= m_Wrapper.m_DebuggingActionsCallbackInterface.OnSkill2;
+                @Skill3.started -= m_Wrapper.m_DebuggingActionsCallbackInterface.OnSkill3;
+                @Skill3.performed -= m_Wrapper.m_DebuggingActionsCallbackInterface.OnSkill3;
+                @Skill3.canceled -= m_Wrapper.m_DebuggingActionsCallbackInterface.OnSkill3;
+                @Skill4.started -= m_Wrapper.m_DebuggingActionsCallbackInterface.OnSkill4;
+                @Skill4.performed -= m_Wrapper.m_DebuggingActionsCallbackInterface.OnSkill4;
+                @Skill4.canceled -= m_Wrapper.m_DebuggingActionsCallbackInterface.OnSkill4;
             }
             m_Wrapper.m_DebuggingActionsCallbackInterface = instance;
             if (instance != null)
@@ -505,10 +875,75 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                 @ChangeTimeScale.started += instance.OnChangeTimeScale;
                 @ChangeTimeScale.performed += instance.OnChangeTimeScale;
                 @ChangeTimeScale.canceled += instance.OnChangeTimeScale;
+                @Gun1.started += instance.OnGun1;
+                @Gun1.performed += instance.OnGun1;
+                @Gun1.canceled += instance.OnGun1;
+                @Gun2.started += instance.OnGun2;
+                @Gun2.performed += instance.OnGun2;
+                @Gun2.canceled += instance.OnGun2;
+                @Gun3.started += instance.OnGun3;
+                @Gun3.performed += instance.OnGun3;
+                @Gun3.canceled += instance.OnGun3;
+                @Gun4.started += instance.OnGun4;
+                @Gun4.performed += instance.OnGun4;
+                @Gun4.canceled += instance.OnGun4;
+                @Skill1.started += instance.OnSkill1;
+                @Skill1.performed += instance.OnSkill1;
+                @Skill1.canceled += instance.OnSkill1;
+                @Skill2.started += instance.OnSkill2;
+                @Skill2.performed += instance.OnSkill2;
+                @Skill2.canceled += instance.OnSkill2;
+                @Skill3.started += instance.OnSkill3;
+                @Skill3.performed += instance.OnSkill3;
+                @Skill3.canceled += instance.OnSkill3;
+                @Skill4.started += instance.OnSkill4;
+                @Skill4.performed += instance.OnSkill4;
+                @Skill4.canceled += instance.OnSkill4;
             }
         }
     }
     public DebuggingActions @Debugging => new DebuggingActions(this);
+
+    // Shooting
+    private readonly InputActionMap m_Shooting;
+    private IShootingActions m_ShootingActionsCallbackInterface;
+    private readonly InputAction m_Shooting_Shoot;
+    private readonly InputAction m_Shooting_Reload;
+    public struct ShootingActions
+    {
+        private @PlayerInputMap m_Wrapper;
+        public ShootingActions(@PlayerInputMap wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Shoot => m_Wrapper.m_Shooting_Shoot;
+        public InputAction @Reload => m_Wrapper.m_Shooting_Reload;
+        public InputActionMap Get() { return m_Wrapper.m_Shooting; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(ShootingActions set) { return set.Get(); }
+        public void SetCallbacks(IShootingActions instance)
+        {
+            if (m_Wrapper.m_ShootingActionsCallbackInterface != null)
+            {
+                @Shoot.started -= m_Wrapper.m_ShootingActionsCallbackInterface.OnShoot;
+                @Shoot.performed -= m_Wrapper.m_ShootingActionsCallbackInterface.OnShoot;
+                @Shoot.canceled -= m_Wrapper.m_ShootingActionsCallbackInterface.OnShoot;
+                @Reload.started -= m_Wrapper.m_ShootingActionsCallbackInterface.OnReload;
+                @Reload.performed -= m_Wrapper.m_ShootingActionsCallbackInterface.OnReload;
+                @Reload.canceled -= m_Wrapper.m_ShootingActionsCallbackInterface.OnReload;
+            }
+            m_Wrapper.m_ShootingActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Shoot.started += instance.OnShoot;
+                @Shoot.performed += instance.OnShoot;
+                @Shoot.canceled += instance.OnShoot;
+                @Reload.started += instance.OnReload;
+                @Reload.performed += instance.OnReload;
+                @Reload.canceled += instance.OnReload;
+            }
+        }
+    }
+    public ShootingActions @Shooting => new ShootingActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -540,5 +975,18 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
         void OnChangeFramerate(InputAction.CallbackContext context);
         void OnUnfocus(InputAction.CallbackContext context);
         void OnChangeTimeScale(InputAction.CallbackContext context);
+        void OnGun1(InputAction.CallbackContext context);
+        void OnGun2(InputAction.CallbackContext context);
+        void OnGun3(InputAction.CallbackContext context);
+        void OnGun4(InputAction.CallbackContext context);
+        void OnSkill1(InputAction.CallbackContext context);
+        void OnSkill2(InputAction.CallbackContext context);
+        void OnSkill3(InputAction.CallbackContext context);
+        void OnSkill4(InputAction.CallbackContext context);
+    }
+    public interface IShootingActions
+    {
+        void OnShoot(InputAction.CallbackContext context);
+        void OnReload(InputAction.CallbackContext context);
     }
 }
