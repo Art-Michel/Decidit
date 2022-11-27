@@ -24,36 +24,9 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
     ""name"": ""PlayerInputMap"",
     ""maps"": [
         {
-            ""name"": ""FirstPersonCamera"",
+            ""name"": ""Movement"",
             ""id"": ""863135e6-bea6-4ed2-b692-413856ebbc9f"",
             ""actions"": [
-                {
-                    ""name"": ""Rotate"",
-                    ""type"": ""Value"",
-                    ""id"": ""01a0b487-aa39-4b9f-8f45-43ad21bf9009"",
-                    ""expectedControlType"": ""Delta"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""RotateX"",
-                    ""type"": ""Value"",
-                    ""id"": ""e491d7e4-43be-4119-8b69-a84644feefd5"",
-                    ""expectedControlType"": ""Analog"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""RotateY"",
-                    ""type"": ""Value"",
-                    ""id"": ""29451bb7-91e8-4d2d-9acd-10ed968a1da8"",
-                    ""expectedControlType"": ""Analog"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
                 {
                     ""name"": ""Move"",
                     ""type"": ""Value"",
@@ -71,42 +44,18 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Slide"",
+                    ""type"": ""Button"",
+                    ""id"": ""c28de2aa-cf1b-44aa-9352-2a93b7ef0b1b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""ac486cd9-a9d1-4608-a39c-40a7e99bd4c6"",
-                    ""path"": ""<Mouse>/delta"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard Mouse"",
-                    ""action"": ""Rotate"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""40ce88d8-245c-4004-9ae5-5d0b0d3d0347"",
-                    ""path"": ""<Gamepad>/rightStick/x"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Controller"",
-                    ""action"": ""RotateX"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""46794db6-9378-4cbc-83fe-f0befe03ec39"",
-                    ""path"": ""<Gamepad>/rightStick/y"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Controller"",
-                    ""action"": ""RotateY"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
                 {
                     ""name"": """",
                     ""id"": ""838ba2a6-c262-4c0d-83e0-c3af829dbc19"",
@@ -192,6 +141,50 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Controller"",
                     ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""76e27c00-6546-465d-8880-d8b398bd1275"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Slide"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a4ae626a-ee9f-48e1-a82f-4ecbb21f7237"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard Mouse"",
+                    ""action"": ""Slide"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c6e4cb93-474a-45a4-8651-3dccffbf542e"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard Mouse"",
+                    ""action"": ""Slide"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6df75783-6203-4cd8-ad96-d828515288a5"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard Mouse"",
+                    ""action"": ""Slide"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -536,7 +529,7 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
             ]
         },
         {
-            ""name"": ""Shooting"",
+            ""name"": ""Actions"",
             ""id"": ""e3b37b3a-b7dc-4ab7-8ee8-56df17f48a01"",
             ""actions"": [
                 {
@@ -552,6 +545,15 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                     ""name"": ""Reload"",
                     ""type"": ""Button"",
                     ""id"": ""59da80fd-13d6-4907-9c2e-4ee298da4015"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Skill"",
+                    ""type"": ""Button"",
+                    ""id"": ""ab5e83aa-a3d3-413e-b1c8-b195d708123f"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -602,6 +604,96 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                     ""action"": ""Reload"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1a1cca13-b179-4726-837d-a1766751be50"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard Mouse"",
+                    ""action"": ""Skill"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""42325e4c-6902-45db-bc4b-cab7025cf839"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Skill"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Camera"",
+            ""id"": ""c22cab92-bd9d-4aab-9603-92cf68f01787"",
+            ""actions"": [
+                {
+                    ""name"": ""RotateY"",
+                    ""type"": ""Value"",
+                    ""id"": ""97c4ce8d-f0fb-4d54-8ebe-662c456cb035"",
+                    ""expectedControlType"": ""Analog"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""RotateX"",
+                    ""type"": ""Value"",
+                    ""id"": ""795de916-179b-42c5-bfb3-939ab84a8517"",
+                    ""expectedControlType"": ""Analog"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Rotate"",
+                    ""type"": ""Value"",
+                    ""id"": ""2dbb6cc6-8a3b-474e-bbb6-aa5617f3d32c"",
+                    ""expectedControlType"": ""Delta"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""5ec1ae38-dbfb-476d-a158-2695b8a5dbf9"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard Mouse"",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""32607ef2-ed21-44da-8103-018044ff37bc"",
+                    ""path"": ""<Gamepad>/rightStick/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""RotateX"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""24b6d93e-51b7-4d53-9878-f98e88f09d09"",
+                    ""path"": ""<Gamepad>/rightStick/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""RotateY"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -646,13 +738,11 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
         }
     ]
 }");
-        // FirstPersonCamera
-        m_FirstPersonCamera = asset.FindActionMap("FirstPersonCamera", throwIfNotFound: true);
-        m_FirstPersonCamera_Rotate = m_FirstPersonCamera.FindAction("Rotate", throwIfNotFound: true);
-        m_FirstPersonCamera_RotateX = m_FirstPersonCamera.FindAction("RotateX", throwIfNotFound: true);
-        m_FirstPersonCamera_RotateY = m_FirstPersonCamera.FindAction("RotateY", throwIfNotFound: true);
-        m_FirstPersonCamera_Move = m_FirstPersonCamera.FindAction("Move", throwIfNotFound: true);
-        m_FirstPersonCamera_Jump = m_FirstPersonCamera.FindAction("Jump", throwIfNotFound: true);
+        // Movement
+        m_Movement = asset.FindActionMap("Movement", throwIfNotFound: true);
+        m_Movement_Move = m_Movement.FindAction("Move", throwIfNotFound: true);
+        m_Movement_Jump = m_Movement.FindAction("Jump", throwIfNotFound: true);
+        m_Movement_Slide = m_Movement.FindAction("Slide", throwIfNotFound: true);
         // Debugging
         m_Debugging = asset.FindActionMap("Debugging", throwIfNotFound: true);
         m_Debugging_ChangeFramerate = m_Debugging.FindAction("ChangeFramerate", throwIfNotFound: true);
@@ -666,10 +756,16 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
         m_Debugging_Skill2 = m_Debugging.FindAction("Skill2", throwIfNotFound: true);
         m_Debugging_Skill3 = m_Debugging.FindAction("Skill3", throwIfNotFound: true);
         m_Debugging_Skill4 = m_Debugging.FindAction("Skill4", throwIfNotFound: true);
-        // Shooting
-        m_Shooting = asset.FindActionMap("Shooting", throwIfNotFound: true);
-        m_Shooting_Shoot = m_Shooting.FindAction("Shoot", throwIfNotFound: true);
-        m_Shooting_Reload = m_Shooting.FindAction("Reload", throwIfNotFound: true);
+        // Actions
+        m_Actions = asset.FindActionMap("Actions", throwIfNotFound: true);
+        m_Actions_Shoot = m_Actions.FindAction("Shoot", throwIfNotFound: true);
+        m_Actions_Reload = m_Actions.FindAction("Reload", throwIfNotFound: true);
+        m_Actions_Skill = m_Actions.FindAction("Skill", throwIfNotFound: true);
+        // Camera
+        m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
+        m_Camera_RotateY = m_Camera.FindAction("RotateY", throwIfNotFound: true);
+        m_Camera_RotateX = m_Camera.FindAction("RotateX", throwIfNotFound: true);
+        m_Camera_Rotate = m_Camera.FindAction("Rotate", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -726,70 +822,54 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // FirstPersonCamera
-    private readonly InputActionMap m_FirstPersonCamera;
-    private IFirstPersonCameraActions m_FirstPersonCameraActionsCallbackInterface;
-    private readonly InputAction m_FirstPersonCamera_Rotate;
-    private readonly InputAction m_FirstPersonCamera_RotateX;
-    private readonly InputAction m_FirstPersonCamera_RotateY;
-    private readonly InputAction m_FirstPersonCamera_Move;
-    private readonly InputAction m_FirstPersonCamera_Jump;
-    public struct FirstPersonCameraActions
+    // Movement
+    private readonly InputActionMap m_Movement;
+    private IMovementActions m_MovementActionsCallbackInterface;
+    private readonly InputAction m_Movement_Move;
+    private readonly InputAction m_Movement_Jump;
+    private readonly InputAction m_Movement_Slide;
+    public struct MovementActions
     {
         private @PlayerInputMap m_Wrapper;
-        public FirstPersonCameraActions(@PlayerInputMap wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Rotate => m_Wrapper.m_FirstPersonCamera_Rotate;
-        public InputAction @RotateX => m_Wrapper.m_FirstPersonCamera_RotateX;
-        public InputAction @RotateY => m_Wrapper.m_FirstPersonCamera_RotateY;
-        public InputAction @Move => m_Wrapper.m_FirstPersonCamera_Move;
-        public InputAction @Jump => m_Wrapper.m_FirstPersonCamera_Jump;
-        public InputActionMap Get() { return m_Wrapper.m_FirstPersonCamera; }
+        public MovementActions(@PlayerInputMap wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Move => m_Wrapper.m_Movement_Move;
+        public InputAction @Jump => m_Wrapper.m_Movement_Jump;
+        public InputAction @Slide => m_Wrapper.m_Movement_Slide;
+        public InputActionMap Get() { return m_Wrapper.m_Movement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(FirstPersonCameraActions set) { return set.Get(); }
-        public void SetCallbacks(IFirstPersonCameraActions instance)
+        public static implicit operator InputActionMap(MovementActions set) { return set.Get(); }
+        public void SetCallbacks(IMovementActions instance)
         {
-            if (m_Wrapper.m_FirstPersonCameraActionsCallbackInterface != null)
+            if (m_Wrapper.m_MovementActionsCallbackInterface != null)
             {
-                @Rotate.started -= m_Wrapper.m_FirstPersonCameraActionsCallbackInterface.OnRotate;
-                @Rotate.performed -= m_Wrapper.m_FirstPersonCameraActionsCallbackInterface.OnRotate;
-                @Rotate.canceled -= m_Wrapper.m_FirstPersonCameraActionsCallbackInterface.OnRotate;
-                @RotateX.started -= m_Wrapper.m_FirstPersonCameraActionsCallbackInterface.OnRotateX;
-                @RotateX.performed -= m_Wrapper.m_FirstPersonCameraActionsCallbackInterface.OnRotateX;
-                @RotateX.canceled -= m_Wrapper.m_FirstPersonCameraActionsCallbackInterface.OnRotateX;
-                @RotateY.started -= m_Wrapper.m_FirstPersonCameraActionsCallbackInterface.OnRotateY;
-                @RotateY.performed -= m_Wrapper.m_FirstPersonCameraActionsCallbackInterface.OnRotateY;
-                @RotateY.canceled -= m_Wrapper.m_FirstPersonCameraActionsCallbackInterface.OnRotateY;
-                @Move.started -= m_Wrapper.m_FirstPersonCameraActionsCallbackInterface.OnMove;
-                @Move.performed -= m_Wrapper.m_FirstPersonCameraActionsCallbackInterface.OnMove;
-                @Move.canceled -= m_Wrapper.m_FirstPersonCameraActionsCallbackInterface.OnMove;
-                @Jump.started -= m_Wrapper.m_FirstPersonCameraActionsCallbackInterface.OnJump;
-                @Jump.performed -= m_Wrapper.m_FirstPersonCameraActionsCallbackInterface.OnJump;
-                @Jump.canceled -= m_Wrapper.m_FirstPersonCameraActionsCallbackInterface.OnJump;
+                @Move.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnMove;
+                @Move.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnMove;
+                @Move.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnMove;
+                @Jump.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnJump;
+                @Jump.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnJump;
+                @Jump.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnJump;
+                @Slide.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnSlide;
+                @Slide.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnSlide;
+                @Slide.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnSlide;
             }
-            m_Wrapper.m_FirstPersonCameraActionsCallbackInterface = instance;
+            m_Wrapper.m_MovementActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @Rotate.started += instance.OnRotate;
-                @Rotate.performed += instance.OnRotate;
-                @Rotate.canceled += instance.OnRotate;
-                @RotateX.started += instance.OnRotateX;
-                @RotateX.performed += instance.OnRotateX;
-                @RotateX.canceled += instance.OnRotateX;
-                @RotateY.started += instance.OnRotateY;
-                @RotateY.performed += instance.OnRotateY;
-                @RotateY.canceled += instance.OnRotateY;
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
+                @Slide.started += instance.OnSlide;
+                @Slide.performed += instance.OnSlide;
+                @Slide.canceled += instance.OnSlide;
             }
         }
     }
-    public FirstPersonCameraActions @FirstPersonCamera => new FirstPersonCameraActions(this);
+    public MovementActions @Movement => new MovementActions(this);
 
     // Debugging
     private readonly InputActionMap m_Debugging;
@@ -904,34 +984,39 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
     }
     public DebuggingActions @Debugging => new DebuggingActions(this);
 
-    // Shooting
-    private readonly InputActionMap m_Shooting;
-    private IShootingActions m_ShootingActionsCallbackInterface;
-    private readonly InputAction m_Shooting_Shoot;
-    private readonly InputAction m_Shooting_Reload;
-    public struct ShootingActions
+    // Actions
+    private readonly InputActionMap m_Actions;
+    private IActionsActions m_ActionsActionsCallbackInterface;
+    private readonly InputAction m_Actions_Shoot;
+    private readonly InputAction m_Actions_Reload;
+    private readonly InputAction m_Actions_Skill;
+    public struct ActionsActions
     {
         private @PlayerInputMap m_Wrapper;
-        public ShootingActions(@PlayerInputMap wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Shoot => m_Wrapper.m_Shooting_Shoot;
-        public InputAction @Reload => m_Wrapper.m_Shooting_Reload;
-        public InputActionMap Get() { return m_Wrapper.m_Shooting; }
+        public ActionsActions(@PlayerInputMap wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Shoot => m_Wrapper.m_Actions_Shoot;
+        public InputAction @Reload => m_Wrapper.m_Actions_Reload;
+        public InputAction @Skill => m_Wrapper.m_Actions_Skill;
+        public InputActionMap Get() { return m_Wrapper.m_Actions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(ShootingActions set) { return set.Get(); }
-        public void SetCallbacks(IShootingActions instance)
+        public static implicit operator InputActionMap(ActionsActions set) { return set.Get(); }
+        public void SetCallbacks(IActionsActions instance)
         {
-            if (m_Wrapper.m_ShootingActionsCallbackInterface != null)
+            if (m_Wrapper.m_ActionsActionsCallbackInterface != null)
             {
-                @Shoot.started -= m_Wrapper.m_ShootingActionsCallbackInterface.OnShoot;
-                @Shoot.performed -= m_Wrapper.m_ShootingActionsCallbackInterface.OnShoot;
-                @Shoot.canceled -= m_Wrapper.m_ShootingActionsCallbackInterface.OnShoot;
-                @Reload.started -= m_Wrapper.m_ShootingActionsCallbackInterface.OnReload;
-                @Reload.performed -= m_Wrapper.m_ShootingActionsCallbackInterface.OnReload;
-                @Reload.canceled -= m_Wrapper.m_ShootingActionsCallbackInterface.OnReload;
+                @Shoot.started -= m_Wrapper.m_ActionsActionsCallbackInterface.OnShoot;
+                @Shoot.performed -= m_Wrapper.m_ActionsActionsCallbackInterface.OnShoot;
+                @Shoot.canceled -= m_Wrapper.m_ActionsActionsCallbackInterface.OnShoot;
+                @Reload.started -= m_Wrapper.m_ActionsActionsCallbackInterface.OnReload;
+                @Reload.performed -= m_Wrapper.m_ActionsActionsCallbackInterface.OnReload;
+                @Reload.canceled -= m_Wrapper.m_ActionsActionsCallbackInterface.OnReload;
+                @Skill.started -= m_Wrapper.m_ActionsActionsCallbackInterface.OnSkill;
+                @Skill.performed -= m_Wrapper.m_ActionsActionsCallbackInterface.OnSkill;
+                @Skill.canceled -= m_Wrapper.m_ActionsActionsCallbackInterface.OnSkill;
             }
-            m_Wrapper.m_ShootingActionsCallbackInterface = instance;
+            m_Wrapper.m_ActionsActionsCallbackInterface = instance;
             if (instance != null)
             {
                 @Shoot.started += instance.OnShoot;
@@ -940,10 +1025,62 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                 @Reload.started += instance.OnReload;
                 @Reload.performed += instance.OnReload;
                 @Reload.canceled += instance.OnReload;
+                @Skill.started += instance.OnSkill;
+                @Skill.performed += instance.OnSkill;
+                @Skill.canceled += instance.OnSkill;
             }
         }
     }
-    public ShootingActions @Shooting => new ShootingActions(this);
+    public ActionsActions @Actions => new ActionsActions(this);
+
+    // Camera
+    private readonly InputActionMap m_Camera;
+    private ICameraActions m_CameraActionsCallbackInterface;
+    private readonly InputAction m_Camera_RotateY;
+    private readonly InputAction m_Camera_RotateX;
+    private readonly InputAction m_Camera_Rotate;
+    public struct CameraActions
+    {
+        private @PlayerInputMap m_Wrapper;
+        public CameraActions(@PlayerInputMap wrapper) { m_Wrapper = wrapper; }
+        public InputAction @RotateY => m_Wrapper.m_Camera_RotateY;
+        public InputAction @RotateX => m_Wrapper.m_Camera_RotateX;
+        public InputAction @Rotate => m_Wrapper.m_Camera_Rotate;
+        public InputActionMap Get() { return m_Wrapper.m_Camera; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(CameraActions set) { return set.Get(); }
+        public void SetCallbacks(ICameraActions instance)
+        {
+            if (m_Wrapper.m_CameraActionsCallbackInterface != null)
+            {
+                @RotateY.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnRotateY;
+                @RotateY.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnRotateY;
+                @RotateY.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnRotateY;
+                @RotateX.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnRotateX;
+                @RotateX.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnRotateX;
+                @RotateX.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnRotateX;
+                @Rotate.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnRotate;
+                @Rotate.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnRotate;
+                @Rotate.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnRotate;
+            }
+            m_Wrapper.m_CameraActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @RotateY.started += instance.OnRotateY;
+                @RotateY.performed += instance.OnRotateY;
+                @RotateY.canceled += instance.OnRotateY;
+                @RotateX.started += instance.OnRotateX;
+                @RotateX.performed += instance.OnRotateX;
+                @RotateX.canceled += instance.OnRotateX;
+                @Rotate.started += instance.OnRotate;
+                @Rotate.performed += instance.OnRotate;
+                @Rotate.canceled += instance.OnRotate;
+            }
+        }
+    }
+    public CameraActions @Camera => new CameraActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -962,13 +1099,11 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
             return asset.controlSchemes[m_ControllerSchemeIndex];
         }
     }
-    public interface IFirstPersonCameraActions
+    public interface IMovementActions
     {
-        void OnRotate(InputAction.CallbackContext context);
-        void OnRotateX(InputAction.CallbackContext context);
-        void OnRotateY(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnSlide(InputAction.CallbackContext context);
     }
     public interface IDebuggingActions
     {
@@ -984,9 +1119,16 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
         void OnSkill3(InputAction.CallbackContext context);
         void OnSkill4(InputAction.CallbackContext context);
     }
-    public interface IShootingActions
+    public interface IActionsActions
     {
         void OnShoot(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
+        void OnSkill(InputAction.CallbackContext context);
+    }
+    public interface ICameraActions
+    {
+        void OnRotateY(InputAction.CallbackContext context);
+        void OnRotateX(InputAction.CallbackContext context);
+        void OnRotate(InputAction.CallbackContext context);
     }
 }

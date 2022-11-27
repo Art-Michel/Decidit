@@ -2,36 +2,9 @@
     "name": "PlayerInputMap",
     "maps": [
         {
-            "name": "FirstPersonCamera",
+            "name": "Movement",
             "id": "863135e6-bea6-4ed2-b692-413856ebbc9f",
             "actions": [
-                {
-                    "name": "Rotate",
-                    "type": "Value",
-                    "id": "01a0b487-aa39-4b9f-8f45-43ad21bf9009",
-                    "expectedControlType": "Delta",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "RotateX",
-                    "type": "Value",
-                    "id": "e491d7e4-43be-4119-8b69-a84644feefd5",
-                    "expectedControlType": "Analog",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "RotateY",
-                    "type": "Value",
-                    "id": "29451bb7-91e8-4d2d-9acd-10ed968a1da8",
-                    "expectedControlType": "Analog",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
                 {
                     "name": "Move",
                     "type": "Value",
@@ -49,42 +22,18 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Slide",
+                    "type": "Button",
+                    "id": "c28de2aa-cf1b-44aa-9352-2a93b7ef0b1b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "ac486cd9-a9d1-4608-a39c-40a7e99bd4c6",
-                    "path": "<Mouse>/delta",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard Mouse",
-                    "action": "Rotate",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "40ce88d8-245c-4004-9ae5-5d0b0d3d0347",
-                    "path": "<Gamepad>/rightStick/x",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Controller",
-                    "action": "RotateX",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "46794db6-9378-4cbc-83fe-f0befe03ec39",
-                    "path": "<Gamepad>/rightStick/y",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Controller",
-                    "action": "RotateY",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "",
                     "id": "838ba2a6-c262-4c0d-83e0-c3af829dbc19",
@@ -170,6 +119,50 @@
                     "processors": "",
                     "groups": "Controller",
                     "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "76e27c00-6546-465d-8880-d8b398bd1275",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Slide",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a4ae626a-ee9f-48e1-a82f-4ecbb21f7237",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard Mouse",
+                    "action": "Slide",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c6e4cb93-474a-45a4-8651-3dccffbf542e",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard Mouse",
+                    "action": "Slide",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6df75783-6203-4cd8-ad96-d828515288a5",
+                    "path": "<Keyboard>/ctrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard Mouse",
+                    "action": "Slide",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -514,7 +507,7 @@
             ]
         },
         {
-            "name": "Shooting",
+            "name": "Actions",
             "id": "e3b37b3a-b7dc-4ab7-8ee8-56df17f48a01",
             "actions": [
                 {
@@ -530,6 +523,15 @@
                     "name": "Reload",
                     "type": "Button",
                     "id": "59da80fd-13d6-4907-9c2e-4ee298da4015",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Skill",
+                    "type": "Button",
+                    "id": "ab5e83aa-a3d3-413e-b1c8-b195d708123f",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -578,6 +580,96 @@
                     "processors": "",
                     "groups": "Controller",
                     "action": "Reload",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1a1cca13-b179-4726-837d-a1766751be50",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard Mouse",
+                    "action": "Skill",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "42325e4c-6902-45db-bc4b-cab7025cf839",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Skill",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Camera",
+            "id": "c22cab92-bd9d-4aab-9603-92cf68f01787",
+            "actions": [
+                {
+                    "name": "RotateY",
+                    "type": "Value",
+                    "id": "97c4ce8d-f0fb-4d54-8ebe-662c456cb035",
+                    "expectedControlType": "Analog",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "RotateX",
+                    "type": "Value",
+                    "id": "795de916-179b-42c5-bfb3-939ab84a8517",
+                    "expectedControlType": "Analog",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Rotate",
+                    "type": "Value",
+                    "id": "2dbb6cc6-8a3b-474e-bbb6-aa5617f3d32c",
+                    "expectedControlType": "Delta",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "5ec1ae38-dbfb-476d-a158-2695b8a5dbf9",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard Mouse",
+                    "action": "Rotate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "32607ef2-ed21-44da-8103-018044ff37bc",
+                    "path": "<Gamepad>/rightStick/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "RotateX",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "24b6d93e-51b7-4d53-9878-f98e88f09d09",
+                    "path": "<Gamepad>/rightStick/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "RotateY",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

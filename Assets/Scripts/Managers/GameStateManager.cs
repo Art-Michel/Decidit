@@ -7,8 +7,9 @@ using TMPro;
 public class GameStateManager : MonoBehaviour
 {
     PlayerInputMap _inputs;
-    [SerializeField] TextMeshProUGUI _TimescaleDebugUi;
-    bool isFocused;
+    [SerializeField] GameObject _DebuggingCanvas;
+    [SerializeField] TextMeshProUGUI _timescaleDebugUi;
+    bool _isFocused;
     bool _is30fps;
     [SerializeField] List<GameObject> _guns;
     [SerializeField] List<GameObject> _arms;
@@ -112,6 +113,10 @@ public class GameStateManager : MonoBehaviour
 
         //Framerate
         _is30fps = false;
+
+#if UNITY_EDITOR
+        _DebuggingCanvas.SetActive(true);
+#endif
     }
 
     void ChangeFramerate()
@@ -128,29 +133,27 @@ public class GameStateManager : MonoBehaviour
         }
     }
 
-
-
     void ChangeTimeScale()
     {
         var direction = _inputs.Debugging.ChangeTimeScale.ReadValue<float>();
         if (Mathf.Sign(direction) > 0) Time.timeScale = Mathf.Clamp(Time.timeScale + .1f, 0.01f, 10);
         else if (Mathf.Sign(direction) < 0) Time.timeScale = Mathf.Clamp(Time.timeScale - .1f, 0.01f, 10);
 
-        if (_TimescaleDebugUi)
-            _TimescaleDebugUi.text = ("TimeScale: " + Time.timeScale.ToString("F1"));
+        if (_timescaleDebugUi)
+            _timescaleDebugUi.text = ("TimeScale: " + Time.timeScale.ToString("F1"));
     }
 
     void FocusUnfocus()
     {
-        if (isFocused)
+        if (_isFocused)
         {
-            isFocused = false;
+            _isFocused = false;
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
         }
         else
         {
-            isFocused = true;
+            _isFocused = true;
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
         }

@@ -109,7 +109,7 @@ public class Player : LocalManager<Player>
         _fsm = GetComponent<PlayerFSM>();
         _playerHealth = GetComponent<PlayerHealth>();
         _inputs = new PlayerInputMap();
-        _inputs.FirstPersonCamera.Jump.started += _ => PressJump();
+        _inputs.Movement.Jump.started += _ => PressJump();
     }
 
     private void Start()
@@ -230,7 +230,7 @@ public class Player : LocalManager<Player>
 
     private void MoveCameraWithMouse()
     {
-        Vector2 mouseMovement = _inputs.FirstPersonCamera.Rotate.ReadValue<Vector2>()/* * Time.deltaTime */;
+        Vector2 mouseMovement = _inputs.Camera.Rotate.ReadValue<Vector2>()/* * Time.deltaTime */;
         _cameraTargetYRotation = Mathf.Repeat(_cameraTargetYRotation, 360);
         _cameraTargetYRotation += mouseMovement.x * _mouseSensitivityX * 0.01f * _mouseXInvertedValue;
         _cameraTargetXRotation -= mouseMovement.y * _mouseSensitivityY * 0.01f * _mouseYInvertedValue;
@@ -244,8 +244,8 @@ public class Player : LocalManager<Player>
 
     private void MoveCameraWithRightStick()
     {
-        float RStickMovementX = _inputs.FirstPersonCamera.RotateX.ReadValue<float>() * Time.deltaTime;
-        float RStickMovementY = _inputs.FirstPersonCamera.RotateY.ReadValue<float>() * Time.deltaTime;
+        float RStickMovementX = _inputs.Camera.RotateX.ReadValue<float>() * Time.deltaTime;
+        float RStickMovementY = _inputs.Camera.RotateY.ReadValue<float>() * Time.deltaTime;
         _cameraTargetYRotation = Mathf.Repeat(_cameraTargetYRotation, 360);
         _cameraTargetYRotation += RStickMovementX * _stickSensitivityX * 10 * _controllerCameraXInvertedValue;
         _cameraTargetXRotation -= RStickMovementY * _stickSensitivityY * 10 * _controllerCameraYInvertedValue;
@@ -293,7 +293,7 @@ public class Player : LocalManager<Player>
         _coyoteTime = _coyoteMaxTime;
 
         //Jump immediately if player is pressing jump
-        if (_inputs.FirstPersonCamera.Jump.IsPressed()) PressJump();
+        if (_inputs.Movement.Jump.IsPressed()) PressJump();
     }
 
     public void StartFalling()
@@ -423,7 +423,7 @@ public class Player : LocalManager<Player>
     private void UpdateMovement()
     {
         //Register new movement input
-        Vector3 _newMovementInputs = MakeDirectionCameraRelative(_inputs.FirstPersonCamera.Move.ReadValue<Vector2>());
+        Vector3 _newMovementInputs = MakeDirectionCameraRelative(_inputs.Movement.Move.ReadValue<Vector2>());
 
         //only use new movement input if it is not null
         _isPressingADirection = _newMovementInputs.x != 0 || _newMovementInputs.z != 0;

@@ -30,8 +30,8 @@ public class Revolver : MonoBehaviour
     {
         _fsm = GetComponent<RevolverFSM>();
         _inputs = new PlayerInputMap();
-        _inputs.Shooting.Shoot.started += _ => PressShoot();
-        _inputs.Shooting.Reload.started += _ => PressReload();
+        _inputs.Actions.Shoot.started += _ => PressShoot();
+        _inputs.Actions.Reload.started += _ => PressReload();
     }
 
     void Start()
@@ -73,7 +73,7 @@ public class Revolver : MonoBehaviour
 
     public void CheckBuffer()
     {
-        if (_inputs.Shooting.Shoot.IsPressed())
+        if (_inputs.Actions.Shoot.IsPressed())
             PressShoot();
         if (_reloadBuffered)
             PressReload();
