@@ -11,8 +11,7 @@ public class RevolverStateShooting : RevolverState
 
     public override void Begin()
     {
-        _revolver.BaseShoot();
-        //Shooting sfx
+        _revolver.Shoot();
         _revolver.LowerAmmoCount();
         _revolver.StartRecoil();
         //Shooting animation

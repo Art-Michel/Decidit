@@ -8,15 +8,15 @@ public class PlayerStateJumpingUpSlope : PlayerState
 
     public override void Begin()
     {
-        
+
     }
 
     public override void StateUpdate()
     {
-        _player.ApplyJumpingGravity();
         _player.JumpSlideUpSlope();
-        _player.CheckForNoCeiling();
         _player.CheckForCeiling();
+        _player.CheckForNoCeiling();
+        _player.ApplyJumpingGravity();
     }
 
     public override void Exit()

@@ -346,7 +346,7 @@ public class Player : LocalManager<Player>
                 _currentlyAppliedGravity = 0f;
 
             // ceiling is slopey -> slide along
-            else
+            else if (_fsm.currentState.Name != PlayerStatesList.JUMPINGUPSLOPE)
                 _fsm.ChangeState(PlayerStatesList.JUMPINGUPSLOPE);
         }
     }

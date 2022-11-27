@@ -2,17 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EylauRevolverStateIdle : MonoBehaviour
+public class EylauRevolverStateIdle : RevolverState
 {
-    // Start is called before the first frame update
-    void Start()
+    public EylauRevolverStateIdle() : base(RevolverStateList.IDLE)
     {
-        
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Begin()
     {
-        
+        _revolver.CheckBuffer();
     }
+
+    public override void StateUpdate()
+    {
+
+    }
+
+    public override void Exit()
+    {
+
+    }
+
 }

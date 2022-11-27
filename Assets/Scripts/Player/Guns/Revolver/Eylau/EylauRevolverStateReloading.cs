@@ -2,17 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EylauRevolverStateReloading : MonoBehaviour
+public class EylauRevolverStateReloading : RevolverState
 {
-    // Start is called before the first frame update
-    void Start()
+    public EylauRevolverStateReloading() : base(RevolverStateList.RELOADING)
     {
-        
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Begin()
     {
-        
+        //animation
+        _revolver.StartReload();
     }
+
+    public override void StateUpdate()
+    {
+        _revolver.Reloading();
+    }
+
+    public override void Exit()
+    {
+
+    }
+
 }

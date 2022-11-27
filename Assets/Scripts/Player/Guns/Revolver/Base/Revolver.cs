@@ -76,10 +76,10 @@ public class Revolver : MonoBehaviour
         _reloadBuffered = false;
     }
 
-    public void BaseShoot()
+    public virtual void Shoot()
     {
         //Raycast Here
-        //SFX
+        PlaceHolderSoundManager.Instance.PlayRevolverShot();
     }
 
     public void StartRecoil()
@@ -141,7 +141,10 @@ public class Revolver : MonoBehaviour
 
     private void DisplayAmmo()
     {
-        _ammoCountText.text = _ammo.ToString() + "/" + _maxAmmo.ToString();
+        if (_ammoCountText)
+            _ammoCountText.text = _ammo.ToString() + "/" + _maxAmmo.ToString();
+        else
+            Debug.LogError("AmmoCount UI Text unassigned.");
     }
     #endregion
 

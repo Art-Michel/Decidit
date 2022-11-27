@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AragonRevolverStateIdle : RevolverState
+public class ArmStateIdle : ArmState
 {
-    public AragonRevolverStateIdle() : base(RevolverStateList.IDLE)
+    public ArmStateIdle() : base(ArmStateList.IDLE)
     {
 
     }
 
     public override void Begin()
     {
-        _revolver.CheckBuffer();
+        
     }
 
     public override void StateUpdate()

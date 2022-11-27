@@ -2,17 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AragonRevolverStateReloading : MonoBehaviour
+public class AragonRevolverStateReloading : RevolverState
 {
-    // Start is called before the first frame update
-    void Start()
+    public AragonRevolverStateReloading() : base(RevolverStateList.RELOADING)
     {
-        
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Begin()
     {
-        
+        //animation
+        _revolver.StartReload();
     }
+
+    public override void StateUpdate()
+    {
+        _revolver.Reloading();
+    }
+
+    public override void Exit()
+    {
+
+    }
+
 }

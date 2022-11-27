@@ -44,6 +44,7 @@ public class GameStateManager : MonoBehaviour
         foreach (GameObject arm in _arms)
             arm.SetActive(false);
         _arms[3].SetActive(true);
+        PlaceHolderSoundManager.Instance.PlayArmEquip();
     }
 
     private void Skill3()
@@ -51,6 +52,7 @@ public class GameStateManager : MonoBehaviour
         foreach (GameObject arm in _arms)
             arm.SetActive(false);
         _arms[2].SetActive(true);
+        PlaceHolderSoundManager.Instance.PlayArmEquip();
     }
 
     private void Skill2()
@@ -58,6 +60,7 @@ public class GameStateManager : MonoBehaviour
         foreach (GameObject arm in _arms)
             arm.SetActive(false);
         _arms[1].SetActive(true);
+        PlaceHolderSoundManager.Instance.PlayArmEquip();
     }
 
     private void Skill1()
@@ -65,6 +68,7 @@ public class GameStateManager : MonoBehaviour
         foreach (GameObject arm in _arms)
             arm.SetActive(false);
         _arms[0].SetActive(true);
+        PlaceHolderSoundManager.Instance.PlayArmEquip();
     }
 
     private void Gun4()
@@ -72,6 +76,7 @@ public class GameStateManager : MonoBehaviour
         foreach (GameObject gun in _guns)
             gun.SetActive(false);
         _guns[3].SetActive(true);
+        PlaceHolderSoundManager.Instance.PlayWeaponEquip();
     }
 
     private void Gun3()
@@ -79,6 +84,7 @@ public class GameStateManager : MonoBehaviour
         foreach (GameObject gun in _guns)
             gun.SetActive(false);
         _guns[2].SetActive(true);
+        PlaceHolderSoundManager.Instance.PlayWeaponEquip();
     }
 
     private void Gun2()
@@ -86,6 +92,7 @@ public class GameStateManager : MonoBehaviour
         foreach (GameObject gun in _guns)
             gun.SetActive(false);
         _guns[1].SetActive(true);
+        PlaceHolderSoundManager.Instance.PlayWeaponEquip();
     }
 
     private void Gun1()
@@ -93,6 +100,7 @@ public class GameStateManager : MonoBehaviour
         foreach (GameObject gun in _guns)
             gun.SetActive(false);
         _guns[0].SetActive(true);
+        PlaceHolderSoundManager.Instance.PlayWeaponEquip();
     }
     #endregion
 

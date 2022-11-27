@@ -11,7 +11,9 @@ GameObject:
   - component: {fileID: 183938225}
   - component: {fileID: 183938228}
   - component: {fileID: 183938227}
-  m_Layer: 0
+  - component: {fileID: 7666983725993333357}
+  - component: {fileID: 950598985533358227}
+  m_Layer: 6
   m_Name: AragonArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,7 +61,7 @@ MeshRenderer:
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 257
-  m_RendererPriority: 0
+  m_RendererPriority: 1
   m_Materials:
   - {fileID: 2100000, guid: db0d38aa876057847a621bff38aae020, type: 2}
   m_StaticBatchInfo:
@@ -83,6 +85,30 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7666983725993333357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 183938224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 629730ad1c35888488a42fc74fb75bea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &950598985533358227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 183938224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94f4a0eb98e2f9d499061bd1b7133050, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &197478553
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,9 +120,9 @@ GameObject:
   - component: {fileID: 197478554}
   - component: {fileID: 197478558}
   - component: {fileID: 197478557}
-  - component: {fileID: 197478556}
-  - component: {fileID: 197478555}
-  m_Layer: 0
+  - component: {fileID: 1176019354187306853}
+  - component: {fileID: 8072250455143683778}
+  m_Layer: 6
   m_Name: AragonRevolver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -144,7 +170,7 @@ MeshRenderer:
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 257
-  m_RendererPriority: 0
+  m_RendererPriority: 1
   m_Materials:
   - {fileID: 2100000, guid: db0d38aa876057847a621bff38aae020, type: 2}
   m_StaticBatchInfo:
@@ -168,7 +194,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &197478556
+--- !u!114 &1176019354187306853
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -177,16 +203,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 197478553}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 021a1deb274caa047acde7eec7d06500, type: 3}
+  m_Script: {fileID: 11500000, guid: a0bad28861b13b54aae69f296c750029, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _debugStateText: {fileID: 5484497909188995371}
   _ammoCountText: {fileID: 1340939800}
   _recoilTime: 0.6
-  _reloadMaxTime: 2
-  _reloadMinTime: 1.7
-  _maxAmmo: 8
---- !u!114 &197478555
+  _reloadMaxTime: 1
+  _reloadMinTime: 0.9
+  _maxAmmo: 6
+--- !u!114 &8072250455143683778
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -195,7 +221,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 197478553}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5d3ec7f04e351e4d82bcbcd111cdb51, type: 3}
+  m_Script: {fileID: 11500000, guid: 098f98a16b07ee34380ac667866f974e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &525554331
@@ -211,7 +237,7 @@ GameObject:
   - component: {fileID: 525554333}
   - component: {fileID: 525554335}
   - component: {fileID: 525554336}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Revolver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -259,7 +285,7 @@ MeshRenderer:
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 257
-  m_RendererPriority: 0
+  m_RendererPriority: 1
   m_Materials:
   - {fileID: 2100000, guid: 236c5c2b4bf3ec448a64618be814c193, type: 2}
   m_StaticBatchInfo:
@@ -324,9 +350,9 @@ GameObject:
   - component: {fileID: 1236369751}
   - component: {fileID: 1236369755}
   - component: {fileID: 1236369754}
-  - component: {fileID: 1236369753}
-  - component: {fileID: 1236369752}
-  m_Layer: 0
+  - component: {fileID: 5584357950323043461}
+  - component: {fileID: 2590228436923606291}
+  m_Layer: 6
   m_Name: MuseRevolver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -374,7 +400,7 @@ MeshRenderer:
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 257
-  m_RendererPriority: 0
+  m_RendererPriority: 1
   m_Materials:
   - {fileID: 2100000, guid: 400b3adc1b8ca264598dc3561656665c, type: 2}
   m_StaticBatchInfo:
@@ -398,7 +424,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1236369753
+--- !u!114 &5584357950323043461
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -407,16 +433,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1236369750}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 021a1deb274caa047acde7eec7d06500, type: 3}
+  m_Script: {fileID: 11500000, guid: be253c4d95bf6ae4a83d26b84cd2401b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _debugStateText: {fileID: 5484497909188995371}
   _ammoCountText: {fileID: 1340939800}
-  _recoilTime: 0.8
+  _recoilTime: 0.4
   _reloadMaxTime: 1
   _reloadMinTime: 0.9
   _maxAmmo: 4
---- !u!114 &1236369752
+--- !u!114 &2590228436923606291
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -425,7 +451,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1236369750}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5d3ec7f04e351e4d82bcbcd111cdb51, type: 3}
+  m_Script: {fileID: 11500000, guid: a7258d969fd18654e8dba74e84ea4251, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1340939798
@@ -575,7 +601,9 @@ GameObject:
   - component: {fileID: 1447211705}
   - component: {fileID: 1447211708}
   - component: {fileID: 1447211707}
-  m_Layer: 0
+  - component: {fileID: 4002850350934483186}
+  - component: {fileID: 7185384529714351238}
+  m_Layer: 6
   m_Name: EylauArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -623,7 +651,7 @@ MeshRenderer:
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 257
-  m_RendererPriority: 0
+  m_RendererPriority: 1
   m_Materials:
   - {fileID: 2100000, guid: f0982d1e18f122a4da82a33c27bb3153, type: 2}
   m_StaticBatchInfo:
@@ -647,6 +675,30 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4002850350934483186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1447211704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d0cf7383c8707d4c9667199a4f49a85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7185384529714351238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1447211704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a4dad28d17d08345acfbc115cfd609e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1470377084
 GameObject:
   m_ObjectHideFlags: 0
@@ -658,7 +710,9 @@ GameObject:
   - component: {fileID: 1470377085}
   - component: {fileID: 1470377088}
   - component: {fileID: 1470377087}
-  m_Layer: 0
+  - component: {fileID: 9085273154028729085}
+  - component: {fileID: 4718325429581890698}
+  m_Layer: 6
   m_Name: BareArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -706,7 +760,7 @@ MeshRenderer:
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 257
-  m_RendererPriority: 0
+  m_RendererPriority: 1
   m_Materials:
   - {fileID: 2100000, guid: 236c5c2b4bf3ec448a64618be814c193, type: 2}
   m_StaticBatchInfo:
@@ -730,6 +784,30 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &9085273154028729085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1470377084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 238ccfd2fa28a94498fccb840c4f32e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4718325429581890698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1470377084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eeede1672277ef743aa1dc4dffa03035, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1914196447
 GameObject:
   m_ObjectHideFlags: 0
@@ -741,7 +819,9 @@ GameObject:
   - component: {fileID: 1914196448}
   - component: {fileID: 1914196451}
   - component: {fileID: 1914196450}
-  m_Layer: 0
+  - component: {fileID: 1908504653360000372}
+  - component: {fileID: 6608527378357389676}
+  m_Layer: 6
   m_Name: MuseArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -789,7 +869,7 @@ MeshRenderer:
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 257
-  m_RendererPriority: 0
+  m_RendererPriority: 1
   m_Materials:
   - {fileID: 2100000, guid: 400b3adc1b8ca264598dc3561656665c, type: 2}
   m_StaticBatchInfo:
@@ -813,6 +893,30 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1908504653360000372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1914196447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05411612d0f4cf048a0a668924cccb8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6608527378357389676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1914196447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbed5fb6f7d7bb54bb699bdbf44395b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2113098007
 GameObject:
   m_ObjectHideFlags: 0
@@ -824,9 +928,9 @@ GameObject:
   - component: {fileID: 2113098008}
   - component: {fileID: 2113098012}
   - component: {fileID: 2113098011}
-  - component: {fileID: 2113098010}
-  - component: {fileID: 2113098009}
-  m_Layer: 0
+  - component: {fileID: 7268849856978730495}
+  - component: {fileID: 9161445646862943683}
+  m_Layer: 6
   m_Name: EylauRevolver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -874,7 +978,7 @@ MeshRenderer:
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 257
-  m_RendererPriority: 0
+  m_RendererPriority: 1
   m_Materials:
   - {fileID: 2100000, guid: f0982d1e18f122a4da82a33c27bb3153, type: 2}
   m_StaticBatchInfo:
@@ -898,7 +1002,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &2113098010
+--- !u!114 &7268849856978730495
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -907,16 +1011,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 2113098007}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 021a1deb274caa047acde7eec7d06500, type: 3}
+  m_Script: {fileID: 11500000, guid: e31af492d5adca2458e2aa902d3f65b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _debugStateText: {fileID: 5484497909188995371}
   _ammoCountText: {fileID: 1340939800}
   _recoilTime: 0.1
-  _reloadMaxTime: 0.5
-  _reloadMinTime: 0.4
+  _reloadMaxTime: 1
+  _reloadMinTime: 0.9
   _maxAmmo: 12
---- !u!114 &2113098009
+--- !u!114 &9161445646862943683
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -925,7 +1029,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2113098007}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5d3ec7f04e351e4d82bcbcd111cdb51, type: 3}
+  m_Script: {fileID: 11500000, guid: 7fba036bc84e43a4493c64e81c472984, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &995329137770584059
@@ -2395,7 +2499,7 @@ Camera:
   m_FOVAxisMode: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
-  m_FocalLength: 50
+  m_FocalLength: 12
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -2410,7 +2514,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 23
+    m_Bits: 2147483647
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -2447,7 +2551,7 @@ MonoBehaviour:
   clearDepth: 1
   volumeLayerMask:
     serializedVersion: 2
-    m_Bits: 23
+    m_Bits: 2147483647
   volumeAnchorOverride: {fileID: 0}
   antialiasing: 2
   SMAAQuality: 2
