@@ -123,12 +123,13 @@ public class Revolver : MonoBehaviour
     public void StartReload()
     {
         _reloadT = _reloadMaxTime;
+        PlaceHolderSoundManager.Instance.PlayReload();
     }
 
     public void Reloading()
     {
         _reloadT -= Time.deltaTime;
-        if (_reloadT <= _reloadMaxTime - _reloadMinTime)
+        if (_reloadT <= _reloadMaxTime - _reloadMinTime && _ammo < _maxAmmo)
         {
             Reloaded();
         }
@@ -141,6 +142,7 @@ public class Revolver : MonoBehaviour
     private void Reloaded()
     {
         _ammo = _maxAmmo;
+        PlaceHolderSoundManager.Instance.PlayReloaded();
         DisplayAmmo();
     }
 

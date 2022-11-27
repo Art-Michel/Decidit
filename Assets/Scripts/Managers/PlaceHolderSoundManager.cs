@@ -13,6 +13,8 @@ public class PlaceHolderSoundManager : LocalManager<PlaceHolderSoundManager>
     [SerializeField] AudioClip _museShot;
     [SerializeField] AudioClip _eylauShot;
 
+    [SerializeField] AudioClip _playReload;
+    [SerializeField] AudioClip _playReloaded;
     [SerializeField] AudioClip _weaponEquip;
     [SerializeField] AudioClip _armEquip;
 
@@ -46,9 +48,20 @@ public class PlaceHolderSoundManager : LocalManager<PlaceHolderSoundManager>
     {
         PlaySound(_weaponEquip, 1f);
     }
+
     public void PlayArmEquip()
     {
         PlaySound(_armEquip, 1f);
+    }
+
+    public void PlayReload()
+    {
+        PlaySound(_playReload, 1f);
+    }
+
+    public void PlayReloaded()
+    {
+        PlaySound(_playReloaded, 1f);
     }
 
     override protected void Awake()
