@@ -2,17 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AragonArmStateIdle : MonoBehaviour
+public class AragonArmStateIdle : ArmState
 {
-    // Start is called before the first frame update
-    void Start()
+    public AragonArmStateIdle() : base(ArmStateList.IDLE)
+    {
+
+    }
+
+    public override void Begin()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void StateUpdate()
     {
-        
+
     }
+
+    public override void Exit()
+    {
+
+    }
+
 }

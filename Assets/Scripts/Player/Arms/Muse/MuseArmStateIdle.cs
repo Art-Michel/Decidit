@@ -2,17 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MuseArmStateIdle : MonoBehaviour
+public class MuseArmStateIdle : ArmState
 {
-    // Start is called before the first frame update
-    void Start()
+    public MuseArmStateIdle() : base(ArmStateList.IDLE)
     {
-        
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Begin()
     {
-        
+
     }
+
+    public override void StateUpdate()
+    {
+
+    }
+
+    public override void Exit()
+    {
+
+    }
+
 }
