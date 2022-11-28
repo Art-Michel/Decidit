@@ -10,6 +10,7 @@ public class Revolver : MonoBehaviour
     [SerializeField] TextMeshProUGUI _ammoCountText;
     PlayerInputMap _inputs;
     RevolverFSM _fsm;
+    Transform _camera;
 
     #endregion
 
@@ -19,19 +20,23 @@ public class Revolver : MonoBehaviour
     [SerializeField] float _reloadMaxTime = 1f;
     [SerializeField] float _reloadMinTime = 0.9f;
     [SerializeField] int _maxAmmo = 6;
+    [SerializeField] float _maxRange = 50f;
 
     float _recoilT;
     float _reloadT;
     int _ammo;
     bool _reloadBuffered;
-    #endregion 
+    int _mask;
+    #endregion
 
     void Awake()
     {
         _fsm = GetComponent<RevolverFSM>();
+        _camera = Camera.main.transform;
         _inputs = new PlayerInputMap();
         _inputs.Actions.Shoot.started += _ => PressShoot();
         _inputs.Actions.Reload.started += _ => PressReload();
+        _mask = LayerMask.GetMask("Enemies");
     }
 
     void Start()
@@ -83,8 +88,10 @@ public class Revolver : MonoBehaviour
 
     public virtual void Shoot()
     {
-        //Raycast Here
         PlaceHolderSoundManager.Instance.PlayRevolverShot();
+        //I would like to avoid getcomponent calls but thatll do for now
+        if (Physics.Raycast(_camera.position, _camera.forward, out RaycastHit hit, _maxRange, _mask))
+            hit.transform.GetComponent<Health>().TakeDamage();
     }
 
     public void StartRecoil()
