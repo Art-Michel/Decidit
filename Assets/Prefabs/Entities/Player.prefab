@@ -469,7 +469,7 @@ GameObject:
   - component: {fileID: 1340939799}
   - component: {fileID: 1340939801}
   - component: {fileID: 1340939800}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Ammo Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1051,7 +1051,7 @@ GameObject:
   - component: {fileID: 4051422561487363086}
   - component: {fileID: 4133363916863170250}
   - component: {fileID: 5484497909188995371}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Debug Gun State Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1187,7 +1187,7 @@ GameObject:
   - component: {fileID: 2200446483175276499}
   - component: {fileID: 2200446483175276501}
   - component: {fileID: 2200446483175276498}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Debug Slope Velocity Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1323,7 +1323,7 @@ GameObject:
   - component: {fileID: 2200446483452257791}
   - component: {fileID: 2200446483452257761}
   - component: {fileID: 2200446483452257790}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Debug Character State Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1457,7 +1457,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2200446483621540319}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Pl_HPEnd
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1495,7 +1495,7 @@ GameObject:
   - component: {fileID: 2200446483659829171}
   - component: {fileID: 2200446483659829173}
   - component: {fileID: 2200446483659829170}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Debug Speed Velocity Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1631,7 +1631,7 @@ GameObject:
   - component: {fileID: 2200446483695940434}
   - component: {fileID: 2200446483695940436}
   - component: {fileID: 2200446483695940437}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Debug Input Velocity Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1765,7 +1765,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2200446483702820357}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: PlayerBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1798,7 +1798,7 @@ GameObject:
   - component: {fileID: 2200446483753945753}
   - component: {fileID: 2200446483753945755}
   - component: {fileID: 2200446483753945752}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Debug Gravity Velocity Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1932,7 +1932,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2200446483787204076}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Pl_HPStart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1970,7 +1970,7 @@ GameObject:
   - component: {fileID: 2200446483924117780}
   - component: {fileID: 2200446483924117782}
   - component: {fileID: 2200446483924117783}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Pl_HP Probation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2046,7 +2046,7 @@ GameObject:
   - component: {fileID: 2200446484005636424}
   - component: {fileID: 2200446484005636426}
   - component: {fileID: 2200446484005636427}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Timescale
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2184,7 +2184,7 @@ GameObject:
   - component: {fileID: 2200446484116235282}
   - component: {fileID: 2200446484116235284}
   - component: {fileID: 2200446484116235285}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Pl_HP Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2264,7 +2264,7 @@ GameObject:
   - component: {fileID: 2200446484234949841}
   - component: {fileID: 2200446484234949840}
   - component: {fileID: 2200446484234949843}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2309,15 +2309,18 @@ MonoBehaviour:
   _debugSpeedText: {fileID: 2200446483659829170}
   _head: {fileID: 2200446484878844514}
   _charaCon: {fileID: 2200446484234949841}
-  _mouseSensitivityX: 10
-  _mouseSensitivityY: 10
+  _collisionMask:
+    serializedVersion: 2
+    m_Bits: 1537
+  _mouseSensitivityX: 8
+  _mouseSensitivityY: 8
   _mouseXInverted: 0
   _mouseYInverted: 0
   _stickSensitivityX: 15
   _stickSensitivityY: 15
   _controllerCameraXInverted: 0
   _controllerCameraYInverted: 0
-  _cameraSmoothness: 100000
+  _cameraSmoothness: 1000
   _jumpStrength: 14
   _airborneDrag: 3
   _jumpingDrag: 3
@@ -2389,7 +2392,7 @@ GameObject:
   - component: {fileID: 2200446484329315733}
   - component: {fileID: 2200446484329315735}
   - component: {fileID: 2200446484329315732}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Pl_HP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2469,7 +2472,7 @@ GameObject:
   - component: {fileID: 2200446484381738819}
   - component: {fileID: 2200446484381738816}
   - component: {fileID: 2200446484381738821}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -2679,7 +2682,7 @@ GameObject:
   - component: {fileID: 2200446484577634938}
   - component: {fileID: 2200446484577634939}
   - component: {fileID: 2200446484577634936}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2782,7 +2785,7 @@ GameObject:
   - component: {fileID: 2200446484797913917}
   - component: {fileID: 2200446484797913919}
   - component: {fileID: 2200446484797913916}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Pl_HPCursor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2857,7 +2860,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2200446484828752700}
   - component: {fileID: 2200446484828752703}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Other
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2920,7 +2923,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2200446484852391367}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Debugging UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2958,7 +2961,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2200446484878844514}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: PlayerHead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2972,7 +2975,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2200446484878844515}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: 0.71027184, z: -0, w: -0.70392746}
   m_LocalPosition: {x: 0, y: 0.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2988,7 +2991,7 @@ Transform:
   - {fileID: 1447211705}
   m_Father: {fileID: 2200446484234949676}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -450.514, z: 0}
 --- !u!1 &2200446484907440231
 GameObject:
   m_ObjectHideFlags: 0
@@ -3000,7 +3003,7 @@ GameObject:
   - component: {fileID: 2200446484907440230}
   - component: {fileID: 2200446484907440232}
   - component: {fileID: 2200446484907440233}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Crosshair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3076,7 +3079,7 @@ GameObject:
   - component: {fileID: 2200446485109751258}
   - component: {fileID: 2200446485109751260}
   - component: {fileID: 2200446485109751261}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Debug Global Velocity Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3217,7 +3220,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2200446485163580524}
   - component: {fileID: 2200446485163580527}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: ControllerRelated
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3289,7 +3292,7 @@ GameObject:
   - component: {fileID: 4462948425955975120}
   - component: {fileID: 3895835483905755465}
   - component: {fileID: 586017204446625089}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Debug ArmState Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}

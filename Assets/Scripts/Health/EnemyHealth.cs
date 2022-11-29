@@ -14,9 +14,9 @@ public class EnemyHealth : Health
 
     [Header("Values")]
     [SerializeField][Range(0.05f, 0.6f)] float _uiScale = 0.1f;
-    [SerializeField][Range(0.0001f, 10f)] float _lookStrictness = 0.99f;
-    [SerializeField][Range(0.5f, 10f)] float _appearSpeed = 9f;
-    [SerializeField][Range(0.5f, 10f)] float _disappearSpeed = 1f;
+    [SerializeField][Range(0.0001f, 10f)] float _lookStrictness = 0.08f;
+    [SerializeField][Range(0.5f, 20f)] float _appearSpeed = 15f;
+    [SerializeField][Range(0.5f, 20f)] float _disappearSpeed = 4f;
     [SerializeField][Range(0f, 2f)] float _disappearMaxStartup = 1f;
     float _disappearStartup;
     float _appearT;

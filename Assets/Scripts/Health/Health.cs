@@ -36,7 +36,7 @@ public class Health : MonoBehaviour
     }
 
     [Button]
-    public void TakeDamage(int damage = 10)
+    public void TakeDamage(int damage = 5)
     {
         _hp -= damage;
         DisplayHealth();
@@ -95,6 +95,6 @@ public class Health : MonoBehaviour
 
     private void Death()
     {
-        
+
     }
 }
