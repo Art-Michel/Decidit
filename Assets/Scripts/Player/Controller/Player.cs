@@ -14,6 +14,7 @@ public class Player : LocalManager<Player>
     [SerializeField] TextMeshProUGUI _debugSpeedText;
     [SerializeField] Transform _head;
     [SerializeField] CharacterController _charaCon;
+    [SerializeField] LayerMask _collisionMask;
     PlayerInputMap _inputs;
     PlayerFSM _fsm;
     PlayerHealth _playerHealth;
@@ -137,9 +138,9 @@ public class Player : LocalManager<Player>
         MoveCameraWithMouse();
 
         //Ground Spherecast and Storage of its values
-        Physics.SphereCast(transform.position, _groundSpherecastRadius, -transform.up, out _groundHit, _groundSpherecastLength);
+        Physics.SphereCast(transform.position, _groundSpherecastRadius, -transform.up, out _groundHit, _groundSpherecastLength, _collisionMask);
         //Ceiling Spherecast and Storage of its values
-        Physics.SphereCast(transform.position, _ceilingSpherecastRadius, transform.up, out _ceilingHit, _ceilingRaycastLength);
+        Physics.SphereCast(transform.position, _ceilingSpherecastRadius, transform.up, out _ceilingHit, _ceilingRaycastLength, _collisionMask);
 
         //Update Movement Vectors
         UpdateMovement();

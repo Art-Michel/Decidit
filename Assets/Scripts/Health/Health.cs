@@ -43,6 +43,7 @@ public class Health : MonoBehaviour
 
         if (_hp <= 0)
         {
+            _hp = 0f;
             Death();
             return;
         }
@@ -58,7 +59,7 @@ public class Health : MonoBehaviour
         }
     }
 
-    private void StartProbHealth()
+    protected void StartProbHealth()
     {
         _probationStartup = _probationMaxStartup;
         _hasProbation = true;
@@ -94,7 +95,6 @@ public class Health : MonoBehaviour
 
     private void Death()
     {
-
+        
     }
-
 }
