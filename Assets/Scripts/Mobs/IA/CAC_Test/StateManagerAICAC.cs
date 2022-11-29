@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class StateManagerAICAC : MonoBehaviour
 {
-    [SerializeField] public enum State { BaseIdle, BaseMovement, Dodge, BaseAttack, Death, SurroundPlayer, DodgeOtherAI};
+    [SerializeField] public enum State { BaseIdle, BaseMovement, Dodge, BaseAttack, Death, SurroundPlayer};
     [SerializeField] public State state;
 
     RaycastHit hitRight, hitLeft;
@@ -20,6 +20,7 @@ public class StateManagerAICAC : MonoBehaviour
     public NavMeshAgent agent;
     public AILife aILife;
     public Animator myAnimator;
+    public AICACVarianteState aICACVarianteState;
 
     [Header("Distance Player")]
     [SerializeField] public float distplayer;
@@ -63,10 +64,6 @@ public class StateManagerAICAC : MonoBehaviour
     public SurroundParameterAICAC surroundParameterAICACSO;
     public SurroundParameterAICAC surroundParameterAICACSOInstance;
 
-    DodgeOtherAICAC dodgeOtherAICAC;
-    public DodgeOtherParameterAICAC dodgeOtherParameterAICACSO;
-    public DodgeOtherParameterAICAC dodgeOtherParameterAICACSOInstance;
-
     public void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -74,6 +71,7 @@ public class StateManagerAICAC : MonoBehaviour
         playerTransform = GameObject.FindWithTag("Player").transform;
         myAnimator = GetComponent<Animator>();
         spawnSurroundDodge = transform.Find("SpawnSurroundRay");
+        aICACVarianteState = transform.parent.GetComponent<AICACVarianteState>();
 
         baseMoveAICAC = new BaseMoveAICAC();
         baseAttackAICAC = new BaseAttackAICAC();
@@ -81,7 +79,6 @@ public class StateManagerAICAC : MonoBehaviour
         deathAICAC = new DeathAICAC();
         dodgeAICAC = new DodgeAICAC();
         surroundAICAC = new SurroundAICAC();
-        dodgeOtherAICAC = new DodgeOtherAICAC();
 
         baseMoveParameterAICACSOInstance = Instantiate(baseMoveParameterAICACSO);
         baseAttackParameterAICACSOInstance = Instantiate(baseAttackParameterAICACSO);
@@ -89,7 +86,6 @@ public class StateManagerAICAC : MonoBehaviour
         deathParameterAICACSOInstance = Instantiate(deathParameterAICACSO);
         dodgeParameterAICACSOInstance = Instantiate(dodgeParameterAICACSO);
         surroundParameterAICACSOInstance = Instantiate(surroundParameterAICACSO);
-        dodgeOtherParameterAICACSOInstance = Instantiate(dodgeOtherParameterAICACSO);
 
         baseMoveAICAC.virtual_AICAC = this;
         baseMoveAICAC.baseMoveParameterSO = baseMoveParameterAICACSOInstance;
@@ -108,14 +104,14 @@ public class StateManagerAICAC : MonoBehaviour
         dodgeAICAC.dodgeAICACSO = dodgeParameterAICACSOInstance;
 
         surroundAICAC.stateManagerAICAC = this;
+        surroundAICAC.aICACVarianteState = aICACVarianteState;
         surroundAICAC.SurroundAICACSO = surroundParameterAICACSOInstance;
-
-        dodgeOtherAICAC.stateManagerAICAC = this;
-        dodgeOtherAICAC.dodgeOtherSO = dodgeOtherParameterAICACSOInstance;
     }
 
     public void SwitchToNewState(int indexState)
     {
+        Debug.Log("SwitchToNewState");
+
         if (state != State.Death)
         {
             if (indexState == 2)
@@ -169,19 +165,13 @@ public class StateManagerAICAC : MonoBehaviour
                 break;
 
             case State.SurroundPlayer:
-                //surroundAICAC.ChooseDirection();
-                break;
-            case State.DodgeOtherAI:
-                dodgeOtherAICAC.MoveDodge();
+                surroundAICAC.ChooseDirection();
                 break;
 
             case State.Death:
                 deathAICAC.Death();
                 break;
         }
-
-        if (left && right && state == State.BaseMovement)
-            state = State.DodgeOtherAI;
     }
     private void FixedUpdate()
     {
@@ -195,11 +185,6 @@ public class StateManagerAICAC : MonoBehaviour
             surroundAICAC.ChooseDirection();
             surroundAICAC.GetSurroundDestination();
         }
-        else if (state == State.DodgeOtherAI)
-            dodgeOtherAICAC.SetDodgeDestination();
-
-        if (listOtherAIContact.Count>0)
-            DetectNearOther();
     }
 
     void SmoothLookForward()
@@ -213,7 +198,7 @@ public class StateManagerAICAC : MonoBehaviour
         relativePos.y = 0;
         relativePos.z = direction.z - transform.position.z;
 
-        if (state == State.SurroundPlayer || state == State.DodgeOtherAI)
+        if (state == State.SurroundPlayer)
         {
             agent.angularSpeed = 360f;
             speedSmoothRot = 0;
@@ -228,54 +213,6 @@ public class StateManagerAICAC : MonoBehaviour
         transform.rotation = rotation;
     }
 
-    void DetectNearOther()
-    {
-        for(int i =0; i < listOtherCACAI.Count; i++)
-        {
-            hitRight = RaycastAIManager.RaycastAI(transform.position, listOtherAIContact[i].position - transform.position, noMask, Color.red, 5f);
-            float angleRight;
-            angleRight = Vector3.SignedAngle(listOtherAIContact[i].forward, transform.forward, Vector3.up);
-
-            Debug.Log(gameObject.name + "  " +angleRight);
-
-            if(Vector3.Distance(listOtherAIContact[i].position, transform.position) < 3)
-            {
-                if (angleRight > 0)
-                {
-                    right = true;
-                }
-            }
-            else
-            {
-                if (angleRight > 0)
-                {
-                    right = false;
-                    listOtherAIContact.Remove(listOtherAIContact[i]);
-                }
-            }
-
-            hitLeft = RaycastAIManager.RaycastAI(transform.position, listOtherAIContact[i].position - transform.position, noMask, Color.blue, 5f);
-            float angleLeft;
-            angleLeft = Vector3.SignedAngle(listOtherAIContact[i].forward, transform.forward, Vector3.up);
-
-            if (Vector3.Distance(listOtherAIContact[i].position, transform.position) < 3)
-            {
-                if (angleLeft < 0)
-                {
-                    left = true;
-                }
-            }
-            else
-            {
-                if (angleLeft < 0)
-                {
-                    left = false;
-                    listOtherAIContact.Remove(listOtherAIContact[i]);
-                }
-            }
-        }
-    }
-
     /// <summary>
     /// Animation Event
     /// </summary>
@@ -283,37 +220,5 @@ public class StateManagerAICAC : MonoBehaviour
     {
         myAnimator.SetBool("Attack", false);
         baseAttackParameterAICACSOInstance.isAttacking = false;
-    }
-
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if(listOtherCACAI.Contains(other.gameObject))
-        {
-            if(!listOtherAIContact.Contains(other.transform))
-                listOtherAIContact.Add(other.transform);
-            Debug.Log("Contact srhab  " + Vector3.Distance(other.transform.position, transform.position));
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-       /* if (listOtherCACAI.Contains(other.gameObject))
-        {
-            listOtherAIContact.Remove(other.transform);
-
-            hit = RaycastAIManager.RaycastAI(transform.position, other.transform.position - transform.position, noMask, Color.red, 100f);
-            float angle;
-            angle = Vector3.SignedAngle(other.transform.forward, transform.forward, Vector3.up);
-
-            if (angle > 0)
-            {
-                right = false;
-            }
-            else
-            {
-                left = false;
-            }
-        }*/
     }
 }

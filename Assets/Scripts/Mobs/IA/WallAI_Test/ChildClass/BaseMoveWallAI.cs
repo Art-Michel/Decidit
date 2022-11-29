@@ -38,8 +38,6 @@ public class BaseMoveWallAI
     {
         if (!IsMoving())
         {
-            Debug.Log("SelectNewPos");
-
             baseMoveWallAISO.selectedWall = Random.Range(0, 4);
             baseMoveWallAISO.newPos = SearchNewPos(wallAI.walls[baseMoveWallAISO.selectedWall].bounds);
 
@@ -48,12 +46,10 @@ public class BaseMoveWallAI
 
             if (hit.transform != wallAI.playerTransform)
             {
-                Debug.Log(hit.transform);
                 baseMoveWallAISO.findNewPos = false;
             }
             else
             {
-                Debug.Log(hit.transform);
                 baseMoveWallAISO.findNewPos = true;
             }
         }

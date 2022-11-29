@@ -24,8 +24,6 @@ public class BaseAttackWallAI
         directionPlayer.y = wallAI.playerController.controller.velocity.normalized.y;
         directionPlayer.z = wallAI.playerController.controller.velocity.normalized.z;
 
-        Debug.Log(wallAI.playerController.localVelocity);
-
         switch (wallAI.playerController.localVelocity)
         {
             case 0:

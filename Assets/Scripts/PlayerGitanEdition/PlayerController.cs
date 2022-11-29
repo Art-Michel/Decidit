@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (hit.transform.GetComponent<StateManagerAICAC>() != null)
                 {
-                    if (Random.Range(0, 25) == 10)
+                    if (Random.Range(0, 50) == 10)
                     {
                         RaycastHit hit = RaycastAIManager.RaycastAI(transform.position, transform.forward, mask, Color.red, 100f);
                         float angle;
@@ -94,8 +94,16 @@ public class PlayerController : MonoBehaviour
 
         Vector2 dirXZ = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
 
-        move.x = dirXZ.x;
-        move.z = dirXZ.y;
+        if(controller.isGrounded)
+        {
+            move.x = dirXZ.x;
+            move.z = dirXZ.y;
+        }
+        else
+        {
+            move.x = dirXZ.x * 1.5f;
+            move.z = dirXZ.y * 1.5f;
+        }
 
         //movement
         if (controller.isGrounded)

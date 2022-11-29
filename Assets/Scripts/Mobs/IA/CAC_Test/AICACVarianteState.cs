@@ -6,8 +6,10 @@ public class AICACVarianteState : MonoBehaviour
 {
     [SerializeField] List<StateManagerAICAC> aiCACScriptsList= new List<StateManagerAICAC>();
     [SerializeField] List<StateManagerAICAC> aiCACSurroundSelectedList = new List<StateManagerAICAC>();
+    [SerializeField] List<SurroundParameterAICAC> listSurroundParameterAICACSO = new List<SurroundParameterAICAC>();
 
     [SerializeField] int maxAISurround;
+    [SerializeField] int numberAISurrouned;
     int index = 0;
 
     [SerializeField] float currentCoolDownDurround;
@@ -15,7 +17,7 @@ public class AICACVarianteState : MonoBehaviour
 
     void Start()
     {
-        for(int i =0; i < transform.childCount; i++)
+        for (int i =0; i < transform.childCount; i++)
         {
             aiCACScriptsList.Add(transform.GetChild(i).GetComponent<StateManagerAICAC>());
         }
@@ -31,12 +33,32 @@ public class AICACVarianteState : MonoBehaviour
         maxAISurround = Mathf.CeilToInt((float)aiCACScriptsList.Count / 2f);
 
         currentCoolDownDurround = maxCoolDownDurround;
+
+        for (int i = 0; i < aiCACScriptsList.Count; i++)
+        {
+            listSurroundParameterAICACSO.Add(aiCACScriptsList[i].surroundParameterAICACSOInstance);
+
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         CoolDown();
+
+        if(aiCACSurroundSelectedList.Count == 2)
+        {
+            if (aiCACSurroundSelectedList[0].surroundParameterAICACSOInstance.right && aiCACSurroundSelectedList[1].surroundParameterAICACSOInstance.right)
+            {
+                aiCACSurroundSelectedList[1].surroundParameterAICACSOInstance.right = false;
+                aiCACSurroundSelectedList[1].surroundParameterAICACSOInstance.left = true;
+            }
+            else if(aiCACSurroundSelectedList[0].surroundParameterAICACSOInstance.left && aiCACSurroundSelectedList[1].surroundParameterAICACSOInstance.left)
+            {
+                aiCACSurroundSelectedList[1].surroundParameterAICACSOInstance.left = false;
+                aiCACSurroundSelectedList[1].surroundParameterAICACSOInstance.right = true;
+            }
+        }
     }
 
     void CoolDown()
@@ -72,9 +94,16 @@ public class AICACVarianteState : MonoBehaviour
 
         for(int i =0; i < aiCACSurroundSelectedList.Count; i++)
         {
+            if (i == 1)
+            {
+                if (aiCACSurroundSelectedList[0].surroundParameterAICACSOInstance.right)
+                    aiCACSurroundSelectedList[1].surroundParameterAICACSOInstance.left = true;
+                else
+                    aiCACSurroundSelectedList[1].surroundParameterAICACSOInstance.right = true;
+            }
+
             aiCACSurroundSelectedList[i].SwitchToNewState(5);
         }
-        ResetAISelected();
     }
     void SelectedFirstSurroundAI(int shortestDist)
     {
@@ -89,8 +118,10 @@ public class AICACVarianteState : MonoBehaviour
                 shortestDist = aiCACScriptsList.IndexOf(aiCACScriptsList[i+1]);
             }
         }
-        aiCACSurroundSelectedList.Add(aiCACScriptsList[shortestDist]);
+        if(aiCACSurroundSelectedList.Count < 2)
+            aiCACSurroundSelectedList.Add(aiCACScriptsList[shortestDist]);
     }
+
     void SelectedOtherSurroundAI(int shortestDist)
     {
         for (int i = 0; i < aiCACScriptsList.Count - 1; i++)
@@ -98,7 +129,9 @@ public class AICACVarianteState : MonoBehaviour
             if (aiCACScriptsList[i].distplayer > aiCACScriptsList[i + 1].distplayer)
             {
                 if(!aiCACSurroundSelectedList.Contains(aiCACScriptsList[i]))
+                {
                     shortestDist = aiCACScriptsList.IndexOf(aiCACScriptsList[i]);
+                }
             }
             else
             {
@@ -106,17 +139,21 @@ public class AICACVarianteState : MonoBehaviour
                     shortestDist = aiCACScriptsList.IndexOf(aiCACScriptsList[i + 1]);
             }
         }
-        aiCACSurroundSelectedList.Add(aiCACScriptsList[shortestDist]);
+        if (aiCACSurroundSelectedList.Count < 2)
+            aiCACSurroundSelectedList.Add(aiCACScriptsList[shortestDist]);
     }
 
-    public void ResetAISelected()
+    public void RemoveAISelected(StateManagerAICAC stateManagerAICAC)
     {
-        while (aiCACSurroundSelectedList.Count > 0)
+        Debug.Log(aiCACSurroundSelectedList.Count);
+        aiCACSurroundSelectedList.Remove(stateManagerAICAC);
+
+        /*while (aiCACSurroundSelectedList.Count > 0)
         {
             for (int i = 0; i < aiCACSurroundSelectedList.Count; i++)
             {
                 aiCACSurroundSelectedList.RemoveAt(i);
             }
-        }
+        }*/
     }
 }

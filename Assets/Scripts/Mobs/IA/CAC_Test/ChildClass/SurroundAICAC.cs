@@ -6,6 +6,9 @@ public class SurroundAICAC
 {
     public StateManagerAICAC stateManagerAICAC;
     public SurroundParameterAICAC SurroundAICACSO;
+    public AICACVarianteState aICACVarianteState;
+
+    public List<SurroundParameterAICAC> listSurrounScript = new List<SurroundParameterAICAC>();
 
     Vector3 destination;
     Ray ray;
@@ -21,8 +24,6 @@ public class SurroundAICAC
             stateManagerAICAC.playerTransform.position - stateManagerAICAC.spawnSurroundDodge.position, SurroundAICACSO.mask, Color.red, 100f);
             float angle;
             angle = Vector3.SignedAngle(stateManagerAICAC.playerTransform.forward, stateManagerAICAC.transform.forward, Vector3.up);
-
-            Debug.Log(stateManagerAICAC.transform.name + " " + angle);
 
             if (angle > 0)
             {
@@ -87,6 +88,7 @@ public class SurroundAICAC
     {
         SurroundAICACSO.right = false;
         SurroundAICACSO.left = false;
+        aICACVarianteState.RemoveAISelected(stateManagerAICAC);
         stateManagerAICAC.SwitchToNewState(1);
     }
 }

@@ -123,7 +123,7 @@ public class DodgeAICAC
         else
         {
             dodgeAICACSO.dodgeRushBull = false;
-            stateManagerAICAC.SwitchToNewState(5);
+            //stateManagerAICAC.SwitchToNewState(5);
         }
     }
 }
