@@ -1,0 +1,20 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.AI;
+
+[CreateAssetMenu(fileName = "TrashMob_DodgeParameter", menuName = "TrashMob/DodgeParameter")]
+public class DodgeParameterAICAC : ScriptableObject
+{
+    public float dodgeLenght;
+    public float dodgeSpeed;
+    public bool isDodging = false;
+    public bool dodgeRushBull = false;
+    public bool rightDodge = false;
+    public bool leftDodge = false;
+    public bool dodgeIsSet = false;
+    public Vector3 targetDodgeVector = Vector3.zero;
+    public NavMeshHit navHit;
+    public LayerMask noMask;
+    public Transform targetObjectToDodge;
+}
