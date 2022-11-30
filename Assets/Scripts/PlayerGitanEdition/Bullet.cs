@@ -27,5 +27,17 @@ public class Bullet : MonoBehaviour
         {
             collision.transform.GetComponent<AILife>().ApplyDamage(damageBullet);
         }
+        else if (collision.gameObject.CompareTag("Player"))
+        {
+            PlayerController.ApplyDamage(10);
+        }
+    }
+
+    private void OnTriggerEnter(Collider collider)
+    {
+        if (collider.CompareTag("Player"))
+        {
+            PlayerController.ApplyDamage(10);
+        }
     }
 }

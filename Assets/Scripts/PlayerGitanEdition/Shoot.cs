@@ -11,10 +11,15 @@ public class Shoot : MonoBehaviour
 
     [SerializeField] LayerMask mask;
 
+    [Header("Shoot Variable")]
     [SerializeField] Rigidbody prefabBullet;
     [SerializeField] float force;
-
     [SerializeField] bool fireClick;
+
+    [Header("Fire Rate")]
+    [SerializeField] float maxFireRate;
+    [SerializeField] float currentFireRate;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,9 +31,16 @@ public class Shoot : MonoBehaviour
     {
         RaycastGun();
 
-        if(Input.GetMouseButtonDown(0))
+        if (currentFireRate <= 0)
         {
-            fireClick = true;
+            if (Input.GetMouseButtonDown(0))
+            {
+                fireClick = true;
+            }
+        }
+        else
+        {
+            currentFireRate -= Time.deltaTime;
         }
     }
     void FixedUpdate()
@@ -60,5 +72,6 @@ public class Shoot : MonoBehaviour
         fireClick = false;
         Rigidbody cloneBullet = Instantiate(prefabBullet, transform.position, transform.rotation);
         cloneBullet.AddRelativeForce(Vector3.forward * force, ForceMode.Impulse);
+        currentFireRate = maxFireRate;
     }
 }

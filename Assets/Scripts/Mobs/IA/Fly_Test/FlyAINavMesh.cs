@@ -109,5 +109,12 @@ public class FlyAINavMesh : MonoBehaviour
             if(state == State.BaseAttack)
                 state = State.BaseMovement;
         }
+        else if(collision.gameObject.CompareTag("Player"))
+        {
+            if(state == State.BaseAttack)
+            {
+                PlayerController.ApplyDamage(10);
+            }
+        }
     }
 }
