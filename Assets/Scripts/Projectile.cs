@@ -2,32 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody), typeof(Collider))]
-public class Projectile : MonoBehaviour
+public class Projectile : Hitbox
 {
-    [SerializeField] LayerMask _mask;
-    [SerializeField] Rigidbody _rb;
     [SerializeField] float _speed;
-
-    void Awake()
-    {
-        _rb = GetComponent<Rigidbody>();
-    }
+    [SerializeField] Vector3 _direction;
+    [SerializeField] Vector3 _initialPosition;
 
     void Start()
     {
-
+        Setup();
     }
 
-    private void OnTriggerEnter(Collider other)
+    void OnEnable()
     {
-        Debug.Log("hit " + other.gameObject.name);
-        if (other.CompareTag("Ennemi"))
-            other.transform.GetComponent<Health>().TakeDamage();
+        Setup();
     }
 
-    void Update()
+    void Setup()
     {
-        _rb.MovePosition(transform.position + Vector3.forward * Time.deltaTime * _speed);
+        _initialPosition = transform.position;
     }
+
+    protected override void FixedUpdate()
+    {
+
+        transform.position += _direction * _speed;
+    }
+
+    protected override void Hit(Collider collider)
+    {
+        base.Hit(collider);
+    }
+
 }

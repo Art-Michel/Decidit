@@ -35,8 +35,7 @@ public class Health : MonoBehaviour
             UpdateProbHealth();
     }
 
-    [Button]
-    public void TakeDamage(int damage = 5)
+    public virtual void TakeDamage(int damage = 5)
     {
         _hp -= damage;
         DisplayHealth();

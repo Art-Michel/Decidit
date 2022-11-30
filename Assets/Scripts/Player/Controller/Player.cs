@@ -82,9 +82,6 @@ public class Player : LocalManager<Player>
     [SerializeField]
     private float _movementDecelerationSpeed = 0.0666f; //Approx 4 frames
     [Range(0, 100)]
-    [SerializeField]
-    private float _slideForceOnSlopes = 1f;
-    [Range(0, 100)]
     [Tooltip("if lower than movement speed, you will accelerate when airborne")]
     [SerializeField]
     private float _airborneFriction = 9f;
@@ -124,7 +121,7 @@ public class Player : LocalManager<Player>
         SetCameraInvert();
     }
 
-    private void Update() //Things that are StateMachine-unrelated
+    private void Update()
     {
         //jump cooldown
         if (_justJumped)
@@ -364,7 +361,7 @@ public class Player : LocalManager<Player>
         Vector3 temp = Vector3.Cross(_ceilingHit.normal, Vector3.up);
         Vector3 slopeDir = Vector3.Cross(temp, _ceilingHit.normal);
 
-        _steepSlopesMovement = (slopeDir + Vector3.up) * _currentlyAppliedGravity * -(Vector3.Dot(_movementInputs.normalized, slopeDir) - 1);
+        _steepSlopesMovement = (slopeDir + Vector3.up) * _currentlyAppliedGravity;
 
         // Nullify movement input towards wall
         Vector3 ceilingHorizontalDir = new Vector3(slopeDir.x, 0, slopeDir.z).normalized;
@@ -393,7 +390,7 @@ public class Player : LocalManager<Player>
 
         //Add gravity in the right direction
         _currentlyAppliedGravity -= _gravity * _airborneDrag * Time.deltaTime;
-        _steepSlopesMovement = (slopeDir + Vector3.down) * -_currentlyAppliedGravity * -(Vector3.Dot(_movementInputs.normalized, slopeDir) - 1);
+        _steepSlopesMovement = (slopeDir + Vector3.down) * -_currentlyAppliedGravity;
 
         // Nullify movement input towards wall
         Vector3 slopeHorizontalDir = new Vector3(slopeDir.x, 0, slopeDir.z).normalized;

@@ -18,6 +18,8 @@ public class PlaceHolderSoundManager : LocalManager<PlaceHolderSoundManager>
     [SerializeField] AudioClip _weaponEquip;
     [SerializeField] AudioClip _armEquip;
 
+    [SerializeField] AudioClip _hit;
+
 
     private void PlaySound(AudioClip clip, float volume)
     {
@@ -27,6 +29,11 @@ public class PlaceHolderSoundManager : LocalManager<PlaceHolderSoundManager>
     public void PlayRevolverShot()
     {
         PlaySound(_revolverShot, 1f);
+    }
+
+    public void PlayHitSound()
+    {
+        PlaySound(_hit, 1f);
     }
 
     public void PlayAragonShot()

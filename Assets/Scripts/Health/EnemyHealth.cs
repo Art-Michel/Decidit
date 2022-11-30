@@ -45,6 +45,12 @@ public class EnemyHealth : Health
         AdjustVisibility();
     }
 
+    public override void TakeDamage(int amount = 10)
+    {
+        base.TakeDamage();
+        PlaceHolderSoundManager.Instance.PlayHitSound();
+    }
+
     void LookAtCamera()
     {
         //self explanatory
