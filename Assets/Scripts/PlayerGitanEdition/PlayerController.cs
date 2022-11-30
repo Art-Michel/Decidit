@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class PlayerController : MonoBehaviour
 {
     Transform cam;
+    [SerializeField] CinemachineVirtualCamera vCam;
+    [SerializeField] CinemachinePOV povCam;
+    CinemachineBasicMultiChannelPerlin shakeCam;
     [SerializeField] Transform spawnRay;
     [SerializeField] LayerMask mask;
     RaycastHit hit;
@@ -36,18 +40,19 @@ public class PlayerController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         cam = transform.GetChild(0);
         hpStatic = hp;
+        povCam = vCam.GetCinemachineComponent<CinemachinePOV>();
     }
     void Update()
     {
         hp = hpStatic;
 
-        rotX -= rotSpeed * Input.GetAxis("Mouse Y") * Time.deltaTime;
-        rotY += rotSpeed * Input.GetAxis("Mouse X") * Time.deltaTime;
+        //rotX -= rotSpeed * Input.GetAxis("Mouse Y") * Time.deltaTime;
+        //rotY += rotSpeed * Input.GetAxis("Mouse X") * Time.deltaTime;
+            
+        transform.rotation = Quaternion.Euler(0, povCam.m_HorizontalAxis.Value, 0);
 
-        transform.rotation = Quaternion.Euler(0, rotY, 0);
-
-        rotX = Mathf.Clamp(rotX ,-65f, 65f);
-        cam.localRotation = Quaternion.Euler(rotX, 0, 0);
+        //rotX = Mathf.Clamp(rotX ,-65f, 65f);
+        //cam.localRotation = Quaternion.Euler(rotX, 0, 0);
 
         groundedPlayer = controller.isGrounded;
 
@@ -132,5 +137,7 @@ public class PlayerController : MonoBehaviour
     public static void ApplyDamage(int damage)
     {
         hpStatic -= damage;
+        ShakeCam.ShakerCam(ShakeCam.shakeCamhitStatic, ShakeCam.shakeCamhitStatic[0].axeShake, ShakeCam.shakeCamhitStatic[0].amplitude,
+            ShakeCam.shakeCamhitStatic[0].frequence, ShakeCam.shakeCamhitStatic[0].duration);
     }
 }

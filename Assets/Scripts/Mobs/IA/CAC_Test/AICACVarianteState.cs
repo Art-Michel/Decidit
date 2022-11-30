@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AICACVarianteState : MonoBehaviour
 {
+    [SerializeField] public float offeset;
     [SerializeField] public float positiveOffeset;
     [SerializeField] public float negativeOffeset;
 
@@ -65,13 +66,13 @@ public class AICACVarianteState : MonoBehaviour
         {
             if (i % 2 == 0)
             {
-                positiveOffeset++;
+                positiveOffeset += offeset;
                 Debug.Log(i % 2);
                 aiCACScriptsList[i].offsetDestination = positiveOffeset;
             }
             else
             {
-                negativeOffeset--;
+                negativeOffeset -= offeset;
                 Debug.Log(i % 2);
                 aiCACScriptsList[i].offsetDestination = negativeOffeset;
             }

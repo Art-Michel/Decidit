@@ -227,7 +227,7 @@ public class BullAI : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag("Player") && state == State.RushMovement)
+        if(collision.collider.CompareTag("Player") && state == State.RushMovement)
         {
             PlayerController.ApplyDamage(rushBullParameterSOInstance.damageRushAttack);
         }
