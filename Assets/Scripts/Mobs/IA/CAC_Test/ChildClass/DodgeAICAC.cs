@@ -7,6 +7,7 @@ public class DodgeAICAC
 {
     public StateManagerAICAC stateManagerAICAC;
     public DodgeParameterAICAC dodgeAICACSO;
+    public BaseMoveParameterAICAC baseMoveAICACSO;
 
     public float AngleDir(Vector3 fwd, Vector3 targetDir, Vector3 up)
     {
@@ -96,6 +97,7 @@ public class DodgeAICAC
         //Debug.Log(distDodgeDestination);
         if (distDodgeDestination > 1.1f)
         {
+            baseMoveAICACSO.speedRot = 0;
             stateManagerAICAC.agent.speed = dodgeAICACSO.dodgeSpeed;
             dodgeAICACSO.isDodging = true;
             stateManagerAICAC.agent.SetDestination(dodgeAICACSO.targetDodgeVector);
@@ -112,6 +114,7 @@ public class DodgeAICAC
     }
     void StopDodge()
     {
+        dodgeAICACSO.speedRot = 0;
         dodgeAICACSO.leftDodge = false;
         dodgeAICACSO.rightDodge = false;
         dodgeAICACSO.isDodging = false;
@@ -125,5 +128,26 @@ public class DodgeAICAC
             dodgeAICACSO.dodgeRushBull = false;
             //stateManagerAICAC.SwitchToNewState(5);
         }
+    }
+
+    public void SmoothLookAt()
+    {
+        Vector3 direction;
+        Vector3 relativePos;
+
+        direction = stateManagerAICAC.playerTransform.position;
+        relativePos.x = direction.x - stateManagerAICAC.transform.position.x;
+        relativePos.y = 0;
+        relativePos.z = direction.z - stateManagerAICAC.transform.position.z;
+
+        if (dodgeAICACSO.speedRot < dodgeAICACSO.maxSpeedRot)
+            dodgeAICACSO.speedRot += Time.deltaTime / dodgeAICACSO.smoothRot;
+        else
+        {
+            dodgeAICACSO.speedRot = dodgeAICACSO.maxSpeedRot;
+        }
+
+        Quaternion rotation = Quaternion.Slerp(stateManagerAICAC.transform.rotation, Quaternion.LookRotation(relativePos, Vector3.up), dodgeAICACSO.speedRot);
+        stateManagerAICAC.transform.rotation = rotation;
     }
 }

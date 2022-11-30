@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class AICACVarianteState : MonoBehaviour
 {
+    [SerializeField] public float positiveOffeset;
+    [SerializeField] public float negativeOffeset;
+
     [SerializeField] List<StateManagerAICAC> aiCACScriptsList= new List<StateManagerAICAC>();
     [SerializeField] List<StateManagerAICAC> aiCACSurroundSelectedList = new List<StateManagerAICAC>();
     [SerializeField] List<SurroundParameterAICAC> listSurroundParameterAICACSO = new List<SurroundParameterAICAC>();
@@ -17,28 +20,65 @@ public class AICACVarianteState : MonoBehaviour
 
     void Start()
     {
-        for (int i =0; i < transform.childCount; i++)
+        Invoke("SetDecalageDestination", 1f);
+        SetListActiveAI();
+    }
+
+    public void SetListActiveAI()
+    {
+        aiCACScriptsList.Clear();
+        aiCACSurroundSelectedList.Clear();
+        listSurroundParameterAICACSO.Clear();
+
+        for (int i = 0; i < transform.childCount; i++)
         {
             aiCACScriptsList.Add(transform.GetChild(i).GetComponent<StateManagerAICAC>());
         }
 
         for (int i = 0; i < transform.childCount; i++)
         {
-            for(int j = 0; j < transform.childCount; j++)
+            for (int j = 0; j < transform.childCount; j++)
             {
                 aiCACScriptsList[j].listOtherCACAI.Add(transform.GetChild(i).gameObject);
             }
         }
 
-        maxAISurround = Mathf.CeilToInt((float)aiCACScriptsList.Count / 2f);
-
-        currentCoolDownDurround = maxCoolDownDurround;
+        if(transform.childCount != 2)
+            maxAISurround = Mathf.CeilToInt((float)aiCACScriptsList.Count / 2f);
+        else
+        {
+            maxAISurround = 2;
+        }
 
         for (int i = 0; i < aiCACScriptsList.Count; i++)
         {
             listSurroundParameterAICACSO.Add(aiCACScriptsList[i].surroundParameterAICACSOInstance);
 
         }
+
+        Invoke("SetDecalageDestination", 1f);
+    }
+
+    void SetDecalageDestination()
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            if (i % 2 == 0)
+            {
+                positiveOffeset++;
+                Debug.Log(i % 2);
+                aiCACScriptsList[i].offsetDestination = positiveOffeset;
+            }
+            else
+            {
+                negativeOffeset--;
+                Debug.Log(i % 2);
+                aiCACScriptsList[i].offsetDestination = negativeOffeset;
+            }
+        }
+
+        positiveOffeset = 0;
+        negativeOffeset = 0;
     }
 
     // Update is called once per frame

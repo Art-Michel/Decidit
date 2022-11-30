@@ -24,10 +24,12 @@ public class StateManagerAICAC : MonoBehaviour
 
     [Header("Distance Player")]
     [SerializeField] public float distplayer;
+    [SerializeField] public float offsetDestination;
 
     [Header("SpeedParameter")]
-    [SerializeField] public float setSpeedSmoothRot;
-    [SerializeField] public float speedSmoothRot;
+    [SerializeField] public float maxSpeedRot;
+    [SerializeField] public float speedRot;
+    [SerializeField] public float smoothRot;
 
     [Header("Dodge")]
     [SerializeField] public Transform spawnRayDodge;
@@ -87,7 +89,7 @@ public class StateManagerAICAC : MonoBehaviour
         dodgeParameterAICACSOInstance = Instantiate(dodgeParameterAICACSO);
         surroundParameterAICACSOInstance = Instantiate(surroundParameterAICACSO);
 
-        baseMoveAICAC.virtual_AICAC = this;
+        baseMoveAICAC.stateManagerAICAC = this;
         baseMoveAICAC.baseMoveParameterSO = baseMoveParameterAICACSOInstance;
         baseMoveAICAC.baseAttackParameterSO = baseAttackParameterAICACSOInstance;
 
@@ -102,6 +104,7 @@ public class StateManagerAICAC : MonoBehaviour
 
         dodgeAICAC.stateManagerAICAC = this;
         dodgeAICAC.dodgeAICACSO = dodgeParameterAICACSOInstance;
+        dodgeAICAC.baseMoveAICACSO = baseMoveParameterAICACSOInstance;
 
         surroundAICAC.stateManagerAICAC = this;
         surroundAICAC.aICACVarianteState = aICACVarianteState;
@@ -110,8 +113,6 @@ public class StateManagerAICAC : MonoBehaviour
 
     public void SwitchToNewState(int indexState)
     {
-        Debug.Log("SwitchToNewState");
-
         if (state != State.Death)
         {
             if (indexState == 2)
@@ -152,16 +153,19 @@ public class StateManagerAICAC : MonoBehaviour
                 break;
 
             case State.BaseMovement:
+                baseMoveAICAC.SmoothLookAt();
                 baseMoveAICAC.BaseMovement(agent, playerTransform, transform, distplayer);
                 break;
 
             case State.Dodge:
+                dodgeAICAC.SmoothLookAt();
                 if (dodgeParameterAICACSOInstance.dodgeIsSet)
                     dodgeAICAC.Dodge();
                 break;
 
             case State.BaseAttack:
                 baseAttackAICAC.BaseAttack(myAnimator);
+                baseAttackAICAC.SmoothLookAt();
                 break;
 
             case State.SurroundPlayer:
@@ -189,28 +193,14 @@ public class StateManagerAICAC : MonoBehaviour
 
     void SmoothLookForward()
     {
-        Vector3 direction;
-        Vector3 relativePos;
-
-        direction = playerTransform.position;
-
-        relativePos.x = direction.x - transform.position.x;
-        relativePos.y = 0;
-        relativePos.z = direction.z - transform.position.z;
-
         if (state == State.SurroundPlayer)
         {
             agent.angularSpeed = 360f;
-            speedSmoothRot = 0;
         }
         else
         {
-            agent.angularSpeed = 0;
-            speedSmoothRot = setSpeedSmoothRot;
+            agent.angularSpeed = 0f;
         }
-
-        Quaternion rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(relativePos, Vector3.up), speedSmoothRot);
-        transform.rotation = rotation;
     }
 
     /// <summary>
