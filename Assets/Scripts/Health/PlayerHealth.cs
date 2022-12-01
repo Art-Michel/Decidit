@@ -15,11 +15,21 @@ public class PlayerHealth : Health
             _hpCursor.rectTransform.anchoredPosition = Vector2.Lerp(_hpBarStart.anchoredPosition, _hpBarEnd.anchoredPosition, _hpUi.fillAmount);
     }
 
+    public override void TakeDamage(int amount = 10)
+    {
+        base.TakeDamage();
+        PlaceHolderSoundManager.Instance.PlayHurt();
+    }
+
     [Button]
     private void ProbRegen(int amount = 10)
     {
-        _hp = Mathf.Clamp(_hp + amount, 0, _probHp);
-        DisplayHealth();
-        //StartProbHealth();
+        if (_hp < _probHp)
+        {
+            _hp = Mathf.Clamp(_hp + amount, 0, _probHp);
+            DisplayHealth();
+            PlaceHolderSoundManager.Instance.PlayRegen();
+            //StartProbHealth(); //uncomment if we want to reset prob timer upon regen
+        }
     }
 }

@@ -8,9 +8,10 @@ public class Revolver : MonoBehaviour
     [Header("References")]
     [SerializeField] TextMeshProUGUI _debugStateText;
     [SerializeField] TextMeshProUGUI _ammoCountText;
+    [SerializeField] protected Transform _canon;
     PlayerInputMap _inputs;
     RevolverFSM _fsm;
-    Transform _camera;
+    protected Transform _camera;
 
     #endregion
 
