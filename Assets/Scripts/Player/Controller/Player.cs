@@ -102,7 +102,7 @@ public class Player : LocalManager<Player>
     private float _movementAcceleration;
     private bool _isPressingADirection;
 
-    private Vector3 _finalMovement;
+    public Vector3 FinalMovement { get; private set; }
     #endregion
 
     protected override void Awake()
@@ -155,7 +155,7 @@ public class Player : LocalManager<Player>
             _fsm.currentState.StateUpdate();
 
         //Final Movement Formula //I got lost with the deltatime stuff but i swear it works perfectly
-        _finalMovement = (_globalMomentum * Time.deltaTime) + (_movementInputs) + (Vector3.up * _currentlyAppliedGravity * Time.deltaTime) + (_steepSlopesMovement * Time.deltaTime);
+        FinalMovement = (_globalMomentum * Time.deltaTime) + (_movementInputs) + (Vector3.up * _currentlyAppliedGravity * Time.deltaTime) + (_steepSlopesMovement * Time.deltaTime);
 
         //Debug Values on screen
         UpdateDebugTexts();
@@ -164,7 +164,7 @@ public class Player : LocalManager<Player>
     void LateUpdate()
     {
         //Apply Movement
-        ApplyMovementsToCharacter(_finalMovement);
+        ApplyMovementsToCharacter(FinalMovement);
     }
 
     #region Debugs
@@ -193,7 +193,7 @@ public class Player : LocalManager<Player>
             _debugSlopeText.text = ("Slope Velocity:\n   " + _steepSlopesMovement.ToString("F1"));
 
         if (_debugSpeedText)
-            _debugSpeedText.text = ("Total Speed:\n   " + (_finalMovement.magnitude / Time.deltaTime).ToString("F3"));
+            _debugSpeedText.text = ("Total Speed:\n   " + (FinalMovement.magnitude / Time.deltaTime).ToString("F3"));
 #endif
     }
 
@@ -208,7 +208,7 @@ public class Player : LocalManager<Player>
             Gizmos.DrawWireSphere(new Vector3(transform.position.x, (debugGroundcast.point.y + _groundSpherecastRadius), transform.position.z), (_groundSpherecastRadius));
 
         //Direction Vector
-        Debug.DrawLine(transform.position, transform.position + _finalMovement / Time.deltaTime * 0.3f, Color.red, 0f);
+        Debug.DrawLine(transform.position, transform.position + FinalMovement / Time.deltaTime * 0.3f, Color.red, 0f);
 
         //Ceiling Cast
         Debug.DrawLine(transform.position, transform.position + (transform.up * (_ceilingRaycastLength)), Color.cyan, 0f);

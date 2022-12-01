@@ -13,6 +13,7 @@ public class WallAI : MonoBehaviour
     public Animator animator;
     public PlayerController playerController;
     public AILife aILife;
+    EnemyHealth enemyHealth;
 
     [Header("*Search new Position")]
     public BoxCollider[] walls;
@@ -42,6 +43,7 @@ public class WallAI : MonoBehaviour
         playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
         areaWallAI = GameObject.Find("Area_WAllAi").transform;
         aILife = GetComponent<AILife>();
+        enemyHealth = GetComponent<EnemyHealth>();
 
         for (int i=0; i < areaWallAI.childCount; i++)
         {
@@ -78,7 +80,7 @@ public class WallAI : MonoBehaviour
 
     void Update()
     {
-        if (aILife.hp <= 0)
+        if (enemyHealth._hp <= 0)
             state = State.Death;
 
         switch (state)

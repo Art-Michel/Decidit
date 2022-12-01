@@ -137,7 +137,7 @@ public class PlayerController : MonoBehaviour
     public static void ApplyDamage(int damage)
     {
         hpStatic -= damage;
-        ShakeCam.ShakerCam(ShakeCam.shakeCamhitStatic, ShakeCam.shakeCamhitStatic[0].axeShake, ShakeCam.shakeCamhitStatic[0].amplitude,
-            ShakeCam.shakeCamhitStatic[0].frequence, ShakeCam.shakeCamhitStatic[0].duration);
+        /*ShakeCam.ShakerCam(ShakeCam.shakeCamhitStatic, ShakeCam.shakeCamhitStatic[0].axeShake, ShakeCam.shakeCamhitStatic[0].amplitude,
+            ShakeCam.shakeCamhitStatic[0].frequence, ShakeCam.shakeCamhitStatic[0].duration);*/
     }
 }

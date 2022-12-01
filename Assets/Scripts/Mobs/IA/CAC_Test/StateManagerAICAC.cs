@@ -21,6 +21,7 @@ public class StateManagerAICAC : MonoBehaviour
     public AILife aILife;
     public Animator myAnimator;
     public AICACVarianteState aICACVarianteState;
+    EnemyHealth enemyHealth;
 
     [Header("Distance Player")]
     [SerializeField] public float distplayer;
@@ -74,6 +75,7 @@ public class StateManagerAICAC : MonoBehaviour
         myAnimator = GetComponent<Animator>();
         spawnSurroundDodge = transform.Find("SpawnSurroundRay");
         aICACVarianteState = transform.parent.GetComponent<AICACVarianteState>();
+        enemyHealth = GetComponent<EnemyHealth>();
 
         baseMoveAICAC = new BaseMoveAICAC();
         baseAttackAICAC = new BaseAttackAICAC();
@@ -141,7 +143,7 @@ public class StateManagerAICAC : MonoBehaviour
         if (state != State.Death)
             SmoothLookForward();
 
-        if (aILife.hp <= 0)
+        if (enemyHealth._hp <= 0)
         {
             state = State.Death;
         }

@@ -22,16 +22,4 @@ public class PlayerHealth : Health
         Player.Instance.StartShake(0.3f, 0.3f);
         GameManager.Instance.StartSlowMo(0.1f, 1f);
     }
-
-    [Button]
-    private void ProbRegen(int amount = 10)
-    {
-        if (_hp < _probHp)
-        {
-            _hp = Mathf.Clamp(_hp + amount, 0, _probHp);
-            DisplayHealth();
-            PlaceHolderSoundManager.Instance.PlayRegen();
-            //StartProbHealth(); //uncomment if we want to reset prob timer upon regen
-        }
-    }
 }

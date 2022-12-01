@@ -11,6 +11,7 @@ public class FlyAINavMesh : MonoBehaviour
     public NavMeshAgent agent;
     public Transform playerTransform, childObj;
     public AILife aILife;
+    public EnemyHealth enemyHealth;
 
     [Header("Destination Variable (Debug)")]
     [SerializeField]public float distDestination;
@@ -38,6 +39,7 @@ public class FlyAINavMesh : MonoBehaviour
         playerTransform = GameObject.FindWithTag("Player").transform;
         childObj = transform.parent;
         aILife = GetComponent<AILife>();
+        enemyHealth = GetComponent<EnemyHealth>();
 
         baseMoveFly = new BaseMoveFly();
         lockPlayerFly = new LockPlayerFly();
@@ -72,10 +74,10 @@ public class FlyAINavMesh : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (aILife.hp <= 0)
+        if (enemyHealth._hp <= 0)
             state = State.Death;
 
-        switch(state)
+        switch (state)
         {
             case State.BaseMovement:
                  baseMoveFly.SmoothLookAtYAxisPatrol();

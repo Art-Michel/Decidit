@@ -14,7 +14,7 @@ public class Health : MonoBehaviour
     [Range(0, 3)][SerializeField] float _probationMaxStartup = 1;
     [Range(0.1f, 60)][SerializeField] float _probationSpeed = 15;
 
-    protected float _hp;
+    public float _hp { get; private set; }
     protected float _probHp;
     protected bool _hasProbation;
     protected float _probationStartup;
@@ -48,6 +48,17 @@ public class Health : MonoBehaviour
         }
 
         StartProbHealth();
+    }
+
+    private void ProbRegen(int amount = 10)
+    {
+        if (_hp < _probHp)
+        {
+            _hp = Mathf.Clamp(_hp + amount, 0, _probHp);
+            DisplayHealth();
+            PlaceHolderSoundManager.Instance.PlayRegen();
+            //StartProbHealth(); //uncomment if we want to reset prob timer upon regen
+        }
     }
 
     protected virtual void DisplayHealth()

@@ -65,12 +65,14 @@ public class BaseMoveWallAI
     }
     public void WallCrackEffect()
     {
-        baseMoveWallAISO.distSinceLast = Vector3.Distance(wallAI.transform.parent.position, baseMoveWallAISO.lastWallCrack.transform.position);
+        /*baseMoveWallAISO.distSinceLast = Vector3.Distance(wallAI.transform.parent.position, baseMoveWallAISO.lastWallCrack.transform.position);
+
+        wallAI.orientation = wallAI.walls[baseMoveWallAISO.selectedWall].transform.localEulerAngles.y-90;
 
         if (baseMoveWallAISO.distSinceLast >= baseMoveWallAISO.decalage)
         {
             baseMoveWallAISO.lastWallCrack = MonoBehaviour.Instantiate(baseMoveWallAISO.wallCrackPrefab, wallAI.transform.parent.position, Quaternion.Euler(0, wallAI.orientation, 0));
-        }
+        }*/
     }
 
     void LaunchDelayBeforeAttack()

@@ -13,6 +13,7 @@ public class BullAI : MonoBehaviour
     public Transform playerTransform;
     [SerializeField] LayerMask noMask;
     RaycastHit hit;
+    EnemyHealth enemyHealth;
 
     [Header("Health Point")]
     public int hp;
@@ -58,6 +59,7 @@ public class BullAI : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         aILife = GetComponent<AILife>();
         playerTransform = GameObject.FindWithTag("Player").transform;
+        enemyHealth = GetComponent<EnemyHealth>();
 
         baseIdleBullSOInstance = Instantiate(baseIdleBullSO);
         baseMoveBullParameterSOInstance = Instantiate(baseMoveBullParameterSO);
@@ -109,7 +111,7 @@ public class BullAI : MonoBehaviour
         // t = d/v;
         // d = v*t;
 
-        if(aILife.hp <=0)
+        if(enemyHealth._hp <=0)
         {
             state = State.Death;
         }
