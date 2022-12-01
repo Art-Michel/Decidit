@@ -7,12 +7,13 @@ public class Hitbox : MonoBehaviour
 {
     [SerializeField] protected LayerMask _shouldCollideWith;
     [SerializeField] protected float _radius = .2f;
+    [SerializeField] protected float _multiHitMaxCooldown;
 
-    List<Transform> _blacklist;
+    Dictionary<Transform, float> _blacklist;
 
     void Awake()
     {
-        _blacklist = new List<Transform>();
+        _blacklist = new Dictionary<Transform, float>();
     }
 
     void OnEnable()
@@ -32,18 +33,38 @@ public class Hitbox : MonoBehaviour
         if (colliders != null)
         {
             foreach (Collider collider in colliders)
-                Hit(collider.transform);
+                CheckForHit(collider.transform);
         }
     }
 
-    protected void Hit(Transform target)
+    void Update()
     {
-        if (!_blacklist.Contains(target))
+        if (_blacklist.Count > 0)
         {
-            Debug.Log(transform.name + " hit " + target.transform.name);
-            target.GetComponent<Health>().TakeDamage();
-            _blacklist.Add(target);
+            Transform[] keys = _blacklist.Keys.ToArray();
+            foreach (Transform key in keys)
+                _blacklist[key] -= Time.deltaTime;
         }
+    }
+
+    protected void CheckForHit(Transform target)
+    {
+        if (!_blacklist.ContainsKey(target))
+        {
+            Hit(target);
+            _blacklist.Add(target, _multiHitMaxCooldown);
+        }
+        else if (_blacklist[target] <= 0)
+        {
+            Hit(target);
+            _blacklist[target] = _multiHitMaxCooldown;
+        }
+    }
+
+    private void Hit(Transform target)
+    {
+        Debug.Log(transform.name + " hit " + target.transform.name);
+        target.GetComponent<Health>().TakeDamage();
     }
 
     void ClearBlacklist()

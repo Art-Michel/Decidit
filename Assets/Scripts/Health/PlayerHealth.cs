@@ -20,6 +20,7 @@ public class PlayerHealth : Health
         base.TakeDamage();
         PlaceHolderSoundManager.Instance.PlayHurt();
         Player.Instance.StartShake(0.3f, 0.3f);
+        GameManager.Instance.StartSlowMo(0.1f, 1f);
     }
 
     [Button]

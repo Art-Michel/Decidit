@@ -8,7 +8,7 @@ public class PiercingProjectile : Projectile
     {
         float range = (_direction * _speed).magnitude;
         foreach (RaycastHit collider in Physics.SphereCastAll(transform.position, _radius, _direction, range, _shouldCollideWith))
-            Hit(collider.transform);
+            CheckForHit(collider.transform);
         transform.position += _direction * _speed;
     }
 }
