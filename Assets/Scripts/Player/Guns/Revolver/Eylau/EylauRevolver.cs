@@ -10,6 +10,7 @@ public class EylauRevolver : Revolver
     public override void Shoot()
     {
         Instantiate(_unchargedProjectilePrefab, _canon.position, _camera.rotation);
+        Player.Instance.StartShake(_shootShakeIntensity, _shootShakeDuration);
         PlaceHolderSoundManager.Instance.PlayEylauShot();
     }
 }

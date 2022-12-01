@@ -7,5 +7,6 @@ public class MuseRevolver : Revolver
     public override void Shoot()
     {
         PlaceHolderSoundManager.Instance.PlayMuseShot();
+        Player.Instance.StartShake(_shootShakeIntensity, _shootShakeDuration);
     }
 }

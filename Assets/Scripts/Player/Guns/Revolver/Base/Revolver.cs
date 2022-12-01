@@ -22,6 +22,8 @@ public class Revolver : MonoBehaviour
     [SerializeField] float _reloadMinTime = 0.9f;
     [SerializeField] int _maxAmmo = 6;
     [SerializeField] float _maxRange = 50f;
+    [SerializeField] protected float _shootShakeIntensity;
+    [SerializeField] protected float _shootShakeDuration;
 
     float _recoilT;
     float _reloadT;
@@ -89,10 +91,11 @@ public class Revolver : MonoBehaviour
 
     public virtual void Shoot()
     {
-        PlaceHolderSoundManager.Instance.PlayRevolverShot();
-        //I would like to avoid getcomponent calls but thatll do for now
         if (Physics.Raycast(_camera.position, _camera.forward, out RaycastHit hit, _maxRange, _mask))
             hit.transform.GetComponent<Health>().TakeDamage();
+
+        PlaceHolderSoundManager.Instance.PlayRevolverShot();
+        Player.Instance.StartShake(_shootShakeIntensity, _shootShakeDuration);
     }
 
     public void StartRecoil()

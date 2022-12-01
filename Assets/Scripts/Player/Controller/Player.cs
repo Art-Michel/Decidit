@@ -23,6 +23,10 @@ public class Player : LocalManager<Player>
     #region Camera rotation variables
     private float _cameraTargetYRotation;
     private float _cameraTargetXRotation;
+    float _shakeT;
+    float _shakeInitialT;
+    float _shakeIntensity;
+    Vector3 _initialHeadPos = new Vector3(0, 0.4f, 0);
 
     [Header("Camera Settings")]
     //Mouse
@@ -119,6 +123,7 @@ public class Player : LocalManager<Player>
         _currentlyAppliedGravity = 0;
         _movementAcceleration = 0;
         SetCameraInvert();
+        StopShake();
     }
 
     private void Update()
@@ -133,6 +138,7 @@ public class Player : LocalManager<Player>
         //Camera
         MoveCameraWithRightStick();
         MoveCameraWithMouse();
+        Shake();
 
         //Ground Spherecast and Storage of its values
         Physics.SphereCast(transform.position, _groundSpherecastRadius, -transform.up, out _groundHit, _groundSpherecastLength, _collisionMask);
@@ -253,6 +259,36 @@ public class Player : LocalManager<Player>
         var targetRotation = Quaternion.Euler(Vector3.up * _cameraTargetYRotation) * Quaternion.Euler(Vector3.right * _cameraTargetXRotation);
 
         _head.rotation = Quaternion.Lerp(_head.rotation, targetRotation, _cameraSmoothness * Time.deltaTime);
+    }
+
+    public void StartShake(float intensity, float duration)
+    {
+        if (duration > _shakeT)
+        {
+            _shakeInitialT = duration;
+            _shakeT = duration;
+        }
+        if (intensity > _shakeIntensity)
+            _shakeIntensity = intensity;
+    }
+
+    private void Shake()
+    {
+        if (_shakeT > 0)
+        {
+            float shakeIntensity = _shakeIntensity * Mathf.InverseLerp(0, _shakeInitialT, _shakeT);
+            _head.localPosition = _initialHeadPos + new Vector3(UnityEngine.Random.Range(-1, 1), UnityEngine.Random.Range(-1, 1), 0).normalized * shakeIntensity;
+            _shakeT -= Time.deltaTime;
+            if (_shakeT < 0)
+                StopShake();
+        }
+    }
+
+    public void StopShake()
+    {
+        _shakeIntensity = 0;
+        _shakeT = 0;
+        _head.localPosition = _initialHeadPos;
     }
     #endregion
 
