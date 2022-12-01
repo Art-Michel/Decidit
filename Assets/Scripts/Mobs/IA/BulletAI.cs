@@ -2,13 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class BulletAI : MonoBehaviour
 {
     [SerializeField] float lifeTimeBullet;
 
     public int damageBullet;
-
-    // Start is called before the first frame update
+ 
     void Start()
     {
         StartCoroutine("DestroyBullet");
@@ -21,11 +20,11 @@ public class Bullet : MonoBehaviour
         yield break;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider collider)
     {
-        if(collision.gameObject.CompareTag("Ennemi"))
+        if (collider.CompareTag("Player"))
         {
-            collision.transform.GetComponent<AILife>().ApplyDamage(damageBullet);
+            PlayerController.ApplyDamage(10);
         }
     }
 }

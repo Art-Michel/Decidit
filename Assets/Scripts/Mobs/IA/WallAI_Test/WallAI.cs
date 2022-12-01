@@ -111,12 +111,4 @@ public class WallAI : MonoBehaviour
     {
         baseAttackWallAI.ReturnBaseMoveState();
     }
-
-    /*private void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("Wall"))
-        {
-            orientation = other.transform.eulerAngles.y-90;
-        }
-    }*/
 }

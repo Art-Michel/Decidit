@@ -39,6 +39,7 @@ public class BaseMoveWallAI
         if (!IsMoving())
         {
             baseMoveWallAISO.selectedWall = Random.Range(0, 4);
+            Debug.Log(baseMoveWallAISO.selectedWall);
             baseMoveWallAISO.newPos = SearchNewPos(wallAI.walls[baseMoveWallAISO.selectedWall].bounds);
 
             hit = RaycastAIManager.RaycastAI(baseMoveWallAISO.newPos, wallAI.playerTransform.position - baseMoveWallAISO.newPos, baseMoveWallAISO.mask, 
@@ -84,6 +85,7 @@ public class BaseMoveWallAI
             {
                 baseMoveWallAISO.rateAttack = baseMoveWallAISO.maxRateAttack;
                 baseMoveWallAISO.findNewPos = false;
+                wallAI.agent.SetDestination(wallAI.transform.position);
                 wallAI.SwitchToNewState(1);
             }
         }
