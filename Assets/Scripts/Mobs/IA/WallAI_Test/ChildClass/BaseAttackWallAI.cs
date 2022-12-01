@@ -19,7 +19,7 @@ public class BaseAttackWallAI
         // t = d/v;
         // d = v*t;
 
-        Vector3 directionPlayer = Player.Instance.FinalMovement;
+        Vector3 directionPlayer = Player.Instance.FinalMovement.normalized;
 
         switch (directionPlayer.magnitude)
         {
@@ -30,7 +30,7 @@ public class BaseAttackWallAI
                 break;
             default:
                 baseAttackWallAISO.playerPredicDir = wallAI.playerTransform.position + (directionPlayer * baseAttackWallAISO.distAnticip);
-                baseAttackWallAISO.vPlayer = directionPlayer.magnitude;
+                baseAttackWallAISO.vPlayer = directionPlayer.magnitude * 7f;
 
                 baseAttackWallAISO.timePlayerGoToPredicPos = Vector3.Distance(wallAI.playerTransform.position, baseAttackWallAISO.playerPredicDir) / baseAttackWallAISO.vPlayer;
                 baseAttackWallAISO.vProjectileGotToPredicPos = Vector3.Distance(wallAI.transform.parent.position, baseAttackWallAISO.playerPredicDir) / baseAttackWallAISO.timePlayerGoToPredicPos;

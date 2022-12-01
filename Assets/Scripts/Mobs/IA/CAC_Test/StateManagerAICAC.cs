@@ -10,6 +10,7 @@ public class StateManagerAICAC : MonoBehaviour
 
     RaycastHit hitRight, hitLeft;
     [SerializeField] LayerMask noMask;
+    [SerializeField] GameObject hitBox;
 
     public List<GameObject> listOtherCACAI = new List<GameObject>();
 
@@ -208,8 +209,14 @@ public class StateManagerAICAC : MonoBehaviour
     /// <summary>
     /// Animation Event
     /// </summary>
+
+    void StartAttack()
+    {
+        hitBox.SetActive(true);
+    }
     void EndAttack()
     {
+        hitBox.SetActive(false);
         myAnimator.SetBool("Attack", false);
         baseAttackParameterAICACSOInstance.isAttacking = false;
     }
