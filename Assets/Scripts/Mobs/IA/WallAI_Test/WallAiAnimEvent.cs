@@ -19,9 +19,11 @@ public class WallAiAnimEvent : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
+        Debug.Log("Va niquer ta mere");
         if (other.CompareTag("Wall"))
         {
-            wallAI.orientation = other.transform.eulerAngles.y - 90;
+            Debug.Log("Va niquer ta mere");
+            wallAI.orientation = other.transform.localEulerAngles.y -90;
         }
     }
 }

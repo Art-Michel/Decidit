@@ -113,4 +113,12 @@ public class WallAI : MonoBehaviour
     {
         baseAttackWallAI.ReturnBaseMoveState();
     }
+
+    /*private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.collider.CompareTag("WallAI"))
+        {
+            orientation = collision.transform.localEulerAngles.y - 180f;
+        }
+    }*/
 }
