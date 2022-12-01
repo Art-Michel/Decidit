@@ -19,6 +19,7 @@ public class PlayerHealth : Health
     {
         base.TakeDamage();
         PlaceHolderSoundManager.Instance.PlayHurt();
+        Player.Instance.StartShake(0.3f, 0.3f);
     }
 
     [Button]
