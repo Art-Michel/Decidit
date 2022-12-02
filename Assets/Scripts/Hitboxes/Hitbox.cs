@@ -8,6 +8,7 @@ public class Hitbox : MonoBehaviour
     [SerializeField] protected LayerMask _shouldCollideWith;
     [SerializeField] protected float _radius = .2f;
     [SerializeField] protected float _multiHitMaxCooldown;
+    [SerializeField] protected int _damage;
 
     Dictionary<Transform, float> _blacklist;
 
@@ -64,7 +65,7 @@ public class Hitbox : MonoBehaviour
     private void Hit(Transform target)
     {
         Debug.Log(transform.name + " hit " + target.transform.name);
-        target.GetComponent<Health>().TakeDamage();
+        target.GetComponent<Health>().TakeDamage(_damage);
     }
 
     void ClearBlacklist()

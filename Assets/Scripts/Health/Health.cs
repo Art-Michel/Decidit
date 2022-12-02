@@ -35,7 +35,7 @@ public class Health : MonoBehaviour
             UpdateProbHealth();
     }
 
-    public virtual void TakeDamage(int damage = 5)
+    public virtual void TakeDamage(int damage)
     {
         _hp -= damage;
         DisplayHealth();

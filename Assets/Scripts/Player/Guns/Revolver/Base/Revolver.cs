@@ -92,7 +92,7 @@ public class Revolver : MonoBehaviour
     public virtual void Shoot()
     {
         if (Physics.Raycast(_camera.position, _camera.forward, out RaycastHit hit, _maxRange, _mask))
-            hit.transform.GetComponent<Health>().TakeDamage();
+            hit.transform.GetComponent<Health>().TakeDamage(40);
 
         PlaceHolderSoundManager.Instance.PlayRevolverShot();
         Player.Instance.StartShake(_shootShakeIntensity, _shootShakeDuration);

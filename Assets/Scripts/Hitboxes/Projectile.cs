@@ -33,7 +33,7 @@ public class Projectile : Hitbox
     void HitOnce(Transform target)
     {
         Debug.Log(transform.name + " hit " + target.transform.name);
-        target.GetComponent<Health>().TakeDamage();
+        target.GetComponent<Health>().TakeDamage(_damage);
         DestroyThis();
     }
 
