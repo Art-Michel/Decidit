@@ -44,7 +44,11 @@ public class Hitbox : MonoBehaviour
         {
             Transform[] keys = _blacklist.Keys.ToArray();
             foreach (Transform key in keys)
+            {
                 _blacklist[key] -= Time.deltaTime;
+                if (_blacklist[key] <= 0)
+                    _blacklist.Remove(key);
+            }
         }
     }
 
@@ -54,11 +58,6 @@ public class Hitbox : MonoBehaviour
         {
             Hit(target);
             _blacklist.Add(target, _multiHitMaxCooldown);
-        }
-        else if (_blacklist[target] <= 0)
-        {
-            Hit(target);
-            _blacklist[target] = _multiHitMaxCooldown;
         }
     }
 
