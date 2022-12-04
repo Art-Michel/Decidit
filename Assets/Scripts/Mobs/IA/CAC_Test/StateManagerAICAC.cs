@@ -72,7 +72,7 @@ public class StateManagerAICAC : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         aILife = GetComponent<AILife>();
-        playerTransform = GameObject.FindWithTag("Player").transform;
+        playerTransform = GameObject.FindWithTag("Player").transform.GetChild(0).transform;
         myAnimator = GetComponent<Animator>();
         spawnSurroundDodge = transform.Find("SpawnSurroundRay");
         aICACVarianteState = transform.parent.GetComponent<AICACVarianteState>();

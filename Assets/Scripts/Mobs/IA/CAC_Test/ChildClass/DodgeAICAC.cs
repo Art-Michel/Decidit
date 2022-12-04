@@ -30,7 +30,9 @@ public class DodgeAICAC
 
     public void SetDodgePosition()
     {
-        if(!dodgeAICACSO.leftDodge && !dodgeAICACSO.rightDodge)
+        dodgeAICACSO.targetObjectToDodge = stateManagerAICAC.playerTransform;
+
+        if (!dodgeAICACSO.leftDodge && !dodgeAICACSO.rightDodge)
         {
             if (Random.Range(0, 2) == 0)
             {
@@ -52,6 +54,8 @@ public class DodgeAICAC
             Ray ray = new Ray(stateManagerAICAC.spawnRayDodge.position, right);
             dodgeAICACSO.targetDodgeVector = ray.GetPoint(dodgeAICACSO.dodgeLenght);
             dodgeAICACSO.dodgeIsSet = true;
+
+            Debug.DrawRay(stateManagerAICAC.spawnRayDodge.position, right);
         }
         if (dodgeAICACSO.leftDodge) // choisi l esquive par la gauche 
         {
@@ -61,6 +65,7 @@ public class DodgeAICAC
             Ray ray = new Ray(stateManagerAICAC.spawnRayDodge.position, left);
             dodgeAICACSO.targetDodgeVector = ray.GetPoint(dodgeAICACSO.dodgeLenght);
             dodgeAICACSO.dodgeIsSet = true;
+            Debug.DrawRay(stateManagerAICAC.spawnRayDodge.position, left);
         }
     }
 

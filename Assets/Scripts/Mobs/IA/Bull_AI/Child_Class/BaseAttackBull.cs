@@ -19,6 +19,7 @@ public class BaseAttackBull
         {
             if (baseAttackBullSO.currentAttackRate <= 0)
             {
+                bullAI.colliderBaseAttack.gameObject.SetActive(true);
                 bullAI.attackCollider.enabled = true;
             }
             else
@@ -31,13 +32,14 @@ public class BaseAttackBull
     {
         if (touchPlayer)
         {
-            PlayerController.ApplyDamage(baseAttackBullSO.damageBaseAttack);
             baseAttackBullSO.currentAttackRate = baseAttackBullSO.maxAttackRate;
+            bullAI.colliderBaseAttack.gameObject.SetActive(false);
             bullAI.attackCollider.enabled = false;
         }
         else
         {
             baseAttackBullSO.currentAttackRate = baseAttackBullSO.maxAttackRate;
+            bullAI.colliderBaseAttack.gameObject.SetActive(false);
             bullAI.attackCollider.enabled = false;
         }
     }

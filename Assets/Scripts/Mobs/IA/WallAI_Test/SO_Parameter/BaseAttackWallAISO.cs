@@ -9,7 +9,8 @@ public class BaseAttackWallAISO : ScriptableObject
     public float stopSpeed;
 
     [Header("*Anticipatoin pos Player")]
-    public float distAnticip;
+    public float distAnticipGround;
+    public float distAnticipUp;
     public Vector3 playerPredicDir;
     public float timePlayerGoToPredicPos;
     public float vProjectileGotToPredicPos;

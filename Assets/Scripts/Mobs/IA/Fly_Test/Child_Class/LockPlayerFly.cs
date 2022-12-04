@@ -10,6 +10,8 @@ public class LockPlayerFly
 
     public void LockPlayer()
     {
+        flyAINavMesh.colliderBaseAttack.gameObject.SetActive(false);
+
         lockPlayerFlySO.destinationFinal = new Vector3(flyAINavMesh.playerTransform.position.x, flyAINavMesh.playerTransform.position.y - 0.5f, flyAINavMesh.playerTransform.position.z);
 
         if (baseAttackFlySO.speedRotationAIAttack >= 1f)

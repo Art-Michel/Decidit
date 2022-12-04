@@ -6,8 +6,10 @@ using UnityEngine.AI;
 public class WallAI : MonoBehaviour
 {
     [SerializeField] enum State { BaseMovement, BaseAttack, Death };
+    [Header("State")]
     [SerializeField] State state;
 
+    [Header("References")]
     public Transform areaWallAI;
     public NavMeshAgent agent;
     public Animator animator;

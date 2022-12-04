@@ -6,12 +6,15 @@ using UnityEngine.AI;
 public class BullAI : MonoBehaviour
 {
     [SerializeField] enum State { BaseIdle, BaseMovement, WaitBeforeRush, RushMovement, BaseAttack, Death};
+    [Header("State")]
     [SerializeField] State state;
 
+    [Header("References")]
     public NavMeshAgent agent;
-    AILife aILife;
     public Transform playerTransform;
     [SerializeField] LayerMask noMask;
+    public Transform colliderRush;
+    public Transform colliderBaseAttack;
     RaycastHit hit;
     EnemyHealth enemyHealth;
 
@@ -57,9 +60,10 @@ public class BullAI : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        aILife = GetComponent<AILife>();
         playerTransform = GameObject.FindWithTag("Player").transform;
         enemyHealth = GetComponent<EnemyHealth>();
+        colliderRush.gameObject.SetActive(false);
+        colliderBaseAttack.gameObject.SetActive(false);
 
         baseIdleBullSOInstance = Instantiate(baseIdleBullSO);
         baseMoveBullParameterSOInstance = Instantiate(baseMoveBullParameterSO);
@@ -92,6 +96,8 @@ public class BullAI : MonoBehaviour
         deathBull = new DeathBull();
         deathBull.bullAI = this;
         deathBull.deathBullParameterSO = this.deathBullParameterSOInstance;
+
+        baseMoveBull.baseAttackBullSO = baseAttackBullSOInstance;
     }
 
     public void SwitchToNewState(int indexState)
@@ -231,7 +237,7 @@ public class BullAI : MonoBehaviour
     {
         if(collision.collider.CompareTag("Player") && state == State.RushMovement)
         {
-            PlayerController.ApplyDamage(rushBullParameterSOInstance.damageRushAttack);
+            //PlayerController.ApplyDamage(rushBullParameterSOInstance.damageRushAttack);
         }
     }
 

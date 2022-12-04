@@ -20,6 +20,7 @@ public class RushBull
             rushBullSO.rushDestination = bullAI.playerTransform.position + bullAI.transform.forward * rushBullSO.rushInertieSetDistance;
         }
 
+        bullAI.colliderRush.gameObject.SetActive(true);
         bullAI.detectOtherAICollider.enabled = true;
         bullAI.agent.speed = rushBullSO.rushSpeed;
         bullAI.agent.SetDestination(rushBullSO.rushDestination);
@@ -43,6 +44,7 @@ public class RushBull
 
     void StopRush()
     {
+        bullAI.colliderRush.gameObject.SetActive(false);
         bullAI.detectOtherAICollider.enabled = false;
         rushBullSO.stopLockPlayer = false;
 

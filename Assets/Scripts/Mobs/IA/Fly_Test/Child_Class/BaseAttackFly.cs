@@ -12,6 +12,7 @@ public class BaseAttackFly
     public void Attack()
     {
         baseAttackFlySO.distDestinationFinal = Vector3.Distance(lockPlayerFlySO.destinationFinal, flyAINavMesh.transform.position);
+        flyAINavMesh.colliderBaseAttack.gameObject.SetActive(true);
 
         ApplyFlyingMove();
 

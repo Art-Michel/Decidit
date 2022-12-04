@@ -6,13 +6,14 @@ public class BaseMoveBull
 {
     public BullAI bullAI;
     public BaseMoveBullParameterSO baseMoveBullSO;
-
+    public BaseAttackBullSO baseAttackBullSO;
+    
     public void BaseMovement()
     {
         bullAI.agent.speed = baseMoveBullSO.baseSpeed;
         bullAI.agent.SetDestination(bullAI.playerTransform.position);
 
-        if (bullAI.distPlayer < baseMoveBullSO.attackRange)
+        if (bullAI.distPlayer < baseAttackBullSO.attackRange)
         {
             bullAI.SwitchToNewState(4);
         }

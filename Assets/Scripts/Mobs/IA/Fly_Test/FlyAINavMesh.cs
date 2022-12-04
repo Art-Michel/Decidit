@@ -6,12 +6,14 @@ using UnityEngine.AI;
 public class FlyAINavMesh : MonoBehaviour
 {
     [SerializeField] enum State { BaseMovement, LockPlayer, BaseAttack, Death };
+    [Header("State")]
     [SerializeField] State state;
 
+    [Header("References")]
     public NavMeshAgent agent;
     public Transform playerTransform, childObj;
-    public AILife aILife;
     public EnemyHealth enemyHealth;
+    public Transform colliderBaseAttack;
 
     [Header("Destination Variable (Debug)")]
     [SerializeField]public float distDestination;
@@ -38,8 +40,8 @@ public class FlyAINavMesh : MonoBehaviour
     {
         playerTransform = GameObject.FindWithTag("Player").transform;
         childObj = transform.parent;
-        aILife = GetComponent<AILife>();
         enemyHealth = GetComponent<EnemyHealth>();
+        colliderBaseAttack.gameObject.SetActive(false);
 
         baseMoveFly = new BaseMoveFly();
         lockPlayerFly = new LockPlayerFly();
@@ -115,7 +117,7 @@ public class FlyAINavMesh : MonoBehaviour
         {
             if(state == State.BaseAttack)
             {
-                PlayerController.ApplyDamage(10);
+                colliderBaseAttack.gameObject.SetActive(false);
             }
         }
     }

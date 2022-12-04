@@ -6,7 +6,6 @@ using UnityEngine;
 public class BaseMoveBullParameterSO : ScriptableObject
 {
     public float baseSpeed;
-    public float attackRange;
     public float maxCoolDownRush;
     public float currentCoolDownWaitRush;
 }

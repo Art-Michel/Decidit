@@ -29,7 +29,7 @@ public class BaseAttackWallAI
                 baseAttackWallAISO.vProjectileGotToPredicPos = baseAttackWallAISO.defaultForceBullet;
                 break;
             default:
-                baseAttackWallAISO.playerPredicDir = wallAI.playerTransform.position + (directionPlayer * baseAttackWallAISO.distAnticip);
+                baseAttackWallAISO.playerPredicDir = wallAI.playerTransform.position + (directionPlayer * baseAttackWallAISO.distAnticipGround);
                 baseAttackWallAISO.vPlayer = directionPlayer.magnitude * 7f;
 
                 baseAttackWallAISO.timePlayerGoToPredicPos = Vector3.Distance(wallAI.playerTransform.position, baseAttackWallAISO.playerPredicDir) / baseAttackWallAISO.vPlayer;
