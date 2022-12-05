@@ -4,40 +4,68 @@ using UnityEngine;
 
 public class Projectile : Hitbox
 {
-    [SerializeField] protected float _speed = 0.5f;
+    [SerializeField] private float _speed = 100f;
+    [SerializeField] private float _lifeSpan = 5f;
     protected Vector3 _direction;
+    protected Vector3 _cameraDirection;
+    protected Vector3 _lasterFramePosition = Vector3.zero;
+    protected Vector3 _lastFramePosition = Vector3.zero;
+    protected Vector3 _spaceTraveledLastFrame = Vector3.zero;
 
-    void Start()
-    {
-        Setup(transform.forward);
-    }
-
-    void OnEnable()
-    {
-        Setup(transform.forward);
-    }
-
-    void Setup(Vector3 direction)
+    public void Setup(Vector3 direction)
     {
         _direction = direction;
     }
 
-    protected override void FixedUpdate()
+    public void Setup(Vector3 direction, Vector3 cameraDirection)
     {
-        float range = (_direction * _speed).magnitude;
-        if (Physics.SphereCast(transform.position, _radius, _direction, out RaycastHit hit, range, _shouldCollideWith))
-            HitOnce(hit.transform);
-        transform.position += _direction * _speed;
+        _direction = direction;
+        _cameraDirection = cameraDirection;
     }
 
-    void HitOnce(Transform target)
+    protected override void Update()
     {
-        Debug.Log(transform.name + " hit " + target.transform.name);
-        target.GetComponent<Health>().TakeDamage(_damage);
-        DestroyThis();
+        _lasterFramePosition = _lastFramePosition;
+        _lastFramePosition = transform.position;
+        transform.position += _direction * _speed * Time.deltaTime;
+        _spaceTraveledLastFrame = transform.position - _lastFramePosition;
+
+        CheckForCollision();
+
+        UpdateLifeSpan();
+
+        if (_canMultiHit)
+            UpdateBlackList();
     }
 
-    void DestroyThis()
+    private void UpdateLifeSpan()
+    {
+        _lifeSpan -= Time.deltaTime;
+        if (_lifeSpan <= 0)
+        {
+            Disappear();
+        }
+    }
+
+    protected override void CheckForCollision()
+    {
+        if (_canMultiHit)
+        {
+            foreach (RaycastHit hit in Physics.SphereCastAll(_lasterFramePosition, _radius, _spaceTraveledLastFrame, _spaceTraveledLastFrame.magnitude, _shouldCollideWith))
+                if (!AlreadyHit(hit.transform))
+                {
+                    Hit(hit.transform);
+                    _direction = _cameraDirection;
+                }
+        }
+        else if (Physics.SphereCast(_lasterFramePosition, _radius, _spaceTraveledLastFrame, out RaycastHit hit, _spaceTraveledLastFrame.magnitude, _shouldCollideWith))
+        {
+            Hit(hit.transform);
+            Disappear();
+        }
+    }
+
+    protected void Disappear()
     {
         Destroy(this.gameObject);
     }

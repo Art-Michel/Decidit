@@ -1,44 +1,70 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using NaughtyAttributes;
 using System.Linq;
 
 public class Hitbox : MonoBehaviour
 {
     [SerializeField] protected LayerMask _shouldCollideWith;
     [SerializeField] protected float _radius = .2f;
-    [SerializeField] protected float _multiHitMaxCooldown;
-    [SerializeField] protected int _damage;
+    [SerializeField] protected int _damage = 10;
 
-    Dictionary<Transform, float> _blacklist;
+    protected Dictionary<Transform, float> _blacklist;
+    [SerializeField] protected bool _canMultiHit = false;
+    [ShowIf("_canMultiHit")][SerializeField] protected float _delayBetweenHits = 0f;
+    // [SerializeField] protected float _targetInvulnerability;
 
-    void Awake()
+    private void Awake()
     {
         _blacklist = new Dictionary<Transform, float>();
     }
 
-    void OnEnable()
+    private void OnEnable()
     {
         ClearBlacklist();
     }
 
-    void OnDrawGizmos()
+    private void OnDrawGizmos()
     {
         Gizmos.color = new Color(1, 0, 0, 0.3f);
         Gizmos.DrawSphere(transform.position, _radius);
     }
 
-    protected virtual void FixedUpdate()
+    protected virtual void Update()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, _radius, _shouldCollideWith);
-        if (colliders != null)
-        {
-            foreach (Collider collider in colliders)
-                CheckForHit(collider.transform);
-        }
+        CheckForCollision();
+        if (_canMultiHit) UpdateBlackList();
     }
 
-    void Update()
+    protected virtual void CheckForCollision()
+    {
+        foreach (Collider collider in Physics.OverlapSphere(transform.position, _radius, _shouldCollideWith))
+            if (!AlreadyHit(collider.transform))
+                Hit(collider.transform);
+    }
+
+    protected bool AlreadyHit(Transform target)
+    {
+        if (_canMultiHit)
+        {
+            if (_blacklist.ContainsKey(target))
+                return _blacklist[target] > 0;
+            else
+                return false;
+        }
+        else
+            return _blacklist.ContainsKey(target);
+    }
+
+    protected void Hit(Transform target)
+    {
+        Debug.Log(transform.name + " hit " + target.transform.name);
+        target.GetComponent<Health>().TakeDamage(_damage);
+        _blacklist.Add(target, _delayBetweenHits);
+    }
+
+    protected void UpdateBlackList()
     {
         if (_blacklist.Count > 0)
         {
@@ -52,22 +78,7 @@ public class Hitbox : MonoBehaviour
         }
     }
 
-    protected void CheckForHit(Transform target)
-    {
-        if (!_blacklist.ContainsKey(target))
-        {
-            Hit(target);
-            _blacklist.Add(target, _multiHitMaxCooldown);
-        }
-    }
-
-    private void Hit(Transform target)
-    {
-        Debug.Log(transform.name + " hit " + target.transform.name);
-        target.GetComponent<Health>().TakeDamage(_damage);
-    }
-
-    void ClearBlacklist()
+    private void ClearBlacklist()
     {
         _blacklist.Clear();
     }

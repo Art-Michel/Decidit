@@ -24,12 +24,13 @@ public class Revolver : MonoBehaviour
     [SerializeField] float _maxRange = 50f;
     [SerializeField] protected float _shootShakeIntensity;
     [SerializeField] protected float _shootShakeDuration;
+    [SerializeField] LayerMask _mask;
 
+    protected Vector3 _currentlyAimedAt;
     float _recoilT;
     float _reloadT;
     int _ammo;
     bool _reloadBuffered;
-    int _mask;
     #endregion
 
     void Awake()
@@ -39,7 +40,6 @@ public class Revolver : MonoBehaviour
         _inputs = new PlayerInputMap();
         _inputs.Actions.Shoot.started += _ => PressShoot();
         _inputs.Actions.Reload.started += _ => PressReload();
-        _mask = LayerMask.GetMask("Enemies");
     }
 
     void Start()
@@ -52,6 +52,11 @@ public class Revolver : MonoBehaviour
         //State update
         if (_fsm.currentState != null)
             _fsm.currentState.StateUpdate();
+
+        if (Physics.Raycast(_camera.position, _camera.forward, out RaycastHit hit, Mathf.Infinity, _mask))
+            _currentlyAimedAt = hit.point;
+        else
+            _currentlyAimedAt = _camera.forward * 1000;
 
         //Debugging
         Debugging();
@@ -92,7 +97,10 @@ public class Revolver : MonoBehaviour
     public virtual void Shoot()
     {
         if (Physics.Raycast(_camera.position, _camera.forward, out RaycastHit hit, _maxRange, _mask))
-            hit.transform.GetComponent<Health>().TakeDamage(40);
+        {
+            if (hit.transform.TryGetComponent<Health>(out Health health))
+                health.TakeDamage(40);
+        }
 
         PlaceHolderSoundManager.Instance.PlayRevolverShot();
         Player.Instance.StartShake(_shootShakeIntensity, _shootShakeDuration);

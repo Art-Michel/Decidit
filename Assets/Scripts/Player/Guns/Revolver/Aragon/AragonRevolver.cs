@@ -9,8 +9,9 @@ public class AragonRevolver : Revolver
 
     public override void Shoot()
     {
-        Instantiate(_projectilePrefab, _canon.position, _camera.rotation);
-        
+        GameObject Shot = Instantiate(_projectilePrefab, _canon.position, Quaternion.Euler(_currentlyAimedAt - _canon.position));
+        Shot.GetComponent<Projectile>().Setup((_currentlyAimedAt - _canon.position).normalized, _camera.forward);
+
         Player.Instance.StartShake(_shootShakeIntensity, _shootShakeDuration);
         PlaceHolderSoundManager.Instance.PlayAragonShot();
     }
