@@ -19,9 +19,9 @@ public class RaycastCrossHair : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        Vector3 stärtPos = cam.ScreenToWorldPoint(crossHair.position);
+        Vector3 startPos = cam.ScreenToWorldPoint(crossHair.position);
 
-        hit = RaycastAIManager.RaycastAI(stärtPos, playerT.forward, mask, Color.black, 100f);
+        hit = RaycastAIManager.RaycastAI(startPos, playerT.forward, mask, Color.black, 100f);
 
         if (hit.transform != null)
         {
