@@ -15,6 +15,7 @@ public class BullAI : MonoBehaviour
     [SerializeField] LayerMask noMask;
     public Transform colliderRush;
     public Transform colliderBaseAttack;
+    public BullAITeam bullAITeam;
     RaycastHit hit;
     EnemyHealth enemyHealth;
 
@@ -64,6 +65,7 @@ public class BullAI : MonoBehaviour
         enemyHealth = GetComponent<EnemyHealth>();
         colliderRush.gameObject.SetActive(false);
         colliderBaseAttack.gameObject.SetActive(false);
+        bullAITeam = transform.parent.GetComponent<BullAITeam>();
 
         baseIdleBullSOInstance = Instantiate(baseIdleBullSO);
         baseMoveBullParameterSOInstance = Instantiate(baseMoveBullParameterSO);
@@ -132,7 +134,7 @@ public class BullAI : MonoBehaviour
                 baseMoveBull.CoolDownRush();
                 break;
             case State.WaitBeforeRush:
-                waitBeforeRushBull.CoolDownBeforeRush();
+                waitBeforeRushBull.GoToStartRushPos();
                 break;
             case State.RushMovement:
                 rushBull.RushMovement();

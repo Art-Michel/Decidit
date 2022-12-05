@@ -6,8 +6,11 @@ using UnityEngine;
 public class CoolDownRushBullParameterSO : ScriptableObject
 {
     public float stopSpeed;
+    public float speedGoToStartPos;
     public float currentCoolDownRush;
     public float coolDownRush;
     public float rushInertieSetDistance;
     public Vector3 rushDestination;
+    public Vector3 startPos;
+    public BoxCollider boxSelected;
 }
