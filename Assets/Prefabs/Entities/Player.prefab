@@ -270,7 +270,7 @@ MonoBehaviour:
   _shootShakeDuration: 0.1
   _mask:
     serializedVersion: 2
-    m_Bits: 640
+    m_Bits: 33280
   _projectilePrefab: {fileID: 8252760470148114170, guid: 761a0a66d6e3a524fbb1ad7370c627ba,
     type: 3}
 --- !u!114 &8072250455143683778
@@ -395,7 +395,7 @@ MonoBehaviour:
   _shootShakeDuration: 0.1
   _mask:
     serializedVersion: 2
-    m_Bits: 640
+    m_Bits: 33280
 --- !u!114 &525554336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -638,7 +638,7 @@ MonoBehaviour:
   _shootShakeDuration: 0.1
   _mask:
     serializedVersion: 2
-    m_Bits: 640
+    m_Bits: 33280
 --- !u!114 &2590228436923606291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1237,6 +1237,185 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 4
   pos: 10
+--- !u!1 &2007368072
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2007368074}
+  - component: {fileID: 2007368073}
+  - component: {fileID: 2007368075}
+  - component: {fileID: 2007368076}
+  m_Layer: 0
+  m_Name: Managers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2007368074
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2007368072}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 5.78, y: 10.85, z: -28.55}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6765435174213133401}
+  m_Father: {fileID: 2200446484234949676}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2007368073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2007368072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 910b37a7c1900c749b72f13024736180, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _DebuggingCanvas: {fileID: 2200446484852391364}
+  _timescaleDebugUi: {fileID: 2200446484005636427}
+  _guns:
+  - {fileID: 525554331}
+  - {fileID: 197478553}
+  - {fileID: 1236369750}
+  - {fileID: 2113098007}
+  _arms:
+  - {fileID: 1470377084}
+  - {fileID: 183938224}
+  - {fileID: 1914196447}
+  - {fileID: 1447211704}
+--- !u!114 &2007368075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2007368072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1026f1f4e75d0b448bee51c6cdde745e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _revolverShot: {fileID: 8300000, guid: 83e36ff29bb150e48803e13bc7c8d3cf, type: 3}
+  _aragonShot: {fileID: 8300000, guid: b82ddf839a0ee37478e9be13fa9d0253, type: 3}
+  _museShot: {fileID: 8300000, guid: 7a382af6d0305d943b5dc3e221deeb59, type: 3}
+  _eylauShot: {fileID: 8300000, guid: fd7f3f8f27bdc214aa96816697cdb742, type: 3}
+  _playReload: {fileID: 8300000, guid: d09e1db767633544d92b6204a31647d5, type: 3}
+  _playReloaded: {fileID: 8300000, guid: db92ec632863648448bd8cfb7aeb1760, type: 3}
+  _weaponEquip: {fileID: 8300000, guid: 8ae215a3a086ec74bbfdb69d765755c1, type: 3}
+  _armEquip: {fileID: 8300000, guid: 7165409a6fdbe7742ae9e1f1d43b9ec6, type: 3}
+  _hurt: {fileID: 8300000, guid: 9ea235343ffade74eaff898e9e06cb7d, type: 3}
+  _regen: {fileID: 8300000, guid: c431e37ba8ce6f9429b693915d4f2164, type: 3}
+  _hit: {fileID: 8300000, guid: 3c3d3a9c4fb6df0458cd94072c846f1a, type: 3}
+  _criticalHit: {fileID: 8300000, guid: 6ce388ec08164d14b8732c37dd763699, type: 3}
+--- !u!82 &2007368076
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2007368072}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 0.209
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &2063085530
 GameObject:
   m_ObjectHideFlags: 0
@@ -1407,7 +1586,7 @@ MonoBehaviour:
   _shootShakeDuration: 0.1
   _mask:
     serializedVersion: 2
-    m_Bits: 640
+    m_Bits: 33280
   _unchargedProjectilePrefab: {fileID: 4939631121027515308, guid: 3bb5aafe2875b5c48b28766744164823,
     type: 3}
 --- !u!114 &9161445646862943683
@@ -2148,7 +2327,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2200446483702820357}
   - component: {fileID: 2862296136533635875}
-  m_Layer: 3
+  m_Layer: 14
   m_Name: PlayerBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2661,7 +2840,7 @@ GameObject:
   - component: {fileID: 2200446484234949841}
   - component: {fileID: 2200446484234949840}
   - component: {fileID: 2200446484234949843}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -2684,6 +2863,7 @@ Transform:
   - {fileID: 2200446483702820357}
   - {fileID: 2200446484577634941}
   - {fileID: 3504090}
+  - {fileID: 2007368074}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3846,3 +4026,109 @@ Transform:
   m_Father: {fileID: 2200446484878844514}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6765435174213133403
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6765435174213133401}
+  - component: {fileID: 6765435174213133400}
+  m_Layer: 0
+  m_Name: Custom_Pass
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6765435174213133401
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6765435174213133403}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -18.33, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2007368074}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6765435174213133400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6765435174213133403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26d6499a6bd256e47b859377446493a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  fadeRadius: 0
+  priority: 0
+  customPasses:
+  - rid: 6294568315624882176
+  - rid: 6294568315624882177
+  injectionPoint: 2
+  m_TargetCamera: {fileID: 0}
+  useTargetCamera: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 6294568315624882176
+      type: {class: DrawRenderersCustomPass, ns: UnityEngine.Rendering.HighDefinition,
+        asm: Unity.RenderPipelines.HighDefinition.Runtime}
+      data:
+        m_Name: Custom Pass
+        enabled: 1
+        targetColorBuffer: 0
+        targetDepthBuffer: 0
+        clearFlags: 0
+        passFoldout: 0
+        m_Version: 0
+        filterFoldout: 1
+        rendererFoldout: 1
+        renderQueueType: 10
+        layerMask:
+          serializedVersion: 2
+          m_Bits: 32
+        sortingCriteria: -1
+        overrideMaterial: {fileID: 0}
+        overrideMaterialPassIndex: 0
+        overrideMaterialPassName: Forward
+        overrideDepthState: 1
+        depthCompareFunction: 8
+        depthWrite: 1
+        shaderPass: 0
+    - rid: 6294568315624882177
+      type: {class: DrawRenderersCustomPass, ns: UnityEngine.Rendering.HighDefinition,
+        asm: Unity.RenderPipelines.HighDefinition.Runtime}
+      data:
+        m_Name: Custom Pass
+        enabled: 1
+        targetColorBuffer: 0
+        targetDepthBuffer: 0
+        clearFlags: 0
+        passFoldout: 0
+        m_Version: 0
+        filterFoldout: 1
+        rendererFoldout: 1
+        renderQueueType: 10
+        layerMask:
+          serializedVersion: 2
+          m_Bits: 64
+        sortingCriteria: 59
+        overrideMaterial: {fileID: 0}
+        overrideMaterialPassIndex: 0
+        overrideMaterialPassName: Forward
+        overrideDepthState: 1
+        depthCompareFunction: 8
+        depthWrite: 1
+        shaderPass: 0
