@@ -3,7 +3,7 @@ using UnityEngine.AI;
 
 public class BullAI : MonoBehaviour
 {
-    [SerializeField] enum State { BaseIdle, BaseMovement, WaitBeforeRush, RushMovement, BaseAttack, Death};
+    [SerializeField] enum State { BaseIdle, BaseMovement, WaitBeforeRush, RushMovement, BaseAttack, Death };
     [Header("State")]
     [SerializeField] State state;
 
@@ -11,8 +11,8 @@ public class BullAI : MonoBehaviour
     public NavMeshAgent agent;
     public Transform playerTransform;
     [SerializeField] LayerMask noMask;
-    public Transform colliderRush;
-    public Transform colliderBaseAttack;
+    //public Transform colliderRush;
+    //public Transform colliderBaseAttack;
     public BullAIStartPosRush bullAIStartPosRush;
     RaycastHit hit;
     EnemyHealth enemyHealth;
@@ -63,8 +63,8 @@ public class BullAI : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         playerTransform = GameObject.FindWithTag("Player").transform;
         enemyHealth = GetComponent<EnemyHealth>();
-        colliderRush.gameObject.SetActive(false);
-        colliderBaseAttack.gameObject.SetActive(false);
+        //colliderRush.gameObject.SetActive(false);
+        //colliderBaseAttack.gameObject.SetActive(false);
         bullAIStartPosRush = transform.parent.GetComponent<BullAIStartPosRush>();
 
         baseIdleBullSOInstance = Instantiate(baseIdleBullSO);
@@ -119,12 +119,12 @@ public class BullAI : MonoBehaviour
         // t = d/v;
         // d = v*t;
 
-        if(enemyHealth._hp <=0)
+        if (enemyHealth._hp <= 0)
         {
             state = State.Death;
         }
 
-        switch(state)
+        switch (state)
         {
             case State.BaseIdle:
                 baseIdleBull.BaseIdle();
@@ -237,7 +237,7 @@ public class BullAI : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.collider.CompareTag("Player") && state == State.RushMovement)
+        if (collision.collider.CompareTag("Player") && state == State.RushMovement)
         {
             //PlayerController.ApplyDamage(rushBullParameterSOInstance.damageRushAttack);
         }

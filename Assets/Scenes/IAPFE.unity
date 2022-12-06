@@ -130,6 +130,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 525554335, guid: 46abff79d02163140a0fa90ea074a789, type: 3}
+      propertyPath: _mask.m_Bits
+      value: 33280
+      objectReference: {fileID: 0}
+    - target: {fileID: 1176019354187306853, guid: 46abff79d02163140a0fa90ea074a789,
+        type: 3}
+      propertyPath: _mask.m_Bits
+      value: 32768
+      objectReference: {fileID: 0}
     - target: {fileID: 2200446484234949676, guid: 46abff79d02163140a0fa90ea074a789,
         type: 3}
       propertyPath: m_RootOrder
@@ -189,6 +198,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5584357950323043461, guid: 46abff79d02163140a0fa90ea074a789,
+        type: 3}
+      propertyPath: _mask.m_Bits
+      value: 32768
+      objectReference: {fileID: 0}
+    - target: {fileID: 7268849856978730495, guid: 46abff79d02163140a0fa90ea074a789,
+        type: 3}
+      propertyPath: _mask.m_Bits
+      value: 32768
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 46abff79d02163140a0fa90ea074a789, type: 3}
@@ -329,57 +348,6 @@ Camera:
     type: 3}
   m_PrefabInstance: {fileID: 87668279}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &378278681
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 378278682}
-  - component: {fileID: 378278683}
-  m_Layer: 7
-  m_Name: ColliderBaseAttack
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &378278682
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 378278681}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.9714283}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1960197773}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &378278683
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 378278681}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0210dfaab9332e642aa36cf82470974a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _shouldCollideWith:
-    serializedVersion: 2
-    m_Bits: 8
-  _radius: 0.8
-  _damage: 0
-  _canMultiHit: 0
-  _delayBetweenHits: 0
 --- !u!1 &383866177
 GameObject:
   m_ObjectHideFlags: 0
@@ -869,57 +837,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!1 &660150767
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 660150768}
-  - component: {fileID: 660150769}
-  m_Layer: 7
-  m_Name: ColliderBaseAttack
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &660150768
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 660150767}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.9714283}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 988940176}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &660150769
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 660150767}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0210dfaab9332e642aa36cf82470974a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _shouldCollideWith:
-    serializedVersion: 2
-    m_Bits: 8
-  _radius: 0.8
-  _damage: 0
-  _canMultiHit: 0
-  _delayBetweenHits: 0
 --- !u!1 &675165665 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1447211704, guid: 46abff79d02163140a0fa90ea074a789,
@@ -1444,6 +1361,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1576493752672925691, guid: d738348b9be270a489e6b27deb0809a3,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6f4c1aa3f118aa847b9981eb71183100, type: 2}
     - target: {fileID: 1576493752672925692, guid: d738348b9be270a489e6b27deb0809a3,
         type: 3}
       propertyPath: m_Enabled
@@ -1564,57 +1486,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!1 &1399549210
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1399549211}
-  - component: {fileID: 1399549212}
-  m_Layer: 7
-  m_Name: ColliderRush
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1399549211
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1399549210}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.2571426}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1960197773}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1399549212
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1399549210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0210dfaab9332e642aa36cf82470974a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _shouldCollideWith:
-    serializedVersion: 2
-    m_Bits: 8
-  _radius: 0.83
-  _damage: 0
-  _canMultiHit: 0
-  _delayBetweenHits: 0
 --- !u!1 &1484747363
 GameObject:
   m_ObjectHideFlags: 0
@@ -1971,57 +1842,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1730203840}
   m_CullTransparentMesh: 1
---- !u!1 &1793115472
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1793115473}
-  - component: {fileID: 1793115474}
-  m_Layer: 7
-  m_Name: ColliderRush
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1793115473
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1793115472}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.2571426}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 988940176}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1793115474
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1793115472}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0210dfaab9332e642aa36cf82470974a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _shouldCollideWith:
-    serializedVersion: 2
-    m_Bits: 8
-  _radius: 0.83
-  _damage: 0
-  _canMultiHit: 0
-  _delayBetweenHits: 0
 --- !u!1 &1805906808
 GameObject:
   m_ObjectHideFlags: 0
@@ -2097,16 +1917,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BullAI_1
       objectReference: {fileID: 0}
-    - target: {fileID: 5314086221994346189, guid: d501f4ad7f368424f82c40ac7366e0a2,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5314086221994346228, guid: d501f4ad7f368424f82c40ac7366e0a2,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5314086221994346230, guid: d501f4ad7f368424f82c40ac7366e0a2,
         type: 3}
       propertyPath: m_RootOrder
@@ -2162,16 +1972,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5314086221994346231, guid: d501f4ad7f368424f82c40ac7366e0a2,
+    - target: {fileID: 7059855476554367407, guid: d501f4ad7f368424f82c40ac7366e0a2,
         type: 3}
-      propertyPath: colliderRush
-      value: 
-      objectReference: {fileID: 1399549211}
-    - target: {fileID: 5314086221994346231, guid: d501f4ad7f368424f82c40ac7366e0a2,
-        type: 3}
-      propertyPath: colliderBaseAttack
-      value: 
-      objectReference: {fileID: 378278682}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d501f4ad7f368424f82c40ac7366e0a2, type: 3}
 --- !u!4 &1960197773 stripped
@@ -2252,11 +2057,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: AICAC_2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3888318928632032895, guid: c24a58f537c8d6841a585d50ff610c4c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c24a58f537c8d6841a585d50ff610c4c, type: 3}
@@ -2344,11 +2144,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: AICAC_1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3888318928632032895, guid: c24a58f537c8d6841a585d50ff610c4c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c24a58f537c8d6841a585d50ff610c4c, type: 3}
@@ -2541,10 +2336,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1484747364}
     m_Modifications:
-    - target: {fileID: 279298340, guid: c24a58f537c8d6841a585d50ff610c4c, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3888318928632032891, guid: c24a58f537c8d6841a585d50ff610c4c,
         type: 3}
       propertyPath: m_RootOrder
@@ -2619,16 +2410,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BullAI
       objectReference: {fileID: 0}
-    - target: {fileID: 5314086221994346189, guid: d501f4ad7f368424f82c40ac7366e0a2,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5314086221994346228, guid: d501f4ad7f368424f82c40ac7366e0a2,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5314086221994346230, guid: d501f4ad7f368424f82c40ac7366e0a2,
         type: 3}
       propertyPath: m_RootOrder
@@ -2684,16 +2465,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5314086221994346231, guid: d501f4ad7f368424f82c40ac7366e0a2,
-        type: 3}
-      propertyPath: colliderRush
-      value: 
-      objectReference: {fileID: 1793115473}
-    - target: {fileID: 5314086221994346231, guid: d501f4ad7f368424f82c40ac7366e0a2,
-        type: 3}
-      propertyPath: colliderBaseAttack
-      value: 
-      objectReference: {fileID: 660150768}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d501f4ad7f368424f82c40ac7366e0a2, type: 3}
 --- !u!1001 &5407937164311034896

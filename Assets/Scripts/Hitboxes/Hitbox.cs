@@ -63,7 +63,10 @@ public class Hitbox : MonoBehaviour
         if (targetCollider.CompareTag("WeakHurtbox"))
             targetCollider.parent.GetComponent<Health>().TakeCriticalDamage(_damage);
         else
+        {
+            Debug.Log(targetCollider.name);
             targetCollider.parent.GetComponent<Health>().TakeDamage(_damage);
+        }
         _blacklist.Add(targetCollider.parent, _delayBetweenHits);
     }
 

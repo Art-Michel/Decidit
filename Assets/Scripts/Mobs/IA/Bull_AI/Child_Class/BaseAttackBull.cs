@@ -18,7 +18,7 @@ public class BaseAttackBull
         {
             if (baseAttackBullSO.currentAttackRate <= 0)
             {
-                bullAI.colliderBaseAttack.gameObject.SetActive(true);
+                //bullAI.colliderBaseAttack.gameObject.SetActive(true);
                 Debug.Log("Attack");
             }
             else
@@ -32,12 +32,12 @@ public class BaseAttackBull
         if (touchPlayer)
         {
             baseAttackBullSO.currentAttackRate = baseAttackBullSO.maxAttackRate;
-            bullAI.colliderBaseAttack.gameObject.SetActive(false);
+            //bullAI.colliderBaseAttack.gameObject.SetActive(false);
         }
         else
         {
             baseAttackBullSO.currentAttackRate = baseAttackBullSO.maxAttackRate;
-            bullAI.colliderBaseAttack.gameObject.SetActive(false);
+            //bullAI.colliderBaseAttack.gameObject.SetActive(false);
         }
     }
 
