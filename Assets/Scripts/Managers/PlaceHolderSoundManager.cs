@@ -48,14 +48,12 @@ public class PlaceHolderSoundManager : LocalManager<PlaceHolderSoundManager>
 
     public void PlayHitSound()
     {
-        PlaySound(_hit, 1f);
+        PlaySound(_hit, 2f);
     }
 
     public void PlayCriticalHitSound()
     {
-        AudioSource.pitch = 3f;
-        PlaySound(_hit, 3f);
-        AudioSource.pitch = 1f;
+        PlaySound(_criticalHit, 5f);
     }
 
     public void PlayAragonShot()

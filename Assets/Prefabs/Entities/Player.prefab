@@ -335,7 +335,7 @@ MonoBehaviour:
   _debugStateText: {fileID: 5484497909188995371}
   _ammoCountText: {fileID: 1340939800}
   _canon: {fileID: 4922958101454955021}
-  _hitscanDamage: 0
+  _hitscanDamage: 25
   _recoilTime: 0.4
   _reloadMaxTime: 1.5
   _reloadMinTime: 1.3
@@ -1047,7 +1047,7 @@ MonoBehaviour:
   _debugStateText: {fileID: 5484497909188995371}
   _ammoCountText: {fileID: 1340939800}
   _canon: {fileID: 4922958101454955021}
-  _hitscanDamage: 0
+  _hitscanDamage: 90
   _recoilTime: 0.1
   _reloadMaxTime: 1.5
   _reloadMinTime: 1.3
@@ -2516,8 +2516,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2200446484381738818}
   - component: {fileID: 2200446484381738819}
-  - component: {fileID: 2200446484381738816}
   - component: {fileID: 2200446484381738821}
+  - component: {fileID: 1823688471}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2583,14 +2583,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &2200446484381738816
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2200446484381738817}
-  m_Enabled: 1
 --- !u!114 &2200446484381738821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2716,6 +2708,14 @@ MonoBehaviour:
       enableFptlForForwardOpaque: 0
       enableBigTilePrepass: 0
       isFptlEnabled: 0
+--- !u!81 &1823688471
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2200446484381738817}
+  m_Enabled: 1
 --- !u!1 &2200446484577634937
 GameObject:
   m_ObjectHideFlags: 0
