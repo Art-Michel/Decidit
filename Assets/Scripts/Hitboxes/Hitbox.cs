@@ -40,7 +40,7 @@ public class Hitbox : MonoBehaviour
     protected virtual void CheckForCollision()
     {
         foreach (Collider collider in Physics.OverlapSphere(transform.position, _radius, _shouldCollideWith))
-            if (!AlreadyHit(collider.transform))
+            if (!AlreadyHit(collider.transform.parent))
                 Hit(collider.transform);
     }
 
@@ -48,23 +48,23 @@ public class Hitbox : MonoBehaviour
     {
         if (_canMultiHit)
         {
-            if (_blacklist.ContainsKey(target.parent))
-                return _blacklist[target.parent] > 0;
+            if (_blacklist.ContainsKey(target))
+                return _blacklist[target] > 0;
             else
                 return false;
         }
         else
-            return _blacklist.ContainsKey(target.parent);
+            return _blacklist.ContainsKey(target);
     }
 
-    protected void Hit(Transform target)
+    protected void Hit(Transform targetCollider)
     {
         //Debug.Log(transform.name + " hit " + target.transform.name);
-        if (target.CompareTag("WeakHurtbox"))
-            target.parent.GetComponent<Health>().TakeCriticalDamage(_damage);
+        if (targetCollider.CompareTag("WeakHurtbox"))
+            targetCollider.parent.GetComponent<Health>().TakeCriticalDamage(_damage);
         else
-            target.parent.GetComponent<Health>().TakeDamage(_damage);
-        _blacklist.Add(target.parent, _delayBetweenHits);
+            targetCollider.parent.GetComponent<Health>().TakeDamage(_damage);
+        _blacklist.Add(targetCollider.parent, _delayBetweenHits);
     }
 
     protected void UpdateBlackList()

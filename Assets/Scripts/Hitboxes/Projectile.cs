@@ -52,7 +52,7 @@ public class Projectile : Hitbox
         if (_canMultiHit)
         {
             foreach (RaycastHit hit in Physics.SphereCastAll(_lasterFramePosition, _radius, _spaceTraveledLastFrame, _spaceTraveledLastFrame.magnitude, _shouldCollideWith))
-                if (!AlreadyHit(hit.transform))
+                if (!AlreadyHit(hit.transform.parent))
                 {
                     Hit(hit.transform);
                     _direction = _cameraDirection;
