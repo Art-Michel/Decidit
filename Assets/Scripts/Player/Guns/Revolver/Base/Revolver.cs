@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using NaughtyAttributes;
 
 public class Revolver : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class Revolver : MonoBehaviour
 
     #region Stats Decleration
     [Header("Stats")]
+    [Tooltip("No use if not a hitscan weapon")][SerializeField] int _hitscanDamage;
     [SerializeField] float _recoilTime = .3f;
     [SerializeField] float _reloadMaxTime = 1f;
     [SerializeField] float _reloadMinTime = 0.9f;
@@ -98,8 +100,13 @@ public class Revolver : MonoBehaviour
     {
         if (Physics.Raycast(_camera.position, _camera.forward, out RaycastHit hit, _maxRange, _mask))
         {
-            if (hit.transform.TryGetComponent<Health>(out Health health))
-                health.TakeDamage(40);
+            if (hit.transform.parent.TryGetComponent<Health>(out Health health))
+            {
+                if (hit.transform.CompareTag("WeakHurtbox"))
+                    health.TakeCriticalDamage(_hitscanDamage);
+                else
+                    health.TakeDamage(_hitscanDamage);
+            }
         }
 
         PlaceHolderSoundManager.Instance.PlayRevolverShot();

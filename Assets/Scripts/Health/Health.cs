@@ -50,6 +50,21 @@ public class Health : MonoBehaviour
         StartProbHealth();
     }
 
+    public virtual void TakeCriticalDamage(int damage)
+    {
+        _hp -= damage * 2;
+        DisplayHealth();
+
+        if (_hp <= 0)
+        {
+            _hp = 0f;
+            Death();
+            return;
+        }
+
+        StartProbHealth();
+    }
+
     private void ProbRegen(int amount = 10)
     {
         if (_hp < _probHp)

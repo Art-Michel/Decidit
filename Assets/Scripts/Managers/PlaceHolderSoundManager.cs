@@ -22,6 +22,7 @@ public class PlaceHolderSoundManager : LocalManager<PlaceHolderSoundManager>
     [SerializeField] AudioClip _regen;
 
     [SerializeField] AudioClip _hit;
+    [SerializeField] AudioClip _criticalHit;
 
 
     private void PlaySound(AudioClip clip, float volume)
@@ -48,6 +49,11 @@ public class PlaceHolderSoundManager : LocalManager<PlaceHolderSoundManager>
     public void PlayHitSound()
     {
         PlaySound(_hit, 1f);
+    }
+
+    public void PlayCriticalHitSound()
+    {
+        PlaySound(_criticalHit, 1f);
     }
 
     public void PlayAragonShot()

@@ -48,20 +48,23 @@ public class Hitbox : MonoBehaviour
     {
         if (_canMultiHit)
         {
-            if (_blacklist.ContainsKey(target))
-                return _blacklist[target] > 0;
+            if (_blacklist.ContainsKey(target.parent))
+                return _blacklist[target.parent] > 0;
             else
                 return false;
         }
         else
-            return _blacklist.ContainsKey(target);
+            return _blacklist.ContainsKey(target.parent);
     }
 
     protected void Hit(Transform target)
     {
-        Debug.Log(transform.name + " hit " + target.transform.name);
-        target.GetComponent<Health>().TakeDamage(_damage);
-        _blacklist.Add(target, _delayBetweenHits);
+        //Debug.Log(transform.name + " hit " + target.transform.name);
+        if (target.CompareTag("WeakHurtbox"))
+            target.parent.GetComponent<Health>().TakeCriticalDamage(_damage);
+        else
+            target.parent.GetComponent<Health>().TakeDamage(_damage);
+        _blacklist.Add(target.parent, _delayBetweenHits);
     }
 
     protected void UpdateBlackList()

@@ -51,6 +51,12 @@ public class EnemyHealth : Health
         PlaceHolderSoundManager.Instance.PlayHitSound();
     }
 
+    public override void TakeCriticalDamage(int amount)
+    {
+        base.TakeDamage(amount);
+        PlaceHolderSoundManager.Instance.PlayCriticalHitSound();
+    }
+
     void LookAtCamera()
     {
         //self explanatory
