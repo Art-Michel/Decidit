@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BaseAttackBull
@@ -10,6 +8,7 @@ public class BaseAttackBull
     public void BaseAttackTimer()
     {
         bullAI.agent.speed = 0;
+        SmoothLookAtPlayer();
 
         if (bullAI.distPlayer > baseAttackBullSO.attackRange)
         {
@@ -20,7 +19,7 @@ public class BaseAttackBull
             if (baseAttackBullSO.currentAttackRate <= 0)
             {
                 bullAI.colliderBaseAttack.gameObject.SetActive(true);
-                bullAI.attackCollider.enabled = true;
+                Debug.Log("Attack");
             }
             else
             {
@@ -34,13 +33,33 @@ public class BaseAttackBull
         {
             baseAttackBullSO.currentAttackRate = baseAttackBullSO.maxAttackRate;
             bullAI.colliderBaseAttack.gameObject.SetActive(false);
-            bullAI.attackCollider.enabled = false;
         }
         else
         {
             baseAttackBullSO.currentAttackRate = baseAttackBullSO.maxAttackRate;
             bullAI.colliderBaseAttack.gameObject.SetActive(false);
-            bullAI.attackCollider.enabled = false;
         }
+    }
+
+    void SmoothLookAtPlayer()
+    {
+        Vector3 direction;
+        Vector3 relativePos;
+
+        direction = bullAI.playerTransform.position;
+
+        relativePos.x = direction.x - bullAI.transform.position.x;
+        relativePos.y = 0;
+        relativePos.z = direction.z - bullAI.transform.position.z;
+
+        if (baseAttackBullSO.speedRot < baseAttackBullSO.maxSpeedRot)
+            baseAttackBullSO.speedRot += Time.deltaTime / baseAttackBullSO.smoothRot;
+        else
+        {
+            baseAttackBullSO.speedRot = baseAttackBullSO.maxSpeedRot;
+        }
+
+        Quaternion rotation = Quaternion.Slerp(bullAI.transform.rotation, Quaternion.LookRotation(relativePos, Vector3.up), baseAttackBullSO.speedRot);
+        bullAI.transform.rotation = rotation;
     }
 }

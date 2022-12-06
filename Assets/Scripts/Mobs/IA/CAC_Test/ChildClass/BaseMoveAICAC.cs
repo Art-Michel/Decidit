@@ -14,13 +14,13 @@ public class BaseMoveAICAC
         Vector3 dir = playerTransform.position - stateManagerAICAC.transform.position;
         Vector3 left = Vector3.Cross(dir, Vector3.up).normalized;
 
-        distplayer = Vector3.Distance(playerTransform.position, transform.position);
+        //distplayer = Vector3.Distance(playerTransform.position, transform.position);
 
         Vector3 destination = playerTransform.position + left* stateManagerAICAC.offsetDestination;
 
         agent.SetDestination(destination);
 
-        if (distplayer < baseMoveParameterSO.attackRange)
+        if (stateManagerAICAC.distplayer < baseMoveParameterSO.attackRange)
         {
             baseAttackParameterSO.isAttacking = false;
             baseMoveParameterSO.speedRot = 0;
@@ -28,9 +28,9 @@ public class BaseMoveAICAC
         }
         else
         {
-            if (distplayer >= baseMoveParameterSO.distCanRun)
+            if (stateManagerAICAC.distplayer >= baseMoveParameterSO.distCanRun)
                 agent.speed = baseMoveParameterSO.runSpeed;
-            else if(distplayer <= baseMoveParameterSO.distStopRun)
+            else if(stateManagerAICAC.distplayer <= baseMoveParameterSO.distStopRun)
                 agent.speed = baseMoveParameterSO.baseSpeed;
         }
     }

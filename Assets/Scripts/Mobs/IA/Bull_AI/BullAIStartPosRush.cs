@@ -1,18 +1,17 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class BullAITeam : MonoBehaviour
+public class BullAIStartPosRush : MonoBehaviour
 {
     RaycastHit hit;
     Ray ray;
     LayerMask noMask;
 
-    [SerializeField] List<BullAI> listBullAIScript = new List<BullAI>();
-    [SerializeField] List<BoxCollider> listBounds = new List<BoxCollider>();
-    [SerializeField] List<BoxCollider> listSelectedBox = new List<BoxCollider>();
-    [SerializeField] NavMeshData navMeshData;
+    public List<BullAI> listBullAIScript = new List<BullAI>();
+    public List<BoxCollider> listBounds = new List<BoxCollider>();
+    public List<BoxCollider> listSelectedBox = new List<BoxCollider>();
+    public NavMeshData navMeshData;
 
     // Start is called before the first frame update
     void Start()
@@ -21,23 +20,15 @@ public class BullAITeam : MonoBehaviour
         {
             listBullAIScript.Add(transform.GetChild(i).GetComponent<BullAI>());
         }
+
+        listSelectedBox = listBounds;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SelectAI(BullAI bullAI)
     {
-        for(int i =0; i < listBullAIScript.Count; i++)
-        {
-            int indexBox = Random.Range(0, listBounds.Count-1);
-
-            while(listBounds.Contains(listSelectedBox[indexBox]))
-            {
-                indexBox = Random.Range(0, listBounds.Count - 1);
-                listSelectedBox.Add(listBounds[i]);
-            }
-
-            CheckPosition(listBullAIScript[i], listBounds[indexBox]);
-        }
+        int indexBox = Random.Range(0, listSelectedBox.Count - 1);
+        CheckPosition(bullAI, listBounds[indexBox]);
+        listSelectedBox.RemoveAt(indexBox);
     }
 
     void CheckPosition(BullAI bullAI, BoxCollider boxSelected)
@@ -46,24 +37,22 @@ public class BullAITeam : MonoBehaviour
                                          navMeshData.sourceBounds.center.y,
                                          Random.Range(boxSelected.bounds.min.z, boxSelected.bounds.max.z));
 
-        CheckNavMeshPoint(boundsForwardPos);
-        bullAI.coolDownRushBullParameterSOInstance.startPos = boundsForwardPos;
+        bullAI.coolDownRushBullParameterSOInstance.startPos = CheckNavMeshPoint(boundsForwardPos);
         bullAI.coolDownRushBullParameterSOInstance.boxSelected = boxSelected;
     }
 
-    void CheckNavMeshPoint(Vector3 boundsForwardPos)
+    Vector3 CheckNavMeshPoint(Vector3 boundsForwardPos)
     {
         NavMeshHit closestHit;
         if (NavMesh.SamplePosition(boundsForwardPos, out closestHit, 20, 1))
         {
             boundsForwardPos = closestHit.position;
         }
-
-        transform.position = boundsForwardPos;
+        return boundsForwardPos;
     }
 
     public void ResetSelectedBox(BoxCollider boxColliderSelected)
     {
-        listSelectedBox.Remove(boxColliderSelected);
+        listSelectedBox.Add(boxColliderSelected);
     }
 }

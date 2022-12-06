@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WaitBeforeRushBull
@@ -9,19 +7,22 @@ public class WaitBeforeRushBull
 
     public void GoToStartRushPos()
     {
-        if(coolDownRushBullSO.startPos != Vector3.zero)
+        if (coolDownRushBullSO.startPos == Vector3.zero)
         {
+            bullAI.bullAIStartPosRush.SelectAI(bullAI);
             bullAI.agent.speed = coolDownRushBullSO.speedGoToStartPos;
             bullAI.agent.SetDestination(coolDownRushBullSO.startPos);
         }
-
-        if(bullAI.agent.remainingDistance ==0)
+        else if(bullAI.agent.remainingDistance ==0)
         {
+            bullAI.agent.SetDestination(coolDownRushBullSO.startPos);
             CoolDownBeforeRush();
         }
+
+        SmoothLookAtPlayer();
     }
 
-    public void CoolDownBeforeRush()
+    void CoolDownBeforeRush()
     {
         bullAI.agent.speed = coolDownRushBullSO.stopSpeed;
         if (coolDownRushBullSO.currentCoolDownRush> 0)
@@ -34,9 +35,35 @@ public class WaitBeforeRushBull
             coolDownRushBullSO.currentCoolDownRush = coolDownRushBullSO.coolDownRush;
             bullAI.agent.SetDestination(coolDownRushBullSO.rushDestination);
             coolDownRushBullSO.startPos = Vector3.zero;
-            bullAI.bullAITeam.ResetSelectedBox(coolDownRushBullSO.boxSelected);
+            bullAI.bullAIStartPosRush.ResetSelectedBox(coolDownRushBullSO.boxSelected);
             coolDownRushBullSO.boxSelected = null;
+            coolDownRushBullSO.speedRot = 0;
             bullAI.SwitchToNewState(3);
         }
+    }
+
+    void SmoothLookAtPlayer()
+    {
+        Vector3 direction;
+        Vector3 relativePos;
+        
+        if(bullAI.agent.remainingDistance != 0)
+            direction = bullAI.agent.destination;
+        else
+            direction = bullAI.playerTransform.position;
+
+        relativePos.x = direction.x - bullAI.transform.position.x;
+        relativePos.y = 0;
+        relativePos.z = direction.z - bullAI.transform.position.z;
+
+        if (coolDownRushBullSO.speedRot < coolDownRushBullSO.maxSpeedRot)
+            coolDownRushBullSO.speedRot += Time.deltaTime / coolDownRushBullSO.smoothRot;
+        else
+        {
+            coolDownRushBullSO.speedRot = coolDownRushBullSO.maxSpeedRot;
+        }
+
+        Quaternion rotation = Quaternion.Slerp(bullAI.transform.rotation, Quaternion.LookRotation(relativePos, Vector3.up), coolDownRushBullSO.speedRot);
+        bullAI.transform.rotation = rotation;
     }
 }

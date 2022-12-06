@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -15,7 +13,7 @@ public class BullAI : MonoBehaviour
     [SerializeField] LayerMask noMask;
     public Transform colliderRush;
     public Transform colliderBaseAttack;
-    public BullAITeam bullAITeam;
+    public BullAIStartPosRush bullAIStartPosRush;
     RaycastHit hit;
     EnemyHealth enemyHealth;
 
@@ -23,7 +21,9 @@ public class BullAI : MonoBehaviour
     public int hp;
 
     [Header("Distance ennemi / player")]
-    [SerializeField]public float distPlayer;
+    [SerializeField] public float distPlayer;
+    [SerializeField] public float offsetDestination;
+
 
     [Header("SpeedParameter")]
     [SerializeField] float setSpeedSmoothRot;
@@ -65,7 +65,7 @@ public class BullAI : MonoBehaviour
         enemyHealth = GetComponent<EnemyHealth>();
         colliderRush.gameObject.SetActive(false);
         colliderBaseAttack.gameObject.SetActive(false);
-        bullAITeam = transform.parent.GetComponent<BullAITeam>();
+        bullAIStartPosRush = transform.parent.GetComponent<BullAIStartPosRush>();
 
         baseIdleBullSOInstance = Instantiate(baseIdleBullSO);
         baseMoveBullParameterSOInstance = Instantiate(baseMoveBullParameterSO);
@@ -112,8 +112,8 @@ public class BullAI : MonoBehaviour
     {
         distPlayer = Vector3.Distance(transform.position, playerTransform.position);
 
-        if (state != State.Death)
-            SmoothLookAtPlayer();
+        /*if (state != State.Death)
+            SmoothLookAtPlayer();*/
 
         // v= d/t;
         // t = d/v;
@@ -156,7 +156,7 @@ public class BullAI : MonoBehaviour
         }
     }
 
-    void SmoothLookAtPlayer()
+    /*void SmoothLookAtPlayer()
     {
         Vector3 direction;
         Vector3 relativePos;
@@ -174,7 +174,7 @@ public class BullAI : MonoBehaviour
 
         Quaternion rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(relativePos, Vector3.up), speedSmoothRot);
         transform.rotation = rotation;
-    }
+    }*/
 
     private void OnTriggerEnter(Collider other)
     {

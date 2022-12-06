@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class AICACVarianteState : MonoBehaviour
 {
+    [Header("Offset AI Destination")]
     [SerializeField] public float offeset;
     [SerializeField] public float positiveOffeset;
     [SerializeField] public float negativeOffeset;
 
+    [Header("List AI Surround")]
     [SerializeField] List<StateManagerAICAC> aiCACScriptsList= new List<StateManagerAICAC>();
     [SerializeField] List<StateManagerAICAC> aiCACSurroundSelectedList = new List<StateManagerAICAC>();
     [SerializeField] List<SurroundParameterAICAC> listSurroundParameterAICACSO = new List<SurroundParameterAICAC>();
 
+    [Header("Number AI Surround")]
     [SerializeField] int maxAISurround;
     [SerializeField] int numberAISurrouned;
     int index = 0;
@@ -21,7 +24,7 @@ public class AICACVarianteState : MonoBehaviour
 
     void Start()
     {
-        Invoke("SetDecalageDestination", 1f);
+        Invoke("SetOffsetDestination", 1f);
         SetListActiveAI();
     }
 
@@ -54,27 +57,47 @@ public class AICACVarianteState : MonoBehaviour
         for (int i = 0; i < aiCACScriptsList.Count; i++)
         {
             listSurroundParameterAICACSO.Add(aiCACScriptsList[i].surroundParameterAICACSOInstance);
-
         }
 
-        Invoke("SetDecalageDestination", 1f);
+        Invoke("SetOffsetDestination", 1f);
     }
 
-    void SetDecalageDestination()
+    void SetOffsetDestination()
     {
-        for (int i = 0; i < transform.childCount; i++)
+        if (transform.childCount % 2 == 0)
         {
-            if (i % 2 == 0)
+            for (int i = 0; i < transform.childCount; i++)
             {
-                positiveOffeset += offeset;
-                Debug.Log(i % 2);
-                aiCACScriptsList[i].offsetDestination = positiveOffeset;
+                if (i % 2 == 0)
+                {
+                    positiveOffeset += offeset;
+                    Debug.Log(i % 2);
+                    aiCACScriptsList[i].offsetDestination = positiveOffeset;
+                }
+                else
+                {
+                    negativeOffeset -= offeset;
+                    Debug.Log(i % 2);
+                    aiCACScriptsList[i].offsetDestination = negativeOffeset;
+                }
             }
-            else
+        }
+        else
+        {
+            for (int i = 0; i < transform.childCount; i++)
             {
-                negativeOffeset -= offeset;
-                Debug.Log(i % 2);
-                aiCACScriptsList[i].offsetDestination = negativeOffeset;
+                if (i % 2 == 0)
+                {
+                    Debug.Log(i % 2);
+                    aiCACScriptsList[i].offsetDestination = positiveOffeset;
+                    positiveOffeset += offeset;
+                }
+                else
+                {
+                    negativeOffeset -= offeset;
+                    Debug.Log(i % 2);
+                    aiCACScriptsList[i].offsetDestination = negativeOffeset;
+                }
             }
         }
 
@@ -188,13 +211,5 @@ public class AICACVarianteState : MonoBehaviour
     {
         Debug.Log(aiCACSurroundSelectedList.Count);
         aiCACSurroundSelectedList.Remove(stateManagerAICAC);
-
-        /*while (aiCACSurroundSelectedList.Count > 0)
-        {
-            for (int i = 0; i < aiCACSurroundSelectedList.Count; i++)
-            {
-                aiCACSurroundSelectedList.RemoveAt(i);
-            }
-        }*/
     }
 }

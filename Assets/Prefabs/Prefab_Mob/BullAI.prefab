@@ -355,7 +355,6 @@ GameObject:
   - component: {fileID: 5314086220701509005}
   - component: {fileID: 5314086220701509040}
   - component: {fileID: 5314086220701509043}
-  - component: {fileID: 5314086220701509042}
   m_Layer: 7
   m_Name: Cube
   m_TagString: Untagged
@@ -428,19 +427,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &5314086220701509042
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5314086220701509004}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5314086221994346189
 GameObject:
   m_ObjectHideFlags: 0
@@ -456,7 +442,6 @@ GameObject:
   - component: {fileID: 5314086221994346226}
   - component: {fileID: 5314086221994346231}
   - component: {fileID: 5314086221994346229}
-  - component: {fileID: 5314086221994346228}
   - component: {fileID: 5314086221994346234}
   - component: {fileID: 2001756105}
   m_Layer: 7
@@ -587,11 +572,15 @@ MonoBehaviour:
   noMask:
     serializedVersion: 2
     m_Bits: 4294967295
+  colliderRush: {fileID: 0}
+  colliderBaseAttack: {fileID: 0}
+  bullAIStartPosRush: {fileID: 0}
   hp: 0
   distPlayer: 0
+  offsetDestination: 0
   setSpeedSmoothRot: 0.5
   speedSmoothRot: 0
-  attackCollider: {fileID: 5314086221994346228}
+  attackCollider: {fileID: 0}
   detectOtherAICollider: {fileID: 5314086221994346234}
   baseIdleBullSO: {fileID: 11400000, guid: 87061001b673e2241ad66755c7e50389, type: 2}
   baseIdleBullSOInstance: {fileID: 0}
@@ -626,19 +615,6 @@ MonoBehaviour:
   material: {fileID: 2100000, guid: e2339007d9d768a40984b82ef7256716, type: 2}
   baseColor: {r: 0, g: 0, b: 0, a: 0}
   hitColor: {r: 0.764151, g: 0.32103133, b: 0, a: 1}
---- !u!65 &5314086221994346228
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5314086221994346189}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 2, z: 2}
-  m_Center: {x: 0, y: 0, z: 1}
 --- !u!65 &5314086221994346234
 BoxCollider:
   m_ObjectHideFlags: 0

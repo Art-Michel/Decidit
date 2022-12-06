@@ -1,10 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Bull_CoolDownRushParameter", menuName = "Bull/CoolDownParameter")]
 public class CoolDownRushBullParameterSO : ScriptableObject
 {
+    [Header("Speed Rotation Parameter")]
+    [SerializeField] public float speedRot;
+    [SerializeField] public float maxSpeedRot;
+    [SerializeField] public float smoothRot;
+
+    [Header("Movement Parameter")]
     public float stopSpeed;
     public float speedGoToStartPos;
     public float currentCoolDownRush;
