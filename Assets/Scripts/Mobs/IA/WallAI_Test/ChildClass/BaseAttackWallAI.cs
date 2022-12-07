@@ -41,6 +41,7 @@ public class BaseAttackWallAI
 
     public void ThrowProjectile()
     {
+        Debug.Log(CalculateSpeedProjectile());
         wallAI.spawnBullet.LookAt(baseAttackWallAISO.playerPredicDir);
         Rigidbody cloneBullet = MonoBehaviour.Instantiate(baseAttackWallAISO.bulletPrefab, wallAI.spawnBullet.position, wallAI.spawnBullet.rotation);
         cloneBullet.AddRelativeForce(Vector3.forward * CalculateSpeedProjectile(), ForceMode.VelocityChange);

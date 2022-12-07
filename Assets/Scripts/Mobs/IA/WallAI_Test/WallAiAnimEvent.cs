@@ -17,13 +17,13 @@ public class WallAiAnimEvent : MonoBehaviour
         wallAI.EndAttack();
     }
 
-    private void OnTriggerStay(Collider other)
+    /*private void OnTriggerStay(Collider other)
     {
         Debug.Log("Va niquer ta mere");
         if (other.CompareTag("Wall"))
         {
             Debug.Log("Va niquer ta mere");
-            wallAI.orientation = other.transform.localEulerAngles.y -90;
+            wallAI.orientation = other.transform.localEulerAngles.y - 90;
         }
-    }
+    }*/
 }

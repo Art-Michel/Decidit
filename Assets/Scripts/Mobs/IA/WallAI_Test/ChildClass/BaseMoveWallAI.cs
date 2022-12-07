@@ -69,7 +69,9 @@ public class BaseMoveWallAI
 
         if (baseMoveWallAISO.distSinceLast >= baseMoveWallAISO.decalage)
         {
-            baseMoveWallAISO.lastWallCrack = MonoBehaviour.Instantiate(baseMoveWallAISO.wallCrackPrefab, wallAI.transform.parent.position, Quaternion.Euler(0, wallAI.orientation, 0));
+            baseMoveWallAISO.lastWallCrack = MonoBehaviour.Instantiate(baseMoveWallAISO.wallCrackPrefab, 
+                wallAI.transform.parent.position, 
+                Quaternion.Euler(0, wallAI.orientation, 0));
         }
     }
 

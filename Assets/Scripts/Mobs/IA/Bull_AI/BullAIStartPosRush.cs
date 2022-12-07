@@ -18,7 +18,14 @@ public class BullAIStartPosRush : MonoBehaviour
     {
         for(int i = 0; i < transform.childCount; i++)
         {
-            listBullAIScript.Add(transform.GetChild(i).GetComponent<BullAI>());
+            try
+            {
+                listBullAIScript.Add(transform.GetChild(i).GetComponent<BullAI>());
+            }
+            catch
+            {
+                Debug.LogWarning("Miss BullAI component");
+            }
         }
 
         listSelectedBox = listBounds;
