@@ -9,7 +9,6 @@ public class RushBull
 
     public void RushMovement()
     {
-        SmoothLookAtPlayer();
         if (bullAI.distPlayer < rushBullSO.stopLockDist)
         {
             rushBullSO.stopLockPlayer = true;
@@ -19,15 +18,17 @@ public class RushBull
             rushBullSO.rushDestination = bullAI.playerTransform.position + bullAI.transform.forward * rushBullSO.rushInertieSetDistance;
         }
 
-        //bullAI.colliderRush.gameObject.SetActive(true);
         bullAI.detectOtherAICollider.enabled = true;
         bullAI.agent.speed = rushBullSO.rushSpeed;
         bullAI.agent.SetDestination(CheckNavMeshPoint(rushBullSO.rushDestination));
+        bullAI.Hitbox.SetActive(true);
 
         if (bullAI.agent.remainingDistance == 0)
         {
             StopRush();
         }
+
+        SmoothLookAtPlayer();
     }
     Vector3 CheckNavMeshPoint(Vector3 newDestination)
     {
@@ -52,9 +53,9 @@ public class RushBull
 
     void StopRush()
     {
-        //bullAI.colliderRush.gameObject.SetActive(false);
         bullAI.detectOtherAICollider.enabled = false;
         rushBullSO.stopLockPlayer = false;
+        bullAI.Hitbox.SetActive(false);
 
         rushBullSO.speedRot = 0;
         bullAI.SwitchToNewState(0);
@@ -71,12 +72,7 @@ public class RushBull
         relativePos.y = 0;
         relativePos.z = direction.z - bullAI.transform.position.z;
 
-        if (rushBullSO.speedRot < rushBullSO.maxSpeedRot)
-            rushBullSO.speedRot += Time.deltaTime / rushBullSO.smoothRot;
-        else
-        {
-            rushBullSO.speedRot = rushBullSO.maxSpeedRot;
-        }
+        rushBullSO.speedRot = rushBullSO.maxSpeedRot;
 
         Quaternion rotation = Quaternion.Slerp(bullAI.transform.rotation, Quaternion.LookRotation(relativePos, Vector3.up), rushBullSO.speedRot);
         bullAI.transform.rotation = rotation;

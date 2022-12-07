@@ -28,10 +28,24 @@ public class BaseMoveAICAC
         }
         else
         {
-            if (stateManagerAICAC.distplayer >= baseMoveParameterSO.distCanRun)
-                agent.speed = baseMoveParameterSO.runSpeed;
-            else if(stateManagerAICAC.distplayer <= baseMoveParameterSO.distStopRun)
-                agent.speed = baseMoveParameterSO.baseSpeed;
+            SpeedAdjusting();
+        }
+    }
+    void SpeedAdjusting()
+    {
+        if (stateManagerAICAC.distplayer >= baseMoveParameterSO.distCanRun)
+        {
+            if(stateManagerAICAC.agent.speed < baseMoveParameterSO.runSpeed)
+                stateManagerAICAC.agent.speed += baseMoveParameterSO.smoothSpeedRun * Time.deltaTime;
+            else
+                stateManagerAICAC.agent.speed = baseMoveParameterSO.runSpeed;
+        }
+        else if (stateManagerAICAC.distplayer <= baseMoveParameterSO.distStopRun)
+        {
+            if(stateManagerAICAC.agent.speed > baseMoveParameterSO.baseSpeed)
+                stateManagerAICAC.agent.speed -= baseMoveParameterSO.smoothSpeedbase * Time.deltaTime;
+            else
+                stateManagerAICAC.agent.speed = baseMoveParameterSO.baseSpeed;
         }
     }
 

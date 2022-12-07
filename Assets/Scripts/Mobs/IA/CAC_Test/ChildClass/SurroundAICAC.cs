@@ -13,7 +13,6 @@ public class SurroundAICAC
     Vector3 destination;
     Ray ray;
     RaycastHit hit;
-
     public void ChooseDirection()
     {
         stateManagerAICAC.spawnSurroundDodge.LookAt(stateManagerAICAC.playerTransform.position);
@@ -67,15 +66,26 @@ public class SurroundAICAC
 
     public void MoveSurround()
     {
-        stateManagerAICAC.agent.speed = SurroundAICACSO.surroundSpeed;
+        //stateManagerAICAC.agent.speed = SurroundAICACSO.surroundSpeed;
 
-        if (SurroundAICACSO.left)
-        {   
-            stateManagerAICAC.agent.SetDestination(ray.GetPoint(stateManagerAICAC.distplayer));
-        }
-        else if(SurroundAICACSO.right)
+        if(stateManagerAICAC.agent.speed < SurroundAICACSO.surroundSpeed)
+            stateManagerAICAC.agent.speed += SurroundAICACSO.speedSmooth * Time.deltaTime;
+        else
+            stateManagerAICAC.agent.speed = SurroundAICACSO.surroundSpeed;
+
+        if(stateManagerAICAC.distplayer > SurroundAICACSO.stopSurroundDistance+2)
         {
-            stateManagerAICAC.agent.SetDestination(ray.GetPoint(stateManagerAICAC.distplayer));
+            if (SurroundAICACSO.left || SurroundAICACSO.right)
+            {
+                stateManagerAICAC.agent.SetDestination(ray.GetPoint(stateManagerAICAC.distplayer));
+            }
+        }
+        else
+        {
+            if (SurroundAICACSO.left || SurroundAICACSO.right)
+            {
+                stateManagerAICAC.agent.SetDestination(stateManagerAICAC.playerTransform.position);
+            }
         }
 
         if(stateManagerAICAC.distplayer <= SurroundAICACSO.stopSurroundDistance)

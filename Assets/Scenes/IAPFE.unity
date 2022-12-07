@@ -206,6 +206,57 @@ Camera:
     type: 3}
   m_PrefabInstance: {fileID: 87668279}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &336271810
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 336271811}
+  - component: {fileID: 336271812}
+  m_Layer: 0
+  m_Name: Hitbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &336271811
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 336271810}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 988940176}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &336271812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 336271810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0210dfaab9332e642aa36cf82470974a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shouldCollideWith:
+    serializedVersion: 2
+    m_Bits: 16384
+  _radius: 0.2
+  _damage: 20
+  _canMultiHit: 0
+  _delayBetweenHits: 0
 --- !u!114 &351293028 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2200446484005636427, guid: 46abff79d02163140a0fa90ea074a789,
@@ -1242,7 +1293,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1251178080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2150,6 +2201,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5314086221994346231, guid: d501f4ad7f368424f82c40ac7366e0a2,
+        type: 3}
+      propertyPath: Hitbox
+      value: 
+      objectReference: {fileID: 336271810}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d501f4ad7f368424f82c40ac7366e0a2, type: 3}
 --- !u!1001 &5407937164311034896
@@ -2171,7 +2227,7 @@ PrefabInstance:
     - target: {fileID: 5407937164410842285, guid: 119454a1c2920cd4fb3eb117a779d3db,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5407937164410842286, guid: 119454a1c2920cd4fb3eb117a779d3db,
         type: 3}
@@ -2384,7 +2440,7 @@ PrefabInstance:
     - target: {fileID: 7333516158302212432, guid: 46f23d6782467f5498976a696f8cee76,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7333516158302212433, guid: 46f23d6782467f5498976a696f8cee76,
         type: 3}

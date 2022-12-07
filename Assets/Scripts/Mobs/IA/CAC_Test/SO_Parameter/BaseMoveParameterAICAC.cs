@@ -10,7 +10,9 @@ public class BaseMoveParameterAICAC : ScriptableObject
 
     [Header("Speed Movement Parameter")]
     [SerializeField] public float baseSpeed;
+    [SerializeField] public float smoothSpeedbase;
     [SerializeField] public float runSpeed;
+    [SerializeField] public float smoothSpeedRun;
     [SerializeField] public float distCanRun;
     [SerializeField] public float distStopRun;
     [SerializeField] public float attackRange;

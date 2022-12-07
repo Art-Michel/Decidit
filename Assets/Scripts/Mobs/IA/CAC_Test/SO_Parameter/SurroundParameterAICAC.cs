@@ -6,6 +6,7 @@ using UnityEngine;
 public class SurroundParameterAICAC : ScriptableObject
 {
     public float surroundSpeed;
+    public float speedSmooth;
     public float stopSurroundDistance;
     public bool right;
     public bool left;

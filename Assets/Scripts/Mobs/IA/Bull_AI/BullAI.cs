@@ -32,6 +32,7 @@ public class BullAI : MonoBehaviour
     [Header("Attack Parameter")]
     public BoxCollider attackCollider;
     public BoxCollider detectOtherAICollider;
+    public GameObject Hitbox;
 
     BaseIdleBull baseIdleBull;
     public BaseIdleBullSO baseIdleBullSO;

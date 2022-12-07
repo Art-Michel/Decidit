@@ -45,7 +45,7 @@ public class GameManager : LocalManager<GameManager>
     private void DebugStart()
     {
 #if UNITY_EDITOR
-        _DebuggingCanvas.SetActive(true);
+        if (_DebuggingCanvas)_DebuggingCanvas.SetActive(true);
 
         //Framerate
         _is30fps = false;
