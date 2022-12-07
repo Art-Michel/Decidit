@@ -9,6 +9,7 @@ public class RaycastCrossHair : MonoBehaviour
     [SerializeField] Transform crossHair;
     [SerializeField] Transform playerT;
     [SerializeField] Camera cam;
+    [SerializeField] int maxRangeChanceToActiveDodge;
 
     // Start is called before the first frame update
     void Start()
@@ -29,7 +30,7 @@ public class RaycastCrossHair : MonoBehaviour
             {
                 if (hit.transform.GetComponent<StateManagerAICAC>() != null)
                 {
-                    if (Random.Range(0, 50) == 10)
+                    if (Random.Range(0, maxRangeChanceToActiveDodge) == 10)
                     {
                         float angle;
                         angle = Vector3.SignedAngle(playerT.forward, hit.normal, Vector3.up);
