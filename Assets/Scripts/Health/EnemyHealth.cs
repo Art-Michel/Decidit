@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class EnemyHealth : Health
 {
     [Header("References")]
     [SerializeField] Canvas _canvas;
+    [SerializeField] Material _material;
+    [SerializeField] VisualEffect _deathVfx;
     CanvasGroup _canvasGroup;
     Transform _playerCamera;
     Vector3 _camPos;
@@ -18,9 +21,12 @@ public class EnemyHealth : Health
     [SerializeField][Range(0.5f, 20f)] float _appearSpeed = 15f;
     [SerializeField][Range(0.5f, 20f)] float _disappearSpeed = 4f;
     [SerializeField][Range(0f, 2f)] float _disappearMaxStartup = 1f;
+    [SerializeField][Range(0f, 2f)] float _deathAnimationDuration = 1f;
     float _disappearStartup;
     float _appearT;
     bool _isVisible;
+    float _deathT;
+    bool _isDying = false;
 
     void Awake()
     {
@@ -33,6 +39,7 @@ public class EnemyHealth : Health
         base.Start();
         _appearT = 0f;
         _canvasGroup.alpha = 0f;
+        _material = GetComponent<Material_Instances>().material;
     }
 
     protected override void Update()
@@ -43,6 +50,9 @@ public class EnemyHealth : Health
         LookAtCamera();
         AdjustScale();
         AdjustVisibility();
+
+        if (_isDying)
+            UpdateDeath();
     }
 
     public override void TakeDamage(int amount)
@@ -98,4 +108,21 @@ public class EnemyHealth : Health
             _canvasGroup.alpha = Mathf.Lerp(0, 1, _appearT);
         }
     }
+
+    protected override void Death()
+    {
+        //! Ici desactiver ia ou mettre l'ia en state Dying jsp
+        _deathT = _deathAnimationDuration;
+        _isDying = true;
+        _deathVfx.Play();
+    }
+
+    private void UpdateDeath()
+    {
+        _deathT -= Time.deltaTime;
+        _material.SetFloat("_clip", Mathf.InverseLerp(_deathAnimationDuration, 0, _deathT));
+        if (_deathT <= 0)
+            Destroy(gameObject);
+    }
+
 }

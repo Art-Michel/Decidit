@@ -8,10 +8,10 @@ public class Material_Instances : MonoBehaviour
     public Color color;
     public Material material;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         go = this.gameObject;
-        material = go.GetComponent<SkinnedMeshRenderer>().material;
+        material = go.GetComponent<MeshRenderer>().material;
     }
 
     // Update is called once per frame

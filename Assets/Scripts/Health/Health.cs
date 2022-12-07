@@ -118,7 +118,7 @@ public class Health : MonoBehaviour
         }
     }
 
-    private void Death()
+    protected virtual void Death()
     {
 
     }
