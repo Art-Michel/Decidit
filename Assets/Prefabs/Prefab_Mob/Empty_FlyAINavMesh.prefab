@@ -780,6 +780,7 @@ GameObject:
   - component: {fileID: 5407937165128473252}
   - component: {fileID: 5407937165128473253}
   - component: {fileID: 1522482573}
+  - component: {fileID: 1467130709}
   m_Layer: 7
   m_Name: Ennemi_FlyNavMesh (1)
   m_TagString: Ennemi
@@ -836,7 +837,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0be94a39ccd205f4f9d884136bb4c52b, type: 2}
+  - {fileID: 2100000, guid: 4f464c633df81524a9235c1407baf01e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -898,11 +899,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db0d7e7847b71de4e8b203eddb5e5d06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpMax: 100
-  hp: 0
-  material: {fileID: 0}
-  baseColor: {r: 0, g: 0, b: 0, a: 0}
-  hitColor: {r: 0.9716981, g: 0.3850682, b: 0, a: 0}
 --- !u!114 &1522482573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -921,11 +917,31 @@ MonoBehaviour:
   _probationMaxStartup: 1
   _probationSpeed: 15
   _canvas: {fileID: 1872300975}
+  _material: {fileID: 2100000, guid: 0be94a39ccd205f4f9d884136bb4c52b, type: 2}
+  _deathVfx: {fileID: 0}
   _uiScale: 0.1
   _lookStrictness: 0.08
   _appearSpeed: 15
   _disappearSpeed: 4
   _disappearMaxStartup: 1
+  _deathAnimationDuration: 1
+--- !u!114 &1467130709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5407937165128473279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 696edb1499390144ba6e6e6526406c5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  go: {fileID: 5407937165128473279}
+  color: {r: 0, g: 0, b: 0, a: 1}
+  material: {fileID: 2100000, guid: 4f464c633df81524a9235c1407baf01e, type: 2}
+  texture: {fileID: 0}
+  setPixelTexture: {x: 0, y: 0}
 --- !u!1 &6300504266062117377
 GameObject:
   m_ObjectHideFlags: 0

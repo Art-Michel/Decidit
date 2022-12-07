@@ -481,6 +481,7 @@ GameObject:
   - component: {fileID: 7333516157775419068}
   - component: {fileID: 7333516157775419069}
   - component: {fileID: 475703519}
+  - component: {fileID: 2145315359}
   m_Layer: 7
   m_Name: WallEnemy
   m_TagString: Ennemi
@@ -533,7 +534,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1fa0c89a0057b564d95c65f7c6811243, type: 2}
+  - {fileID: 2100000, guid: 4f464c633df81524a9235c1407baf01e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -563,10 +564,10 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7333516157775419203}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.5
-  m_Height: 5.19
+  m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7333516157775419068
@@ -613,11 +614,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db0d7e7847b71de4e8b203eddb5e5d06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpMax: 100
-  hp: 0
-  material: {fileID: 0}
-  baseColor: {r: 1, g: 1, b: 1, a: 0}
-  hitColor: {r: 0.9622642, g: 0.429745, b: 0.030865014, a: 0}
 --- !u!114 &475703519
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -636,11 +632,31 @@ MonoBehaviour:
   _probationMaxStartup: 1
   _probationSpeed: 15
   _canvas: {fileID: 484671541}
+  _material: {fileID: 0}
+  _deathVfx: {fileID: 0}
   _uiScale: 0.1
   _lookStrictness: 0.08
   _appearSpeed: 15
   _disappearSpeed: 4
   _disappearMaxStartup: 1
+  _deathAnimationDuration: 1
+--- !u!114 &2145315359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7333516157775419203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 696edb1499390144ba6e6e6526406c5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  go: {fileID: 7333516157775419203}
+  color: {r: 0.4528302, g: 0, b: 0, a: 1}
+  material: {fileID: 2100000, guid: 4f464c633df81524a9235c1407baf01e, type: 2}
+  texture: {fileID: 0}
+  setPixelTexture: {x: 0, y: 0}
 --- !u!1 &7333516158302212432
 GameObject:
   m_ObjectHideFlags: 0
@@ -659,7 +675,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7333516158302212433
 Transform:
   m_ObjectHideFlags: 0

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AILife : MonoBehaviour
 {
-    public int hpMax;
+/*    public int hpMax;
     public int hp;
 
     [SerializeField] Material material;
@@ -31,5 +31,5 @@ public class AILife : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         material.color = baseColor;
         yield break;
-    }
+    }*/
 }

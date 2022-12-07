@@ -9,11 +9,11 @@ public class AICAC : MonoBehaviour
     [SerializeField] public State state;
     Transform playerTransform;
     public NavMeshAgent agent;
-    AILife aILife;
     Animator animator;
     NavMeshHit navHit;
     RaycastHit hit;
     Ray dodgeRay;
+    EnemyHealth enemyHealth;
 
     [SerializeField] LayerMask noMask;
 
@@ -53,9 +53,9 @@ public class AICAC : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        aILife = GetComponent<AILife>();
         playerTransform = GameObject.FindWithTag("Player").transform;
         animator = GetComponent<Animator>();
+        enemyHealth = GetComponent<EnemyHealth>();
     }
 
     void Update()
@@ -67,12 +67,12 @@ public class AICAC : MonoBehaviour
         if (state != State.Death)
             transform.LookAt(playerTransform.position);
 
-        SpeedManager();
-
-        if (aILife.hp <= 0)
+        if (enemyHealth._hp <= 0)
         {
             state = State.Death;
         }
+
+        SpeedManager();
 
         switch (state)
         {

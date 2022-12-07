@@ -25,7 +25,7 @@ public class Bullet : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Ennemi"))
         {
-            collision.transform.GetComponent<AILife>().ApplyDamage(damageBullet);
+            //collision.transform.GetComponent<AILife>().ApplyDamage(damageBullet);
         }
     }
 }

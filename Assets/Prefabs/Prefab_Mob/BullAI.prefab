@@ -534,6 +534,7 @@ GameObject:
   - component: {fileID: 5314086221994346229}
   - component: {fileID: 5314086221994346234}
   - component: {fileID: 2001756105}
+  - component: {fileID: 1585214519}
   m_Layer: 7
   m_Name: BullAI
   m_TagString: Ennemi
@@ -588,7 +589,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5e0bb336ca3a5a9448a83bc121f24f99, type: 2}
+  - {fileID: 2100000, guid: 4f464c633df81524a9235c1407baf01e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -686,11 +687,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db0d7e7847b71de4e8b203eddb5e5d06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpMax: 1000
-  hp: 0
-  material: {fileID: 2100000, guid: e2339007d9d768a40984b82ef7256716, type: 2}
-  baseColor: {r: 0, g: 0, b: 0, a: 0}
-  hitColor: {r: 0.764151, g: 0.32103133, b: 0, a: 1}
 --- !u!65 &5314086221994346234
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -722,8 +718,28 @@ MonoBehaviour:
   _probationMaxStartup: 1
   _probationSpeed: 15
   _canvas: {fileID: 1791998167}
+  _material: {fileID: 0}
+  _deathVfx: {fileID: 0}
   _uiScale: 0.1
   _lookStrictness: 0.08
   _appearSpeed: 15
   _disappearSpeed: 4
   _disappearMaxStartup: 1
+  _deathAnimationDuration: 1
+--- !u!114 &1585214519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5314086221994346189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 696edb1499390144ba6e6e6526406c5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  go: {fileID: 5314086221994346189}
+  color: {r: 0.4528302, g: 0.4528302, b: 0.4528302, a: 1}
+  material: {fileID: 2100000, guid: 4f464c633df81524a9235c1407baf01e, type: 2}
+  texture: {fileID: 0}
+  setPixelTexture: {x: 0, y: 0}
