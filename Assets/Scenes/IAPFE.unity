@@ -687,12 +687,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!4 &723434880 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5407937164474220354, guid: 119454a1c2920cd4fb3eb117a779d3db,
-    type: 3}
-  m_PrefabInstance: {fileID: 5407937164311034896}
-  m_PrefabAsset: {fileID: 0}
 --- !u!65 &817741331 stripped
 BoxCollider:
   m_CorrespondingSourceObject: {fileID: 817741331, guid: 46abff79d02163140a0fa90ea074a789,
@@ -1083,7 +1077,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1251178080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1304,7 +1298,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1484747364
 Transform:
   m_ObjectHideFlags: 0
@@ -1644,57 +1638,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1730203840}
   m_CullTransparentMesh: 1
---- !u!1 &1805906808
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1805906809}
-  - component: {fileID: 1805906810}
-  m_Layer: 7
-  m_Name: ColliderAttack
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1805906809
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1805906808}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.00000009007148, z: -0.44000036}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 723434880}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1805906810
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1805906808}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0210dfaab9332e642aa36cf82470974a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _shouldCollideWith:
-    serializedVersion: 2
-    m_Bits: 8
-  _radius: 0.3
-  _damage: 0
-  _canMultiHit: 0
-  _delayBetweenHits: 0
 --- !u!224 &1839344583 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2200446484907440230, guid: 46abff79d02163140a0fa90ea074a789,
@@ -1861,7 +1804,7 @@ PrefabInstance:
       value: AICAC_2
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 3888318928632032870, guid: c24a58f537c8d6841a585d50ff610c4c, type: 3}
+    - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: c24a58f537c8d6841a585d50ff610c4c, type: 3}
 --- !u!4 &2000944632 stripped
 Transform:
@@ -1943,7 +1886,7 @@ PrefabInstance:
       value: AICAC_1
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 3888318928632032870, guid: c24a58f537c8d6841a585d50ff610c4c, type: 3}
+    - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: c24a58f537c8d6841a585d50ff610c4c, type: 3}
 --- !u!4 &2079164532 stripped
 Transform:
@@ -2194,8 +2137,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: AICAC
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 3888318928632032870, guid: c24a58f537c8d6841a585d50ff610c4c, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c24a58f537c8d6841a585d50ff610c4c, type: 3}
 --- !u!1001 &5314086220186537618
 PrefabInstance:
@@ -2278,11 +2220,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Empty_FlyAINavMesh
       objectReference: {fileID: 0}
-    - target: {fileID: 5407937164410842285, guid: 119454a1c2920cd4fb3eb117a779d3db,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5407937164410842286, guid: 119454a1c2920cd4fb3eb117a779d3db,
         type: 3}
       propertyPath: m_RootOrder
@@ -2343,11 +2280,6 @@ PrefabInstance:
       propertyPath: myCollider
       value: 
       objectReference: {fileID: 448494848}
-    - target: {fileID: 5407937165128473252, guid: 119454a1c2920cd4fb3eb117a779d3db,
-        type: 3}
-      propertyPath: colliderBaseAttack
-      value: 
-      objectReference: {fileID: 1805906809}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 119454a1c2920cd4fb3eb117a779d3db, type: 3}
 --- !u!1001 &7245601620452276251
@@ -2481,20 +2413,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7333516157775419201, guid: 46f23d6782467f5498976a696f8cee76,
-        type: 3}
-      propertyPath: m_Height
-      value: 5.19
-      objectReference: {fileID: 0}
     - target: {fileID: 7333516158302212432, guid: 46f23d6782467f5498976a696f8cee76,
         type: 3}
       propertyPath: m_Name
       value: WallAI
-      objectReference: {fileID: 0}
-    - target: {fileID: 7333516158302212432, guid: 46f23d6782467f5498976a696f8cee76,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7333516158302212433, guid: 46f23d6782467f5498976a696f8cee76,
         type: 3}
