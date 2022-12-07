@@ -11,7 +11,14 @@ public class Material_Instances : MonoBehaviour
     void Awake()
     {
         go = this.gameObject;
-        material = go.GetComponent<MeshRenderer>().material;
+        try
+        {
+            material = go.GetComponent<MeshRenderer>().material;
+        }
+        catch
+        {
+            material = go.GetComponent<SkinnedMeshRenderer>().material;
+        }
     }
 
     // Update is called once per frame
