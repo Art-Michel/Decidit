@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -33,19 +31,31 @@ public class BaseMoveAICAC
     }
     void SpeedAdjusting()
     {
-        if (stateManagerAICAC.distplayer >= baseMoveParameterSO.distCanRun)
+        if(!baseMoveParameterSO.activeAnticipDestination)
         {
-            if(stateManagerAICAC.agent.speed < baseMoveParameterSO.runSpeed)
-                stateManagerAICAC.agent.speed += baseMoveParameterSO.smoothSpeedRun * Time.deltaTime;
-            else
-                stateManagerAICAC.agent.speed = baseMoveParameterSO.runSpeed;
+            if (stateManagerAICAC.distplayer >= baseMoveParameterSO.distCanRun)
+            {
+                if (stateManagerAICAC.agent.speed < baseMoveParameterSO.runSpeed)
+                {
+                    stateManagerAICAC.agent.speed += baseMoveParameterSO.smoothSpeedRun * Time.deltaTime;
+                }
+                else
+                    stateManagerAICAC.agent.speed = baseMoveParameterSO.runSpeed;
+            }
+            else if (stateManagerAICAC.distplayer <= baseMoveParameterSO.distStopRun)
+            {
+                if (stateManagerAICAC.agent.speed > baseMoveParameterSO.baseSpeed)
+                    stateManagerAICAC.agent.speed -= baseMoveParameterSO.smoothSpeedbase * Time.deltaTime;
+                else
+                    stateManagerAICAC.agent.speed = baseMoveParameterSO.baseSpeed;
+            }
         }
-        else if (stateManagerAICAC.distplayer <= baseMoveParameterSO.distStopRun)
+        else
         {
-            if(stateManagerAICAC.agent.speed > baseMoveParameterSO.baseSpeed)
-                stateManagerAICAC.agent.speed -= baseMoveParameterSO.smoothSpeedbase * Time.deltaTime;
+            if (stateManagerAICAC.agent.speed < baseMoveParameterSO.anticipSpeed)
+                stateManagerAICAC.agent.speed += baseMoveParameterSO.smoothSpeedAnticip * Time.deltaTime;
             else
-                stateManagerAICAC.agent.speed = baseMoveParameterSO.baseSpeed;
+                stateManagerAICAC.agent.speed = baseMoveParameterSO.anticipSpeed;
         }
     }
 

@@ -13,7 +13,10 @@ public class BaseMoveParameterAICAC : ScriptableObject
     [SerializeField] public float smoothSpeedbase;
     [SerializeField] public float runSpeed;
     [SerializeField] public float smoothSpeedRun;
+    [SerializeField] public float anticipSpeed;
+    [SerializeField] public float smoothSpeedAnticip;
     [SerializeField] public float distCanRun;
     [SerializeField] public float distStopRun;
     [SerializeField] public float attackRange;
+    [SerializeField] public bool activeAnticipDestination;
 }

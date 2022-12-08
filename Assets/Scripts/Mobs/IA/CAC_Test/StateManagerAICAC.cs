@@ -63,7 +63,6 @@ public class StateManagerAICAC : MonoBehaviour
     public DodgeParameterAICAC dodgeParameterAICACSO;
     public DodgeParameterAICAC dodgeParameterAICACSOInstance;
 
-
     SurroundAICAC surroundAICAC;
     public SurroundParameterAICAC surroundParameterAICACSO;
     public SurroundParameterAICAC surroundParameterAICACSOInstance;
@@ -99,7 +98,7 @@ public class StateManagerAICAC : MonoBehaviour
         baseAttackAICAC.stateManagerAICAC = this;
         baseAttackAICAC.baseAttackParameterSO = baseAttackParameterAICACSOInstance;
 
-        baseIdleAICAC.virtual_AICAC = this;
+        baseIdleAICAC.stateManagerAICAC = this;
         baseIdleAICAC.baseIdleParameterSO = baseIdleParameterAICACSOInstance;
 
         deathAICAC.stateManagerAICAC = this;

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,6 +22,7 @@ public class RushBullParameterSO : ScriptableObject
     public List<GameObject> ennemiInCollider = new List<GameObject>();
     public RaycastHit hit;
     public LayerMask mask;
+    public LayerMask maskCheckObstacle;
 
 
 }

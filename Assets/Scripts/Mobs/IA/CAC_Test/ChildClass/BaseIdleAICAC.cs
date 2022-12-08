@@ -1,23 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BaseIdleAICAC
 {
-    public StateManagerAICAC virtual_AICAC;
+    public StateManagerAICAC stateManagerAICAC;
     public BaseIdleParameterAICAC baseIdleParameterSO;
 
     public void StateIdle()
     {
         if (baseIdleParameterSO.currentDelayIdleState > 0)
         {
+            stateManagerAICAC.agent.speed = 0;
             baseIdleParameterSO.currentDelayIdleState -= Time.deltaTime;
         }
         else
         {
             baseIdleParameterSO.currentDelayIdleState = baseIdleParameterSO.maxDelayIdleState;
 
-            virtual_AICAC.SwitchToNewState(1);
+            stateManagerAICAC.SwitchToNewState(1);
         }
     }
 }

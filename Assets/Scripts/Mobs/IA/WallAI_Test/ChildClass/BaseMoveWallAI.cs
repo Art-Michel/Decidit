@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BaseMoveWallAI
@@ -39,7 +37,6 @@ public class BaseMoveWallAI
         if (!IsMoving())
         {
             baseMoveWallAISO.selectedWall = Random.Range(0, 4);
-            Debug.Log(baseMoveWallAISO.selectedWall);
             baseMoveWallAISO.newPos = SearchNewPos(wallAI.walls[baseMoveWallAISO.selectedWall].bounds);
 
             hit = RaycastAIManager.RaycastAI(baseMoveWallAISO.newPos, wallAI.playerTransform.position - baseMoveWallAISO.newPos, baseMoveWallAISO.mask, 

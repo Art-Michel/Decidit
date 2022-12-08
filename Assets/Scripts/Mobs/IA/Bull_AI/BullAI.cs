@@ -157,26 +157,6 @@ public class BullAI : MonoBehaviour
         }
     }
 
-    /*void SmoothLookAtPlayer()
-    {
-        Vector3 direction;
-        Vector3 relativePos;
-
-        direction = playerTransform.position;
-
-        relativePos.x = direction.x - transform.position.x;
-        relativePos.y = 0;
-        relativePos.z = direction.z - transform.position.z;
-
-        if (rushBullParameterSOInstance.stopLockPlayer)
-            speedSmoothRot = 0;
-        else
-            speedSmoothRot = setSpeedSmoothRot;
-
-        Quaternion rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(relativePos, Vector3.up), speedSmoothRot);
-        transform.rotation = rotation;
-    }*/
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && state == State.BaseAttack)
@@ -190,6 +170,8 @@ public class BullAI : MonoBehaviour
 
         if (other.CompareTag("Ennemi") && state == State.RushMovement)
         {
+            Debug.Log("Get TrashMob");
+
             if (!rushBullParameterSOInstance.ennemiInCollider.Contains(other.gameObject) || rushBullParameterSOInstance.ennemiInCollider == null)
                 rushBullParameterSOInstance.ennemiInCollider.Add(other.gameObject);
         }
@@ -211,12 +193,15 @@ public class BullAI : MonoBehaviour
 
                         if (angle > 0)
                         {
+                            Debug.Log("Dodge TrashMob");
+
                             rushBullParameterSOInstance.ennemiInCollider[i].GetComponent<StateManagerAICAC>().dodgeParameterAICACSOInstance.targetObjectToDodge = this.transform;
                             rushBullParameterSOInstance.ennemiInCollider[i].GetComponent<StateManagerAICAC>().dodgeParameterAICACSOInstance.rightDodge = true;
                             rushBullParameterSOInstance.ennemiInCollider[i].GetComponent<StateManagerAICAC>().SwitchToNewState(2);
                         }
                         else
                         {
+                            Debug.Log("Dodge TrashMob");
                             rushBullParameterSOInstance.ennemiInCollider[i].GetComponent<StateManagerAICAC>().dodgeParameterAICACSOInstance.targetObjectToDodge = this.transform;
                             rushBullParameterSOInstance.ennemiInCollider[i].GetComponent<StateManagerAICAC>().dodgeParameterAICACSOInstance.leftDodge = true;
                             rushBullParameterSOInstance.ennemiInCollider[i].GetComponent<StateManagerAICAC>().dodgeParameterAICACSOInstance.dodgeRushBull = true;
@@ -232,15 +217,6 @@ public class BullAI : MonoBehaviour
         if (other.CompareTag("Ennemi"))
         {
             rushBullParameterSOInstance.ennemiInCollider.Remove(other.gameObject);
-        }
-    }
-
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.collider.CompareTag("Player") && state == State.RushMovement)
-        {
-            //PlayerController.ApplyDamage(rushBullParameterSOInstance.damageRushAttack);
         }
     }
 

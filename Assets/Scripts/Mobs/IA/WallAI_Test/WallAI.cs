@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -118,10 +116,8 @@ public class WallAI : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        Debug.Log("Va niquer ta mere");
         if (other.CompareTag("Wall"))
         {
-            Debug.Log("Va niquer ta mere");
             orientation = other.transform.localEulerAngles.y - 90;
         }
     }

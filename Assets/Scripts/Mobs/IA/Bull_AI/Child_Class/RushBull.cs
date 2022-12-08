@@ -42,7 +42,7 @@ public class RushBull
 
     public void CheckObstacleOnPath()
     {
-        hit = RaycastAIManager.RaycastAI(bullAI.transform.position, bullAI.transform.forward, rushBullSO.mask, Color.red, 2f);
+        hit = RaycastAIManager.RaycastAI(bullAI.transform.position, bullAI.transform.forward, rushBullSO.maskCheckObstacle, Color.red, 2f);
 
         if (hit.transform != null)
         {

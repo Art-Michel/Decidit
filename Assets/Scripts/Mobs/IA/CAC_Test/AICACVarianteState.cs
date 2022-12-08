@@ -5,7 +5,8 @@ using UnityEngine;
 public class AICACVarianteState : MonoBehaviour
 {
     [Header("Offset AI Destination")]
-    [SerializeField] public float offeset;
+    [SerializeField] public float offesetAnticipation;
+    [SerializeField] public float offesetBase;
     [SerializeField] public float positiveOffeset;
     [SerializeField] public float negativeOffeset;
 
@@ -19,12 +20,19 @@ public class AICACVarianteState : MonoBehaviour
     [SerializeField] int numberAISurrouned;
     int index = 0;
 
-    [SerializeField] float currentCoolDownDurround;
-    [SerializeField] float maxCoolDownDurround;
+    [Header("CoolDown AI Surround")]
+    [SerializeField] float currentCoolDownSurround;
+    [SerializeField] float maxCoolDownSurround;
+
+    [Header("CoolDown Anticip Direction")]
+    [SerializeField] float currentCoolDownAnticipDirection;
+    [SerializeField] float maxCoolDownAnticipDirection;
+    [SerializeField] float currentCoolDownStopAnticipDirection;
+    [SerializeField] float maxCoolDownStopAnticipDirection;
+    [SerializeField] bool activeAnticip;
 
     void Start()
     {
-        Invoke("SetOffsetDestination", 1f);
         SetListActiveAI();
     }
 
@@ -58,11 +66,89 @@ public class AICACVarianteState : MonoBehaviour
         {
             listSurroundParameterAICACSO.Add(aiCACScriptsList[i].surroundParameterAICACSOInstance);
         }
-
-        Invoke("SetOffsetDestination", 1f);
     }
 
+    // Update is called once per frame
+    void Update()
+    {
+        if(!activeAnticip)
+            CoolDownAnticipDirection();
+
+        if (activeAnticip)
+            SetOffsetDestination();
+        else
+            SetOffsetAticipationDestination();
+
+
+        CoolDownSurround();
+        SetSurroundDirection();
+    }
+
+    /// <summary>
+    /// Anticip Lateral Direction Move
+    /// </summary>
+    void CoolDownAnticipDirection()
+    {
+        if(currentCoolDownAnticipDirection >0)
+        {
+            if (Input.GetAxis("Horizontal") != 0)
+            {
+                currentCoolDownAnticipDirection -= Time.deltaTime;
+            }
+        }
+        else
+        {
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                aiCACScriptsList[i].baseMoveParameterAICACSOInstance.activeAnticipDestination = true;
+            }
+            activeAnticip = true;
+            currentCoolDownAnticipDirection = maxCoolDownAnticipDirection;
+        }
+    }
+    void CoolDownStopAnticipDirection()
+    {
+        if(currentCoolDownStopAnticipDirection >0)
+        {
+            currentCoolDownStopAnticipDirection -= Time.deltaTime;
+        }
+        else
+        {
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                aiCACScriptsList[i].baseMoveParameterAICACSOInstance.activeAnticipDestination = false;
+            }
+            activeAnticip = false;
+            currentCoolDownStopAnticipDirection = maxCoolDownStopAnticipDirection;
+        }
+    }
     void SetOffsetDestination()
+    {
+        if (Input.GetAxis("Horizontal") > 0)
+        {
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                aiCACScriptsList[i].offsetDestination = positiveOffeset;
+                positiveOffeset += offesetAnticipation;
+            }
+        }
+        else if (Input.GetAxis("Horizontal") < 0)
+        {
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                aiCACScriptsList[i].offsetDestination = positiveOffeset;
+                positiveOffeset -= offesetAnticipation;
+            }
+        }
+        else
+        {
+            CoolDownStopAnticipDirection();
+        }
+
+        positiveOffeset = 0;
+        negativeOffeset = 0;
+    }
+    void SetOffsetAticipationDestination()
     {
         if (transform.childCount % 2 == 0)
         {
@@ -70,13 +156,13 @@ public class AICACVarianteState : MonoBehaviour
             {
                 if (i % 2 == 0)
                 {
-                    positiveOffeset += offeset;
+                    positiveOffeset += offesetBase;
                     Debug.Log(i % 2);
                     aiCACScriptsList[i].offsetDestination = positiveOffeset;
                 }
                 else
                 {
-                    negativeOffeset -= offeset;
+                    negativeOffeset -= offesetBase;
                     Debug.Log(i % 2);
                     aiCACScriptsList[i].offsetDestination = negativeOffeset;
                 }
@@ -90,11 +176,11 @@ public class AICACVarianteState : MonoBehaviour
                 {
                     Debug.Log(i % 2);
                     aiCACScriptsList[i].offsetDestination = positiveOffeset;
-                    positiveOffeset += offeset;
+                    positiveOffeset += offesetBase;
                 }
                 else
                 {
-                    negativeOffeset -= offeset;
+                    negativeOffeset -= offesetBase;
                     Debug.Log(i % 2);
                     aiCACScriptsList[i].offsetDestination = negativeOffeset;
                 }
@@ -105,39 +191,38 @@ public class AICACVarianteState : MonoBehaviour
         negativeOffeset = 0;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        CoolDown();
 
-        if(aiCACSurroundSelectedList.Count == 2)
+    /// <summary>
+    /// Surround Move
+    /// </summary>
+    void CoolDownSurround()
+    {
+        if(currentCoolDownSurround >0)
+        {
+            currentCoolDownSurround -= Time.deltaTime;
+        }
+        else
+        {
+            currentCoolDownSurround = maxCoolDownSurround;
+            SurroundPlayer();
+        }
+    }
+    void SetSurroundDirection()
+    {
+        if (aiCACSurroundSelectedList.Count == 2)
         {
             if (aiCACSurroundSelectedList[0].surroundParameterAICACSOInstance.right && aiCACSurroundSelectedList[1].surroundParameterAICACSOInstance.right)
             {
                 aiCACSurroundSelectedList[1].surroundParameterAICACSOInstance.right = false;
                 aiCACSurroundSelectedList[1].surroundParameterAICACSOInstance.left = true;
             }
-            else if(aiCACSurroundSelectedList[0].surroundParameterAICACSOInstance.left && aiCACSurroundSelectedList[1].surroundParameterAICACSOInstance.left)
+            else if (aiCACSurroundSelectedList[0].surroundParameterAICACSOInstance.left && aiCACSurroundSelectedList[1].surroundParameterAICACSOInstance.left)
             {
                 aiCACSurroundSelectedList[1].surroundParameterAICACSOInstance.left = false;
                 aiCACSurroundSelectedList[1].surroundParameterAICACSOInstance.right = true;
             }
         }
     }
-
-    void CoolDown()
-    {
-        if(currentCoolDownDurround >0)
-        {
-            currentCoolDownDurround -= Time.deltaTime;
-        }
-        else
-        {
-            currentCoolDownDurround = maxCoolDownDurround;
-            SurroundPlayer();
-        }
-    }
-
     public void SurroundPlayer()
     {
         SelectedAI();
@@ -206,7 +291,6 @@ public class AICACVarianteState : MonoBehaviour
         if (aiCACSurroundSelectedList.Count < 2)
             aiCACSurroundSelectedList.Add(aiCACScriptsList[shortestDist]);
     }
-
     public void RemoveAISelected(StateManagerAICAC stateManagerAICAC)
     {
         Debug.Log(aiCACSurroundSelectedList.Count);
