@@ -11,9 +11,8 @@ public class BullAI : MonoBehaviour
     public NavMeshAgent agent;
     public Transform playerTransform;
     [SerializeField] LayerMask noMask;
-    //public Transform colliderRush;
-    //public Transform colliderBaseAttack;
     public BullAIStartPosRush bullAIStartPosRush;
+    public Material_Instances material_Instances;
     RaycastHit hit;
     EnemyHealth enemyHealth;
 
@@ -64,9 +63,8 @@ public class BullAI : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         playerTransform = GameObject.FindWithTag("Player").transform;
         enemyHealth = GetComponent<EnemyHealth>();
-        //colliderRush.gameObject.SetActive(false);
-        //colliderBaseAttack.gameObject.SetActive(false);
         bullAIStartPosRush = transform.parent.GetComponent<BullAIStartPosRush>();
+        material_Instances = GetComponent<Material_Instances>();
 
         baseIdleBullSOInstance = Instantiate(baseIdleBullSO);
         baseMoveBullParameterSOInstance = Instantiate(baseMoveBullParameterSO);

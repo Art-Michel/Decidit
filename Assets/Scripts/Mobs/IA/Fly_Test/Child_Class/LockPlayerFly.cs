@@ -16,12 +16,20 @@ public class LockPlayerFly
 
         if (baseAttackFlySO.speedRotationAIAttack >= 1f)
         {
+            flyAINavMesh.material_Instances.material.color = flyAINavMesh.material_Instances.color;
+            flyAINavMesh.material_Instances.ChangeColorTexture(flyAINavMesh.material_Instances.color);
+
             Vector3 destinationFinal2D = new Vector2(lockPlayerFlySO.destinationFinal.x, lockPlayerFlySO.destinationFinal.z);
             Vector3 transformPos2D = new Vector2(flyAINavMesh.transform.position.x, flyAINavMesh.transform.position.z);
 
             baseAttackFlySO.timeGoToDestinationAttack = Vector3.Distance(destinationFinal2D, transformPos2D) / baseAttackFlySO.baseAttackSpeed;
             baseAttackFlySO.maxSpeedYTranslationAttack = Mathf.Abs(lockPlayerFlySO.destinationFinal.y - flyAINavMesh.transform.position.y) / baseAttackFlySO.timeGoToDestinationAttack;
             flyAINavMesh.SwitchToNewState(2);
+        }
+        else
+        {
+            flyAINavMesh.material_Instances.material.color = flyAINavMesh.material_Instances.colorPreAtatck;
+            flyAINavMesh.material_Instances.ChangeColorTexture(flyAINavMesh.material_Instances.colorPreAtatck);
         }
     }
     public void SmoothLookAtYAxisAttack()

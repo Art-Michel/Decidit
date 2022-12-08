@@ -11,10 +11,16 @@ public class CoolDownRushBullParameterSO : ScriptableObject
     [Header("Movement Parameter")]
     public float stopSpeed;
     public float speedGoToStartPos;
-    public float currentCoolDownRush;
-    public float coolDownRush;
     public float rushInertieSetDistance;
     public Vector3 rushDestination;
     public Vector3 startPos;
     public BoxCollider boxSelected;
+
+    [Header("cool down switch startPos Parameter")]
+    public float currentCoolDownSwitchPos;
+    public float maxCoolDownSwitchPos;
+
+    [Header("cool down rush Parameter")]
+    public float currentCoolDownRush;
+    public float coolDownRush;
 }

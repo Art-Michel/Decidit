@@ -16,7 +16,7 @@ public class BaseIdleBull
         else
         {
             baseIdleBullSO.currentTransition = baseIdleBullSO.transitionDurationMax;
-            bullAI.SwitchToNewState(1);
+            bullAI.SwitchToNewState(2);
         }
     }
 }

@@ -7,39 +7,54 @@ public class WaitBeforeRushBull
 
     public void GoToStartRushPos()
     {
+        CoolDownBeforeRush();
+
+        bullAI.material_Instances.material.color = bullAI.material_Instances.colorPreAtatck;
+        bullAI.material_Instances.ChangeColorTexture(bullAI.material_Instances.colorPreAtatck);
+
         if (coolDownRushBullSO.startPos == Vector3.zero)
         {
-            bullAI.bullAIStartPosRush.SelectAI(bullAI);
-            bullAI.agent.speed = coolDownRushBullSO.speedGoToStartPos;
-            bullAI.agent.SetDestination(coolDownRushBullSO.startPos);
+            SelectStartPos();
         }
-        else if(bullAI.agent.remainingDistance ==0)
+        else if(bullAI.agent.remainingDistance <= 0.5f)
         {
             bullAI.agent.SetDestination(coolDownRushBullSO.startPos);
-            CoolDownBeforeRush();
         }
 
+        if(coolDownRushBullSO.startPos != Vector3.zero && bullAI.agent.remainingDistance <= 0.5f)
+        {
+            SelectStartPos();
+        }
         SmoothLookAtPlayer();
     }
 
     void CoolDownBeforeRush()
     {
-        bullAI.agent.speed = coolDownRushBullSO.stopSpeed;
         if (coolDownRushBullSO.currentCoolDownRush> 0)
         {
-            coolDownRushBullSO.rushDestination = bullAI.playerTransform.position + bullAI.transform.forward * coolDownRushBullSO.rushInertieSetDistance;
             coolDownRushBullSO.currentCoolDownRush -= Time.deltaTime;
         }
         else
         {
+            bullAI.agent.speed = coolDownRushBullSO.stopSpeed;
+            coolDownRushBullSO.rushDestination = bullAI.playerTransform.position + bullAI.transform.forward * coolDownRushBullSO.rushInertieSetDistance;
             coolDownRushBullSO.currentCoolDownRush = coolDownRushBullSO.coolDownRush;
             bullAI.agent.SetDestination(coolDownRushBullSO.rushDestination);
             coolDownRushBullSO.startPos = Vector3.zero;
             bullAI.bullAIStartPosRush.ResetSelectedBox(coolDownRushBullSO.boxSelected);
             coolDownRushBullSO.boxSelected = null;
             coolDownRushBullSO.speedRot = 0;
+            bullAI.material_Instances.material.color = bullAI.material_Instances.color;
+            bullAI.material_Instances.ChangeColorTexture(bullAI.material_Instances.color);
             bullAI.SwitchToNewState(3);
         }
+    }
+
+    void SelectStartPos()
+    {
+        bullAI.bullAIStartPosRush.SelectAI(bullAI);
+        bullAI.agent.speed = coolDownRushBullSO.speedGoToStartPos;
+        bullAI.agent.SetDestination(coolDownRushBullSO.startPos);
     }
 
     void SmoothLookAtPlayer()

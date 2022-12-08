@@ -23,6 +23,7 @@ public class StateManagerAICAC : MonoBehaviour
     public Animator myAnimator;
     public AICACVarianteState aICACVarianteState;
     EnemyHealth enemyHealth;
+    [SerializeField] Material_Instances material_Instances;
 
     [Header("Distance Player")]
     [SerializeField] public float distplayer;
@@ -76,6 +77,7 @@ public class StateManagerAICAC : MonoBehaviour
         spawnSurroundDodge = transform.Find("SpawnSurroundRay");
         aICACVarianteState = transform.parent.GetComponent<AICACVarianteState>();
         enemyHealth = GetComponent<EnemyHealth>();
+        material_Instances = GetComponent<Material_Instances>();
 
         baseMoveAICAC = new BaseMoveAICAC();
         baseAttackAICAC = new BaseAttackAICAC();
@@ -209,8 +211,15 @@ public class StateManagerAICAC : MonoBehaviour
     /// Animation Event
     /// </summary>
 
-    void StartAttack()
+    void PreAttack()
     {
+        material_Instances.material.color = material_Instances.colorPreAtatck;
+        material_Instances.ChangeColorTexture(material_Instances.colorPreAtatck);
+    }
+    void LaunchAttack()
+    {
+        material_Instances.material.color = material_Instances.color;
+        material_Instances.ChangeColorTexture(material_Instances.color);
         hitBox.SetActive(true);
     }
     void EndAttack()

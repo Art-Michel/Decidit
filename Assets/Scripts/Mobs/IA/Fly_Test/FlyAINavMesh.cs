@@ -14,6 +14,7 @@ public class FlyAINavMesh : MonoBehaviour
     public Transform playerTransform, childObj;
     public EnemyHealth enemyHealth;
     public Transform colliderBaseAttack;
+    public Material_Instances material_Instances;
 
     [Header("Destination Variable (Debug)")]
     [SerializeField]public float distDestination;
@@ -42,6 +43,7 @@ public class FlyAINavMesh : MonoBehaviour
         childObj = transform.parent;
         enemyHealth = GetComponent<EnemyHealth>();
         colliderBaseAttack.gameObject.SetActive(false);
+        material_Instances = GetComponent<Material_Instances>();
 
         baseMoveFly = new BaseMoveFly();
         lockPlayerFly = new LockPlayerFly();
