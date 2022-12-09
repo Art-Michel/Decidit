@@ -5,8 +5,9 @@ using UnityEngine;
 public class Pooler : MonoBehaviour
 {
     [SerializeField] protected GameObject _prefab;
+    [SerializeField] int _initialCount = 4;
+    [SerializeField] bool _shouldBeParent;
     Queue<PooledObject> _prefabs;
-    int _initialCount = 4;
 
     void Awake()
     {
@@ -47,7 +48,7 @@ public class Pooler : MonoBehaviour
     {
         GameObject obj = Instantiate(_prefab);
         PooledObject pooled = obj.GetComponent<PooledObject>();
-        pooled.Init(this);
+        pooled.Init(this, _shouldBeParent);
         return pooled;
     }
 }

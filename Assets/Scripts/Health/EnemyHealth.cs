@@ -65,7 +65,7 @@ public class EnemyHealth : Health
 
     public override void TakeCriticalDamage(int amount)
     {
-        base.TakeDamage(amount);
+        base.TakeCriticalDamage(amount);
         PlaceHolderSoundManager.Instance.PlayCriticalHitSound();
     }
 

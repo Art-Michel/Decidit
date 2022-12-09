@@ -15,7 +15,7 @@ public class Hitbox : MonoBehaviour
     [ShowIf("_canMultiHit")][SerializeField] protected float _delayBetweenHits = 0f;
     // [SerializeField] protected float _targetInvulnerability;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         _blacklist = new Dictionary<Transform, float>();
     }

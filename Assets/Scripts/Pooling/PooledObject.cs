@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class PooledObject : MonoBehaviour
 {
-    protected Pooler _pooler;
+    public Pooler Pooler { get; private set; }
 
-    public virtual void Init(Pooler pooler)
+    public virtual void Init(Pooler pooler, bool shouldBeParented)
     {
-        _pooler = pooler;
-        transform.SetParent(pooler.transform);
+        Pooler = pooler;
+        if (shouldBeParented)
+            transform.SetParent(pooler.transform);
         gameObject.SetActive(false);
     }
 }

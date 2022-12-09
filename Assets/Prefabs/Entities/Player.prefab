@@ -173,6 +173,7 @@ GameObject:
   - component: {fileID: 197478557}
   - component: {fileID: 1176019354187306853}
   - component: {fileID: 8072250455143683778}
+  - component: {fileID: 2200446483770630233}
   m_Layer: 6
   m_Name: AragonRevolver
   m_TagString: Untagged
@@ -271,8 +272,7 @@ MonoBehaviour:
   _mask:
     serializedVersion: 2
     m_Bits: 33280
-  _projectilePrefab: {fileID: 8252760470148114170, guid: 761a0a66d6e3a524fbb1ad7370c627ba,
-    type: 3}
+  _pooler: {fileID: 2200446483770630233}
 --- !u!114 &8072250455143683778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -285,6 +285,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 098f98a16b07ee34380ac667866f974e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2200446483770630233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 197478553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 8252760470148114170, guid: 761a0a66d6e3a524fbb1ad7370c627ba, type: 3}
+  _initialCount: 6
+  _shouldBeParent: 0
 --- !u!1 &525554331
 GameObject:
   m_ObjectHideFlags: 0
@@ -541,6 +556,7 @@ GameObject:
   - component: {fileID: 1236369754}
   - component: {fileID: 5584357950323043461}
   - component: {fileID: 2590228436923606291}
+  - component: {fileID: 2200446483770630232}
   m_Layer: 6
   m_Name: MuseRevolver
   m_TagString: Untagged
@@ -651,6 +667,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7258d969fd18654e8dba74e84ea4251, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2200446483770630232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1236369750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 0}
+  _initialCount: 4
+  _shouldBeParent: 0
 --- !u!1 &1340939798
 GameObject:
   m_ObjectHideFlags: 0
@@ -1489,6 +1520,9 @@ GameObject:
   - component: {fileID: 2113098011}
   - component: {fileID: 7268849856978730495}
   - component: {fileID: 9161445646862943683}
+  - component: {fileID: 2200446483770630229}
+  - component: {fileID: 2200446483770630230}
+  - component: {fileID: 2200446483770630231}
   m_Layer: 6
   m_Name: EylauRevolver
   m_TagString: Untagged
@@ -1587,8 +1621,7 @@ MonoBehaviour:
   _mask:
     serializedVersion: 2
     m_Bits: 33280
-  _unchargedProjectilePrefab: {fileID: 4939631121027515308, guid: 3bb5aafe2875b5c48b28766744164823,
-    type: 3}
+  _projectile1Pooler: {fileID: 2200446483770630231}
 --- !u!114 &9161445646862943683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1601,6 +1634,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fba036bc84e43a4493c64e81c472984, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2200446483770630229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2113098007}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 0}
+  _initialCount: 4
+  _shouldBeParent: 0
+--- !u!114 &2200446483770630230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2113098007}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 0}
+  _initialCount: 4
+  _shouldBeParent: 0
+--- !u!114 &2200446483770630231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2113098007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 4939631121027515308, guid: 3bb5aafe2875b5c48b28766744164823, type: 3}
+  _initialCount: 12
+  _shouldBeParent: 0
 --- !u!1 &995329137770584059
 GameObject:
   m_ObjectHideFlags: 0

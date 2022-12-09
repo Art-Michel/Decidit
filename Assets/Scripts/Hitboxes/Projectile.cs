@@ -2,25 +2,46 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(PooledObject))]
 public class Projectile : Hitbox
 {
     [SerializeField] private float _speed = 100f;
     [SerializeField] private float _lifeSpan = 5f;
+    private float _lifeT;
     protected Vector3 _direction;
     protected Vector3 _cameraDirection;
-    protected Vector3 _lasterFramePosition = Vector3.zero;
-    protected Vector3 _lastFramePosition = Vector3.zero;
-    protected Vector3 _spaceTraveledLastFrame = Vector3.zero;
+    protected Vector3 _lasterFramePosition;
+    protected Vector3 _lastFramePosition;
+    protected Vector3 _spaceTraveledLastFrame;
+    private PooledObject _pooledObject;
+    private TrailRenderer _trailRenderer;
 
-    public void Setup(Vector3 direction)
+    public void Setup(Vector3 position, Vector3 direction)
     {
+        transform.position = position;
         _direction = direction;
+        _lifeT = _lifeSpan;
+        _lasterFramePosition = position;
+        _lastFramePosition = position;
+        _spaceTraveledLastFrame = position;
     }
 
-    public void Setup(Vector3 direction, Vector3 cameraDirection)
+    public void Setup(Vector3 position, Vector3 direction, Vector3 cameraDirection)
     {
+        transform.position = position;
         _direction = direction;
         _cameraDirection = cameraDirection;
+        _lifeT = _lifeSpan;
+        _lasterFramePosition = position;
+        _lastFramePosition = position;
+        _spaceTraveledLastFrame = position;
+    }
+
+    protected override void Awake()
+    {
+        base.Awake();
+        _pooledObject = GetComponent<PooledObject>();
+        _trailRenderer = GetComponent<TrailRenderer>();
     }
 
     protected override void Update()
@@ -40,8 +61,8 @@ public class Projectile : Hitbox
 
     private void UpdateLifeSpan()
     {
-        _lifeSpan -= Time.deltaTime;
-        if (_lifeSpan <= 0)
+        _lifeT -= Time.deltaTime;
+        if (_lifeT <= 0)
         {
             Disappear();
         }
@@ -67,6 +88,7 @@ public class Projectile : Hitbox
 
     protected void Disappear()
     {
-        Destroy(this.gameObject);
+        _trailRenderer.Clear();
+        _pooledObject.Pooler.Return(_pooledObject);
     }
 }

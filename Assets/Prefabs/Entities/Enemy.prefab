@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4635867274154161521}
-  - component: {fileID: 3549029057662835098}
+  - component: {fileID: 2223420636143152346}
   m_Layer: 15
   m_Name: Hurtbox
   m_TagString: Untagged
@@ -25,15 +25,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 264588355813454882}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.414, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2126751611409770581}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &3549029057662835098
-CapsuleCollider:
+--- !u!65 &2223420636143152346
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -42,10 +42,9 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 2
+  m_Size: {x: 0.75, y: 1.1427417, z: 0.75}
+  m_Center: {x: 0, y: 0.07137084, z: 0}
 --- !u!1 &948389600558853954
 GameObject:
   m_ObjectHideFlags: 0
@@ -127,6 +126,7 @@ Transform:
   - {fileID: 2126751611621324500}
   - {fileID: 4362780681685274651}
   - {fileID: 4635867274154161521}
+  - {fileID: 657331833239862642}
   - {fileID: 4013108723624049396}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -219,12 +219,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 696edb1499390144ba6e6e6526406c5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  go: {fileID: 0}
-  color: {r: 0, g: 0, b: 0, a: 0}
-  colorPreAtatck: {r: 0, g: 0, b: 0, a: 0}
-  material: {fileID: 0}
-  texture: {fileID: 0}
-  setPixelTexture: {x: 0, y: 0}
+  MeshGameObject: {fileID: 0}
+  Color: {r: 1, g: 1, b: 1, a: 0}
+  ColorPreAtatck: {r: 1, g: 1, b: 1, a: 0}
+  Material: {fileID: 2100000, guid: 579335bc1ab04274a8006d35f495ba12, type: 2}
+  Texture: {fileID: 2800000, guid: 83482549c13339e4098ddbead77b0b64, type: 3}
+  SetPixelTexture: {x: 0, y: 0}
 --- !u!114 &6982454923184648655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -238,6 +238,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _prefab: {fileID: 3028111322435012058, guid: 4de8fdf8ed2e8ea43a59f380247afa84, type: 3}
+  _initialCount: 4
+  _shouldBeParent: 1
 --- !u!1 &2126751611621324520
 GameObject:
   m_ObjectHideFlags: 0
@@ -615,7 +617,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2126751611409770581}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!2083052967 &6359839212021272516
 VisualEffect:
@@ -740,3 +742,48 @@ MonoBehaviour:
   m_Property:
     m_Name: Transform
   Target: {fileID: 0}
+--- !u!1 &8154807316847746344
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 657331833239862642}
+  - component: {fileID: 9171034004295946763}
+  m_Layer: 15
+  m_Name: Hurtbox2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &657331833239862642
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8154807316847746344}
+  m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
+  m_LocalPosition: {x: 0, y: -0.414, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2126751611409770581}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 45, z: 0}
+--- !u!65 &9171034004295946763
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8154807316847746344}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.75, y: 1.1427417, z: 0.75}
+  m_Center: {x: 0, y: 0.07137084, z: 0}

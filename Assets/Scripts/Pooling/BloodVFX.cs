@@ -6,6 +6,6 @@ public class BloodVFX : PooledObject
 {
     private void OnParticleSystemStopped()
     {
-        this._pooler.Return(this);
+        this.Pooler.Return(this);
     }
 }

@@ -5,12 +5,12 @@ using UnityEngine;
 public class AragonRevolver : Revolver
 {
     [Header("References")]
-    [SerializeField] GameObject _projectilePrefab;
+    [SerializeField] Pooler _pooler;
 
     public override void Shoot()
     {
-        GameObject Shot = Instantiate(_projectilePrefab, _canon.position, Quaternion.Euler(_currentlyAimedAt - _canon.position));
-        Shot.GetComponent<Projectile>().Setup((_currentlyAimedAt - _canon.position).normalized, _camera.forward);
+        PooledObject shot = _pooler.Get();
+        shot.GetComponent<Projectile>().Setup(_canon.position, (_currentlyAimedAt - _canon.position).normalized, _camera.forward);
 
         Player.Instance.StartShake(_shootShakeIntensity, _shootShakeDuration);
         PlaceHolderSoundManager.Instance.PlayAragonShot();
