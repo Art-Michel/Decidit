@@ -695,6 +695,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3651693591780365185}
   - component: {fileID: 3651693591780365184}
+  - component: {fileID: 3482775155419962180}
+  - component: {fileID: 3757828332054071203}
   m_Layer: 0
   m_Name: Big Enemy
   m_TagString: Untagged
@@ -743,7 +745,7 @@ MonoBehaviour:
   _probationMaxStartup: 0.5
   _probationSpeed: 50
   _canvas: {fileID: 3651693591180118756}
-  _dissolve: {fileID: 0}
+  _material: {fileID: 0}
   _deathVfx: {fileID: 8439734090078822253}
   _uiScale: 0.1
   _lookStrictness: 0.08
@@ -751,6 +753,37 @@ MonoBehaviour:
   _disappearSpeed: 4
   _disappearMaxStartup: 1
   _deathAnimationDuration: 1
+--- !u!114 &3482775155419962180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3651693591780365186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 696edb1499390144ba6e6e6526406c5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MeshGameObject: {fileID: 3651693591585181975}
+  Color: {r: 0, g: 0, b: 0, a: 0}
+  ColorPreAtatck: {r: 0, g: 0, b: 0, a: 0}
+  Material: {fileID: 0}
+  Texture: {fileID: 0}
+  SetPixelTexture: {x: 0, y: 0}
+--- !u!114 &3757828332054071203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3651693591780365186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 3028111322435012058, guid: 4de8fdf8ed2e8ea43a59f380247afa84, type: 3}
 --- !u!1 &3651693591963884957
 GameObject:
   m_ObjectHideFlags: 0

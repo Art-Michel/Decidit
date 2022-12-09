@@ -9,19 +9,19 @@ public class WaitBeforeRushBull
     {
         CoolDownBeforeRush();
 
-        bullAI.material_Instances.material.color = bullAI.material_Instances.colorPreAtatck;
-        bullAI.material_Instances.ChangeColorTexture(bullAI.material_Instances.colorPreAtatck);
+        bullAI.material_Instances.Material.color = bullAI.material_Instances.ColorPreAtatck;
+        bullAI.material_Instances.ChangeColorTexture(bullAI.material_Instances.ColorPreAtatck);
 
         if (coolDownRushBullSO.startPos == Vector3.zero)
         {
             SelectStartPos();
         }
-        else if(bullAI.agent.remainingDistance <= 0.5f)
+        else if (bullAI.agent.remainingDistance <= 0.5f)
         {
             bullAI.agent.SetDestination(coolDownRushBullSO.startPos);
         }
 
-        if(coolDownRushBullSO.startPos != Vector3.zero && bullAI.agent.remainingDistance <= 0.5f)
+        if (coolDownRushBullSO.startPos != Vector3.zero && bullAI.agent.remainingDistance <= 0.5f)
         {
             SelectStartPos();
         }
@@ -30,7 +30,7 @@ public class WaitBeforeRushBull
 
     void CoolDownBeforeRush()
     {
-        if (coolDownRushBullSO.currentCoolDownRush> 0)
+        if (coolDownRushBullSO.currentCoolDownRush > 0)
         {
             coolDownRushBullSO.currentCoolDownRush -= Time.deltaTime;
         }
@@ -44,8 +44,8 @@ public class WaitBeforeRushBull
             bullAI.bullAIStartPosRush.ResetSelectedBox(coolDownRushBullSO.boxSelected);
             coolDownRushBullSO.boxSelected = null;
             coolDownRushBullSO.speedRot = 0;
-            bullAI.material_Instances.material.color = bullAI.material_Instances.color;
-            bullAI.material_Instances.ChangeColorTexture(bullAI.material_Instances.color);
+            bullAI.material_Instances.Material.color = bullAI.material_Instances.Color;
+            bullAI.material_Instances.ChangeColorTexture(bullAI.material_Instances.Color);
             bullAI.SwitchToNewState(3);
         }
     }
@@ -61,8 +61,8 @@ public class WaitBeforeRushBull
     {
         Vector3 direction;
         Vector3 relativePos;
-        
-        if(bullAI.agent.remainingDistance != 0)
+
+        if (bullAI.agent.remainingDistance != 0)
             direction = bullAI.agent.destination;
         else
             direction = bullAI.playerTransform.position;

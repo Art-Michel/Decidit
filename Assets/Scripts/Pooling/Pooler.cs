@@ -24,9 +24,17 @@ public class Pooler : MonoBehaviour
     public PooledObject Get()
     {
         if (_prefabs.Count > 0)
-            return _prefabs.Dequeue();
+        {
+            PooledObject obj = _prefabs.Dequeue();
+            obj.gameObject.SetActive(true);
+            return obj;
+        }
         else
-            return Create();
+        {
+            PooledObject obj = Create();
+            obj.gameObject.SetActive(true);
+            return obj;
+        }
     }
 
     public void Return(PooledObject obj)

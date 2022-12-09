@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class StateManagerAICAC : MonoBehaviour
 {
-    [SerializeField] public enum State { BaseIdle, BaseMovement, Dodge, BaseAttack, Death, SurroundPlayer};
+    [SerializeField] public enum State { BaseIdle, BaseMovement, Dodge, BaseAttack, Death, SurroundPlayer };
     [SerializeField] public State state;
 
     RaycastHit hitRight, hitLeft;
@@ -213,13 +213,13 @@ public class StateManagerAICAC : MonoBehaviour
 
     void PreAttack()
     {
-        material_Instances.material.color = material_Instances.colorPreAtatck;
-        material_Instances.ChangeColorTexture(material_Instances.colorPreAtatck);
+        material_Instances.Material.color = material_Instances.ColorPreAtatck;
+        material_Instances.ChangeColorTexture(material_Instances.ColorPreAtatck);
     }
     void LaunchAttack()
     {
-        material_Instances.material.color = material_Instances.color;
-        material_Instances.ChangeColorTexture(material_Instances.color);
+        material_Instances.Material.color = material_Instances.Color;
+        material_Instances.ChangeColorTexture(material_Instances.Color);
         hitBox.SetActive(true);
     }
     void EndAttack()

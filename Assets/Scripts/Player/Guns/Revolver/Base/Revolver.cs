@@ -103,9 +103,9 @@ public class Revolver : MonoBehaviour
             if (hit.transform.parent.TryGetComponent<Health>(out Health health))
             {
                 if (hit.transform.CompareTag("WeakHurtbox"))
-                    health.TakeCriticalDamage(_hitscanDamage);
+                    (health as EnemyHealth).TakeCriticalDamage(_hitscanDamage, hit.point, hit.normal);
                 else
-                    health.TakeDamage(_hitscanDamage);
+                    (health as EnemyHealth).TakeDamage(_hitscanDamage, hit.point, hit.normal);
             }
         }
 
