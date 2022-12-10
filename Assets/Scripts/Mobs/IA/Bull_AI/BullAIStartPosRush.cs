@@ -4,14 +4,10 @@ using UnityEngine.AI;
 
 public class BullAIStartPosRush : MonoBehaviour
 {
-    RaycastHit hit;
-    Ray ray;
-    LayerMask noMask;
-
     public List<BullAI> listBullAIScript = new List<BullAI>();
-    public List<BoxCollider> listBounds = new List<BoxCollider>();
-    public List<BoxCollider> listSelectedBox = new List<BoxCollider>();
-    public NavMeshData navMeshData;
+    [SerializeField] List<BoxCollider> listBounds = new List<BoxCollider>();
+    [SerializeField] List<BoxCollider> listSelectedBox;
+    [SerializeField] NavMeshData navMeshData;
 
     // Start is called before the first frame update
     void Start()
@@ -24,18 +20,26 @@ public class BullAIStartPosRush : MonoBehaviour
             }
             catch
             {
-                Debug.LogWarning("Miss BullAI component");
+                Debug.LogError("Miss BullAI component");
             }
         }
 
-        listSelectedBox = listBounds;
+        listSelectedBox = new List<BoxCollider>(listBounds);
     }
 
     public void SelectAI(BullAI bullAI)
     {
-        int indexBox = Random.Range(0, listSelectedBox.Count - 1);
-        CheckPosition(bullAI, listBounds[indexBox]);
-        listSelectedBox.RemoveAt(indexBox);
+        try
+        {
+            int indexBox = Random.Range(0, listSelectedBox.Count - 1);
+            CheckPosition(bullAI, listBounds[indexBox]);
+            listSelectedBox.Remove(listBounds[indexBox]);
+        }
+        catch
+        {
+            Debug.LogError("List Empty");
+            listSelectedBox = new List<BoxCollider>(listBounds);
+        }
     }
 
     void CheckPosition(BullAI bullAI, BoxCollider boxSelected)

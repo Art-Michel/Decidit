@@ -13,15 +13,22 @@ MonoBehaviour:
   m_Name: Bull_CoolDownRushParameter
   m_EditorClassIdentifier: 
   speedRot: 0
-  maxSpeedRot: 1
+  maxSpeedRot: 0.1
   smoothRot: 2
   stopSpeed: 0
-  speedGoToStartPos: 15
+  speedPatrolToStartPos: 10
+  speedRushToStartPos: 15
   rushInertieSetDistance: 5
   rushDestination: {x: 0, y: 0, z: 0}
   startPos: {x: 0, y: 0, z: 0}
   boxSelected: {fileID: 0}
-  currentCoolDownSwitchPos: 0
-  maxCoolDownSwitchPos: 0
+  currentDurationStay: 3
+  maxDurationStay: 3
   currentCoolDownRush: 10
   coolDownRush: 10
+  mask:
+    serializedVersion: 2
+    m_Bits: 11264
+  distDetect: 2
+  currentCoolDownCheckObstacle: 0
+  maxCoolDownCheckObstacle: 2

@@ -153,6 +153,10 @@ public class BullAI : MonoBehaviour
         {
             rushBull.CheckObstacleOnPath();
         }
+        else if(state == State.WaitBeforeRush)
+        {
+            waitBeforeRushBull.CheckObstacle();
+        }
     }
 
     private void OnTriggerEnter(Collider other)

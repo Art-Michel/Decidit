@@ -31,14 +31,11 @@ public class BullAIOffsetDestination : MonoBehaviour
                 if (i % 2 == 0)
                 {
                     positiveOffeset += offeset;
-                    Debug.Log(i % 2);
-                    Debug.Log(bullAIStartPosRush.listBullAIScript[i]);
                     bullAIStartPosRush.listBullAIScript[i].offsetDestination = positiveOffeset;
                 }
                 else
                 {
                     negativeOffeset -= offeset;
-                    Debug.Log(i % 2);
                     bullAIStartPosRush.listBullAIScript[i].offsetDestination = negativeOffeset;
                 }
             }
@@ -49,15 +46,12 @@ public class BullAIOffsetDestination : MonoBehaviour
             {
                 if (i % 2 == 0)
                 {
-                    Debug.Log(i % 2);
-                    Debug.Log(bullAIStartPosRush.listBullAIScript[i]);
                     bullAIStartPosRush.listBullAIScript[i].offsetDestination = positiveOffeset;
                     positiveOffeset += offeset;
                 }
                 else
                 {
                     negativeOffeset -= offeset;
-                    Debug.Log(i % 2);
                     bullAIStartPosRush.listBullAIScript[i].offsetDestination = negativeOffeset;
                 }
             }
