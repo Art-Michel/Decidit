@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(PooledObject))]
 public class Projectile : Hitbox
 {
-    [SerializeField] private float _speed = 100f;
+    [SerializeField] protected float _speed = 100f;
     [SerializeField] private float _lifeSpan = 5f;
     [SerializeField] private float _trailDelay = 0.025f;
     private float _lifeT;
@@ -18,7 +18,7 @@ public class Projectile : Hitbox
     private PooledObject _pooledObject;
     private TrailRenderer _trailRenderer;
 
-    public void Setup(Vector3 position, Vector3 direction)
+    public virtual void Setup(Vector3 position, Vector3 direction)
     {
         transform.position = position;
         _direction = direction;
@@ -30,7 +30,7 @@ public class Projectile : Hitbox
         _spaceTraveledLastFrame = position;
     }
 
-    public void Setup(Vector3 position, Vector3 direction, Vector3 cameraDirection)
+    public virtual void Setup(Vector3 position, Vector3 direction, Vector3 cameraDirection)
     {
         Setup(position, direction);
         _cameraDirection = cameraDirection;
@@ -47,7 +47,8 @@ public class Projectile : Hitbox
     {
         _lasterFramePosition = _lastFramePosition;
         _lastFramePosition = transform.position;
-        transform.position += _direction * _speed * Time.deltaTime;
+
+        Move();
         _spaceTraveledLastFrame = transform.position - _lastFramePosition;
 
         CheckForCollision();
@@ -56,6 +57,11 @@ public class Projectile : Hitbox
 
         if (_canMultiHit)
             UpdateBlackList();
+    }
+
+    protected virtual void Move()
+    {
+        transform.position += _direction * _speed * Time.deltaTime;
     }
 
     private void UpdateLifeSpan()

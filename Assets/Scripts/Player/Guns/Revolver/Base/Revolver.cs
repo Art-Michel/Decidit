@@ -57,10 +57,10 @@ public class Revolver : MonoBehaviour
         if (_fsm.currentState != null)
             _fsm.currentState.StateUpdate();
 
-        if (Physics.Raycast(_camera.position, _camera.forward, out RaycastHit hit, Mathf.Infinity, _mask))
+        if (Physics.Raycast(_camera.position, _camera.forward, out RaycastHit hit, 9999999999f, _mask))
             _currentlyAimedAt = hit.point;
         else
-            _currentlyAimedAt = _camera.forward * 1000;
+            _currentlyAimedAt = _camera.forward * 9999999999f;
 
         //Debugging
         Debugging();
@@ -111,6 +111,9 @@ public class Revolver : MonoBehaviour
             }
         }
 
+        //TODO pool un vfx de ligne
+        //TODO VFX.pos1 = _canon.position
+        //TODO VFX.pos2 = hit.point
         PlaceHolderSoundManager.Instance.PlayRevolverShot();
         _muzzleFlash.Play();
         Player.Instance.StartShake(_shootShakeIntensity, _shootShakeDuration);
