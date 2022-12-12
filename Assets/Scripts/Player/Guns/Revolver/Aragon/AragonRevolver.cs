@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class AragonRevolver : Revolver
 {
@@ -14,5 +15,6 @@ public class AragonRevolver : Revolver
 
         Player.Instance.StartShake(_shootShakeIntensity, _shootShakeDuration);
         PlaceHolderSoundManager.Instance.PlayAragonShot();
+        _muzzleFlash.Play();
     }
 }

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using NaughtyAttributes;
+using UnityEngine.VFX;
 
 public class Revolver : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class Revolver : MonoBehaviour
     [SerializeField] TextMeshProUGUI _debugStateText;
     [SerializeField] TextMeshProUGUI _ammoCountText;
     [SerializeField] protected Transform _canon;
+    [SerializeField] protected VisualEffect _muzzleFlash;
     PlayerInputMap _inputs;
     RevolverFSM _fsm;
     protected Transform _camera;
@@ -110,6 +112,7 @@ public class Revolver : MonoBehaviour
         }
 
         PlaceHolderSoundManager.Instance.PlayRevolverShot();
+        _muzzleFlash.Play();
         Player.Instance.StartShake(_shootShakeIntensity, _shootShakeDuration);
     }
 

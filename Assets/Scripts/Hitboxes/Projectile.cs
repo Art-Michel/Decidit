@@ -7,7 +7,9 @@ public class Projectile : Hitbox
 {
     [SerializeField] private float _speed = 100f;
     [SerializeField] private float _lifeSpan = 5f;
+    [SerializeField] private float _trailDelay = 0.025f;
     private float _lifeT;
+    private float _trailDelayT;
     protected Vector3 _direction;
     protected Vector3 _cameraDirection;
     protected Vector3 _lasterFramePosition;
@@ -21,6 +23,8 @@ public class Projectile : Hitbox
         transform.position = position;
         _direction = direction;
         _lifeT = _lifeSpan;
+        _trailDelayT = _trailDelay; //Delay before spawning the trail
+        _trailRenderer.enabled = false;
         _lasterFramePosition = position;
         _lastFramePosition = position;
         _spaceTraveledLastFrame = position;
@@ -28,13 +32,8 @@ public class Projectile : Hitbox
 
     public void Setup(Vector3 position, Vector3 direction, Vector3 cameraDirection)
     {
-        transform.position = position;
-        _direction = direction;
+        Setup(position, direction);
         _cameraDirection = cameraDirection;
-        _lifeT = _lifeSpan;
-        _lasterFramePosition = position;
-        _lastFramePosition = position;
-        _spaceTraveledLastFrame = position;
     }
 
     protected override void Awake()
@@ -66,6 +65,12 @@ public class Projectile : Hitbox
         {
             Disappear();
         }
+        if (_trailDelayT > 0)
+        {
+            _trailDelayT -= Time.deltaTime;
+            if (_trailDelayT <= 0)
+                _trailRenderer.enabled = true;
+        }
     }
 
     protected override void CheckForCollision()
@@ -89,6 +94,7 @@ public class Projectile : Hitbox
     protected void Disappear()
     {
         _trailRenderer.Clear();
+        _trailRenderer.enabled = false;
         _pooledObject.Pooler.Return(_pooledObject);
     }
 }
