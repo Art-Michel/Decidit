@@ -124,3 +124,30 @@ public class WaitBeforeRushBull
         bullAI.transform.rotation = rotation;
     }
 }
+
+public class CoolDown
+{
+    float _maxTime;
+    System.Action _CallBack;
+    public bool isDone => _maxTime <=0;
+
+
+    public CoolDown(float maxTim, System.Action CallBack)
+    {
+        _maxTime = maxTim;
+        _CallBack = CallBack;
+    }
+
+    public bool Progress(float elapsedTime)
+    {
+        _maxTime -= elapsedTime;
+
+        if (_maxTime <= 0)
+        {
+            _CallBack?.Invoke();
+            return true;
+        }
+        else
+            return false;
+    }
+}
