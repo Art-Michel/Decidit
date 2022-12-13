@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8252760470148114170
+--- !u!1 &7988620854853741856
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,49 +8,39 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8252760470148114166}
-  - component: {fileID: 8252760470148114168}
-  - component: {fileID: 8252760470148114169}
-  - component: {fileID: 6203956287809712641}
-  - component: {fileID: 5930670103747019972}
-  - component: {fileID: -1762411037367617702}
+  - component: {fileID: 1017327006228758683}
+  - component: {fileID: 3631087043354229171}
+  - component: {fileID: 3837961766242036342}
+  - component: {fileID: 3538186965706082739}
   m_Layer: 8
-  m_Name: AragonShotPrefab
+  m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8252760470148114166
+--- !u!4 &1017327006228758683
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8252760470148114170}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_GameObject: {fileID: 7988620854853741856}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 8252760470148114166}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &8252760470148114168
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8252760470148114170}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &8252760470148114169
+--- !u!23 &3631087043354229171
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8252760470148114170}
+  m_GameObject: {fileID: 7988620854853741856}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -86,36 +76,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &6203956287809712641
-MonoBehaviour:
+--- !u!33 &3837961766242036342
+MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8252760470148114170}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9574ac2a6562174390c63c3d9b71002, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _shouldCollideWith:
-    serializedVersion: 2
-    m_Bits: 32768
-  _radius: 0.11
-  _damage: 10
-  _canMultiHit: 1
-  _delayBetweenHits: 0.02
-  _speed: 60
-  _lifeSpan: 5
-  _trailDelay: 0.016666
---- !u!96 &5930670103747019972
+  m_GameObject: {fileID: 7988620854853741856}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!96 &3538186965706082739
 TrailRenderer:
   serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8252760470148114170}
+  m_GameObject: {fileID: 7988620854853741856}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 1
@@ -225,6 +201,65 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
+--- !u!1 &8252760470148114170
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8252760470148114166}
+  - component: {fileID: 6203956287809712641}
+  - component: {fileID: -1762411037367617702}
+  m_Layer: 8
+  m_Name: AragonShotPrefab
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8252760470148114166
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8252760470148114170}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_ConstrainProportionsScale: 1
+  m_Children:
+  - {fileID: 1017327006228758683}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6203956287809712641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8252760470148114170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9574ac2a6562174390c63c3d9b71002, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shouldCollideWith:
+    serializedVersion: 2
+    m_Bits: 33280
+  _radius: 0.11
+  _damage: 10
+  _canMultiHit: 1
+  _delayBetweenHits: 0.02
+  _pooledObject: {fileID: -1762411037367617702}
+  _mesh: {fileID: 7988620854853741856}
+  _trailRenderer: {fileID: 3538186965706082739}
+  _speed: 60
+  _lifeSpan: 5
+  _trailDelay: 0.01
 --- !u!114 &-1762411037367617702
 MonoBehaviour:
   m_ObjectHideFlags: 0

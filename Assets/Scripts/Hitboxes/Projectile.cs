@@ -1,3 +1,4 @@
+using System.Runtime.Serialization.Formatters;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,10 @@ using UnityEngine;
 [RequireComponent(typeof(PooledObject))]
 public class Projectile : Hitbox
 {
+    [Header("Projectile values")]
+    [SerializeField] private PooledObject _pooledObject;
+    [SerializeField] private GameObject _mesh;
+    [SerializeField] private TrailRenderer _trailRenderer;
     [SerializeField] protected float _speed = 100f;
     [SerializeField] private float _lifeSpan = 5f;
     [SerializeField] private float _trailDelay = 0.025f;
@@ -15,8 +20,6 @@ public class Projectile : Hitbox
     protected Vector3 _lasterFramePosition;
     protected Vector3 _lastFramePosition;
     protected Vector3 _spaceTraveledLastFrame;
-    private PooledObject _pooledObject;
-    private TrailRenderer _trailRenderer;
 
     public virtual void Setup(Vector3 position, Vector3 direction)
     {
@@ -25,6 +28,7 @@ public class Projectile : Hitbox
         _lifeT = _lifeSpan;
         _trailDelayT = _trailDelay; //Delay before spawning the trail
         _trailRenderer.enabled = false;
+        _mesh.SetActive(false);
         _lasterFramePosition = position;
         _lastFramePosition = position;
         _spaceTraveledLastFrame = position;
@@ -39,8 +43,7 @@ public class Projectile : Hitbox
     protected override void Awake()
     {
         base.Awake();
-        _pooledObject = GetComponent<PooledObject>();
-        _trailRenderer = GetComponent<TrailRenderer>();
+        _mesh.SetActive(false);
     }
 
     protected override void Update()
@@ -75,7 +78,10 @@ public class Projectile : Hitbox
         {
             _trailDelayT -= Time.deltaTime;
             if (_trailDelayT <= 0)
+            {
                 _trailRenderer.enabled = true;
+                _mesh.SetActive(true);
+            }
         }
     }
 
