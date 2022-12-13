@@ -84,7 +84,7 @@ public class Hitbox : MonoBehaviour
         }
     }
 
-    private void ClearBlacklist()
+    protected void ClearBlacklist()
     {
         _blacklist.Clear();
     }

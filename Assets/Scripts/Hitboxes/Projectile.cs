@@ -2,6 +2,7 @@ using System.Runtime.Serialization.Formatters;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using NaughtyAttributes;
 
 [RequireComponent(typeof(PooledObject))]
 public class Projectile : Hitbox
@@ -10,6 +11,8 @@ public class Projectile : Hitbox
     [SerializeField] private PooledObject _pooledObject;
     [SerializeField] private GameObject _mesh;
     [SerializeField] private TrailRenderer _trailRenderer;
+    [SerializeField] private bool _explodesOnHit;
+    [SerializeField][ShowIf("_explodesOnHit")] private GameObject _explosion;
     [SerializeField] protected float _speed = 100f;
     [SerializeField] private float _lifeSpan = 5f;
     [SerializeField] private float _trailDelay = 0.025f;
@@ -32,6 +35,7 @@ public class Projectile : Hitbox
         _lasterFramePosition = position;
         _lastFramePosition = position;
         _spaceTraveledLastFrame = position;
+        this.enabled = true;
     }
 
     public virtual void Setup(Vector3 position, Vector3 direction, Vector3 cameraDirection)
@@ -99,11 +103,17 @@ public class Projectile : Hitbox
         else if (Physics.SphereCast(_lasterFramePosition, _radius, _spaceTraveledLastFrame, out RaycastHit hit, _spaceTraveledLastFrame.magnitude, _shouldCollideWith))
         {
             Hit(hit.transform);
-            Disappear();
+            if (_explodesOnHit)
+            {
+                _explosion.SetActive(true);
+                this.enabled = false;
+            }
+            else
+                Disappear();
         }
     }
 
-    protected void Disappear()
+    public void Disappear()
     {
         _trailRenderer.Clear();
         _trailRenderer.enabled = false;
