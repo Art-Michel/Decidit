@@ -22,7 +22,7 @@ public class Projectile : Hitbox
     protected Vector3 _cameraDirection;
     protected Vector3 _lasterFramePosition;
     protected Vector3 _lastFramePosition;
-    protected Vector3 _spaceTraveledLastFrame;
+    protected Vector3 _spaceTraveledLast2Frames;
 
     public virtual void Setup(Vector3 position, Vector3 direction)
     {
@@ -34,7 +34,7 @@ public class Projectile : Hitbox
         _mesh.SetActive(false);
         _lasterFramePosition = position;
         _lastFramePosition = position;
-        _spaceTraveledLastFrame = position;
+        _spaceTraveledLast2Frames = Vector3.zero;
         this.enabled = true;
     }
 
@@ -56,7 +56,7 @@ public class Projectile : Hitbox
         _lastFramePosition = transform.position;
 
         Move();
-        _spaceTraveledLastFrame = transform.position - _lastFramePosition;
+        _spaceTraveledLast2Frames = transform.position - _lasterFramePosition;
 
         CheckForCollision();
 
@@ -93,14 +93,14 @@ public class Projectile : Hitbox
     {
         if (_canMultiHit)
         {
-            foreach (RaycastHit hit in Physics.SphereCastAll(_lasterFramePosition, _radius, _spaceTraveledLastFrame, _spaceTraveledLastFrame.magnitude, _shouldCollideWith))
+            foreach (RaycastHit hit in Physics.SphereCastAll(_lasterFramePosition, _radius, _spaceTraveledLast2Frames, _spaceTraveledLast2Frames.magnitude, _shouldCollideWith))
                 if (!AlreadyHit(hit.transform.parent))
                 {
                     Hit(hit.transform);
                     _direction = _cameraDirection;
                 }
         }
-        else if (Physics.SphereCast(_lasterFramePosition, _radius, _spaceTraveledLastFrame, out RaycastHit hit, _spaceTraveledLastFrame.magnitude, _shouldCollideWith))
+        else if (Physics.SphereCast(_lasterFramePosition, _radius, _spaceTraveledLast2Frames, out RaycastHit hit, _spaceTraveledLast2Frames.magnitude, _shouldCollideWith))
         {
             Hit(hit.transform);
             if (_explodesOnHit)
