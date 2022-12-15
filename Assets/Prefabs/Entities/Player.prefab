@@ -258,21 +258,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0bad28861b13b54aae69f296c750029, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _debugStateText: {fileID: 5484497909188995371}
   _ammoCountText: {fileID: 1340939800}
-  _canon: {fileID: 4922958101454955021}
+  _canonPosition: {fileID: 0}
   _muzzleFlash: {fileID: 1524789784}
-  _hitscanDamage: 0
+  _mask:
+    serializedVersion: 2
+    m_Bits: 33280
   _recoilTime: 0.6
   _reloadMaxTime: 1.5
   _reloadMinTime: 1.3
   _maxAmmo: 6
-  _maxRange: 50
   _shootShakeIntensity: 0.2
   _shootShakeDuration: 0.1
-  _mask:
-    serializedVersion: 2
-    m_Bits: 33280
   _pooler: {fileID: 2200446483770630233}
 --- !u!114 &8072250455143683778
 MonoBehaviour:
@@ -342,7 +339,7 @@ VisualEffect:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 399988182}
   m_Enabled: 1
-  m_Asset: {fileID: 8926484042661614526, guid: 576f185ff058c9e47bdbedd4d4ebdc44, type: 3}
+  m_Asset: {fileID: 0}
   m_InitialEventName: OnPlay
   m_InitialEventNameOverriden: 0
   m_StartSeed: 0
@@ -452,7 +449,7 @@ VisualEffect:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 444173604}
   m_Enabled: 1
-  m_Asset: {fileID: 8926484042661614526, guid: 6611fbedfdd076b488568cc2b7165293, type: 3}
+  m_Asset: {fileID: 0}
   m_InitialEventName: OnPlay
   m_InitialEventNameOverriden: 0
   m_StartSeed: 0
@@ -618,21 +615,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 021a1deb274caa047acde7eec7d06500, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _debugStateText: {fileID: 5484497909188995371}
   _ammoCountText: {fileID: 1340939800}
-  _canon: {fileID: 4922958101454955021}
+  _canonPosition: {fileID: 0}
   _muzzleFlash: {fileID: 444173607}
-  _hitscanDamage: 25
+  _mask:
+    serializedVersion: 2
+    m_Bits: 33280
   _recoilTime: 0.4
   _reloadMaxTime: 1.5
   _reloadMinTime: 1.3
   _maxAmmo: 6
-  _maxRange: 10000
   _shootShakeIntensity: 0.1
   _shootShakeDuration: 0.1
-  _mask:
-    serializedVersion: 2
-    m_Bits: 33280
 --- !u!114 &525554336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -746,7 +740,7 @@ VisualEffect:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 780515701}
   m_Enabled: 1
-  m_Asset: {fileID: 8926484042661614526, guid: a8d94c0f18d3db4428b163aa434827d8, type: 3}
+  m_Asset: {fileID: 0}
   m_InitialEventName: OnPlay
   m_InitialEventNameOverriden: 0
   m_StartSeed: 0
@@ -973,21 +967,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be253c4d95bf6ae4a83d26b84cd2401b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _debugStateText: {fileID: 5484497909188995371}
   _ammoCountText: {fileID: 1340939800}
-  _canon: {fileID: 4922958101454955021}
+  _canonPosition: {fileID: 0}
   _muzzleFlash: {fileID: 399988185}
-  _hitscanDamage: 0
-  _recoilTime: 0.4
-  _reloadMaxTime: 1.5
-  _reloadMinTime: 1.3
-  _maxAmmo: 4
-  _maxRange: 50
-  _shootShakeIntensity: 0.2
-  _shootShakeDuration: 0.1
   _mask:
     serializedVersion: 2
     m_Bits: 33280
+  _recoilTime: 0.3
+  _reloadMaxTime: 1
+  _reloadMinTime: 0.85
+  _maxAmmo: 6
+  _shootShakeIntensity: 0.2
+  _shootShakeDuration: 0.1
   _pooler: {fileID: 2200446483770630232}
 --- !u!114 &2590228436923606291
 MonoBehaviour:
@@ -1413,7 +1404,7 @@ VisualEffect:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1524789781}
   m_Enabled: 1
-  m_Asset: {fileID: 8926484042661614526, guid: 35a6289ba20e8f14b8c7a565ded7d3d3, type: 3}
+  m_Asset: {fileID: 0}
   m_InitialEventName: OnPlay
   m_InitialEventNameOverriden: 0
   m_StartSeed: 0
@@ -1783,6 +1774,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1026f1f4e75d0b448bee51c6cdde745e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _land: {fileID: 8300000, guid: 7eeeecc3ec7f93e46835a40f7dbfbf83, type: 3}
   _revolverShot: {fileID: 8300000, guid: 83e36ff29bb150e48803e13bc7c8d3cf, type: 3}
   _aragonShot: {fileID: 8300000, guid: b82ddf839a0ee37478e9be13fa9d0253, type: 3}
   _museShot: {fileID: 8300000, guid: 7a382af6d0305d943b5dc3e221deeb59, type: 3}
@@ -2051,21 +2043,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e31af492d5adca2458e2aa902d3f65b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _debugStateText: {fileID: 5484497909188995371}
   _ammoCountText: {fileID: 1340939800}
-  _canon: {fileID: 4922958101454955021}
+  _canonPosition: {fileID: 0}
   _muzzleFlash: {fileID: 780515704}
-  _hitscanDamage: 90
+  _mask:
+    serializedVersion: 2
+    m_Bits: 33280
   _recoilTime: 0.1
   _reloadMaxTime: 1.5
   _reloadMinTime: 1.3
   _maxAmmo: 12
-  _maxRange: 50
   _shootShakeIntensity: 0.1
   _shootShakeDuration: 0.1
-  _mask:
-    serializedVersion: 2
-    m_Bits: 33280
   _projectile1Pooler: {fileID: 2200446483770630231}
 --- !u!114 &9161445646862943683
 MonoBehaviour:

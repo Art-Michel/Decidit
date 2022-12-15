@@ -60,13 +60,14 @@ public class Hitbox : MonoBehaviour
     protected void Hit(Transform targetCollider)
     {
         //Debug.Log(transform.name + " hit " + target.transform.name);
-        if (targetCollider.CompareTag("WeakHurtbox"))
-            targetCollider.parent.GetComponent<Health>().TakeCriticalDamage(_damage);
-        else
+        if (targetCollider.parent.TryGetComponent<Health>(out Health health))
         {
-            targetCollider.parent.GetComponent<Health>().TakeDamage(_damage);
+            if (targetCollider.CompareTag("WeakHurtbox"))
+                health.TakeCriticalDamage(_damage);
+            else
+                health.TakeDamage(_damage);
+            _blacklist.Add(targetCollider.parent, _delayBetweenHits);
         }
-        _blacklist.Add(targetCollider.parent, _delayBetweenHits);
     }
 
     protected void UpdateBlackList()
@@ -83,7 +84,7 @@ public class Hitbox : MonoBehaviour
         }
     }
 
-    private void ClearBlacklist()
+    protected void ClearBlacklist()
     {
         _blacklist.Clear();
     }

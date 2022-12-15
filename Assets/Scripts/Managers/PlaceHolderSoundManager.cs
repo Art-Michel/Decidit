@@ -8,6 +8,9 @@ using NaughtyAttributes;
 public class PlaceHolderSoundManager : LocalManager<PlaceHolderSoundManager>
 {
     [NonSerialized] public AudioSource AudioSource;
+
+    [SerializeField] AudioClip _land;
+
     [SerializeField] AudioClip _revolverShot;
     [SerializeField] AudioClip _aragonShot;
     [SerializeField] AudioClip _museShot;
@@ -28,6 +31,11 @@ public class PlaceHolderSoundManager : LocalManager<PlaceHolderSoundManager>
     private void PlaySound(AudioClip clip, float volume)
     {
         AudioSource.PlayOneShot(clip, volume);
+    }
+
+    public void PlayLand()
+    {
+        PlaySound(_land, .2f);
     }
 
     public void PlayHurt()

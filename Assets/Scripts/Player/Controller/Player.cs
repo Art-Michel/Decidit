@@ -326,6 +326,8 @@ public class Player : LocalManager<Player>
         _globalMomentum.y = 0;
         _coyoteTime = _coyoteMaxTime;
 
+        PlaceHolderSoundManager.Instance.PlayLand();
+
         //Jump immediately if player is pressing jump
         if (_inputs.Movement.Jump.IsPressed()) PressJump();
     }
