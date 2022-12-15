@@ -1,4 +1,5 @@
 using UnityEngine;
+using State.AICAC;
 
 public class RaycastCrossHair : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class RaycastCrossHair : MonoBehaviour
     [SerializeField] Transform playerT;
     [SerializeField] Camera cam;
     [SerializeField] int maxRangeChanceToActiveDodge;
+
+    GlobalRefAICAC globalRef;
 
     // Start is called before the first frame update
     void Start()
@@ -26,8 +29,10 @@ public class RaycastCrossHair : MonoBehaviour
         {
             if (hit.transform.CompareTag("Ennemi"))
             {
-                if (hit.transform.GetComponent<StateManagerAICAC>() != null)
+                if (hit.transform.GetComponent<GlobalRefAICAC>() != null)
                 {
+                    globalRef = hit.transform.GetComponent<GlobalRefAICAC>();
+
                     if (Random.Range(0, maxRangeChanceToActiveDodge) == 10)
                     {
                         float angle;
@@ -35,15 +40,15 @@ public class RaycastCrossHair : MonoBehaviour
 
                         if (angle > 0)
                         {
-                            hit.transform.GetComponent<StateManagerAICAC>().dodgeParameterAICACSOInstance.targetObjectToDodge = this.transform;
-                            hit.transform.GetComponent<StateManagerAICAC>().dodgeParameterAICACSOInstance.rightDodge = true;
-                            hit.transform.GetComponent<StateManagerAICAC>().SwitchToNewState(2);
+                            globalRef.dodgeAICACSO.targetObjectToDodge = this.transform;
+                            globalRef.dodgeAICACSO.rightDodge = true;
+                            globalRef.ActiveStateDodge();
                         }
                         else
                         {
-                            hit.transform.GetComponent<StateManagerAICAC>().dodgeParameterAICACSOInstance.targetObjectToDodge = this.transform;
-                            hit.transform.GetComponent<StateManagerAICAC>().dodgeParameterAICACSOInstance.leftDodge = true;
-                            hit.transform.GetComponent<StateManagerAICAC>().SwitchToNewState(2);
+                            globalRef.dodgeAICACSO.targetObjectToDodge = this.transform;
+                            globalRef.dodgeAICACSO.leftDodge = true;
+                            globalRef.ActiveStateDodge();
                         }
                     }
                 }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
@@ -59,7 +57,7 @@ public class PlayerController : MonoBehaviour
         Deplacement();
     }
 
-    private void FixedUpdate()
+   /* private void FixedUpdate()
     {
         hit = RaycastAIManager.RaycastAI(spawnRay.position, transform.forward, mask, Color.black, 100f);
 
@@ -91,7 +89,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-    }
+    }*/
 
     void Deplacement()
     {

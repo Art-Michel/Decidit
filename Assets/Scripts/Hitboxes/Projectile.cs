@@ -1,18 +1,10 @@
-using System.Runtime.Serialization.Formatters;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using NaughtyAttributes;
 
 [RequireComponent(typeof(PooledObject))]
 public class Projectile : Hitbox
 {
-    [Header("Projectile values")]
-    [SerializeField] private PooledObject _pooledObject;
-    [SerializeField] private GameObject _mesh;
-    [SerializeField] private TrailRenderer _trailRenderer;
-    [SerializeField] private bool _explodesOnHit;
-    [SerializeField][ShowIf("_explodesOnHit")] private GameObject _explosion;
     [SerializeField] protected float _speed = 100f;
     [SerializeField] private float _lifeSpan = 5f;
     [SerializeField] private float _trailDelay = 0.025f;
@@ -22,7 +14,9 @@ public class Projectile : Hitbox
     protected Vector3 _cameraDirection;
     protected Vector3 _lasterFramePosition;
     protected Vector3 _lastFramePosition;
-    protected Vector3 _spaceTraveledLast2Frames;
+    protected Vector3 _spaceTraveledLastFrame;
+    private PooledObject _pooledObject;
+    private TrailRenderer _trailRenderer;
 
     public virtual void Setup(Vector3 position, Vector3 direction)
     {
@@ -31,11 +25,9 @@ public class Projectile : Hitbox
         _lifeT = _lifeSpan;
         _trailDelayT = _trailDelay; //Delay before spawning the trail
         _trailRenderer.enabled = false;
-        _mesh.SetActive(false);
         _lasterFramePosition = position;
         _lastFramePosition = position;
-        _spaceTraveledLast2Frames = Vector3.zero;
-        this.enabled = true;
+        _spaceTraveledLastFrame = position;
     }
 
     public virtual void Setup(Vector3 position, Vector3 direction, Vector3 cameraDirection)
@@ -47,7 +39,8 @@ public class Projectile : Hitbox
     protected override void Awake()
     {
         base.Awake();
-        _mesh.SetActive(false);
+        _pooledObject = GetComponent<PooledObject>();
+        _trailRenderer = GetComponent<TrailRenderer>();
     }
 
     protected override void Update()
@@ -56,7 +49,7 @@ public class Projectile : Hitbox
         _lastFramePosition = transform.position;
 
         Move();
-        _spaceTraveledLast2Frames = transform.position - _lasterFramePosition;
+        _spaceTraveledLastFrame = transform.position - _lastFramePosition;
 
         CheckForCollision();
 
@@ -82,10 +75,7 @@ public class Projectile : Hitbox
         {
             _trailDelayT -= Time.deltaTime;
             if (_trailDelayT <= 0)
-            {
                 _trailRenderer.enabled = true;
-                _mesh.SetActive(true);
-            }
         }
     }
 
@@ -93,27 +83,21 @@ public class Projectile : Hitbox
     {
         if (_canMultiHit)
         {
-            foreach (RaycastHit hit in Physics.SphereCastAll(_lasterFramePosition, _radius, _spaceTraveledLast2Frames, _spaceTraveledLast2Frames.magnitude, _shouldCollideWith))
+            foreach (RaycastHit hit in Physics.SphereCastAll(_lasterFramePosition, _radius, _spaceTraveledLastFrame, _spaceTraveledLastFrame.magnitude, _shouldCollideWith))
                 if (!AlreadyHit(hit.transform.parent))
                 {
                     Hit(hit.transform);
                     _direction = _cameraDirection;
                 }
         }
-        else if (Physics.SphereCast(_lasterFramePosition, _radius, _spaceTraveledLast2Frames, out RaycastHit hit, _spaceTraveledLast2Frames.magnitude, _shouldCollideWith))
+        else if (Physics.SphereCast(_lasterFramePosition, _radius, _spaceTraveledLastFrame, out RaycastHit hit, _spaceTraveledLastFrame.magnitude, _shouldCollideWith))
         {
             Hit(hit.transform);
-            if (_explodesOnHit)
-            {
-                _explosion.SetActive(true);
-                this.enabled = false;
-            }
-            else
-                Disappear();
+            Disappear();
         }
     }
 
-    public void Disappear()
+    protected void Disappear()
     {
         _trailRenderer.Clear();
         _trailRenderer.enabled = false;

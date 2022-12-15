@@ -11,7 +11,7 @@ public class AragonRevolver : Revolver
     public override void Shoot()
     {
         PooledObject shot = _pooler.Get();
-        shot.GetComponent<Projectile>().Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized, _camera.forward);
+        shot.GetComponent<Projectile>().Setup(_canon.position, (_currentlyAimedAt - _canon.position).normalized, _camera.forward);
 
         Player.Instance.StartShake(_shootShakeIntensity, _shootShakeDuration);
         PlaceHolderSoundManager.Instance.PlayAragonShot();

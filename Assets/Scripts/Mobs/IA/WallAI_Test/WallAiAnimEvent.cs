@@ -1,27 +1,20 @@
 using UnityEngine;
 
-public class WallAiAnimEvent : MonoBehaviour
+namespace State.WallAI
 {
-    [SerializeField] WallAI wallAI;
-
-    ////////////////////////  ANIMATION EVENT \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    void StartAttack()
+    public class WallAiAnimEvent : MonoBehaviour
     {
-        wallAI.StartAttack();
-    }
+        [SerializeField] BaseAttackWallAIState baseAttackWallAIState;
 
-    void EndAttack()
-    {
-        wallAI.EndAttack();
-    }
-
-    /*private void OnTriggerStay(Collider other)
-    {
-        Debug.Log("Va niquer ta mere");
-        if (other.CompareTag("Wall"))
+        ////////////////////////  ANIMATION EVENT \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+        void StartAttack()
         {
-            Debug.Log("Va niquer ta mere");
-            wallAI.orientation = other.transform.localEulerAngles.y - 90;
+            baseAttackWallAIState.StartAttack();
         }
-    }*/
+
+        void EndAttack()
+        {
+            baseAttackWallAIState.EndAttack();
+        }
+    }
 }

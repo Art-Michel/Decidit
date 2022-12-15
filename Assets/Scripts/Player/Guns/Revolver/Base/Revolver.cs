@@ -8,30 +8,33 @@ public class Revolver : MonoBehaviour
 {
     #region References Decleration
     [Header("References")]
-    [SerializeField] private TextMeshProUGUI _ammoCountText;
-    [SerializeField] protected Transform _canonPosition;
+    [SerializeField] TextMeshProUGUI _debugStateText;
+    [SerializeField] TextMeshProUGUI _ammoCountText;
+    [SerializeField] protected Transform _canon;
     [SerializeField] protected VisualEffect _muzzleFlash;
-    private PlayerInputMap _inputs;
-    private RevolverFSM _fsm;
+    PlayerInputMap _inputs;
+    RevolverFSM _fsm;
     protected Transform _camera;
 
     #endregion
 
     #region Stats Decleration
     [Header("Stats")]
-    [SerializeField] protected LayerMask _mask;
-    [SerializeField] private float _recoilTime = .3f;
-    [SerializeField] private float _reloadMaxTime = 1f;
-    [SerializeField] private float _reloadMinTime = 0.9f;
-    [SerializeField] private int _maxAmmo = 6;
+    [Tooltip("No use if not a hitscan weapon")][SerializeField] int _hitscanDamage;
+    [SerializeField] float _recoilTime = .3f;
+    [SerializeField] float _reloadMaxTime = 1f;
+    [SerializeField] float _reloadMinTime = 0.9f;
+    [SerializeField] int _maxAmmo = 6;
+    [SerializeField] float _maxRange = 50f;
     [SerializeField] protected float _shootShakeIntensity;
     [SerializeField] protected float _shootShakeDuration;
+    [SerializeField] LayerMask _mask;
 
     protected Vector3 _currentlyAimedAt;
-    private float _recoilT;
-    private float _reloadT;
-    private int _ammo;
-    private bool _reloadBuffered;
+    float _recoilT;
+    float _reloadT;
+    int _ammo;
+    bool _reloadBuffered;
     #endregion
 
     void Awake()
@@ -54,33 +57,27 @@ public class Revolver : MonoBehaviour
         if (_fsm.currentState != null)
             _fsm.currentState.StateUpdate();
 
-
-
-        //Debugging();
-    }
-
-    //     #region Debugging
-    //     void Debugging()
-    //     {
-    // #if UNITY_EDITOR
-    //         DebugDisplayGunState();
-    // #endif
-    //     }
-
-    //     public void DebugDisplayGunState()
-    //     {
-    //         // if (_debugStateText && _fsm.currentState != null)
-    //         //     _debugStateText.text = ("Revolver state: " + _fsm.currentState.Name);
-    //     }
-    //     #endregion
-
-    #region Aiming
-    public void CheckLookedAt()
-    {
         if (Physics.Raycast(_camera.position, _camera.forward, out RaycastHit hit, 9999999999f, _mask))
             _currentlyAimedAt = hit.point;
         else
             _currentlyAimedAt = _camera.forward * 9999999999f;
+
+        //Debugging
+        Debugging();
+    }
+
+    #region Debugging
+    void Debugging()
+    {
+#if UNITY_EDITOR
+        DebugDisplayGunState();
+#endif
+    }
+
+    public void DebugDisplayGunState()
+    {
+        if (_debugStateText && _fsm.currentState != null)
+            _debugStateText.text = ("Revolver state: " + _fsm.currentState.Name);
     }
     #endregion
 
@@ -103,7 +100,23 @@ public class Revolver : MonoBehaviour
 
     public virtual void Shoot()
     {
+        if (Physics.Raycast(_camera.position, _camera.forward, out RaycastHit hit, _maxRange, _mask))
+        {
+            if (hit.transform.parent.TryGetComponent<Health>(out Health health))
+            {
+                if (hit.transform.CompareTag("WeakHurtbox"))
+                    (health as EnemyHealth).TakeCriticalDamage(_hitscanDamage, hit.point, hit.normal);
+                else
+                    (health as EnemyHealth).TakeDamage(_hitscanDamage, hit.point, hit.normal);
+            }
+        }
 
+        //TODO pool un vfx de ligne
+        //TODO VFX.pos1 = _canon.position
+        //TODO VFX.pos2 = hit.point
+        PlaceHolderSoundManager.Instance.PlayRevolverShot();
+        _muzzleFlash.Play();
+        Player.Instance.StartShake(_shootShakeIntensity, _shootShakeDuration);
     }
 
     public void StartRecoil()
