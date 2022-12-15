@@ -54,8 +54,7 @@ public class Revolver : MonoBehaviour
         if (_fsm.currentState != null)
             _fsm.currentState.StateUpdate();
 
-
-
+        CheckLookedAt();
         //Debugging();
     }
 
@@ -177,7 +176,7 @@ public class Revolver : MonoBehaviour
     #region Enable Disable Inputs
     void OnEnable()
     {
-        Reloaded();
+        if (PlaceHolderSoundManager.Instance != null) Reloaded();
         _inputs.Enable();
     }
 
