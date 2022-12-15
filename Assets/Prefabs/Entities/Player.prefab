@@ -259,7 +259,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ammoCountText: {fileID: 1340939800}
-  _canonPosition: {fileID: 0}
+  _canonPosition: {fileID: 4922958101454955021}
   _muzzleFlash: {fileID: 1524789784}
   _mask:
     serializedVersion: 2
@@ -529,8 +529,8 @@ GameObject:
   - component: {fileID: 525554332}
   - component: {fileID: 525554334}
   - component: {fileID: 525554333}
-  - component: {fileID: 525554335}
   - component: {fileID: 525554336}
+  - component: {fileID: 1979195283}
   m_Layer: 6
   m_Name: Revolver
   m_TagString: Untagged
@@ -603,30 +603,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &525554335
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 525554331}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 021a1deb274caa047acde7eec7d06500, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _ammoCountText: {fileID: 1340939800}
-  _canonPosition: {fileID: 0}
-  _muzzleFlash: {fileID: 444173607}
-  _mask:
-    serializedVersion: 2
-    m_Bits: 33280
-  _recoilTime: 0.4
-  _reloadMaxTime: 1.5
-  _reloadMinTime: 1.3
-  _maxAmmo: 6
-  _shootShakeIntensity: 0.1
-  _shootShakeDuration: 0.1
 --- !u!114 &525554336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -639,6 +615,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5d3ec7f04e351e4d82bcbcd111cdb51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1979195283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 525554331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87d32cecd9a819046a769fdcdc3f658e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _ammoCountText: {fileID: 1340939800}
+  _canonPosition: {fileID: 4922958101454955021}
+  _muzzleFlash: {fileID: 444173607}
+  _mask:
+    serializedVersion: 2
+    m_Bits: 33280
+  _recoilTime: 0.3
+  _reloadMaxTime: 1
+  _reloadMinTime: 0.9
+  _maxAmmo: 6
+  _shootShakeIntensity: 0
+  _shootShakeDuration: 0
+  _vfxPooler: {fileID: 0}
+  _hitscanDamage: 25
+  _hitscanMaxRange: 100
 --- !u!1 &636914228
 GameObject:
   m_ObjectHideFlags: 0
@@ -968,7 +971,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ammoCountText: {fileID: 1340939800}
-  _canonPosition: {fileID: 0}
+  _canonPosition: {fileID: 4922958101454955021}
   _muzzleFlash: {fileID: 399988185}
   _mask:
     serializedVersion: 2
@@ -2044,7 +2047,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ammoCountText: {fileID: 1340939800}
-  _canonPosition: {fileID: 0}
+  _canonPosition: {fileID: 4922958101454955021}
   _muzzleFlash: {fileID: 780515704}
   _mask:
     serializedVersion: 2
