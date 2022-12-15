@@ -24,7 +24,6 @@ public class FallingProjectile : Projectile
         _currentSpeed = _speed;
     }
 
-
     protected override void Move()
     {
         _currentlyAppliedGravity -= _gravity * _drag * Time.deltaTime;

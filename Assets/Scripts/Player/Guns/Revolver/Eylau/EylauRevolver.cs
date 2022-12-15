@@ -11,7 +11,7 @@ public class EylauRevolver : Revolver
     public override void Shoot()
     {
         PooledObject shot = _projectile1Pooler.Get();
-        shot.GetComponent<Projectile>().Setup(_canon.position, (_currentlyAimedAt - _canon.position).normalized);
+        shot.GetComponent<Projectile>().Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized);
 
         Player.Instance.StartShake(_shootShakeIntensity, _shootShakeDuration);
         PlaceHolderSoundManager.Instance.PlayEylauShot();
