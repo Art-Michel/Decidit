@@ -10,8 +10,6 @@ public class RaycastCrossHair : MonoBehaviour
     [SerializeField] Camera cam;
     [SerializeField] int maxRangeChanceToActiveDodge;
 
-    GlobalRefAICAC globalRef;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -31,7 +29,7 @@ public class RaycastCrossHair : MonoBehaviour
             {
                 if (hit.transform.GetComponent<GlobalRefAICAC>() != null)
                 {
-                    globalRef = hit.transform.GetComponent<GlobalRefAICAC>();
+                    GlobalRefAICAC globalRef = hit.transform.GetComponent<GlobalRefAICAC>();
 
                     if (Random.Range(0, maxRangeChanceToActiveDodge) == 10)
                     {

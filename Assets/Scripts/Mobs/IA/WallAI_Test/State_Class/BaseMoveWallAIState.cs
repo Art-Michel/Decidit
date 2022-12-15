@@ -36,6 +36,10 @@ namespace State.WallAI
         public void MoveAI()
         {
             Debug.Log(globalRef.baseMoveWallAISO);
+            Debug.Log(globalRef);
+            Debug.Log(globalRef.agent);
+            Debug.Log(globalRef.agent.remainingDistance);
+
             if (!globalRef.agent.isOnOffMeshLink)
             {
                 WallCrackEffect();

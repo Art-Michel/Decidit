@@ -21,14 +21,15 @@ namespace State.WallAI
         void Start()
         {
             baseMoveWallAISO = Instantiate(baseMoveWallAISO);
-            baseMoveWallAISO.lastWallCrack = Instantiate(baseMoveWallAISO.wallCrackPrefab, transform.position, Quaternion.Euler(0, orientation, 0));
-
             baseAttackWallAISO = Instantiate(baseAttackWallAISO);
+            baseMoveWallAISO.lastWallCrack = Instantiate(baseMoveWallAISO.wallCrackPrefab, transform.position, Quaternion.Euler(0, orientation, 0));
 
             for (int i = 0; i < areaWallAI.childCount; i++)
             {
                 walls[i] = areaWallAI.GetChild(i).GetComponent<BoxCollider>();
             }
+
+            Debug.Log(agent);
         }
 
         private void OnTriggerStay(Collider other)

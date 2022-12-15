@@ -24,7 +24,7 @@ public class BulletAI : MonoBehaviour
     {
         if (collider.CompareTag("Player"))
         {
-            PlayerController.ApplyDamage(10);
+            //PlayerController.ApplyDamage(10);
         }
     }
 }
