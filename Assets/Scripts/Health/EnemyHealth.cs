@@ -93,9 +93,9 @@ public class EnemyHealth : Health
         splash.forward = forward;
     }
 
+    //used to make healthbar face the camera
     void LookAtCamera()
     {
-        //self explanatory
         _canvas.transform.forward = _camForward;
     }
 

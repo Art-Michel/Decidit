@@ -21,8 +21,8 @@ public class Revolver : MonoBehaviour
     [Header("Stats")]
     [SerializeField] protected LayerMask _mask;
     [SerializeField] private float _recoilTime = .3f;
-    [SerializeField] private float _reloadMaxTime = 1f;
-    [SerializeField] private float _reloadMinTime = 0.9f;
+    [SerializeField][Tooltip("total reload animation duration")] private float _reloadMaxTime = 1f;
+    [SerializeField][Tooltip("time before which you can cancel reloading")] private float _reloadMinTime = 0.9f;
     [SerializeField] private int _maxAmmo = 6;
     [SerializeField] protected float _shootShakeIntensity;
     [SerializeField] protected float _shootShakeDuration;
@@ -74,6 +74,7 @@ public class Revolver : MonoBehaviour
     //     #endregion
 
     #region Aiming
+    //raycast forward to aim gun in that direction
     public void CheckLookedAt()
     {
         if (Physics.Raycast(_camera.position, _camera.forward, out RaycastHit hit, 9999999999f, _mask))
@@ -130,6 +131,7 @@ public class Revolver : MonoBehaviour
         DisplayAmmo();
     }
 
+    //register input then enter reloading state
     private void PressReload()
     {
         if (_fsm.currentState.Name == RevolverStateList.IDLE && _ammo < _maxAmmo)
@@ -138,12 +140,14 @@ public class Revolver : MonoBehaviour
             _reloadBuffered = true;
     }
 
+    // Initiate reloading
     public void StartReload()
     {
         _reloadT = _reloadMaxTime;
         PlaceHolderSoundManager.Instance.PlayReload();
     }
 
+    // update reloading state
     public void Reloading()
     {
         _reloadT -= Time.deltaTime;
@@ -157,6 +161,7 @@ public class Revolver : MonoBehaviour
         }
     }
 
+    //Actually refill ammo
     private void Reloaded()
     {
         _ammo = _maxAmmo;
