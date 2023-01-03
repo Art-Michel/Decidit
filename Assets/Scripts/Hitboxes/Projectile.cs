@@ -113,6 +113,11 @@ public class Projectile : Hitbox
         }
     }
 
+    protected virtual void Collide()
+    {
+
+    }
+
     public void Disappear()
     {
         _trailRenderer.Clear();
