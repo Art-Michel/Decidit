@@ -106,6 +106,7 @@ public class Projectile : Hitbox
             if (_explodesOnHit)
             {
                 _explosion.SetActive(true);
+                _mesh.SetActive(false);
                 this.enabled = false;
             }
             else
