@@ -991,6 +991,9 @@ GameObject:
   - component: {fileID: 1127582834}
   - component: {fileID: 686522204}
   - component: {fileID: 686522203}
+  - component: {fileID: 591862396}
+  - component: {fileID: 591862405}
+  - component: {fileID: 591862406}
   m_Layer: 7
   m_Name: AICAC
   m_TagString: Ennemi
@@ -1049,7 +1052,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4f464c633df81524a9235c1407baf01e, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1144,7 +1147,7 @@ MonoBehaviour:
   _probationMaxStartup: 1
   _probationSpeed: 15
   _canvas: {fileID: 1267908144}
-  _material: {fileID: 0}
+  _material: {fileID: 2100000, guid: 1fa0c89a0057b564d95c65f7c6811243, type: 2}
   _deathVfx: {fileID: 0}
   _uiScale: 0.1
   _lookStrictness: 0.08
@@ -1164,8 +1167,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 696edb1499390144ba6e6e6526406c5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MeshGameObject: {fileID: 0}
-  Color: {r: 0, g: 0, b: 0, a: 1}
+  MeshGameObject: {fileID: 3888318928632032895}
+  Color: {r: 0.03773582, g: 0.03773582, b: 0.03773582, a: 1}
   ColorPreAtatck: {r: 0.6132076, g: 0, b: 0, a: 1}
   Material: {fileID: 0}
   Texture: {fileID: 0}
@@ -1189,7 +1192,7 @@ MonoBehaviour:
   aICACVarianteState: {fileID: 0}
   material_Instances: {fileID: 0}
   distPlayer: 0
-  stateControllerAICAC: {fileID: 0}
+  stateControllerAICAC: {fileID: 686522203}
   offsetDestination: 0
   spawnRayDodge: {fileID: 3888318928596240787}
   hitBox: {fileID: 279298340}
@@ -1220,6 +1223,46 @@ MonoBehaviour:
   - {fileID: 69837512}
   - {fileID: 1622473883}
   - {fileID: 1130150010}
+--- !u!114 &591862396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3888318928632032895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04da4fdd4981b364c9873d5f80611073, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  globalRef: {fileID: 686522204}
+--- !u!114 &591862405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3888318928632032895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6710f03ff1c41064088ccced29e28e05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &591862406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3888318928632032895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 8252760470148114170, guid: 761a0a66d6e3a524fbb1ad7370c627ba, type: 3}
+  _initialCount: 4
+  _shouldBeParent: 0
 --- !u!1 &3888318928693326222
 GameObject:
   m_ObjectHideFlags: 0

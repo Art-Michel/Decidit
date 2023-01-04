@@ -254,7 +254,6 @@ namespace State.AICAC
                 }
 
                 aiCACSurroundSelectedList[i].ActiveState(StateControllerAICAC.AIState.SurroundPlayer);
-                //aiCACSurroundSelectedList[i].SwitchToNewState(5);
             }
         }
         void SelectedFirstSurroundAI(int shortestDist)
