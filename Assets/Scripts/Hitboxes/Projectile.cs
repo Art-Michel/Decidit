@@ -12,9 +12,11 @@ public class Projectile : Hitbox
     [SerializeField] private GameObject _mesh;
     [SerializeField] private TrailRenderer _trailRenderer;
     [SerializeField] private bool _bounces;
+    [SerializeField][ShowIf("_bounces")][Range(0f, 1f)] protected float _bounciness;
     [SerializeField] private bool _explodesOnHit;
     [SerializeField][ShowIf("_explodesOnHit")] private GameObject _explosion;
     [SerializeField] protected float _speed = 100f;
+    [SerializeField] protected float _currentSpeed;
     [SerializeField] private float _lifeSpan = 5f;
     [SerializeField] private float _trailDelay = 0.025f;
     private float _lifeT;
@@ -33,9 +35,10 @@ public class Projectile : Hitbox
         _trailDelayT = _trailDelay; //Delay before spawning the trail
         _trailRenderer.enabled = false;
         _mesh.SetActive(false);
-        _lasterFramePosition = position;
-        _lastFramePosition = position;
+        _lasterFramePosition = position - _direction * _radius;
+        _lastFramePosition = position - _direction * _radius;
         _spaceTraveledLast2Frames = Vector3.zero;
+        _currentSpeed = _speed;
         this.enabled = true;
     }
 
@@ -43,6 +46,7 @@ public class Projectile : Hitbox
     {
         Setup(position, direction);
         _cameraDirection = cameraDirection;
+        _currentSpeed = _speed;
     }
 
     protected override void Awake()
@@ -69,7 +73,7 @@ public class Projectile : Hitbox
 
     protected virtual void Move()
     {
-        transform.position += _direction * _speed * Time.deltaTime;
+        transform.position += _direction * _currentSpeed * Time.deltaTime;
     }
 
     private void UpdateLifeSpan()
@@ -77,13 +81,17 @@ public class Projectile : Hitbox
         _lifeT -= Time.deltaTime;
         if (_lifeT <= 0)
         {
-            Disappear();
+            if (_explodesOnHit)
+                Explode();
+            else
+                Disappear();
         }
         if (_trailDelayT > 0)
         {
             _trailDelayT -= Time.deltaTime;
             if (_trailDelayT <= 0)
             {
+                // spawn trail after a bit
                 _trailRenderer.enabled = true;
                 _mesh.SetActive(true);
             }
@@ -95,15 +103,16 @@ public class Projectile : Hitbox
         //if the bullet can multihit, it is piercing, no questions, just hit what you can
         if (_canMultiHit)
         {
-            foreach (RaycastHit hit in Physics.SphereCastAll(_lasterFramePosition, _radius, _spaceTraveledLast2Frames, _spaceTraveledLast2Frames.magnitude, _shouldCollideWith))
+            foreach (RaycastHit hit in Physics.SphereCastAll(_lasterFramePosition, _radius, _spaceTraveledLast2Frames.normalized, _spaceTraveledLast2Frames.magnitude, _shouldCollideWith))
                 if (!AlreadyHit(hit.transform.parent))
                 {
                     Hit(hit.transform);
                     _direction = _cameraDirection;
                 }
         }
+
         //if the bullet should disappear on hit, we gotta first check whether it is a bouncing ball
-        else if (Physics.SphereCast(_lasterFramePosition, _radius, _spaceTraveledLast2Frames, out RaycastHit hit, _spaceTraveledLast2Frames.magnitude, _shouldCollideWith))
+        else if (Physics.SphereCast(_lasterFramePosition, _radius, _spaceTraveledLast2Frames.normalized, out RaycastHit hit, _spaceTraveledLast2Frames.magnitude, _shouldCollideWith))
         {
             if (_bounces)
             {
@@ -113,16 +122,12 @@ public class Projectile : Hitbox
                     Hit(hit.transform);
                     //+ explostion if projectile should spawn an explosion.
                     if (_explodesOnHit)
-                    {
-                        _explosion.SetActive(true);
-                        _mesh.SetActive(false);
-                        this.enabled = false;
-                    }
+                        Explode();
+                    else
+                        Disappear();
                 }
                 else
-                {
-                    //bounce formula;
-                }
+                    Bounce(hit);
             }
 
             //if does not bounce nor multihit, just hit and disappear
@@ -131,14 +136,28 @@ public class Projectile : Hitbox
                 Hit(hit.transform);
                 //+ explostion if projectile should spawn an explosion.
                 if (_explodesOnHit)
-                {
-                    _explosion.SetActive(true);
-                    _mesh.SetActive(false);
-                    this.enabled = false;
-                }
-                Disappear();
+                    Explode();
+                else
+                    Disappear();
             }
         }
+    }
+
+    //bounces
+    protected virtual void Bounce(RaycastHit hit)
+    {
+        transform.position = hit.point + hit.normal * (_radius + 0.1f);
+        _currentSpeed *= _bounciness;
+        _direction = Vector3.Reflect(_direction, hit.normal).normalized;
+        _lasterFramePosition = hit.point + hit.normal * (_radius + 0.1f);
+        _lastFramePosition = hit.point + hit.normal * (_radius + 0.1f);
+    }
+
+    private void Explode()
+    {
+        _explosion.SetActive(true);
+        _mesh.SetActive(false);
+        this.enabled = false;
     }
 
     public void Disappear()
