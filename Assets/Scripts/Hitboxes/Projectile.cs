@@ -11,6 +11,7 @@ public class Projectile : Hitbox
     [SerializeField] private PooledObject _pooledObject;
     [SerializeField] private GameObject _mesh;
     [SerializeField] private TrailRenderer _trailRenderer;
+    [SerializeField] private bool _bounces;
     [SerializeField] private bool _explodesOnHit;
     [SerializeField][ShowIf("_explodesOnHit")] private GameObject _explosion;
     [SerializeField] protected float _speed = 100f;
@@ -91,6 +92,7 @@ public class Projectile : Hitbox
 
     protected override void CheckForCollision()
     {
+        //if the bullet can multihit, it is piercing, no questions, just hit what you can
         if (_canMultiHit)
         {
             foreach (RaycastHit hit in Physics.SphereCastAll(_lasterFramePosition, _radius, _spaceTraveledLast2Frames, _spaceTraveledLast2Frames.magnitude, _shouldCollideWith))
@@ -100,23 +102,43 @@ public class Projectile : Hitbox
                     _direction = _cameraDirection;
                 }
         }
+        //if the bullet should disappear on hit, we gotta first check whether it is a bouncing ball
         else if (Physics.SphereCast(_lasterFramePosition, _radius, _spaceTraveledLast2Frames, out RaycastHit hit, _spaceTraveledLast2Frames.magnitude, _shouldCollideWith))
         {
-            Hit(hit.transform);
-            if (_explodesOnHit)
+            if (_bounces)
             {
-                _explosion.SetActive(true);
-                _mesh.SetActive(false);
-                this.enabled = false;
+                //will not bounce if hit a direct enemy
+                if (hit.transform.gameObject.layer == LayerMask.NameToLayer("EnemyHurtbox"))
+                {
+                    Hit(hit.transform);
+                    //+ explostion if projectile should spawn an explosion.
+                    if (_explodesOnHit)
+                    {
+                        _explosion.SetActive(true);
+                        _mesh.SetActive(false);
+                        this.enabled = false;
+                    }
+                }
+                else
+                {
+                    //bounce formula;
+                }
             }
+
+            //if does not bounce nor multihit, just hit and disappear
             else
+            {
+                Hit(hit.transform);
+                //+ explostion if projectile should spawn an explosion.
+                if (_explodesOnHit)
+                {
+                    _explosion.SetActive(true);
+                    _mesh.SetActive(false);
+                    this.enabled = false;
+                }
                 Disappear();
+            }
         }
-    }
-
-    protected virtual void Collide()
-    {
-
     }
 
     public void Disappear()
