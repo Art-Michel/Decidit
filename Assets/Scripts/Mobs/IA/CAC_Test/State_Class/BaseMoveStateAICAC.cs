@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace State.AICAC
 {
@@ -29,7 +30,9 @@ namespace State.AICAC
 
             Vector3 destination = globalRef.playerTransform.position + left * globalRef.offsetDestination;
 
-            globalRef.agent.SetDestination(destination);
+            globalRef.debugDestination = CheckNavMeshPoint(destination);
+
+            globalRef.agent.SetDestination(CheckNavMeshPoint(destination));
 
             if (globalRef.distPlayer < globalRef.baseMoveAICACSO.attackRange)
             {
@@ -38,6 +41,24 @@ namespace State.AICAC
             else
             {
                 SpeedAdjusting();
+            }
+        }
+        Vector3 CheckNavMeshPoint(Vector3 _destination)
+        {
+            NavMeshHit closestHit;
+            if (NavMesh.SamplePosition(_destination, out closestHit, 1, 1))
+            {
+                _destination = closestHit.position;
+                Debug.Log(transform.parent.transform.parent.gameObject.name + " point is on navmesh : " + _destination);
+
+                return _destination;
+            }
+            else
+            {
+                _destination = globalRef.playerTransform.position;
+                Debug.Log(transform.parent.transform.parent.gameObject.name + " point isnt on navmesh : " + _destination);
+
+                return _destination;
             }
         }
         void SpeedAdjusting()
@@ -57,6 +78,15 @@ namespace State.AICAC
                 {
                     if (globalRef.agent.speed > globalRef.baseMoveAICACSO.baseSpeed)
                         globalRef.agent.speed -= globalRef.baseMoveAICACSO.smoothSpeedbase * Time.deltaTime;
+                    else
+                        globalRef.agent.speed = globalRef.baseMoveAICACSO.baseSpeed;
+                }
+                else
+                {
+                    if (globalRef.agent.speed < globalRef.baseMoveAICACSO.baseSpeed)
+                    {
+                        globalRef.agent.speed += globalRef.baseMoveAICACSO.smoothSpeedbase * Time.deltaTime;
+                    }
                     else
                         globalRef.agent.speed = globalRef.baseMoveAICACSO.baseSpeed;
                 }

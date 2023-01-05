@@ -19,6 +19,7 @@ namespace State.AICAC
 
         [Header("Ref Move State")]
         public float offsetDestination;
+        public Vector3 debugDestination;
 
         [Header("Ref Dodge State")]
         public Transform spawnRayDodge;
