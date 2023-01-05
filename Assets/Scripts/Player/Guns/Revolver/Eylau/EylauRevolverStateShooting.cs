@@ -20,6 +20,7 @@ public class EylauRevolverStateShooting : RevolverState
     public override void StateUpdate()
     {
         _revolver.Recoiling();
+        _revolver.UpdateChargeLevel();
     }
 
     public override void Exit()

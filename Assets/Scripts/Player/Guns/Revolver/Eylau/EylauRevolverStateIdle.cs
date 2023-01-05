@@ -16,7 +16,7 @@ public class EylauRevolverStateIdle : RevolverState
 
     public override void StateUpdate()
     {
-
+        _revolver.UpdateChargeLevel();
     }
 
     public override void Exit()

@@ -14,7 +14,19 @@ public class PlaceHolderSoundManager : LocalManager<PlaceHolderSoundManager>
     [SerializeField] AudioClip _revolverShot;
     [SerializeField] AudioClip _aragonShot;
     [SerializeField] AudioClip _museShot;
-    [SerializeField] AudioClip _eylauShot;
+
+    [SerializeField] AudioClip _eylauShot0;
+    [SerializeField] AudioClip _eylauShot1;
+    [SerializeField] AudioClip _eylauShot2;
+    [SerializeField] AudioClip _eylauShot3;
+    [SerializeField] AudioClip _eylauShot4;
+    [SerializeField] AudioClip _eylauShot5;
+    [SerializeField] AudioClip _eylauCharge0;
+    [SerializeField] AudioClip _eylauCharge1;
+    [SerializeField] AudioClip _eylauCharge2;
+    [SerializeField] AudioClip _eylauCharge3;
+    [SerializeField] AudioClip _eylauCharge4;
+    [SerializeField] AudioClip _eylauCharge5;
 
     [SerializeField] AudioClip _playReload;
     [SerializeField] AudioClip _playReloaded;
@@ -33,6 +45,31 @@ public class PlaceHolderSoundManager : LocalManager<PlaceHolderSoundManager>
         AudioSource.PlayOneShot(clip, volume);
     }
 
+    public void PlayEylauCharge(int currentChargeStep)
+    {
+        switch (currentChargeStep)
+        {
+            case 0:
+                PlaySound(_eylauCharge0, 1f);
+                break;
+            case 1:
+                PlaySound(_eylauCharge1, 1f);
+                break;
+            case 2:
+                PlaySound(_eylauCharge2, 1f);
+                break;
+            case 3:
+                PlaySound(_eylauCharge3, 1f);
+                break;
+            case 4:
+                PlaySound(_eylauCharge4, 1f);
+                break;
+            case 5:
+                PlaySound(_eylauCharge5, 1f);
+                break;
+        }
+    }
+
     public void PlayLand()
     {
         PlaySound(_land, .2f);
@@ -47,7 +84,6 @@ public class PlaceHolderSoundManager : LocalManager<PlaceHolderSoundManager>
     {
         PlaySound(_regen, 1f);
     }
-
 
     public void PlayRevolverShot()
     {
@@ -74,9 +110,29 @@ public class PlaceHolderSoundManager : LocalManager<PlaceHolderSoundManager>
         PlaySound(_museShot, 1f);
     }
 
-    public void PlayEylauShot()
+    public void PlayEylauShot(int i)
     {
-        PlaySound(_eylauShot, 1f);
+        switch (i)
+        {
+            case 0:
+                PlaySound(_eylauShot0, 1f);
+                break;
+            case 1:
+                PlaySound(_eylauShot1, 1f);
+                break;
+            case 2:
+                PlaySound(_eylauShot2, 1f);
+                break;
+            case 3:
+                PlaySound(_eylauShot3, 1f);
+                break;
+            case 4:
+                PlaySound(_eylauShot5, 1f);
+                break;
+            case 5:
+                PlaySound(_eylauShot5, 1f);
+                break;
+        }
     }
 
     public void PlayWeaponEquip()

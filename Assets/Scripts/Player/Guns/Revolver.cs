@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using NaughtyAttributes;
 using UnityEngine.VFX;
+using System;
 
 public class Revolver : MonoBehaviour
 {
@@ -10,7 +11,9 @@ public class Revolver : MonoBehaviour
     [Header("References")]
     [SerializeField] private TextMeshProUGUI _ammoCountText;
     [SerializeField] protected Transform _canonPosition;
+    [SerializeField] protected GameObject _ui;
     [SerializeField] protected VisualEffect _muzzleFlash;
+
     private PlayerInputMap _inputs;
     private RevolverFSM _fsm;
     protected Transform _camera;
@@ -20,7 +23,7 @@ public class Revolver : MonoBehaviour
     #region Stats Decleration
     [Header("Stats")]
     [SerializeField] protected LayerMask _mask;
-    [SerializeField] private float _recoilTime = .3f;
+    [SerializeField] protected float _recoilTime = .3f;
     [SerializeField][Tooltip("total reload animation duration")] private float _reloadMaxTime = 1f;
     [SerializeField][Tooltip("time before which you can cancel reloading")] private float _reloadMinTime = 0.9f;
     [SerializeField] private int _maxAmmo = 6;
@@ -58,7 +61,7 @@ public class Revolver : MonoBehaviour
         //Debugging();
     }
 
-    //     #region Debugging
+    #region Debugging
     //     void Debugging()
     //     {
     // #if UNITY_EDITOR
@@ -71,7 +74,7 @@ public class Revolver : MonoBehaviour
     //         // if (_debugStateText && _fsm.currentState != null)
     //         //     _debugStateText.text = ("Revolver state: " + _fsm.currentState.Name);
     //     }
-    //     #endregion
+    #endregion
 
     #region Aiming
     //raycast forward to aim gun in that direction
@@ -87,8 +90,11 @@ public class Revolver : MonoBehaviour
     #region Shooting
     private void PressShoot()
     {
-        if ((_fsm.currentState.Name == RevolverStateList.IDLE || _fsm.currentState.Name == RevolverStateList.RELOADING) && _ammo > 0)
-            _fsm.ChangeState(RevolverStateList.SHOOTING);
+        if (_fsm)
+        {
+            if ((_fsm.currentState.Name == RevolverStateList.IDLE || _fsm.currentState.Name == RevolverStateList.RELOADING) && _ammo > 0)
+                _fsm.ChangeState(RevolverStateList.SHOOTING);
+        }
     }
 
     public void CheckBuffer()
@@ -121,6 +127,15 @@ public class Revolver : MonoBehaviour
             else
                 _fsm.ChangeState(RevolverStateList.RELOADING);
         }
+    }
+
+    public virtual void UpdateChargeLevel()
+    {
+        Debug.Log("mario");
+    }
+    public virtual void ResetChargeLevel()
+    {
+
     }
     #endregion
 
@@ -178,16 +193,19 @@ public class Revolver : MonoBehaviour
     }
     #endregion
 
-    #region Enable Disable Inputs
-    void OnEnable()
+    #region Enable Disable
+    protected virtual void OnEnable()
     {
-        if (PlaceHolderSoundManager.Instance != null) Reloaded();
+        if (PlaceHolderSoundManager.Instance != null)
+            Reloaded();
         _inputs.Enable();
+        _ui.SetActive(true);
     }
 
-    void OnDisable()
+    protected virtual void OnDisable()
     {
         _inputs.Disable();
+        _ui.SetActive(false);
     }
     #endregion
 }

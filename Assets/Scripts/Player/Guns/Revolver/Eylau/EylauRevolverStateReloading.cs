@@ -13,11 +13,13 @@ public class EylauRevolverStateReloading : RevolverState
     {
         //animation
         _revolver.StartReload();
+        _revolver.ResetChargeLevel();
     }
 
     public override void StateUpdate()
     {
         _revolver.Reloading();
+        Debug.Log("yahoo!");
     }
 
     public override void Exit()

@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class RevolverFSM : MonoBehaviour
 {
-    private Dictionary<string, RevolverState> states;
-    Revolver _revolver;
+    protected Dictionary<string, RevolverState> _states;
+    protected Revolver _revolver;
 
     public RevolverState currentState { get; private set; }
     public RevolverState previousState { get; private set; }
 
-    void Awake()
+    protected virtual void Awake()
     {
-        _revolver = GetComponent<Revolver>();
-        states = new Dictionary<string, RevolverState>();
+        _revolver = GetComponent<BaseRevolver>();
+        _states = new Dictionary<string, RevolverState>();
     }
 
-    void Start()
+    protected virtual void Start()
     {
         AddState(new RevolverStateIdle());
         AddState(new RevolverStateReloading());
@@ -29,13 +29,13 @@ public class RevolverFSM : MonoBehaviour
     {
         state._fsm = this;
         state._revolver = this._revolver;
-        states[state.Name] = state;
+        _states[state.Name] = state;
     }
 
     public void ChangeState(string nextStateName)
     {
         RevolverState nextState = null;
-        states.TryGetValue(nextStateName, out nextState);
+        _states.TryGetValue(nextStateName, out nextState);
 
         if (nextState == null)
         {
