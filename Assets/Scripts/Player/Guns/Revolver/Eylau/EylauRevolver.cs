@@ -14,18 +14,18 @@ public class EylauRevolver : Revolver
     [Foldout("References")]
     [SerializeField] private Image _chargeUi;
 
-    [Foldout("Recoils")]
-    [SerializeField] private float _recoilCharge0 = .9f;
-    [Foldout("Recoils")]
-    [SerializeField] private float _recoilCharge1 = 1f;
-    [Foldout("Recoils")]
-    [SerializeField] private float _recoilCharge2 = 1.1f;
-    [Foldout("Recoils")]
-    [SerializeField] private float _recoilCharge3 = 1.2f;
-    [Foldout("Recoils")]
-    [SerializeField] private float _recoilCharge4 = 1.3f;
-    [Foldout("Recoils")]
-    [SerializeField] private float _recoilCharge5 = 1.6f;
+    // [Foldout("Recoils")]
+    // [SerializeField] private float _recoilCharge0 = .9f;
+    // [Foldout("Recoils")]
+    // [SerializeField] private float _recoilCharge1 = 1f;
+    // [Foldout("Recoils")]
+    // [SerializeField] private float _recoilCharge2 = 1.1f;
+    // [Foldout("Recoils")]
+    // [SerializeField] private float _recoilCharge3 = 1.2f;
+    // [Foldout("Recoils")]
+    // [SerializeField] private float _recoilCharge4 = 1.3f;
+    // [Foldout("Recoils")]
+    // [SerializeField] private float _recoilCharge5 = 1.6f;
 
     [Foldout("Stats")]
     [SerializeField] private float _chargeSpeed = 2f;
@@ -38,7 +38,6 @@ public class EylauRevolver : Revolver
         _currentCharge = Mathf.Clamp(_currentCharge + Time.deltaTime * _chargeSpeed, 0, _maxCharge);
         _chargeUi.fillAmount = Mathf.Lerp(0, 1, Mathf.InverseLerp(0, _maxCharge, _currentCharge));
 
-        Debug.Log(_currentCharge);
         if (_currentCharge >= _currentChargeStep + 1)
         {
             _currentChargeStep += 1;

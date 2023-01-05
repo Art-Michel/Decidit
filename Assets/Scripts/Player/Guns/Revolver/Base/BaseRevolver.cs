@@ -30,4 +30,9 @@ public class BaseRevolver : Revolver
         Player.Instance.StartShake(_shootShakeIntensity, _shootShakeDuration);
         _muzzleFlash.Play();
     }
+
+    public void SpawnTrail()
+    {
+
+    }
 }
