@@ -15,17 +15,20 @@ public class BaseRevolver : Revolver
 
     public override void Shoot()
     {
+        var vfx = _vfxPooler.Get().GetComponent<TwoPosTrail>();
         if (Physics.Raycast(_camera.position, _camera.forward, out RaycastHit hit, _hitscanMaxRange, _mask) && hit.transform.parent.TryGetComponent<Health>(out Health health))
         {
+            vfx.SetPos(_canonPosition.position, hit.point);
             if (hit.transform.CompareTag("WeakHurtbox"))
                 (health as EnemyHealth).TakeCriticalDamage(_hitscanDamage, hit.point, hit.normal);
             else
                 (health as EnemyHealth).TakeDamage(_hitscanDamage, hit.point, hit.normal);
         }
+        else
+            vfx.SetPos(_canonPosition.position, _canonPosition.position + _camera.forward * _hitscanMaxRange);
 
-        //TODO pool un vfx de ligne
-        //TODO VFX.pos1 = _canon.position
-        //TODO VFX.pos2 = hit.point
+        vfx.Play();
+
         PlaceHolderSoundManager.Instance.PlayRevolverShot();
         Player.Instance.StartShake(_shootShakeIntensity, _shootShakeDuration);
         _muzzleFlash.Play();
