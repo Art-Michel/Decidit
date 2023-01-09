@@ -20,6 +20,7 @@ namespace State.AICAC
         [Header("Ref Move State")]
         public float offsetDestination;
         public Vector3 debugDestination;
+        public AgentLinkMover agentLinkMover;
 
         [Header("Ref Dodge State")]
         public Transform spawnRayDodge;
@@ -48,7 +49,7 @@ namespace State.AICAC
             aICACVarianteState = transform.parent.GetComponent<AICACVarianteState>();
             enemyHealth = GetComponent<EnemyHealth>();
             material_Instances = GetComponent<Material_Instances>();
-
+            agentLinkMover = GetComponent<AgentLinkMover>();
 
             baseMoveAICACSO = Instantiate(baseMoveAICACSO);
             baseAttackAICACSO = Instantiate(baseAttackAICACSO);

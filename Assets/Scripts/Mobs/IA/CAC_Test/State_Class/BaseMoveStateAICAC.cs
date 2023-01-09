@@ -6,6 +6,9 @@ namespace State.AICAC
     public class BaseMoveStateAICAC : _StateAICAC
     {
         [SerializeField] GlobalRefAICAC globalRef;
+        NavMeshLink navLink;
+
+        float maxDurationNavLink;
 
         public override void InitState(StateControllerAICAC stateController)
         {
@@ -20,6 +23,37 @@ namespace State.AICAC
             {
                 SmoothLookAt();
                 BaseMovement();
+            }
+
+          /*  Debug.Log(globalRef.agentLinkMover.m_Curve.keys.Length);
+
+            if(globalRef.agentLinkMover.m_Curve.length < 2f && globalRef.agentLinkMover.m_Curve.length > 0.1f)
+            {
+                globalRef.agent.ActivateCurrentOffMeshLink(false);
+                Debug.Log("Disable");
+            }
+            else
+            {
+                globalRef.agent.ActivateCurrentOffMeshLink(true);
+                Debug.Log("Active");
+            }*/
+
+
+            if (globalRef.agent.isOnOffMeshLink)
+            {
+                if (maxDurationNavLink >= 0.1f)
+                {
+                    globalRef.agent.ActivateCurrentOffMeshLink(false);
+                    maxDurationNavLink -= Time.deltaTime;
+                }
+                else
+                {
+                    globalRef.agent.ActivateCurrentOffMeshLink(true);
+                }
+            }
+            else
+            {
+                maxDurationNavLink = globalRef.agentLinkMover._duration;
             }
         }
 
@@ -49,15 +83,11 @@ namespace State.AICAC
             if (NavMesh.SamplePosition(_destination, out closestHit, 1, 1))
             {
                 _destination = closestHit.position;
-                Debug.Log(transform.parent.transform.parent.gameObject.name + " point is on navmesh : " + _destination);
-
                 return _destination;
             }
             else
             {
                 _destination = globalRef.playerTransform.position;
-                Debug.Log(transform.parent.transform.parent.gameObject.name + " point isnt on navmesh : " + _destination);
-
                 return _destination;
             }
         }
