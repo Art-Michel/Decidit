@@ -6,9 +6,10 @@ namespace State.AICAC
     public class BaseMoveStateAICAC : _StateAICAC
     {
         [SerializeField] GlobalRefAICAC globalRef;
-        NavMeshLink navLink;
 
-        float maxDurationNavLink;
+        [SerializeField] float maxDurationNavLink;
+        [SerializeField] bool linkIsActive;
+        NavMeshLink navLink;
 
         public override void InitState(StateControllerAICAC stateController)
         {
@@ -19,40 +20,40 @@ namespace State.AICAC
 
         private void Update()
         {
-            if(state == StateControllerAICAC.AIState.BaseMove)
+            if (state == StateControllerAICAC.AIState.BaseMove)
             {
                 SmoothLookAt();
                 BaseMovement();
             }
 
-          /*  Debug.Log(globalRef.agentLinkMover.m_Curve.keys.Length);
-
-            if(globalRef.agentLinkMover.m_Curve.length < 2f && globalRef.agentLinkMover.m_Curve.length > 0.1f)
-            {
-                globalRef.agent.ActivateCurrentOffMeshLink(false);
-                Debug.Log("Disable");
-            }
-            else
-            {
-                globalRef.agent.ActivateCurrentOffMeshLink(true);
-                Debug.Log("Active");
-            }*/
-
-
             if (globalRef.agent.isOnOffMeshLink)
             {
+                globalRef.agent.speed = 3;
+
+                if(navLink == null)
+                    navLink = globalRef.agent.navMeshOwner as NavMeshLink;
+
                 if (maxDurationNavLink >= 0.1f)
                 {
                     globalRef.agent.ActivateCurrentOffMeshLink(false);
+                    linkIsActive = false;
+                    Debug.Log(linkIsActive);
                     maxDurationNavLink -= Time.deltaTime;
                 }
                 else
                 {
+                    linkIsActive = true;
+                    Debug.Log(linkIsActive);
                     globalRef.agent.ActivateCurrentOffMeshLink(true);
                 }
             }
             else
             {
+                if(navLink != null)
+                {
+                    navLink.UpdateLink();
+                    navLink = null;
+                }
                 maxDurationNavLink = globalRef.agentLinkMover._duration;
             }
         }
@@ -74,7 +75,8 @@ namespace State.AICAC
             }
             else
             {
-                SpeedAdjusting();
+                if (!globalRef.agent.isOnOffMeshLink)
+                    SpeedAdjusting();
             }
         }
         Vector3 CheckNavMeshPoint(Vector3 _destination)
