@@ -12,15 +12,14 @@ public class EylauRevolverStateShooting : RevolverState
     public override void Begin()
     {
         _revolver.Shoot();
-        _revolver.LowerAmmoCount();
         _revolver.StartRecoil();
+        _revolver.LowerAmmoCount();
         //Shooting animation
     }
 
     public override void StateUpdate()
     {
         _revolver.Recoiling();
-        _revolver.UpdateChargeLevel();
     }
 
     public override void Exit()

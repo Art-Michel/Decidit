@@ -50,22 +50,22 @@ public class PlaceHolderSoundManager : LocalManager<PlaceHolderSoundManager>
         switch (currentChargeStep)
         {
             case 0:
-                PlaySound(_eylauCharge0, 1f);
+                PlaySound(_eylauCharge0, .2f);
                 break;
             case 1:
-                PlaySound(_eylauCharge1, 1f);
+                PlaySound(_eylauCharge1, .2f);
                 break;
             case 2:
-                PlaySound(_eylauCharge2, 1f);
+                PlaySound(_eylauCharge2, .2f);
                 break;
             case 3:
-                PlaySound(_eylauCharge3, 1f);
+                PlaySound(_eylauCharge3, .2f);
                 break;
             case 4:
-                PlaySound(_eylauCharge4, 1f);
+                PlaySound(_eylauCharge4, .2f);
                 break;
             case 5:
-                PlaySound(_eylauCharge5, 1f);
+                PlaySound(_eylauCharge5, .3f);
                 break;
         }
     }

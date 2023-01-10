@@ -31,7 +31,7 @@ public class Revolver : MonoBehaviour
     [SerializeField] protected float _shootShakeDuration;
 
     protected Vector3 _currentlyAimedAt;
-    private float _recoilT;
+    protected float _recoilT;
     private float _reloadT;
     private int _ammo;
     private bool _reloadBuffered;
@@ -112,7 +112,7 @@ public class Revolver : MonoBehaviour
 
     }
 
-    public void StartRecoil()
+    public virtual void StartRecoil()
     {
         _recoilT = _recoilTime;
     }
@@ -140,7 +140,7 @@ public class Revolver : MonoBehaviour
     #endregion
 
     #region Ammo
-    public void LowerAmmoCount()
+    public virtual void LowerAmmoCount()
     {
         _ammo--;
         DisplayAmmo();

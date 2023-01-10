@@ -12,8 +12,11 @@ public class TwoPosTrail : PooledObject
 
     public void SetPos(Vector3 startPos, Vector3 endPos)
     {
-        transform.position = startPos;
-        _endObj.localPosition = endPos;
+        _vfx.SetVector3("Start_Pos", startPos);
+        _vfx.SetVector3("End_Pos", endPos);
+        transform.position = Vector3.zero;
+        _startObj.position = startPos;
+        _endObj.position = endPos;
     }
 
     public void Play()

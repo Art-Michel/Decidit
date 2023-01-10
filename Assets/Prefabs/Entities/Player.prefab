@@ -809,7 +809,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 5684111798065457426, guid: 16bca070959bdc447989e0d7a8d21bf7, type: 3}
+  _prefab: {fileID: 4725506551224192338, guid: 9589ee764ed142446aae44056dfc4f38, type: 3}
   _initialCount: 4
   _shouldBeParent: 0
 --- !u!1 &636914228
@@ -1520,7 +1520,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -32.3, y: 8}
+  m_AnchoredPosition: {x: -32.30005, y: 8}
   m_SizeDelta: {x: 308.33, y: 100}
   m_Pivot: {x: 1, y: 0}
 --- !u!222 &1340939801
@@ -2448,6 +2448,9 @@ GameObject:
   - component: {fileID: 2200446483770630229}
   - component: {fileID: 2200446483770630230}
   - component: {fileID: 2200446483770630231}
+  - component: {fileID: 8620154464695890639}
+  - component: {fileID: 3174289190664690925}
+  - component: {fileID: 2200446483770630237}
   m_Layer: 6
   m_Name: EylauRevolver
   m_TagString: Untagged
@@ -2539,15 +2542,53 @@ MonoBehaviour:
   _mask:
     serializedVersion: 2
     m_Bits: 33280
-  _recoilTime: 0.07
+  _recoilTime: 0.1
   _reloadMaxTime: 1.5
   _reloadMinTime: 1.3
   _maxAmmo: 6
-  _shootShakeIntensity: 0.1
-  _shootShakeDuration: 0.1
-  _projectile1Pooler: {fileID: 2200446483770630231}
+  _shootShakeIntensity: 0
+  _shootShakeDuration: 0
+  _projectile0Pooler: {fileID: 2200446483770630229}
+  _projectile1Pooler: {fileID: 2200446483770630230}
+  _projectile2Pooler: {fileID: 2200446483770630231}
+  _projectile3Pooler: {fileID: 3174289190664690925}
+  _projectile4Pooler: {fileID: 8620154464695890639}
+  _projectile5Pooler: {fileID: 2200446483770630237}
   _chargeUi: {fileID: 7926085865351582358}
-  _chargeSpeed: 1.85
+  _additionalRecoilCharge0: 0
+  _additionalRecoilCharge1: 0.02
+  _additionalRecoilCharge2: 0.04
+  _additionalRecoilCharge3: 0.06
+  _additionalRecoilCharge4: 0.08
+  _additionalRecoilCharge5: 0.12
+  _shakeIntensity0: 0.4
+  _shakeIntensity1: 0.5
+  _shakeIntensity2: 0.6
+  _shakeIntensity3: 0.7
+  _shakeIntensity4: 0.8
+  _shakeIntensity5: 0.9
+  _shakeDuration0: 0.15
+  _shakeDuration1: 0.25
+  _shakeDuration2: 0.3
+  _shakeDuration3: 0.35
+  _shakeDuration4: 0.4
+  _shakeDuration5: 0.6
+  _bulletPrefab0: {fileID: 4939631121027515308, guid: 3bb5aafe2875b5c48b28766744164823,
+    type: 3}
+  _bulletPrefab1: {fileID: 4082346403535372032, guid: e4e52aa81f31d844e9058d9fe6921b57,
+    type: 3}
+  _bulletPrefab2: {fileID: 8026799233648510373, guid: b647177aeafa0d04482865a490b78bb5,
+    type: 3}
+  _bulletPrefab3: {fileID: 5777929842385905463, guid: e206da096f1eebd48b4289cc9e0e229c,
+    type: 3}
+  _bulletPrefab4: {fileID: 2818867246145638118, guid: 8679d7f9981d01c408ec3aaba7cfad29,
+    type: 3}
+  _bulletPrefab5: {fileID: 0}
+  _vfxPooler: {fileID: 2200446483770630237}
+  _chargeSpeed: 3.5
+  _hitscanMaxRange: 100
+  _hitscanDamage: 100
+  _laserShouldPierce: 0
 --- !u!114 &9161445646862943683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2567,13 +2608,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2113098007}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 0}
-  _initialCount: 4
+  _prefab: {fileID: 4939631121027515308, guid: 3bb5aafe2875b5c48b28766744164823, type: 3}
+  _initialCount: 6
   _shouldBeParent: 0
 --- !u!114 &2200446483770630230
 MonoBehaviour:
@@ -2582,13 +2623,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2113098007}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 0}
-  _initialCount: 4
+  _prefab: {fileID: 4082346403535372032, guid: e4e52aa81f31d844e9058d9fe6921b57, type: 3}
+  _initialCount: 3
   _shouldBeParent: 0
 --- !u!114 &2200446483770630231
 MonoBehaviour:
@@ -2602,8 +2643,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 4939631121027515308, guid: 3bb5aafe2875b5c48b28766744164823, type: 3}
-  _initialCount: 12
+  _prefab: {fileID: 8026799233648510373, guid: b647177aeafa0d04482865a490b78bb5, type: 3}
+  _initialCount: 2
+  _shouldBeParent: 0
+--- !u!114 &8620154464695890639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2113098007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 2818867246145638118, guid: 8679d7f9981d01c408ec3aaba7cfad29, type: 3}
+  _initialCount: 2
+  _shouldBeParent: 0
+--- !u!114 &3174289190664690925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2113098007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 5777929842385905463, guid: e206da096f1eebd48b4289cc9e0e229c, type: 3}
+  _initialCount: 1
+  _shouldBeParent: 0
+--- !u!114 &2200446483770630237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2113098007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 4725506551224192338, guid: 9589ee764ed142446aae44056dfc4f38, type: 3}
+  _initialCount: 4
   _shouldBeParent: 0
 --- !u!1 &498829373937372374
 GameObject:
@@ -4132,7 +4218,7 @@ MonoBehaviour:
   _controllerCameraYInverted: 0
   _cameraSmoothness: 1000
   _jumpStrength: 12
-  _airborneDrag: 2
+  _airborneDrag: 4
   _jumpingDrag: 2
   _maxCeilingAngle: 30
   _baseSpeed: 12
@@ -5911,7 +5997,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5521657772868206815
 RectTransform:
   m_ObjectHideFlags: 0

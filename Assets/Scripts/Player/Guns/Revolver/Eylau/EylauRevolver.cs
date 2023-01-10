@@ -74,9 +74,17 @@ public class EylauRevolver : Revolver
     [SerializeField] private GameObject _bulletPrefab4;
     [Foldout("Projectiles")]
     [SerializeField] private GameObject _bulletPrefab5;
+    [Foldout("Projectiles")]
+    [SerializeField] private Pooler _vfxPooler;
 
     [Foldout("Stats")]
     [SerializeField] private float _chargeSpeed = 2f;
+    [Foldout("Stats")]
+    [SerializeField] private int _hitscanMaxRange;
+    [Foldout("Stats")]
+    [SerializeField] private int _hitscanDamage;
+    [Foldout("Stats")]
+    [SerializeField] private bool _laserShouldPierce;
     private float _currentCharge;
     private int _currentChargeStep;
     private const int _maxCharge = 5;
@@ -119,7 +127,10 @@ public class EylauRevolver : Revolver
                 Player.Instance.StartShake(_shakeIntensity4, _shakeDuration4);
                 break;
             case 5:
-                //Laser
+                if (_laserShouldPierce)
+                    PiercingLaser();
+                else
+                    Laser();
                 Player.Instance.StartShake(_shakeIntensity5, _shakeDuration5);
                 break;
         }
@@ -128,8 +139,74 @@ public class EylauRevolver : Revolver
             shot.GetComponent<Projectile>().Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized);
 
         PlaceHolderSoundManager.Instance.PlayEylauShot(_currentChargeStep);
-        ResetChargeLevel();
         _muzzleFlash.Play();
+    }
+
+    private void Laser()
+    {
+
+        var vfx = _vfxPooler.Get().GetComponent<TwoPosTrail>();
+        if (Physics.Raycast(_camera.position, _camera.forward, out RaycastHit hit, _hitscanMaxRange, _mask) && hit.transform.parent.TryGetComponent<Health>(out Health health))
+        {
+            vfx.SetPos(_canonPosition.position, hit.point);
+            if (hit.transform.CompareTag("WeakHurtbox"))
+                (health as EnemyHealth).TakeCriticalDamage(_hitscanDamage, hit.point, hit.normal);
+            else
+                (health as EnemyHealth).TakeDamage(_hitscanDamage, hit.point, hit.normal);
+        }
+        else
+            vfx.SetPos(_canonPosition.position, _canonPosition.position + _camera.forward * _hitscanMaxRange);
+    }
+    private void PiercingLaser()
+    {
+
+        var vfx = _vfxPooler.Get().GetComponent<TwoPosTrail>();
+        RaycastHit[] hits = Physics.RaycastAll(_camera.position, _camera.forward, _hitscanMaxRange, _mask);
+        foreach (RaycastHit hit in hits)
+        {
+            hit.transform.parent.TryGetComponent<Health>(out Health health);
+            if (health)
+            {
+
+                if (hit.transform.CompareTag("WeakHurtbox"))
+                    (health as EnemyHealth).TakeCriticalDamage(_hitscanDamage, hit.point, hit.normal);
+                else
+                    (health as EnemyHealth).TakeDamage(_hitscanDamage, hit.point, hit.normal);
+            }
+        }
+        vfx.SetPos(_canonPosition.position, _canonPosition.position + _camera.forward * _hitscanMaxRange);
+    }
+
+    public override void StartRecoil()
+    {
+        base.StartRecoil();
+        switch (_currentChargeStep)
+        {
+            case 0:
+                _recoilT += _additionalRecoilCharge0;
+                break;
+            case 1:
+                _recoilT += _additionalRecoilCharge1;
+                break;
+            case 2:
+                _recoilT += _additionalRecoilCharge2;
+                break;
+            case 3:
+                _recoilT += _additionalRecoilCharge3;
+                break;
+            case 4:
+                _recoilT += _additionalRecoilCharge4;
+                break;
+            case 5:
+                _recoilT += _additionalRecoilCharge5;
+                break;
+        }
+    }
+
+    public override void LowerAmmoCount()
+    {
+        base.LowerAmmoCount();
+        ResetChargeLevel();
     }
 
     public override void ResetChargeLevel()
