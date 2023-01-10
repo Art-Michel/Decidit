@@ -90,6 +90,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   globalRef: {fileID: 686522204}
+  maxDurationNavLink: 0
+  linkIsActive: 0
 --- !u!1 &279298340
 GameObject:
   m_ObjectHideFlags: 0
@@ -1053,7 +1055,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 4f464c633df81524a9235c1407baf01e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1149,7 +1151,8 @@ MonoBehaviour:
   _probationSpeed: 15
   _canvas: {fileID: 1267908144}
   _material: {fileID: 2100000, guid: 1fa0c89a0057b564d95c65f7c6811243, type: 2}
-  _deathVfx: {fileID: 0}
+  _deathVfx: {fileID: 8782500626266542195, guid: 4e088f7fded15e04a95d92413fada8e4,
+    type: 3}
   _uiScale: 0.1
   _lookStrictness: 0.08
   _appearSpeed: 15
@@ -1196,6 +1199,7 @@ MonoBehaviour:
   stateControllerAICAC: {fileID: 686522203}
   offsetDestination: 0
   debugDestination: {x: 0, y: 0, z: 0}
+  agentLinkMover: {fileID: 0}
   spawnRayDodge: {fileID: 3888318928596240787}
   hitBox: {fileID: 279298340}
   listOtherCACAI: []
@@ -1302,6 +1306,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  _duration: 0
 --- !u!1 &3888318928693326222
 GameObject:
   m_ObjectHideFlags: 0

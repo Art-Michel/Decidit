@@ -252,7 +252,6 @@ namespace State.AICAC
                     else
                         aiCACSurroundSelectedList[1].surroundAICACSO.right = true;
                 }
-
                 aiCACSurroundSelectedList[i].ActiveState(StateControllerAICAC.AIState.SurroundPlayer);
             }
         }

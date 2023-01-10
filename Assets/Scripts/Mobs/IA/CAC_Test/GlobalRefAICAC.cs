@@ -62,6 +62,14 @@ namespace State.AICAC
         private void Update()
         {
             distPlayer = Vector3.Distance(playerTransform.position, transform.position);
+
+            if (enemyHealth._hp <= 0)
+            {
+                Debug.Log(enemyHealth._hp);
+
+                ActiveState(StateControllerAICAC.AIState.BaseDeath);
+                myAnimator.SetBool("Death", true);
+            }
         }
 
         public void ActiveState(StateControllerAICAC.AIState newState)

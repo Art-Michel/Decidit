@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace State.AICAC
 {
-    public class BaseDeathState : _StateAICAC
+    public class BaseDeathStateAICAC : _StateAICAC
     {
         [SerializeField] GlobalRefAICAC globalRef;
         bool once;
@@ -15,21 +15,24 @@ namespace State.AICAC
 
         private void Update()
         {
-            if (state == StateControllerAICAC.AIState.BaseDeath)
-            {
-                Death();
-            }
+            Death();
         }
 
         void Death()
         {
             globalRef.transform.parent = null;
             globalRef.agent.speed = globalRef.deathAICACSO.stopSpeed;
-            if (!once)
+            globalRef.agent.enabled = false;
+
+            Debug.Log(globalRef.agent.speed);
+
+            /*if (!once)
             {
-                //stateManagerAICAC.aICACVarianteState.SetListActiveAI();
+                globalRef.transform.parent = null;
+                globalRef.agent.speed = globalRef.deathAICACSO.stopSpeed;
+                globalRef.agent.enabled = false;
                 once = true;
-            }
+            }*/
         }
     }
 }
