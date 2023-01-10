@@ -26,30 +26,35 @@ namespace State.AICAC
                 BaseMovement();
             }
 
+            ManageCurrentNavMeshLink();
+        }
+
+        void ManageCurrentNavMeshLink()
+        {
             if (globalRef.agent.isOnOffMeshLink)
             {
-                globalRef.agent.speed = 3;
-
-                if(navLink == null)
-                    navLink = globalRef.agent.navMeshOwner as NavMeshLink;
-
-                if (maxDurationNavLink >= 0.1f)
+                if (maxDurationNavLink > 0)
                 {
                     globalRef.agent.ActivateCurrentOffMeshLink(false);
                     linkIsActive = false;
-                    Debug.Log(linkIsActive);
+                    Debug.Log(linkIsActive + "Disable");
                     maxDurationNavLink -= Time.deltaTime;
                 }
                 else
                 {
                     linkIsActive = true;
-                    Debug.Log(linkIsActive);
+                    Debug.Log(linkIsActive + "Enable");
                     globalRef.agent.ActivateCurrentOffMeshLink(true);
                 }
+
+                globalRef.agent.speed = 3;
+                if (navLink == null)
+                    navLink = globalRef.agent.navMeshOwner as NavMeshLink;
+
             }
             else
             {
-                if(navLink != null)
+                if (navLink != null)
                 {
                     navLink.UpdateLink();
                     navLink = null;
