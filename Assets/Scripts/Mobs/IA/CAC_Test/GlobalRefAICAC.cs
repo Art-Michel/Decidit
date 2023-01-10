@@ -28,6 +28,9 @@ namespace State.AICAC
         [Header("Ref Attack State")]
         public GameObject hitBox;
 
+        [Header("Ref Death State")]
+        bool isDead;
+
         [Header("Ref Surround State")]
         public List<GameObject> listOtherCACAI = new List<GameObject>();
         public List<Transform> listOtherAIContact = new List<Transform>();
@@ -63,12 +66,11 @@ namespace State.AICAC
         {
             distPlayer = Vector3.Distance(playerTransform.position, transform.position);
 
-            if (enemyHealth._hp <= 0)
+            if (enemyHealth._hp <= 0 && !isDead)
             {
-                Debug.Log(enemyHealth._hp);
-
                 ActiveState(StateControllerAICAC.AIState.BaseDeath);
                 myAnimator.SetBool("Death", true);
+                isDead = true;
             }
         }
 

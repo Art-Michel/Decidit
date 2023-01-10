@@ -15,6 +15,7 @@ namespace State.AICAC
 
         private void Update()
         {
+            Debug.Log("Ta grand mere la pute");
             Death();
         }
 
