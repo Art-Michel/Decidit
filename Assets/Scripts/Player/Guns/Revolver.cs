@@ -8,11 +8,16 @@ using System;
 public class Revolver : MonoBehaviour
 {
     #region References Decleration
-    [Header("References")]
+    [Foldout("References")]
     [SerializeField] private TextMeshProUGUI _ammoCountText;
+    [Foldout("References")]
     [SerializeField] protected Transform _canonPosition;
+    [Foldout("References")]
     [SerializeField] protected GameObject _ui;
+    [Foldout("References")]
     [SerializeField] protected VisualEffect _muzzleFlash;
+    [Foldout("References")]
+    [SerializeField] protected Image _reloadingWarning;
 
     private PlayerInputMap _inputs;
     private RevolverFSM _fsm;
@@ -21,14 +26,28 @@ public class Revolver : MonoBehaviour
     #endregion
 
     #region Stats Decleration
-    [Header("Stats")]
+    [Foldout("Stats")]
     [SerializeField] protected LayerMask _mask;
+    [Foldout("Stats")]
     [SerializeField] protected float _recoilTime = .3f;
+    [Foldout("Stats")]
     [SerializeField][Tooltip("total reload animation duration")] private float _reloadMaxTime = 1f;
+    [Foldout("Stats")]
     [SerializeField][Tooltip("time before which you can cancel reloading")] private float _reloadMinTime = 0.9f;
+    [Foldout("Stats")]
     [SerializeField] private int _maxAmmo = 6;
+    [Foldout("Stats")]
     [SerializeField] protected float _shootShakeIntensity;
+    [Foldout("Stats")]
     [SerializeField] protected float _shootShakeDuration;
+
+    [Foldout("Other")]
+    [SerializeField] Color _fullAmmoColor;
+    [Foldout("Other")]
+    [SerializeField] Color _lowAmmoColor;
+    [Foldout("Other")]
+    [SerializeField] Color _noAmmoColor;
+
 
     protected Vector3 _currentlyAimedAt;
     protected float _recoilT;
@@ -159,6 +178,8 @@ public class Revolver : MonoBehaviour
     public void StartReload()
     {
         _reloadT = _reloadMaxTime;
+        _reloadingWarning.fillAmount = 0f;
+        _reloadingWarning.enabled = true;
         PlaceHolderSoundManager.Instance.PlayReload();
     }
 
@@ -166,6 +187,7 @@ public class Revolver : MonoBehaviour
     public void Reloading()
     {
         _reloadT -= Time.deltaTime;
+        _reloadingWarning.fillAmount = Mathf.Lerp(0, 1, Mathf.InverseLerp(_reloadMaxTime, 0 + (_reloadMaxTime - _reloadMinTime), _reloadT));
         if (_reloadT <= _reloadMaxTime - _reloadMinTime && _ammo < _maxAmmo)
         {
             Reloaded();
@@ -180,6 +202,7 @@ public class Revolver : MonoBehaviour
     private void Reloaded()
     {
         _ammo = _maxAmmo;
+        _reloadingWarning.enabled = false;
         PlaceHolderSoundManager.Instance.PlayReloaded();
         DisplayAmmo();
     }
@@ -187,7 +210,20 @@ public class Revolver : MonoBehaviour
     private void DisplayAmmo()
     {
         if (_ammoCountText)
+        {
             _ammoCountText.text = _ammo.ToString() + "/" + _maxAmmo.ToString();
+            //Color
+            if (_ammo <= _maxAmmo / 3)
+            {
+                if (_ammo > 0)
+                    _ammoCountText.color = _lowAmmoColor;
+                else
+                    _ammoCountText.color = _noAmmoColor;
+            }
+            else _ammoCountText.color = _fullAmmoColor;
+
+        }
+
         else
             Debug.LogError("AmmoCount UI Text unassigned.");
     }
