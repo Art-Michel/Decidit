@@ -4,19 +4,20 @@ using UnityEngine;
 public class BaseMoveParameterAICAC : ScriptableObject
 {
     [Header("Speed Rotation Parameter")]
-    [SerializeField] public float speedRot;
-    [SerializeField] public float maxSpeedRot;
-    [SerializeField] public float smoothRot;
+    public float speedRot;
+    public float maxSpeedRot;
+    public float smoothRot;
 
     [Header("Speed Movement Parameter")]
-    [SerializeField] public float baseSpeed;
-    [SerializeField] public float smoothSpeedbase;
-    [SerializeField] public float runSpeed;
-    [SerializeField] public float smoothSpeedRun;
-    [SerializeField] public float anticipSpeed;
-    [SerializeField] public float smoothSpeedAnticip;
-    [SerializeField] public float distCanRun;
-    [SerializeField] public float distStopRun;
-    [SerializeField] public float attackRange;
-    [SerializeField] public bool activeAnticipDestination;
+    public float baseSpeed;
+    public float smoothSpeedbase;
+    public float runSpeed;
+    public float smoothSpeedRun;
+    public float anticipSpeed;
+    public float smoothSpeedAnticip;
+    public float distCanRun;
+    public float distStopRun;
+    public float attackRange;
+    public bool activeAnticipDestination;
+    public float jumpRate;
 }

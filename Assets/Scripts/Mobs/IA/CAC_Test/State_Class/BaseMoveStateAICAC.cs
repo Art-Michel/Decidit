@@ -7,9 +7,12 @@ namespace State.AICAC
     {
         [SerializeField] GlobalRefAICAC globalRef;
 
+        Vector3 destination;
+
         [SerializeField] float maxDurationNavLink;
         [SerializeField] bool linkIsActive;
         NavMeshLink navLink;
+        bool triggerNavLink;
 
         public override void InitState(StateControllerAICAC stateController)
         {
@@ -20,12 +23,12 @@ namespace State.AICAC
 
         private void Update()
         {
-            if (state == StateControllerAICAC.AIState.BaseMove)
-            {
-                SmoothLookAt();
-                BaseMovement();
-            }
+            //globalRef.agent.areaMask |= (1 << NavMesh.GetAreaFromName("Walkable"));
+            //globalRef.agent.areaMask |= (1 << NavMesh.GetAreaFromName("Not Walkable"));
+           // globalRef.agent.areaMask |= (1 << NavMesh.GetAreaFromName("Jump"));
 
+            SmoothLookAt();
+            BaseMovement();
             ManageCurrentNavMeshLink();
         }
 
@@ -68,10 +71,39 @@ namespace State.AICAC
             Vector3 dir = globalRef.playerTransform.position - globalRef.transform.position;
             Vector3 left = Vector3.Cross(dir, Vector3.up).normalized;
 
-            Vector3 destination = globalRef.playerTransform.position + left * globalRef.offsetDestination;
+
+            if (globalRef.agent.isOnOffMeshLink)
+            {
+                NavMeshLink link;
+                link = globalRef.agent.navMeshOwner as NavMeshLink;
+                
+                if (!triggerNavLink)
+                {
+                    if(Vector3.Distance(globalRef.transform.position, link.startPoint) < Vector3.Distance(globalRef.transform.position, link.endPoint))
+                    {
+                        destination = link.endPoint;
+                        triggerNavLink = true;
+                    }
+                    else
+                    {
+                        destination = link.startPoint;
+                        triggerNavLink = true;
+                    }
+                }
+            }
+            else
+            {
+                destination = globalRef.playerTransform.position + left * globalRef.offsetDestination;
+
+                if(triggerNavLink)
+                {
+                    globalRef.agent.areaMask &= ~(1 << NavMesh.GetAreaFromName("Jump"));
+                    triggerNavLink = false;
+                    Invoke("ActiveJump", globalRef.baseMoveAICACSO.jumpRate);
+                }
+            }
 
             globalRef.debugDestination = CheckNavMeshPoint(destination);
-
             globalRef.agent.SetDestination(CheckNavMeshPoint(destination));
 
             if (globalRef.distPlayer < globalRef.baseMoveAICACSO.attackRange)
@@ -90,13 +122,8 @@ namespace State.AICAC
             if (NavMesh.SamplePosition(_destination, out closestHit, 1, 1))
             {
                 _destination = closestHit.position;
-                return _destination;
             }
-            else
-            {
-                _destination = globalRef.playerTransform.position;
-                return _destination;
-            }
+            return _destination;
         }
         void SpeedAdjusting()
         {
@@ -142,7 +169,7 @@ namespace State.AICAC
             Vector3 direction;
             Vector3 relativePos;
 
-            direction = globalRef.agent.destination;
+            direction = destination;
             relativePos.x = direction.x - globalRef.transform.position.x;
             relativePos.y = 0;
             relativePos.z = direction.z - globalRef.transform.position.z;
@@ -156,6 +183,11 @@ namespace State.AICAC
 
             Quaternion rotation = Quaternion.Slerp(globalRef.transform.rotation, Quaternion.LookRotation(relativePos, Vector3.up), globalRef.baseMoveAICACSO.speedRot);
             globalRef.transform.rotation = rotation;
+        }
+
+        void ActiveJump()
+        {
+            globalRef.agent.areaMask |= (1 << NavMesh.GetAreaFromName("Jump"));
         }
 
         private void OnDisable()
