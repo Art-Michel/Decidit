@@ -14,6 +14,8 @@ namespace State.AICAC
         NavMeshLink navLink;
         bool triggerNavLink;
 
+        RaycastHit hit;
+
         public override void InitState(StateControllerAICAC stateController)
         {
             base.InitState(stateController);
@@ -68,7 +70,7 @@ namespace State.AICAC
 
         void BaseMovement()
         {
-            Vector3 dir = globalRef.playerTransform.position - globalRef.transform.position;
+            Vector3 dir = CheckPlayerDownPos.positionPlayer - globalRef.transform.position;
             Vector3 left = Vector3.Cross(dir, Vector3.up).normalized;
 
 
@@ -93,9 +95,9 @@ namespace State.AICAC
             }
             else
             {
-                destination = globalRef.playerTransform.position + left * globalRef.offsetDestination;
+                destination = CheckPlayerDownPos.positionPlayer + left * globalRef.offsetDestination;
 
-                if(triggerNavLink)
+                if (triggerNavLink)
                 {
                     globalRef.agent.areaMask &= ~(1 << NavMesh.GetAreaFromName("Jump"));
                     triggerNavLink = false;

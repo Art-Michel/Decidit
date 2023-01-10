@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class RaycastToGround : MonoBehaviour
+public class CheckPlayerDownPos : MonoBehaviour
 {
     [SerializeField] LayerMask mask;
 

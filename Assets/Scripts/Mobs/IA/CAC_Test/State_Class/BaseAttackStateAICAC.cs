@@ -5,6 +5,9 @@ namespace State.AICAC
     public class BaseAttackStateAICAC : _StateAICAC
     {
         [SerializeField] GlobalRefAICAC globalRef;
+
+        RaycastHit hit;
+
         public override void InitState(StateControllerAICAC stateController)
         {
             base.InitState(stateController);
