@@ -10,7 +10,7 @@ public class Hitbox : MonoBehaviour
     [SerializeField] protected float _radius = .2f;
     [SerializeField] protected int _damage = 10;
 
-    public Dictionary<Transform, float> Blacklist;
+    public Dictionary<Transform, float> Blacklist { get; private set; }
     [SerializeField] protected bool _canMultiHit = false;
     [ShowIf("_canMultiHit")][SerializeField] protected float _delayBetweenHits = 0f;
     // [SerializeField] protected float _targetInvulnerability;
