@@ -848,6 +848,9 @@ GameObject:
   - component: {fileID: 988940185}
   - component: {fileID: 5314086220186537621}
   - component: {fileID: 5314086220186537620}
+  - component: {fileID: -5786898878562634712}
+  - component: {fileID: 2316416254645839507}
+  - component: {fileID: -2253650008094462077}
   m_Layer: 7
   m_Name: BullAI
   m_TagString: Ennemi
@@ -979,8 +982,9 @@ MonoBehaviour:
   _probationMaxStartup: 1
   _probationSpeed: 15
   _canvas: {fileID: 1791998167}
-  _material: {fileID: 0}
-  _deathVfx: {fileID: 0}
+  _material: {fileID: 2100000, guid: 4f464c633df81524a9235c1407baf01e, type: 2}
+  _deathVfx: {fileID: 8782500626266542195, guid: 4e088f7fded15e04a95d92413fada8e4,
+    type: 3}
   _uiScale: 0.1
   _lookStrictness: 0.08
   _appearSpeed: 15
@@ -1061,11 +1065,79 @@ MonoBehaviour:
   enemyHealth: {fileID: 0}
   distPlayer: 0
   offsetDestination: 0
+  bullCount: {fileID: 0}
+  stateControllerBull: {fileID: 0}
   hitBox: {fileID: 336271810}
   detectOtherAICollider: {fileID: 5314086221994346234}
+  isDead: 0
   baseIdleBullSO: {fileID: 11400000, guid: 87061001b673e2241ad66755c7e50389, type: 2}
   baseMoveBullSO: {fileID: 11400000, guid: f1f55874d69354f4191d9aee35e3e75c, type: 2}
   coolDownRushBullSO: {fileID: 11400000, guid: e68c50c7e89b8f34e88442df2bfa1a31, type: 2}
   rushBullSO: {fileID: 11400000, guid: ac628e5ea4cebe343aae18034362a953, type: 2}
   baseAttackBullSO: {fileID: 11400000, guid: 4daae14d32f9f36498fcf457e3d3702d, type: 2}
   deathBullSO: {fileID: 11400000, guid: dbf870102e3694f41a0d1971f0353ccd, type: 2}
+--- !u!114 &-5786898878562634712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5314086221994346189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03bc8063c9e95401f9a8a38bc716750d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Method: 2
+  m_Curve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _duration: 0.75
+--- !u!114 &2316416254645839507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5314086221994346189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 8252760470148114170, guid: 761a0a66d6e3a524fbb1ad7370c627ba, type: 3}
+  _initialCount: 4
+  _shouldBeParent: 0
+--- !u!114 &-2253650008094462077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5314086221994346189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6710f03ff1c41064088ccced29e28e05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -13,10 +13,12 @@ namespace State.AIBull
             state = StateControllerBull.AIState.Death;
         }
 
-        private void Update()
+        private void OnEnable()
         {
-            if (state == StateControllerBull.AIState.Death)
+            if(globalRef.isDead)
             {
+                globalRef.bullCount.RemoveAI(globalRef.transform);
+                globalRef.agent.speed = 0;
                 Debug.Log("Death");
             }
         }

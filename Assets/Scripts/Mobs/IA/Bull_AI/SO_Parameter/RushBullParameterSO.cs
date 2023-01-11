@@ -4,10 +4,14 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "RushParameter", menuName = "Bull/RushParameter")]
 public class RushBullParameterSO : ScriptableObject
 {
+    [Header("Duration rush")]
+    public float rushCurrentDuration;
+    public float rushMaxDuration;
+
     [Header("Speed Rotation Parameter")]
-    [SerializeField] public float speedRot;
-    [SerializeField] public float maxSpeedRot;
-    [SerializeField] public float smoothRot;
+    public float speedRot;
+    public float maxSpeedRot;
+    public float smoothRot;
 
     [Header("Movement Parameter")]
     public float rushSpeed;

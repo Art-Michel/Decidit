@@ -17,42 +17,62 @@ namespace State.AIBull
             state = StateControllerBull.AIState.Rush;
         }
 
+        private void OnEnable()
+        {
+            globalRef.rushBullSO.rushCurrentDuration = globalRef.rushBullSO.rushMaxDuration;
+        }
+
         private void Update()
         {
             RushMovement();
+            RushDuration();
         }
         private void FixedUpdate()
         {
             CheckObstacleOnPath();
         }
 
+        void RushDuration()
+        {
+            if(globalRef.rushBullSO.rushCurrentDuration > 0)
+            {
+                globalRef.rushBullSO.rushCurrentDuration -= Time.deltaTime;
+            }
+            else
+            {
+                StopRush();
+            }
+        }
+
         public void RushMovement()
         {
-            if (globalRef.distPlayer < globalRef.rushBullSO.stopLockDist)
+            /*if (globalRef.distPlayer < globalRef.rushBullSO.stopLockDist)
             {
                 globalRef.rushBullSO.stopLockPlayer = true;
             }
             else if (!globalRef.rushBullSO.stopLockPlayer)
             {
-                globalRef.rushBullSO.rushDestination = globalRef.playerTransform.position + globalRef.transform.forward * globalRef.rushBullSO.rushInertieSetDistance;
-            }
+               // globalRef.rushBullSO.rushDestination = globalRef.playerTransform.position + globalRef.transform.forward * globalRef.rushBullSO.rushInertieSetDistance;
+                globalRef.rushBullSO.rushDestination = globalRef.playerTransform.position;
+            }*/
 
+            globalRef.rushBullSO.rushDestination = globalRef.playerTransform.position;
             globalRef.detectOtherAICollider.enabled = true;
             globalRef.agent.speed = globalRef.rushBullSO.rushSpeed;
             globalRef.agent.SetDestination(CheckNavMeshPoint(globalRef.rushBullSO.rushDestination));
             globalRef.hitBox.SetActive(true);
-
+/*
             if (globalRef.agent.remainingDistance == 0)
             {
                 StopRush();
-            }
+            }*/
 
             SmoothLookAtPlayer();
         }
         Vector3 CheckNavMeshPoint(Vector3 newDestination)
         {
             NavMeshHit closestHit;
-            if (NavMesh.SamplePosition(newDestination, out closestHit, 20, 1))
+            if (NavMesh.SamplePosition(newDestination, out closestHit, 1, 1))
             {
                 newDestination = closestHit.position;
             }
@@ -63,11 +83,11 @@ namespace State.AIBull
         {
             hit = RaycastAIManager.RaycastAI(globalRef.transform.position, globalRef.transform.forward, globalRef.rushBullSO.maskCheckObstacle, Color.red, 2f);
 
-            if (hit.transform != null)
+            /*if (hit.transform != null)
             {
                 Debug.Log("Obstacle Stop Rush");
                 StopRush();
-            }
+            }*/
         }
 
         void StopRush()

@@ -14,10 +14,15 @@ namespace State.AIBull
         public EnemyHealth enemyHealth;
         public float distPlayer;
         public float offsetDestination;
+        public BullCount bullCount;
+        public StateControllerBull stateControllerBull;
 
         [Header("Ref ATtck State")]
         public GameObject hitBox;
         public BoxCollider detectOtherAICollider;
+
+        [Header("Ref Death State")]
+        public bool isDead;
 
         [Header("Scriptable")]
         public BaseIdleBullSO baseIdleBullSO;
@@ -33,6 +38,8 @@ namespace State.AIBull
             playerTransform = GameObject.FindWithTag("Player").transform;
             enemyHealth = GetComponent<EnemyHealth>();
             material_Instances = GetComponent<Material_Instances>();
+            bullAIStartPosRush = GetComponentInParent<BullAIStartPosRush>();
+            bullCount = GetComponentInParent<BullCount>();
 
             baseIdleBullSO = Instantiate(baseIdleBullSO);
             baseMoveBullSO = Instantiate(baseMoveBullSO);
@@ -46,6 +53,17 @@ namespace State.AIBull
         {
             distPlayer = Vector3.Distance(transform.position, playerTransform.position);
 
+            if (enemyHealth._hp <= 0 && !isDead)
+            {
+                isDead = true;
+                ActiveState(StateControllerBull.AIState.Death);
+                //myAnimator.SetBool("Death", true);
+            }
+        }
+
+        public void ActiveState(StateControllerBull.AIState newState)
+        {
+            stateControllerBull.SetActiveState(newState);
         }
     }
 }

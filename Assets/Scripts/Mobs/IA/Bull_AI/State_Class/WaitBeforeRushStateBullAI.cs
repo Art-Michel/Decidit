@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace State.AIBull
 {
@@ -12,6 +13,11 @@ namespace State.AIBull
             base.InitState(stateController);
 
             state = StateControllerBull.AIState.WaitBeforeRush;
+        }
+
+        private void OnEnable()
+        {
+            globalRef.agent.speed = globalRef.coolDownRushBullSO.speedPatrolToStartPos;
         }
 
         private void Update()
@@ -33,7 +39,7 @@ namespace State.AIBull
             }
             else if (globalRef.agent.remainingDistance > 0.5f) // avance vers la position
             {
-                globalRef.agent.SetDestination(globalRef.coolDownRushBullSO.startPos);
+                globalRef.agent.SetDestination(CheckNavMeshPoint(globalRef.coolDownRushBullSO.startPos));
             }
 
             if (globalRef.coolDownRushBullSO.startPos != Vector3.zero && globalRef.agent.remainingDistance <= 1f)
@@ -57,7 +63,16 @@ namespace State.AIBull
         {
             globalRef.bullAIStartPosRush.SelectAI(globalRef);
             globalRef.agent.speed = globalRef.coolDownRushBullSO.speedPatrolToStartPos;
-            globalRef.agent.SetDestination(globalRef.coolDownRushBullSO.startPos);
+            globalRef.agent.SetDestination(CheckNavMeshPoint(globalRef.coolDownRushBullSO.startPos));
+        }
+        Vector3 CheckNavMeshPoint(Vector3 _destination)
+        {
+            NavMeshHit closestHit;
+            if (NavMesh.SamplePosition(_destination, out closestHit, 1, 1))
+            {
+                _destination = closestHit.position;
+            }
+            return _destination;
         }
 
         void CheckObstacle()
@@ -92,7 +107,10 @@ namespace State.AIBull
                     globalRef.coolDownRushBullSO.currentDurationStay -= Time.deltaTime;
                 }
                 else
+                {
+                    Debug.Log("Rush");
                     stateController.SetActiveState(StateControllerBull.AIState.Rush);
+                }
             }
         }
        
