@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class Doors : MonoBehaviour
 {
+    #region Variables
     public static Doors Instance = null;
     [SerializeField] int NbIA;
 
     [SerializeField] GameObject Door;
-    [SerializeField] List<GameObject> IA;
+    [SerializeField] GameObject Door2;
+    [SerializeField] GameObject Room;
+    [SerializeField] GameObject Room2;
+
+    
+    #endregion
 
     private void Awake()
     {
@@ -18,6 +24,8 @@ public class Doors : MonoBehaviour
             return;
         }
         Instance = this;
+        //fait spawn la map de base et on enregistre le nombre d'enemies
+        SetUp();
         NbIACheck();
     }
 
@@ -26,21 +34,41 @@ public class Doors : MonoBehaviour
         
     }
 
-    // Update is called once per frame
     void Update()
     {
+        //on check si il a clean sa room
         if(NbIA <= 0)
         {
-            Debug.Log("Ouverture");
+            //on ouvre la porte
+            Door.SetActive(false);
+            NbIA +=1;
         }
     }
 
-    private void NbIACheck()
+    #region Becons
+    public void NbIACheck()
     {
         NbIA = GameObject.FindGameObjectsWithTag("Ennemi").Length;
     }
     public void NbIASubqtract()
     {
-        NbIA -= 1;
+        NbIA --;
     }
+    private void SetUp()
+    {
+        Room.SetActive(true);
+    }
+    public GameObject GetDoor()
+    {
+        return(Door);
+    }
+    public GameObject GetDoor2()
+    {
+        return(Door2);
+    }
+    public GameObject GetRoom()
+    {
+        return(Room);
+    }
+    #endregion
 }
