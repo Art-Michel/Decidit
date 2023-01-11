@@ -27,7 +27,7 @@ public class EnemyHealth : Health
     float _appearT;
     bool _isVisible;
     float _deathT;
-    bool _isDying = false;
+    bool _isDying;
 
     void Awake()
     {
@@ -41,6 +41,7 @@ public class EnemyHealth : Health
         base.Start();
         _appearT = 0f;
         _canvasGroup.alpha = 0f;
+        _isDying = false;
         _material = GetComponent<Material_Instances>().Material;
     }
 
@@ -138,10 +139,13 @@ public class EnemyHealth : Health
     protected override void Death()
     {
         //! Ici desactiver ia ou mettre l'ia en state Dying jsp
-        Doors.Instance.NbIASubqtract();
-        _deathT = _deathAnimationDuration;
-        _isDying = true;
-        _deathVfx.Play();
+        if (!_isDying)
+        {
+            Doors.Instance.NbIASubqtract();
+            _deathT = _deathAnimationDuration;
+            _isDying = true;
+            _deathVfx.Play();
+        }
     }
 
     private void UpdateDeath()
