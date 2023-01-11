@@ -10,14 +10,14 @@ public class Hitbox : MonoBehaviour
     [SerializeField] protected float _radius = .2f;
     [SerializeField] protected int _damage = 10;
 
-    public Dictionary<Transform, float> Blacklist { get; private set; }
+    public Dictionary<Transform, float> Blacklist { get; set; }
     [SerializeField] protected bool _canMultiHit = false;
     [ShowIf("_canMultiHit")][SerializeField] protected float _delayBetweenHits = 0f;
     // [SerializeField] protected float _targetInvulnerability;
 
     protected virtual void Awake()
     {
-        _blacklist = new Dictionary<Transform, float>();
+        Blacklist = new Dictionary<Transform, float>();
     }
 
     private void OnEnable()
@@ -48,13 +48,13 @@ public class Hitbox : MonoBehaviour
     {
         if (_canMultiHit)
         {
-            if (_blacklist.ContainsKey(target))
-                return _blacklist[target] > 0;
+            if (Blacklist.ContainsKey(target))
+                return Blacklist[target] > 0;
             else
                 return false;
         }
         else
-            return _blacklist.ContainsKey(target);
+            return Blacklist.ContainsKey(target);
     }
 
     protected void Hit(Transform targetCollider)
@@ -66,26 +66,26 @@ public class Hitbox : MonoBehaviour
                 health.TakeCriticalDamage(_damage);
             else
                 health.TakeDamage(_damage);
-            _blacklist.Add(targetCollider.parent, _delayBetweenHits);
+            Blacklist.Add(targetCollider.parent, _delayBetweenHits);
         }
     }
 
     protected void UpdateBlackList()
     {
-        if (_blacklist.Count > 0)
+        if (Blacklist.Count > 0)
         {
-            Transform[] keys = _blacklist.Keys.ToArray();
+            Transform[] keys = Blacklist.Keys.ToArray();
             foreach (Transform key in keys)
             {
-                _blacklist[key] -= Time.deltaTime;
-                if (_blacklist[key] <= 0)
-                    _blacklist.Remove(key);
+                Blacklist[key] -= Time.deltaTime;
+                if (Blacklist[key] <= 0)
+                    Blacklist.Remove(key);
             }
         }
     }
 
     protected void ClearBlacklist()
     {
-        _blacklist.Clear();
+        Blacklist.Clear();
     }
 }
