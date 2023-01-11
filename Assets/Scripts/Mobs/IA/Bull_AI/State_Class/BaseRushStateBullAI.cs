@@ -9,6 +9,14 @@ namespace State.AIBull
         [SerializeField] GlobalRefBullAI globalRef;
         RaycastHit hit;
 
+        bool rushIsActive, lockPlayer;
+
+        [SerializeField] float maxDurationNavLink;
+        [SerializeField] bool linkIsActive;
+        NavMeshLink navLink;
+        bool triggerNavLink;
+
+        Vector3 destination;
 
         public override void InitState(StateControllerBull stateController)
         {
@@ -19,24 +27,72 @@ namespace State.AIBull
 
         private void OnEnable()
         {
-            globalRef.rushBullSO.rushCurrentDuration = globalRef.rushBullSO.rushMaxDuration;
+            try
+            {
+                globalRef.rushBullSO.rushCurrentDuration = globalRef.rushBullSO.rushMaxDuration;
+            }
+            catch
+            {
+                Debug.LogWarning("missing Reference");
+            }
         }
 
         private void Update()
         {
             RushMovement();
             RushDuration();
+            ManageCurrentNavMeshLink();
         }
         private void FixedUpdate()
         {
-            CheckObstacleOnPath();
+            CheckPlayerDistance();
+
+        }
+        void ManageCurrentNavMeshLink()
+        {
+            if (globalRef.agent.isOnOffMeshLink)
+            {
+                if (maxDurationNavLink > 0)
+                {
+                    globalRef.agent.ActivateCurrentOffMeshLink(false);
+                    linkIsActive = false;
+                    Debug.Log(linkIsActive + "Disable");
+                    maxDurationNavLink -= Time.deltaTime;
+                }
+                else
+                {
+                    linkIsActive = true;
+                    Debug.Log(linkIsActive + "Enable");
+                    globalRef.agent.ActivateCurrentOffMeshLink(true);
+                }
+
+                globalRef.agent.speed = 3;
+                if (navLink == null)
+                    navLink = globalRef.agent.navMeshOwner as NavMeshLink;
+
+            }
+            else
+            {
+                if (navLink != null)
+                {
+                    navLink.UpdateLink();
+                    navLink = null;
+                }
+                maxDurationNavLink = globalRef.agentLinkMover._duration;
+            }
         }
 
         void RushDuration()
         {
             if(globalRef.rushBullSO.rushCurrentDuration > 0)
             {
-                globalRef.rushBullSO.rushCurrentDuration -= Time.deltaTime;
+                if(!globalRef.agent.isOnOffMeshLink)
+                    globalRef.rushBullSO.rushCurrentDuration -= Time.deltaTime;
+
+                if(globalRef.hitBox.Blacklist.Count >0) // player is hit
+                {
+                    globalRef.rushBullSO.rushCurrentDuration = 0;
+                }
             }
             else
             {
@@ -46,26 +102,21 @@ namespace State.AIBull
 
         public void RushMovement()
         {
-            /*if (globalRef.distPlayer < globalRef.rushBullSO.stopLockDist)
-            {
-                globalRef.rushBullSO.stopLockPlayer = true;
-            }
-            else if (!globalRef.rushBullSO.stopLockPlayer)
-            {
-               // globalRef.rushBullSO.rushDestination = globalRef.playerTransform.position + globalRef.transform.forward * globalRef.rushBullSO.rushInertieSetDistance;
+            if(!rushIsActive)
                 globalRef.rushBullSO.rushDestination = globalRef.playerTransform.position;
-            }*/
+            else
+            {
+                if(!lockPlayer)
+                {
+                    globalRef.rushBullSO.rushDestination = globalRef.playerTransform.position + globalRef.transform.forward * globalRef.rushBullSO.rushInertieSetDistance;
+                    lockPlayer = true;
+                }
+            }
 
-            globalRef.rushBullSO.rushDestination = globalRef.playerTransform.position;
             globalRef.detectOtherAICollider.enabled = true;
             globalRef.agent.speed = globalRef.rushBullSO.rushSpeed;
             globalRef.agent.SetDestination(CheckNavMeshPoint(globalRef.rushBullSO.rushDestination));
-            globalRef.hitBox.SetActive(true);
-/*
-            if (globalRef.agent.remainingDistance == 0)
-            {
-                StopRush();
-            }*/
+            globalRef.hitBox.gameObject.SetActive(true);
 
             SmoothLookAtPlayer();
         }
@@ -79,15 +130,21 @@ namespace State.AIBull
             return newDestination;
         }
 
-        public void CheckObstacleOnPath()
+        public void CheckPlayerDistance()
         {
-            hit = RaycastAIManager.RaycastAI(globalRef.transform.position, globalRef.transform.forward, globalRef.rushBullSO.maskCheckObstacle, Color.red, 2f);
+            hit = RaycastAIManager.RaycastAI(globalRef.transform.position, globalRef.transform.forward, globalRef.rushBullSO.noMask, Color.red, globalRef.rushBullSO.rangeAttack);
 
-            /*if (hit.transform != null)
+            if (hit.transform != null)
             {
-                Debug.Log("Obstacle Stop Rush");
-                StopRush();
-            }*/
+                if (hit.transform.CompareTag("Player"))
+                {
+                    if(hit.distance <= globalRef.rushBullSO.rangeAttack)
+                    {
+                        rushIsActive = true;
+                        Debug.Log("Rush");
+                    }
+                }
+            }
         }
 
         void StopRush()
@@ -95,12 +152,40 @@ namespace State.AIBull
             stateController.SetActiveState(StateControllerBull.AIState.Idle);
         }
 
+        Vector3 SwitchToLoockLinkDestination()
+        {
+            NavMeshLink link;
+            link = globalRef.agent.navMeshOwner as NavMeshLink;
+
+            if (!triggerNavLink)
+            {
+                if (Vector3.Distance(globalRef.transform.position, link.startPoint) < Vector3.Distance(globalRef.transform.position, link.endPoint))
+                {
+                    destination = link.endPoint;
+                    triggerNavLink = true;
+                }
+                else
+                {
+                    destination = link.startPoint;
+                    triggerNavLink = true;
+                }
+            }
+            return destination;
+        }
         void SmoothLookAtPlayer()
         {
             Vector3 direction;
             Vector3 relativePos;
 
-            direction = globalRef.agent.destination;
+            if (globalRef.agent.isOnOffMeshLink)
+            {
+                direction = SwitchToLoockLinkDestination();
+            }
+            else
+            {
+                triggerNavLink = false;
+                direction = globalRef.agent.destination;
+            }
 
             relativePos.x = direction.x - globalRef.transform.position.x;
             relativePos.y = 0;
@@ -114,10 +199,11 @@ namespace State.AIBull
 
         private void OnDisable()
         {
-
+            lockPlayer = false;
+            rushIsActive = false;
             globalRef.detectOtherAICollider.enabled = false;
             globalRef.rushBullSO.stopLockPlayer = false;
-            globalRef.hitBox.SetActive(false);
+            globalRef.hitBox.gameObject.SetActive(false);
 
             globalRef.rushBullSO.speedRot = 0;
         }

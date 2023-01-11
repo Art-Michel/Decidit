@@ -16,9 +16,14 @@ namespace State.AIBull
         public float offsetDestination;
         public BullCount bullCount;
         public StateControllerBull stateControllerBull;
+        public AgentLinkMover agentLinkMover;
+
+        [Header("Debug Destination")]
+        public Transform sphereDebug;
+
 
         [Header("Ref ATtck State")]
-        public GameObject hitBox;
+        public Hitbox hitBox;
         public BoxCollider detectOtherAICollider;
 
         [Header("Ref Death State")]
@@ -32,7 +37,7 @@ namespace State.AIBull
         public BaseAttackBullSO baseAttackBullSO;
         public DeathBullParameterSO deathBullSO;
 
-        void Start()
+        void Awake()
         {
             agent = GetComponent<NavMeshAgent>();
             playerTransform = GameObject.FindWithTag("Player").transform;
@@ -40,6 +45,7 @@ namespace State.AIBull
             material_Instances = GetComponent<Material_Instances>();
             bullAIStartPosRush = GetComponentInParent<BullAIStartPosRush>();
             bullCount = GetComponentInParent<BullCount>();
+            agentLinkMover = GetComponent<AgentLinkMover>();
 
             baseIdleBullSO = Instantiate(baseIdleBullSO);
             baseMoveBullSO = Instantiate(baseMoveBullSO);
@@ -51,6 +57,8 @@ namespace State.AIBull
 
         void Update()
         {
+            sphereDebug.position = agent.destination;
+
             distPlayer = Vector3.Distance(transform.position, playerTransform.position);
 
             if (enemyHealth._hp <= 0 && !isDead)

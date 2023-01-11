@@ -15,7 +15,7 @@ namespace State.AIBull
 
         private void OnEnable()
         {
-            if(globalRef.isDead)
+            if(globalRef != null && globalRef.isDead)
             {
                 globalRef.bullCount.RemoveAI(globalRef.transform);
                 globalRef.agent.speed = 0;

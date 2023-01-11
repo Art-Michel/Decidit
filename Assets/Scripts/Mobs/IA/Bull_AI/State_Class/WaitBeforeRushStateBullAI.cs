@@ -8,6 +8,13 @@ namespace State.AIBull
         [SerializeField] GlobalRefBullAI globalRef;
         RaycastHit hit;
 
+        [SerializeField] float maxDurationNavLink;
+        [SerializeField] bool linkIsActive;
+        NavMeshLink navLink;
+        bool triggerNavLink;
+
+        Vector3 destination;
+
         public override void InitState(StateControllerBull stateController)
         {
             base.InitState(stateController);
@@ -17,16 +24,58 @@ namespace State.AIBull
 
         private void OnEnable()
         {
-            globalRef.agent.speed = globalRef.coolDownRushBullSO.speedPatrolToStartPos;
+            try 
+            { 
+                globalRef.agent.speed = globalRef.coolDownRushBullSO.speedPatrolToStartPos; 
+            }
+            catch
+            {
+                Debug.LogWarning("missing Reference");
+            }
         }
 
         private void Update()
         {
+            ManageCurrentNavMeshLink();
             GoToStartRushPos();
         }
         private void FixedUpdate()
         {
             CheckObstacle();
+        }
+
+        void ManageCurrentNavMeshLink()
+        {
+            if (globalRef.agent.isOnOffMeshLink)
+            {
+                if (maxDurationNavLink > 0)
+                {
+                    globalRef.agent.ActivateCurrentOffMeshLink(false);
+                    linkIsActive = false;
+                    Debug.Log(linkIsActive + "Disable");
+                    maxDurationNavLink -= Time.deltaTime;
+                }
+                else
+                {
+                    linkIsActive = true;
+                    Debug.Log(linkIsActive + "Enable");
+                    globalRef.agent.ActivateCurrentOffMeshLink(true);
+                }
+
+                globalRef.agent.speed = 3;
+                if (navLink == null)
+                    navLink = globalRef.agent.navMeshOwner as NavMeshLink;
+
+            }
+            else
+            {
+                if (navLink != null)
+                {
+                    navLink.UpdateLink();
+                    navLink = null;
+                }
+                maxDurationNavLink = globalRef.agentLinkMover._duration;
+            }
         }
 
         void GoToStartRushPos()
@@ -108,7 +157,6 @@ namespace State.AIBull
                 }
                 else
                 {
-                    Debug.Log("Rush");
                     stateController.SetActiveState(StateControllerBull.AIState.Rush);
                 }
             }
@@ -121,17 +169,45 @@ namespace State.AIBull
             globalRef.agent.speed = globalRef.coolDownRushBullSO.speedRushToStartPos;
         }
 
+        Vector3 SwitchToLoockLinkDestination()
+        {
+            NavMeshLink link;
+            link = globalRef.agent.navMeshOwner as NavMeshLink;
+
+            if (!triggerNavLink)
+            {
+                if (Vector3.Distance(globalRef.transform.position, link.startPoint) < Vector3.Distance(globalRef.transform.position, link.endPoint))
+                {
+                    destination = link.endPoint;
+                    triggerNavLink = true;
+                }
+                else
+                {
+                    destination = link.startPoint;
+                    triggerNavLink = true;
+                }
+            }
+            return destination;
+        }
+
         void SmoothLookAtPlayer()
         {
             Vector3 direction;
             Vector3 relativePos;
 
-            if (globalRef.agent.remainingDistance > 1)
-                direction = globalRef.agent.destination;
+            if(globalRef.agent.isOnOffMeshLink)
+            {
+                direction = SwitchToLoockLinkDestination();
+            }
             else
-                direction = globalRef.playerTransform.position;
+            {
+                triggerNavLink = false;
 
-            //direction = bullAI.playerTransform.position;
+                if (globalRef.agent.remainingDistance > 1)
+                    direction = globalRef.agent.destination;
+                else
+                    direction = globalRef.playerTransform.position;
+            }
 
             relativePos.x = direction.x - globalRef.transform.position.x;
             relativePos.y = 0;

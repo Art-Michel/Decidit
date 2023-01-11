@@ -21,12 +21,14 @@ public class RushBullParameterSO : ScriptableObject
     public float rushInertieSetDistance;
     public bool stopLockPlayer;
 
+    [Header("Attack Range")]
+    public float rangeAttack;
+
     [Header("Detect Trash Mob Parameter")]
     public BoxCollider detectOtherAICollider;
     public List<GameObject> ennemiInCollider = new List<GameObject>();
     public RaycastHit hit;
-    public LayerMask mask;
+    public LayerMask maskCheckEnnemi;
     public LayerMask maskCheckObstacle;
-
-
+    public LayerMask noMask;
 }

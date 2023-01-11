@@ -57,7 +57,7 @@ namespace State.AIBull
         Vector3 CheckNavMeshPoint(Vector3 boundsForwardPos)
         {
             NavMeshHit closestHit;
-            if (NavMesh.SamplePosition(boundsForwardPos, out closestHit, 20, 1))
+            if (NavMesh.SamplePosition(boundsForwardPos, out closestHit, 1, 1))
             {
                 boundsForwardPos = closestHit.position;
             }
@@ -66,7 +66,8 @@ namespace State.AIBull
 
         public void ResetSelectedBox(BoxCollider boxColliderSelected)
         {
-            listSelectedBox.Add(boxColliderSelected);
+            if(listSelectedBox.Count < listBounds.Count)
+                listSelectedBox.Add(boxColliderSelected);
         }
     }
 }
