@@ -11,6 +11,7 @@ public class PlaceHolderSoundManager : LocalManager<PlaceHolderSoundManager>
 
     [SerializeField] AudioClip _land;
 
+    [SerializeField] AudioClip _lastBulletClick;
     [SerializeField] AudioClip _revolverShot;
     [SerializeField] AudioClip _aragonShot;
     [SerializeField] AudioClip _museShot;
@@ -108,6 +109,14 @@ public class PlaceHolderSoundManager : LocalManager<PlaceHolderSoundManager>
     public void PlayMuseShot()
     {
         PlaySound(_museShot, 1f);
+    }
+
+    public void PlayLastBulletClick()
+    {
+        if (_lastBulletClick)
+            PlaySound(_lastBulletClick, 1f);
+        else
+            Debug.LogWarning("Could not find Sound");
     }
 
     public void PlayEylauShot(int i)

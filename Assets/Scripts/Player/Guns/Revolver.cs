@@ -213,12 +213,15 @@ public class Revolver : MonoBehaviour
         {
             _ammoCountText.text = _ammo.ToString() + "/" + _maxAmmo.ToString();
             //Color
-            if (_ammo <= _maxAmmo / 3)
+            if (_ammo <= 1)
             {
-                if (_ammo > 0)
+                if (_ammo == 1)
                     _ammoCountText.color = _lowAmmoColor;
                 else
+                {
+                    PlaceHolderSoundManager.Instance.PlayLastBulletClick();
                     _ammoCountText.color = _noAmmoColor;
+                }
             }
             else _ammoCountText.color = _fullAmmoColor;
 
