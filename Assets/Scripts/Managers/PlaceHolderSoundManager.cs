@@ -113,10 +113,7 @@ public class PlaceHolderSoundManager : LocalManager<PlaceHolderSoundManager>
 
     public void PlayLastBulletClick()
     {
-        if (_lastBulletClick)
-            PlaySound(_lastBulletClick, 1f);
-        else
-            Debug.LogWarning("Could not find Sound");
+        PlaySound(_lastBulletClick, .5f);
     }
 
     public void PlayEylauShot(int i)
