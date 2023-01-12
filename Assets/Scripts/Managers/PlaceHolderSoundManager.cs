@@ -15,6 +15,7 @@ public class PlaceHolderSoundManager : LocalManager<PlaceHolderSoundManager>
     [SerializeField] AudioClip _revolverShot;
     [SerializeField] AudioClip _aragonShot;
     [SerializeField] AudioClip _museShot;
+    [SerializeField] AudioClip _museExplosion;
 
     [SerializeField] AudioClip _eylauShot0;
     [SerializeField] AudioClip _eylauShot1;

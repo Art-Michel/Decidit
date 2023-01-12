@@ -9,6 +9,8 @@ public class Explosion : Hitbox
     private Projectile _parentProjectile;
     private float _lifeT;
     [SerializeField] private VisualEffect _explosionVfx;
+    [SerializeField] private AudioSource _explosionAudioSource;
+    [SerializeField] private AudioClip _explosionSfx;
 
     protected override void Awake()
     {
@@ -29,8 +31,14 @@ public class Explosion : Hitbox
     private void Reset()
     {
         _lifeT = _lifeSpan;
+        PlayMuseExplosion();
 
         ClearBlacklist();
+    }
+
+    private void PlayMuseExplosion()
+    {
+        _explosionAudioSource.PlayOneShot(_explosionSfx, 1f);
     }
 
     protected override void Update()
