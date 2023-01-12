@@ -17,7 +17,15 @@ namespace State.AICAC
 
         private void Update()
         {
-            BaseAttack();
+            if (globalRef.distPlayer > globalRef.baseAttackAICACSO.attackRange && !globalRef.baseAttackAICACSO.isAttacking)
+            {
+                stateControllerAICAC.SetActiveState(StateControllerAICAC.AIState.BaseMove);
+            }
+            else
+            {
+                BaseAttack();
+            }
+
             SmoothLookAt();
         }
 
@@ -25,22 +33,17 @@ namespace State.AICAC
         {
             globalRef.agent.speed = 0;
 
-            if (globalRef.distPlayer > globalRef.baseAttackAICACSO.attackRange && !globalRef.baseAttackAICACSO.isAttacking)
+            if (globalRef.baseAttackAICACSO.currentAttackRate <= 0)
             {
-                stateControllerAICAC.SetActiveState(StateControllerAICAC.AIState.BaseMove);
+                Debug.Log("launch attack");
+
+                globalRef.myAnimator.SetBool("Attack", true);
+                globalRef.baseAttackAICACSO.isAttacking = true;
+                globalRef.baseAttackAICACSO.currentAttackRate = globalRef.baseAttackAICACSO.maxAttackRate;
             }
-            else
+            else if (!globalRef.baseAttackAICACSO.isAttacking)
             {
-                if (globalRef.baseAttackAICACSO.currentAttackRate <= 0)
-                {
-                    globalRef.myAnimator.SetBool("Attack", true);
-                    globalRef.baseAttackAICACSO.isAttacking = true;
-                    globalRef.baseAttackAICACSO.currentAttackRate = globalRef.baseAttackAICACSO.maxAttackRate;
-                }
-                else if (!globalRef.baseAttackAICACSO.isAttacking)
-                {
-                    globalRef.baseAttackAICACSO.currentAttackRate -= Time.deltaTime;
-                }
+                globalRef.baseAttackAICACSO.currentAttackRate -= Time.deltaTime;
             }
         }
 

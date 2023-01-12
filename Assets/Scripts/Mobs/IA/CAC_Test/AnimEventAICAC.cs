@@ -33,8 +33,9 @@ namespace State.AICAC
         void EndAttack()
         {
             globalRef.hitBox.SetActive(false);
-            globalRef.myAnimator.SetBool("Attack", false);
             globalRef.baseAttackAICACSO.isAttacking = false;
+            globalRef.myAnimator.SetBool("Attack", false);
+            Debug.Log("Stop attack");
         }
     }
 }
