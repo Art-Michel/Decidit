@@ -26,7 +26,8 @@ namespace State.AIBull
         {
             try 
             { 
-                globalRef.agent.speed = globalRef.coolDownRushBullSO.speedPatrolToStartPos; 
+                globalRef.agent.speed = globalRef.coolDownRushBullSO.speedPatrolToStartPos;
+                PreSelectingStartPos();
             }
             catch
             {
@@ -93,21 +94,27 @@ namespace State.AIBull
 
             if (globalRef.coolDownRushBullSO.startPos != Vector3.zero && globalRef.agent.remainingDistance <= 1f)
             {
+                Debug.Log("In Pos");
+
                 if (globalRef.coolDownRushBullSO.currentDurationStay > 0)
                 {
                     globalRef.coolDownRushBullSO.currentDurationStay -= Time.deltaTime;
                 }
                 else
                 {
-                    globalRef.coolDownRushBullSO.currentDurationStay = globalRef.coolDownRushBullSO.maxDurationStay;
-                    globalRef.bullAIStartPosRush.ResetSelectedBox(globalRef.coolDownRushBullSO.boxSelected);
-                    globalRef.coolDownRushBullSO.boxSelected = null;
-                    SelectStartPos();
+                    PreSelectingStartPos();
                 }
             }
             SmoothLookAtPlayer();
         }
 
+        void PreSelectingStartPos()
+        {
+            globalRef.coolDownRushBullSO.currentDurationStay = globalRef.coolDownRushBullSO.maxDurationStay;
+            globalRef.bullAIStartPosRush.ResetSelectedBox(globalRef.coolDownRushBullSO.boxSelected);
+            //globalRef.coolDownRushBullSO.boxSelected = null;
+            SelectStartPos();
+        }
         void SelectStartPos()
         {
             globalRef.bullAIStartPosRush.SelectAI(globalRef);
@@ -195,7 +202,7 @@ namespace State.AIBull
             Vector3 direction;
             Vector3 relativePos;
 
-            if(globalRef.agent.isOnOffMeshLink)
+            if (globalRef.agent.isOnOffMeshLink)
             {
                 direction = SwitchToLoockLinkDestination();
             }
@@ -204,7 +211,7 @@ namespace State.AIBull
                 triggerNavLink = false;
 
                 if (globalRef.agent.remainingDistance > 1)
-                    direction = globalRef.agent.destination;
+                    direction = globalRef.transform.position + globalRef.agent.desiredVelocity;
                 else
                     direction = globalRef.playerTransform.position;
             }
@@ -226,13 +233,14 @@ namespace State.AIBull
 
         private void OnDisable()
         {
+            globalRef.bullAIStartPosRush.ResetSelectedBox(globalRef.coolDownRushBullSO.boxSelected);
+            //globalRef.coolDownRushBullSO.boxSelected = null;
+
             globalRef.agent.speed = globalRef.coolDownRushBullSO.stopSpeed;
             globalRef.coolDownRushBullSO.rushDestination = globalRef.playerTransform.position + globalRef.transform.forward * globalRef.coolDownRushBullSO.rushInertieSetDistance;
             globalRef.coolDownRushBullSO.currentCoolDownRush = globalRef.coolDownRushBullSO.coolDownRush;
             globalRef.agent.SetDestination(globalRef.coolDownRushBullSO.rushDestination);
             globalRef.coolDownRushBullSO.startPos = Vector3.zero;
-            globalRef.bullAIStartPosRush.ResetSelectedBox(globalRef.coolDownRushBullSO.boxSelected);
-            globalRef.coolDownRushBullSO.boxSelected = null;
             globalRef.coolDownRushBullSO.speedRot = 0;
             globalRef.material_Instances.Material.color = globalRef.material_Instances.Color;
             globalRef.material_Instances.ChangeColorTexture(globalRef.material_Instances.Color);

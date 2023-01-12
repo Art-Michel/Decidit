@@ -33,8 +33,9 @@ namespace State.AIBull
         {
             try
             {
+                listSelectedBox = new List<BoxCollider>(listBounds);
                 int indexBox = Random.Range(0, listSelectedBox.Count - 1);
-                CheckPosition(bullAI, listBounds[indexBox]);
+                CheckPosition(bullAI, listSelectedBox[indexBox]);
                 listSelectedBox.Remove(listBounds[indexBox]);
             }
             catch
@@ -46,6 +47,8 @@ namespace State.AIBull
 
         void CheckPosition(GlobalRefBullAI bullAI, BoxCollider boxSelected)
         {
+            Debug.Log(boxSelected);
+
             Vector3 boundsForwardPos = new Vector3(Random.Range(boxSelected.bounds.min.x, boxSelected.bounds.max.x),
                                              navMeshData.sourceBounds.center.y,
                                              Random.Range(boxSelected.bounds.min.z, boxSelected.bounds.max.z));

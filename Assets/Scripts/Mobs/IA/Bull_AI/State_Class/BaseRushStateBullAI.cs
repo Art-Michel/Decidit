@@ -46,7 +46,6 @@ namespace State.AIBull
         private void FixedUpdate()
         {
             CheckPlayerDistance();
-
         }
         void ManageCurrentNavMeshLink()
         {
@@ -95,6 +94,11 @@ namespace State.AIBull
                 }
             }
             else
+            {
+                StopRush();
+            }
+
+            if(lockPlayer && rushIsActive && globalRef.agent.velocity.magnitude ==0)
             {
                 StopRush();
             }
@@ -184,7 +188,7 @@ namespace State.AIBull
             else
             {
                 triggerNavLink = false;
-                direction = globalRef.agent.destination;
+                direction = globalRef.transform.position + globalRef.agent.desiredVelocity;
             }
 
             relativePos.x = direction.x - globalRef.transform.position.x;

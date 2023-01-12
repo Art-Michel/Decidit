@@ -8,6 +8,7 @@ namespace State.AICAC
         [SerializeField] GlobalRefAICAC globalRef;
 
         Vector3 destination;
+        [SerializeField] float offset;
 
         [SerializeField] float maxDurationNavLink;
         [SerializeField] bool linkIsActive;
@@ -95,7 +96,10 @@ namespace State.AICAC
             }
             else
             {
-                destination = CheckPlayerDownPos.positionPlayer + left * globalRef.offsetDestination;
+                offset = Mathf.Lerp(offset, globalRef.offsetDestination, globalRef.baseMoveAICACSO.offsetTransitionSmooth * Time.deltaTime);
+                offset = Mathf.Clamp(offset, -Mathf.Abs(globalRef.offsetDestination), Mathf.Abs(globalRef.offsetDestination));
+
+                destination = CheckPlayerDownPos.positionPlayer + left * offset;
 
                 if (triggerNavLink)
                 {
@@ -171,7 +175,15 @@ namespace State.AICAC
             Vector3 direction;
             Vector3 relativePos;
 
-            direction = destination;
+            if (globalRef.agent.isOnOffMeshLink)
+            {
+                direction = destination;
+            }
+            else
+            {
+                direction = globalRef.transform.position + globalRef.agent.desiredVelocity;
+            }
+
             relativePos.x = direction.x - globalRef.transform.position.x;
             relativePos.y = 0;
             relativePos.z = direction.z - globalRef.transform.position.z;

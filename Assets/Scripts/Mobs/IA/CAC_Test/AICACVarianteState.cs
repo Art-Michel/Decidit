@@ -82,8 +82,8 @@ namespace State.AICAC
                 SetOffsetAticipationDestination();
 
 
-            CoolDownSurround();
-            SetSurroundDirection();
+            //CoolDownSurround();
+            //SetSurroundDirection();
         }
 
         /// <summary>

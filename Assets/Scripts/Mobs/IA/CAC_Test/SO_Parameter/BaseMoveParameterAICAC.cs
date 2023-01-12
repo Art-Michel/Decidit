@@ -20,4 +20,5 @@ public class BaseMoveParameterAICAC : ScriptableObject
     public float attackRange;
     public bool activeAnticipDestination;
     public float jumpRate;
+    public float offsetTransitionSmooth;
 }
