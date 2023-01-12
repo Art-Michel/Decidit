@@ -7,29 +7,36 @@ public class DoorCollider : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
-            //on ferme la parte derière le joueur et on enlève la room qu'il vient de passer
-            Doors.Instance.GetDoor().SetActive(true);
-            Doors.Instance.GetRoom().SetActive(false);
-
             //si c'est la porte du bout du coulloir...
-            if(Doors.Instance.GetDoor2())
+            if (Doors.Instance.GetDoorIndex() % 2 == 1)
             {
-                //on active la room suivante et check le nombre dennemies
                 Doors.Instance.GetDoor().SetActive(false);
                 Doors.Instance.GetRoom().SetActive(true);
+                Doors.Instance.AddRoomIndex();
+                Doors.Instance.AddDoorIndex();
                 Doors.Instance.NbIACheck();
+                gameObject.SetActive(false);
+            }
+            else
+            {
+                //on ferme la parte derière le joueur et on enlève la room qu'il vient de passer
+                Doors.Instance.GetDoor().SetActive(true);
+                Doors.Instance.GetRoom().SetActive(false);
+                Doors.Instance.AddRoomIndex();
+                gameObject.SetActive(false);
+                Doors.Instance.AddDoorIndex();
             }
         }
     }

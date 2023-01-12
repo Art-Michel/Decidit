@@ -7,13 +7,12 @@ public class Doors : MonoBehaviour
     #region Variables
     public static Doors Instance = null;
     [SerializeField] int NbIA;
+    [SerializeField] int indexRoom;
+    [SerializeField] int indexDoor;
 
-    [SerializeField] GameObject Door;
-    [SerializeField] GameObject Door2;
-    [SerializeField] GameObject Room;
-    [SerializeField] GameObject Room2;
+    [SerializeField] List<GameObject> Door;
+    [SerializeField] List<GameObject> Room;
 
-    
     #endregion
 
     private void Awake()
@@ -24,8 +23,7 @@ public class Doors : MonoBehaviour
             return;
         }
         Instance = this;
-        //fait spawn la map de base et on enregistre le nombre d'enemies
-        SetUp();
+        //on enregistre le nombre d'enemies
         NbIACheck();
     }
 
@@ -40,8 +38,7 @@ public class Doors : MonoBehaviour
         if(NbIA <= 0)
         {
             //on ouvre la porte
-            Door.SetActive(false);
-            NbIA +=1;
+            Door[indexDoor].SetActive(false);
         }
     }
 
@@ -54,25 +51,25 @@ public class Doors : MonoBehaviour
     {
         NbIA --;
     }
-    private void SetUp()
-    {
-        Room.SetActive(true);
-    }
     public GameObject GetDoor()
     {
-        return(Door);
+        return(Door[indexDoor]);
     }
-    public GameObject GetDoor2()
+    public void AddDoorIndex()
     {
-        return(Door2);
+        indexDoor ++;
+    }
+    public int GetDoorIndex()
+    {
+        return (indexDoor);
     }
     public GameObject GetRoom()
     {
-        return(Room);
+        return(Room[indexRoom]);
     }
-    public GameObject GetRoom2()
+    public void AddRoomIndex()
     {
-        return(Room2);
+        indexRoom ++;
     }
     #endregion
 }
