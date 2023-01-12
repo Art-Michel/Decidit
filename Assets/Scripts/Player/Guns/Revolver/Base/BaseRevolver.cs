@@ -31,7 +31,10 @@ public class BaseRevolver : Revolver
 
         PlaceHolderSoundManager.Instance.PlayRevolverShot();
         Player.Instance.StartShake(_shootShakeIntensity, _shootShakeDuration);
-        _muzzleFlash.Play();
+
+        //va te faire enculer unity
+        _muzzleFlash.PlayAll();
+
     }
 
     public void SpawnTrail()

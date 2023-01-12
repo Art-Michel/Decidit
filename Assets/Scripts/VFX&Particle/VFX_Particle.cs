@@ -12,7 +12,7 @@ public class VFX_Particle : MonoBehaviour
     private List<ParticleSystem> _particleSystems;
 
     [Button]
-    private void PlayAll()
+    public void PlayAll()
     {
         _vfx.Play();
         foreach (ParticleSystem system in _particleSystems)

@@ -15,6 +15,6 @@ public class MuseRevolver : Revolver
 
         Player.Instance.StartShake(_shootShakeIntensity, _shootShakeDuration);
         PlaceHolderSoundManager.Instance.PlayMuseShot();
-        _muzzleFlash.Play();
+        _muzzleFlash.PlayAll();
     }
 }

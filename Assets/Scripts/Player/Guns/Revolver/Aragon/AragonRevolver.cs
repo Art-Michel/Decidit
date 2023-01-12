@@ -15,6 +15,6 @@ public class AragonRevolver : Revolver
 
         Player.Instance.StartShake(_shootShakeIntensity, _shootShakeDuration);
         PlaceHolderSoundManager.Instance.PlayAragonShot();
-        _muzzleFlash.Play();
+        _muzzleFlash.PlayAll();
     }
 }

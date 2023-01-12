@@ -139,7 +139,7 @@ public class EylauRevolver : Revolver
             shot.GetComponent<Projectile>().Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized);
 
         PlaceHolderSoundManager.Instance.PlayEylauShot(_currentChargeStep);
-        _muzzleFlash.Play();
+        _muzzleFlash.PlayAll();
     }
 
     private void Laser()
