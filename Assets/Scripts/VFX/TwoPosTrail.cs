@@ -27,8 +27,12 @@ public class TwoPosTrail : PooledObject
 
     void Update()
     {
+        if(!Pooler!=null)
+        {
+
         _cd -= Time.deltaTime;
         if (_cd <= 0f)
             this.Pooler.Return(this);
+        }
     }
 }
