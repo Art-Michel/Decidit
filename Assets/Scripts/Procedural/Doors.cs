@@ -70,5 +70,9 @@ public class Doors : MonoBehaviour
     {
         return(Room);
     }
+    public GameObject GetRoom2()
+    {
+        return(Room2);
+    }
     #endregion
 }
