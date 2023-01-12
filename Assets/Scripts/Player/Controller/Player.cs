@@ -105,6 +105,12 @@ public class Player : LocalManager<Player>
     public Vector3 FinalMovement { get; private set; }
     #endregion
 
+    #region FugueSpell Variables
+    private float _fugueDashDestination;
+    private float _fugueDashStart;
+    private float _fugueDashT;
+    #endregion
+
     protected override void Awake()
     {
         base.Awake();
@@ -161,7 +167,7 @@ public class Player : LocalManager<Player>
         UpdateDebugTexts();
     }
 
-    void LateUpdate()
+    private void LateUpdate()
     {
         //Apply Movement
         ApplyMovementsToCharacter(FinalMovement);
@@ -513,6 +519,14 @@ public class Player : LocalManager<Player>
 
         //Actually move
         _charaCon.Move(direction);
+    }
+
+    #endregion
+
+    #region Dashing Functions
+    public void StartDash(Vector3 position)
+    {
+
     }
 
     #endregion
