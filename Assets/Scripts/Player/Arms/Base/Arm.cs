@@ -14,6 +14,10 @@ public class Arm : MonoBehaviour
     [SerializeField] Image _crossHairOutline;
     [Foldout("References")]
     [SerializeField] protected GameObject _ui;
+    [Foldout("References")]
+    [SerializeField]
+    protected Transform _camera;
+
     PlayerInputMap _inputs;
     ArmFSM _fsm;
     #endregion
@@ -31,6 +35,7 @@ public class Arm : MonoBehaviour
         _inputs.Actions.Skill.started += _ => PressSong();
         _inputs.Actions.Cancel.started += _ => PressCancelSong();
         _inputs.Actions.Skill.canceled += _ => ReleaseSong();
+        _camera = Camera.main.transform;
     }
 
     void Start()
@@ -80,6 +85,16 @@ public class Arm : MonoBehaviour
     }
 
     public virtual void StartPrevis()
+    {
+
+    }
+
+    public virtual void UpdatePrevis()
+    {
+
+    }
+
+    public virtual void StopPrevis()
     {
 
     }

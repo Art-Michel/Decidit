@@ -16,14 +16,12 @@ public class AragonArmStatePrevis : ArmState
 
     public override void StateUpdate()
     {
-        base.StateUpdate();
-
+        _arm.UpdatePrevis();
     }
 
     public override void Exit()
     {
-        base.Exit();
-
+        _arm.StopPrevis();
     }
 
 }
