@@ -87,7 +87,7 @@ public class Arm : MonoBehaviour
     public virtual void StartActive()
     {
         _fsm.ChangeState(ArmStateList.RECOVERY);
-
+        _crossHairOutline.enabled = false;
     }
 
     public virtual void StartRecovery()

@@ -11,7 +11,7 @@ public class AragonArmStateIdle : ArmState
 
     public override void Begin()
     {
-        
+        _arm.StartIdle();
     }
 
     public override void StateUpdate()

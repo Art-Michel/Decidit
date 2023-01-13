@@ -11,7 +11,7 @@ public class EylauArmStatePrevis : ArmState
 
     public override void Begin()
     {
-
+        _arm.StartPrevis();
     }
 
     public override void StateUpdate()

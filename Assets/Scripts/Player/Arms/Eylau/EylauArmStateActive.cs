@@ -11,7 +11,7 @@ public class EylauArmStateActive : ArmState
 
     public override void Begin()
     {
-        _fsm.ChangeState(ArmStateList.RECOVERY);
+        _arm.StartActive();
     }
 
     public override void StateUpdate()

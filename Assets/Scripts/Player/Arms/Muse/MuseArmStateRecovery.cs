@@ -11,13 +11,12 @@ public class MuseArmStateRecovery : ArmState
 
     public override void Begin()
     {
-        _fsm.ChangeState(ArmStateList.IDLE);
-
+        _arm.StartRecovery();
     }
 
     public override void StateUpdate()
     {
-
+        _arm.UpdateCooldown();
     }
 
     public override void Exit()

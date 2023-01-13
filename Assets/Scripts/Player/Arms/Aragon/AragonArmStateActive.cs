@@ -11,17 +11,15 @@ public class AragonArmStateActive : ArmState
 
     public override void Begin()
     {
-        _fsm.ChangeState(ArmStateList.RECOVERY);
+        _arm.StartActive();
     }
 
     public override void StateUpdate()
     {
-
     }
 
     public override void Exit()
     {
-
     }
 
 }
