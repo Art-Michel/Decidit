@@ -2,21 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArmStateIdle : ArmState
+public class ArmStateRecovery : ArmState
 {
-    public ArmStateIdle() : base(ArmStateList.IDLE)
+    public ArmStateRecovery() : base(ArmStateList.RECOVERY)
     {
 
     }
 
     public override void Begin()
     {
-        _arm.StartIdle();
+        _arm.StartRecovery();
+
     }
 
     public override void StateUpdate()
     {
-
+        _arm.UpdateCooldown();
     }
 
     public override void Exit()

@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.VFX;
 
 public class AragonRevolver : Revolver
 {
-    [Header("References")]
+    [Foldout("References")]
     [SerializeField] Pooler _pooler;
 
     public override void Shoot()

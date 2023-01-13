@@ -134,7 +134,7 @@ public class PlaceHolderSoundManager : LocalManager<PlaceHolderSoundManager>
                 PlaySound(_eylauShot3, 1f);
                 break;
             case 4:
-                PlaySound(_eylauShot5, 1f);
+                PlaySound(_eylauShot4, 1f);
                 break;
             case 5:
                 PlaySound(_eylauShot5, 1f);

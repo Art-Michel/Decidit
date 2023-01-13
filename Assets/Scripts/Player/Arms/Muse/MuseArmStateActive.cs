@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArmStateIdle : ArmState
+public class MuseArmStateActive : ArmState
 {
-    public ArmStateIdle() : base(ArmStateList.IDLE)
+    public MuseArmStateActive() : base(ArmStateList.ACTIVE)
     {
 
     }
 
     public override void Begin()
     {
-        _arm.StartIdle();
+        _fsm.ChangeState(ArmStateList.RECOVERY);
     }
 
     public override void StateUpdate()

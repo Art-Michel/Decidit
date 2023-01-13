@@ -16,9 +16,12 @@ public class ArmFSM : MonoBehaviour
         states = new Dictionary<string, ArmState>();
     }
 
-    void Start()
+    protected virtual void Start()
     {
         AddState(new ArmStateIdle());
+        AddState(new ArmStateActive());
+        AddState(new ArmStatePrevis());
+        AddState(new ArmStateRecovery());
 
         ChangeState(ArmStateList.IDLE);
     }

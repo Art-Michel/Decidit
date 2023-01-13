@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArmStateIdle : ArmState
+public class ArmStatePrevis : ArmState
 {
-    public ArmStateIdle() : base(ArmStateList.IDLE)
+    public ArmStatePrevis() : base(ArmStateList.PREVIS)
     {
 
     }
 
     public override void Begin()
     {
-        _arm.StartIdle();
+        _arm.StartPrevis();
     }
 
     public override void StateUpdate()

@@ -19,12 +19,10 @@ public class EylauRevolverStateReloading : RevolverState
     public override void StateUpdate()
     {
         _revolver.Reloading();
-        Debug.Log("yahoo!");
     }
 
     public override void Exit()
     {
 
     }
-
 }

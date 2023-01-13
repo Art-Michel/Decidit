@@ -5,4 +5,8 @@ using UnityEngine;
 public class AragonArm : Arm
 {
 
+    public override void StartPrevis()
+    {
+        base.StartPrevis();
+    }
 }

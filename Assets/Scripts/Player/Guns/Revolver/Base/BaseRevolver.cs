@@ -1,16 +1,18 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.VFX;
 
 public class BaseRevolver : Revolver
 {
-    [Header("References")]
+    [Foldout("References")]
     [SerializeField] Pooler _vfxPooler;
 
-    [Header("Stats")]
+    [Foldout("Stats")]
     [SerializeField] int _hitscanDamage = 25;
+    [Foldout("Stats")]
     [SerializeField] float _hitscanMaxRange = 100f;
 
     public override void Shoot()

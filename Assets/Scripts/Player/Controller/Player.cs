@@ -1,19 +1,28 @@
 using System;
 using UnityEngine;
 using TMPro;
+using NaughtyAttributes;
 
 public class Player : LocalManager<Player>
 {
     #region References
-    [Header("References")]
+    [Foldout("Debug References")]
     [SerializeField] TextMeshProUGUI _debugInputVelocityText;
+    [Foldout("Debug References")]
     [SerializeField] TextMeshProUGUI _debugGlobalVelocityText;
+    [Foldout("Debug References")]
     [SerializeField] TextMeshProUGUI _debugGravityText;
+    [Foldout("Debug References")]
     [SerializeField] TextMeshProUGUI _debugSlopeText;
+    [Foldout("Debug References")]
     [SerializeField] TextMeshProUGUI _debugStateText;
+    [Foldout("Debug References")]
     [SerializeField] TextMeshProUGUI _debugSpeedText;
+    [Foldout("References")]
     [SerializeField] Transform _head;
+    [Foldout("References")]
     [SerializeField] CharacterController _charaCon;
+    [Foldout("References")]
     [SerializeField] LayerMask _collisionMask;
     PlayerInputMap _inputs;
     PlayerFSM _fsm;
@@ -28,17 +37,24 @@ public class Player : LocalManager<Player>
     float _shakeIntensity;
     Vector3 _initialHeadPos = new Vector3(0, 0.4f, 0);
 
-    [Header("Camera Settings")]
     //Mouse
+    [Foldout("Camera Mouse Settings")]
     [Range(0.1f, 100)][SerializeField] private float _mouseSensitivityX = 10f;
+    [Foldout("Camera Mouse Settings")]
     [Range(0.1f, 100)][SerializeField] private float _mouseSensitivityY = 10f;
+    [Foldout("Camera Mouse Settings")]
     [SerializeField] private bool _mouseXInverted = false;
+    [Foldout("Camera Mouse Settings")]
     [SerializeField] private bool _mouseYInverted = false;
 
     //Joysticks
+    [Foldout("Camera Stick Settings")]
     [Range(1f, 100)][SerializeField] private float _stickSensitivityX = 15f;
+    [Foldout("Camera Stick Settings")]
     [Range(1f, 100)][SerializeField] private float _stickSensitivityY = 15f;
+    [Foldout("Camera Stick Settings")]
     [SerializeField] private bool _controllerCameraXInverted = false;
+    [Foldout("Camera Stick Settings")]
     [SerializeField] private bool _controllerCameraYInverted = false;
 
     int _mouseXInvertedValue;
@@ -51,10 +67,13 @@ public class Player : LocalManager<Player>
     #endregion
 
     #region Jumping, Falling and Ground Detection variables
-    [Header("Jumping Settings")]
+    [Foldout("Jumping Settings")]
     [Range(0, 50)][SerializeField] private float _jumpStrength = 14f;
+    [Foldout("Jumping Settings")]
     [Range(0, 10)][SerializeField] private float _airborneDrag = 3f;
+    [Foldout("Jumping Settings")]
     [Range(0, 10)][SerializeField] private float _jumpingDrag = 3f;
+    [Foldout("Jumping Settings")]
     [Range(0, 90)][SerializeField] private float _maxCeilingAngle = 30f;
 
     private const float _gravity = 9.81f;
@@ -75,20 +94,24 @@ public class Player : LocalManager<Player>
     #endregion
 
     #region Movement Variables
-    [Header("Movement Settings")]
+    [Foldout("Movement Settings")]
     [Range(0, 20)]
     [SerializeField]
     private float _baseSpeed = 9f;
+    [Foldout("Movement Settings")]
     [Range(0, 1)]
     [SerializeField]
     private float _movementAccelerationSpeed = 0.0666f; //Approx 4 frames
+    [Foldout("Movement Settings")]
     [Range(0, 1)]
     [SerializeField]
     private float _movementDecelerationSpeed = 0.0666f; //Approx 4 frames
+    [Foldout("Movement Settings")]
     [Range(0, 100)]
     [Tooltip("if lower than movement speed, you will accelerate when airborne")]
     [SerializeField]
     private float _airborneFriction = 9f;
+    [Foldout("Movement Settings")]
     [Range(0, 100)]
     [SerializeField]
     private float _groundedFriction = 50f;

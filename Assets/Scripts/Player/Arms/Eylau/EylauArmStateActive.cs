@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArmStateIdle : ArmState
+public class EylauArmStateActive : ArmState
 {
-    public ArmStateIdle() : base(ArmStateList.IDLE)
+    public EylauArmStateActive() : base(ArmStateList.ACTIVE)
     {
 
     }
 
     public override void Begin()
     {
-        _arm.StartIdle();
+        _fsm.ChangeState(ArmStateList.RECOVERY);
     }
 
     public override void StateUpdate()

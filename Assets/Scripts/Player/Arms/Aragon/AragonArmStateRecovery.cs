@@ -2,16 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArmStateIdle : ArmState
+public class AragonArmStateRecovery : ArmState
 {
-    public ArmStateIdle() : base(ArmStateList.IDLE)
+    public AragonArmStateRecovery() : base(ArmStateList.RECOVERY)
     {
 
     }
 
     public override void Begin()
     {
-        _arm.StartIdle();
+        _fsm.ChangeState(ArmStateList.IDLE);
+
     }
 
     public override void StateUpdate()
