@@ -63,7 +63,7 @@ public class Explosion : Hitbox
         }
 
         //Explosion gets weaker over time
-        _knockbackForce = _initialKnockbackForce * Mathf.InverseLerp(_lifeSpan, 0f, _lifeT);
-        _damage = Mathf.RoundToInt(_initialDamage * Mathf.InverseLerp(_lifeSpan, 0f, _lifeT));
+        _knockbackForce = _initialKnockbackForce * Mathf.InverseLerp(_lifeSpan, 1f, _lifeT);
+        _damage = Mathf.RoundToInt(_initialDamage * Mathf.InverseLerp(_lifeSpan, 1f, _lifeT));
     }
 }

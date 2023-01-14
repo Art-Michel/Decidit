@@ -27,6 +27,11 @@ public class AragonArm : Arm
     private Vector3 _dashDestination;
     private float _dashT;
 
+    public override void StartIdle()
+    {
+        _vfx.SetActive(false);
+    }
+
     public override void StartPrevis()
     {
         _vfx.SetActive(true);

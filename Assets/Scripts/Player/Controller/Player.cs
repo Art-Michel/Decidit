@@ -513,8 +513,9 @@ public class Player : LocalManager<Player>
 
     public void AddMomentum(Vector3 blow)
     {
-        _globalMomentum += blow;
         _fsm.ChangeState(PlayerStatesList.AIRBORNE);
+        FinalMovement += blow.normalized;
+        _globalMomentum += blow;
     }
 
     private void UpdateGlobalMomentum()
