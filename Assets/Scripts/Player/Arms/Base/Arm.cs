@@ -136,6 +136,11 @@ public class Arm : MonoBehaviour
         _crossHairOutline.enabled = true;
     }
 
+    public virtual void CheckLookedAt()
+    {
+
+    }
+
     #region Debugging
     void Debugging()
     {

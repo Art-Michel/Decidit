@@ -5,13 +5,16 @@ using NaughtyAttributes;
 
 public class Health : MonoBehaviour
 {
-    [Header("References")]
+    [Foldout("References")]
     [SerializeField] protected Image _hpUi;
+    [Foldout("References")]
     [SerializeField] protected Image _probHpUi;
 
-    [Header("Stats")]
+    [Foldout("Stats")]
     [Range(1, 300)][SerializeField] protected float _maxHp = 100;
+    [Foldout("Stats")]
     [Range(0, 3)][SerializeField] float _probationMaxStartup = 1;
+    [Foldout("Stats")]
     [Range(0.1f, 60)][SerializeField] float _probationSpeed = 15;
 
     public float _hp { get; private set; }
@@ -63,6 +66,11 @@ public class Health : MonoBehaviour
         }
 
         StartProbHealth();
+    }
+
+    public virtual void Knockback(Vector3 direction)
+    {
+
     }
 
     private void ProbRegen(int amount = 10)

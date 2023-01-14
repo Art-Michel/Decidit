@@ -12,6 +12,7 @@ public class MuseArmStateActive : ArmState
     public override void Begin()
     {
         _arm.StartActive();
+        _fsm.ChangeState(ArmStateList.RECOVERY);
     }
 
     public override void StateUpdate()

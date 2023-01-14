@@ -20,6 +20,8 @@ public class PlaceHolderSoundManager : LocalManager<PlaceHolderSoundManager>
     [SerializeField] AudioClip _eylauShot0;
     [SerializeField] AudioClip _eylauShot1;
     [SerializeField] AudioClip _eylauShot2;
+    [SerializeField] AudioClip _museRocketLaunch;
+
     [SerializeField] AudioClip _eylauShot3;
     [SerializeField] AudioClip _eylauShot4;
     [SerializeField] AudioClip _eylauShot5;
@@ -40,7 +42,6 @@ public class PlaceHolderSoundManager : LocalManager<PlaceHolderSoundManager>
 
     [SerializeField] AudioClip _hit;
     [SerializeField] AudioClip _criticalHit;
-
 
     private void PlaySound(AudioClip clip, float volume)
     {
@@ -110,6 +111,11 @@ public class PlaceHolderSoundManager : LocalManager<PlaceHolderSoundManager>
     public void PlayMuseShot()
     {
         PlaySound(_museShot, 1f);
+    }
+
+    internal void PlayMuseRocketLaunch()
+    {
+        PlaySound(_museRocketLaunch, 1f);
     }
 
     public void PlayLastBulletClick()

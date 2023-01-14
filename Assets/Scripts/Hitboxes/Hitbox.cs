@@ -9,6 +9,7 @@ public class Hitbox : MonoBehaviour
     [SerializeField] protected LayerMask _shouldCollideWith;
     [SerializeField] protected float _radius = .2f;
     [SerializeField] protected int _damage = 10;
+    [SerializeField] protected float _knockbackForce = 10f;
 
     public Dictionary<Transform, float> Blacklist { get; set; }
     [SerializeField] protected bool _canMultiHit = false;
@@ -66,6 +67,11 @@ public class Hitbox : MonoBehaviour
                 health.TakeCriticalDamage(_damage);
             else
                 health.TakeDamage(_damage);
+            if (_knockbackForce > 0f)
+            {
+                Vector3 direction = (targetCollider.position - transform.position).normalized;
+                health.Knockback(direction * _knockbackForce);
+            }
             Blacklist.Add(targetCollider.parent, _delayBetweenHits);
         }
     }

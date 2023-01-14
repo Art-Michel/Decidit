@@ -16,7 +16,7 @@ public class MuseArmStateIdle : ArmState
 
     public override void StateUpdate()
     {
-
+        _arm.CheckLookedAt();
     }
 
     public override void Exit()

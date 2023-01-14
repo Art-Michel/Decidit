@@ -511,6 +511,12 @@ public class Player : LocalManager<Player>
         _movementInputs *= _movementAcceleration;
     }
 
+    public void AddMomentum(Vector3 blow)
+    {
+        _globalMomentum += blow;
+        _fsm.ChangeState(PlayerStatesList.AIRBORNE);
+    }
+
     private void UpdateGlobalMomentum()
     {
         //Add Input Vector to Momentum

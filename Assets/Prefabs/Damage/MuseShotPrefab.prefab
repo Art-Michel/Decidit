@@ -324,6 +324,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8339305955289743854}
+  - {fileID: 6413250448817371002}
   m_Father: {fileID: 8465386666873793416}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -344,6 +345,7 @@ MonoBehaviour:
     m_Bits: 32768
   _radius: 3
   _damage: 30
+  _knockbackForce: 10
   _canMultiHit: 0
   _delayBetweenHits: 0
   _lifeSpan: 1.06
@@ -498,6 +500,7 @@ MonoBehaviour:
     m_Bits: 33280
   _radius: 0.25
   _damage: 30
+  _knockbackForce: 10
   _canMultiHit: 0
   _delayBetweenHits: 0
   _pooledObject: {fileID: 6950745005677804068}
@@ -525,3 +528,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88ae98f78f66b0a41b7fdb171237df2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &9109925886092690631
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6413250448817371002}
+  - component: {fileID: 3078469253170240065}
+  m_Layer: 0
+  m_Name: Windbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6413250448817371002
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9109925886092690631}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4133054445552840744}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3078469253170240065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9109925886092690631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0210dfaab9332e642aa36cf82470974a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shouldCollideWith:
+    serializedVersion: 2
+    m_Bits: 16384
+  _radius: 3
+  _damage: 0
+  _knockbackForce: 20
+  _canMultiHit: 0
+  _delayBetweenHits: 0

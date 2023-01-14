@@ -8,7 +8,7 @@ public class Explosion : Hitbox
     [SerializeField] private float _lifeSpan = 1f;
     private Projectile _parentProjectile;
     private float _lifeT;
-    [SerializeField] private VisualEffect _explosionVfx;
+    [SerializeField] private VFX_Particle _explosionVfx;
     [SerializeField] private AudioSource _explosionAudioSource;
     [SerializeField] private AudioClip _explosionSfx;
 
@@ -48,7 +48,7 @@ public class Explosion : Hitbox
         if (_lifeT <= 0)
         {
             gameObject.SetActive(false);
-            _explosionVfx.Play();
+            if (_explosionVfx) _explosionVfx.PlayAll();
             _parentProjectile.Disappear();
         }
     }
