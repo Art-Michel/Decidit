@@ -21,7 +21,7 @@ public class Player : LocalManager<Player>
     [Foldout("References")]
     [SerializeField] Transform _head;
     [Foldout("References")]
-    [SerializeField] CharacterController _charaCon;
+    public CharacterController _charaCon;
     [Foldout("References")]
     [SerializeField] LayerMask _collisionMask;
     PlayerInputMap _inputs;
@@ -119,6 +119,7 @@ public class Player : LocalManager<Player>
     private float _currentFriction;
 
     private float _currentSpeed;
+    private bool _canMove;
     private Vector3 _movementInputs; // X is Left-Right and Z is Backward-Forward
     private Vector3 _lastFrameMovementInputs;
     private Vector3 _globalMomentum;
@@ -126,12 +127,6 @@ public class Player : LocalManager<Player>
     private bool _isPressingADirection;
 
     public Vector3 FinalMovement { get; private set; }
-    #endregion
-
-    #region FugueSpell Variables
-    private float _fugueDashDestination;
-    private float _fugueDashStart;
-    private float _fugueDashT;
     #endregion
 
     protected override void Awake()
@@ -151,6 +146,7 @@ public class Player : LocalManager<Player>
         _currentSpeed = _baseSpeed;
         _currentlyAppliedGravity = 0;
         _movementAcceleration = 0;
+        _canMove = true;
         SetCameraInvert();
         StopShake();
     }
@@ -541,15 +537,23 @@ public class Player : LocalManager<Player>
         }
 
         //Actually move
-        _charaCon.Move(direction);
+        if (_charaCon.enabled)
+            _charaCon.Move(direction);
     }
 
     #endregion
 
     #region Dashing Functions
-    public void StartDash(Vector3 position)
+    public void KillMomentum()
     {
+        _globalMomentum = Vector3.zero;
+        _currentlyAppliedGravity = 0f;
+        _steepSlopesMovement = Vector3.zero;
+    }
 
+    public void AllowMovement(bool boolean)
+    {
+        _canMove = boolean;
     }
 
     #endregion

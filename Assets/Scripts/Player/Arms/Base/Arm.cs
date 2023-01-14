@@ -9,9 +9,9 @@ public class Arm : MonoBehaviour
     [Foldout("References")]
     [SerializeField] TextMeshProUGUI _debugStateText;
     [Foldout("References")]
-    [SerializeField] Image _crossHair;
+    [SerializeField] protected Image _crossHair;
     [Foldout("References")]
-    [SerializeField] Image _crossHairOutline;
+    [SerializeField] protected Image _crossHairOutline;
     [Foldout("References")]
     [SerializeField] protected GameObject _ui;
     [Foldout("References")]
@@ -19,7 +19,7 @@ public class Arm : MonoBehaviour
     protected Transform _camera;
 
     PlayerInputMap _inputs;
-    ArmFSM _fsm;
+    protected ArmFSM _fsm;
     #endregion
 
     #region Stats Decleration
@@ -35,7 +35,6 @@ public class Arm : MonoBehaviour
         _inputs.Actions.Skill.started += _ => PressSong();
         _inputs.Actions.Cancel.started += _ => PressCancelSong();
         _inputs.Actions.Skill.canceled += _ => ReleaseSong();
-        _camera = Camera.main.transform;
     }
 
     void Start()
@@ -47,7 +46,9 @@ public class Arm : MonoBehaviour
     {
         //State update
         if (_fsm.currentState != null)
+        {
             _fsm.currentState.StateUpdate();
+        }
 
         Debugging();
     }
@@ -103,6 +104,16 @@ public class Arm : MonoBehaviour
     {
         _fsm.ChangeState(ArmStateList.RECOVERY);
         _crossHairOutline.enabled = false;
+    }
+
+    public virtual void UpdateActive()
+    {
+
+    }
+
+    public virtual void StopActive()
+    {
+
     }
 
     public virtual void StartRecovery()

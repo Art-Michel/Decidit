@@ -9,14 +9,23 @@ public class AragonArm : Arm
     [Foldout("References")]
     [SerializeField]
     private GameObject _vfx;
-    [Foldout("References")]
+    [Foldout("Stats")]
     [SerializeField]
     private float _range;
-
+    [Foldout("References")]
+    [SerializeField]
+    private Player _player;
 
     [Foldout("Stats")]
     [SerializeField]
     private LayerMask _detectionMask;
+    [Foldout("Stats")]
+    [SerializeField]
+    private float _dashSpeed;
+
+    private Vector3 _dashStartPosition;
+    private Vector3 _dashDestination;
+    private float _dashT;
 
     public override void StartPrevis()
     {
@@ -36,5 +45,32 @@ public class AragonArm : Arm
     public override void StopPrevis()
     {
         _vfx.SetActive(false);
+    }
+
+    public override void StartActive()
+    {
+        _player.AllowMovement(false);
+        _player.KillMomentum();
+        _player._charaCon.enabled = false;
+        _dashStartPosition = _player.transform.position;
+        _dashDestination = _vfx.transform.position + Vector3.up;
+        _dashT = 0;
+    }
+
+    public override void UpdateActive()
+    {
+        _dashT += Time.deltaTime * _dashSpeed;
+        _player.transform.position = Vector3.Lerp(_dashStartPosition, _dashDestination, _dashT);
+        if (_dashT >= 1)
+        {
+            _fsm.ChangeState(ArmStateList.RECOVERY);
+        }
+    }
+
+    public override void StopActive()
+    {
+        _player.AllowMovement(true);
+        _player.KillMomentum();
+        _player._charaCon.enabled = true;
     }
 }

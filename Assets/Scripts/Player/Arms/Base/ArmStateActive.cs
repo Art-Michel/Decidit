@@ -16,12 +16,12 @@ public class ArmStateActive : ArmState
 
     public override void StateUpdate()
     {
-
+        _arm.UpdateActive();
     }
 
     public override void Exit()
     {
-
+        _arm.StopActive();
     }
 
 }
