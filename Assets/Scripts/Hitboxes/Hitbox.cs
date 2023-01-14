@@ -69,8 +69,14 @@ public class Hitbox : MonoBehaviour
                 health.TakeDamage(_damage);
             if (_knockbackForce > 0f)
             {
-                Vector3 direction = (targetCollider.position - transform.position).normalized;
-                health.Knockback(direction * _knockbackForce);
+                //direction
+                Vector3 direction = (targetCollider.position - transform.position);
+
+                //weaker over distance
+                float force = _knockbackForce * Mathf.InverseLerp(_radius, 2, direction.magnitude);
+
+                //apply knockback
+                health.Knockback(direction.normalized * force);
             }
             Blacklist.Add(targetCollider.parent, _delayBetweenHits);
         }

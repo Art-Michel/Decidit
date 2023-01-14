@@ -82,7 +82,7 @@ public class Projectile : Hitbox
         if (_lifeT <= 0)
         {
             if (_explodesOnHit)
-                Explode();
+                Explode(Vector3.zero);
             else
                 Disappear();
         }
@@ -122,7 +122,7 @@ public class Projectile : Hitbox
                     Hit(hit.transform);
                     //+ explostion if projectile should spawn an explosion.
                     if (_explodesOnHit)
-                        Explode();
+                        Explode(hit.normal);
                     else
                         Disappear();
                 }
@@ -136,7 +136,7 @@ public class Projectile : Hitbox
                 Hit(hit.transform);
                 //+ explostion if projectile should spawn an explosion.
                 if (_explodesOnHit)
-                    Explode();
+                    Explode(hit.normal);
                 else
                     Disappear();
             }
@@ -153,8 +153,11 @@ public class Projectile : Hitbox
         _lastFramePosition = hit.point + hit.normal * (_radius + 0.1f);
     }
 
-    private void Explode()
+    private void Explode(Vector3 normal)
     {
+        if (normal != Vector3.zero)
+            _explosion.transform.up = normal;
+
         _explosion.SetActive(true);
         _mesh.SetActive(false);
         this.enabled = false;

@@ -42,7 +42,7 @@ public class PlayerHealth : Health
         base.TakeDamage(amount);
         PlaceHolderSoundManager.Instance.PlayHurt();
         Player.Instance.StartShake(_playerHurtShakeStrength, _playerHurtShakeDuration);
-        GameManager.Instance.StartSlowMo(_playerHurtFreezeStrength, _playerHurtFreezeDuration);
+        //GameManager.Instance.StartSlowMo(_playerHurtFreezeStrength, _playerHurtFreezeDuration);
     }
 
     public override void Knockback(Vector3 direction)
