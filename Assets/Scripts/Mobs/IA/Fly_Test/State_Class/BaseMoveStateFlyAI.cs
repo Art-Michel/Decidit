@@ -23,10 +23,7 @@ namespace State.FlyAI
 
         private void Update()
         {
-            if(state == StateControllerFlyAI.AIState.BaseMove)
-            {
-                SmoothLookAtYAxisPatrol();
-            }
+            SmoothLookAtYAxisPatrol();
         }
 
         public void SmoothLookAtYAxisPatrol()
