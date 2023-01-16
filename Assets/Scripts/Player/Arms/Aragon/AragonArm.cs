@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.VFX;
 
 public class AragonArm : Arm
@@ -16,6 +17,9 @@ public class AragonArm : Arm
     [Foldout("References")]
     [SerializeField]
     private Player _player;
+    [Foldout("References")]
+    [SerializeField]
+    private Image _vignette;
 
     private Camera _camera;
 
@@ -25,13 +29,16 @@ public class AragonArm : Arm
     private LayerMask _detectionMask;
     [Foldout("Stats")]
     [SerializeField]
-    private float _dashSpeed;
+    private float _dashSpeed = 3f;
     [Foldout("Stats")]
     [SerializeField]
     AnimationCurve _dashFeedbacksCurve;
     [Foldout("Stats")]
     [SerializeField]
-    float _dashFovIncrease;
+    float _dashFovIncrease = 20f;
+    [Foldout("Stats")]
+    [SerializeField]
+    float _maxVignetteAlpha = 0.3f;
 
     float _defaultFov;
     private Vector3 _dashStartPosition;
@@ -99,6 +106,7 @@ public class AragonArm : Arm
     private void DashFeedbacks()
     {
         _camera.fieldOfView = Mathf.Lerp(_defaultFov, _defaultFov + _dashFovIncrease, _dashFeedbacksCurve.Evaluate(_dashT));
+        _vignette.color = new Color(_vignette.color.r, _vignette.color.g, _vignette.color.b, Mathf.Lerp(0, _maxVignetteAlpha, _dashFeedbacksCurve.Evaluate(_dashT)));
     }
 
     public override void StopActive()

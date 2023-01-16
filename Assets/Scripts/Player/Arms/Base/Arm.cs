@@ -18,6 +18,7 @@ public class Arm : MonoBehaviour
     [SerializeField]
     protected Transform _cameraTransform;
 
+
     PlayerInputMap _inputs;
     protected ArmFSM _fsm;
     #endregion
