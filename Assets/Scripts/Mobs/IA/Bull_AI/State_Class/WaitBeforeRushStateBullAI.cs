@@ -38,7 +38,11 @@ namespace State.AIBull
         private void Update()
         {
             ManageCurrentNavMeshLink();
-            GoToStartRushPos();
+
+            if(globalRef.coolDownRushBullSO.currentCoolDownRush > 0)
+                GoToStartRushPos();
+
+            CoolDownBeforeRush();
         }
         private void FixedUpdate()
         {
@@ -81,8 +85,6 @@ namespace State.AIBull
 
         void GoToStartRushPos()
         {
-            CoolDownBeforeRush();
-
             if (globalRef.coolDownRushBullSO.startPos == Vector3.zero) // cherche une nouvelle position si aucune n est defifni
             {
                 SelectStartPos();
@@ -112,7 +114,6 @@ namespace State.AIBull
         {
             globalRef.coolDownRushBullSO.currentDurationStay = globalRef.coolDownRushBullSO.maxDurationStay;
             globalRef.bullAIStartPosRush.ResetSelectedBox(globalRef.coolDownRushBullSO.boxSelected);
-            //globalRef.coolDownRushBullSO.boxSelected = null;
             SelectStartPos();
         }
         void SelectStartPos()

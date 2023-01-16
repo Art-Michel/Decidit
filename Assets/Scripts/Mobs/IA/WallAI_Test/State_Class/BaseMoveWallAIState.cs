@@ -33,6 +33,11 @@ namespace State.WallAI
         {
             MoveAI();
 
+            if (globalRef.enemyHealth._hp <= 0)
+            {
+                stateControllerWallAI.SetActiveState(StateControllerWallAI.WallAIState.Death, true);
+            }
+
             Debug.Log(globalRef.agent.remainingDistance);
         }
 

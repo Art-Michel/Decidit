@@ -40,6 +40,11 @@ namespace State.WallAI
             {
                 LaunchAttack();
             }
+
+            if (globalRef.enemyHealth._hp <= 0)
+            {
+                stateControllerWallAI.SetActiveState(StateControllerWallAI.WallAIState.Death, true);
+            }
         }
 
         public void LaunchAttack()

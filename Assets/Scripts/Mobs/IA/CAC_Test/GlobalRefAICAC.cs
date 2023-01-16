@@ -68,6 +68,7 @@ namespace State.AICAC
 
             if (enemyHealth._hp <= 0 && !isDead)
             {
+                aICACVarianteState.RemoveAISelected(this);
                 ActiveState(StateControllerAICAC.AIState.BaseDeath);
                 myAnimator.SetBool("Death", true);
                 isDead = true;

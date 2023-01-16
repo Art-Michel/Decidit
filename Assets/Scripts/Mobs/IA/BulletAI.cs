@@ -20,11 +20,9 @@ public class BulletAI : MonoBehaviour
         yield break;
     }
 
-    private void OnTriggerEnter(Collider collider)
+    private void OnTriggerEnter (Collider collider)
     {
-        if (collider.CompareTag("Player"))
-        {
-            //PlayerController.ApplyDamage(10);
-        }
+        Debug.Log(collider.gameObject);
+        gameObject.SetActive(false);
     }
 }

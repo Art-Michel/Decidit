@@ -523,6 +523,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2892735930382173101}
   - component: {fileID: 851489939178235476}
+  - component: {fileID: 1522120071652233837}
   m_Layer: 15
   m_Name: WeakSpot
   m_TagString: WeakHurtbox
@@ -558,6 +559,22 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.6
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &1522120071652233837
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 918669901567716321}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 1
 --- !u!1 &3961159187850603902
 GameObject:
   m_ObjectHideFlags: 0
@@ -568,6 +585,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4559969379653064005}
   - component: {fileID: 5819445517737031388}
+  - component: {fileID: 7022724033792158420}
   m_Layer: 15
   m_Name: Hurtbox
   m_TagString: Untagged
@@ -604,6 +622,22 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &7022724033792158420
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3961159187850603902}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 1
 --- !u!1 &7333516157666857983
 GameObject:
   m_ObjectHideFlags: 0
@@ -649,6 +683,8 @@ GameObject:
   - component: {fileID: 7333516157775419201}
   - component: {fileID: 475703519}
   - component: {fileID: 2145315359}
+  - component: {fileID: 514505303248324779}
+  - component: {fileID: 6361566959551655630}
   m_Layer: 7
   m_Name: WallEnemy
   m_TagString: Ennemi
@@ -781,6 +817,33 @@ MonoBehaviour:
   Material: {fileID: 0}
   Texture: {fileID: 0}
   SetPixelTexture: {x: 0, y: 0}
+--- !u!114 &514505303248324779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7333516157775419203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6710f03ff1c41064088ccced29e28e05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6361566959551655630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7333516157775419203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 8252760470148114170, guid: 761a0a66d6e3a524fbb1ad7370c627ba, type: 3}
+  _initialCount: 4
+  _shouldBeParent: 0
 --- !u!1 &7333516158302212432
 GameObject:
   m_ObjectHideFlags: 0
@@ -795,6 +858,7 @@ GameObject:
   - component: {fileID: 7333516158302212428}
   - component: {fileID: 7333516156728121282}
   - component: {fileID: 7333516156728121281}
+  - component: {fileID: 1776645733}
   m_Layer: 7
   m_Name: WallAI
   m_TagString: Untagged
@@ -832,7 +896,7 @@ NavMeshAgent:
   m_AgentTypeID: -1372625422
   m_Radius: 0.5
   m_Speed: 20
-  m_Acceleration: 100
+  m_Acceleration: 10
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 0
@@ -855,7 +919,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec8fd75dde36aa54bb47abb4b72866c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseAttackWallAIState: {fileID: 0}
+  baseAttackWallAIState: {fileID: 1714682581}
 --- !u!95 &7333516158302212428
 Animator:
   serializedVersion: 4
@@ -889,15 +953,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   areaWallAI: {fileID: 0}
-  agent: {fileID: 0}
-  animator: {fileID: 0}
+  agent: {fileID: 7333516158302212430}
+  animator: {fileID: 7333516158302212428}
   spawnBullet: {fileID: 7333516157666857980}
-  enemyHealth: {fileID: 0}
-  walls: []
+  enemyHealth: {fileID: 475703519}
+  walls:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   playerTransform: {fileID: 0}
   orientation: 0
   baseMoveWallAISO: {fileID: 11400000, guid: 2d85b8170f55db34f9e21e4bd2d588b8, type: 2}
   baseAttackWallAISO: {fileID: 11400000, guid: 76196c520fc01eb4e968528241807d21, type: 2}
+  meshRenderer: {fileID: 7333516157775419070}
 --- !u!114 &7333516156728121281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -914,3 +987,19 @@ MonoBehaviour:
   - {fileID: 1708337759}
   - {fileID: 1714682581}
   - {fileID: 411397619}
+--- !u!54 &1776645733
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7333516158302212432}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 1

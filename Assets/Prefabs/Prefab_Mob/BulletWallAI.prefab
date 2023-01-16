@@ -96,9 +96,9 @@ SphereCollider:
   m_GameObject: {fileID: 1404559074165780241}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.25
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &4457546727834266994
 Rigidbody:
@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29ae9c3f80acaa24b81430f9d58bf23d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeTimeBullet: 1
+  lifeTimeBullet: 2
   damageBullet: 10
 --- !u!114 &-5297157090106014675
 MonoBehaviour:
@@ -145,7 +145,8 @@ MonoBehaviour:
   _shouldCollideWith:
     serializedVersion: 2
     m_Bits: 16384
-  _radius: 0.55
-  _damage: 0
+  _radius: 0.6
+  _damage: 20
+  _knockbackForce: 10
   _canMultiHit: 0
   _delayBetweenHits: 0

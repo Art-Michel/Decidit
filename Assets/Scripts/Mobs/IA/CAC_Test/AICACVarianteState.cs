@@ -73,13 +73,13 @@ namespace State.AICAC
         // Update is called once per frame
         void Update()
         {
-            if (!activeAnticip)
-                CoolDownAnticipDirection();
-
             if (activeAnticip)
                 SetOffsetDestination();
             else
+            {
+                CoolDownAnticipDirection();
                 SetOffsetAticipationDestination();
+            }
 
 
             //CoolDownSurround();
@@ -294,8 +294,9 @@ namespace State.AICAC
         }
         public void RemoveAISelected(GlobalRefAICAC globalRef)
         {
-            Debug.Log(aiCACSurroundSelectedList.Count);
-            aiCACSurroundSelectedList.Remove(globalRef);
+            aiCACScriptsList.Remove(globalRef);
+            //SetOffsetDestination();
+            //SetOffsetAticipationDestination();
         }
     }
 }
