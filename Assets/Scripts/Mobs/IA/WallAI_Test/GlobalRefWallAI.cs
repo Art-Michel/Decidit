@@ -16,6 +16,7 @@ namespace State.WallAI
         public float orientation;
         public BaseMoveWallAISO baseMoveWallAISO;
         public BaseAttackWallAISO baseAttackWallAISO;
+        public MeshRenderer meshRenderer;
 
         // Start is called before the first frame update
         void Start()
@@ -28,15 +29,13 @@ namespace State.WallAI
             {
                 walls[i] = areaWallAI.GetChild(i).GetComponent<BoxCollider>();
             }
-
-            Debug.Log(agent);
         }
 
         private void OnTriggerStay(Collider other)
         {
-            if (other.CompareTag("Wall"))
+            if (other.CompareTag("WallAI"))
             {
-                orientation = other.transform.localEulerAngles.y - 90;
+                orientation = other.transform.localEulerAngles.y - 90 + 180;
             }
         }
     }

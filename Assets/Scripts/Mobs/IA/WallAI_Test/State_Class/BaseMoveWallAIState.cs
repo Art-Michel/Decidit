@@ -18,13 +18,22 @@ namespace State.WallAI
             state = StateControllerWallAI.WallAIState.BaseMove;
         }
 
+        private void OnEnable()
+        {
+            try
+            {
+                globalRef.meshRenderer.enabled = false;
+            }
+            catch
+            {
+            }
+        }
+
         private void Update()
         {
-            if(state == StateControllerWallAI.WallAIState.BaseMove)
-            {
-                Debug.Log("baseMove");
-                MoveAI();
-            }
+            MoveAI();
+
+            Debug.Log(globalRef.agent.remainingDistance);
         }
 
         private void FixedUpdate()
@@ -35,11 +44,6 @@ namespace State.WallAI
 
         public void MoveAI()
         {
-            Debug.Log(globalRef.baseMoveWallAISO);
-            Debug.Log(globalRef);
-            Debug.Log(globalRef.agent);
-            Debug.Log(globalRef.agent.remainingDistance);
-
             if (!globalRef.agent.isOnOffMeshLink)
             {
                 WallCrackEffect();
@@ -112,7 +116,7 @@ namespace State.WallAI
             }
             else
             {
-                if (!globalRef.agent.isOnOffMeshLink)
+                if (!globalRef.agent.isOnOffMeshLink && !IsMoving())
                 {
                     stateControllerWallAI.SetActiveState(StateControllerWallAI.WallAIState.BaseAttack);
                 }

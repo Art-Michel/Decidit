@@ -18,6 +18,17 @@ namespace State.WallAI
             state = StateControllerWallAI.WallAIState.BaseAttack;
         }
 
+        private void OnEnable()
+        {
+            try
+            {
+                globalRef.meshRenderer.enabled = true;
+            }
+            catch
+            {
+            }
+        }
+
         private void Start()
         {
             baseAttackWallAISO = globalRef.baseAttackWallAISO;
@@ -57,7 +68,7 @@ namespace State.WallAI
                     baseAttackWallAISO.vPlayer = directionPlayer.magnitude * 7f;
 
                     baseAttackWallAISO.timePlayerGoToPredicPos = Vector3.Distance(globalRef.playerTransform.position, baseAttackWallAISO.playerPredicDir) / baseAttackWallAISO.vPlayer;
-                    baseAttackWallAISO.vProjectileGotToPredicPos = Vector3.Distance(globalRef.transform.parent.position, baseAttackWallAISO.playerPredicDir) / baseAttackWallAISO.timePlayerGoToPredicPos;
+                    baseAttackWallAISO.vProjectileGotToPredicPos = Vector3.Distance(globalRef.transform.position, baseAttackWallAISO.playerPredicDir) / baseAttackWallAISO.timePlayerGoToPredicPos;
                     break;
             }
             return baseAttackWallAISO.vProjectileGotToPredicPos;
