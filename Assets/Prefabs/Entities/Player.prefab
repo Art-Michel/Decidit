@@ -346,6 +346,7 @@ MonoBehaviour:
   _cameraTransform: {fileID: 2200446484381738818}
   _cooldown: 2
   _vfx: {fileID: 7866625081794672881}
+  _vfxGroundProjection: {fileID: 8093213824556858173}
   _range: 30
   _player: {fileID: 2200446484234949679}
   _vignette: {fileID: 2006583777}
@@ -396,6 +397,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _dashFovIncrease: 20
+  _maxVignetteAlpha: 0.3
 --- !u!114 &950598985533358227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5225,7 +5227,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2200446483702820354}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.4, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7744,17 +7746,17 @@ PrefabInstance:
     - target: {fileID: 8332314337795821494, guid: 788dd87012210f948967e9e39470356b,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.85354453
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8332314337795821494, guid: 788dd87012210f948967e9e39470356b,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.8535445
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8332314337795821494, guid: 788dd87012210f948967e9e39470356b,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.85354453
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8332314337795821494, guid: 788dd87012210f948967e9e39470356b,
         type: 3}
@@ -7806,6 +7808,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8332314337795821494, guid: 788dd87012210f948967e9e39470356b,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 788dd87012210f948967e9e39470356b, type: 3}
 --- !u!1 &7866625081794672881 stripped
@@ -7817,6 +7824,12 @@ GameObject:
 --- !u!4 &7866625081794672882 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8332314337795821494, guid: 788dd87012210f948967e9e39470356b,
+    type: 3}
+  m_PrefabInstance: {fileID: 2200446484380022596}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8093213824556858173 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7987505010210999417, guid: 788dd87012210f948967e9e39470356b,
     type: 3}
   m_PrefabInstance: {fileID: 2200446484380022596}
   m_PrefabAsset: {fileID: 0}

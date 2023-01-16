@@ -11,6 +11,9 @@ public class AragonArm : Arm
     [Foldout("References")]
     [SerializeField]
     private GameObject _vfx;
+    [Foldout("References")]
+    [SerializeField]
+    private Transform _vfxGroundProjection;
     [Foldout("Stats")]
     [SerializeField]
     private float _range;
@@ -68,7 +71,10 @@ public class AragonArm : Arm
             _vfx.transform.position = hit.point + hit.normal * 0.3f;
         else
             _vfx.transform.position = _cameraTransform.transform.position + _cameraTransform.forward * _range;
+
         _vfx.transform.rotation = Quaternion.identity;
+        Physics.Raycast(_vfx.transform.position, Vector3.down, out RaycastHit groundHit, 100f, _detectionMask);
+        _vfxGroundProjection.position = groundHit.point + Vector3.up * 0.1f;
     }
 
     public override void StopPrevis()
