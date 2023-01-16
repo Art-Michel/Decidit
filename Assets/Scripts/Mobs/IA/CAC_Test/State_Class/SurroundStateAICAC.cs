@@ -19,9 +19,7 @@ namespace State.AICAC
 
         private void Update()
         {
-            if (state == StateControllerAICAC.AIState.SurroundPlayer)
-            {
-            }
+            SmoothLookAt();
         }
 
         private void FixedUpdate()
@@ -84,7 +82,7 @@ namespace State.AICAC
         public void MoveSurround()
         {
             if (globalRef.agent.speed < globalRef.surroundAICACSO.surroundSpeed)
-                globalRef.agent.speed += globalRef.surroundAICACSO.speedSmooth * Time.deltaTime;
+                globalRef.agent.speed += globalRef.surroundAICACSO.speedSmooth * Time.fixedDeltaTime;
             else
                 globalRef.agent.speed = globalRef.surroundAICACSO.surroundSpeed;
 
@@ -109,11 +107,40 @@ namespace State.AICAC
             }
         }
 
+        void SmoothLookAt()
+        {
+            Vector3 direction;
+            Vector3 relativePos;
+
+            if (globalRef.agent.isOnOffMeshLink)
+            {
+                direction = destination;
+            }
+            else
+            {
+                direction = globalRef.transform.position + globalRef.agent.desiredVelocity;
+            }
+
+            relativePos.x = direction.x - globalRef.transform.position.x;
+            relativePos.y = 0;
+            relativePos.z = direction.z - globalRef.transform.position.z;
+
+            if (globalRef.baseMoveAICACSO.speedRot < globalRef.baseMoveAICACSO.maxSpeedRot)
+                globalRef.baseMoveAICACSO.speedRot += Time.deltaTime / globalRef.baseMoveAICACSO.smoothRot;
+            else
+            {
+                globalRef.baseMoveAICACSO.speedRot = globalRef.baseMoveAICACSO.maxSpeedRot;
+            }
+
+            Quaternion rotation = Quaternion.Slerp(globalRef.transform.rotation, Quaternion.LookRotation(relativePos, Vector3.up), globalRef.baseMoveAICACSO.speedRot);
+            globalRef.transform.rotation = rotation;
+        }
+
         void StopSurround()
         {
             globalRef.surroundAICACSO.right = false;
             globalRef.surroundAICACSO.left = false;
-            globalRef.aICACVarianteState.RemoveAISelected(globalRef);
+            globalRef.aICACVarianteState.RemoveAISelectedSurround(globalRef);
             stateControllerAICAC.SetActiveState(StateControllerAICAC.AIState.BaseMove);
         }
     }

@@ -32,13 +32,14 @@ namespace State.AICAC
         [SerializeField] float currentCoolDownStopAnticipDirection;
         [SerializeField] float maxCoolDownStopAnticipDirection;
         [SerializeField] bool activeAnticip;
+        [SerializeField] bool activeSurround;
 
         void Start()
         {
             SetListActiveAI();
         }
 
-        public void SetListActiveAI()
+        void SetListActiveAI()
         {
             aiCACScriptsList.Clear();
             aiCACSurroundSelectedList.Clear();
@@ -81,9 +82,11 @@ namespace State.AICAC
                 SetOffsetAticipationDestination();
             }
 
-
-            //CoolDownSurround();
-            //SetSurroundDirection();
+            if(activeSurround)
+            {
+                CoolDownSurround();
+                SetSurroundDirection();
+            }
         }
 
         /// <summary>
@@ -292,11 +295,13 @@ namespace State.AICAC
             if (aiCACSurroundSelectedList.Count < 2)
                 aiCACSurroundSelectedList.Add(aiCACScriptsList[shortestDist]);
         }
-        public void RemoveAISelected(GlobalRefAICAC globalRef)
+        public void RemoveAISelectedAnticip(GlobalRefAICAC globalRef)
         {
             aiCACScriptsList.Remove(globalRef);
-            //SetOffsetDestination();
-            //SetOffsetAticipationDestination();
+        }
+        public void RemoveAISelectedSurround(GlobalRefAICAC globalRef)
+        {
+            aiCACSurroundSelectedList.Remove(globalRef);
         }
     }
 }
