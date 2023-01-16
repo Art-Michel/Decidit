@@ -129,6 +129,7 @@ namespace State.WallAI
         // Reset Value When Change State
         private void OnDisable()
         {
+            globalRef.baseAttackWallAISO.bulletCount = globalRef.baseAttackWallAISO.maxBulletCount;
             globalRef.baseMoveWallAISO.rateAttack = globalRef.baseMoveWallAISO.maxRateAttack;
             globalRef.baseMoveWallAISO.findNewPos = false;
             globalRef.agent.SetDestination(globalRef.transform.position);

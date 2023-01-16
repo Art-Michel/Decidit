@@ -6,7 +6,7 @@ namespace State.WallAI
     public class BaseAttackWallAIState : _StateWallAI
     {
         protected StateControllerWallAI stateControllerWallAI;
-        bool instanceSOIsCreate;
+        bool activeAttack;
 
         BaseAttackWallAISO baseAttackWallAISO;
         [SerializeField] GlobalRefWallAI globalRef;
@@ -36,9 +36,10 @@ namespace State.WallAI
 
         private void Update()
         {
-            if (state == StateControllerWallAI.WallAIState.BaseAttack)
+            if (!activeAttack)
             {
                 LaunchAttack();
+                activeAttack = true;
             }
 
             if (globalRef.enemyHealth._hp <= 0)
@@ -47,7 +48,7 @@ namespace State.WallAI
             }
         }
 
-        public void LaunchAttack()
+        void LaunchAttack()
         {
             globalRef.agent.speed = baseAttackWallAISO.stopSpeed;
             globalRef.animator.SetBool("LaunchAttack", true);
@@ -70,7 +71,7 @@ namespace State.WallAI
                     break;
                 default:
                     baseAttackWallAISO.playerPredicDir = globalRef.playerTransform.position + (directionPlayer * baseAttackWallAISO.distAnticipGround);
-                    baseAttackWallAISO.vPlayer = directionPlayer.magnitude * 7f;
+                    baseAttackWallAISO.vPlayer = directionPlayer.magnitude * 8f;
 
                     baseAttackWallAISO.timePlayerGoToPredicPos = Vector3.Distance(globalRef.playerTransform.position, baseAttackWallAISO.playerPredicDir) / baseAttackWallAISO.vPlayer;
                     baseAttackWallAISO.vProjectileGotToPredicPos = Vector3.Distance(globalRef.transform.position, baseAttackWallAISO.playerPredicDir) / baseAttackWallAISO.timePlayerGoToPredicPos;
@@ -81,15 +82,23 @@ namespace State.WallAI
 
         public void ThrowProjectile()
         {
-            globalRef.spawnBullet.LookAt(baseAttackWallAISO.playerPredicDir);
-            Rigidbody cloneBullet = Instantiate(baseAttackWallAISO.bulletPrefab, globalRef.spawnBullet.position, globalRef.spawnBullet.rotation);
-            cloneBullet.AddRelativeForce(Vector3.forward * CalculateSpeedProjectile(), ForceMode.VelocityChange);
+            if (baseAttackWallAISO.bulletCount >0)
+            {
+                globalRef.spawnBullet.LookAt(baseAttackWallAISO.playerPredicDir);
+                Rigidbody cloneBullet = Instantiate(baseAttackWallAISO.bulletPrefab, globalRef.spawnBullet.position, globalRef.spawnBullet.rotation);
+                cloneBullet.AddRelativeForce(Vector3.forward * CalculateSpeedProjectile(), ForceMode.VelocityChange);
+                baseAttackWallAISO.bulletCount--;
+            }
         }
 
         public void ReturnBaseMoveState()
         {
-            globalRef.animator.SetBool("LaunchAttack", false);
-            stateControllerWallAI.SetActiveState(StateControllerWallAI.WallAIState.BaseMove, true);
+            if(baseAttackWallAISO.bulletCount <=0)
+            {
+                globalRef.animator.SetBool("LaunchAttack", false);
+                activeAttack = false;
+                stateControllerWallAI.SetActiveState(StateControllerWallAI.WallAIState.BaseMove, true);
+            }
         }
 
         ////////////////////////  ANIMATION EVENT \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\

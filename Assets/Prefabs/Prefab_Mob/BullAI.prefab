@@ -474,6 +474,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1728274096}
   - component: {fileID: 8100736487116432644}
+  - component: {fileID: 9191719257376539284}
   m_Layer: 7
   m_Name: BaseRush
   m_TagString: Untagged
@@ -509,8 +510,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   globalRef: {fileID: 5314086220186537620}
+  lockPlayer: 0
   maxDurationNavLink: 0
   linkIsActive: 0
+--- !u!65 &9191719257376539284
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1728274095}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 2, z: 4}
+  m_Center: {x: 0, y: 0, z: 2.5}
 --- !u!1 &1791998166
 GameObject:
   m_ObjectHideFlags: 0
@@ -881,10 +896,8 @@ GameObject:
   - component: {fileID: 5314086221994346225}
   - component: {fileID: 5314086221994346224}
   - component: {fileID: 5314086221994346226}
-  - component: {fileID: 5314086221994346234}
   - component: {fileID: 2001756105}
   - component: {fileID: 1585214519}
-  - component: {fileID: 988940185}
   - component: {fileID: 5314086220186537621}
   - component: {fileID: 5314086220186537620}
   - component: {fileID: -5786898878562634712}
@@ -989,19 +1002,6 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!65 &5314086221994346234
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5314086221994346189}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.84, y: 2, z: 3.99}
-  m_Center: {x: 0, y: 0, z: 2.01}
 --- !u!114 &2001756105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1047,22 +1047,6 @@ MonoBehaviour:
   Material: {fileID: 0}
   Texture: {fileID: 0}
   SetPixelTexture: {x: 0, y: 0}
---- !u!54 &988940185
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5314086221994346189}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 126
-  m_CollisionDetection: 0
 --- !u!114 &5314086220186537621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1095,7 +1079,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 0}
   playerTransform: {fileID: 0}
-  noMask:
+  ennemiMask:
     serializedVersion: 2
     m_Bits: 128
   bullAIStartPosRush: {fileID: 0}
@@ -1108,7 +1092,7 @@ MonoBehaviour:
   agentLinkMover: {fileID: 0}
   sphereDebug: {fileID: 0}
   hitBox: {fileID: 336271812}
-  detectOtherAICollider: {fileID: 5314086221994346234}
+  detectOtherAICollider: {fileID: 9191719257376539284}
   isDead: 0
   baseIdleBullSO: {fileID: 11400000, guid: 87061001b673e2241ad66755c7e50389, type: 2}
   baseMoveBullSO: {fileID: 11400000, guid: f1f55874d69354f4191d9aee35e3e75c, type: 2}

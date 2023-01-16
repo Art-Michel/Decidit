@@ -19,7 +19,7 @@ namespace State.WallAI
         public MeshRenderer meshRenderer;
 
         // Start is called before the first frame update
-        void Start()
+        void Awake()
         {
             baseMoveWallAISO = Instantiate(baseMoveWallAISO);
             baseAttackWallAISO = Instantiate(baseAttackWallAISO);

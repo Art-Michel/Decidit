@@ -5,6 +5,7 @@ namespace State.AIBull
     public class BaseDeathStateBullAI : _StateBull
     {
         [SerializeField] GlobalRefBullAI globalRef;
+        bool once;
 
         public override void InitState(StateControllerBull stateController)
         {
@@ -13,11 +14,11 @@ namespace State.AIBull
             state = StateControllerBull.AIState.Death;
         }
 
-        private void OnEnable()
+        private void Update()
         {
-            if(globalRef != null && globalRef.isDead)
+            if(!once)
             {
-                globalRef.bullCount.RemoveAI(globalRef.transform);
+                //globalRef.bullCount.RemoveAI(globalRef.transform);
                 globalRef.agent.speed = 0;
                 Debug.Log("Death");
             }

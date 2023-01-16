@@ -8,7 +8,7 @@ namespace State.AIBull
         [Header("Global References")]
         public NavMeshAgent agent;
         public Transform playerTransform;
-        public LayerMask noMask;
+        public LayerMask ennemiMask;
         public BullAIStartPosRush bullAIStartPosRush;
         public Material_Instances material_Instances;
         public EnemyHealth enemyHealth;
@@ -20,7 +20,6 @@ namespace State.AIBull
 
         [Header("Debug Destination")]
         public Transform sphereDebug;
-
 
         [Header("Ref ATtck State")]
         public Hitbox hitBox;

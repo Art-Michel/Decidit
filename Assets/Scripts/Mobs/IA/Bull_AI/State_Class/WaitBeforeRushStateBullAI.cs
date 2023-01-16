@@ -43,6 +43,7 @@ namespace State.AIBull
                 GoToStartRushPos();
 
             CoolDownBeforeRush();
+            SmoothLookAtPlayer();
         }
         private void FixedUpdate()
         {
@@ -107,7 +108,6 @@ namespace State.AIBull
                     PreSelectingStartPos();
                 }
             }
-            SmoothLookAtPlayer();
         }
 
         void PreSelectingStartPos()
@@ -238,7 +238,8 @@ namespace State.AIBull
             //globalRef.coolDownRushBullSO.boxSelected = null;
 
             globalRef.agent.speed = globalRef.coolDownRushBullSO.stopSpeed;
-            globalRef.coolDownRushBullSO.rushDestination = globalRef.playerTransform.position + globalRef.transform.forward * globalRef.coolDownRushBullSO.rushInertieSetDistance;
+            globalRef.coolDownRushBullSO.rushDestination = globalRef.playerTransform.position + globalRef.transform.forward * globalRef.rushBullSO.rushInertieSetDistance;
+            globalRef.rushBullSO.rushDestination = globalRef.playerTransform.position + globalRef.transform.forward * globalRef.rushBullSO.rushInertieSetDistance;
             globalRef.coolDownRushBullSO.currentCoolDownRush = globalRef.coolDownRushBullSO.coolDownRush;
             globalRef.agent.SetDestination(globalRef.coolDownRushBullSO.rushDestination);
             globalRef.coolDownRushBullSO.startPos = Vector3.zero;

@@ -19,5 +19,7 @@ namespace State.WallAI
         [Header("*Attack")]
         public Rigidbody bulletPrefab;
         public float defaultForceBullet;
+        public int bulletCount;
+        public int maxBulletCount;
     }
 }

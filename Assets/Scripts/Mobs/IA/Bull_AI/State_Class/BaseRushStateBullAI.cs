@@ -25,22 +25,18 @@ namespace State.AIBull
             state = StateControllerBull.AIState.Rush;
         }
 
-        private void OnEnable()
-        {
-            Debug.Log("Rush");
-
-            try
-            {
-                globalRef.rushBullSO.rushCurrentDuration = globalRef.rushBullSO.rushMaxDuration;
-            }
-            catch
-            {
-                Debug.LogWarning("missing Reference");
-            }
-        }
-
         private void Update()
         {
+            if (globalRef.distPlayer > globalRef.rushBullSO.stopLockDist && !lockPlayer)
+            {
+                globalRef.rushBullSO.rushDestination = globalRef.playerTransform.position + globalRef.transform.forward * globalRef.rushBullSO.rushInertieSetDistance;
+                SmoothLookAtPlayer();
+            }
+            else
+            {
+                lockPlayer = true;
+            }
+
             RushMovement();
             RushDuration();
             //ManageCurrentNavMeshLink();
@@ -90,22 +86,18 @@ namespace State.AIBull
             {
                 StopRush();
             }
+            else if(globalRef.agent.remainingDistance <= 1)
+            {
+                StopRush();
+            }
         }
 
         public void RushMovement()
         {
-            if (!lockPlayer)
-            {
-                globalRef.rushBullSO.rushDestination = globalRef.playerTransform.position + globalRef.transform.forward * globalRef.rushBullSO.rushInertieSetDistance;
-                lockPlayer = true;
-            }
-
             globalRef.detectOtherAICollider.enabled = true;
             globalRef.agent.speed = globalRef.rushBullSO.rushSpeed;
             globalRef.agent.SetDestination(CheckNavMeshPoint(globalRef.rushBullSO.rushDestination));
             globalRef.hitBox.gameObject.SetActive(true);
-
-            SmoothLookAtPlayer();
         }
         Vector3 CheckNavMeshPoint(Vector3 newDestination)
         {
@@ -132,7 +124,6 @@ namespace State.AIBull
 
         void StopRush()
         {
-            Debug.Log("StopRush");
             stateController.SetActiveState(StateControllerBull.AIState.Idle);
         }
 
@@ -199,10 +190,44 @@ namespace State.AIBull
 
                 if (!globalRef.rushBullSO.ennemiInCollider.Contains(other.gameObject) || globalRef.rushBullSO.ennemiInCollider == null)
                     globalRef.rushBullSO.ennemiInCollider.Add(other.gameObject);
+
+                if (globalRef.rushBullSO.ennemiInCollider != null)
+                {
+                    for (int i = 0; i < globalRef.rushBullSO.ennemiInCollider.Count; i++)
+                    {
+                        if (globalRef.rushBullSO.ennemiInCollider[i].GetComponent<GlobalRefAICAC>() != null)
+                        {
+                            GlobalRefAICAC globalRefAICAC = globalRef.rushBullSO.ennemiInCollider[i].GetComponent<GlobalRefAICAC>();
+
+                            RaycastHit hit = RaycastAIManager.RaycastAI(transform.position, transform.forward, globalRef.ennemiMask, Color.red, 10f);
+                            float angle;
+                            angle = Vector3.SignedAngle(transform.forward, hit.normal, Vector3.up);
+
+                            if (globalRef.agent.velocity.magnitude > 0)
+                            {
+                                if (angle > 0 && globalRef.agent.velocity.magnitude > 0)
+                                {
+                                    Debug.Log("Dodge TrashMob");
+                                    globalRefAICAC.dodgeAICACSO.targetObjectToDodge = this.transform;
+                                    globalRefAICAC.dodgeAICACSO.rightDodge = true;
+                                    globalRefAICAC.ActiveStateDodge();
+                                }
+                                else
+                                {
+                                    Debug.Log("Dodge TrashMob");
+                                    globalRefAICAC.dodgeAICACSO.targetObjectToDodge = this.transform;
+                                    globalRefAICAC.dodgeAICACSO.leftDodge = true;
+                                    globalRefAICAC.dodgeAICACSO.dodgeRushBull = true;
+                                    globalRefAICAC.ActiveStateDodge();
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
 
-        private void OnTriggerStay(Collider other)
+/*        private void OnTriggerStay(Collider other)
         {
             if (other.CompareTag("Ennemi") && gameObject.activeInHierarchy)
             {
@@ -214,31 +239,33 @@ namespace State.AIBull
                         {
                             GlobalRefAICAC globalRefAICAC = globalRef.rushBullSO.ennemiInCollider[i].GetComponent<GlobalRefAICAC>();
 
-                            RaycastHit hit = RaycastAIManager.RaycastAI(transform.position, transform.forward, globalRef.noMask, Color.red, 10f);
+                            RaycastHit hit = RaycastAIManager.RaycastAI(transform.position, transform.forward, globalRef.ennemiMask, Color.red, 10f);
                             float angle;
                             angle = Vector3.SignedAngle(transform.forward, hit.normal, Vector3.up);
 
-                            if (angle > 0)
+                            if(globalRef.agent.velocity.magnitude > 0)
                             {
-                                Debug.Log("Dodge TrashMob");
-
-                                globalRefAICAC.dodgeAICACSO.targetObjectToDodge = this.transform;
-                                globalRefAICAC.dodgeAICACSO.rightDodge = true;
-                                globalRefAICAC.ActiveStateDodge();
-                            }
-                            else
-                            {
-                                Debug.Log("Dodge TrashMob");
-                                globalRefAICAC.dodgeAICACSO.targetObjectToDodge = this.transform;
-                                globalRefAICAC.dodgeAICACSO.leftDodge = true;
-                                globalRefAICAC.dodgeAICACSO.dodgeRushBull = true;
-                                globalRefAICAC.ActiveStateDodge();
+                                if (angle > 0 && globalRef.agent.velocity.magnitude > 0)
+                                {
+                                    Debug.Log("Dodge TrashMob");
+                                    globalRefAICAC.dodgeAICACSO.targetObjectToDodge = this.transform;
+                                    globalRefAICAC.dodgeAICACSO.rightDodge = true;
+                                    globalRefAICAC.ActiveStateDodge();
+                                }
+                                else
+                                {
+                                    Debug.Log("Dodge TrashMob");
+                                    globalRefAICAC.dodgeAICACSO.targetObjectToDodge = this.transform;
+                                    globalRefAICAC.dodgeAICACSO.leftDodge = true;
+                                    globalRefAICAC.dodgeAICACSO.dodgeRushBull = true;
+                                    globalRefAICAC.ActiveStateDodge();
+                                }
                             }
                         }
                     }
                 }
             }
-        }
+        }*/
         private void OnTriggerExit(Collider other)
         {
             if (other.CompareTag("Ennemi"))

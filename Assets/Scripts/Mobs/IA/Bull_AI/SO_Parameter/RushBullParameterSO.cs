@@ -22,7 +22,7 @@ public class RushBullParameterSO : ScriptableObject
     public bool stopLockPlayer;
 
     [Header("Attack Range")]
-    public float rangeAttack;
+    public float distRush;
 
     [Header("Detect Trash Mob Parameter")]
     public BoxCollider detectOtherAICollider;
