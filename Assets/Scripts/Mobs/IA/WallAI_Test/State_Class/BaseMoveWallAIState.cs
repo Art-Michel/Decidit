@@ -37,8 +37,6 @@ namespace State.WallAI
             {
                 stateControllerWallAI.SetActiveState(StateControllerWallAI.WallAIState.Death, true);
             }
-
-            Debug.Log(globalRef.agent.remainingDistance);
         }
 
         private void FixedUpdate()

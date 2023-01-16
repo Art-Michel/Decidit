@@ -9,7 +9,7 @@ namespace State.AIBull
         [SerializeField] GlobalRefBullAI globalRef;
         RaycastHit hit;
 
-        bool rushIsActive, lockPlayer;
+        [SerializeField] bool lockPlayer;
 
         [SerializeField] float maxDurationNavLink;
         [SerializeField] bool linkIsActive;
@@ -27,6 +27,8 @@ namespace State.AIBull
 
         private void OnEnable()
         {
+            Debug.Log("Rush");
+
             try
             {
                 globalRef.rushBullSO.rushCurrentDuration = globalRef.rushBullSO.rushMaxDuration;
@@ -41,12 +43,13 @@ namespace State.AIBull
         {
             RushMovement();
             RushDuration();
-            ManageCurrentNavMeshLink();
+            //ManageCurrentNavMeshLink();
         }
         private void FixedUpdate()
         {
             CheckPlayerDistance();
         }
+
         void ManageCurrentNavMeshLink()
         {
             if (globalRef.agent.isOnOffMeshLink)
@@ -83,22 +86,7 @@ namespace State.AIBull
 
         void RushDuration()
         {
-            if(globalRef.rushBullSO.rushCurrentDuration > 0)
-            {
-                if(!globalRef.agent.isOnOffMeshLink)
-                    globalRef.rushBullSO.rushCurrentDuration -= Time.deltaTime;
-
-                if(globalRef.hitBox.Blacklist.Count >0) // player is hit
-                {
-                    globalRef.rushBullSO.rushCurrentDuration = 0;
-                }
-            }
-            else
-            {
-                StopRush();
-            }
-
-            if(lockPlayer && rushIsActive && globalRef.agent.velocity.magnitude ==0)
+            if (globalRef.hitBox.Blacklist.Count > 0) // player is hit
             {
                 StopRush();
             }
@@ -106,15 +94,10 @@ namespace State.AIBull
 
         public void RushMovement()
         {
-            if(!rushIsActive)
-                globalRef.rushBullSO.rushDestination = globalRef.playerTransform.position;
-            else
+            if (!lockPlayer)
             {
-                if(!lockPlayer)
-                {
-                    globalRef.rushBullSO.rushDestination = globalRef.playerTransform.position + globalRef.transform.forward * globalRef.rushBullSO.rushInertieSetDistance;
-                    lockPlayer = true;
-                }
+                globalRef.rushBullSO.rushDestination = globalRef.playerTransform.position + globalRef.transform.forward * globalRef.rushBullSO.rushInertieSetDistance;
+                lockPlayer = true;
             }
 
             globalRef.detectOtherAICollider.enabled = true;
@@ -134,25 +117,22 @@ namespace State.AIBull
             return newDestination;
         }
 
-        public void CheckPlayerDistance()
+        void CheckPlayerDistance()
         {
-            hit = RaycastAIManager.RaycastAI(globalRef.transform.position, globalRef.transform.forward, globalRef.rushBullSO.noMask, Color.red, globalRef.rushBullSO.rangeAttack);
+            hit = RaycastAIManager.RaycastAI(globalRef.transform.position, globalRef.transform.forward, globalRef.rushBullSO.noMask, Color.red, 1f);
 
             if (hit.transform != null)
             {
-                if (hit.transform.CompareTag("Player"))
+                if (hit.transform.CompareTag("Wall"))
                 {
-                    if(hit.distance <= globalRef.rushBullSO.rangeAttack)
-                    {
-                        rushIsActive = true;
-                        Debug.Log("Rush");
-                    }
+                    StopRush();
                 }
             }
         }
 
         void StopRush()
         {
+            Debug.Log("StopRush");
             stateController.SetActiveState(StateControllerBull.AIState.Idle);
         }
 
@@ -204,7 +184,6 @@ namespace State.AIBull
         private void OnDisable()
         {
             lockPlayer = false;
-            rushIsActive = false;
             globalRef.detectOtherAICollider.enabled = false;
             globalRef.rushBullSO.stopLockPlayer = false;
             globalRef.hitBox.gameObject.SetActive(false);
