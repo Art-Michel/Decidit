@@ -16,7 +16,7 @@ public class Arm : MonoBehaviour
     [SerializeField] protected GameObject _ui;
     [Foldout("References")]
     [SerializeField]
-    protected Transform _camera;
+    protected Transform _cameraTransform;
 
     PlayerInputMap _inputs;
     protected ArmFSM _fsm;
@@ -28,7 +28,7 @@ public class Arm : MonoBehaviour
     protected float _cooldownT;
     #endregion 
 
-    void Awake()
+    protected virtual void Awake()
     {
         _fsm = GetComponent<ArmFSM>();
         _inputs = new PlayerInputMap();

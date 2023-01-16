@@ -34,16 +34,16 @@ public class MuseArm : Arm
 
     public override void CheckLookedAt()
     {
-        if (Physics.Raycast(_camera.position, _camera.forward, out RaycastHit hit, 10000f, _mask))
+        if (Physics.Raycast(_cameraTransform.position, _cameraTransform.forward, out RaycastHit hit, 10000f, _mask))
             _currentlyAimedAt = hit.point;
         else
-            _currentlyAimedAt = _camera.forward * 10000f;
+            _currentlyAimedAt = _cameraTransform.forward * 10000f;
     }
 
     public override void StartActive()
     {
         PooledObject shot = _pooler.Get();
-        shot.GetComponent<Projectile>().Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized, _camera.forward);
+        shot.GetComponent<Projectile>().Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized, _cameraTransform.forward);
 
         Player.Instance.StartShake(_launchShakeIntensity, _launchShakeDuration);
         PlaceHolderSoundManager.Instance.PlayMuseRocketLaunch();
