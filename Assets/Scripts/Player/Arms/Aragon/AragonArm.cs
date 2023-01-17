@@ -79,7 +79,7 @@ public class AragonArm : Arm
 
     public override void StopPrevis()
     {
-        _vfx.SetActive(false);
+        //_vfx.SetActive(false);
     }
 
     public override void StartActive()

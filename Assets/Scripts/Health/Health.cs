@@ -73,7 +73,7 @@ public class Health : MonoBehaviour
 
     }
 
-    private void ProbRegen(int amount = 10)
+    public void ProbRegen(int amount = 10)
     {
         if (_hp < _probHp)
         {
