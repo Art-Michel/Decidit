@@ -9,6 +9,9 @@ public class EnemyHealth : Health
     [SerializeField] Canvas _canvas;
     [SerializeField] Material _material;
     [SerializeField] VisualEffect _deathVfx;
+
+    [SerializeField] float _regenValue;
+    //[SerializeField] int 
     Pooler _bloodVFXPooler;
     CanvasGroup _canvasGroup;
     Transform _playerCamera;
@@ -34,6 +37,7 @@ public class EnemyHealth : Health
         _playerCamera = Camera.main.transform;
         _canvasGroup = _canvas.GetComponent<CanvasGroup>();
         _bloodVFXPooler = GetComponent<Pooler>();
+        _regenValue = _hp;
     }
 
     protected override void Start()
@@ -145,6 +149,7 @@ public class EnemyHealth : Health
             _deathT = _deathAnimationDuration;
             _isDying = true;
             _deathVfx.Play();
+            //Player.Instance.gameObject.GetComponent<Health>().ProbRegen();
         }
     }
 
