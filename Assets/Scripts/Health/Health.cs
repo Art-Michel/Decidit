@@ -17,15 +17,17 @@ public class Health : MonoBehaviour
     [Foldout("Stats")]
     [Range(0.1f, 60)][SerializeField] float _probationSpeed = 15;
 
-    public float _hp { get; private set; }
+    public float _hp { get; protected set; }
     protected float _probHp;
     protected bool _hasProbation;
     protected float _probationStartup;
 
-
-    protected virtual void Start()
+    protected virtual void Awake()
     {
         _hp = _maxHp;
+    }
+    protected virtual void Start()
+    {
         _probHp = _hp;
         _hasProbation = false;
         DisplayHealth();

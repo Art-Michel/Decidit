@@ -29,6 +29,10 @@ public class PlayerHealth : Health
     [Tooltip("For how long Screen will shake when player gets hit.")]
     private float _playerHurtShakeDuration = 0.3f;
 
+    protected override void Awake()
+    {
+        base.Awake();
+    }
 
     protected override void DisplayHealth()
     {
