@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace State.FlyAI
 {
@@ -9,6 +10,11 @@ namespace State.FlyAI
 
         [SerializeField] GameObject flyAI;
         [SerializeField] Transform childflyAI;
+
+        [SerializeField] bool dodgeObstacle;
+        [SerializeField] bool right;
+        [SerializeField] float offset;
+
         public override void InitState(StateControllerFlyAI stateController)
         {
             base.InitState(stateController);
@@ -24,6 +30,32 @@ namespace State.FlyAI
         private void Update()
         {
             SmoothLookAtYAxisPatrol();
+        }
+
+        private void FixedUpdate()
+        {
+            CheckObstacle();
+        }
+
+        void CheckObstacle()
+        {
+            RaycastHit hit;
+
+            hit = RaycastAIManager.RaycastAI(transform.position, baseMoveFlySO.destinationFinal - flyAI.transform.position, baseMoveFlySO.maskObstacle, 
+                Color.red,Vector3.Distance(flyAI.transform.position, baseMoveFlySO.destinationFinal));
+
+            if(hit.transform != null)
+            {
+                dodgeObstacle = true;
+                SearchNewPos();
+            }
+            else
+            {
+                if(dodgeObstacle)
+                {
+                    dodgeObstacle = false;
+                }
+            }
         }
 
         public void SmoothLookAtYAxisPatrol()
@@ -51,7 +83,7 @@ namespace State.FlyAI
         {
             Debug.Log("searchPos");
 
-            if (baseMoveFlySO.distDestinationFinal < 20)
+            if (baseMoveFlySO.distDestinationFinal < 20 || dodgeObstacle)
             {
                 baseMoveFlySO.destinationFinal = RandomPointInBounds(globalRef.myCollider.bounds);
 
@@ -96,7 +128,7 @@ namespace State.FlyAI
             {
                 if (baseMoveFlySO.distDestinationFinal > 7)
                 {
-                    globalRef.agent.SetDestination(new Vector3(flyAI.transform.position.x, 0, flyAI.transform.position.z) + childflyAI.TransformDirection(Vector3.forward));
+                    globalRef.agent.SetDestination(CheckNavMeshPoint(new Vector3(flyAI.transform.position.x, 0, flyAI.transform.position.z) + childflyAI.TransformDirection(Vector3.forward)));
                     baseMoveFlySO.currentSpeedYPatrol = Mathf.Lerp(baseMoveFlySO.currentSpeedYPatrol, baseMoveFlySO.maxSpeedYTranslationPatrol, baseMoveFlySO.lerpSpeedYValuePatrol);
 
                     if (Mathf.Abs(flyAI.transform.position.y - baseMoveFlySO.destinationFinal.y) > 1)
@@ -116,6 +148,15 @@ namespace State.FlyAI
             }
             else
                 SearchNewPos();
+        }
+        Vector3 CheckNavMeshPoint(Vector3 newDestination)
+        {
+            NavMeshHit closestHit;
+            if (NavMesh.SamplePosition(newDestination, out closestHit, 1, 1))
+            {
+                newDestination = closestHit.position;
+            }
+            return newDestination;
         }
 
         void DelayBeforeAttack()

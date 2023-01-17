@@ -10,6 +10,8 @@ public class BaseMoveFlySO : ScriptableObject
     public float distDestinationFinal;
     public Vector3 newPos;
     public bool newPosIsSet;
+    public LayerMask maskObstacle;
+    public float distDetectObstace;
 
     [Header("Speed Y Position Patrol")]
     public float timeGoToDestinationPatrol;
