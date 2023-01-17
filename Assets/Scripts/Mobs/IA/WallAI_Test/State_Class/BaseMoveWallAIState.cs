@@ -37,6 +37,8 @@ namespace State.WallAI
             {
                 stateControllerWallAI.SetActiveState(StateControllerWallAI.WallAIState.Death, true);
             }
+
+            PlaySound();
         }
 
         private void FixedUpdate()
@@ -126,9 +128,19 @@ namespace State.WallAI
             }
         }
 
+        void PlaySound()
+        {
+            if (IsMoving())
+            {
+                if(!globalRef.audioSource.isPlaying)
+                    SoundManager.PlaySoundMobByClip(globalRef.audioSource, SoundManager.soundAndVolumeWallMobStatic[0], true);
+            }
+        }
+
         // Reset Value When Change State
         private void OnDisable()
         {
+            SoundManager.PlaySoundMobByClip(globalRef.audioSource, SoundManager.soundAndVolumeWallMobStatic[0], false);
             globalRef.baseAttackWallAISO.bulletCount = globalRef.baseAttackWallAISO.maxBulletCount;
             globalRef.baseMoveWallAISO.rateAttack = globalRef.baseMoveWallAISO.maxRateAttack;
             globalRef.baseMoveWallAISO.findNewPos = false;

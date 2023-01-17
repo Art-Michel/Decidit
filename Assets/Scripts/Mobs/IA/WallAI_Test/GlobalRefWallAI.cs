@@ -14,9 +14,12 @@ namespace State.WallAI
         public BoxCollider[] walls;
         public Transform playerTransform;
         public float orientation;
+        public MeshRenderer meshRenderer;
+        public AudioSource audioSource;
+
+        [Header("Scripatble")]
         public BaseMoveWallAISO baseMoveWallAISO;
         public BaseAttackWallAISO baseAttackWallAISO;
-        public MeshRenderer meshRenderer;
 
         // Start is called before the first frame update
         void Awake()
