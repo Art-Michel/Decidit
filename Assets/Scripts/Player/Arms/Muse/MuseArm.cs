@@ -43,7 +43,9 @@ public class MuseArm : Arm
     public override void StartActive()
     {
         PooledObject shot = _pooler.Get();
+        shot.transform.rotation = transform.rotation;
         shot.GetComponent<Projectile>().Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized, _cameraTransform.forward);
+
 
         Player.Instance.StartShake(_launchShakeIntensity, _launchShakeDuration);
         PlaceHolderSoundManager.Instance.PlayMuseRocketLaunch();
