@@ -5,11 +5,11 @@ using UnityEngine;
 public class Room : MonoBehaviour
 {
     public Vector3 Size => size;
-    public Doors Enter => enter;
-    public Doors Exit => exit;
+    public GameObject Enter => enter;
+    public GameObject Exit => exit;
     [SerializeField] private Vector3 size;
-    [SerializeField] private Doors enter;
-    [SerializeField] private Doors exit;
+    [SerializeField] private GameObject enter;
+    [SerializeField] private GameObject exit;
 
     public void GetDoors()
     {

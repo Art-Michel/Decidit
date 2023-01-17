@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class DungeonGenerator : MonoBehaviour
 {
     [SerializeField] int seed;
@@ -10,6 +11,7 @@ public class DungeonGenerator : MonoBehaviour
     [SerializeField] int length;
     [SerializeField] List<RoomSetup> rooms;
     [SerializeField] List<RoomSetup> corridors;
+    [SerializeField] List<GameObject> destroyObjects;
 
     List<Room> roomGen;
 
@@ -20,6 +22,11 @@ public class DungeonGenerator : MonoBehaviour
 
     public void Generate()
     {
+        if (destroyObjects.Count > length)
+        {
+            ClearDungeon();
+        }
+
         Random.InitState(seed);
 
         roomGen = new List<Room>(length + 2 + (length + 1));
@@ -34,17 +41,20 @@ public class DungeonGenerator : MonoBehaviour
         roomGen.Add(finalRoom.Get());
 
         Build();
+
+        ResetDungeon();
     }
 
     private void Build()
     {
-        Doors lastDoor = null;
+        GameObject lastDoor = null;
 
         foreach (Room room in roomGen)
         {
             Room instance = Instantiate(room, Vector3.zero, Quaternion.identity, transform);
-            
-            if(lastDoor != null)
+            destroyObjects.Add(instance.gameObject);
+
+            if (lastDoor != null)
             {
                 Vector3 direction = lastDoor.transform.position - instance.Enter.transform.position;
                 instance.transform.Translate(direction);
@@ -52,5 +62,22 @@ public class DungeonGenerator : MonoBehaviour
 
             lastDoor = instance.Exit;
         }
+    }
+
+    private void ResetDungeon()
+    {
+        transform.DetachChildren();
+
+        roomGen.Clear();
+    }
+
+    public void ClearDungeon()
+    {
+        foreach (GameObject obj in destroyObjects)
+        {
+            //Debug.Log("child name " + obj.name);
+            DestroyImmediate(obj);
+        }
+        destroyObjects.Clear();
     }
 }
