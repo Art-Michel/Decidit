@@ -269,7 +269,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 336271810}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalPosition: {x: 0, y: 0.105, z: 0.51}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -291,9 +291,10 @@ MonoBehaviour:
   _shouldCollideWith:
     serializedVersion: 2
     m_Bits: 16384
-  _radius: 0.2
+  _radius: 0.91
   _damage: 20
-  _knockbackForce: 10
+  _knockbackForce: 300
+  _knockbackAngle: {x: 0, y: 1, z: 1}
   _canMultiHit: 0
   _delayBetweenHits: 0
 --- !u!1 &1430261728
@@ -1023,6 +1024,7 @@ MonoBehaviour:
   _material: {fileID: 2100000, guid: 4f464c633df81524a9235c1407baf01e, type: 2}
   _deathVfx: {fileID: 8782500626266542195, guid: 4e088f7fded15e04a95d92413fada8e4,
     type: 3}
+  _regenValue: 0
   _uiScale: 0.1
   _lookStrictness: 0.08
   _appearSpeed: 15

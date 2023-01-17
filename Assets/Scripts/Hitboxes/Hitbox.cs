@@ -10,6 +10,7 @@ public class Hitbox : MonoBehaviour
     [SerializeField] protected float _radius = .2f;
     [SerializeField] protected int _damage = 10;
     [SerializeField] protected float _knockbackForce = 10f;
+    [SerializeField] protected Vector3 _knockbackAngle = Vector3.zero;
 
     public Dictionary<Transform, float> Blacklist { get; set; }
     [SerializeField] protected bool _canMultiHit = false;
@@ -70,7 +71,11 @@ public class Hitbox : MonoBehaviour
             if (_knockbackForce > 0f)
             {
                 //direction
-                Vector3 direction = (targetCollider.position - transform.position);
+                Vector3 direction;
+                if (_knockbackAngle == Vector3.zero)
+                    direction = (targetCollider.position - transform.position);
+                else
+                    direction = MakeDirectionRelative(_knockbackAngle.normalized);
 
                 //weaker over distance
                 float force = _knockbackForce * Mathf.InverseLerp(_radius, 2, direction.magnitude);
@@ -80,6 +85,16 @@ public class Hitbox : MonoBehaviour
             }
             Blacklist.Add(targetCollider.parent, _delayBetweenHits);
         }
+    }
+
+    Vector3 MakeDirectionRelative(Vector3 direction)
+    {
+        Vector3 that;
+        that = transform.right * direction.x;
+        that += transform.up * direction.y;
+        that += transform.forward * direction.z;
+
+        return that;
     }
 
     protected void UpdateBlackList()
