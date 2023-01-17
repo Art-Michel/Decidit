@@ -22,8 +22,8 @@ public class CoolDownRushBullParameterSO : ScriptableObject
     public float maxDurationStay;
 
     [Header("Cool Down Rush Parameter")]
-    public float currentCoolDownRush;
-    public float coolDownRush;
+    public float maxNumberOfPatrol;
+    public float currentNumberOfPatrol;
 
     [Header("Detect Wall")]
     public LayerMask mask;

@@ -15,6 +15,7 @@ namespace State.AIBull
         [SerializeField] bool linkIsActive;
         NavMeshLink navLink;
         bool triggerNavLink;
+        bool canStartRush;
 
         Vector3 destination;
 
@@ -27,23 +28,40 @@ namespace State.AIBull
 
         private void Update()
         {
-            if (globalRef.distPlayer > globalRef.rushBullSO.stopLockDist && !lockPlayer)
+            if(!canStartRush)
             {
-                globalRef.rushBullSO.rushDestination = globalRef.playerTransform.position + globalRef.transform.forward * globalRef.rushBullSO.rushInertieSetDistance;
-                SmoothLookAtPlayer();
+                ShowSoonAttack(true);
             }
             else
             {
-                lockPlayer = true;
+                ShowSoonAttack(false);
             }
 
-            RushMovement();
-            RushDuration();
+            SmoothLookAtPlayer();
+
+            if (globalRef.distPlayer > globalRef.rushBullSO.stopLockDist && !lockPlayer)
+            {
+                globalRef.rushBullSO.rushDestination = globalRef.playerTransform.position;
+            }
+            else
+            {
+                if(!lockPlayer)
+                {
+                    globalRef.rushBullSO.rushDestination = globalRef.playerTransform.position + globalRef.transform.forward * globalRef.rushBullSO.rushInertieSetDistance;
+                    lockPlayer = true;
+                }
+            }
+
+            if(canStartRush)
+            {
+                RushMovement();
+                RushDuration();
+            }
             //ManageCurrentNavMeshLink();
         }
         private void FixedUpdate()
         {
-            CheckPlayerDistance();
+            CheckObstacle();
         }
 
         void ManageCurrentNavMeshLink()
@@ -82,11 +100,11 @@ namespace State.AIBull
 
         void RushDuration()
         {
-            if (globalRef.hitBox.Blacklist.Count > 0) // player is hit
+           /* if (globalRef.hitBox.Blacklist.Count > 0) // player is hit
             {
                 StopRush();
-            }
-            else if(globalRef.agent.remainingDistance <= 1)
+            }*/
+            if(globalRef.agent.remainingDistance <= 1)
             {
                 StopRush();
             }
@@ -109,16 +127,14 @@ namespace State.AIBull
             return newDestination;
         }
 
-        void CheckPlayerDistance()
+        void CheckObstacle()
         {
-            hit = RaycastAIManager.RaycastAI(globalRef.transform.position, globalRef.transform.forward, globalRef.rushBullSO.noMask, Color.red, 1f);
+            hit = RaycastAIManager.RaycastAI(globalRef.transform.position, globalRef.transform.forward, globalRef.rushBullSO.maskCheckObstacle, Color.red, 2f);
 
             if (hit.transform != null)
             {
-                if (hit.transform.CompareTag("Wall"))
-                {
-                    StopRush();
-                }
+                Debug.Log(hit.transform);
+                StopRush();
             }
         }
 
@@ -156,6 +172,11 @@ namespace State.AIBull
             {
                 direction = SwitchToLoockLinkDestination();
             }
+            else if(!canStartRush)
+            {
+                triggerNavLink = false;
+                direction = globalRef.playerTransform.position;
+            }
             else
             {
                 triggerNavLink = false;
@@ -166,14 +187,35 @@ namespace State.AIBull
             relativePos.y = 0;
             relativePos.z = direction.z - globalRef.transform.position.z;
 
-            globalRef.rushBullSO.speedRot = globalRef.rushBullSO.maxSpeedRot;
+            if (globalRef.rushBullSO.speedRot < globalRef.rushBullSO.maxSpeedRot)
+                globalRef.rushBullSO.speedRot += Time.deltaTime / globalRef.rushBullSO.smoothRot;
+            else
+            {
+                canStartRush = true;
+                globalRef.rushBullSO.speedRot = globalRef.rushBullSO.maxSpeedRot;
+            }
 
             Quaternion rotation = Quaternion.Slerp(globalRef.transform.rotation, Quaternion.LookRotation(relativePos, Vector3.up), globalRef.rushBullSO.speedRot);
             globalRef.transform.rotation = rotation;
         }
 
+        void ShowSoonAttack(bool active)
+        {
+            if(active)
+            {
+                globalRef.material_Instances.Material.color = globalRef.material_Instances.ColorPreAtatck;
+                globalRef.material_Instances.ChangeColorTexture(globalRef.material_Instances.ColorPreAtatck);
+            }
+            else
+            {
+                globalRef.material_Instances.Material.color = globalRef.material_Instances.Color;
+                globalRef.material_Instances.ChangeColorTexture(globalRef.material_Instances.Color);
+            }
+        }
+
         private void OnDisable()
         {
+            canStartRush = false;
             lockPlayer = false;
             globalRef.detectOtherAICollider.enabled = false;
             globalRef.rushBullSO.stopLockPlayer = false;

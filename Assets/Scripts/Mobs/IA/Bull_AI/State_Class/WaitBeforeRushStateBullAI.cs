@@ -39,10 +39,15 @@ namespace State.AIBull
         {
             ManageCurrentNavMeshLink();
 
-            if(globalRef.coolDownRushBullSO.currentCoolDownRush > 0)
+            if(globalRef.coolDownRushBullSO.currentNumberOfPatrol < globalRef.coolDownRushBullSO.maxNumberOfPatrol)
+            {
                 GoToStartRushPos();
+            }
+            else
+            {
+                SwitchToStateRush();
+            }
 
-            CoolDownBeforeRush();
             SmoothLookAtPlayer();
         }
         private void FixedUpdate()
@@ -97,14 +102,13 @@ namespace State.AIBull
 
             if (globalRef.coolDownRushBullSO.startPos != Vector3.zero && globalRef.agent.remainingDistance <= 1f)
             {
-                Debug.Log("In Pos");
-
                 if (globalRef.coolDownRushBullSO.currentDurationStay > 0)
                 {
                     globalRef.coolDownRushBullSO.currentDurationStay -= Time.deltaTime;
                 }
                 else
                 {
+                    globalRef.coolDownRushBullSO.currentNumberOfPatrol++;
                     PreSelectingStartPos();
                 }
             }
@@ -150,24 +154,9 @@ namespace State.AIBull
             }
         }
 
-        void CoolDownBeforeRush()
+        void SwitchToStateRush()
         {
-            if (globalRef.coolDownRushBullSO.currentCoolDownRush > 0)
-            {
-                globalRef.coolDownRushBullSO.currentCoolDownRush -= Time.deltaTime;
-            }
-            else if (globalRef.agent.remainingDistance <= 1f)
-            {
-                if (globalRef.coolDownRushBullSO.currentDurationStay > 0)
-                {
-                    ShowSoonAttack();
-                    globalRef.coolDownRushBullSO.currentDurationStay -= Time.deltaTime;
-                }
-                else
-                {
-                    stateController.SetActiveState(StateControllerBull.AIState.Rush);
-                }
-            }
+            stateController.SetActiveState(StateControllerBull.AIState.Rush);
         }
        
         void ShowSoonAttack()
@@ -236,16 +225,13 @@ namespace State.AIBull
         {
             globalRef.bullAIStartPosRush.ResetSelectedBox(globalRef.coolDownRushBullSO.boxSelected);
             //globalRef.coolDownRushBullSO.boxSelected = null;
-
+            globalRef.coolDownRushBullSO.currentNumberOfPatrol = 0;
             globalRef.agent.speed = globalRef.coolDownRushBullSO.stopSpeed;
-            globalRef.coolDownRushBullSO.rushDestination = globalRef.playerTransform.position + globalRef.transform.forward * globalRef.rushBullSO.rushInertieSetDistance;
+            /*globalRef.coolDownRushBullSO.rushDestination = globalRef.playerTransform.position + globalRef.transform.forward * globalRef.rushBullSO.rushInertieSetDistance;
             globalRef.rushBullSO.rushDestination = globalRef.playerTransform.position + globalRef.transform.forward * globalRef.rushBullSO.rushInertieSetDistance;
-            globalRef.coolDownRushBullSO.currentCoolDownRush = globalRef.coolDownRushBullSO.coolDownRush;
-            globalRef.agent.SetDestination(globalRef.coolDownRushBullSO.rushDestination);
+            globalRef.agent.SetDestination(globalRef.coolDownRushBullSO.rushDestination);*/
             globalRef.coolDownRushBullSO.startPos = Vector3.zero;
             globalRef.coolDownRushBullSO.speedRot = 0;
-            globalRef.material_Instances.Material.color = globalRef.material_Instances.Color;
-            globalRef.material_Instances.ChangeColorTexture(globalRef.material_Instances.Color);
             globalRef.coolDownRushBullSO.currentDurationStay = globalRef.coolDownRushBullSO.maxDurationStay;
         }
     }
