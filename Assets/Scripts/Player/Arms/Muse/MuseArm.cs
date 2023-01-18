@@ -32,6 +32,11 @@ public class MuseArm : Arm
 
     }
 
+    public override void StartIdle()
+    {
+        _crossHairOutline.enabled = true;
+    }
+
     public override void CheckLookedAt()
     {
         if (Physics.Raycast(_cameraTransform.position, _cameraTransform.forward, out RaycastHit hit, 10000f, _mask))
@@ -42,6 +47,7 @@ public class MuseArm : Arm
 
     public override void StartActive()
     {
+        _crossHairOutline.enabled = false;
         PooledObject shot = _pooler.Get();
         shot.transform.rotation = transform.rotation;
         shot.GetComponent<Projectile>().Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized, _cameraTransform.forward);

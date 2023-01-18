@@ -56,6 +56,7 @@ public class AragonArm : Arm
 
     public override void StartIdle()
     {
+        _crossHairOutline.enabled = true;
         _vfx.SetActive(false);
     }
 
@@ -68,7 +69,7 @@ public class AragonArm : Arm
     {
         Physics.Raycast(_cameraTransform.position, _cameraTransform.forward, out RaycastHit hit, _range, _detectionMask);
         if (hit.transform != null)
-            _vfx.transform.position = hit.point + hit.normal * 0.3f;
+            _vfx.transform.position = hit.point + hit.normal * 0.9f;
         else
             _vfx.transform.position = _cameraTransform.transform.position + _cameraTransform.forward * _range;
 
@@ -84,11 +85,12 @@ public class AragonArm : Arm
 
     public override void StartActive()
     {
+        _crossHairOutline.enabled = false;
         _player.AllowMovement(false);
         _player.KillMomentum();
         _player._charaCon.enabled = false;
         _dashStartPosition = _player.transform.position;
-        _dashDestination = _vfx.transform.position + Vector3.up;
+        _dashDestination = _vfx.transform.position;
         _dashT = 0;
         StartDashFeedbacks();
     }
