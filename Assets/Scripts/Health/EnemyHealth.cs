@@ -31,7 +31,7 @@ public class EnemyHealth : Health
     float _deathT;
     bool _isDying;
 
-    void Awake()
+    protected override void Awake()
     {
         base.Awake();
         _regenValue = _hp;

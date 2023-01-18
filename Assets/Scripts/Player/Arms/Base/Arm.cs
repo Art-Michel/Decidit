@@ -129,17 +129,24 @@ public class Arm : MonoBehaviour
         if (_cooldownT <= 0f)
         {
             _fsm.ChangeState(ArmStateList.IDLE);
+            Refilled();
         }
     }
 
     public virtual void StartIdle()
     {
-        _crossHairOutline.enabled = true;
+
     }
 
     public virtual void CheckLookedAt()
     {
 
+    }
+
+    protected void Refilled()
+    {
+        _crossHairOutline.enabled = true;
+        PlaceHolderSoundManager.Instance.PlayArmFilled();
     }
 
     #region Debugging

@@ -56,13 +56,13 @@ public class AragonArm : Arm
 
     public override void StartIdle()
     {
-        _crossHairOutline.enabled = true;
         _vfx.SetActive(false);
     }
 
     public override void StartPrevis()
     {
         _vfx.SetActive(true);
+        PlaceHolderSoundManager.Instance.PlayDashPrevisSound();
     }
 
     public override void UpdatePrevis()
@@ -86,6 +86,7 @@ public class AragonArm : Arm
     public override void StartActive()
     {
         _crossHairOutline.enabled = false;
+        PlaceHolderSoundManager.Instance.PlayDashSound();
         _player.AllowMovement(false);
         _player.KillMomentum();
         _player._charaCon.enabled = false;

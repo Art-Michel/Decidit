@@ -34,7 +34,6 @@ public class MuseArm : Arm
 
     public override void StartIdle()
     {
-        _crossHairOutline.enabled = true;
     }
 
     public override void CheckLookedAt()

@@ -2207,7 +2207,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1186558932
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3701,15 +3701,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _land: {fileID: 8300000, guid: 7eeeecc3ec7f93e46835a40f7dbfbf83, type: 3}
+  _hurt: {fileID: 8300000, guid: 9ea235343ffade74eaff898e9e06cb7d, type: 3}
+  _regen: {fileID: 8300000, guid: c431e37ba8ce6f9429b693915d4f2164, type: 3}
+  _playReload: {fileID: 8300000, guid: d09e1db767633544d92b6204a31647d5, type: 3}
+  _playReloaded: {fileID: 8300000, guid: db92ec632863648448bd8cfb7aeb1760, type: 3}
+  _weaponEquip: {fileID: 8300000, guid: 8ae215a3a086ec74bbfdb69d765755c1, type: 3}
   _lastBulletClick: {fileID: 8300000, guid: b99950e3667ff6d4a9d7eba5369d1e5f, type: 3}
   _revolverShot: {fileID: 8300000, guid: 83e36ff29bb150e48803e13bc7c8d3cf, type: 3}
   _aragonShot: {fileID: 8300000, guid: b82ddf839a0ee37478e9be13fa9d0253, type: 3}
   _museShot: {fileID: 8300000, guid: 7a382af6d0305d943b5dc3e221deeb59, type: 3}
-  _museExplosion: {fileID: 8300000, guid: fa3a4f7775a1c4247a3b32698a10ff92, type: 3}
   _eylauShot0: {fileID: 8300000, guid: 1abe169fd23c43846af749537389e360, type: 3}
   _eylauShot1: {fileID: 8300000, guid: a0483ef353daa70479ef8abbc52576cb, type: 3}
   _eylauShot2: {fileID: 8300000, guid: 0d6b7cbc80cb4e24fa1921ba26ad13b4, type: 3}
-  _museRocketLaunch: {fileID: 8300000, guid: ca251d2f422d7c147a5d9707367582d4, type: 3}
   _eylauShot3: {fileID: 8300000, guid: 7d9ccdf0a6cdedc49b67fad7186b7360, type: 3}
   _eylauShot4: {fileID: 8300000, guid: ef6cc95bb0af8004f8dbcf615664258a, type: 3}
   _eylauShot5: {fileID: 8300000, guid: 66ee4c3090af06e44b3d11a40a74a054, type: 3}
@@ -3719,12 +3722,11 @@ MonoBehaviour:
   _eylauCharge3: {fileID: 8300000, guid: 6b4b26f610be1ec479e6cb27abaa7e9b, type: 3}
   _eylauCharge4: {fileID: 8300000, guid: 6b4b26f610be1ec479e6cb27abaa7e9b, type: 3}
   _eylauCharge5: {fileID: 8300000, guid: 27e03b1826aebdd4cae7aab669610e49, type: 3}
-  _playReload: {fileID: 8300000, guid: d09e1db767633544d92b6204a31647d5, type: 3}
-  _playReloaded: {fileID: 8300000, guid: db92ec632863648448bd8cfb7aeb1760, type: 3}
-  _weaponEquip: {fileID: 8300000, guid: 8ae215a3a086ec74bbfdb69d765755c1, type: 3}
   _armEquip: {fileID: 8300000, guid: 7165409a6fdbe7742ae9e1f1d43b9ec6, type: 3}
-  _hurt: {fileID: 8300000, guid: 9ea235343ffade74eaff898e9e06cb7d, type: 3}
-  _regen: {fileID: 8300000, guid: c431e37ba8ce6f9429b693915d4f2164, type: 3}
+  _armFilled: {fileID: 8300000, guid: 66ee4c3090af06e44b3d11a40a74a054, type: 3}
+  _dash: {fileID: 8300000, guid: fca8eceb98e8fe149838d2c8752318c1, type: 3}
+  _dashPrevis: {fileID: 8300000, guid: 66ee4c3090af06e44b3d11a40a74a054, type: 3}
+  _museRocketLaunch: {fileID: 8300000, guid: ca251d2f422d7c147a5d9707367582d4, type: 3}
   _hit: {fileID: 8300000, guid: 3c3d3a9c4fb6df0458cd94072c846f1a, type: 3}
   _criticalHit: {fileID: 8300000, guid: 6ce388ec08164d14b8732c37dd763699, type: 3}
 --- !u!82 &2007368076
@@ -7721,6 +7723,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: ceca385ad12df2245b61dfc03b988cb0,
         type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: ceca385ad12df2245b61dfc03b988cb0,
+        type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: ade8fca681f724cd89b5a568642f15ae, type: 2}
@@ -7928,6 +7935,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: ceca385ad12df2245b61dfc03b988cb0,
         type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: ceca385ad12df2245b61dfc03b988cb0,
+        type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: db0d38aa876057847a621bff38aae020, type: 2}
@@ -8023,6 +8035,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: ceca385ad12df2245b61dfc03b988cb0,
         type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: ceca385ad12df2245b61dfc03b988cb0,
+        type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 400b3adc1b8ca264598dc3561656665c, type: 2}
@@ -8114,6 +8131,11 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: ceca385ad12df2245b61dfc03b988cb0,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: ceca385ad12df2245b61dfc03b988cb0,
+        type: 3}
+      propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: ceca385ad12df2245b61dfc03b988cb0,

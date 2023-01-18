@@ -9,45 +9,116 @@ public class PlaceHolderSoundManager : LocalManager<PlaceHolderSoundManager>
 {
     [NonSerialized] public AudioSource AudioSource;
 
-    [SerializeField] AudioClip _land;
+    //Note: Muse-Gun and Muse-Skill's explosions are played inside an audiosource in the projectile itself.
+    [Foldout("Movement Sounds")][SerializeField] AudioClip _land;
+    [Foldout("Health Sounds")][SerializeField] AudioClip _hurt;
+    [Foldout("Health Sounds")][SerializeField] AudioClip _regen;
 
-    [SerializeField] AudioClip _lastBulletClick;
-    [SerializeField] AudioClip _revolverShot;
-    [SerializeField] AudioClip _aragonShot;
-    [SerializeField] AudioClip _museShot;
-    [SerializeField] AudioClip _museExplosion;
+    [Foldout("Common Gun Sounds")][SerializeField] AudioClip _playReload;
+    [Foldout("Common Gun Sounds")][SerializeField] AudioClip _playReloaded;
+    [Foldout("Common Gun Sounds")][SerializeField] AudioClip _weaponEquip;
+    [Foldout("Common Gun Sounds")][SerializeField] AudioClip _lastBulletClick;
 
-    [SerializeField] AudioClip _eylauShot0;
-    [SerializeField] AudioClip _eylauShot1;
-    [SerializeField] AudioClip _eylauShot2;
-    [SerializeField] AudioClip _museRocketLaunch;
+    [Foldout("Base Gun Sounds")][SerializeField] AudioClip _revolverShot;
+    [Foldout("Aragon Gun Sounds")][SerializeField] AudioClip _aragonShot;
+    [Foldout("Muse Gun Sounds")][SerializeField] AudioClip _museShot;
+    [Foldout("Eylau Gun Sounds")][SerializeField] AudioClip _eylauShot0;
+    [Foldout("Eylau Gun Sounds")][SerializeField] AudioClip _eylauShot1;
+    [Foldout("Eylau Gun Sounds")][SerializeField] AudioClip _eylauShot2;
 
-    [SerializeField] AudioClip _eylauShot3;
-    [SerializeField] AudioClip _eylauShot4;
-    [SerializeField] AudioClip _eylauShot5;
-    [SerializeField] AudioClip _eylauCharge0;
-    [SerializeField] AudioClip _eylauCharge1;
-    [SerializeField] AudioClip _eylauCharge2;
-    [SerializeField] AudioClip _eylauCharge3;
-    [SerializeField] AudioClip _eylauCharge4;
-    [SerializeField] AudioClip _eylauCharge5;
+    [Foldout("Eylau Gun Sounds")][SerializeField] AudioClip _eylauShot3;
+    [Foldout("Eylau Gun Sounds")][SerializeField] AudioClip _eylauShot4;
+    [Foldout("Eylau Gun Sounds")][SerializeField] AudioClip _eylauShot5;
+    [Foldout("Eylau Gun Sounds")][SerializeField] AudioClip _eylauCharge0;
+    [Foldout("Eylau Gun Sounds")][SerializeField] AudioClip _eylauCharge1;
+    [Foldout("Eylau Gun Sounds")][SerializeField] AudioClip _eylauCharge2;
+    [Foldout("Eylau Gun Sounds")][SerializeField] AudioClip _eylauCharge3;
+    [Foldout("Eylau Gun Sounds")][SerializeField] AudioClip _eylauCharge4;
+    [Foldout("Eylau Gun Sounds")][SerializeField] AudioClip _eylauCharge5;
 
-    [SerializeField] AudioClip _playReload;
-    [SerializeField] AudioClip _playReloaded;
-    [SerializeField] AudioClip _weaponEquip;
-    [SerializeField] AudioClip _armEquip;
+    [Foldout("Common Skills Sounds")][SerializeField] AudioClip _armEquip;
+    [Foldout("Common Skills Sounds")][SerializeField] AudioClip _armFilled;
+    [Foldout("Aragon Skills Sounds")][SerializeField] AudioClip _dash;
+    [Foldout("Aragon Skills Sounds")][SerializeField] AudioClip _dashPrevis;
+    [Foldout("Muse Skills Sounds")][SerializeField] AudioClip _museRocketLaunch;
 
-    [SerializeField] AudioClip _hurt;
-    [SerializeField] AudioClip _regen;
+    [Foldout("Enemy Hit sounds")][SerializeField] AudioClip _hit;
+    [Foldout("Enemy Hit sounds")][SerializeField] AudioClip _criticalHit;
 
-    [SerializeField] AudioClip _hit;
-    [SerializeField] AudioClip _criticalHit;
+    override protected void Awake()
+    {
+        base.Awake();
+        AudioSource = GetComponent<AudioSource>();
+    }
 
     private void PlaySound(AudioClip clip, float volume)
     {
         AudioSource.PlayOneShot(clip, volume);
     }
 
+    #region Movement sounds
+    public void PlayLand()
+    {
+        PlaySound(_land, .2f);
+    }
+    #endregion
+
+    #region Health sounds
+    public void PlayHurt()
+    {
+        PlaySound(_hurt, 1f);
+    }
+
+    public void PlayRegen()
+    {
+        PlaySound(_regen, 1f);
+    }
+    #endregion
+
+    #region Common gun sounds
+    public void PlayLastBulletClick()
+    {
+        PlaySound(_lastBulletClick, .5f);
+    }
+
+    public void PlayReload()
+    {
+        PlaySound(_playReload, 1f);
+    }
+
+    public void PlayReloaded()
+    {
+        PlaySound(_playReloaded, 1f);
+    }
+
+    public void PlayWeaponEquip()
+    {
+        PlaySound(_weaponEquip, 1f);
+    }
+    #endregion
+
+    #region Base Gun sounds
+    public void PlayRevolverShot()
+    {
+        PlaySound(_revolverShot, 1f);
+    }
+    #endregion
+
+    #region Aragon Gun sounds
+    public void PlayAragonShot()
+    {
+        PlaySound(_aragonShot, 1f);
+    }
+    #endregion
+
+    #region Muse Gun sounds
+    public void PlayMuseShot()
+    {
+        PlaySound(_museShot, 1f);
+    }
+    #endregion
+
+    #region Eylau Gun sounds
     public void PlayEylauCharge(int currentChargeStep)
     {
         switch (currentChargeStep)
@@ -71,56 +142,6 @@ public class PlaceHolderSoundManager : LocalManager<PlaceHolderSoundManager>
                 PlaySound(_eylauCharge5, .3f);
                 break;
         }
-    }
-
-    public void PlayLand()
-    {
-        PlaySound(_land, .2f);
-    }
-
-    public void PlayHurt()
-    {
-        PlaySound(_hurt, 1f);
-    }
-
-    public void PlayRegen()
-    {
-        PlaySound(_regen, 1f);
-    }
-
-    public void PlayRevolverShot()
-    {
-        PlaySound(_revolverShot, 1f);
-    }
-
-    public void PlayHitSound()
-    {
-        PlaySound(_hit, 2f);
-    }
-
-    public void PlayCriticalHitSound()
-    {
-        PlaySound(_criticalHit, 5f);
-    }
-
-    public void PlayAragonShot()
-    {
-        PlaySound(_aragonShot, 1f);
-    }
-
-    public void PlayMuseShot()
-    {
-        PlaySound(_museShot, 1f);
-    }
-
-    internal void PlayMuseRocketLaunch()
-    {
-        PlaySound(_museRocketLaunch, 1f);
-    }
-
-    public void PlayLastBulletClick()
-    {
-        PlaySound(_lastBulletClick, .5f);
     }
 
     public void PlayEylauShot(int i)
@@ -147,31 +168,49 @@ public class PlaceHolderSoundManager : LocalManager<PlaceHolderSoundManager>
                 break;
         }
     }
+    #endregion
 
-    public void PlayWeaponEquip()
-    {
-        PlaySound(_weaponEquip, 1f);
-    }
-
+    #region Common Skills sounds
     public void PlayArmEquip()
     {
         PlaySound(_armEquip, 1f);
     }
-
-    public void PlayReload()
+    public void PlayArmFilled()
     {
-        PlaySound(_playReload, 1f);
+        PlaySound(_armFilled, 1f);
+    }
+    #endregion
+
+    #region Aragon Skills sounds
+    internal void PlayDashSound()
+    {
+        PlaySound(_dash, .4f);
+    }
+    internal void PlayDashPrevisSound()
+    {
+        PlaySound(_dashPrevis, 1f);
+    }
+    #endregion
+
+    #region Muse Skills sounds
+    internal void PlayMuseRocketLaunch()
+    {
+        PlaySound(_museRocketLaunch, 1f);
+    }
+    #endregion
+
+    #region Enemies hit sounds
+    public void PlayHitSound()
+    {
+        PlaySound(_hit, 2f);
     }
 
-    public void PlayReloaded()
+    public void PlayCriticalHitSound()
     {
-        PlaySound(_playReloaded, 1f);
+        PlaySound(_criticalHit, 5f);
     }
+    #endregion
 
-    override protected void Awake()
-    {
-        base.Awake();
-        AudioSource = GetComponent<AudioSource>();
-    }
+
 
 }
