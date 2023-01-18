@@ -7,7 +7,7 @@ namespace State.AIBull
     public class BullAIStartPosRush : MonoBehaviour
     {
         [SerializeField] string nameParentObjectContainsBox;
-         Transform parentObjectContainsBox;
+        Transform parentObjectContainsBox;
 
         public List<GlobalRefBullAI> listBullAIScript = new List<GlobalRefBullAI>();
         [SerializeField] List<BoxCollider> listBounds = new List<BoxCollider>();
@@ -15,13 +15,13 @@ namespace State.AIBull
         [SerializeField] NavMeshData navMeshData;
 
         // Start is called before the first frame update
-        void Start()
+        void Awake()
         {
-            parentObjectContainsBox = GameObject.Find("Empty_StartPosBullRush").transform;
+            parentObjectContainsBox = GameObject.Find(nameParentObjectContainsBox).transform;
 
             for (int i =0; i < parentObjectContainsBox.childCount; i++)
             {
-                listSelectedBox.Add(parentObjectContainsBox.GetChild(i).GetComponent<BoxCollider>());
+                listBounds.Add(parentObjectContainsBox.GetChild(i).GetComponent<BoxCollider>());
             }
 
             for (int i = 0; i < transform.childCount; i++)
