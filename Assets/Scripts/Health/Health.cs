@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using NaughtyAttributes;
+using UnityEngine.SceneManagement;
 
 public class Health : MonoBehaviour
 {
@@ -130,6 +131,6 @@ public class Health : MonoBehaviour
 
     protected virtual void Death()
     {
-
+        SceneManager.LoadScene("Retry");
     }
 }
