@@ -8,7 +8,7 @@ public class MenuManager : MonoBehaviour
     public static MenuManager Instance = null;
     [SerializeField] int _gameIndex;
     [SerializeField] int _optionIndex;
-    //[SerializeField] List<Sprite> sprites;
+    //[SerializeField] List<> sprites;
 
     [SerializeField] GameObject firstSelected;
 
@@ -56,7 +56,7 @@ public class MenuManager : MonoBehaviour
         //Clear
         //EventSystem.current.SetSelectedGameObject(null);
 
-        if (EventSystem.current == null || EventSystem.current == sprites)
+        if (EventSystem.current == null /*EventSystem.current == sprites*/)
         {
             Debug.Log("vbksdbgjbkjnkgnklsmnkgln,lnkdglkbndklnbsknbknkl,ngs");
             //Reassign
