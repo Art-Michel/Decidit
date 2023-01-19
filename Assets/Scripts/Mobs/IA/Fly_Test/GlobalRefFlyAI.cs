@@ -21,12 +21,13 @@ namespace State.FlyAI
         public DeathFlySO deathFlySO;
 
         // Start is called before the first frame update
-        void Start()
+        void Awake()
         {
             baseMoveFlySO = Instantiate(baseMoveFlySO);
             lockPlayerFlySO = Instantiate(lockPlayerFlySO);
             baseAttackFlySO = Instantiate(baseAttackFlySO);
             deathFlySO = Instantiate(deathFlySO);
+            playerTransform = GameObject.FindWithTag("Player").transform;
         }
     }
 }
