@@ -5,12 +5,15 @@ using UnityEngine;
 public class PhysicsRushMob : MonoBehaviour
 {
     CapsuleCollider capsuleCollider;
+    private CharacterController controller;
+
 
     [Header("Gravity collision")]
     [SerializeField] LayerMask maskCollision;
     [SerializeField] List<Collider> listCol = new List<Collider>();
     [SerializeField] bool isFall;
     [SerializeField] bool isGround;
+    [SerializeField] bool endMove;
 
     [Header("Gravity value")]
     [SerializeField] float gravity;
@@ -20,18 +23,32 @@ public class PhysicsRushMob : MonoBehaviour
 
     [Header("Movement value")]
     [SerializeField] Transform target;
+    private Vector3 playerVelocity;
     [SerializeField] float speedMove;
+    [SerializeField] float velocity;
 
     void Start()
     {
         capsuleCollider = GetComponent<CapsuleCollider>();
+        controller = GetComponent<CharacterController>();
     }
 
     void Update()
     {
-        CreateCollider();
-        ApplyGravity();
-        Movement();
+        if(!endMove)
+        {
+            //CreateCollider();
+            ApplyMovement();
+        }
+
+        if (!isFall && !isGround)
+        {
+            isFall = true;
+        }
+        else if(isFall && isGround)
+        {
+            endMove = true;
+        }
     }
 
     void CreateCollider()
@@ -53,6 +70,7 @@ public class PhysicsRushMob : MonoBehaviour
         {
             isGround = true;
             fallingTime = 1;
+            currentAcceleration = 0;
         }
         else
         {
@@ -60,26 +78,29 @@ public class PhysicsRushMob : MonoBehaviour
         }
     }
 
-    void ApplyGravity()
+    void ApplyMovement()
     {
-        if(!isFall && !isGround)
-        {
-            isFall = true;
-        }
+        Vector2 targetPos = new Vector2(target.position.x, target.position.z);
+        Vector2 direction = targetPos - (new Vector2(transform.position.x, transform.position.z));
+        direction = direction.normalized * speedMove;
 
-        if(!isGround)
+        SetGravity();
+
+        Vector3 move = new Vector3(direction.x, playerVelocity.y, direction.y);
+        controller.Move(move * Time.deltaTime);
+        velocity = playerVelocity.y;
+    }
+    void SetGravity()
+    {
+        if (!isGround)
         {
             fallingTime += Time.deltaTime;
-            float effectiveGravity = gravity * (fallingTime * fallingTime);
-            currentAcceleration = effectiveGravity;
-            transform.Translate(-Vector3.up * effectiveGravity * Time.deltaTime);
+            float effectiveGravity = gravity * fallingTime;
+            playerVelocity.y += effectiveGravity;
         }
-    }
-
-    void Movement()
-    {
-        Vector3 targetPos = new Vector3(target.position.x, transform.position.y, target.position.z); 
-        Vector3 direction = targetPos - transform.position;
-        transform.Translate(direction * speedMove * Time.deltaTime);
+        else
+        {
+            playerVelocity.y = 0;
+        }
     }
 }
