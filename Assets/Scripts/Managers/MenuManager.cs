@@ -15,6 +15,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] GameObject firstSelected;
 
     [SerializeField] EventSystem eventsys;
+    Gamepad gamepad = Gamepad.current;
 
     private void Awake()
     {
@@ -34,8 +35,9 @@ public class MenuManager : MonoBehaviour
 
     void Update()
     {
-        SetSelectedGameObjectToSettings();
-        Debug.Log(eventsys.currentSelectedGameObject);
+        //SetSelectedGameObjectToSettings();
+        //Debug.Log(eventsys.currentSelectedGameObject);
+        HideMousse();
     }
     #region Butons fonctions
     //toutes les fonctions pour les boutons 
@@ -60,7 +62,7 @@ public class MenuManager : MonoBehaviour
     public void SetSelectedGameObjectToSettings()
     {
         //switch manette/clavier souris
-        if(eventsys.currentSelectedGameObject == null)
+        if (eventsys.currentSelectedGameObject == null)
         {
             eventsys.SetSelectedGameObject(firstSelected);
         }
@@ -68,7 +70,17 @@ public class MenuManager : MonoBehaviour
 
     public void HideMousse()
     {
-        Cursor.visible = false;
+        if(gamepad.IsActuated())
+        {
+            Debug.Log("mhidfnbjmnsbknksnb");
+        }
+        //SetSelectedGameObjectToSettings();
+        //Cursor.visible = false;
+    }
+    private void OnMouseDown()
+    {
+        Cursor.visible = true;
+        gamepad = null;
     }
 
     #endregion
