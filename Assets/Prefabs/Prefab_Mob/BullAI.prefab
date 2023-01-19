@@ -512,8 +512,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   globalRef: {fileID: 5314086220186537620}
   lockPlayer: 0
-  maxDurationNavLink: 0
-  linkIsActive: 0
+  listCol: []
+  distDestination: 0
+  distDetectObstacle: 1.5
+  directionYSlope: {x: 0, y: 0, z: 0}
 --- !u!65 &9191719257376539284
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -903,6 +905,7 @@ GameObject:
   - component: {fileID: 5314086220186537620}
   - component: {fileID: -5786898878562634712}
   - component: {fileID: 2316416254645839507}
+  - component: {fileID: 4926933427431696317}
   m_Layer: 7
   m_Name: BullAI
   m_TagString: Ennemi
@@ -1091,6 +1094,8 @@ MonoBehaviour:
   bullCount: {fileID: 0}
   stateControllerBull: {fileID: 5314086220186537621}
   agentLinkMover: {fileID: 0}
+  characterController: {fileID: 4926933427431696317}
+  capsuleCollider: {fileID: 0}
   sphereDebug: {fileID: 0}
   hitBox: {fileID: 336271812}
   detectOtherAICollider: {fileID: 9191719257376539284}
@@ -1154,3 +1159,21 @@ MonoBehaviour:
   _prefab: {fileID: 8252760470148114170, guid: 761a0a66d6e3a524fbb1ad7370c627ba, type: 3}
   _initialCount: 4
   _shouldBeParent: 0
+--- !u!143 &4926933427431696317
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5314086221994346189}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 1.6
+  m_Radius: 0.49999997
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}

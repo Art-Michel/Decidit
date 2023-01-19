@@ -1,6 +1,6 @@
 using UnityEngine;
-using UnityEngine.AI;
 using State.AICAC;
+using System.Collections.Generic;
 
 namespace State.AIBull
 {
@@ -10,14 +10,13 @@ namespace State.AIBull
         RaycastHit hit;
 
         [SerializeField] bool lockPlayer;
-
-        [SerializeField] float maxDurationNavLink;
-        [SerializeField] bool linkIsActive;
-        NavMeshLink navLink;
-        bool triggerNavLink;
         bool canStartRush;
 
-        Vector3 destination;
+        [SerializeField] float distDestination;
+        [SerializeField] float distDetectObstacle;
+
+        [SerializeField] Vector3 directionYSlope;
+        Vector3 move;
 
         public override void InitState(StateControllerBull stateController)
         {
@@ -26,9 +25,22 @@ namespace State.AIBull
             state = StateControllerBull.AIState.Rush;
         }
 
+        private void OnEnable()
+        {
+            try
+            {
+                globalRef.characterController.enabled = true;
+                globalRef.agent.enabled = false;
+            }
+            catch
+            {
+                Debug.LogWarning("Missing Ref");
+            }
+        }
+
         private void Update()
         {
-            if(!canStartRush)
+            if (!canStartRush)
             {
                 ShowSoonAttack(true);
             }
@@ -57,83 +69,78 @@ namespace State.AIBull
                 RushMovement();
                 RushDuration();
             }
-            //ManageCurrentNavMeshLink();
         }
         private void FixedUpdate()
         {
             CheckObstacle();
         }
 
-        void ManageCurrentNavMeshLink()
+        void RushDuration()
         {
-            if (globalRef.agent.isOnOffMeshLink)
+            /* if (globalRef.hitBox.Blacklist.Count > 0) // player is hit
+             {
+                 StopRush();
+             }*/
+
+            distDestination = Vector3.Distance(new Vector2(globalRef.transform.position.x, globalRef.transform.position.z),
+                new Vector2(globalRef.rushBullSO.rushDestination.x, globalRef.rushBullSO.rushDestination.z));
+
+            if (distDestination <= 1)
             {
-                if (maxDurationNavLink > 0)
-                {
-                    globalRef.agent.ActivateCurrentOffMeshLink(false);
-                    linkIsActive = false;
-                    Debug.Log(linkIsActive + "Disable");
-                    maxDurationNavLink -= Time.deltaTime;
-                }
-                else
-                {
-                    linkIsActive = true;
-                    Debug.Log(linkIsActive + "Enable");
-                    globalRef.agent.ActivateCurrentOffMeshLink(true);
-                }
+                StopRush();
+            }
 
-                globalRef.agent.speed = 3;
-                if (navLink == null)
-                    navLink = globalRef.agent.navMeshOwner as NavMeshLink;
+            if (!globalRef.rushBullSO.isFall && !globalRef.rushBullSO.isGround)
+            {
+                globalRef.rushBullSO.isFall = true;
+            }
+            else if (globalRef.rushBullSO.isFall && globalRef.rushBullSO.isGround)
+            {
+                StopRush();
+            }
+        }
 
+        void RushMovement()
+        {
+            Vector2 targetPos = new Vector2(globalRef.rushBullSO.rushDestination.x, globalRef.rushBullSO.rushDestination.z);
+            Vector2 direction = targetPos - (new Vector2(globalRef.transform.position.x, globalRef.transform.position.z));
+            direction = direction.normalized * globalRef.rushBullSO.speedMove;
+
+            SetGravity();
+
+            move = new Vector3(direction.x, directionYSlope.y + globalRef.rushBullSO.playerVelocity.y, direction.y);
+            globalRef.characterController.Move(move * Time.deltaTime);
+            globalRef.rushBullSO.isGround = globalRef.characterController.isGrounded;
+            
+            globalRef.detectOtherAICollider.enabled = true;
+            globalRef.hitBox.gameObject.SetActive(true);
+        }
+        void SetGravity()
+        {
+            if (!globalRef.rushBullSO.isGround)
+            {
+                globalRef.rushBullSO.fallingTime += Time.deltaTime;
+                float effectiveGravity = globalRef.rushBullSO.gravity * globalRef.rushBullSO.fallingTime;
+                globalRef.rushBullSO.playerVelocity.y += effectiveGravity;
             }
             else
             {
-                if (navLink != null)
-                {
-                    navLink.UpdateLink();
-                    navLink = null;
-                }
-                maxDurationNavLink = globalRef.agentLinkMover._duration;
+                globalRef.rushBullSO.playerVelocity.y = 0;
             }
-        }
-
-        void RushDuration()
-        {
-           /* if (globalRef.hitBox.Blacklist.Count > 0) // player is hit
-            {
-                StopRush();
-            }*/
-            if(globalRef.agent.remainingDistance <= 1)
-            {
-                StopRush();
-            }
-        }
-
-        public void RushMovement()
-        {
-            globalRef.detectOtherAICollider.enabled = true;
-            globalRef.agent.speed = globalRef.rushBullSO.rushSpeed;
-            globalRef.agent.SetDestination(CheckNavMeshPoint(globalRef.rushBullSO.rushDestination));
-            globalRef.hitBox.gameObject.SetActive(true);
-        }
-        Vector3 CheckNavMeshPoint(Vector3 newDestination)
-        {
-            NavMeshHit closestHit;
-            if (NavMesh.SamplePosition(newDestination, out closestHit, 1, 1))
-            {
-                newDestination = closestHit.position;
-            }
-            return newDestination;
         }
 
         void CheckObstacle()
         {
-            hit = RaycastAIManager.RaycastAI(globalRef.transform.position, globalRef.transform.forward, globalRef.rushBullSO.maskCheckObstacle, Color.red, 2f);
+            hit = RaycastAIManager.RaycastAI(globalRef.transform.position, -globalRef.transform.up, globalRef.rushBullSO.maskCheckObstacle, Color.red, 1.5f);
+            directionYSlope = move;
+            if (Vector3.Angle(transform.up, hit.normal) < globalRef.characterController.slopeLimit)
+                directionYSlope = (directionYSlope - (Vector3.Dot(directionYSlope, hit.normal)) * hit.normal);
 
-            if (hit.transform != null)
+
+            RaycastHit hitObstacle = RaycastAIManager.RaycastAI(globalRef.transform.position, globalRef.transform.forward, globalRef.rushBullSO.maskCheckObstacle, Color.red, distDetectObstacle);
+            if (hitObstacle.transform != null)
             {
-                Debug.Log(hit.transform);
+                Debug.Log("Obstacle");
                 StopRush();
             }
         }
@@ -143,45 +150,12 @@ namespace State.AIBull
             stateController.SetActiveState(StateControllerBull.AIState.Idle);
         }
 
-        Vector3 SwitchToLoockLinkDestination()
-        {
-            NavMeshLink link;
-            link = globalRef.agent.navMeshOwner as NavMeshLink;
-
-            if (!triggerNavLink)
-            {
-                if (Vector3.Distance(globalRef.transform.position, link.startPoint) < Vector3.Distance(globalRef.transform.position, link.endPoint))
-                {
-                    destination = link.endPoint;
-                    triggerNavLink = true;
-                }
-                else
-                {
-                    destination = link.startPoint;
-                    triggerNavLink = true;
-                }
-            }
-            return destination;
-        }
         void SmoothLookAtPlayer()
         {
             Vector3 direction;
             Vector3 relativePos;
 
-            if (globalRef.agent.isOnOffMeshLink)
-            {
-                direction = SwitchToLoockLinkDestination();
-            }
-            else if(!canStartRush)
-            {
-                triggerNavLink = false;
-                direction = globalRef.playerTransform.position;
-            }
-            else
-            {
-                triggerNavLink = false;
-                direction = globalRef.transform.position + globalRef.agent.desiredVelocity;
-            }
+            direction = globalRef.rushBullSO.rushDestination;
 
             relativePos.x = direction.x - globalRef.transform.position.x;
             relativePos.y = 0;
@@ -215,12 +189,15 @@ namespace State.AIBull
 
         private void OnDisable()
         {
+            globalRef.rushBullSO.isFall = false;
+            globalRef.rushBullSO.isGround = true;
             canStartRush = false;
             lockPlayer = false;
             globalRef.detectOtherAICollider.enabled = false;
             globalRef.rushBullSO.stopLockPlayer = false;
             globalRef.hitBox.gameObject.SetActive(false);
-
+            globalRef.characterController.enabled = false;
+            globalRef.agent.enabled = true;
             globalRef.rushBullSO.speedRot = 0;
         }
 
@@ -269,45 +246,6 @@ namespace State.AIBull
             }
         }
 
-/*        private void OnTriggerStay(Collider other)
-        {
-            if (other.CompareTag("Ennemi") && gameObject.activeInHierarchy)
-            {
-                if (globalRef.rushBullSO.ennemiInCollider != null)
-                {
-                    for (int i = 0; i < globalRef.rushBullSO.ennemiInCollider.Count; i++)
-                    {
-                        if (globalRef.rushBullSO.ennemiInCollider[i].GetComponent<GlobalRefAICAC>() != null)
-                        {
-                            GlobalRefAICAC globalRefAICAC = globalRef.rushBullSO.ennemiInCollider[i].GetComponent<GlobalRefAICAC>();
-
-                            RaycastHit hit = RaycastAIManager.RaycastAI(transform.position, transform.forward, globalRef.ennemiMask, Color.red, 10f);
-                            float angle;
-                            angle = Vector3.SignedAngle(transform.forward, hit.normal, Vector3.up);
-
-                            if(globalRef.agent.velocity.magnitude > 0)
-                            {
-                                if (angle > 0 && globalRef.agent.velocity.magnitude > 0)
-                                {
-                                    Debug.Log("Dodge TrashMob");
-                                    globalRefAICAC.dodgeAICACSO.targetObjectToDodge = this.transform;
-                                    globalRefAICAC.dodgeAICACSO.rightDodge = true;
-                                    globalRefAICAC.ActiveStateDodge();
-                                }
-                                else
-                                {
-                                    Debug.Log("Dodge TrashMob");
-                                    globalRefAICAC.dodgeAICACSO.targetObjectToDodge = this.transform;
-                                    globalRefAICAC.dodgeAICACSO.leftDodge = true;
-                                    globalRefAICAC.dodgeAICACSO.dodgeRushBull = true;
-                                    globalRefAICAC.ActiveStateDodge();
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }*/
         private void OnTriggerExit(Collider other)
         {
             if (other.CompareTag("Ennemi"))

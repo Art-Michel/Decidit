@@ -13,16 +13,25 @@ public class RushBullParameterSO : ScriptableObject
     public float maxSpeedRot;
     public float smoothRot;
 
+    [Header("Gravity collision")]
+    public LayerMask maskCollision;
+    public bool isFall;
+    public bool isGround;
+
+    [Header("Gravity value")]
+    public float gravity;
+    public float fallingTime;
+    public float currentAcceleration;
+
+    [Header("Movement value")]
+    public Vector3 playerVelocity;
+    public float speedMove;
+
     [Header("Movement Parameter")]
-    public float rushSpeed;
     public float stopLockDist;
-    public int damageRushAttack;
     public Vector3 rushDestination;
     public float rushInertieSetDistance;
     public bool stopLockPlayer;
-
-    [Header("Attack Range")]
-    public float distRush;
 
     [Header("Detect Trash Mob Parameter")]
     public BoxCollider detectOtherAICollider;

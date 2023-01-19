@@ -17,6 +17,8 @@ namespace State.AIBull
         public BullCount bullCount;
         public StateControllerBull stateControllerBull;
         public AgentLinkMover agentLinkMover;
+        public CharacterController characterController;
+        public CapsuleCollider capsuleCollider;
 
         [Header("Debug Destination")]
         public Transform sphereDebug;
@@ -45,6 +47,7 @@ namespace State.AIBull
             bullAIStartPosRush = GetComponentInParent<BullAIStartPosRush>();
             bullCount = GetComponentInParent<BullCount>();
             agentLinkMover = GetComponent<AgentLinkMover>();
+            capsuleCollider = GetComponent<CapsuleCollider>();
 
             baseIdleBullSO = Instantiate(baseIdleBullSO);
             baseMoveBullSO = Instantiate(baseMoveBullSO);
@@ -56,7 +59,7 @@ namespace State.AIBull
 
         void Update()
         {
-            sphereDebug.position = agent.destination;
+           // sphereDebug.position = agent.destination;
 
             distPlayer = Vector3.Distance(transform.position, playerTransform.position);
 
