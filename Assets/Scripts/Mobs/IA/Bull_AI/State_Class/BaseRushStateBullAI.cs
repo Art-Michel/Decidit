@@ -14,6 +14,7 @@ namespace State.AIBull
 
         [SerializeField] float distDestination;
         [SerializeField] float distDetectObstacle;
+        [SerializeField] float distDetectGround;
 
         [SerializeField] Vector3 directionYSlope;
         Vector3 move;
@@ -29,7 +30,6 @@ namespace State.AIBull
         {
             try
             {
-                globalRef.characterController.enabled = true;
                 globalRef.agent.enabled = false;
             }
             catch
@@ -87,6 +87,7 @@ namespace State.AIBull
 
             if (distDestination <= 1)
             {
+                Debug.Log("Distance Stop Rush");
                 StopRush();
             }
 
@@ -96,6 +97,7 @@ namespace State.AIBull
             }
             else if (globalRef.rushBullSO.isFall && globalRef.rushBullSO.isGround)
             {
+                Debug.Log("Fall Stop Rush");
                 StopRush();
             }
         }
@@ -110,8 +112,7 @@ namespace State.AIBull
 
             move = new Vector3(direction.x, directionYSlope.y + globalRef.rushBullSO.playerVelocity.y, direction.y);
             globalRef.characterController.Move(move * Time.deltaTime);
-            globalRef.rushBullSO.isGround = globalRef.characterController.isGrounded;
-            
+                        
             globalRef.detectOtherAICollider.enabled = true;
             globalRef.hitBox.gameObject.SetActive(true);
         }
@@ -131,16 +132,26 @@ namespace State.AIBull
 
         void CheckObstacle()
         {
-            hit = RaycastAIManager.RaycastAI(globalRef.transform.position, -globalRef.transform.up, globalRef.rushBullSO.maskCheckObstacle, Color.red, 1.5f);
+            //Check obstacle Ground
+            hit = RaycastAIManager.RaycastAI(globalRef.transform.position, -globalRef.transform.up, globalRef.rushBullSO.maskCheckObstacle, Color.red, distDetectGround);
             directionYSlope = move;
             if (Vector3.Angle(transform.up, hit.normal) < globalRef.characterController.slopeLimit)
                 directionYSlope = (directionYSlope - (Vector3.Dot(directionYSlope, hit.normal)) * hit.normal);
+            if (hit.transform != null)
+            {
+                globalRef.rushBullSO.isGround = true;
+            }
+            else
+            {
+                Debug.Log("Is Falling");
+                globalRef.rushBullSO.isGround = false;
+            }
 
-
+            //Check obstacle Wall
             RaycastHit hitObstacle = RaycastAIManager.RaycastAI(globalRef.transform.position, globalRef.transform.forward, globalRef.rushBullSO.maskCheckObstacle, Color.red, distDetectObstacle);
             if (hitObstacle.transform != null)
             {
-                Debug.Log("Obstacle");
+                Debug.Log("Obstacle Stop Rush");
                 StopRush();
             }
         }
@@ -196,7 +207,6 @@ namespace State.AIBull
             globalRef.detectOtherAICollider.enabled = false;
             globalRef.rushBullSO.stopLockPlayer = false;
             globalRef.hitBox.gameObject.SetActive(false);
-            globalRef.characterController.enabled = false;
             globalRef.agent.enabled = true;
             globalRef.rushBullSO.speedRot = 0;
         }
