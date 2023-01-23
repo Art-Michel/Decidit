@@ -4,10 +4,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "RushParameter", menuName = "Bull/RushParameter")]
 public class RushBullParameterSO : ScriptableObject
 {
-    [Header("Duration rush")]
-    public float rushCurrentDuration;
-    public float rushMaxDuration;
-
     [Header("Speed Rotation Parameter")]
     public float speedRot;
     public float maxSpeedRot;
@@ -24,14 +20,15 @@ public class RushBullParameterSO : ScriptableObject
     public float currentAcceleration;
 
     [Header("Movement value")]
-    public Vector3 playerVelocity;
+    public Vector3 AIVelocity;
     public float speedMove;
 
     [Header("Movement Parameter")]
-    public float stopLockDist;
     public Vector3 rushDestination;
-    public float rushInertieSetDistance;
     public bool stopLockPlayer;
+    public float stopLockDist;
+    public float rushDistance;
+    public float rushInertieSetDistance;
 
     [Header("Detect Trash Mob Parameter")]
     public BoxCollider detectOtherAICollider;

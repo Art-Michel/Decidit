@@ -5,6 +5,7 @@ namespace State.AIBull
 {
     public class WaitBeforeRushStateBullAI : _StateBull
     {
+        [SerializeField] BaseRushStateBullAI baseRushStateBullAI;
         [SerializeField] GlobalRefBullAI globalRef;
         RaycastHit hit;
 
@@ -116,6 +117,8 @@ namespace State.AIBull
 
         void PreSelectingStartPos()
         {
+            Debug.Log("count");
+
             globalRef.coolDownRushBullSO.currentDurationStay = globalRef.coolDownRushBullSO.maxDurationStay;
             globalRef.bullAIStartPosRush.ResetSelectedBox(globalRef.coolDownRushBullSO.boxSelected);
             SelectStartPos();
@@ -157,13 +160,6 @@ namespace State.AIBull
         void SwitchToStateRush()
         {
             stateController.SetActiveState(StateControllerBull.AIState.Rush);
-        }
-       
-        void ShowSoonAttack()
-        {
-            globalRef.material_Instances.Material.color = globalRef.material_Instances.ColorPreAtatck;
-            globalRef.material_Instances.ChangeColorTexture(globalRef.material_Instances.ColorPreAtatck);
-            globalRef.agent.speed = globalRef.coolDownRushBullSO.speedRushToStartPos;
         }
 
         Vector3 SwitchToLoockLinkDestination()
@@ -223,6 +219,8 @@ namespace State.AIBull
 
         private void OnDisable()
         {
+            baseRushStateBullAI.captureBasePosDistance = globalRef.transform.position;
+
             globalRef.bullAIStartPosRush.ResetSelectedBox(globalRef.coolDownRushBullSO.boxSelected);
             //globalRef.coolDownRushBullSO.boxSelected = null;
             globalRef.coolDownRushBullSO.currentNumberOfPatrol = 0;

@@ -18,7 +18,6 @@ namespace State.AIBull
         public StateControllerBull stateControllerBull;
         public AgentLinkMover agentLinkMover;
         public CharacterController characterController;
-        public CapsuleCollider capsuleCollider;
 
         [Header("Debug Destination")]
         public Transform sphereDebug;
@@ -47,7 +46,6 @@ namespace State.AIBull
             bullAIStartPosRush = GetComponentInParent<BullAIStartPosRush>();
             bullCount = GetComponentInParent<BullCount>();
             agentLinkMover = GetComponent<AgentLinkMover>();
-            capsuleCollider = GetComponent<CapsuleCollider>();
 
             baseIdleBullSO = Instantiate(baseIdleBullSO);
             baseMoveBullSO = Instantiate(baseMoveBullSO);

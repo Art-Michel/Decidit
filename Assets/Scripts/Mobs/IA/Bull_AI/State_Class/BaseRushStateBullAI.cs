@@ -19,6 +19,9 @@ namespace State.AIBull
         [SerializeField] Vector3 directionYSlope;
         Vector3 move;
 
+        public Vector3 captureBasePosDistance;
+        [SerializeField] float distRush;
+
         public override void InitState(StateControllerBull stateController)
         {
             base.InitState(stateController);
@@ -51,18 +54,7 @@ namespace State.AIBull
 
             SmoothLookAtPlayer();
 
-            if (globalRef.distPlayer > globalRef.rushBullSO.stopLockDist && !lockPlayer)
-            {
-                globalRef.rushBullSO.rushDestination = globalRef.playerTransform.position;
-            }
-            else
-            {
-                if(!lockPlayer)
-                {
-                    globalRef.rushBullSO.rushDestination = globalRef.playerTransform.position + globalRef.transform.forward * globalRef.rushBullSO.rushInertieSetDistance;
-                    lockPlayer = true;
-                }
-            }
+            SetDestination();
 
             if(canStartRush)
             {
@@ -75,13 +67,24 @@ namespace State.AIBull
             CheckObstacle();
         }
 
+        void SetDestination()
+        {
+            if (globalRef.distPlayer > globalRef.rushBullSO.stopLockDist && !lockPlayer)
+            {
+                globalRef.rushBullSO.rushDestination = globalRef.playerTransform.position;
+            }
+            else
+            {
+                if (!lockPlayer)
+                {
+                    globalRef.rushBullSO.rushDestination = globalRef.playerTransform.position + globalRef.transform.forward * globalRef.rushBullSO.rushInertieSetDistance;
+                    lockPlayer = true;
+                }
+            }
+        }
+
         void RushDuration()
         {
-            /* if (globalRef.hitBox.Blacklist.Count > 0) // player is hit
-             {
-                 StopRush();
-             }*/
-
             distDestination = Vector3.Distance(new Vector2(globalRef.transform.position.x, globalRef.transform.position.z),
                 new Vector2(globalRef.rushBullSO.rushDestination.x, globalRef.rushBullSO.rushDestination.z));
 
@@ -100,6 +103,12 @@ namespace State.AIBull
                 Debug.Log("Fall Stop Rush");
                 StopRush();
             }
+
+            distRush = Vector3.Distance(captureBasePosDistance, globalRef.transform.position);
+            if (distRush >= globalRef.rushBullSO.rushDistance)
+            {
+                StopRush();
+            }
         }
 
         void RushMovement()
@@ -110,7 +119,7 @@ namespace State.AIBull
 
             SetGravity();
 
-            move = new Vector3(direction.x, directionYSlope.y + globalRef.rushBullSO.playerVelocity.y, direction.y);
+            move = new Vector3(direction.x, directionYSlope.y + globalRef.rushBullSO.AIVelocity.y, direction.y);
             globalRef.characterController.Move(move * Time.deltaTime);
                         
             globalRef.detectOtherAICollider.enabled = true;
@@ -122,11 +131,11 @@ namespace State.AIBull
             {
                 globalRef.rushBullSO.fallingTime += Time.deltaTime;
                 float effectiveGravity = globalRef.rushBullSO.gravity * globalRef.rushBullSO.fallingTime;
-                globalRef.rushBullSO.playerVelocity.y += effectiveGravity;
+                globalRef.rushBullSO.AIVelocity.y += effectiveGravity;
             }
             else
             {
-                globalRef.rushBullSO.playerVelocity.y = 0;
+                globalRef.rushBullSO.AIVelocity.y = 0;
             }
         }
 

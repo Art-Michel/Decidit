@@ -462,6 +462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4927ea78944ece44eb6c6e9eb97f84a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  baseRushStateBullAI: {fileID: 8100736487116432644}
   globalRef: {fileID: 5314086220186537620}
   maxDurationNavLink: 0
   linkIsActive: 0
@@ -514,8 +515,10 @@ MonoBehaviour:
   lockPlayer: 0
   distDestination: 1
   distDetectObstacle: 1.5
-  distDetectGround: 2
+  distDetectGround: 5
   directionYSlope: {x: 0, y: 0, z: 0}
+  captureBasePosDistance: {x: 0, y: 0, z: 0}
+  distRush: 0
 --- !u!65 &9191719257376539284
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1095,7 +1098,6 @@ MonoBehaviour:
   stateControllerBull: {fileID: 5314086220186537621}
   agentLinkMover: {fileID: 0}
   characterController: {fileID: 4926933427431696317}
-  capsuleCollider: {fileID: 0}
   sphereDebug: {fileID: 0}
   hitBox: {fileID: 336271812}
   detectOtherAICollider: {fileID: 9191719257376539284}
