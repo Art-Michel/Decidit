@@ -196,8 +196,13 @@ namespace State.AIBull
             {
                 triggerNavLink = false;
 
-                if (globalRef.agent.remainingDistance > 1)
-                    direction = globalRef.transform.position + globalRef.agent.desiredVelocity;
+                if(globalRef.agent.isActiveAndEnabled)
+                {
+                    if (globalRef.agent.remainingDistance > 1)
+                        direction = globalRef.transform.position + globalRef.agent.desiredVelocity;
+                    else
+                        direction = globalRef.playerTransform.position;
+                }
                 else
                     direction = globalRef.playerTransform.position;
             }
