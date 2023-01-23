@@ -13,6 +13,7 @@ namespace State.FlyAI
 
         [Header("Ref Base Attack")]
         public GameObject colliderBaseAttack;
+        public Hitbox hitbox;
 
         [Header("Ref Scriptable")]
         public BaseMoveFlySO baseMoveFlySO;

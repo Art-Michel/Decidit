@@ -25,6 +25,7 @@ namespace State.FlyAI
         private void Start()
         {
             baseMoveFlySO = globalRef.baseMoveFlySO;
+            baseMoveFlySO.currentRateAttack = (int)Random.Range(baseMoveFlySO.maxRateAttack.x, baseMoveFlySO.maxRateAttack.y);
         }
 
         private void Update()
@@ -46,6 +47,7 @@ namespace State.FlyAI
 
             if(hit.transform != null)
             {
+                Debug.Log("Search new pos");
                 dodgeObstacle = true;
                 SearchNewPos();
             }
@@ -53,6 +55,7 @@ namespace State.FlyAI
             {
                 if(dodgeObstacle)
                 {
+                    Debug.Log("New pos found");
                     dodgeObstacle = false;
                 }
             }
@@ -179,7 +182,7 @@ namespace State.FlyAI
 
         void OnDisable()
         {
-            baseMoveFlySO.currentRateAttack = baseMoveFlySO.maxRateAttack;
+            baseMoveFlySO.currentRateAttack = Random.Range(baseMoveFlySO.maxRateAttack.x, baseMoveFlySO.maxRateAttack.y);
             baseMoveFlySO.timeGoToDestinationPatrol = 0;
             baseMoveFlySO.maxSpeedYTranslationPatrol = 0;
             baseMoveFlySO.currentSpeedYPatrol = 0;

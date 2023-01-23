@@ -8,4 +8,5 @@ public class LockPlayerFlySO : ScriptableObject
     public float stopSpeed;
     public Vector3 destinationFinal;
     public float distStopLockPlayer;
+    public float offsetYpos;
 }

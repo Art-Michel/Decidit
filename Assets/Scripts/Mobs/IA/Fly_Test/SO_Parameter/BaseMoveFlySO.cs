@@ -27,5 +27,5 @@ public class BaseMoveFlySO : ScriptableObject
 
     [Header("Rate Attack")]
     public float currentRateAttack;
-    public float maxRateAttack;
+    public Vector2 maxRateAttack;
 }

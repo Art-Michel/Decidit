@@ -8,7 +8,8 @@ public class BaseAttackFlySO : ScriptableObject
 
     [Header("Distance Destination")]
     public float distDestinationFinal;
-
+    public float distDetectWall;
+    public LayerMask wallMask;
 
     [Header("Speed Rotation Attack")]
     public float maxSpeedRotationAIAttack;

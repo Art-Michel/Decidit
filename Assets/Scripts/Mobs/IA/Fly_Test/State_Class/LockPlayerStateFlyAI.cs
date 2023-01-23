@@ -24,21 +24,27 @@ namespace State.FlyAI
             baseAttackFlySO = globalRef.baseAttackFlySO;
         }
 
+        private void OnEnable()
+        {
+            try
+            {
+                globalRef.colliderBaseAttack.gameObject.SetActive(false);
+            }
+            catch
+            {
+                Debug.LogWarning("Missing Reference");
+            }
+        }
+
         private void Update()
         {
-            if (state == StateControllerFlyAI.AIState.LockPlayer)
-            {
-                Debug.Log("Idle");
-                LockPlayer();
-                SmoothLookAtYAxisAttack();
-            }
+            LockPlayer();
+            SmoothLookAtYAxisAttack();
         }
 
         public void LockPlayer()
         {
-            globalRef.colliderBaseAttack.gameObject.SetActive(false);
-
-            lockPlayerFlySO.destinationFinal = new Vector3(globalRef.playerTransform.position.x, globalRef.playerTransform.position.y - 1f, globalRef.playerTransform.position.z);
+            lockPlayerFlySO.destinationFinal = new Vector3(globalRef.playerTransform.position.x, globalRef.playerTransform.position.y - lockPlayerFlySO.offsetYpos, globalRef.playerTransform.position.z);
 
             if (baseAttackFlySO.speedRotationAIAttack >= 1f)
             {
@@ -73,8 +79,18 @@ namespace State.FlyAI
 
             if (baseAttackFlySO.speedRotationAIAttack < baseAttackFlySO.maxSpeedRotationAIAttack)
             {
-                baseAttackFlySO.speedRotationAIAttack += (Time.deltaTime / baseAttackFlySO.smoothRotationAttack);
+                if (this.enabled == true)
+                    baseAttackFlySO.speedRotationAIAttack += (Time.deltaTime / baseAttackFlySO.smoothRotationAttack);
+                else
+                {
+                    baseAttackFlySO.speedRotationAIAttack += (Time.deltaTime / (baseAttackFlySO.smoothRotationAttack / 4));
+                    Debug.Log("Follow charge");
+                }
                 //lerpSpeedYValueAttack += (Time.deltaTime / ySpeedSmootherAttack);
+            }
+            else
+            {
+                baseAttackFlySO.speedRotationAIAttack = baseAttackFlySO.maxSpeedRotationAIAttack;
             }
         }
 

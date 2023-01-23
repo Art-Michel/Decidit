@@ -11,6 +11,8 @@ namespace State.FlyAI
 
         [SerializeField] Transform childflyAI;
 
+        [SerializeField] bool stopLock;
+
         public override void InitState(StateControllerFlyAI stateController)
         {
             base.InitState(stateController);
@@ -26,9 +28,17 @@ namespace State.FlyAI
 
         private void Update()
         {
-            if (state == StateControllerFlyAI.AIState.BaseAttack)
+            Attack();
+        }
+
+        private void FixedUpdate()
+        {
+            RaycastHit hit = RaycastAIManager.RaycastAI(childflyAI.position, transform.forward,
+                                                        globalRef.baseAttackFlySO.wallMask, Color.blue, globalRef.baseAttackFlySO.distDetectWall);
+
+            if(hit.transform != null)
             {
-                Attack();
+                stateControllerFlyAI.SetActiveState(StateControllerFlyAI.AIState.BaseMove);
             }
         }
 
@@ -49,15 +59,27 @@ namespace State.FlyAI
 
             ApplyFlyingMove();
 
-            if (baseAttackFlySO.distDestinationFinal > lockPlayerFlySO.distStopLockPlayer)
+            if (baseAttackFlySO.distDestinationFinal > lockPlayerFlySO.distStopLockPlayer && !stopLock)
             {
                 lockPlayerStateFlyAI.LockPlayer();
                 lockPlayerStateFlyAI.SmoothLookAtYAxisAttack();
             }
+            else if(!stopLock)
+            {
+                stopLock = true;
+            }
 
-            if (baseAttackFlySO.distDestinationFinal <= 1.5f)
+            if (baseAttackFlySO.distDestinationFinal <= 1.5f)  // (globalRef.agent.remainingDistance <= 1f)// (baseAttackFlySO.distDestinationFinal <= 1.5f)
             {
                 stateControllerFlyAI.SetActiveState(StateControllerFlyAI.AIState.BaseMove);
+            }
+            else
+            {
+                if(globalRef.hitbox.Blacklist.Count >0)
+                {
+                    globalRef.colliderBaseAttack.gameObject.SetActive(false);
+                    stateControllerFlyAI.SetActiveState(StateControllerFlyAI.AIState.BaseMove);
+                }
             }
         }
 
@@ -85,6 +107,7 @@ namespace State.FlyAI
 
         private void OnDisable()
         {
+            stopLock = false;
             baseAttackFlySO.speedRotationAIAttack = 0;
             baseAttackFlySO.currentSpeedYAttack = 0;
             baseAttackFlySO.lerpSpeedYValueAttack = 0;

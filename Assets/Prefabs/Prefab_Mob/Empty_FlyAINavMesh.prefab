@@ -172,6 +172,9 @@ MonoBehaviour:
   globalRef: {fileID: 5407937164311034899}
   flyAI: {fileID: 5407937164410842285}
   childflyAI: {fileID: 9027603613902104941}
+  dodgeObstacle: 0
+  right: 0
+  offset: 0
 --- !u!1 &772536186
 GameObject:
   m_ObjectHideFlags: 0
@@ -463,8 +466,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 16384
   _radius: 0.3
-  _damage: 0
+  _damage: 20
   _knockbackForce: 10
+  _knockbackAngle: {x: 0, y: 0, z: 0}
   _canMultiHit: 0
   _delayBetweenHits: 0
 --- !u!1 &1824420020
@@ -706,6 +710,7 @@ MonoBehaviour:
   playerTransform: {fileID: 0}
   myCollider: {fileID: 0}
   colliderBaseAttack: {fileID: 1805906808}
+  hitbox: {fileID: 1805906810}
   baseMoveFlySO: {fileID: 11400000, guid: 2b20b36d8cc22b148bf51934b26ddc07, type: 2}
   lockPlayerFlySO: {fileID: 11400000, guid: 25c0fb318df974e4a91a2444ebdd24dc, type: 2}
   baseAttackFlySO: {fileID: 11400000, guid: 183c942ec85d835449e68c69d5cbeabc, type: 2}
