@@ -28,6 +28,8 @@ namespace State.WallAI
             baseAttackWallAISO = Instantiate(baseAttackWallAISO);
             baseMoveWallAISO.lastWallCrack = Instantiate(baseMoveWallAISO.wallCrackPrefab, transform.position, Quaternion.Euler(0, orientation, 0));
 
+            playerTransform = GameObject.FindWithTag("Player").transform;
+
             for (int i = 0; i < areaWallAI.childCount; i++)
             {
                 walls[i] = areaWallAI.GetChild(i).GetComponent<BoxCollider>();
