@@ -16,7 +16,7 @@ public class EylauArmStatePrevis : ArmState
 
     public override void StateUpdate()
     {
-
+        _arm.UpdatePrevis();
     }
 
     public override void Exit()
