@@ -33,12 +33,16 @@ public class EylauArm : Arm
 
     public override void UpdatePrevis()
     {
+        Vector3 pos;
         Physics.Raycast(_cameraTransform.position, _cameraTransform.forward, out RaycastHit hit, _range, _detectionMask);
         if (hit.transform != null)
-            _previs.transform.position = hit.point + hit.normal * 0.5f;
+            pos = hit.point + hit.normal;
         else
-            _previs.transform.position = _cameraTransform.transform.position + _cameraTransform.forward * _range;
+            pos = _cameraTransform.transform.position + _cameraTransform.forward * _range;
 
+        Physics.Raycast(pos, Vector3.down, out RaycastHit groundHit, 100f, _detectionMask);
+
+        _previs.transform.position = groundHit.point + groundHit.normal * 0.1f;
         _previs.transform.rotation = Quaternion.identity;
     }
 
