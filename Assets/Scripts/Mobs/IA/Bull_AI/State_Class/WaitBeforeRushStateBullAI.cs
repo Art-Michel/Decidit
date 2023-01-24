@@ -14,7 +14,9 @@ namespace State.AIBull
         NavMeshLink navLink;
         bool triggerNavLink;
 
-        Vector3 destination;
+        Vector3 destinationLink;
+        Vector3 destinationPath;
+        [SerializeField] bool pathisValid;
 
         public override void InitState(StateControllerBull stateController)
         {
@@ -92,13 +94,13 @@ namespace State.AIBull
 
         void GoToStartRushPos()
         {
-            if (globalRef.coolDownRushBullSO.startPos == Vector3.zero) // cherche une nouvelle position si aucune n est defifni
+            if (!pathisValid) // cherche une nouvelle position si aucune n est defifni
             {
                 SelectStartPos();
             }
             else if (globalRef.agent.remainingDistance > 0.5f) // avance vers la position
             {
-                globalRef.agent.SetDestination(CheckNavMeshPoint(globalRef.coolDownRushBullSO.startPos));
+                //globalRef.agent.SetDestination(CheckNavMeshPoint(globalRef.coolDownRushBullSO.startPos));
             }
 
             if (globalRef.coolDownRushBullSO.startPos != Vector3.zero && globalRef.agent.remainingDistance <= 1f)
@@ -125,6 +127,7 @@ namespace State.AIBull
         }
         void SelectStartPos()
         {
+            Debug.Log("search pos");
             globalRef.bullAIStartPosRush.SelectAI(globalRef);
             globalRef.agent.speed = globalRef.coolDownRushBullSO.speedPatrolToStartPos;
             globalRef.agent.SetDestination(CheckNavMeshPoint(globalRef.coolDownRushBullSO.startPos));
@@ -135,6 +138,19 @@ namespace State.AIBull
             if (NavMesh.SamplePosition(_destination, out closestHit, 1, 1))
             {
                 _destination = closestHit.position;
+            }
+            RaycastHit hit;
+            hit = RaycastAIManager.RaycastAI(_destination, _destination - globalRef.playerTransform.position, globalRef.coolDownRushBullSO.mask,
+                Color.blue, 100f);
+            if (hit.transform != null)
+            {
+                Debug.Log("not found");
+                pathisValid = false;
+            }
+            else
+            {
+                Debug.Log("found");
+                pathisValid = true;
             }
             return _destination;
         }
@@ -148,7 +164,7 @@ namespace State.AIBull
                 if (hit.transform != null)
                 {
                     globalRef.coolDownRushBullSO.currentCoolDownCheckObstacle = globalRef.coolDownRushBullSO.maxCoolDownCheckObstacle;
-                    SelectStartPos();
+                    //SelectStartPos();
                 }
             }
             else
@@ -171,16 +187,16 @@ namespace State.AIBull
             {
                 if (Vector3.Distance(globalRef.transform.position, link.startPoint) < Vector3.Distance(globalRef.transform.position, link.endPoint))
                 {
-                    destination = link.endPoint;
+                    destinationLink = link.endPoint;
                     triggerNavLink = true;
                 }
                 else
                 {
-                    destination = link.startPoint;
+                    destinationLink = link.startPoint;
                     triggerNavLink = true;
                 }
             }
-            return destination;
+            return destinationLink;
         }
 
         void SmoothLookAtPlayer()

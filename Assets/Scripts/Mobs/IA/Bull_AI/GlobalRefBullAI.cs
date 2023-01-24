@@ -21,8 +21,9 @@ namespace State.AIBull
 
         [Header("Debug Destination")]
         public Transform sphereDebug;
+        public LayerMask allMask;
 
-        [Header("Ref ATtck State")]
+        [Header("Ref Attack State")]
         public Hitbox hitBox;
         public BoxCollider detectOtherAICollider;
 
