@@ -10,7 +10,6 @@ public class MenuManager : MonoBehaviour
     public static MenuManager Instance = null;
     [SerializeField] int _gameIndex;
     [SerializeField] int _optionIndex;
-    [SerializeField] List<Button> Buttons;
 
     [SerializeField] GameObject firstSelected;
 
@@ -25,7 +24,6 @@ public class MenuManager : MonoBehaviour
             return;
         }
         Instance = this;
-        List<Sprite> sprites = new List<Sprite>();
     }
 
     void Start()
@@ -35,9 +33,7 @@ public class MenuManager : MonoBehaviour
 
     void Update()
     {
-        //SetSelectedGameObjectToSettings();
-        //Debug.Log(eventsys.currentSelectedGameObject);
-        HideMousse();
+        Switch();
     }
     #region Butons fonctions
     //toutes les fonctions pour les boutons 
@@ -68,19 +64,19 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-    public void HideMousse()
+    public void Switch()
     {
-        if(gamepad.IsActuated())
+        if (gamepad.wasUpdatedThisFrame)
         {
             Debug.Log("mhidfnbjmnsbknksnb");
+            Cursor.visible = false;
+            SetSelectedGameObjectToSettings();
         }
-        //SetSelectedGameObjectToSettings();
-        //Cursor.visible = false;
-    }
-    private void OnMouseDown()
-    {
-        Cursor.visible = true;
-        gamepad = null;
+        if (Input.anyKeyDown)
+        {
+            Debug.Log("Mouse");
+            Cursor.visible = true;
+        }
     }
 
     #endregion
