@@ -11,6 +11,8 @@ namespace State.WallAI
         BaseAttackWallAISO baseAttackWallAISO;
         [SerializeField] GlobalRefWallAI globalRef;
 
+        [SerializeField] float delayAttack;
+
         public override void InitState(StateControllerWallAI stateController)
         {
             base.InitState(stateController);
@@ -50,8 +52,11 @@ namespace State.WallAI
 
         void LaunchAttack()
         {
-            globalRef.agent.speed = baseAttackWallAISO.stopSpeed;
-            globalRef.animator.SetBool("LaunchAttack", true);
+            if(this.enabled)
+            {
+                globalRef.agent.speed = baseAttackWallAISO.stopSpeed;
+                globalRef.animator.SetBool("LaunchAttack", true);
+            }
         }
 
         public float CalculateSpeedProjectile()

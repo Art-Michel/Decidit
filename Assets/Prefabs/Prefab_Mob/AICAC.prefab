@@ -109,7 +109,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &279298341
 Transform:
   m_ObjectHideFlags: 0
@@ -118,7 +118,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 279298340}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0000002805833, y: 2.332708, z: 0.00000068037946}
+  m_LocalPosition: {x: 0, y: 1.0090631, z: -0.16307259}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -143,6 +143,7 @@ MonoBehaviour:
   _radius: 0.2
   _damage: 10
   _knockbackForce: 40
+  _knockbackAngle: {x: 0, y: 0, z: 0}
   _canMultiHit: 0
   _delayBetweenHits: 0
 --- !u!1 &564689861
@@ -190,6 +191,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   globalRef: {fileID: 686522204}
+  tongue: {fileID: 339207632395615176}
+  endAttack: 0
 --- !u!1 &962790380
 GameObject:
   m_ObjectHideFlags: 0
@@ -831,6 +834,38 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!1 &2243859253977133034
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 339207632395615176}
+  m_Layer: 0
+  m_Name: Cylinder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &339207632395615176
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2243859253977133034}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.49999982, z: 0.7142857}
+  m_LocalScale: {x: 0.17521, y: 0.17521, z: 0.17521}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3888318927419110192}
+  m_Father: {fileID: 3888318928632032891}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3888318927419110193
 GameObject:
   m_ObjectHideFlags: 0
@@ -856,13 +891,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3888318927419110193}
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0.000000049161, y: 0.5, z: 0.877}
-  m_LocalScale: {x: 0.17521, y: 0.17521, z: 0.17521}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -0.0000002805833, y: -0.000001020569, z: 0.7020128}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 279298341}
-  m_Father: {fileID: 3888318928632032891}
+  m_Father: {fileID: 339207632395615176}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!33 &3888318927419110205
@@ -998,7 +1033,6 @@ GameObject:
   - component: {fileID: 591862405}
   - component: {fileID: 591862406}
   - component: {fileID: -8431705195059145478}
-  - component: {fileID: -3022294638134241762}
   - component: {fileID: 1015992914697596655}
   m_Layer: 7
   m_Name: AICAC
@@ -1019,7 +1053,7 @@ Transform:
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3888318927419110192}
+  - {fileID: 339207632395615176}
   - {fileID: 3888318928693326221}
   - {fileID: 3888318928596240787}
   - {fileID: 3888318927643487259}
@@ -1143,7 +1177,6 @@ MonoBehaviour:
   _material: {fileID: 2100000, guid: 1fa0c89a0057b564d95c65f7c6811243, type: 2}
   _deathVfx: {fileID: 8782500626266542195, guid: 4e088f7fded15e04a95d92413fada8e4,
     type: 3}
-  _regenValue: 0
   _uiScale: 0.1
   _lookStrictness: 0.08
   _appearSpeed: 15
@@ -1298,22 +1331,6 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _duration: 0.75
---- !u!54 &-3022294638134241762
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3888318928632032895}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 126
-  m_CollisionDetection: 1
 --- !u!136 &1015992914697596655
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1324,7 +1341,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.8
+  m_Radius: 0.6
   m_Height: 1.9999999
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}

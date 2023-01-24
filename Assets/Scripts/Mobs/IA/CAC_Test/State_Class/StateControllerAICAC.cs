@@ -45,7 +45,16 @@ namespace State.AICAC
             //Deactivate all states
             foreach (AIState state in stateDictionary.Keys)
             {
-                stateDictionary[state].gameObject.SetActive(false);
+                try
+                {
+                    Debug.Log(stateDictionary[state]);
+                    stateDictionary[state].gameObject.SetActive(false);
+                }
+                catch
+                {
+                    if(!stateDictionary[state].gameObject.activeInHierarchy)
+                        Debug.LogWarning("Already Disable");
+                }
             }
 
             //Activate the default state

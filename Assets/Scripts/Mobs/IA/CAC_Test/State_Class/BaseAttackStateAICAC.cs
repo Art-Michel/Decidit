@@ -5,8 +5,10 @@ namespace State.AICAC
     public class BaseAttackStateAICAC : _StateAICAC
     {
         [SerializeField] GlobalRefAICAC globalRef;
-
         RaycastHit hit;
+        [SerializeField] Transform tongue;
+
+        [SerializeField] bool endAttack;
 
         public override void InitState(StateControllerAICAC stateController)
         {
@@ -17,16 +19,13 @@ namespace State.AICAC
 
         private void Update()
         {
-            if (globalRef.distPlayer > globalRef.baseAttackAICACSO.attackRange && !globalRef.baseAttackAICACSO.isAttacking)
-            {
-                stateControllerAICAC.SetActiveState(StateControllerAICAC.AIState.BaseMove);
-            }
-            else
-            {
-                BaseAttack();
-            }
-
+            BaseAttack();
             SmoothLookAt();
+        }
+
+        private void LateUpdate()
+        {
+            tongue.LookAt(globalRef.playerTransform.position);
         }
 
         public void BaseAttack()
@@ -35,14 +34,22 @@ namespace State.AICAC
 
             if (globalRef.baseAttackAICACSO.currentAttackRate <= 0)
             {
-                Debug.Log("launch attack");
-
                 globalRef.myAnimator.SetBool("Attack", true);
                 globalRef.baseAttackAICACSO.isAttacking = true;
                 globalRef.baseAttackAICACSO.currentAttackRate = globalRef.baseAttackAICACSO.maxAttackRate;
             }
             else if (!globalRef.baseAttackAICACSO.isAttacking)
             {
+                Debug.Log("Red Color préattack");
+
+                if (globalRef.distPlayer > globalRef.baseAttackAICACSO.attackRange && globalRef.baseAttackAICACSO.currentAttackRate == globalRef.baseAttackAICACSO.maxAttackRate)
+                {
+                    stateControllerAICAC.SetActiveState(StateControllerAICAC.AIState.BaseMove);
+                    return;
+                }
+
+                globalRef.material_Instances.Material.color = globalRef.material_Instances.ColorPreAtatck;
+                globalRef.material_Instances.ChangeColorTexture(globalRef.material_Instances.ColorPreAtatck);
                 globalRef.baseAttackAICACSO.currentAttackRate -= Time.deltaTime;
             }
         }
@@ -70,7 +77,9 @@ namespace State.AICAC
 
         private void OnDisable()
         {
-            globalRef.baseAttackAICACSO.currentAttackRate = 0;
+            globalRef.material_Instances.Material.color = globalRef.material_Instances.Color;
+            globalRef.material_Instances.ChangeColorTexture(globalRef.material_Instances.Color);
+            globalRef.baseAttackAICACSO.currentAttackRate = globalRef.baseAttackAICACSO.maxAttackRate;
             globalRef.baseAttackAICACSO.speedRot = 0;
         }
     }

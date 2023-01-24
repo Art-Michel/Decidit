@@ -47,7 +47,6 @@ namespace State.FlyAI
 
             if(hit.transform != null)
             {
-                Debug.Log("Search new pos");
                 dodgeObstacle = true;
                 SearchNewPos();
             }
@@ -55,7 +54,6 @@ namespace State.FlyAI
             {
                 if(dodgeObstacle)
                 {
-                    Debug.Log("New pos found");
                     dodgeObstacle = false;
                 }
             }
@@ -84,8 +82,6 @@ namespace State.FlyAI
         ////////////// Set Destination \\\\\\\\\\\\\\\\\\\\\
         Vector3 SearchNewPos() // défini la position aléatoire choisi dans la fonction "RandomPointInBounds()" si la distance entre le point et l'IA est suffisament grande
         {
-            Debug.Log("searchPos");
-
             if (baseMoveFlySO.distDestinationFinal < 20 || dodgeObstacle)
             {
                 baseMoveFlySO.destinationFinal = RandomPointInBounds(globalRef.myCollider.bounds);
@@ -98,7 +94,6 @@ namespace State.FlyAI
             }
             else
             {
-                Debug.Log("pos is find");
                 baseMoveFlySO.newPosIsSet = true;
                 baseMoveFlySO.speedRotationAIPatrol = 0;
                 baseMoveFlySO.currentSpeedYPatrol = 0;
