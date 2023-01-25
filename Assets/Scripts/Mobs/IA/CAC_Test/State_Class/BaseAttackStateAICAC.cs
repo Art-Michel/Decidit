@@ -5,6 +5,9 @@ namespace State.AICAC
     public class BaseAttackStateAICAC : _StateAICAC
     {
         [SerializeField] GlobalRefAICAC globalRef;
+        [SerializeField] Material_Instances material_Instances;
+        BaseAttackParameterAICAC baseAttackAICACSO;
+
         RaycastHit hit;
         [SerializeField] Transform tongue;
 
@@ -22,6 +25,12 @@ namespace State.AICAC
             state = StateControllerAICAC.AIState.BaseAttack;
         }
 
+        private void OnEnable()
+        {
+            if (globalRef != null)
+                baseAttackAICACSO = globalRef.baseAttackAICACSO;
+        }
+
         private void Update()
         {
             BaseAttack();
@@ -30,32 +39,36 @@ namespace State.AICAC
 
         private void LateUpdate()
         {
-            tongue.LookAt(globalRef.playerTransform.position);
+            if (baseAttackAICACSO.currentAttackRate <=0.1f)
+                tongue.LookAt(globalRef.playerTransform.position);
         }
 
         public void BaseAttack()
         {
             globalRef.agent.speed = 0;
 
-            if (globalRef.baseAttackAICACSO.currentAttackRate <= 0)
+            if (baseAttackAICACSO.currentAttackRate <= 0)
             {
                 globalRef.myAnimator.SetBool("Attack", true);
-                globalRef.baseAttackAICACSO.isAttacking = true;
-                globalRef.baseAttackAICACSO.currentAttackRate = globalRef.baseAttackAICACSO.maxAttackRate;
+                baseAttackAICACSO.isAttacking = true;
+                baseAttackAICACSO.currentAttackRate = baseAttackAICACSO.maxAttackRate;
             }
-            else if (!globalRef.baseAttackAICACSO.isAttacking)
+            else if (!baseAttackAICACSO.isAttacking)
             {
                 //Debug.Log("Red Color préattack");
 
-                if (globalRef.distPlayer > globalRef.baseAttackAICACSO.attackRange && globalRef.baseAttackAICACSO.currentAttackRate == globalRef.baseAttackAICACSO.maxAttackRate)
+                if (globalRef.distPlayer > baseAttackAICACSO.attackRange && baseAttackAICACSO.currentAttackRate == baseAttackAICACSO.maxAttackRate)
                 {
                     stateControllerAICAC.SetActiveState(StateControllerAICAC.AIState.BaseMove);
                     return;
                 }
+                else if(material_Instances.Material.color != material_Instances.ColorPreAtatck)
+                {
+                    material_Instances.Material.color = material_Instances.ColorPreAtatck;
+                    material_Instances.ChangeColorTexture(material_Instances.ColorPreAtatck);
+                }
 
-                globalRef.material_Instances.Material.color = globalRef.material_Instances.ColorPreAtatck;
-                globalRef.material_Instances.ChangeColorTexture(globalRef.material_Instances.ColorPreAtatck);
-                globalRef.baseAttackAICACSO.currentAttackRate -= Time.deltaTime;
+                baseAttackAICACSO.currentAttackRate -= Time.deltaTime;
             }
         }
 
@@ -66,26 +79,27 @@ namespace State.AICAC
             relativePos.y = 0;
             relativePos.z = direction.z - globalRef.transform.position.z;
 
-            if (globalRef.baseAttackAICACSO.speedRot < globalRef.baseAttackAICACSO.maxSpeedRot)
-                globalRef.baseAttackAICACSO.speedRot += Time.deltaTime / globalRef.baseAttackAICACSO.smoothRot;
+            if (baseAttackAICACSO.speedRot < baseAttackAICACSO.maxSpeedRot)
+                baseAttackAICACSO.speedRot += Time.deltaTime / baseAttackAICACSO.smoothRot;
             else
             {
-                globalRef.baseAttackAICACSO.speedRot = globalRef.baseAttackAICACSO.maxSpeedRot;
+                if (baseAttackAICACSO.speedRot != baseAttackAICACSO.maxSpeedRot)
+                    baseAttackAICACSO.speedRot = baseAttackAICACSO.maxSpeedRot;
             }
 
-            rotation = Quaternion.Slerp(globalRef.transform.rotation, Quaternion.LookRotation(relativePos, Vector3.up), globalRef.baseAttackAICACSO.speedRot);
+            rotation = Quaternion.Slerp(globalRef.transform.rotation, Quaternion.LookRotation(relativePos, Vector3.up), baseAttackAICACSO.speedRot);
             globalRef.transform.rotation = rotation;
         }
 
         private void OnDisable()
         {
-            if(globalRef.material_Instances != null)
+            if(material_Instances != null)
             {
-                globalRef.material_Instances.Material.color = globalRef.material_Instances.Color;
-                globalRef.material_Instances.ChangeColorTexture(globalRef.material_Instances.Color);
+                material_Instances.Material.color = material_Instances.Color;
+                material_Instances.ChangeColorTexture(material_Instances.Color);
             }
-            globalRef.baseAttackAICACSO.currentAttackRate = globalRef.baseAttackAICACSO.maxAttackRate;
-            globalRef.baseAttackAICACSO.speedRot = 0;
+            baseAttackAICACSO.currentAttackRate = baseAttackAICACSO.maxAttackRate;
+            baseAttackAICACSO.speedRot = 0;
         }
     }
 }

@@ -18,6 +18,10 @@ namespace State.AIBull
         [Header("Rush Movement")]
         public Vector3 captureBasePosDistance;
 
+        [Header("Position 2D")]
+        Vector2 posPlayer;
+        Vector2 posAI;
+
         public override void InitState(StateControllerBull stateController)
         {
             base.InitState(stateController);
@@ -36,7 +40,7 @@ namespace State.AIBull
             }
             catch
             {
-                Debug.LogWarning("Missing Ref");
+                //Debug.LogWarning("Missing Ref");
             }
         }
 
@@ -84,10 +88,43 @@ namespace State.AIBull
             }
         }
 
+        void RushMovement()
+        {
+            rushBullSO.targetPos = new Vector2(rushBullSO.rushDestination.x, rushBullSO.rushDestination.z);
+            posAI = new Vector2(globalRef.transform.position.x, globalRef.transform.position.z);
+
+            rushBullSO.direction = rushBullSO.targetPos - posAI;
+            rushBullSO.direction = rushBullSO.direction.normalized * rushBullSO.speedMove;
+
+            SetGravity();
+
+            rushBullSO.move = new Vector3(rushBullSO.direction.x, rushBullSO.directionYSlope.y + rushBullSO.AIVelocity.y, rushBullSO.direction.y);
+            globalRef.characterController.Move(rushBullSO.move * Time.deltaTime);
+                        
+            globalRef.detectOtherAICollider.enabled = true;
+            globalRef.hitBox.gameObject.SetActive(true);
+        }
+        void SetGravity()
+        {
+            if (!rushBullSO.isGround)
+            {
+                rushBullSO.fallingTime += Time.deltaTime;
+                rushBullSO.effectiveGravity = rushBullSO.gravity * rushBullSO.fallingTime;
+                rushBullSO.AIVelocity.y += rushBullSO.effectiveGravity;
+            }
+            else
+            {
+                rushBullSO.AIVelocity.y = 0;
+            }
+        }
+
         void RushDuration()
         {
-            distDestination = Vector3.Distance(new Vector2(globalRef.transform.position.x, globalRef.transform.position.z),
-                new Vector2(rushBullSO.rushDestination.x, rushBullSO.rushDestination.z));
+            /*distDestination = Vector3.Distance(new Vector2(globalRef.transform.position.x, globalRef.transform.position.z),
+                new Vector2(rushBullSO.rushDestination.x, rushBullSO.rushDestination.z));*/
+
+            posPlayer = new Vector2(globalRef.transform.position.x, globalRef.transform.position.z);
+            distDestination = Vector3.Distance(posPlayer, rushBullSO.targetPos);
 
             if (distDestination <= 1)
             {
@@ -112,33 +149,6 @@ namespace State.AIBull
             }
         }
 
-        void RushMovement()
-        {
-            rushBullSO.targetPos = new Vector2(rushBullSO.rushDestination.x, rushBullSO.rushDestination.z);
-            rushBullSO.direction = rushBullSO.targetPos - (new Vector2(globalRef.transform.position.x, globalRef.transform.position.z));
-            rushBullSO.direction = rushBullSO.direction.normalized * rushBullSO.speedMove;
-
-            SetGravity();
-
-            rushBullSO.move = new Vector3(rushBullSO.direction.x, rushBullSO.directionYSlope.y + rushBullSO.AIVelocity.y, rushBullSO.direction.y);
-            globalRef.characterController.Move(rushBullSO.move * Time.deltaTime);
-                        
-            globalRef.detectOtherAICollider.enabled = true;
-            globalRef.hitBox.gameObject.SetActive(true);
-        }
-        void SetGravity()
-        {
-            if (!rushBullSO.isGround)
-            {
-                rushBullSO.fallingTime += Time.deltaTime;
-                rushBullSO.effectiveGravity = rushBullSO.gravity * rushBullSO.fallingTime;
-                rushBullSO.AIVelocity.y += rushBullSO.effectiveGravity;
-            }
-            else
-            {
-                rushBullSO.AIVelocity.y = 0;
-            }
-        }
 
         void CheckObstacle()
         {
@@ -165,7 +175,7 @@ namespace State.AIBull
             if (rushBullSO.hitObstacle.transform != null)
             {
               //  Debug.Log("Obstacle Stop Rush");
-              if (rushBullSO.hitObstacle.transform.CompareTag("Ennemi"))
+              if (!rushBullSO.hitObstacle.transform.CompareTag("Ennemi"))
                 StopRush();
             }
         }

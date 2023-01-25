@@ -6,22 +6,37 @@ namespace State.AICAC
     public class BaseMoveStateAICAC : _StateAICAC
     {
         [SerializeField] GlobalRefAICAC globalRef;
+        BaseMoveParameterAICAC baseMoveAICACSO;
 
-        Vector3 destination;
-        [SerializeField] float offset;
-
+        [Header("Nav Link")]
         [SerializeField] float maxDurationNavLink;
         [SerializeField] bool linkIsActive;
-        NavMeshLink navLink;
         bool triggerNavLink;
-
         RaycastHit hit;
+        NavMeshLink link;
+        NavMeshLink navLink;
+        NavMeshHit closestHit;
+
+        [Header("Direction Movement")]
+        [SerializeField] float offset;
+        Vector3 destination;
+        Vector3 dir;
+        Vector3 left;
+
+        [Header("LookAt")]
+        Vector3 direction;
+        Vector3 relativePos;
 
         public override void InitState(StateControllerAICAC stateController)
         {
             base.InitState(stateController);
 
             state = StateControllerAICAC.AIState.BaseMove;
+        }
+
+        private void Awake()
+        {
+            baseMoveAICACSO = globalRef.baseMoveAICACSO;
         }
 
         private void Update()
@@ -32,7 +47,7 @@ namespace State.AICAC
 
             SmoothLookAt();
             BaseMovement();
-            ManageCurrentNavMeshLink();
+            //ManageCurrentNavMeshLink();
         }
 
         void ManageCurrentNavMeshLink()
@@ -71,13 +86,12 @@ namespace State.AICAC
 
         void BaseMovement()
         {
-            Vector3 dir = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer - globalRef.transform.position;
-            Vector3 left = Vector3.Cross(dir, Vector3.up).normalized;
+            dir = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer - globalRef.transform.position;
+            left = Vector3.Cross(dir, Vector3.up).normalized;
 
 
             if (globalRef.agent.isOnOffMeshLink)
             {
-                NavMeshLink link;
                 link = globalRef.agent.navMeshOwner as NavMeshLink;
                 
                 if (!triggerNavLink)
@@ -96,7 +110,7 @@ namespace State.AICAC
             }
             else
             {
-                offset = Mathf.Lerp(offset, globalRef.offsetDestination, globalRef.baseMoveAICACSO.offsetTransitionSmooth * Time.deltaTime);
+                offset = Mathf.Lerp(offset, globalRef.offsetDestination, baseMoveAICACSO.offsetTransitionSmooth * Time.deltaTime);
                 offset = Mathf.Clamp(offset, -Mathf.Abs(globalRef.offsetDestination), Mathf.Abs(globalRef.offsetDestination));
 
                 destination = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer + left * offset;
@@ -105,14 +119,14 @@ namespace State.AICAC
                 {
                     globalRef.agent.areaMask &= ~(1 << NavMesh.GetAreaFromName("Jump"));
                     triggerNavLink = false;
-                    Invoke("ActiveJump", globalRef.baseMoveAICACSO.jumpRate);
+                    Invoke("ActiveJump", baseMoveAICACSO.jumpRate);
                 }
             }
 
             globalRef.debugDestination = CheckNavMeshPoint(destination);
             globalRef.agent.SetDestination(CheckNavMeshPoint(destination));
 
-            if (globalRef.distPlayer < globalRef.baseMoveAICACSO.attackRange)
+            if (globalRef.distPlayer < baseMoveAICACSO.attackRange)
             {
                 stateControllerAICAC.SetActiveState(StateControllerAICAC.AIState.BaseAttack);
             }
@@ -124,7 +138,6 @@ namespace State.AICAC
         }
         Vector3 CheckNavMeshPoint(Vector3 _destination)
         {
-            NavMeshHit closestHit;
             if (NavMesh.SamplePosition(_destination, out closestHit, 1, 1))
             {
                 _destination = closestHit.position;
@@ -133,48 +146,45 @@ namespace State.AICAC
         }
         void SpeedAdjusting()
         {
-            if (!globalRef.baseMoveAICACSO.activeAnticipDestination)
+            if (!baseMoveAICACSO.activeAnticipDestination)
             {
-                if (globalRef.distPlayer >= globalRef.baseMoveAICACSO.distCanRun)
+                if (globalRef.distPlayer >= baseMoveAICACSO.distCanRun)
                 {
-                    if (globalRef.agent.speed < globalRef.baseMoveAICACSO.runSpeed)
+                    if (globalRef.agent.speed < baseMoveAICACSO.runSpeed)
                     {
-                        globalRef.agent.speed += globalRef.baseMoveAICACSO.smoothSpeedRun * Time.deltaTime;
+                        globalRef.agent.speed += baseMoveAICACSO.smoothSpeedRun * Time.deltaTime;
                     }
                     else
-                        globalRef.agent.speed = globalRef.baseMoveAICACSO.runSpeed;
+                        globalRef.agent.speed = baseMoveAICACSO.runSpeed;
                 }
-                else if (globalRef.distPlayer <= globalRef.baseMoveAICACSO.distStopRun)
+                else if (globalRef.distPlayer <= baseMoveAICACSO.distStopRun)
                 {
-                    if (globalRef.agent.speed > globalRef.baseMoveAICACSO.baseSpeed)
-                        globalRef.agent.speed -= globalRef.baseMoveAICACSO.smoothSpeedbase * Time.deltaTime;
+                    if (globalRef.agent.speed > baseMoveAICACSO.baseSpeed)
+                        globalRef.agent.speed -= baseMoveAICACSO.smoothSpeedbase * Time.deltaTime;
                     else
-                        globalRef.agent.speed = globalRef.baseMoveAICACSO.baseSpeed;
+                        globalRef.agent.speed = baseMoveAICACSO.baseSpeed;
                 }
                 else
                 {
-                    if (globalRef.agent.speed < globalRef.baseMoveAICACSO.baseSpeed)
+                    if (globalRef.agent.speed < baseMoveAICACSO.baseSpeed)
                     {
-                        globalRef.agent.speed += globalRef.baseMoveAICACSO.smoothSpeedbase * Time.deltaTime;
+                        globalRef.agent.speed += baseMoveAICACSO.smoothSpeedbase * Time.deltaTime;
                     }
                     else
-                        globalRef.agent.speed = globalRef.baseMoveAICACSO.baseSpeed;
+                        globalRef.agent.speed = baseMoveAICACSO.baseSpeed;
                 }
             }
             else
             {
-                if (globalRef.agent.speed < globalRef.baseMoveAICACSO.anticipSpeed)
-                    globalRef.agent.speed += globalRef.baseMoveAICACSO.smoothSpeedAnticip * Time.deltaTime;
+                if (globalRef.agent.speed < baseMoveAICACSO.anticipSpeed)
+                    globalRef.agent.speed += baseMoveAICACSO.smoothSpeedAnticip * Time.deltaTime;
                 else
-                    globalRef.agent.speed = globalRef.baseMoveAICACSO.anticipSpeed;
+                    globalRef.agent.speed = baseMoveAICACSO.anticipSpeed;
             }
         }
 
         void SmoothLookAt()
         {
-            Vector3 direction;
-            Vector3 relativePos;
-
             if (globalRef.agent.isOnOffMeshLink)
             {
                 direction = destination;
@@ -188,14 +198,14 @@ namespace State.AICAC
             relativePos.y = 0;
             relativePos.z = direction.z - globalRef.transform.position.z;
 
-            if (globalRef.baseMoveAICACSO.speedRot < globalRef.baseMoveAICACSO.maxSpeedRot)
-                globalRef.baseMoveAICACSO.speedRot += Time.deltaTime / globalRef.baseMoveAICACSO.smoothRot;
+            if (baseMoveAICACSO.speedRot < baseMoveAICACSO.maxSpeedRot)
+                baseMoveAICACSO.speedRot += Time.deltaTime / baseMoveAICACSO.smoothRot;
             else
             {
-                globalRef.baseMoveAICACSO.speedRot = globalRef.baseMoveAICACSO.maxSpeedRot;
+                baseMoveAICACSO.speedRot = baseMoveAICACSO.maxSpeedRot;
             }
 
-            Quaternion rotation = Quaternion.Slerp(globalRef.transform.rotation, Quaternion.LookRotation(relativePos, Vector3.up), globalRef.baseMoveAICACSO.speedRot);
+            Quaternion rotation = Quaternion.Slerp(globalRef.transform.rotation, Quaternion.LookRotation(relativePos, Vector3.up), baseMoveAICACSO.speedRot);
             globalRef.transform.rotation = rotation;
         }
 
@@ -207,7 +217,7 @@ namespace State.AICAC
         private void OnDisable()
         {
             globalRef.baseAttackAICACSO.isAttacking = false;
-            globalRef.baseMoveAICACSO.speedRot = 0;
+            baseMoveAICACSO.speedRot = 0;
         }
     }
 }

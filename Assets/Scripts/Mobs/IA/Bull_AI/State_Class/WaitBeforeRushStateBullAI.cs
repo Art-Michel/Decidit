@@ -98,10 +98,6 @@ namespace State.AIBull
             {
                 SelectStartPos();
             }
-            else if (globalRef.agent.remainingDistance > 0.5f) // avance vers la position
-            {
-                //globalRef.agent.SetDestination(CheckNavMeshPoint(globalRef.coolDownRushBullSO.startPos));
-            }
 
             if (globalRef.coolDownRushBullSO.startPos != Vector3.zero && globalRef.agent.remainingDistance <= 1f)
             {
@@ -119,15 +115,12 @@ namespace State.AIBull
 
         void PreSelectingStartPos()
         {
-            Debug.Log("count");
-
             globalRef.coolDownRushBullSO.currentDurationStay = globalRef.coolDownRushBullSO.maxDurationStay;
             globalRef.bullAIStartPosRush.ResetSelectedBox(globalRef.coolDownRushBullSO.boxSelected);
             SelectStartPos();
         }
         void SelectStartPos()
         {
-            Debug.Log("search pos");
             globalRef.bullAIStartPosRush.SelectAI(globalRef);
             globalRef.agent.speed = globalRef.coolDownRushBullSO.speedPatrolToStartPos;
             globalRef.agent.SetDestination(CheckNavMeshPoint(globalRef.coolDownRushBullSO.startPos));
@@ -144,12 +137,10 @@ namespace State.AIBull
                 Color.blue, 100f);
             if (hit.transform != null)
             {
-                Debug.Log("not found");
                 pathisValid = false;
             }
             else
             {
-                Debug.Log("found");
                 pathisValid = true;
             }
             return _destination;
@@ -241,14 +232,9 @@ namespace State.AIBull
         private void OnDisable()
         {
             baseRushStateBullAI.captureBasePosDistance = globalRef.transform.position;
-
             globalRef.bullAIStartPosRush.ResetSelectedBox(globalRef.coolDownRushBullSO.boxSelected);
-            //globalRef.coolDownRushBullSO.boxSelected = null;
             globalRef.coolDownRushBullSO.currentNumberOfPatrol = 0;
             globalRef.agent.speed = globalRef.coolDownRushBullSO.stopSpeed;
-            /*globalRef.coolDownRushBullSO.rushDestination = globalRef.playerTransform.position + globalRef.transform.forward * globalRef.rushBullSO.rushInertieSetDistance;
-            globalRef.rushBullSO.rushDestination = globalRef.playerTransform.position + globalRef.transform.forward * globalRef.rushBullSO.rushInertieSetDistance;
-            globalRef.agent.SetDestination(globalRef.coolDownRushBullSO.rushDestination);*/
             globalRef.coolDownRushBullSO.startPos = Vector3.zero;
             globalRef.coolDownRushBullSO.speedRot = 0;
             globalRef.coolDownRushBullSO.currentDurationStay = globalRef.coolDownRushBullSO.maxDurationStay;
