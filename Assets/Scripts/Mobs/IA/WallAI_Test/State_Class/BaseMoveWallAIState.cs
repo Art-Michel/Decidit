@@ -8,8 +8,11 @@ namespace State.WallAI
         protected StateControllerWallAI stateControllerWallAI;
 
         public GlobalRefWallAI globalRef;
+        BaseMoveWallAISO baseMoveWallAISO;
 
         RaycastHit hit;
+
+        [SerializeField] bool canTouchPlayer;
 
         public override void InitState(StateControllerWallAI stateController)
         {
@@ -23,6 +26,7 @@ namespace State.WallAI
             try
             {
                 globalRef.meshRenderer.enabled = false;
+                baseMoveWallAISO = globalRef.baseMoveWallAISO;
             }
             catch
             {
@@ -43,8 +47,13 @@ namespace State.WallAI
 
         private void FixedUpdate()
         {
-            if (!globalRef.baseMoveWallAISO.findNewPos)
+            if (!baseMoveWallAISO.findNewPos)
                 SelectNewPos();
+
+            if (baseMoveWallAISO.rateAttack <= 0.1f)
+            {
+                CheckCanTouchPlayer();
+            }
         }
 
         public void MoveAI()
@@ -55,10 +64,14 @@ namespace State.WallAI
             }
 
             if (!IsMoving())
-                globalRef.baseMoveWallAISO.findNewPos = false;
+                baseMoveWallAISO.findNewPos = false;
 
-            globalRef.agent.SetDestination(globalRef.baseMoveWallAISO.newPos);
-            globalRef.agent.speed = globalRef.baseMoveWallAISO.speedMovement;
+            globalRef.agent.SetDestination(baseMoveWallAISO.newPos);
+            globalRef.agent.speed = baseMoveWallAISO.speedMovement;
+            /*if (!baseMoveWallAISO.findNewPos)
+                globalRef.agent.speed = 0;
+            else
+                globalRef.agent.speed = baseMoveWallAISO.speedMovement;*/
 
             LaunchDelayBeforeAttack();
         }
@@ -77,19 +90,19 @@ namespace State.WallAI
         {
             if (!IsMoving())
             {
-                globalRef.baseMoveWallAISO.selectedWall = Random.Range(0, 4);
-                globalRef.baseMoveWallAISO.newPos = SearchNewPos(globalRef.walls[globalRef.baseMoveWallAISO.selectedWall].bounds);
+                baseMoveWallAISO.selectedWall = Random.Range(0, 4);
+                baseMoveWallAISO.newPos = SearchNewPos(globalRef.wallsList[baseMoveWallAISO.selectedWall].bounds);
 
-                hit = RaycastAIManager.instanceRaycast.RaycastAI(globalRef.baseMoveWallAISO.newPos, globalRef.playerTransform.position - globalRef.baseMoveWallAISO.newPos, globalRef.baseMoveWallAISO.mask,
-                    Color.blue, Vector3.Distance(globalRef.baseMoveWallAISO.newPos, globalRef.playerTransform.position));
+                hit = RaycastAIManager.instanceRaycast.RaycastAI(baseMoveWallAISO.newPos, globalRef.playerTransform.position - baseMoveWallAISO.newPos, baseMoveWallAISO.maskCheckTouchPlayer,
+                    Color.blue, Vector3.Distance(baseMoveWallAISO.newPos, globalRef.playerTransform.position));
 
                 if (hit.transform != globalRef.playerTransform)
                 {
-                    globalRef.baseMoveWallAISO.findNewPos = false;
+                    baseMoveWallAISO.findNewPos = false;
                 }
                 else
                 {
-                    globalRef.baseMoveWallAISO.findNewPos = true;
+                    baseMoveWallAISO.findNewPos = true;
                 }
             }
         }
@@ -101,13 +114,33 @@ namespace State.WallAI
                Random.Range(bounds.min.z, bounds.max.z)
            );
         }
+
+        void CheckCanTouchPlayer()
+        {
+            hit = RaycastAIManager.instanceRaycast.RaycastAI(globalRef.transform.position, globalRef.playerTransform.position - globalRef.transform.position, baseMoveWallAISO.maskCheckTouchPlayer,
+                    Color.blue, Vector3.Distance(globalRef.transform.position, globalRef.playerTransform.position));
+
+            if (hit.transform != globalRef.playerTransform)
+            {
+                Debug.Log(hit.transform);
+                canTouchPlayer = false;
+                baseMoveWallAISO.findNewPos = false;
+            }
+            else
+            {
+                Debug.Log("Touche Player");
+                canTouchPlayer = true;
+                baseMoveWallAISO.findNewPos = true;
+            }
+        }
+
         public void WallCrackEffect()
         {
-            globalRef.baseMoveWallAISO.distSinceLast = Vector3.Distance(globalRef.transform.position, globalRef.baseMoveWallAISO.lastWallCrack.transform.position);
+            baseMoveWallAISO.distSinceLast = Vector3.Distance(globalRef.transform.position, baseMoveWallAISO.lastWallCrack.transform.position);
 
-            if (globalRef.baseMoveWallAISO.distSinceLast >= globalRef.baseMoveWallAISO.decalage)
+            if (baseMoveWallAISO.distSinceLast >= baseMoveWallAISO.decalage)
             {
-                globalRef.baseMoveWallAISO.lastWallCrack = Instantiate(globalRef.baseMoveWallAISO.wallCrackPrefab,
+                baseMoveWallAISO.lastWallCrack = Instantiate(baseMoveWallAISO.wallCrackPrefab,
                     globalRef.transform.position,
                     Quaternion.Euler(0, globalRef.orientation, 0));
             }
@@ -115,16 +148,18 @@ namespace State.WallAI
 
         void LaunchDelayBeforeAttack()
         {
-            if (globalRef.baseMoveWallAISO.rateAttack > 0)
+            if (baseMoveWallAISO.rateAttack > 0)
             {
-                globalRef.baseMoveWallAISO.rateAttack -= Time.deltaTime;
+                baseMoveWallAISO.rateAttack -= Time.deltaTime;
             }
             else
             {
-                if (!globalRef.agent.isOnOffMeshLink && !IsMoving())
-                {
+                /*if (!globalRef.agent.isOnOffMeshLink && !IsMoving())
+                    stateControllerWallAI.SetActiveState(StateControllerWallAI.WallAIState.BaseAttack);*/
+
+                if (canTouchPlayer)
                     stateControllerWallAI.SetActiveState(StateControllerWallAI.WallAIState.BaseAttack);
-                }
+
             }
         }
 
@@ -142,8 +177,8 @@ namespace State.WallAI
         {
             SoundManager.PlaySoundMobByClip(globalRef.audioSource, SoundManager.soundAndVolumeWallMobStatic[0], false);
             globalRef.baseAttackWallAISO.bulletCount = globalRef.baseAttackWallAISO.maxBulletCount;
-            globalRef.baseMoveWallAISO.rateAttack = globalRef.baseMoveWallAISO.maxRateAttack;
-            globalRef.baseMoveWallAISO.findNewPos = false;
+            baseMoveWallAISO.rateAttack = baseMoveWallAISO.maxRateAttack;
+            baseMoveWallAISO.findNewPos = false;
             globalRef.agent.SetDestination(globalRef.transform.position);
         }
     }

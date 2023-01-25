@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections.Generic;
 
 namespace State.WallAI
 {
@@ -11,7 +12,7 @@ namespace State.WallAI
         public Animator animator;
         public Transform spawnBullet;
         public EnemyHealth enemyHealth;
-        public BoxCollider[] walls;
+        public List<BoxCollider> wallsList = new List<BoxCollider>();
         public Transform playerTransform;
         public float orientation;
         public MeshRenderer meshRenderer;
@@ -32,7 +33,7 @@ namespace State.WallAI
 
             for (int i = 0; i < areaWallAI.childCount; i++)
             {
-                walls[i] = areaWallAI.GetChild(i).GetComponent<BoxCollider>();
+                wallsList.Add(areaWallAI.GetChild(i).GetComponent<BoxCollider>());
             }
         }
 

@@ -7,7 +7,7 @@ public class BaseMoveWallAISO : ScriptableObject
     public float speedMovement;
 
     [Header("*Search new Position")]
-    public LayerMask mask;
+    public LayerMask maskCheckTouchPlayer;
     public bool findNewPos;
     public Vector3 newPos;
     public int selectedWall;
