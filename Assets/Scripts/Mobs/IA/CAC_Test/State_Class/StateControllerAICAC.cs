@@ -47,13 +47,12 @@ namespace State.AICAC
             {
                 try
                 {
-                    Debug.Log(stateDictionary[state]);
+                    if (!stateDictionary[state].gameObject.activeInHierarchy)
+                        Debug.LogWarning("Already Disable");
                     stateDictionary[state].gameObject.SetActive(false);
                 }
                 catch
                 {
-                    if(!stateDictionary[state].gameObject.activeInHierarchy)
-                        Debug.LogWarning("Already Disable");
                 }
             }
 

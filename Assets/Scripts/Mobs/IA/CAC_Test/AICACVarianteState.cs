@@ -162,13 +162,13 @@ namespace State.AICAC
                     if (i % 2 == 0)
                     {
                         positiveOffeset += offesetBase;
-                        Debug.Log(i % 2);
+                        //Debug.Log(i % 2);
                         aiCACScriptsList[i].offsetDestination = positiveOffeset;
                     }
                     else
                     {
                         negativeOffeset -= offesetBase;
-                        Debug.Log(i % 2);
+                        //Debug.Log(i % 2);
                         aiCACScriptsList[i].offsetDestination = negativeOffeset;
                     }
                 }
@@ -179,14 +179,14 @@ namespace State.AICAC
                 {
                     if (i % 2 == 0)
                     {
-                        Debug.Log(i % 2);
+                        //Debug.Log(i % 2);
                         aiCACScriptsList[i].offsetDestination = positiveOffeset;
                         positiveOffeset += offesetBase;
                     }
                     else
                     {
                         negativeOffeset -= offesetBase;
-                        Debug.Log(i % 2);
+                        //Debug.Log(i % 2);
                         aiCACScriptsList[i].offsetDestination = negativeOffeset;
                     }
                 }

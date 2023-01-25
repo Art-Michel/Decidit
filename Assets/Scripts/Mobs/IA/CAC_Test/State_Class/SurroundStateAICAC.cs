@@ -34,7 +34,7 @@ namespace State.AICAC
 
             if (!globalRef.surroundAICACSO.left && !globalRef.surroundAICACSO.right)
             {
-                hit = RaycastAIManager.RaycastAI(globalRef.spawnSurroundDodge.position,
+                hit = RaycastAIManager.instanceRaycast.RaycastAI(globalRef.spawnSurroundDodge.position,
                 globalRef.playerTransform.position - globalRef.spawnSurroundDodge.position, globalRef.surroundAICACSO.mask, Color.red, 100f);
                 float angle;
                 angle = Vector3.SignedAngle(globalRef.playerTransform.forward, globalRef.transform.forward, Vector3.up);
@@ -73,7 +73,7 @@ namespace State.AICAC
                 destination = left + (right + (-globalRef.spawnSurroundDodge.right + globalRef.spawnSurroundDodge.forward));
             }
 
-            hit = RaycastAIManager.RaycastAI(globalRef.spawnSurroundDodge.position, destination, globalRef.surroundAICACSO.mask, Color.red,
+            hit = RaycastAIManager.instanceRaycast.RaycastAI(globalRef.spawnSurroundDodge.position, destination, globalRef.surroundAICACSO.mask, Color.red,
                 Vector3.Distance(globalRef.playerTransform.position, globalRef.spawnSurroundDodge.position));
 
             ray = new Ray(globalRef.spawnSurroundDodge.position, destination);

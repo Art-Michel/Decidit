@@ -33,7 +33,7 @@ namespace State.FlyAI
 
         private void FixedUpdate()
         {
-            RaycastHit hit = RaycastAIManager.RaycastAI(childflyAI.position, transform.forward,
+            RaycastHit hit = RaycastAIManager.instanceRaycast.RaycastAI(childflyAI.position, transform.forward,
                                                         globalRef.baseAttackFlySO.wallMask, Color.blue, globalRef.baseAttackFlySO.distDetectWall);
 
             if(hit.transform != null)

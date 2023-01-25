@@ -21,7 +21,7 @@ public class RaycastCrossHair : MonoBehaviour
     {
         Vector3 startPos = cam.ScreenToWorldPoint(crossHair.position);
 
-        hit = RaycastAIManager.RaycastAI(startPos, playerT.forward, mask, Color.black, 100f);
+        hit = RaycastAIManager.instanceRaycast.RaycastAI(startPos, playerT.forward, mask, Color.black, 100f);
 
         if (hit.transform != null)
         {

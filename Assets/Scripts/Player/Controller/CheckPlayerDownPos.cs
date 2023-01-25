@@ -2,16 +2,18 @@ using UnityEngine;
 
 public class CheckPlayerDownPos : MonoBehaviour
 {
+    public static CheckPlayerDownPos instanceCheckPlayerPos;
+
     [SerializeField] LayerMask mask;
-    public static Vector3 positionPlayer;
+    public Vector3 positionPlayer;
 
-    void Start()
+    private void Awake()
     {
-
+        instanceCheckPlayerPos = this;
     }
 
     void FixedUpdate()
     {
-        positionPlayer = RaycastAIManager.RaycastAI(transform.position, Vector3.down, mask, Color.yellow, 100).point;
+        positionPlayer = RaycastAIManager.instanceRaycast.RaycastAI(transform.position, Vector3.down, mask, Color.yellow, 100).point;
     }
 }

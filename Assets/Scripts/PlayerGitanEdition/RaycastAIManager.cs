@@ -5,17 +5,17 @@ using UnityEngine;
 
 public class RaycastAIManager : MonoBehaviour
 {
-    static RaycastAIManager instance;
+    static public RaycastAIManager instanceRaycast;
 
     static RaycastHit hit;
 
     static bool isActive;
     private void Awake()
     {
-        instance = GetComponent<RaycastAIManager>();
+        instanceRaycast = GetComponent<RaycastAIManager>();
     }
 
-    static public RaycastHit RaycastAI(Vector3 origine, Vector3 direction, LayerMask mask, Color colorDebug, float lenght)
+    public RaycastHit RaycastAI(Vector3 origine, Vector3 direction, LayerMask mask, Color colorDebug, float lenght)
     {
         Ray ray;
         RaycastHit hit;

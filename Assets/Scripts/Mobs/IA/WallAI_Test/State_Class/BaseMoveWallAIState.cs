@@ -80,7 +80,7 @@ namespace State.WallAI
                 globalRef.baseMoveWallAISO.selectedWall = Random.Range(0, 4);
                 globalRef.baseMoveWallAISO.newPos = SearchNewPos(globalRef.walls[globalRef.baseMoveWallAISO.selectedWall].bounds);
 
-                hit = RaycastAIManager.RaycastAI(globalRef.baseMoveWallAISO.newPos, globalRef.playerTransform.position - globalRef.baseMoveWallAISO.newPos, globalRef.baseMoveWallAISO.mask,
+                hit = RaycastAIManager.instanceRaycast.RaycastAI(globalRef.baseMoveWallAISO.newPos, globalRef.playerTransform.position - globalRef.baseMoveWallAISO.newPos, globalRef.baseMoveWallAISO.mask,
                     Color.blue, Vector3.Distance(globalRef.baseMoveWallAISO.newPos, globalRef.playerTransform.position));
 
                 if (hit.transform != globalRef.playerTransform)

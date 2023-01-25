@@ -10,6 +10,11 @@ namespace State.AICAC
 
         [SerializeField] bool endAttack;
 
+        [Header("LookAt Variable")]
+        Vector3 direction;
+        Vector3 relativePos;
+        Quaternion rotation;
+
         public override void InitState(StateControllerAICAC stateController)
         {
             base.InitState(stateController);
@@ -40,7 +45,7 @@ namespace State.AICAC
             }
             else if (!globalRef.baseAttackAICACSO.isAttacking)
             {
-                Debug.Log("Red Color préattack");
+                //Debug.Log("Red Color préattack");
 
                 if (globalRef.distPlayer > globalRef.baseAttackAICACSO.attackRange && globalRef.baseAttackAICACSO.currentAttackRate == globalRef.baseAttackAICACSO.maxAttackRate)
                 {
@@ -56,9 +61,6 @@ namespace State.AICAC
 
         public void SmoothLookAt()
         {
-            Vector3 direction;
-            Vector3 relativePos;
-
             direction = globalRef.playerTransform.position;
             relativePos.x = direction.x - globalRef.transform.position.x;
             relativePos.y = 0;
@@ -71,14 +73,17 @@ namespace State.AICAC
                 globalRef.baseAttackAICACSO.speedRot = globalRef.baseAttackAICACSO.maxSpeedRot;
             }
 
-            Quaternion rotation = Quaternion.Slerp(globalRef.transform.rotation, Quaternion.LookRotation(relativePos, Vector3.up), globalRef.baseAttackAICACSO.speedRot);
+            rotation = Quaternion.Slerp(globalRef.transform.rotation, Quaternion.LookRotation(relativePos, Vector3.up), globalRef.baseAttackAICACSO.speedRot);
             globalRef.transform.rotation = rotation;
         }
 
         private void OnDisable()
         {
-            globalRef.material_Instances.Material.color = globalRef.material_Instances.Color;
-            globalRef.material_Instances.ChangeColorTexture(globalRef.material_Instances.Color);
+            if(globalRef.material_Instances != null)
+            {
+                globalRef.material_Instances.Material.color = globalRef.material_Instances.Color;
+                globalRef.material_Instances.ChangeColorTexture(globalRef.material_Instances.Color);
+            }
             globalRef.baseAttackAICACSO.currentAttackRate = globalRef.baseAttackAICACSO.maxAttackRate;
             globalRef.baseAttackAICACSO.speedRot = 0;
         }

@@ -1,14 +1,13 @@
 using UnityEngine;
 using State.AICAC;
-using System.Collections.Generic;
 
 namespace State.AIBull
 {
     public class BaseRushStateBullAI : _StateBull
     {
         [SerializeField] GlobalRefBullAI globalRef;
-        RaycastHit hit;
-
+        RushBullParameterSO rushBullSO;
+        [SerializeField] Material_Instances material_Instances;
         [SerializeField] bool lockPlayer;
         bool canStartRush;
 
@@ -16,11 +15,8 @@ namespace State.AIBull
         [SerializeField] float distDetectObstacle;
         [SerializeField] float distDetectGround;
 
-        [SerializeField] Vector3 directionYSlope;
-        Vector3 move;
-
+        [Header("Rush Movement")]
         public Vector3 captureBasePosDistance;
-        [SerializeField] float distRush;
 
         public override void InitState(StateControllerBull stateController)
         {
@@ -34,6 +30,9 @@ namespace State.AIBull
             try
             {
                 globalRef.agent.enabled = false;
+
+                if(rushBullSO == null)
+                    rushBullSO = globalRef.rushBullSO;
             }
             catch
             {
@@ -45,11 +44,13 @@ namespace State.AIBull
         {
             if (!canStartRush)
             {
-                ShowSoonAttack(true);
+                if (material_Instances.Material.color != material_Instances.ColorPreAtatck)
+                    ShowSoonAttack(true);
             }
             else
             {
-                ShowSoonAttack(false);
+                if(material_Instances.Material.color == material_Instances.ColorPreAtatck)
+                    ShowSoonAttack(false);
             }
 
             SmoothLookAtPlayer();
@@ -69,15 +70,15 @@ namespace State.AIBull
 
         void SetDestination()
         {
-            if (globalRef.distPlayer > globalRef.rushBullSO.stopLockDist && !lockPlayer)
+            if (globalRef.distPlayer > rushBullSO.stopLockDist && !lockPlayer)
             {
-                globalRef.rushBullSO.rushDestination = globalRef.playerTransform.position;
+                rushBullSO.rushDestination = globalRef.playerTransform.position;
             }
             else
             {
                 if (!lockPlayer)
                 {
-                    globalRef.rushBullSO.rushDestination = globalRef.playerTransform.position + globalRef.transform.forward * globalRef.rushBullSO.rushInertieSetDistance;
+                    rushBullSO.rushDestination = globalRef.playerTransform.position + globalRef.transform.forward * rushBullSO.rushInertieSetDistance;
                     lockPlayer = true;
                 }
             }
@@ -86,26 +87,26 @@ namespace State.AIBull
         void RushDuration()
         {
             distDestination = Vector3.Distance(new Vector2(globalRef.transform.position.x, globalRef.transform.position.z),
-                new Vector2(globalRef.rushBullSO.rushDestination.x, globalRef.rushBullSO.rushDestination.z));
+                new Vector2(rushBullSO.rushDestination.x, rushBullSO.rushDestination.z));
 
             if (distDestination <= 1)
             {
-                Debug.Log("Distance Stop Rush");
+                //Debug.Log("Distance Stop Rush");
                 StopRush();
             }
 
-            if (!globalRef.rushBullSO.isFall && !globalRef.rushBullSO.isGround)
+            if (!rushBullSO.isFall && !rushBullSO.isGround)
             {
-                globalRef.rushBullSO.isFall = true;
+                rushBullSO.isFall = true;
             }
-            else if (globalRef.rushBullSO.isFall && globalRef.rushBullSO.isGround)
+            else if (rushBullSO.isFall && rushBullSO.isGround)
             {
-                Debug.Log("Fall Stop Rush");
+                //Debug.Log("Fall Stop Rush");
                 StopRush();
             }
 
-            distRush = Vector3.Distance(captureBasePosDistance, globalRef.transform.position);
-            if (distRush >= globalRef.rushBullSO.rushDistance)
+            rushBullSO.distRush = Vector3.Distance(captureBasePosDistance, globalRef.transform.position);
+            if (rushBullSO.distRush >= rushBullSO.rushDistance)
             {
                 StopRush();
             }
@@ -113,54 +114,58 @@ namespace State.AIBull
 
         void RushMovement()
         {
-            Vector2 targetPos = new Vector2(globalRef.rushBullSO.rushDestination.x, globalRef.rushBullSO.rushDestination.z);
-            Vector2 direction = targetPos - (new Vector2(globalRef.transform.position.x, globalRef.transform.position.z));
-            direction = direction.normalized * globalRef.rushBullSO.speedMove;
+            rushBullSO.targetPos = new Vector2(rushBullSO.rushDestination.x, rushBullSO.rushDestination.z);
+            rushBullSO.direction = rushBullSO.targetPos - (new Vector2(globalRef.transform.position.x, globalRef.transform.position.z));
+            rushBullSO.direction = rushBullSO.direction.normalized * rushBullSO.speedMove;
 
             SetGravity();
 
-            move = new Vector3(direction.x, directionYSlope.y + globalRef.rushBullSO.AIVelocity.y, direction.y);
-            globalRef.characterController.Move(move * Time.deltaTime);
+            rushBullSO.move = new Vector3(rushBullSO.direction.x, rushBullSO.directionYSlope.y + rushBullSO.AIVelocity.y, rushBullSO.direction.y);
+            globalRef.characterController.Move(rushBullSO.move * Time.deltaTime);
                         
             globalRef.detectOtherAICollider.enabled = true;
             globalRef.hitBox.gameObject.SetActive(true);
         }
         void SetGravity()
         {
-            if (!globalRef.rushBullSO.isGround)
+            if (!rushBullSO.isGround)
             {
-                globalRef.rushBullSO.fallingTime += Time.deltaTime;
-                float effectiveGravity = globalRef.rushBullSO.gravity * globalRef.rushBullSO.fallingTime;
-                globalRef.rushBullSO.AIVelocity.y += effectiveGravity;
+                rushBullSO.fallingTime += Time.deltaTime;
+                rushBullSO.effectiveGravity = rushBullSO.gravity * rushBullSO.fallingTime;
+                rushBullSO.AIVelocity.y += rushBullSO.effectiveGravity;
             }
             else
             {
-                globalRef.rushBullSO.AIVelocity.y = 0;
+                rushBullSO.AIVelocity.y = 0;
             }
         }
 
         void CheckObstacle()
         {
             //Check obstacle Ground
-            hit = RaycastAIManager.RaycastAI(globalRef.transform.position, -globalRef.transform.up, globalRef.rushBullSO.maskCheckObstacle, Color.red, distDetectGround);
-            directionYSlope = move;
-            if (Vector3.Angle(transform.up, hit.normal) < globalRef.characterController.slopeLimit)
-                directionYSlope = (directionYSlope - (Vector3.Dot(directionYSlope, hit.normal)) * hit.normal);
-            if (hit.transform != null)
+            rushBullSO.hitGround = RaycastAIManager.instanceRaycast.RaycastAI(globalRef.transform.position, -globalRef.transform.up, rushBullSO.maskCheckObstacle, Color.red, distDetectGround);
+            rushBullSO.directionYSlope = rushBullSO.move;
+
+            if (Vector3.Angle(transform.up, rushBullSO.hitGround.normal) < globalRef.characterController.slopeLimit)
+                rushBullSO.directionYSlope = (rushBullSO.directionYSlope - 
+                    (Vector3.Dot(rushBullSO.directionYSlope, rushBullSO.hitGround.normal)) * rushBullSO.hitGround.normal);
+
+            if (rushBullSO.hitGround.transform != null)
             {
-                globalRef.rushBullSO.isGround = true;
+                rushBullSO.isGround = true;
             }
             else
             {
-                Debug.Log("Is Falling");
-                globalRef.rushBullSO.isGround = false;
+               // Debug.Log("Is Falling");
+                rushBullSO.isGround = false;
             }
 
             //Check obstacle Wall
-            RaycastHit hitObstacle = RaycastAIManager.RaycastAI(globalRef.transform.position, globalRef.transform.forward, globalRef.rushBullSO.maskCheckObstacle, Color.red, distDetectObstacle);
-            if (hitObstacle.transform != null)
+            rushBullSO.hitObstacle = RaycastAIManager.instanceRaycast.RaycastAI(globalRef.transform.position, globalRef.transform.forward, rushBullSO.maskCheckObstacle, Color.red, distDetectObstacle);
+            if (rushBullSO.hitObstacle.transform != null)
             {
-                Debug.Log("Obstacle Stop Rush");
+              //  Debug.Log("Obstacle Stop Rush");
+              if (rushBullSO.hitObstacle.transform.CompareTag("Ennemi"))
                 StopRush();
             }
         }
@@ -172,24 +177,25 @@ namespace State.AIBull
 
         void SmoothLookAtPlayer()
         {
-            Vector3 direction;
-            Vector3 relativePos;
+            rushBullSO.directionLookAt = rushBullSO.rushDestination;
 
-            direction = globalRef.rushBullSO.rushDestination;
+            rushBullSO.relativePos.x = rushBullSO.directionLookAt.x - globalRef.transform.position.x;
+            rushBullSO.relativePos.y = 0;
+            rushBullSO.relativePos.z = rushBullSO.directionLookAt.z - globalRef.transform.position.z;
 
-            relativePos.x = direction.x - globalRef.transform.position.x;
-            relativePos.y = 0;
-            relativePos.z = direction.z - globalRef.transform.position.z;
-
-            if (globalRef.rushBullSO.speedRot < globalRef.rushBullSO.maxSpeedRot)
-                globalRef.rushBullSO.speedRot += Time.deltaTime / globalRef.rushBullSO.smoothRot;
+            if (rushBullSO.speedRot < rushBullSO.maxSpeedRot)
+                rushBullSO.speedRot += Time.deltaTime / rushBullSO.smoothRot;
             else
             {
-                canStartRush = true;
-                globalRef.rushBullSO.speedRot = globalRef.rushBullSO.maxSpeedRot;
+                if(!canStartRush)
+                {
+                    ShowSoonAttack(false);
+                    rushBullSO.speedRot = rushBullSO.maxSpeedRot;
+                    canStartRush = true;
+                }
             }
 
-            Quaternion rotation = Quaternion.Slerp(globalRef.transform.rotation, Quaternion.LookRotation(relativePos, Vector3.up), globalRef.rushBullSO.speedRot);
+            Quaternion rotation = Quaternion.Slerp(globalRef.transform.rotation, Quaternion.LookRotation(rushBullSO.relativePos, Vector3.up), rushBullSO.speedRot);
             globalRef.transform.rotation = rotation;
         }
 
@@ -197,49 +203,53 @@ namespace State.AIBull
         {
             if(active)
             {
-                globalRef.material_Instances.Material.color = globalRef.material_Instances.ColorPreAtatck;
-                globalRef.material_Instances.ChangeColorTexture(globalRef.material_Instances.ColorPreAtatck);
+                material_Instances.Material.color = material_Instances.ColorPreAtatck;
+                material_Instances.ChangeColorTexture(material_Instances.ColorPreAtatck);
             }
             else
             {
-                globalRef.material_Instances.Material.color = globalRef.material_Instances.Color;
-                globalRef.material_Instances.ChangeColorTexture(globalRef.material_Instances.Color);
+                material_Instances.Material.color = material_Instances.Color;
+                material_Instances.ChangeColorTexture(material_Instances.Color);
             }
         }
 
         private void OnDisable()
         {
-            globalRef.rushBullSO.isFall = false;
-            globalRef.rushBullSO.isGround = true;
+            if(rushBullSO != null)
+            {
+                rushBullSO.isFall = false;
+                rushBullSO.isGround = true;
+                rushBullSO.speedRot = 0;
+                rushBullSO.stopLockPlayer = false;
+            }
+
             canStartRush = false;
             lockPlayer = false;
             globalRef.detectOtherAICollider.enabled = false;
-            globalRef.rushBullSO.stopLockPlayer = false;
             globalRef.hitBox.gameObject.SetActive(false);
             globalRef.agent.enabled = true;
-            globalRef.rushBullSO.speedRot = 0;
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Ennemi") && gameObject.activeInHierarchy)
+            if (other.CompareTag("Ennemi") && gameObject.activeInHierarchy && other.gameObject.name.Contains("AICAC"))
             {
                 Debug.Log("Get TrashMob");
 
-                if (!globalRef.rushBullSO.ennemiInCollider.Contains(other.gameObject) || globalRef.rushBullSO.ennemiInCollider == null)
-                    globalRef.rushBullSO.ennemiInCollider.Add(other.gameObject);
+                if (!rushBullSO.ennemiInCollider.Contains(other.gameObject) || rushBullSO.ennemiInCollider == null)
+                    rushBullSO.ennemiInCollider.Add(other.gameObject);
 
-                if (globalRef.rushBullSO.ennemiInCollider != null)
+                if (rushBullSO.ennemiInCollider != null)
                 {
-                    for (int i = 0; i < globalRef.rushBullSO.ennemiInCollider.Count; i++)
+                    for (int i = 0; i < rushBullSO.ennemiInCollider.Count; i++)
                     {
-                        if (globalRef.rushBullSO.ennemiInCollider[i].GetComponent<GlobalRefAICAC>() != null)
+                        if (rushBullSO.ennemiInCollider[i].GetComponent<GlobalRefAICAC>() != null)
                         {
-                            GlobalRefAICAC globalRefAICAC = globalRef.rushBullSO.ennemiInCollider[i].GetComponent<GlobalRefAICAC>();
+                            GlobalRefAICAC globalRefAICAC = rushBullSO.ennemiInCollider[i].GetComponent<GlobalRefAICAC>();
 
-                            RaycastHit hit = RaycastAIManager.RaycastAI(transform.position, transform.forward, globalRef.ennemiMask, Color.red, 10f);
+                            rushBullSO.hitAICAC = RaycastAIManager.instanceRaycast.RaycastAI(transform.position, transform.forward, globalRef.ennemiMask, Color.red, 10f);
                             float angle;
-                            angle = Vector3.SignedAngle(transform.forward, hit.normal, Vector3.up);
+                            angle = Vector3.SignedAngle(transform.forward, rushBullSO.hitAICAC.normal, Vector3.up);
 
                             if (globalRef.agent.velocity.magnitude > 0)
                             {
@@ -269,7 +279,7 @@ namespace State.AIBull
         {
             if (other.CompareTag("Ennemi"))
             {
-                globalRef.rushBullSO.ennemiInCollider.Remove(other.gameObject);
+                rushBullSO.ennemiInCollider.Remove(other.gameObject);
             }
         }
 

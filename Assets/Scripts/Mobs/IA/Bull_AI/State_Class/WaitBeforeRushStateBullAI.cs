@@ -140,7 +140,7 @@ namespace State.AIBull
                 _destination = closestHit.position;
             }
             RaycastHit hit;
-            hit = RaycastAIManager.RaycastAI(_destination, _destination - globalRef.playerTransform.position, globalRef.coolDownRushBullSO.mask,
+            hit = RaycastAIManager.instanceRaycast.RaycastAI(_destination, _destination - globalRef.playerTransform.position, globalRef.coolDownRushBullSO.mask,
                 Color.blue, 100f);
             if (hit.transform != null)
             {
@@ -159,7 +159,7 @@ namespace State.AIBull
         {
             if (globalRef.coolDownRushBullSO.currentCoolDownCheckObstacle <= 0)
             {
-                hit = RaycastAIManager.RaycastAI(globalRef.transform.position, globalRef.transform.forward, globalRef.coolDownRushBullSO.mask, Color.red, globalRef.coolDownRushBullSO.distDetect);
+                hit = RaycastAIManager.instanceRaycast.RaycastAI(globalRef.transform.position, globalRef.transform.forward, globalRef.coolDownRushBullSO.mask, Color.red, globalRef.coolDownRushBullSO.distDetect);
 
                 if (hit.transform != null)
                 {

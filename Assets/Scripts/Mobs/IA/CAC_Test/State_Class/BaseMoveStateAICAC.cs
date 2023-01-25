@@ -71,7 +71,7 @@ namespace State.AICAC
 
         void BaseMovement()
         {
-            Vector3 dir = CheckPlayerDownPos.positionPlayer - globalRef.transform.position;
+            Vector3 dir = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer - globalRef.transform.position;
             Vector3 left = Vector3.Cross(dir, Vector3.up).normalized;
 
 
@@ -99,7 +99,7 @@ namespace State.AICAC
                 offset = Mathf.Lerp(offset, globalRef.offsetDestination, globalRef.baseMoveAICACSO.offsetTransitionSmooth * Time.deltaTime);
                 offset = Mathf.Clamp(offset, -Mathf.Abs(globalRef.offsetDestination), Mathf.Abs(globalRef.offsetDestination));
 
-                destination = CheckPlayerDownPos.positionPlayer + left * offset;
+                destination = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer + left * offset;
 
                 if (triggerNavLink)
                 {

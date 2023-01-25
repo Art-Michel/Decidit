@@ -129,7 +129,7 @@ public class PlayerController : MonoBehaviour
         else
             isMooving = false;
 
-        RaycastAIManager.RaycastAI(transform.position, controller.velocity.normalized, mask, Color.red, Vector3.Distance(transform.position, controller.velocity.normalized));
+        RaycastAIManager.instanceRaycast.RaycastAI(transform.position, controller.velocity.normalized, mask, Color.red, Vector3.Distance(transform.position, controller.velocity.normalized));
     }
 
     public static void ApplyDamage(int damage)

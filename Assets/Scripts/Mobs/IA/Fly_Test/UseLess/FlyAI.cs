@@ -362,9 +362,9 @@ public class FlyAI : MonoBehaviour
     void RayDetectObstacle()
     {
         //forward Right
-        hitRight = RaycastAIManager.RaycastAI(this.transform.position + transform.right / 1f, transform.forward, noMask, Color.green, 4f);
+        hitRight = RaycastAIManager.instanceRaycast.RaycastAI(this.transform.position + transform.right / 1f, transform.forward, noMask, Color.green, 4f);
         //forward Left
-        hitLeft = RaycastAIManager.RaycastAI(this.transform.position + -transform.right / 1f, transform.forward, noMask, Color.green, 4f);
+        hitLeft = RaycastAIManager.instanceRaycast.RaycastAI(this.transform.position + -transform.right / 1f, transform.forward, noMask, Color.green, 4f);
     }
 
     void Detection()
@@ -373,7 +373,7 @@ public class FlyAI : MonoBehaviour
 
         if (obstacleTransform.tag == "Obstacle")
         {
-            RaycastHit hit = RaycastAIManager.RaycastAI(this.transform.position, transform.forward, noMask, Color.red, Vector3.Distance(transform.position, obstacleTransform.position));
+            RaycastHit hit = RaycastAIManager.instanceRaycast.RaycastAI(this.transform.position, transform.forward, noMask, Color.red, Vector3.Distance(transform.position, obstacleTransform.position));
             obstaclePos = hit.point;
 
             float angle;
@@ -423,7 +423,7 @@ public class FlyAI : MonoBehaviour
         }
         else if (obstacleTransform.tag == "Wall")
         {
-            RaycastHit hit = RaycastAIManager.RaycastAI(this.transform.position, transform.forward, noMask, Color.red, colliderDetectWAll.radius);
+            RaycastHit hit = RaycastAIManager.instanceRaycast.RaycastAI(this.transform.position, transform.forward, noMask, Color.red, colliderDetectWAll.radius);
             float angle;
 
             if (!obstacleOnPathDetected)

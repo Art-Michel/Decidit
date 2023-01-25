@@ -42,7 +42,7 @@ namespace State.FlyAI
         {
             RaycastHit hit;
 
-            hit = RaycastAIManager.RaycastAI(transform.position, baseMoveFlySO.destinationFinal - flyAI.transform.position, baseMoveFlySO.maskObstacle, 
+            hit = RaycastAIManager.instanceRaycast.RaycastAI(transform.position, baseMoveFlySO.destinationFinal - flyAI.transform.position, baseMoveFlySO.maskObstacle, 
                 Color.red,Vector3.Distance(flyAI.transform.position, baseMoveFlySO.destinationFinal));
 
             if(hit.transform != null)

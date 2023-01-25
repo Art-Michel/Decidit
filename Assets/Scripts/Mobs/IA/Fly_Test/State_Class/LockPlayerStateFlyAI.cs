@@ -60,7 +60,7 @@ namespace State.FlyAI
             {
                 if (ThisStateIsActive())
                 {
-                    Debug.Log("Set Red color");
+                    //Debug.Log("Set Red color");
                     material_Instances.Material.color = material_Instances.ColorPreAtatck;
                     material_Instances.ChangeColorTexture(material_Instances.ColorPreAtatck);
                 }
@@ -84,7 +84,7 @@ namespace State.FlyAI
                 else
                 {
                     baseAttackFlySO.speedRotationAIAttack += (Time.deltaTime / (baseAttackFlySO.smoothRotationAttack / 4));
-                    Debug.Log("Follow charge");
+                    //Debug.Log("Follow charge");
                 }
                 //lerpSpeedYValueAttack += (Time.deltaTime / ySpeedSmootherAttack);
             }
@@ -104,7 +104,7 @@ namespace State.FlyAI
 
         private void OnDisable()
         {
-            Debug.Log("Set Black color");
+           // Debug.Log("Set Black color");
             material_Instances.Material.color = material_Instances.Color;
             material_Instances.ChangeColorTexture(material_Instances.Color);
         }
