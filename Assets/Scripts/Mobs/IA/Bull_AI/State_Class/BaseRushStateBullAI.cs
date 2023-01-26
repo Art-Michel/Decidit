@@ -242,7 +242,7 @@ namespace State.AIBull
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Ennemi") && gameObject.activeInHierarchy && other.gameObject.name.Contains("AICAC"))
+            if (gameObject.activeInHierarchy && other.name.Contains("AICAC"))
             {
                 Debug.Log("Get TrashMob");
 
@@ -251,36 +251,43 @@ namespace State.AIBull
 
                 if (rushBullSO.ennemiInCollider != null)
                 {
+                    Debug.Log("ennemi Collider Not Empty");
+
                     for (int i = 0; i < rushBullSO.ennemiInCollider.Count; i++)
                     {
-                        if (rushBullSO.ennemiInCollider[i].GetComponent<GlobalRefAICAC>() != null)
+                        GlobalRefAICAC globalRefAICAC = rushBullSO.ennemiInCollider[i].GetComponent<GlobalRefAICAC>();
+
+                        rushBullSO.hitAICAC = RaycastAIManager.instanceRaycast.RaycastAI(transform.position, transform.forward, globalRef.ennemiMask, Color.red, 10f);
+                        float angle;
+                        angle = Vector3.SignedAngle(transform.forward, rushBullSO.hitAICAC.normal, Vector3.up);
+
+                        if (globalRef.characterController.velocity.magnitude > 0)
                         {
-                            GlobalRefAICAC globalRefAICAC = rushBullSO.ennemiInCollider[i].GetComponent<GlobalRefAICAC>();
-
-                            rushBullSO.hitAICAC = RaycastAIManager.instanceRaycast.RaycastAI(transform.position, transform.forward, globalRef.ennemiMask, Color.red, 10f);
-                            float angle;
-                            angle = Vector3.SignedAngle(transform.forward, rushBullSO.hitAICAC.normal, Vector3.up);
-
-                            if (globalRef.agent.velocity.magnitude > 0)
+                            if (angle > 0)
                             {
-                                if (angle > 0 && globalRef.agent.velocity.magnitude > 0)
-                                {
-                                    Debug.Log("Dodge TrashMob");
-                                    globalRefAICAC.dodgeAICACSO.targetObjectToDodge = this.transform;
-                                    globalRefAICAC.dodgeAICACSO.rightDodge = true;
-                                    globalRefAICAC.ActiveStateDodge();
-                                }
-                                else
-                                {
-                                    Debug.Log("Dodge TrashMob");
-                                    globalRefAICAC.dodgeAICACSO.targetObjectToDodge = this.transform;
-                                    globalRefAICAC.dodgeAICACSO.leftDodge = true;
-                                    globalRefAICAC.dodgeAICACSO.dodgeRushBull = true;
-                                    globalRefAICAC.ActiveStateDodge();
-                                }
+                                Debug.Log("Dodge TrashMob");
+                                globalRefAICAC.dodgeAICACSO.targetObjectToDodge = this.transform;
+                                globalRefAICAC.dodgeAICACSO.rightDodge = true;
+                                globalRefAICAC.ActiveStateDodge();
+                            }
+                            else
+                            {
+                                Debug.Log("Dodge TrashMob");
+                                globalRefAICAC.dodgeAICACSO.targetObjectToDodge = this.transform;
+                                globalRefAICAC.dodgeAICACSO.leftDodge = true;
+                                globalRefAICAC.dodgeAICACSO.dodgeRushBull = true;
+                                globalRefAICAC.ActiveStateDodge();
                             }
                         }
+
+                        /*if (rushBullSO.ennemiInCollider[i].GetComponent<GlobalRefAICAC>() != null)
+                        {
+                        }*/
                     }
+                }
+                else
+                {
+                    Debug.LogError("ennemi Collider Is Empty");
                 }
             }
         }
