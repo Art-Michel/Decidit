@@ -7,6 +7,8 @@ namespace State.FlyAI
     {
         public NavMeshAgent agent;
         public Transform playerTransform;
+        public StateControllerFlyAI stateControllerFlyAI;
+        public EnemyHealth enemyHealth;
 
         [Header("Ref Base Move")]
         public BoxCollider myCollider;
@@ -14,6 +16,9 @@ namespace State.FlyAI
         [Header("Ref Base Attack")]
         public GameObject colliderBaseAttack;
         public Hitbox hitbox;
+
+        [Header("Ref Base Death")]
+        [SerializeField] bool isDead;
 
         [Header("Ref Scriptable")]
         public BaseMoveFlySO baseMoveFlySO;
@@ -29,6 +34,22 @@ namespace State.FlyAI
             baseAttackFlySO = Instantiate(baseAttackFlySO);
             deathFlySO = Instantiate(deathFlySO);
             playerTransform = GameObject.FindWithTag("Player").transform;
+        }
+
+        private void Update()
+        {
+            if (enemyHealth._hp <= 0 && !isDead)
+            {
+                ActiveState(StateControllerFlyAI.AIState.Death);
+                //myAnimator.SetBool("Death", true);
+                isDead = true;
+            }
+        }
+
+        public void ActiveState(StateControllerFlyAI.AIState newState)
+        {
+            Debug.Log(stateControllerFlyAI);
+            stateControllerFlyAI.SetActiveState(newState);
         }
     }
 }
