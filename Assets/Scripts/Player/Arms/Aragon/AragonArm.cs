@@ -38,6 +38,9 @@ public class AragonArm : Arm
     AnimationCurve _dashFeedbacksCurve;
     [Foldout("Stats")]
     [SerializeField]
+    AnimationCurve _dashMovementCurve;
+    [Foldout("Stats")]
+    [SerializeField]
     float _dashFovIncrease = 20f;
     [Foldout("Stats")]
     [SerializeField]
@@ -47,7 +50,7 @@ public class AragonArm : Arm
     private Vector3 _dashStartPosition;
     private Vector3 _dashDestination;
     private float _dashT;
-
+    private float currentDashSpeed;
     protected override void Awake()
     {
         base.Awake();
@@ -69,13 +72,14 @@ public class AragonArm : Arm
     {
         Physics.Raycast(_cameraTransform.position, _cameraTransform.forward, out RaycastHit hit, _range, _detectionMask);
         if (hit.transform != null)
-            _vfx.transform.position = hit.point + hit.normal * 0.9f;
+            _vfx.transform.position = hit.point + hit.normal * 0.2f;
         else
             _vfx.transform.position = _cameraTransform.transform.position + _cameraTransform.forward * _range;
 
-        _vfx.transform.rotation = Quaternion.identity;
+        _vfx.transform.up = hit.normal;
         Physics.Raycast(_vfx.transform.position, Vector3.down, out RaycastHit groundHit, 100f, _detectionMask);
         _vfxGroundProjection.position = groundHit.point + Vector3.up * 0.1f;
+        _vfxGroundProjection.rotation = Quaternion.identity;
     }
 
     public override void StopPrevis()
@@ -92,6 +96,7 @@ public class AragonArm : Arm
         _player._charaCon.enabled = false;
         _dashStartPosition = _player.transform.position;
         _dashDestination = _vfx.transform.position;
+        currentDashSpeed = _dashSpeed / Vector3.Distance(_dashStartPosition, _dashDestination);
         _dashT = 0;
         StartDashFeedbacks();
     }
@@ -103,8 +108,8 @@ public class AragonArm : Arm
 
     public override void UpdateActive()
     {
-        _dashT += Time.deltaTime * _dashSpeed;
-        _player.transform.position = Vector3.Lerp(_dashStartPosition, _dashDestination, _dashT);
+        _dashT += Time.deltaTime * currentDashSpeed;
+        _player.transform.position = Vector3.LerpUnclamped(_dashStartPosition, _dashDestination, _dashMovementCurve.Evaluate(_dashT));
         if (_dashT >= 1)
         {
             _fsm.ChangeState(ArmStateList.RECOVERY);
@@ -114,8 +119,8 @@ public class AragonArm : Arm
 
     private void DashFeedbacks()
     {
-        _camera.fieldOfView = Mathf.Lerp(_defaultFov, _defaultFov + _dashFovIncrease, _dashFeedbacksCurve.Evaluate(_dashT));
-        _vignette.color = new Color(_vignette.color.r, _vignette.color.g, _vignette.color.b, Mathf.Lerp(0, _maxVignetteAlpha, _dashFeedbacksCurve.Evaluate(_dashT)));
+        _camera.fieldOfView = Mathf.LerpUnclamped(_defaultFov, _defaultFov + _dashFovIncrease, _dashFeedbacksCurve.Evaluate(_dashT));
+        _vignette.color = new Color(_vignette.color.r, _vignette.color.g, _vignette.color.b, Mathf.LerpUnclamped(0, _maxVignetteAlpha, _dashFeedbacksCurve.Evaluate(_dashT)));
     }
 
     public override void StopActive()

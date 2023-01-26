@@ -341,7 +341,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &183938225
 Transform:
   m_ObjectHideFlags: 0
@@ -385,46 +385,79 @@ MonoBehaviour:
   _detectionMask:
     serializedVersion: 2
     m_Bits: 512
-  _dashSpeed: 4
+  _dashSpeed: 70
   _dashFeedbacksCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 4
-      outSlope: 4
-      tangentMode: 34
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.33333334
+      outWeight: 0
     - serializedVersion: 3
       time: 0.25
       value: 1
-      inSlope: 0.027094569
-      outSlope: Infinity
-      tangentMode: 97
-      weightedMode: 1
-      inWeight: 0.4843463
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 3
+      inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.75
+      time: 0.8
       value: 1
-      inSlope: Infinity
-      outSlope: -0.026102142
-      tangentMode: 7
-      weightedMode: 2
-      inWeight: 0.33333334
-      outWeight: 0.5027615
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: -4
-      outSlope: -4
-      tangentMode: 34
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.9301386
+      value: -0.08464092
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _dashMovementCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.9968872
+      value: 0.99252313
+      inSlope: -0.68150234
+      outSlope: -0.68150234
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.11632645
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -8528,7 +8561,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1447211705
 Transform:
   m_ObjectHideFlags: 0
@@ -8600,7 +8633,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1470377085
 Transform:
   m_ObjectHideFlags: 0
@@ -11527,7 +11560,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2200446484234949677}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d55707d94cef9bb4d9bbf9b94eae9f27, type: 3}
   m_Name: 
@@ -11535,6 +11568,7 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 2147483647
+  positionPlayer: {x: 0, y: 0, z: 0}
 --- !u!1 &2200446484329315730
 GameObject:
   m_ObjectHideFlags: 0
