@@ -10,6 +10,8 @@ namespace State.AICAC
         NavMeshHit closestHit;
         [SerializeField] LayerMask noMask;
 
+        bool checkMove;
+
         [Header("Diretcion Move")]
         float distDodgeDestination;
         Vector2 pos2DAI;
@@ -27,6 +29,16 @@ namespace State.AICAC
             base.InitState(stateController);
 
             state = StateControllerAICAC.AIState.Dodge;
+        }
+
+        private void OnEnable()
+        {
+            Invoke("CheckISMoving", 1f);
+        }
+
+        void CheckISMoving()
+        {
+            checkMove = true;
         }
 
         private void Update()
@@ -176,6 +188,14 @@ namespace State.AICAC
             else
             {
                 StopDodge();
+            }
+
+            if(checkMove)
+            {
+                if(globalRef.agent.velocity.magnitude == 0)
+                {
+                    StopDodge();
+                }
             }
         }
         void StopDodge()

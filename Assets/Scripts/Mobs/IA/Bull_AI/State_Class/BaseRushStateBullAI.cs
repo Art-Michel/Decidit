@@ -14,6 +14,7 @@ namespace State.AIBull
         [SerializeField] float distDestination;
         [SerializeField] float distDetectObstacle;
         [SerializeField] float distDetectGround;
+        [SerializeField] float distFallStopRush;
 
         [Header("Rush Movement")]
         public Vector3 captureBasePosDistance;
@@ -132,11 +133,11 @@ namespace State.AIBull
                 StopRush();
             }
 
-            if (!rushBullSO.isFall && !rushBullSO.isGround)
+            /*if (!rushBullSO.isFall && !rushBullSO.isGround)
             {
                 rushBullSO.isFall = true;
-            }
-            else if (rushBullSO.isFall && rushBullSO.isGround)
+            }*/
+            if (rushBullSO.isFall && rushBullSO.isGround)
             {
                 //Debug.Log("Fall Stop Rush");
                 StopRush();
@@ -153,7 +154,7 @@ namespace State.AIBull
         void CheckObstacle()
         {
             //Check obstacle Ground
-            rushBullSO.hitGround = RaycastAIManager.instanceRaycast.RaycastAI(globalRef.transform.position, -globalRef.transform.up, rushBullSO.maskCheckObstacle, Color.red, distDetectGround);
+            rushBullSO.hitGround = RaycastAIManager.instanceRaycast.RaycastAI(globalRef.transform.position, -globalRef.transform.up, rushBullSO.maskCheckObstacle, Color.red, 100f);
             rushBullSO.directionYSlope = rushBullSO.move;
 
             if (Vector3.Angle(transform.up, rushBullSO.hitGround.normal) < globalRef.characterController.slopeLimit)
@@ -162,7 +163,18 @@ namespace State.AIBull
 
             if (rushBullSO.hitGround.transform != null)
             {
-                rushBullSO.isGround = true;
+                if(rushBullSO.isGround && rushBullSO.hitGround.distance > distFallStopRush)
+                {
+                    rushBullSO.isFall = true;
+                }
+                if(rushBullSO.hitGround.distance <= distDetectGround)
+                {
+                    rushBullSO.isGround = true;
+                }
+                else
+                {
+                    rushBullSO.isGround = false;
+                }
             }
             else
             {
@@ -231,6 +243,7 @@ namespace State.AIBull
                 rushBullSO.isGround = true;
                 rushBullSO.speedRot = 0;
                 rushBullSO.stopLockPlayer = false;
+                rushBullSO.ennemiInCollider.Clear();
             }
 
             canStartRush = false;
