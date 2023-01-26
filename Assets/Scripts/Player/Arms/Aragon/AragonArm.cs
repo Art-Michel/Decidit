@@ -51,6 +51,8 @@ public class AragonArm : Arm
     private Vector3 _dashDestination;
     private float _dashT;
     private float currentDashSpeed;
+    int _adjustedTimesNb;
+
     protected override void Awake()
     {
         base.Awake();
@@ -96,9 +98,49 @@ public class AragonArm : Arm
         _player._charaCon.enabled = false;
         _dashStartPosition = _player.transform.position;
         _dashDestination = _vfx.transform.position;
+        _adjustedTimesNb = 0;
+        AdjustDestination();
         currentDashSpeed = _dashSpeed / Vector3.Distance(_dashStartPosition, _dashDestination);
         _dashT = 0;
         StartDashFeedbacks();
+    }
+
+    private void AdjustDestination()
+    {
+        bool yeah = false;
+        _adjustedTimesNb++;
+        if (Physics.Raycast(_dashDestination, Vector3.forward, .5f, _detectionMask))
+        {
+            _dashDestination += Vector3.forward * -.1f;
+            yeah = true;
+        }
+        if (Physics.Raycast(_dashDestination, Vector3.back, .5f, _detectionMask))
+        {
+            _dashDestination += Vector3.back * -.1f;
+            yeah = true;
+        }
+        if (Physics.Raycast(_dashDestination, Vector3.right, .5f, _detectionMask))
+        {
+            _dashDestination += Vector3.right * -.1f;
+            yeah = true;
+        }
+        if (Physics.Raycast(_dashDestination, Vector3.left, .5f, _detectionMask))
+        {
+            _dashDestination += Vector3.left * -.1f;
+            yeah = true;
+        }
+        if (Physics.Raycast(_dashDestination, Vector3.up, .5f, _detectionMask))
+        {
+            _dashDestination += Vector3.up * -.1f;
+            yeah = true;
+        }
+        if (Physics.Raycast(_dashDestination, Vector3.down, .5f, _detectionMask))
+        {
+            _dashDestination += Vector3.down * -.1f;
+            yeah = true;
+        }
+        if (yeah && _adjustedTimesNb < 8)
+            AdjustDestination();
     }
 
     private void StartDashFeedbacks()
