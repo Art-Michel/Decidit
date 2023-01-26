@@ -244,15 +244,11 @@ namespace State.AIBull
         {
             if (gameObject.activeInHierarchy && other.name.Contains("AICAC"))
             {
-                Debug.Log("Get TrashMob");
-
                 if (!rushBullSO.ennemiInCollider.Contains(other.gameObject) || rushBullSO.ennemiInCollider == null)
                     rushBullSO.ennemiInCollider.Add(other.gameObject);
 
                 if (rushBullSO.ennemiInCollider != null)
                 {
-                    Debug.Log("ennemi Collider Not Empty");
-
                     for (int i = 0; i < rushBullSO.ennemiInCollider.Count; i++)
                     {
                         GlobalRefAICAC globalRefAICAC = rushBullSO.ennemiInCollider[i].GetComponent<GlobalRefAICAC>();
@@ -265,14 +261,12 @@ namespace State.AIBull
                         {
                             if (angle > 0)
                             {
-                                Debug.Log("Dodge TrashMob");
                                 globalRefAICAC.dodgeAICACSO.targetObjectToDodge = this.transform;
                                 globalRefAICAC.dodgeAICACSO.rightDodge = true;
                                 globalRefAICAC.ActiveStateDodge();
                             }
                             else
                             {
-                                Debug.Log("Dodge TrashMob");
                                 globalRefAICAC.dodgeAICACSO.targetObjectToDodge = this.transform;
                                 globalRefAICAC.dodgeAICACSO.leftDodge = true;
                                 globalRefAICAC.dodgeAICACSO.dodgeRushBull = true;
@@ -284,10 +278,6 @@ namespace State.AIBull
                         {
                         }*/
                     }
-                }
-                else
-                {
-                    Debug.LogError("ennemi Collider Is Empty");
                 }
             }
         }

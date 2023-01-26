@@ -10,6 +10,18 @@ namespace State.AICAC
         NavMeshHit closestHit;
         [SerializeField] LayerMask noMask;
 
+        [Header("Diretcion Move")]
+        float distDodgeDestination;
+        Vector2 pos2DAI;
+        Vector2 posDodgeDestination2D;
+        Vector3 dir;
+        Vector3 right;
+        Vector3 left;
+
+       [Header("Diretcion LoookAt")]
+        Vector3 direction;
+        Vector3 relativePos;
+
         public override void InitState(StateControllerAICAC stateController)
         {
             base.InitState(stateController);
@@ -44,7 +56,7 @@ namespace State.AICAC
             }
         }
 
-        public float AngleDir(Vector3 fwd, Vector3 targetDir, Vector3 up)
+        float AngleDir(Vector3 fwd, Vector3 targetDir, Vector3 up)
         {
             Vector3 perp = Vector3.Cross(fwd, targetDir);
             float dir = Vector3.Dot(perp, up);
@@ -95,29 +107,21 @@ namespace State.AICAC
 
         void GetRightPoint()
         {
-            Vector3 dir = globalRef.dodgeAICACSO.targetObjectToDodge.position - globalRef.transform.position;
-            Vector3 right = -Vector3.Cross(dir, Vector3.up).normalized;
+            dir = globalRef.dodgeAICACSO.targetObjectToDodge.position - globalRef.transform.position;
+            right = -Vector3.Cross(dir, Vector3.up).normalized;
 
             Ray ray = new Ray(globalRef.spawnRayDodge.position, right);
             globalRef.dodgeAICACSO.targetDodgeVector = ray.GetPoint(globalRef.dodgeAICACSO.dodgeLenght);
             globalRef.dodgeAICACSO.dodgeIsSet = true;
-
-            //RaycastHit hit = RaycastAIManager.instanceRaycast.RaycastAI(globalRef.dodgeAICACSO.targetDodgeVector, Vector3.down, noMask, Color.red, 100f);
-           // DetectDodgePointIsOnNavMesh(hit.point);
-            Debug.DrawRay(globalRef.spawnRayDodge.position, right);
         }
         void GetLeftPoint()
         {
-            Vector3 dir = globalRef.dodgeAICACSO.targetObjectToDodge.position - globalRef.transform.position;
-            Vector3 left = Vector3.Cross(dir, Vector3.up).normalized;
+            dir = globalRef.dodgeAICACSO.targetObjectToDodge.position - globalRef.transform.position;
+            left = Vector3.Cross(dir, Vector3.up).normalized;
 
             Ray ray = new Ray(globalRef.spawnRayDodge.position, left);
             globalRef.dodgeAICACSO.targetDodgeVector = ray.GetPoint(globalRef.dodgeAICACSO.dodgeLenght);
             globalRef.dodgeAICACSO.dodgeIsSet = true;
-
-           // RaycastHit hit = RaycastAIManager.instanceRaycast.RaycastAI(globalRef.dodgeAICACSO.targetDodgeVector, Vector3.down, noMask, Color.red, 100f);
-            //DetectDodgePointIsOnNavMesh(hit.point);
-            Debug.DrawRay(globalRef.spawnRayDodge.position, left);
         }
 
         // fonction qui renvoie vrai si le point "dodgePoint" se trouve sur le NavMesh et faux si ce n est pas le cas
@@ -125,7 +129,6 @@ namespace State.AICAC
         {
             if (NavMesh.SamplePosition(dodgePoint, out globalRef.dodgeAICACSO.navHit, 1f, NavMesh.AllAreas))
             {
-                Debug.Log("point on nav mesh");
                 return true;
             }
             else
@@ -133,13 +136,11 @@ namespace State.AICAC
                 if (globalRef.dodgeAICACSO.rightDodge) // choisi l esquive par la droite 
                 {
                     GetLeftPoint();
-                    Debug.LogError("point out nav mesh");
                     return false;
                 }
                 else // choisi l esquive par la gauche 
                 {
                     GetRightPoint();
-                    Debug.LogError("point out nav mesh");
                     return false;
                 }
             }
@@ -157,10 +158,6 @@ namespace State.AICAC
         // Apply Dodge movement
         public void Dodge()
         {
-            float distDodgeDestination;
-            Vector2 pos2DAI;
-            Vector2 posDodgeDestination2D;
-
             pos2DAI.x = globalRef.transform.position.x;
             pos2DAI.y = globalRef.transform.position.z;
 
@@ -169,7 +166,6 @@ namespace State.AICAC
 
             distDodgeDestination = Vector2.Distance(pos2DAI, posDodgeDestination2D);
 
-            //Debug.Log(distDodgeDestination);
             if (distDodgeDestination > 1.1f)
             {
                 globalRef.baseMoveAICACSO.speedRot = 0;
@@ -179,15 +175,8 @@ namespace State.AICAC
             }
             else
             {
-                Debug.LogWarning("Stop Destination");
                 StopDodge();
             }
-
-            /*if (globalRef.agent.velocity.magnitude == 0f)
-            {
-                Debug.LogWarning("Stop velocity");
-                StopDodge();
-            }*/
         }
         void StopDodge()
         {
@@ -196,9 +185,6 @@ namespace State.AICAC
 
         public void SmoothLookAt()
         {
-            Vector3 direction;
-            Vector3 relativePos;
-
             direction = globalRef.playerTransform.position;
             relativePos.x = direction.x - globalRef.transform.position.x;
             relativePos.y = 0;
@@ -217,7 +203,6 @@ namespace State.AICAC
 
         private void OnDisable()
         {
-            Debug.LogWarning("Stop");
             globalRef.dodgeAICACSO.dodgeRushBull = false;
             globalRef.dodgeAICACSO.speedRot = 0;
             globalRef.dodgeAICACSO.leftDodge = false;
