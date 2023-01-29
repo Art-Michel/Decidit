@@ -81,7 +81,7 @@ public class AragonArm : Arm
         _vfx.transform.up = hit.normal;
         Physics.Raycast(_vfx.transform.position, Vector3.down, out RaycastHit groundHit, 100f, _detectionMask);
         _vfxGroundProjection.position = groundHit.point + Vector3.up * 0.1f;
-        _vfxGroundProjection.rotation = Quaternion.identity;
+        _vfxGroundProjection.up = groundHit.normal;
     }
 
     public override void StopPrevis()
