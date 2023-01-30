@@ -11,10 +11,13 @@ public class Hitbox : MonoBehaviour
     [SerializeField] protected int _damage = 10;
     [SerializeField] protected float _knockbackForce = 10f;
     [SerializeField] protected Vector3 _knockbackAngle = Vector3.zero;
+    [SerializeField] protected bool _canHitThroughWalls;
+    [SerializeField] protected bool _canMultiHit = false;
+    [SerializeField] protected LayerMask _shouldNotHitThrough;
+    [ShowIf("_canMultiHit")][SerializeField] protected float _delayBetweenHits = 0f;
 
     public Dictionary<Transform, float> Blacklist { get; set; }
-    [SerializeField] protected bool _canMultiHit = false;
-    [ShowIf("_canMultiHit")][SerializeField] protected float _delayBetweenHits = 0f;
+
     // [SerializeField] protected float _targetInvulnerability;
 
     protected virtual void Awake()
@@ -43,7 +46,13 @@ public class Hitbox : MonoBehaviour
     {
         foreach (Collider collider in Physics.OverlapSphere(transform.position, _radius, _shouldCollideWith))
             if (!AlreadyHit(collider.transform.parent))
-                Hit(collider.transform);
+            {
+                //if that hitbox can hit through walls.
+                if (_canHitThroughWalls)
+                    Hit(collider.transform);
+                else if (!Physics.Raycast(transform.position, (collider.transform.position - transform.position).normalized, _radius, _shouldNotHitThrough))
+                    Hit(collider.transform);
+            }
     }
 
     protected bool AlreadyHit(Transform target)
