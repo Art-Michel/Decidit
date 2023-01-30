@@ -14,6 +14,9 @@ public class Explosion : Hitbox
     [SerializeField] private VFX_Particle _explosionVfx;
     [SerializeField] private AudioSource _explosionAudioSource;
     [SerializeField] private AudioClip _explosionSfx;
+    [SerializeField] private float _shakeIntensity;
+    [SerializeField] private float _shakeRange;
+    [SerializeField] private float _shakeDuration;
 
     protected override void Awake()
     {
@@ -39,6 +42,7 @@ public class Explosion : Hitbox
         _knockbackForce = _initialKnockbackForce;
         _damage = (int)_initialDamage;
         PlayMuseExplosion();
+        StartExplosionShake();
 
         ClearBlacklist();
     }
@@ -46,6 +50,13 @@ public class Explosion : Hitbox
     private void PlayMuseExplosion()
     {
         _explosionAudioSource.PlayOneShot(_explosionSfx, 1f);
+    }
+
+    private void StartExplosionShake()
+    {
+        float intensity = _shakeIntensity * Mathf.InverseLerp(_shakeRange, 0, Vector3.Distance(Player.Instance.transform.position, transform.position));
+        Player.Instance.StartShake(intensity, _shakeDuration);
+
     }
 
     protected override void Update()
