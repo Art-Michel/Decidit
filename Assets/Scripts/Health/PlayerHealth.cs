@@ -23,7 +23,7 @@ public class PlayerHealth : Health
     [Foldout("Stats")]
     [SerializeField]
     [Tooltip("How much Screen will shake when player gets hit.")]
-    private float _playerHurtShakeStrength = 0.3f;
+    private float _playerHurtShakeMaxStrength = 0.3f;
     [Foldout("Stats")]
     [SerializeField]
     [Tooltip("For how long Screen will shake when player gets hit.")]
@@ -43,10 +43,14 @@ public class PlayerHealth : Health
 
     public override void TakeDamage(int amount)
     {
-        base.TakeDamage(amount);
-        PlaceHolderSoundManager.Instance.PlayHurt();
-        Player.Instance.StartShake(_playerHurtShakeStrength, _playerHurtShakeDuration);
-        //GameManager.Instance.StartSlowMo(_playerHurtFreezeStrength, _playerHurtFreezeDuration);
+        if (amount >= 1)
+        {
+            base.TakeDamage(amount);
+            PlaceHolderSoundManager.Instance.PlayHurt();
+            //cool magic numbers
+            float shakeIntensity = _playerHurtShakeMaxStrength * Mathf.InverseLerp(0, 40, amount + 10);
+            Player.Instance.StartShake(shakeIntensity, _playerHurtShakeDuration);
+        }
     }
 
     public override void Knockback(Vector3 direction)

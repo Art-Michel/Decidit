@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8339305955289743854}
   - component: {fileID: 8140250788562173407}
   - component: {fileID: 3463834990087074639}
+  - component: {fileID: 9125148645660124460}
   m_Layer: 0
   m_Name: FX_Muse_Bullet_Explo
   m_TagString: Untagged
@@ -110,6 +111,20 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &9125148645660124460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 876452070785676260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c30c554f267b3454e9668387cd834faf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _vfx: {fileID: 8140250788562173407}
+  _particleSystems: []
 --- !u!1 &1822004407248124589
 GameObject:
   m_ObjectHideFlags: 0
@@ -349,8 +364,8 @@ MonoBehaviour:
   _knockbackAngle: {x: 0, y: 0, z: 0}
   _canMultiHit: 0
   _delayBetweenHits: 0
-  _lifeSpan: 1.06
-  _explosionVfx: {fileID: 8140250788562173407}
+  _lifeSpan: 1.2
+  _explosionVfx: {fileID: 9125148645660124460}
   _explosionAudioSource: {fileID: 4663864161350573083}
   _explosionSfx: {fileID: 8300000, guid: fa3a4f7775a1c4247a3b32698a10ff92, type: 3}
   _shakeIntensity: 0.5
@@ -517,7 +532,7 @@ MonoBehaviour:
   _explosion: {fileID: 5177672588079378051}
   _speed: 47.63
   _currentSpeed: 0
-  _lifeSpan: 2
+  _lifeSpan: 1
   _trailDelay: 0.01
   _drag: 4.05
   _speedReductionFactor: 10
