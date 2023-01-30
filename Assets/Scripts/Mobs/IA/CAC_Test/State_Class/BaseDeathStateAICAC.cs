@@ -15,7 +15,6 @@ namespace State.AICAC
 
         private void Update()
         {
-            Debug.Log("Ta grand mere la pute");
             Death();
         }
 
@@ -24,9 +23,6 @@ namespace State.AICAC
             globalRef.transform.parent = null;
             globalRef.agent.speed = globalRef.deathAICACSO.stopSpeed;
             globalRef.agent.enabled = false;
-
-            Debug.Log(globalRef.agent.speed);
-
             /*if (!once)
             {
                 globalRef.transform.parent = null;

@@ -60,6 +60,8 @@ namespace State.AICAC
             deathAICACSO = Instantiate(deathAICACSO);
             dodgeAICACSO = Instantiate(dodgeAICACSO);
             surroundAICACSO = Instantiate(surroundAICACSO);
+
+            agent.updatePosition = false;
         }
 
         private void Update()
@@ -77,14 +79,11 @@ namespace State.AICAC
 
         public void ActiveState(StateControllerAICAC.AIState newState)
         {
-            Debug.Log(stateControllerAICAC);
-
             stateControllerAICAC.SetActiveState(newState);
         }
 
         public void ActiveStateDodge()
         {
-            Debug.Log(stateControllerAICAC);
             stateControllerAICAC.SetActiveState(StateControllerAICAC.AIState.Dodge);
         }
     }

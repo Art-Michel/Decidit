@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace State.AICAC
 {
@@ -10,6 +11,15 @@ namespace State.AICAC
         Ray ray;
         RaycastHit hit;
 
+        [Header("Nav Link")]
+        [SerializeField] float maxDurationNavLink;
+        [SerializeField] bool linkIsActive;
+        bool triggerNavLink;
+        NavMeshLink link;
+        NavMeshLink navLink;
+        NavMeshHit closestHit;
+        Vector3 linkDestination;
+
         public override void InitState(StateControllerAICAC stateController)
         {
             base.InitState(stateController);
@@ -20,7 +30,14 @@ namespace State.AICAC
         private void Update()
         {
             SmoothLookAt();
+            ManageCurrentNavMeshLink();
+
+            if (globalRef.surroundAICACSO.left || globalRef.surroundAICACSO.right)
+            {
+                MoveSurround();
+            }
         }
+
 
         private void FixedUpdate()
         {
@@ -28,14 +45,68 @@ namespace State.AICAC
             GetSurroundDestination();
         }
 
+        void ManageCurrentNavMeshLink()
+        {
+            if (globalRef.agent.isOnOffMeshLink)
+            {
+                if (maxDurationNavLink > 0)
+                {
+                    globalRef.agent.ActivateCurrentOffMeshLink(false);
+                    linkIsActive = false;
+                    Debug.Log(linkIsActive + "Disable");
+                    maxDurationNavLink -= Time.deltaTime;
+                }
+                else
+                {
+                    linkIsActive = true;
+                    Debug.Log(linkIsActive + "Enable");
+                    globalRef.agent.ActivateCurrentOffMeshLink(true);
+                }
+
+                globalRef.agent.speed = 3;
+                if (navLink == null)
+                    navLink = globalRef.agent.navMeshOwner as NavMeshLink;
+
+            }
+            else
+            {
+                if (navLink != null)
+                {
+                    navLink.UpdateLink();
+                    navLink = null;
+                }
+                maxDurationNavLink = globalRef.agentLinkMover._duration;
+                triggerNavLink = false;
+            }
+        }
+
         public void ChooseDirection()
         {
             globalRef.spawnSurroundDodge.LookAt(globalRef.playerTransform.position);
 
+            if (globalRef.agent.isOnOffMeshLink)
+            {
+                link = globalRef.agent.navMeshOwner as NavMeshLink;
+
+                if (!triggerNavLink)
+                {
+                    if (Vector3.Distance(globalRef.transform.position, link.startPoint) < Vector3.Distance(globalRef.transform.position, link.endPoint))
+                    {
+                        linkDestination = link.endPoint;
+                        triggerNavLink = true;
+                    }
+                    else
+                    {
+                        linkDestination = link.startPoint;
+                        triggerNavLink = true;
+                    }
+                }
+            }
+
             if (!globalRef.surroundAICACSO.left && !globalRef.surroundAICACSO.right)
             {
                 hit = RaycastAIManager.instanceRaycast.RaycastAI(globalRef.spawnSurroundDodge.position,
-                globalRef.playerTransform.position - globalRef.spawnSurroundDodge.position, globalRef.surroundAICACSO.mask, Color.red, 100f);
+                CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer - globalRef.spawnSurroundDodge.position, globalRef.surroundAICACSO.mask, Color.red, 100f);
                 float angle;
                 angle = Vector3.SignedAngle(globalRef.playerTransform.forward, globalRef.transform.forward, Vector3.up);
 
@@ -47,10 +118,6 @@ namespace State.AICAC
                 {
                     globalRef.surroundAICACSO.right = true;
                 }
-            }
-            else
-            {
-                MoveSurround();
             }
         }
 
@@ -77,12 +144,14 @@ namespace State.AICAC
                 Vector3.Distance(globalRef.playerTransform.position, globalRef.spawnSurroundDodge.position));
 
             ray = new Ray(globalRef.spawnSurroundDodge.position, destination);
+
+            destination = CheckNavMeshPoint(ray.GetPoint(globalRef.distPlayer));
         }
 
-        public void MoveSurround()
+        void MoveSurround()
         {
             if (globalRef.agent.speed < globalRef.surroundAICACSO.surroundSpeed)
-                globalRef.agent.speed += globalRef.surroundAICACSO.speedSmooth * Time.fixedDeltaTime;
+                globalRef.agent.speed += globalRef.surroundAICACSO.speedSmooth * Time.deltaTime;
             else
                 globalRef.agent.speed = globalRef.surroundAICACSO.surroundSpeed;
 
@@ -90,7 +159,7 @@ namespace State.AICAC
             {
                 if (globalRef.surroundAICACSO.left || globalRef.surroundAICACSO.right)
                 {
-                    globalRef.agent.SetDestination(ray.GetPoint(globalRef.distPlayer));
+                    globalRef.agent.SetDestination(destination);
                 }
             }
             else
@@ -106,6 +175,14 @@ namespace State.AICAC
                 StopSurround();
             }
         }
+        Vector3 CheckNavMeshPoint(Vector3 _destination)
+        {
+            if (NavMesh.SamplePosition(_destination, out closestHit, 10f, 1))
+            {
+                _destination = closestHit.position;
+            }
+            return _destination;
+        }
 
         void SmoothLookAt()
         {
@@ -114,11 +191,11 @@ namespace State.AICAC
 
             if (globalRef.agent.isOnOffMeshLink)
             {
-                direction = destination;
+                direction = linkDestination;
             }
             else
             {
-                direction = globalRef.transform.position + globalRef.agent.desiredVelocity;
+                direction = globalRef.agent.destination;
             }
 
             relativePos.x = direction.x - globalRef.transform.position.x;

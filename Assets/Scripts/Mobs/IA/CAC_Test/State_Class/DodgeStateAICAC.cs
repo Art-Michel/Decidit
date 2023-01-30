@@ -34,11 +34,17 @@ namespace State.AICAC
         private void OnEnable()
         {
             Invoke("CheckISMoving", 1f);
+            Invoke("DodgeMaxDuration", 1.5f);
         }
 
         void CheckISMoving()
         {
             checkMove = true;
+        }
+
+        void DodgeMaxDuration()
+        {
+            StopDodge();
         }
 
         private void Update()
@@ -178,7 +184,7 @@ namespace State.AICAC
 
             distDodgeDestination = Vector2.Distance(pos2DAI, posDodgeDestination2D);
 
-            if (distDodgeDestination > 1.1f)
+            if (distDodgeDestination > 1.1f && globalRef.agent.enabled)
             {
                 globalRef.baseMoveAICACSO.speedRot = 0;
                 globalRef.agent.speed = globalRef.dodgeAICACSO.dodgeSpeed;

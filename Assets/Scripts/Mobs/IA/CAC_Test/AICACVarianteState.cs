@@ -84,8 +84,10 @@ namespace State.AICAC
 
             if(activeSurround)
             {
-                CoolDownSurround();
                 SetSurroundDirection();
+
+                if (aiCACSurroundSelectedList.Count < maxAISurround)
+                    CoolDownSurround();
             }
         }
 
@@ -159,17 +161,28 @@ namespace State.AICAC
             {
                 for (int i = 0; i < transform.childCount; i++)
                 {
-                    if (i % 2 == 0)
+                    if(i <= transform.childCount)
                     {
-                        positiveOffeset += offesetBase;
-                        //Debug.Log(i % 2);
-                        aiCACScriptsList[i].offsetDestination = positiveOffeset;
+                        if (i % 2 == 0)
+                        {
+                            if (aiCACScriptsList.Contains(aiCACScriptsList[i]))
+                            {
+                                positiveOffeset += offesetBase;
+                                aiCACScriptsList[i].offsetDestination = positiveOffeset;
+                            }
+                        }
+                        else
+                        {
+                            if (aiCACScriptsList.Contains(aiCACScriptsList[i]))
+                            {
+                                negativeOffeset -= offesetBase;
+                                aiCACScriptsList[i].offsetDestination = negativeOffeset;
+                            }
+                        }
                     }
                     else
                     {
-                        negativeOffeset -= offesetBase;
-                        //Debug.Log(i % 2);
-                        aiCACScriptsList[i].offsetDestination = negativeOffeset;
+                        Debug.LogError("Object was destroy");
                     }
                 }
             }
@@ -177,17 +190,28 @@ namespace State.AICAC
             {
                 for (int i = 0; i < transform.childCount; i++)
                 {
-                    if (i % 2 == 0)
+                    if (i <= transform.childCount)
                     {
-                        //Debug.Log(i % 2);
-                        aiCACScriptsList[i].offsetDestination = positiveOffeset;
-                        positiveOffeset += offesetBase;
+                        if (i % 2 == 0)
+                        {
+                            if (aiCACScriptsList.Contains(aiCACScriptsList[i]))
+                            {
+                                aiCACScriptsList[i].offsetDestination = positiveOffeset;
+                                positiveOffeset += offesetBase;
+                            }
+                        }
+                        else
+                        {
+                            if (aiCACScriptsList.Contains(aiCACScriptsList[i]))
+                            {
+                                negativeOffeset -= offesetBase;
+                                aiCACScriptsList[i].offsetDestination = negativeOffeset;
+                            }
+                        }
                     }
                     else
                     {
-                        negativeOffeset -= offesetBase;
-                        //Debug.Log(i % 2);
-                        aiCACScriptsList[i].offsetDestination = negativeOffeset;
+                        Debug.LogError("Object was destroy");
                     }
                 }
             }
@@ -214,17 +238,36 @@ namespace State.AICAC
         }
         void SetSurroundDirection()
         {
-            if (aiCACSurroundSelectedList.Count == 2)
+            if (aiCACSurroundSelectedList.Count == maxAISurround)
             {
-                if (aiCACSurroundSelectedList[0].surroundAICACSO.right && aiCACSurroundSelectedList[1].surroundAICACSO.right)
+                for (int i = 0; i < aiCACSurroundSelectedList.Count-1; i++)
                 {
-                    aiCACSurroundSelectedList[1].surroundAICACSO.right = false;
-                    aiCACSurroundSelectedList[1].surroundAICACSO.left = true;
-                }
-                else if (aiCACSurroundSelectedList[0].surroundAICACSO.left && aiCACSurroundSelectedList[1].surroundAICACSO.left)
-                {
-                    aiCACSurroundSelectedList[1].surroundAICACSO.left = false;
-                    aiCACSurroundSelectedList[1].surroundAICACSO.right = true;
+                    if (i % 2 == 0)
+                    {
+                        if (aiCACSurroundSelectedList[i].surroundAICACSO.right && aiCACSurroundSelectedList[i + 1].surroundAICACSO.right)
+                        {
+                            aiCACSurroundSelectedList[i + 1].surroundAICACSO.right = false;
+                            aiCACSurroundSelectedList[i + 1].surroundAICACSO.left = true;
+                        }
+                        else if (aiCACSurroundSelectedList[i].surroundAICACSO.left && aiCACSurroundSelectedList[i + 1].surroundAICACSO.left)
+                        {
+                            aiCACSurroundSelectedList[i + 1].surroundAICACSO.left = false;
+                            aiCACSurroundSelectedList[i + 1].surroundAICACSO.right = true;
+                        }
+                    }
+                    else
+                    {
+                        if (aiCACSurroundSelectedList[i].surroundAICACSO.right && aiCACSurroundSelectedList[i + 1].surroundAICACSO.right)
+                        {
+                            aiCACSurroundSelectedList[i + 1].surroundAICACSO.right = false;
+                            aiCACSurroundSelectedList[i + 1].surroundAICACSO.left = true;
+                        }
+                        else if (aiCACSurroundSelectedList[i].surroundAICACSO.left && aiCACSurroundSelectedList[i + 1].surroundAICACSO.left)
+                        {
+                            aiCACSurroundSelectedList[i + 1].surroundAICACSO.left = false;
+                            aiCACSurroundSelectedList[i + 1].surroundAICACSO.right = true;
+                        }
+                    }
                 }
             }
         }
@@ -234,6 +277,8 @@ namespace State.AICAC
         }
         void SelectedAI()
         {
+            maxAISurround = Mathf.CeilToInt((float)aiCACScriptsList.Count / 2f);
+
             for (int i = 0; i < maxAISurround; i++)
             {
                 if (aiCACSurroundSelectedList.Count == 0) // aucune IA Selected
@@ -292,7 +337,7 @@ namespace State.AICAC
                         shortestDist = aiCACScriptsList.IndexOf(aiCACScriptsList[i + 1]);
                 }
             }
-            if (aiCACSurroundSelectedList.Count < 2)
+            if (aiCACSurroundSelectedList.Count < maxAISurround)
                 aiCACSurroundSelectedList.Add(aiCACScriptsList[shortestDist]);
         }
         public void RemoveAISelectedAnticip(GlobalRefAICAC globalRef)
