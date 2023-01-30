@@ -7,7 +7,11 @@ using UnityEngine.ProBuilder;
 public class EylauArea : MonoBehaviour
 {
     [SerializeField] private LayerMask _shouldHit;
+    [SerializeField] private LayerMask _shouldEnhance;
+    [SerializeField] private LayerMask _shouldBuff;
     [SerializeField] private float _radius;
+    private bool _isPlayerInHere = false;
+    private bool _wasPlayerInHere = false;
 
     // void OnTriggerEnter(Collider other)
     // {
@@ -26,14 +30,15 @@ public class EylauArea : MonoBehaviour
 
     void Update()
     {
-        CheckForCollisions();
+        CheckForEnemies();
+        CheckForBullets();
+        CheckForPlayer();
     }
 
-    private void CheckForCollisions()
+    private void CheckForEnemies()
     {
         foreach (Collider collider in Physics.OverlapCapsule(transform.position + Vector3.down * 100, transform.position + Vector3.up * 100, _radius, _shouldHit))
-            if (!AlreadyHit(collider.transform.parent))
-                Hit(collider.transform);
+            Debug.Log("rien");
     }
 
     private bool AlreadyHit(Transform target)
@@ -41,8 +46,28 @@ public class EylauArea : MonoBehaviour
         return true;
     }
 
-    private void Hit(Transform targetCollider)
+    private void CheckForBullets()
     {
 
     }
+
+    private void CheckForPlayer()
+    {
+        _isPlayerInHere = Physics.OverlapCapsule(transform.position + Vector3.down * 100, transform.position + Vector3.up * 100, _radius, _shouldBuff).Length > 0;
+        if (!_isPlayerInHere && _wasPlayerInHere)
+        {
+            //Player.Instance.resetspeed
+        }
+        if (_isPlayerInHere && !_wasPlayerInHere)
+        {
+            //Player.Instance.Speedup();
+        }
+        _wasPlayerInHere = _isPlayerInHere;
+    }
+
+    void OnDisable()
+    {
+
+    }
+
 }

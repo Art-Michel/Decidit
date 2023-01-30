@@ -466,6 +466,16 @@ public class Player : LocalManager<Player>
 
     #region Shmovement Functions
 
+    public void SpeedUpMovement()
+    {
+
+    }
+
+    public void ResetMovementSpeed()
+    {
+
+    }
+
     private Vector3 MakeDirectionCameraRelative(Vector2 inputDirection)
     {
         Vector3 forward = _head.forward;
