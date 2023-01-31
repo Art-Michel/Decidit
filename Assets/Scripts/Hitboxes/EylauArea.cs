@@ -8,42 +8,56 @@ using State.AIBull;
 using State.AICAC;
 using State.FlyAI;
 using State.WallAI;
+using NaughtyAttributes;
 
 public class EylauArea : MonoBehaviour
 {
-    [SerializeField] private LayerMask _shouldEnhance;
-    [SerializeField] private LayerMask _shouldBuff;
-    [SerializeField] private float _radius;
+    [Foldout("References")][SerializeField] private LayerMask _shouldEnhance;
+    [Foldout("References")][SerializeField] private LayerMask _shouldBuff;
+    [Foldout("Stats")][SerializeField] private float _radius;
+    [Foldout("Stats")][SerializeField] private float _lifeSpan;
+    private float _lifeT;
     private bool _isPlayerInHere = false;
     private bool _wasPlayerInHere = false;
 
-    void Update()
+    void OnEnable()
     {
-        CheckForBullets();
-        CheckForPlayer();
+        _lifeT = _lifeSpan;
     }
 
+    void Update()
+    {
+        CheckForPlayer();
+
+        _lifeT -= Time.deltaTime;
+        if (_lifeT <= 0)
+            Disappear();
+    }
+
+    private void Disappear()
+    {
+        gameObject.SetActive(false);
+    }
+
+    #region worst detection of all time due to AIs not having a commmon parent class
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Ennemi"))
         {
             if (TryGetComponent<GlobalRefAICAC>(out GlobalRefAICAC cacAi))
-            {
                 cacAi.isInEylau = true;
-            }
+
             else if (TryGetComponent<GlobalRefBullAI>(out GlobalRefBullAI bullAi))
-            {
                 bullAi.isInEylau = true;
-            }
+
             else if (TryGetComponent<GlobalRefFlyAI>(out GlobalRefFlyAI flyAi))
-            {
                 flyAi.isInEylau = true;
-            }
+
             else if (TryGetComponent<GlobalRefWallAI>(out GlobalRefWallAI wallAi))
-            {
                 wallAi.isInEylau = true;
-            }
-            //globalRefAICAC.isInEylau = true;
+
+            else
+                Debug.Log("found enemy but couldnt find ai script");
         }
     }
 
@@ -61,41 +75,10 @@ public class EylauArea : MonoBehaviour
                 wallAi.isInEylau = false;
 
             else
-                Debug.Log("found enemy but couldnt find ai script");
+                Debug.Log("exited enemy but couldnt find ai script");
         }
     }
-
-    // private void CheckForEnemies()
-    // {
-    //     Collider[] colliders = Physics.OverlapCapsule(transform.position + Vector3.down * 100, transform.position + Vector3.up * 100, _radius, _shouldEnhance);
-
-    //     //foreach enemy detected inside
-    //     foreach (Collider collider in colliders)
-    //     {
-    //         if (!_enemiesInTrigger.ContainsKey(collider))
-    //         {
-    //             Debug.Log("nerfed enemy");
-    //             _enemiesInTrigger.Add(collider, collider.GetComponent<Transform>());
-    //             //TODO  if (!_enemiesInTrigger[collider].IsNerfed)
-    //             //TODO    _enemiesInTrigger[collider].Nerf();
-    //         }
-    //     }
-
-    //     //foreach enemy in the dictionary
-    //     foreach (Collider collider in _enemiesInTrigger.Keys)
-    //     {
-    //         if (!colliders.Contains<Collider>(collider))
-    //         {
-    //             _enemiesInTrigger.Remove(collider);
-    //             Debug.Log("restored enemy");
-    //         }
-    //     }
-    // }
-
-    private void CheckForBullets()
-    {
-
-    }
+    #endregion
 
     private void CheckForPlayer()
     {

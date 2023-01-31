@@ -2138,6 +2138,7 @@ GameObject:
   - component: {fileID: 859588763}
   - component: {fileID: 5187215481898955019}
   - component: {fileID: 2200446483770630227}
+  - component: {fileID: 150827264}
   m_Layer: 0
   m_Name: Spell_Eylau_Area
   m_TagString: Untagged
@@ -2222,9 +2223,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0ecb22278e4f11459a97403d9ce4c09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shouldHit:
-    serializedVersion: 2
-    m_Bits: 128
   _shouldEnhance:
     serializedVersion: 2
     m_Bits: 256
@@ -2232,6 +2230,21 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   _radius: 6
+  _lifeSpan: 5.35
+--- !u!136 &150827264
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 859588760}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &916183221
 GameObject:
   m_ObjectHideFlags: 0
@@ -3168,7 +3181,7 @@ MonoBehaviour:
   _crossHairOutline: {fileID: 1336751327}
   _ui: {fileID: 1507763661}
   _cameraTransform: {fileID: 2200446484381738818}
-  _cooldown: 2
+  _cooldown: 10
   _previs: {fileID: 1147650219}
   _area: {fileID: 859588760}
   _range: 20
@@ -6120,8 +6133,6 @@ MonoBehaviour:
   _hpCursor: {fileID: 2200446484797913916}
   _hpBarStart: {fileID: 2200446483787204076}
   _hpBarEnd: {fileID: 2200446483621540319}
-  _playerHurtFreezeStrength: 0.01
-  _playerHurtFreezeDuration: 0.2
   _playerHurtShakeMaxStrength: 0.3
   _playerHurtShakeDuration: 0.3
 --- !u!114 &5826269185953439215
