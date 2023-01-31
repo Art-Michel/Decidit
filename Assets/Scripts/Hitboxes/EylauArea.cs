@@ -27,10 +27,21 @@ public class EylauArea : MonoBehaviour
     {
         if (other.CompareTag("Ennemi"))
         {
-
-            if (TryGetComponent<GlobalRefAICAC>(out GlobalRefAICAC cac))
+            if (TryGetComponent<GlobalRefAICAC>(out GlobalRefAICAC cacAi))
             {
-
+                cacAi.isInEylau = true;
+            }
+            else if (TryGetComponent<GlobalRefBullAI>(out GlobalRefBullAI bullAi))
+            {
+                bullAi.isInEylau = true;
+            }
+            else if (TryGetComponent<GlobalRefFlyAI>(out GlobalRefFlyAI flyAi))
+            {
+                flyAi.isInEylau = true;
+            }
+            else if (TryGetComponent<GlobalRefWallAI>(out GlobalRefWallAI wallAi))
+            {
+                wallAi.isInEylau = true;
             }
             //globalRefAICAC.isInEylau = true;
         }
@@ -40,7 +51,22 @@ public class EylauArea : MonoBehaviour
     {
         if (other.CompareTag("Ennemi"))
         {
-            //globalRefAICAC.isInEylau = false;
+            if (TryGetComponent<GlobalRefAICAC>(out GlobalRefAICAC cacAi))
+            {
+                cacAi.isInEylau = false;
+            }
+            else if (TryGetComponent<GlobalRefBullAI>(out GlobalRefBullAI bullAi))
+            {
+                bullAi.isInEylau = false;
+            }
+            else if (TryGetComponent<GlobalRefFlyAI>(out GlobalRefFlyAI flyAi))
+            {
+                flyAi.isInEylau = false;
+            }
+            else if (TryGetComponent<GlobalRefWallAI>(out GlobalRefWallAI wallAi))
+            {
+                wallAi.isInEylau = false;
+            }
         }
     }
 
