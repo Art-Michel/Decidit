@@ -1,12 +1,16 @@
+using System.Runtime.InteropServices.WindowsRuntime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.ProBuilder;
+using System.Linq;
+using State.AIBull;
+using State.AICAC;
+using State.FlyAI;
+using State.WallAI;
 
 public class EylauArea : MonoBehaviour
 {
-    [SerializeField] private LayerMask _shouldHit;
     [SerializeField] private LayerMask _shouldEnhance;
     [SerializeField] private LayerMask _shouldBuff;
     [SerializeField] private float _radius;
@@ -15,21 +19,57 @@ public class EylauArea : MonoBehaviour
 
     void Update()
     {
-        CheckForEnemies();
         CheckForBullets();
         CheckForPlayer();
     }
 
-    private void CheckForEnemies()
+    void OnTriggerEnter(Collider other)
     {
-        foreach (Collider collider in Physics.OverlapCapsule(transform.position + Vector3.down * 100, transform.position + Vector3.up * 100, _radius, _shouldHit))
-            Debug.Log("j'ai rien codé ici pour l'instant");
+        if (other.CompareTag("Ennemi"))
+        {
+
+            if (TryGetComponent<GlobalRefAICAC>(out GlobalRefAICAC cac))
+            {
+
+            }
+            //globalRefAICAC.isInEylau = true;
+        }
     }
 
-    private bool AlreadyHit(Transform target)
+    void OnTriggerExit(Collider other)
     {
-        return true;
+        if (other.CompareTag("Ennemi"))
+        {
+            //globalRefAICAC.isInEylau = false;
+        }
     }
+
+    // private void CheckForEnemies()
+    // {
+    //     Collider[] colliders = Physics.OverlapCapsule(transform.position + Vector3.down * 100, transform.position + Vector3.up * 100, _radius, _shouldEnhance);
+
+    //     //foreach enemy detected inside
+    //     foreach (Collider collider in colliders)
+    //     {
+    //         if (!_enemiesInTrigger.ContainsKey(collider))
+    //         {
+    //             Debug.Log("nerfed enemy");
+    //             _enemiesInTrigger.Add(collider, collider.GetComponent<Transform>());
+    //             //TODO  if (!_enemiesInTrigger[collider].IsNerfed)
+    //             //TODO    _enemiesInTrigger[collider].Nerf();
+    //         }
+    //     }
+
+    //     //foreach enemy in the dictionary
+    //     foreach (Collider collider in _enemiesInTrigger.Keys)
+    //     {
+    //         if (!colliders.Contains<Collider>(collider))
+    //         {
+    //             _enemiesInTrigger.Remove(collider);
+    //             Debug.Log("restored enemy");
+    //         }
+    //     }
+    // }
 
     private void CheckForBullets()
     {
@@ -49,10 +89,4 @@ public class EylauArea : MonoBehaviour
         }
         _wasPlayerInHere = _isPlayerInHere;
     }
-
-    void OnDisable()
-    {
-
-    }
-
 }
