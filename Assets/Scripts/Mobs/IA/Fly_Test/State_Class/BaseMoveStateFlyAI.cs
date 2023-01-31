@@ -216,14 +216,16 @@ namespace State.FlyAI
 
         void OnDisable()
         {
-            baseMoveFlySO.currentRateAttack = Random.Range(baseMoveFlySO.maxRateAttack.x, baseMoveFlySO.maxRateAttack.y);
-            baseMoveFlySO.timeGoToDestinationPatrol = 0;
-            baseMoveFlySO.maxSpeedYTranslationPatrol = 0;
-            baseMoveFlySO.currentSpeedYPatrol = 0;
-            baseMoveFlySO.lerpSpeedYValuePatrol = 0;
-            baseMoveFlySO.speedRotationAIPatrol = 0;
-
-            baseMoveFlySO.newPosIsSet = false;
+            if(baseMoveFlySO != null)
+            {
+                baseMoveFlySO.currentRateAttack = Random.Range(baseMoveFlySO.maxRateAttack.x, baseMoveFlySO.maxRateAttack.y);
+                baseMoveFlySO.timeGoToDestinationPatrol = 0;
+                baseMoveFlySO.maxSpeedYTranslationPatrol = 0;
+                baseMoveFlySO.currentSpeedYPatrol = 0;
+                baseMoveFlySO.lerpSpeedYValuePatrol = 0;
+                baseMoveFlySO.speedRotationAIPatrol = 0;
+                baseMoveFlySO.newPosIsSet = false;
+            }
         }
 
     }

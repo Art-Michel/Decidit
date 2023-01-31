@@ -132,9 +132,13 @@ namespace State.FlyAI
         private void OnDisable()
         {
             stopLock = false;
-            baseAttackFlySO.speedRotationAIAttack = 0;
-            baseAttackFlySO.currentSpeedYAttack = 0;
-            baseAttackFlySO.lerpSpeedYValueAttack = 0;
+
+            if(baseAttackFlySO != null)
+            {
+                baseAttackFlySO.speedRotationAIAttack = 0;
+                baseAttackFlySO.currentSpeedYAttack = 0;
+                baseAttackFlySO.lerpSpeedYValueAttack = 0;
+            }
         }
     }
 }
