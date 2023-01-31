@@ -11,8 +11,8 @@ public class Room : MonoBehaviour
     [SerializeField] private GameObject enter;
     [SerializeField] private GameObject exit;
 
-    public void GetDoors()
+    public GameObject GetDoorsExit()
     {
-
+        return(exit);
     }
 }

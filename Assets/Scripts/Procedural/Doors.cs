@@ -5,64 +5,80 @@ using UnityEngine;
 public class Doors : MonoBehaviour
 {
     #region Variables
-    [SerializeField] int NbIA;
-    [SerializeField] int indexRoom;
-    [SerializeField] int indexDoor;
+    [SerializeField] bool isEntree;
 
-    [SerializeField] List<GameObject> Door;
-    [SerializeField] List<GameObject> Room;
+    [SerializeField] GameObject _Door;
+
+    [SerializeField] List<GameObject> _roomNb;
+
+    int _roomIndex = 0;
+    [SerializeField] int _nbIA;
 
     #endregion
 
-    private void Awake()
+    void Awake()
     {
-        //on enregistre le nombre d'enemies
-        NbIACheck();
+
     }
 
     void Start()
     {
-        
+        _roomNb = DungeonGenerator.Instance.GetRoom();
     }
 
     void Update()
     {
-        //on check si il a clean sa room
-        if(NbIA <= 0)
+        _nbIA = CheckIA();
+    }
+
+    #region Functions
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
         {
-            //on ouvre la porte
-            Door[indexDoor].SetActive(false);
+            if (isEntree)
+            {
+                _Door.GetComponent<BoxCollider>().enabled = false;
+                _Door.GetComponent<MeshRenderer>().enabled = false;
+                _roomIndex++;
+            }
+
+            if (!isEntree)
+            {
+                if (_nbIA == 0)
+                {
+                    _Door.GetComponent<BoxCollider>().enabled = false;
+                    _Door.GetComponent<MeshRenderer>().enabled = false;
+                }
+            }
         }
     }
 
-    #region Becons
-    public void NbIACheck()
+    private void OnTriggerExit(Collider other)
     {
-        NbIA = GameObject.FindGameObjectsWithTag("Ennemi").Length;
+        if (other.CompareTag("Player"))
+        {
+            if (isEntree)
+            {
+                _Door.GetComponent<BoxCollider>().enabled = true;
+                _Door.GetComponent<MeshRenderer>().enabled = true;
+            }
+
+            if (!isEntree)
+            {
+                if (_nbIA == 0)
+                {
+                    _Door.GetComponent<BoxCollider>().enabled = true;
+                    _Door.GetComponent<MeshRenderer>().enabled = true;
+                }
+            }
+        }
     }
-    public void NbIASubqtract()
+
+    public int CheckIA()
     {
-        NbIA --;
+        return (GameObject.FindGameObjectsWithTag("Ennemi").Length);
     }
-    public GameObject GetDoor()
-    {
-        return(Door[indexDoor]);
-    }
-    public void AddDoorIndex()
-    {
-        indexDoor ++;
-    }
-    public int GetDoorIndex()
-    {
-        return (indexDoor);
-    }
-    public GameObject GetRoom()
-    {
-        return(Room[indexRoom]);
-    }
-    public void AddRoomIndex()
-    {
-        indexRoom ++;
-    }
+
     #endregion
 }
