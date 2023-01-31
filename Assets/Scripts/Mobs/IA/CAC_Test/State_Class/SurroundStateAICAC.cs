@@ -20,6 +20,10 @@ namespace State.AICAC
         NavMeshHit closestHit;
         Vector3 linkDestination;
 
+        [Header("Rate Calcule Path")]
+        [SerializeField] float maxRateRepath;
+        [SerializeField] float currentRateRepath;
+
         public override void InitState(StateControllerAICAC stateController)
         {
             base.InitState(stateController);
@@ -76,7 +80,6 @@ namespace State.AICAC
                     navLink = null;
                 }
                 maxDurationNavLink = globalRef.agentLinkMover._duration;
-                triggerNavLink = false;
             }
         }
 
@@ -94,11 +97,13 @@ namespace State.AICAC
                     {
                         linkDestination = link.endPoint;
                         triggerNavLink = true;
+                        Invoke("SetCanJump", 1f);
                     }
                     else
                     {
                         linkDestination = link.startPoint;
                         triggerNavLink = true;
+                        Invoke("SetCanJump", 1f);
                     }
                 }
             }
@@ -119,6 +124,10 @@ namespace State.AICAC
                     globalRef.surroundAICACSO.right = true;
                 }
             }
+        }
+        void SetCanJump()
+        {
+            triggerNavLink = false;
         }
 
         public void GetSurroundDestination()
@@ -159,14 +168,14 @@ namespace State.AICAC
             {
                 if (globalRef.surroundAICACSO.left || globalRef.surroundAICACSO.right)
                 {
-                    globalRef.agent.SetDestination(destination);
+                    CalculatePath();
                 }
             }
             else
             {
                 if (globalRef.surroundAICACSO.left || globalRef.surroundAICACSO.right)
                 {
-                    globalRef.agent.SetDestination(globalRef.playerTransform.position);
+                    CalculatePath();
                 }
             }
 
@@ -182,6 +191,35 @@ namespace State.AICAC
                 _destination = closestHit.position;
             }
             return _destination;
+        }
+
+        void CalculatePath()
+        {
+            if (currentRateRepath > 0)
+            {
+                currentRateRepath -= Time.deltaTime;
+            }
+            else
+            {
+                SlowSpeed(globalRef.isInEylau);
+                currentRateRepath = maxRateRepath;
+            }
+        }
+        void SlowSpeed(bool active)
+        {
+            if (active)
+            {
+                globalRef.slowSpeedRot = globalRef.agent.speed / globalRef.slowRatio;
+                globalRef.agent.speed = globalRef.slowSpeedRot;
+                globalRef.agent.SetDestination(destination);
+            }
+            else
+            {
+                if (globalRef.agent.speed == globalRef.slowSpeedRot)
+                    globalRef.agent.speed *= globalRef.slowRatio;
+
+                globalRef.agent.SetDestination(destination);
+            }
         }
 
         void SmoothLookAt()
@@ -202,21 +240,43 @@ namespace State.AICAC
             relativePos.y = 0;
             relativePos.z = direction.z - globalRef.transform.position.z;
 
-            if (globalRef.baseMoveAICACSO.speedRot < globalRef.baseMoveAICACSO.maxSpeedRot)
-                globalRef.baseMoveAICACSO.speedRot += Time.deltaTime / globalRef.baseMoveAICACSO.smoothRot;
-            else
-            {
-                globalRef.baseMoveAICACSO.speedRot = globalRef.baseMoveAICACSO.maxSpeedRot;
-            }
+            SlowRotation(globalRef.isInEylau);
 
             Quaternion rotation = Quaternion.Slerp(globalRef.transform.rotation, Quaternion.LookRotation(relativePos, Vector3.up), globalRef.baseMoveAICACSO.speedRot);
             globalRef.transform.rotation = rotation;
+        }
+        void SlowRotation(bool active)
+        {
+            if (active)
+            {
+                if (globalRef.baseMoveAICACSO.speedRot < globalRef.baseMoveAICACSO.maxSpeedRot)
+                {
+                    globalRef.slowSpeedRot = globalRef.baseMoveAICACSO.smoothRot * 2;
+                    globalRef.baseMoveAICACSO.speedRot += Time.deltaTime / globalRef.slowSpeedRot;
+                }
+                else
+                {
+                    globalRef.baseMoveAICACSO.speedRot = globalRef.baseMoveAICACSO.maxSpeedRot;
+                }
+            }
+            else
+            {
+                if (globalRef.baseMoveAICACSO.speedRot < globalRef.baseMoveAICACSO.maxSpeedRot)
+                {
+                    globalRef.baseMoveAICACSO.speedRot += Time.deltaTime / globalRef.baseMoveAICACSO.smoothRot;
+                }
+                else
+                {
+                    globalRef.baseMoveAICACSO.speedRot = globalRef.baseMoveAICACSO.maxSpeedRot;
+                }
+            }
         }
 
         void StopSurround()
         {
             globalRef.surroundAICACSO.right = false;
             globalRef.surroundAICACSO.left = false;
+            currentRateRepath -= 0;
             globalRef.aICACVarianteState.RemoveAISelectedSurround(globalRef);
             stateControllerAICAC.SetActiveState(StateControllerAICAC.AIState.BaseMove);
         }

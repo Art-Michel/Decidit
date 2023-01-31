@@ -17,6 +17,12 @@ namespace State.AICAC
         public float distPlayer;
         [SerializeField] StateControllerAICAC stateControllerAICAC;
 
+        [Header("Slow Move References")]
+        public bool isInEylau;
+        public float slowSpeedMove;
+        public float slowSpeedRot;
+        public float slowRatio;
+
         [Header("Ref Move State")]
         public float offsetDestination;
         public Vector3 debugDestination;

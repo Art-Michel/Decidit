@@ -19,6 +19,12 @@ namespace State.AIBull
         public AgentLinkMover agentLinkMover;
         public CharacterController characterController;
 
+        [Header("Slow Move References")]
+        public bool isInEylau;
+        public float slowSpeed;
+        public float slowSpeedRot;
+        public float slowRatio;
+
         [Header("Debug Destination")]
         public Transform sphereDebug;
         public LayerMask allMask;

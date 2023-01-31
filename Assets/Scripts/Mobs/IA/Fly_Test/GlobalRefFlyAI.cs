@@ -5,10 +5,17 @@ namespace State.FlyAI
 {
     public class GlobalRefFlyAI : MonoBehaviour
     {
+        [Header("Global Ref")]
         public NavMeshAgent agent;
         public Transform playerTransform;
         public StateControllerFlyAI stateControllerFlyAI;
         public EnemyHealth enemyHealth;
+
+        [Header("Slow Move References")]
+        public bool isInEylau;
+        public float slowSpeed;
+        public float slowSpeedRot;
+        public float slowRatio;
 
         [Header("Ref Base Move")]
         public BoxCollider myCollider;

@@ -18,6 +18,11 @@ namespace State.WallAI
         public MeshRenderer meshRenderer;
         public AudioSource audioSource;
 
+        [Header("Slow Move References")]
+        public bool isInEylau;
+        public float slowSpeed;
+        public float slowRatio;
+
         [Header("Scripatble")]
         public BaseMoveWallAISO baseMoveWallAISO;
         public BaseAttackWallAISO baseAttackWallAISO;

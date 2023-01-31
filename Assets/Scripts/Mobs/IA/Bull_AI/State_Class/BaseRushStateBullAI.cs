@@ -98,7 +98,7 @@ namespace State.AIBull
             rushBullSO.direction = rushBullSO.direction.normalized * rushBullSO.speedMove;
 
             SetGravity();
-
+            SlowSpeed(globalRef.isInEylau);
             rushBullSO.move = new Vector3(rushBullSO.direction.x, rushBullSO.directionYSlope.y + rushBullSO.AIVelocity.y, rushBullSO.direction.y);
             globalRef.characterController.Move(rushBullSO.move * Time.deltaTime);
                         
@@ -116,6 +116,18 @@ namespace State.AIBull
             else
             {
                 rushBullSO.AIVelocity.y = 0;
+            }
+        }
+        void SlowSpeed(bool active)
+        {
+            if (active)
+            {
+                globalRef.slowSpeed = rushBullSO.speedMove / globalRef.slowRatio;
+                rushBullSO.direction = rushBullSO.direction.normalized * globalRef.slowSpeed;
+            }
+            else
+            {
+                rushBullSO.direction = rushBullSO.direction.normalized * rushBullSO.speedMove;
             }
         }
 
@@ -205,6 +217,8 @@ namespace State.AIBull
             rushBullSO.relativePos.y = 0;
             rushBullSO.relativePos.z = rushBullSO.directionLookAt.z - globalRef.transform.position.z;
 
+            SlowRotation(globalRef.isInEylau);
+
             if (rushBullSO.speedRot < rushBullSO.maxSpeedRot)
                 rushBullSO.speedRot += Time.deltaTime / rushBullSO.smoothRot;
             else
@@ -219,6 +233,42 @@ namespace State.AIBull
 
             Quaternion rotation = Quaternion.Slerp(globalRef.transform.rotation, Quaternion.LookRotation(rushBullSO.relativePos, Vector3.up), rushBullSO.speedRot);
             globalRef.transform.rotation = rotation;
+        }
+        void SlowRotation(bool active)
+        {
+            if (active)
+            {
+                if (rushBullSO.speedRot < rushBullSO.maxSpeedRot)
+                {
+                    globalRef.slowSpeedRot = globalRef.coolDownRushBullSO.smoothRot * globalRef.slowRatio;
+                    rushBullSO.speedRot += Time.deltaTime / globalRef.slowSpeedRot;
+                }
+                else
+                {
+                    if (!canStartRush)
+                    {
+                        ShowSoonAttack(false);
+                        rushBullSO.speedRot = rushBullSO.maxSpeedRot;
+                        canStartRush = true;
+                    }
+                }
+            }
+            else
+            {
+                if (globalRef.coolDownRushBullSO.speedRot < globalRef.coolDownRushBullSO.maxSpeedRot)
+                {
+                    rushBullSO.speedRot += Time.deltaTime / globalRef.coolDownRushBullSO.smoothRot;
+                }
+                else
+                {
+                    if (!canStartRush)
+                    {
+                        ShowSoonAttack(false);
+                        rushBullSO.speedRot = rushBullSO.maxSpeedRot;
+                        canStartRush = true;
+                    }
+                }
+            }
         }
 
         void ShowSoonAttack(bool active)

@@ -66,14 +66,31 @@ namespace State.WallAI
             if (!IsMoving())
                 baseMoveWallAISO.findNewPos = false;
 
-            globalRef.agent.SetDestination(baseMoveWallAISO.newPos);
-            globalRef.agent.speed = baseMoveWallAISO.speedMovement;
+            SlowSpeed(globalRef.isInEylau);
+
             /*if (!baseMoveWallAISO.findNewPos)
                 globalRef.agent.speed = 0;
             else
                 globalRef.agent.speed = baseMoveWallAISO.speedMovement;*/
 
             LaunchDelayBeforeAttack();
+        }
+        void SlowSpeed(bool active)
+        {
+            if (active)
+            {
+                globalRef.agent.SetDestination(baseMoveWallAISO.newPos);
+
+                globalRef.agent.speed = baseMoveWallAISO.speedMovement;
+                globalRef.slowSpeed = globalRef.agent.speed / globalRef.slowRatio;
+                globalRef.agent.speed = globalRef.slowSpeed;
+            }
+            else
+            {
+                globalRef.agent.SetDestination(baseMoveWallAISO.newPos);
+                if (globalRef.agent.speed == globalRef.slowSpeed)
+                    globalRef.agent.speed *= globalRef.slowRatio;
+            }
         }
         bool IsMoving()
         {

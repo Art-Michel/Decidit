@@ -17,6 +17,7 @@ namespace State.AIBull
         Vector3 destinationLink;
         Vector3 destinationPath;
         [SerializeField] bool pathisValid;
+        float captureCurrentSpeed;
 
         public override void InitState(StateControllerBull stateController)
         {
@@ -123,7 +124,23 @@ namespace State.AIBull
         {
             globalRef.bullAIStartPosRush.SelectAI(globalRef);
             globalRef.agent.speed = globalRef.coolDownRushBullSO.speedPatrolToStartPos;
-            globalRef.agent.SetDestination(CheckNavMeshPoint(globalRef.coolDownRushBullSO.startPos));
+            SlowSpeed(globalRef.isInEylau);
+        }
+        void SlowSpeed(bool active)
+        {
+            if (active)
+            {
+                globalRef.slowSpeed = globalRef.agent.speed / globalRef.slowRatio;
+                globalRef.agent.speed = globalRef.slowSpeed;
+                globalRef.agent.SetDestination(CheckNavMeshPoint(globalRef.coolDownRushBullSO.startPos));
+            }
+            else
+            {
+                if (globalRef.agent.speed == globalRef.slowSpeed)
+                    globalRef.agent.speed *= globalRef.slowRatio;
+
+                globalRef.agent.SetDestination(CheckNavMeshPoint(globalRef.coolDownRushBullSO.startPos));
+            }
         }
         Vector3 CheckNavMeshPoint(Vector3 _destination)
         {
@@ -218,15 +235,36 @@ namespace State.AIBull
             relativePos.y = 0;
             relativePos.z = direction.z - globalRef.transform.position.z;
 
-            if (globalRef.coolDownRushBullSO.speedRot < globalRef.coolDownRushBullSO.maxSpeedRot)
-                globalRef.coolDownRushBullSO.speedRot += Time.deltaTime / globalRef.coolDownRushBullSO.smoothRot;
-            else
-            {
-                globalRef.coolDownRushBullSO.speedRot = globalRef.coolDownRushBullSO.maxSpeedRot;
-            }
+            SlowRotation(globalRef.isInEylau);
 
             Quaternion rotation = Quaternion.Slerp(globalRef.transform.rotation, Quaternion.LookRotation(relativePos, Vector3.up), globalRef.coolDownRushBullSO.speedRot);
             globalRef.transform.rotation = rotation;
+        }
+        void SlowRotation(bool active)
+        {
+            if (active)
+            {
+                if (globalRef.coolDownRushBullSO.speedRot < globalRef.coolDownRushBullSO.maxSpeedRot)
+                {
+                    globalRef.slowSpeedRot = globalRef.coolDownRushBullSO.smoothRot * globalRef.slowRatio;
+                    globalRef.coolDownRushBullSO.speedRot += Time.deltaTime / globalRef.slowSpeedRot;
+                }
+                else
+                {
+                    globalRef.coolDownRushBullSO.speedRot = globalRef.coolDownRushBullSO.maxSpeedRot;
+                }
+            }
+            else
+            {
+                if (globalRef.coolDownRushBullSO.speedRot < globalRef.coolDownRushBullSO.maxSpeedRot)
+                {
+                    globalRef.coolDownRushBullSO.speedRot += Time.deltaTime / globalRef.coolDownRushBullSO.smoothRot;
+                }
+                else
+                {
+                    globalRef.coolDownRushBullSO.speedRot = globalRef.coolDownRushBullSO.maxSpeedRot;
+                }
+            }
         }
 
         private void OnDisable()

@@ -24,8 +24,6 @@ namespace State.AICAC
         Vector3 destination;
         Vector3 dir;
         Vector3 left;
-        Vector3 velocity;
-        RaycastHit hitGround;
 
         [Header("LookAt")]
         Vector3 direction;
@@ -56,11 +54,6 @@ namespace State.AICAC
             SmoothLookAt();
             BaseMovement();
             ManageCurrentNavMeshLink();
-        }
-
-        private void FixedUpdate()
-        {
-            hitGround = RaycastAIManager.instanceRaycast.RaycastAI(transform.position, Vector3.down, mask, Color.blue, 100f);
         }
 
         void ActiveJump()
@@ -148,25 +141,10 @@ namespace State.AICAC
                 }
                 else
                 {
+                    SlowSpeed(globalRef.isInEylau);
                     globalRef.agent.SetDestination(destination);
                     currentRateRepath = maxRateRepath;
                 }
-
-               /* if (!globalRef.agent.isOnOffMeshLink)
-                {
-                    globalRef.agent.updatePosition = false;
-                    globalRef.agent.SetDestination(destination);
-                    Vector3 updateXZ = Vector3.SmoothDamp(globalRef.transform.position, globalRef.agent.nextPosition, ref velocity, 0.1f);
-                    float updateY = hitGround.point.y;
-
-                    Vector3 updatePosition = new Vector3(updateXZ.x, updateY + 1f, updateXZ.z);
-                    globalRef.transform.position = updatePosition;
-                }
-                else
-                {
-                    globalRef.agent.updatePosition = true;
-                    globalRef.agent.SetDestination(destination);
-                }*/
             }
 
             if (globalRef.distPlayer < baseMoveAICACSO.attackRange)
@@ -226,6 +204,23 @@ namespace State.AICAC
             }
         }
 
+        void SlowSpeed(bool active)
+        {
+            if(active)
+            {
+                globalRef.slowSpeedRot = globalRef.agent.speed / globalRef.slowRatio;
+                globalRef.agent.speed = globalRef.slowSpeedRot;
+                globalRef.agent.SetDestination(destination);
+            }
+            else
+            {
+                if(globalRef.agent.speed == globalRef.slowSpeedRot)
+                    globalRef.agent.speed *= globalRef.slowRatio;
+
+                globalRef.agent.SetDestination(destination);
+            }
+        }
+
         void SmoothLookAt()
         {
             if (globalRef.agent.isOnOffMeshLink)
@@ -242,15 +237,36 @@ namespace State.AICAC
             relativePos.y = 0;
             relativePos.z = direction.z - globalRef.transform.position.z;
 
-            if (baseMoveAICACSO.speedRot < baseMoveAICACSO.maxSpeedRot)
-                baseMoveAICACSO.speedRot += Time.deltaTime / baseMoveAICACSO.smoothRot;
-            else
-            {
-                baseMoveAICACSO.speedRot = baseMoveAICACSO.maxSpeedRot;
-            }
+            SlowRotation(globalRef.isInEylau);
 
             Quaternion rotation = Quaternion.Slerp(globalRef.transform.rotation, Quaternion.LookRotation(relativePos, Vector3.up), baseMoveAICACSO.speedRot);
             globalRef.transform.rotation = rotation;
+        }
+        void SlowRotation(bool active)
+        {
+            if(active)
+            {
+                if (baseMoveAICACSO.speedRot < baseMoveAICACSO.maxSpeedRot)
+                {
+                    globalRef.slowSpeedRot = baseMoveAICACSO.smoothRot* globalRef.slowRatio;
+                    baseMoveAICACSO.speedRot += Time.deltaTime / globalRef.slowSpeedRot;
+                }
+                else
+                {
+                    baseMoveAICACSO.speedRot = baseMoveAICACSO.maxSpeedRot;
+                }
+            }
+            else
+            {
+                if (baseMoveAICACSO.speedRot < baseMoveAICACSO.maxSpeedRot)
+                {
+                    baseMoveAICACSO.speedRot += Time.deltaTime / baseMoveAICACSO.smoothRot;
+                }
+                else
+                {
+                    baseMoveAICACSO.speedRot = baseMoveAICACSO.maxSpeedRot;
+                }
+            }
         }
 
         private void OnDisable()

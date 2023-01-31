@@ -14,6 +14,7 @@ namespace State.FlyAI
         [SerializeField] bool dodgeObstacle;
         [SerializeField] bool right;
         [SerializeField] float offset;
+        Quaternion rotation;
 
         public override void InitState(StateControllerFlyAI stateController)
         {
@@ -67,7 +68,7 @@ namespace State.FlyAI
             relativePos.y = baseMoveFlySO.destinationFinal.y - flyAI.transform.position.y;
             relativePos.z = baseMoveFlySO.destinationFinal.z - flyAI.transform.position.z;
 
-            Quaternion rotation = Quaternion.Slerp(childflyAI.localRotation, Quaternion.LookRotation(relativePos, Vector3.up), baseMoveFlySO.speedRotationAIPatrol);
+            SlowRotation(globalRef.isInEylau, relativePos);
             childflyAI.localRotation = rotation;
 
             if (baseMoveFlySO.speedRotationAIPatrol < baseMoveFlySO.maxSpeedRotationAIPatrol)
@@ -76,9 +77,24 @@ namespace State.FlyAI
                 baseMoveFlySO.lerpSpeedYValuePatrol += (Time.deltaTime / baseMoveFlySO.ySpeedSmootherPatrol);
             }
 
+            SlowRotation(globalRef.isInEylau, relativePos);
+
+
             ApplyFlyingMove();
             DelayBeforeAttack();
         }
+        void SlowRotation(bool active, Vector3 relativePos)
+        {
+            if (active)
+            {
+                rotation = Quaternion.Slerp(childflyAI.localRotation, Quaternion.LookRotation(relativePos, Vector3.up), baseMoveFlySO.speedRotationAIPatrol*2);
+            }
+            else
+            {
+                rotation = Quaternion.Slerp(childflyAI.localRotation, Quaternion.LookRotation(relativePos, Vector3.up), baseMoveFlySO.speedRotationAIPatrol);
+            }
+        }
+
         ////////////// Set Destination \\\\\\\\\\\\\\\\\\\\\
         Vector3 SearchNewPos() // défini la position aléatoire choisi dans la fonction "RandomPointInBounds()" si la distance entre le point et l'IA est suffisament grande
         {
@@ -126,18 +142,24 @@ namespace State.FlyAI
             {
                 if (baseMoveFlySO.distDestinationFinal > 7)
                 {
-                    globalRef.agent.SetDestination(CheckNavMeshPoint(new Vector3(flyAI.transform.position.x, 0, flyAI.transform.position.z) + childflyAI.TransformDirection(Vector3.forward)));
+                    SlowSpeed(globalRef.isInEylau);
                     baseMoveFlySO.currentSpeedYPatrol = Mathf.Lerp(baseMoveFlySO.currentSpeedYPatrol, baseMoveFlySO.maxSpeedYTranslationPatrol, baseMoveFlySO.lerpSpeedYValuePatrol);
 
                     if (Mathf.Abs(flyAI.transform.position.y - baseMoveFlySO.destinationFinal.y) > 1)
                     {
                         if (flyAI.transform.position.y < baseMoveFlySO.destinationFinal.y)
                         {
-                            globalRef.agent.baseOffset += baseMoveFlySO.currentSpeedYPatrol * Time.deltaTime;
+                            if (globalRef.isInEylau)
+                                globalRef.agent.baseOffset += (baseMoveFlySO.currentSpeedYPatrol * Time.deltaTime) / globalRef.slowRatio;
+                            else
+                                globalRef.agent.baseOffset += (baseMoveFlySO.currentSpeedYPatrol * Time.deltaTime);
                         }
                         else
                         {
-                            globalRef.agent.baseOffset -= baseMoveFlySO.currentSpeedYPatrol * Time.deltaTime;
+                            if (globalRef.isInEylau)
+                                globalRef.agent.baseOffset -= (baseMoveFlySO.currentSpeedYPatrol * Time.deltaTime) / globalRef.slowRatio;
+                            else
+                                globalRef.agent.baseOffset -= (baseMoveFlySO.currentSpeedYPatrol * Time.deltaTime);
                         }
                     }
                 }
@@ -155,6 +177,23 @@ namespace State.FlyAI
                 newDestination = closestHit.position;
             }
             return newDestination;
+        }
+        void SlowSpeed(bool active)
+        {
+            if (active)
+            {
+                globalRef.slowSpeed = globalRef.agent.speed / globalRef.slowRatio;
+                globalRef.agent.speed = globalRef.slowSpeed;
+                globalRef.agent.SetDestination(CheckNavMeshPoint(new Vector3(flyAI.transform.position.x, 0, flyAI.transform.position.z) + childflyAI.TransformDirection(Vector3.forward)));
+
+            }
+            else
+            {
+                if (globalRef.agent.speed == globalRef.slowSpeed)
+                    globalRef.agent.speed *= globalRef.slowRatio;
+
+                globalRef.agent.SetDestination(CheckNavMeshPoint(new Vector3(flyAI.transform.position.x, 0, flyAI.transform.position.z) + childflyAI.TransformDirection(Vector3.forward)));
+            }
         }
 
         void DelayBeforeAttack()

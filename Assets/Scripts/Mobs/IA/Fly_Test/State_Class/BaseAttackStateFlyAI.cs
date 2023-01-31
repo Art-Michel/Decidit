@@ -87,7 +87,7 @@ namespace State.FlyAI
         {
             globalRef.agent.speed = baseAttackFlySO.baseAttackSpeed;
 
-            globalRef.agent.SetDestination(new Vector3(globalRef.transform.position.x, 0, globalRef.transform.position.z) + childflyAI.TransformDirection(Vector3.forward));
+            SlowSpeed(globalRef.isInEylau);
             baseAttackFlySO.currentSpeedYAttack = Mathf.Lerp(baseAttackFlySO.currentSpeedYAttack, baseAttackFlySO.maxSpeedYTranslationAttack, baseAttackFlySO.lerpSpeedYValueAttack);
 
             baseAttackFlySO.lerpSpeedYValueAttack += (Time.deltaTime / baseAttackFlySO.ySpeedSmootherAttack);
@@ -96,12 +96,36 @@ namespace State.FlyAI
             {
                 if (globalRef.transform.position.y < lockPlayerFlySO.destinationFinal.y)
                 {
-                    globalRef.agent.baseOffset += baseAttackFlySO.currentSpeedYAttack * Time.deltaTime;
+                    if (globalRef.isInEylau)
+                        globalRef.agent.baseOffset += (baseAttackFlySO.currentSpeedYAttack * Time.deltaTime) / 2;
+                    else
+                        globalRef.agent.baseOffset += baseAttackFlySO.currentSpeedYAttack * Time.deltaTime;
+
                 }
                 else
                 {
-                    globalRef.agent.baseOffset -= baseAttackFlySO.currentSpeedYAttack * Time.deltaTime;
+                    if (globalRef.isInEylau)
+                        globalRef.agent.baseOffset -= (baseAttackFlySO.currentSpeedYAttack * Time.deltaTime) / 2;
+                    else
+                        globalRef.agent.baseOffset -= baseAttackFlySO.currentSpeedYAttack * Time.deltaTime;
                 }
+            }
+        }
+        void SlowSpeed(bool active)
+        {
+            if (active)
+            {
+                globalRef.slowSpeed = globalRef.agent.speed / 2;
+                globalRef.agent.speed = globalRef.slowSpeed;
+                globalRef.agent.SetDestination(new Vector3(globalRef.transform.position.x, 0, globalRef.transform.position.z) + childflyAI.TransformDirection(Vector3.forward));
+
+            }
+            else
+            {
+                if (globalRef.agent.speed == globalRef.slowSpeed)
+                    globalRef.agent.speed *= 2;
+
+                globalRef.agent.SetDestination(new Vector3(globalRef.transform.position.x, 0, globalRef.transform.position.z) + childflyAI.TransformDirection(Vector3.forward));
             }
         }
 
