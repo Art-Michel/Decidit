@@ -219,7 +219,7 @@ namespace State.AIBull
 
             SlowRotation(globalRef.isInEylau);
 
-            if (rushBullSO.speedRot < rushBullSO.maxSpeedRot)
+            /*if (rushBullSO.speedRot < rushBullSO.maxSpeedRot)
                 rushBullSO.speedRot += Time.deltaTime / rushBullSO.smoothRot;
             else
             {
@@ -230,7 +230,7 @@ namespace State.AIBull
                     canStartRush = true;
                 }
             }
-
+*/
             Quaternion rotation = Quaternion.Slerp(globalRef.transform.rotation, Quaternion.LookRotation(rushBullSO.relativePos, Vector3.up), rushBullSO.speedRot);
             globalRef.transform.rotation = rotation;
         }
