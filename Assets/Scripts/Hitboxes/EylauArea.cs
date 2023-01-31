@@ -13,21 +13,6 @@ public class EylauArea : MonoBehaviour
     private bool _isPlayerInHere = false;
     private bool _wasPlayerInHere = false;
 
-    // void OnTriggerEnter(Collider other)
-    // {
-    //     if (other.gameObject.layer == _shouldHit)
-    //     {
-    //         if (other.transform.CompareTag("Player"))
-    //         {
-    //             Debug.Log("players in");
-    //         }
-    //         if (other.transform.CompareTag("Ennemi"))
-    //         {
-    //             Debug.Log("enemys in");
-    //         }
-    //     }
-    // }
-
     void Update()
     {
         CheckForEnemies();
@@ -38,7 +23,7 @@ public class EylauArea : MonoBehaviour
     private void CheckForEnemies()
     {
         foreach (Collider collider in Physics.OverlapCapsule(transform.position + Vector3.down * 100, transform.position + Vector3.up * 100, _radius, _shouldHit))
-            Debug.Log("rien");
+            Debug.Log("j'ai rien codé ici pour l'instant");
     }
 
     private bool AlreadyHit(Transform target)
@@ -57,10 +42,12 @@ public class EylauArea : MonoBehaviour
         if (!_isPlayerInHere && _wasPlayerInHere)
         {
             //Player.Instance.resetspeed
+            Debug.Log("non");
         }
         if (_isPlayerInHere && !_wasPlayerInHere)
         {
             //Player.Instance.Speedup();
+            Debug.Log("oui");
         }
         _wasPlayerInHere = _isPlayerInHere;
     }
