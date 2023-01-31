@@ -18,6 +18,7 @@ namespace State.AIBull
         public StateControllerBull stateControllerBull;
         public AgentLinkMover agentLinkMover;
         public CharacterController characterController;
+        public RushManager rushManager;
 
         [Header("Slow Move References")]
         public bool isInEylau;
@@ -32,6 +33,7 @@ namespace State.AIBull
         [Header("Ref Attack State")]
         public Hitbox hitBox;
         public BoxCollider detectOtherAICollider;
+        public bool launchRush;
 
         [Header("Ref Death State")]
         public bool isDead;
@@ -53,6 +55,7 @@ namespace State.AIBull
             bullAIStartPosRush = GetComponentInParent<BullAIStartPosRush>();
             bullCount = GetComponentInParent<BullCount>();
             agentLinkMover = GetComponent<AgentLinkMover>();
+            rushManager = GetComponentInParent<RushManager>();
 
             baseIdleBullSO = Instantiate(baseIdleBullSO);
             baseMoveBullSO = Instantiate(baseMoveBullSO);

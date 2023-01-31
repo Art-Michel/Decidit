@@ -17,23 +17,27 @@ namespace State.AIBull
         private void Update()
         {
             BaseMovement();
-            CoolDownRush();
+            if(globalRef.launchRush)
+                LaunchRush();
+            else if (globalRef.distPlayer < globalRef.baseMoveBullSO.distActiveRush)
+            {
+                globalRef.launchRush = true;
+                stateController.SetActiveState(StateControllerBull.AIState.Rush);
+            }
+
         }
 
         void BaseMovement()
         {
             Vector3 newDestination;
             globalRef.agent.speed = globalRef.baseMoveBullSO.baseSpeed;
-            if (globalRef.distPlayer > 5)
-                newDestination = globalRef.playerTransform.position + (globalRef.playerTransform.right * globalRef.offsetDestination);
-            else
-                newDestination = globalRef.playerTransform.position;
+            newDestination = globalRef.playerTransform.position + (globalRef.playerTransform.right * globalRef.offsetDestination);
 
             globalRef.agent.SetDestination(CheckNavMeshPoint(newDestination));
             SmoothLookAtPlayer();
             if (globalRef.distPlayer < globalRef.baseAttackBullSO.attackRange)
             {
-                //globalRef.SwitchToNewState(4);
+                //stateController.SetActiveState(StateControllerBull.AIState.WaitBeforeRush);
             }
         }
         Vector3 CheckNavMeshPoint(Vector3 newDestination)
@@ -46,19 +50,9 @@ namespace State.AIBull
             return newDestination;
         }
 
-        void CoolDownRush()
+        void LaunchRush()
         {
-            if (globalRef.distPlayer < globalRef.baseMoveBullSO.distActiveCoolDownRush)
-            {
-                if (globalRef.baseMoveBullSO.currentCoolDownWaitRush > 0)
-                {
-                    globalRef.baseMoveBullSO.currentCoolDownWaitRush -= Time.deltaTime;
-                }
-                else
-                {
-                    stateController.SetActiveState(StateControllerBull.AIState.WaitBeforeRush);
-                }
-            }
+            stateController.SetActiveState(StateControllerBull.AIState.Rush);
         }
 
         void SmoothLookAtPlayer()
@@ -86,7 +80,7 @@ namespace State.AIBull
         private void OnDisable()
         {
             globalRef.baseMoveBullSO.speedRot = 0;
-            globalRef.baseMoveBullSO.currentCoolDownWaitRush = globalRef.baseMoveBullSO.maxCoolDownRush;
+            globalRef.agent.speed = globalRef.baseMoveBullSO.stopSpeed;
         }
     }
 }

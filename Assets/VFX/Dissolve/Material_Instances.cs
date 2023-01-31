@@ -25,10 +25,11 @@ public class Material_Instances : MonoBehaviour
             Material = MeshGameObject.GetComponent<SkinnedMeshRenderer>().material;
         }
 
+        ChangeColorTexture(ColorBase);
+
         if (TextureBase == null)
         {
             Debug.LogWarning("Aucune texture trouvee dans le shader, creation d'une nouvelle");
-            ChangeColorTexture(ColorBase);
         }
     }
 

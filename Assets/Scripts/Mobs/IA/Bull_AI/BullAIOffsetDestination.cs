@@ -16,7 +16,6 @@ namespace State.AIBull
         {
             Invoke("GetAiBullReference", 0.7f);
             Invoke("SetOffsetDestination", 1f);
-
         }
 
         void GetAiBullReference()

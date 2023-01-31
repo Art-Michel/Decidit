@@ -25,7 +25,7 @@ namespace State.AIBull
             if (globalRef.baseIdleBullSO.currentTransition > 0)
                 globalRef.baseIdleBullSO.currentTransition -= Time.deltaTime;
             else
-                stateController.SetActiveState(StateControllerBull.AIState.WaitBeforeRush);
+                stateController.SetActiveState(StateControllerBull.AIState.BaseMove);
         }
 
         private void OnDisable()

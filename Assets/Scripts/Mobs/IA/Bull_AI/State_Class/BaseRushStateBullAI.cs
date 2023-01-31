@@ -9,7 +9,7 @@ namespace State.AIBull
         RushBullParameterSO rushBullSO;
         [SerializeField] Material_Instances material_Instances;
         [SerializeField] bool lockPlayer;
-        bool canStartRush;
+        [SerializeField] bool canStartRush;
 
         [SerializeField] float distDestination;
         [SerializeField] float distDetectObstacle;
@@ -18,6 +18,7 @@ namespace State.AIBull
 
         [Header("Rush Movement")]
         public Vector3 captureBasePosDistance;
+        [SerializeField] float debugSpeed;
 
         [Header("Position 2D")]
         Vector2 posPlayer;
@@ -47,6 +48,11 @@ namespace State.AIBull
 
         private void Update()
         {
+            debugSpeed = globalRef.characterController.velocity.magnitude;
+
+            SetDestination();
+            SmoothLookAtPlayer();
+
             if (!canStartRush)
             {
                 if (material_Instances.Material.color != material_Instances.ColorPreAtatck)
@@ -57,10 +63,6 @@ namespace State.AIBull
                 if(material_Instances.Material.color == material_Instances.ColorPreAtatck)
                     ShowSoonAttack(false);
             }
-
-            SmoothLookAtPlayer();
-
-            SetDestination();
 
             if(canStartRush)
             {
@@ -75,7 +77,7 @@ namespace State.AIBull
 
         void SetDestination()
         {
-            if (globalRef.distPlayer > rushBullSO.stopLockDist && !lockPlayer)
+            /*if (globalRef.distPlayer > rushBullSO.stopLockDist && !lockPlayer)
             {
                 rushBullSO.rushDestination = globalRef.playerTransform.position;
             }
@@ -85,6 +87,21 @@ namespace State.AIBull
                 {
                     rushBullSO.rushDestination = globalRef.playerTransform.position + globalRef.transform.forward * rushBullSO.rushInertieSetDistance;
                     lockPlayer = true;
+                }
+            }*/
+
+            if (!canStartRush && !lockPlayer)
+            {
+                rushBullSO.rushDestination = globalRef.playerTransform.position;
+            }
+            else
+            {
+                if (!lockPlayer)
+                {
+                    rushBullSO.rushDestination = globalRef.playerTransform.position + globalRef.transform.forward * rushBullSO.rushInertieSetDistance;
+                    lockPlayer = true;
+                    globalRef.launchRush = false;
+                    Invoke("CheckSpeed", 1f);
                 }
             }
         }
@@ -101,7 +118,7 @@ namespace State.AIBull
             SlowSpeed(globalRef.isInEylau);
             rushBullSO.move = new Vector3(rushBullSO.direction.x, rushBullSO.directionYSlope.y + rushBullSO.AIVelocity.y, rushBullSO.direction.y);
             globalRef.characterController.Move(rushBullSO.move * Time.deltaTime);
-                        
+
             globalRef.detectOtherAICollider.enabled = true;
             globalRef.hitBox.gameObject.SetActive(true);
         }
@@ -152,7 +169,7 @@ namespace State.AIBull
             if (rushBullSO.isFall && rushBullSO.isGround)
             {
                 //Debug.Log("Fall Stop Rush");
-                StopRush();
+                //StopRush();
             }
 
             rushBullSO.distRush = Vector3.Distance(captureBasePosDistance, globalRef.transform.position);
@@ -160,6 +177,11 @@ namespace State.AIBull
             {
                 StopRush();
             }
+        }
+        void CheckSpeed()
+        {
+            if(globalRef.characterController.velocity.magnitude ==0)
+                StopRush();
         }
 
 
@@ -204,11 +226,6 @@ namespace State.AIBull
             }
         }
 
-        void StopRush()
-        {
-            stateController.SetActiveState(StateControllerBull.AIState.Idle);
-        }
-
         void SmoothLookAtPlayer()
         {
             rushBullSO.directionLookAt = rushBullSO.rushDestination;
@@ -218,56 +235,46 @@ namespace State.AIBull
             rushBullSO.relativePos.z = rushBullSO.directionLookAt.z - globalRef.transform.position.z;
 
             SlowRotation(globalRef.isInEylau);
-
-            /*if (rushBullSO.speedRot < rushBullSO.maxSpeedRot)
-                rushBullSO.speedRot += Time.deltaTime / rushBullSO.smoothRot;
-            else
-            {
-                if(!canStartRush)
-                {
-                    ShowSoonAttack(false);
-                    rushBullSO.speedRot = rushBullSO.maxSpeedRot;
-                    canStartRush = true;
-                }
-            }
-*/
             Quaternion rotation = Quaternion.Slerp(globalRef.transform.rotation, Quaternion.LookRotation(rushBullSO.relativePos, Vector3.up), rushBullSO.speedRot);
             globalRef.transform.rotation = rotation;
         }
         void SlowRotation(bool active)
         {
-            if (active)
+            switch (active)
             {
-                if (rushBullSO.speedRot < rushBullSO.maxSpeedRot)
-                {
-                    globalRef.slowSpeedRot = globalRef.coolDownRushBullSO.smoothRot * globalRef.slowRatio;
-                    rushBullSO.speedRot += Time.deltaTime / globalRef.slowSpeedRot;
-                }
-                else
-                {
-                    if (!canStartRush)
+                case true:
+                    if (rushBullSO.speedRot < rushBullSO.maxSpeedRot)
                     {
-                        ShowSoonAttack(false);
-                        rushBullSO.speedRot = rushBullSO.maxSpeedRot;
-                        canStartRush = true;
+                        globalRef.slowSpeedRot = globalRef.coolDownRushBullSO.smoothRot * globalRef.slowRatio;
+                        rushBullSO.speedRot += Time.deltaTime / globalRef.slowSpeedRot;
                     }
-                }
-            }
-            else
-            {
-                if (globalRef.coolDownRushBullSO.speedRot < globalRef.coolDownRushBullSO.maxSpeedRot)
-                {
-                    rushBullSO.speedRot += Time.deltaTime / globalRef.coolDownRushBullSO.smoothRot;
-                }
-                else
-                {
-                    if (!canStartRush)
+                    else
                     {
-                        ShowSoonAttack(false);
-                        rushBullSO.speedRot = rushBullSO.maxSpeedRot;
-                        canStartRush = true;
+                        if (!canStartRush)
+                        {
+                            ShowSoonAttack(false);
+                            rushBullSO.speedRot = rushBullSO.maxSpeedRot;
+                            canStartRush = true;
+                        }
                     }
-                }
+                    break;
+
+
+                case false:
+                    if (rushBullSO.speedRot < rushBullSO.maxSpeedRot)
+                    {
+                        rushBullSO.speedRot += Time.deltaTime / rushBullSO.smoothRot;
+                    }
+                    else
+                    {
+                        if (!canStartRush)
+                        {
+                            ShowSoonAttack(false);
+                            rushBullSO.speedRot = rushBullSO.maxSpeedRot;
+                            canStartRush = true;
+                        }
+                    }
+                    break;
             }
         }
 
@@ -285,6 +292,10 @@ namespace State.AIBull
             }
         }
 
+        void StopRush()
+        {
+            stateController.SetActiveState(StateControllerBull.AIState.Idle);
+        }
         private void OnDisable()
         {
             if(rushBullSO != null)
@@ -295,12 +306,13 @@ namespace State.AIBull
                 rushBullSO.stopLockPlayer = false;
                 rushBullSO.ennemiInCollider.Clear();
             }
-
+            globalRef.launchRush = false;
             canStartRush = false;
             lockPlayer = false;
             globalRef.detectOtherAICollider.enabled = false;
             globalRef.hitBox.gameObject.SetActive(false);
             globalRef.agent.enabled = true;
+
         }
 
         private void OnTriggerEnter(Collider other)
