@@ -19,6 +19,10 @@ namespace State.AIBull
         [SerializeField] bool pathisValid;
         float captureCurrentSpeed;
 
+        [SerializeField] Vector2 rangeTimerRush;
+        [SerializeField] float maxRangeTimeRush;
+        [SerializeField] float currentRangeTimeRush;
+
         public override void InitState(StateControllerBull stateController)
         {
             base.InitState(stateController);
@@ -28,6 +32,10 @@ namespace State.AIBull
 
         private void OnEnable()
         {
+
+            maxRangeTimeRush = (int)Random.Range(rangeTimerRush.x, rangeTimerRush.y);
+            currentRangeTimeRush = maxRangeTimeRush;
+
             try 
             { 
                 globalRef.agent.speed = globalRef.coolDownRushBullSO.speedPatrolToStartPos;
@@ -41,6 +49,11 @@ namespace State.AIBull
 
         private void Update()
         {
+            if (currentRangeTimeRush > 0)
+                currentRangeTimeRush -= Time.deltaTime;
+            else
+                SwitchToStateRush();
+
             ManageCurrentNavMeshLink();
 
             if(globalRef.coolDownRushBullSO.currentNumberOfPatrol < globalRef.coolDownRushBullSO.maxNumberOfPatrol)
