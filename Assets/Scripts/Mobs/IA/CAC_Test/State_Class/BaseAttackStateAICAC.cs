@@ -95,8 +95,8 @@ namespace State.AICAC
         {
             if(material_Instances != null)
             {
-                material_Instances.Material.color = material_Instances.Color;
-                material_Instances.ChangeColorTexture(material_Instances.Color);
+                material_Instances.Material.color = material_Instances.ColorBase;
+                material_Instances.ChangeColorTexture(material_Instances.ColorBase);
             }
             baseAttackAICACSO.currentAttackRate = baseAttackAICACSO.maxAttackRate;
             baseAttackAICACSO.speedRot = 0;

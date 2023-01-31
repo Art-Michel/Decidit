@@ -88,8 +88,7 @@ namespace State.WallAI
             else
             {
                 globalRef.agent.SetDestination(baseMoveWallAISO.newPos);
-                if (globalRef.agent.speed == globalRef.slowSpeed)
-                    globalRef.agent.speed *= globalRef.slowRatio;
+                globalRef.agent.speed = baseMoveWallAISO.speedMovement;
             }
         }
         bool IsMoving()

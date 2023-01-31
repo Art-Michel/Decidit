@@ -105,8 +105,8 @@ namespace State.FlyAI
         private void OnDisable()
         {
            // Debug.Log("Set Black color");
-            material_Instances.Material.color = material_Instances.Color;
-            material_Instances.ChangeColorTexture(material_Instances.Color);
+            material_Instances.Material.color = material_Instances.ColorBase;
+            material_Instances.ChangeColorTexture(material_Instances.ColorBase);
         }
     }
 }

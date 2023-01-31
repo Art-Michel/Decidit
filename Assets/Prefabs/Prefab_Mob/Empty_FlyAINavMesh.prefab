@@ -470,6 +470,10 @@ MonoBehaviour:
   _damage: 20
   _knockbackForce: 10
   _knockbackAngle: {x: 0, y: 0, z: 0}
+  _canHitThroughWalls: 0
+  _shouldNotHitThrough:
+    serializedVersion: 2
+    m_Bits: 0
   _canMultiHit: 0
   _delayBetweenHits: 0
 --- !u!1 &1824420020
@@ -711,6 +715,10 @@ MonoBehaviour:
   playerTransform: {fileID: 0}
   stateControllerFlyAI: {fileID: 5407937164311034900}
   enemyHealth: {fileID: 1522482573}
+  isInEylau: 0
+  slowSpeed: 0
+  slowSpeedRot: 0
+  slowRatio: 0
   myCollider: {fileID: 0}
   colliderBaseAttack: {fileID: 1805906808}
   hitbox: {fileID: 1805906810}
@@ -1169,10 +1177,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MeshGameObject: {fileID: 8688693978693153689}
-  Color: {r: 0, g: 0, b: 0, a: 1}
+  ColorBase: {r: 0, g: 0, b: 0, a: 0}
   ColorPreAtatck: {r: 0.5943396, g: 0, b: 0, a: 1}
   Material: {fileID: 0}
-  Texture: {fileID: 0}
+  TextureBase: {fileID: 2800000, guid: 28a4b69bf75bbba4c8596e324096193a, type: 3}
+  TexturePreAtatck: {fileID: 2800000, guid: 3a2ae6e068448a14294728a46cc890b5, type: 3}
   SetPixelTexture: {x: 0, y: 0}
 --- !u!114 &3943648564459389494
 MonoBehaviour:

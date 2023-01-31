@@ -14,8 +14,8 @@ namespace State.AICAC
         }*/
         void LaunchAttack()
         {
-            globalRef.material_Instances.Material.color = globalRef.material_Instances.Color;
-            globalRef.material_Instances.ChangeColorTexture(globalRef.material_Instances.Color);
+            globalRef.material_Instances.Material.color = globalRef.material_Instances.ColorBase;
+            globalRef.material_Instances.ChangeColorTexture(globalRef.material_Instances.ColorBase);
             globalRef.hitBox.SetActive(true);
         }
         void EndAttack()
