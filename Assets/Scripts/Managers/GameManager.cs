@@ -60,7 +60,7 @@ public class GameManager : LocalManager<GameManager>
         if (_is30fps)
         {
             _is30fps = false;
-            Application.targetFrameRate = 144;
+            Application.targetFrameRate = 0;
         }
         else
         {
