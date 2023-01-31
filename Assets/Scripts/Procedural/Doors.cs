@@ -5,7 +5,6 @@ using UnityEngine;
 public class Doors : MonoBehaviour
 {
     #region Variables
-    public static Doors Instance = null;
     [SerializeField] int NbIA;
     [SerializeField] int indexRoom;
     [SerializeField] int indexDoor;
@@ -17,12 +16,6 @@ public class Doors : MonoBehaviour
 
     private void Awake()
     {
-        if(Instance != null)
-        {
-            DestroyImmediate(this);
-            return;
-        }
-        Instance = this;
         //on enregistre le nombre d'enemies
         NbIACheck();
     }

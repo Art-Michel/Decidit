@@ -145,7 +145,7 @@ public class EnemyHealth : Health
         //! Ici desactiver ia ou mettre l'ia en state Dying jsp
         if (!_isDying)
         {
-            if (Doors.Instance) Doors.Instance.NbIASubqtract();
+            //if (Doors.Instance) Doors.Instance.NbIASubqtract();
             _deathT = _deathAnimationDuration;
             _isDying = true;
             _deathVfx.Play();

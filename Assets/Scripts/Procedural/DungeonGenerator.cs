@@ -4,6 +4,7 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class DungeonGenerator : MonoBehaviour
 {
+    public static DungeonGenerator Instance = null;
     [SerializeField] int seed;
     [SerializeField] bool randomizeSeed;
     [SerializeField] float dungeonRotation;
@@ -13,11 +14,18 @@ public class DungeonGenerator : MonoBehaviour
     [SerializeField] List<RoomSetup> rooms;
     [SerializeField] List<RoomSetup> corridors;
     [SerializeField] List<GameObject> destroyObjects;
+    [SerializeField] List<GameObject> _referenceRoom;
 
     List<Room> roomGen;
 
     private void Awake()
     {
+        if (Instance != null)
+        {
+            DestroyImmediate(this);
+            return;
+        }
+        Instance = this;
         Generate();
     }
 
@@ -40,7 +48,7 @@ public class DungeonGenerator : MonoBehaviour
         roomGen = new List<Room>(length + 2 + (length + 1));
         roomGen.Add(starterRoom.Get());
 
-        // variables pour répartir la difficulté (difficulty) en fonction du nombre de salles et de la longueur du donjon (stackCount)
+        // variables pour rï¿½partir la difficultï¿½ (difficulty) en fonction du nombre de salles et de la longueur du donjon (stackCount)
         int stackCount = Mathf.RoundToInt(length / 3f);
         int difficulty = 0;
 
@@ -48,15 +56,15 @@ public class DungeonGenerator : MonoBehaviour
         {
             roomGen.Add(corridors[Random.Range(0, corridors.Count)].Get());
 
-            // passe à la difficulté suivante
+            // passe ï¿½ la difficultï¿½ suivante
             if (stackCount <= 0)
             {
                 difficulty++;
-                difficulty = Mathf.Clamp(difficulty, 0, rooms.Count-1);
+                difficulty = Mathf.Clamp(difficulty, 0, rooms.Count - 1);
                 stackCount = Mathf.RoundToInt(length / 3f);
             }
 
-            // ajoute une salle avec une difficulté prédéfini
+            // ajoute une salle avec une difficultï¿½ prï¿½dï¿½fini
             roomGen.Add(rooms[difficulty].Get());
             stackCount--;
         }
@@ -77,7 +85,10 @@ public class DungeonGenerator : MonoBehaviour
         {
             Room instance = Instantiate(room, Vector3.zero, Quaternion.identity, transform);
             destroyObjects.Add(instance.gameObject);
-
+            if (instance.gameObject.CompareTag("LD"))
+            {
+                _referenceRoom.Add(instance.gameObject);
+            }
             // setup rotation
             instance.transform.rotation = Quaternion.Euler(0, dungeonRotation, 0);
 
@@ -89,6 +100,11 @@ public class DungeonGenerator : MonoBehaviour
 
             lastDoor = instance.Exit;
         }
+        for (int i = 0; i < _referenceRoom.Count; i++)
+        {
+            _referenceRoom[i].gameObject.SetActive(false);
+            _referenceRoom[1].gameObject.SetActive(true);
+        }
     }
 
     private void ResetDungeon()
@@ -96,6 +112,7 @@ public class DungeonGenerator : MonoBehaviour
         transform.DetachChildren();
 
         roomGen.Clear();
+        _referenceRoom.Clear();
     }
 
     public void ClearDungeon()
@@ -106,5 +123,10 @@ public class DungeonGenerator : MonoBehaviour
             DestroyImmediate(obj);
         }
         destroyObjects.Clear();
+    }
+
+    public List<Room> GetRoom()
+    {
+        return (roomGen);
     }
 }
