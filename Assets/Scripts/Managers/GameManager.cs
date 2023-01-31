@@ -9,6 +9,9 @@ public class GameManager : LocalManager<GameManager>
     float _slowMoT;
     float _slowMoInitialT;
     float _timeSpeed;
+    float _delayFramerateCalculation;
+
+    [SerializeField] TextMeshProUGUI _fps;
 
     #region Debug
     PlayerInputMap _inputs;
@@ -21,7 +24,6 @@ public class GameManager : LocalManager<GameManager>
     private void DebugAwake()
     {
 #if UNITY_EDITOR
-        _inputs = new PlayerInputMap();
         _inputs.Debugging.ChangeFramerate.started += _ => DebugChangeFramerate();
         _inputs.Debugging.ChangeTimeScale.started += _ => DebugChangeTimeScale();
         if (_guns != null)
@@ -142,6 +144,8 @@ public class GameManager : LocalManager<GameManager>
     protected override void Awake()
     {
         base.Awake();
+        _inputs = new PlayerInputMap();
+        _inputs.Debugging.DisplayFramerate.started += _ => DisplayFramerate();
         DebugAwake();
     }
 
@@ -157,6 +161,25 @@ public class GameManager : LocalManager<GameManager>
     private void Update()
     {
         SlowMo();
+
+        if (_fps.enabled)
+            UpdateFramerate();
+    }
+
+    private void DisplayFramerate()
+    {
+        _fps.enabled = !_fps.enabled;
+    }
+
+    private void UpdateFramerate()
+    {
+        if (_delayFramerateCalculation <= 0)
+        {
+            _fps.text = (1 / Time.deltaTime).ToString("F1");
+            _delayFramerateCalculation = 0.05f;
+        }
+        else
+            _delayFramerateCalculation -= Time.deltaTime;
     }
 
     public void StartSlowMo(float speed, float duration)

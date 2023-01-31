@@ -314,6 +314,15 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DisplayFramerate"",
+                    ""type"": ""Button"",
+                    ""id"": ""304391cc-88d5-45ab-9ee4-cfb7a5f7deec"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -547,6 +556,17 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                     ""action"": ""Skill4"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4f6c6c00-b281-4fcd-a3d0-bdd1f2bdb4dc"",
+                    ""path"": ""<Keyboard>/f3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard Mouse"",
+                    ""action"": ""DisplayFramerate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -809,6 +829,7 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
         m_Debugging_Skill2 = m_Debugging.FindAction("Skill2", throwIfNotFound: true);
         m_Debugging_Skill3 = m_Debugging.FindAction("Skill3", throwIfNotFound: true);
         m_Debugging_Skill4 = m_Debugging.FindAction("Skill4", throwIfNotFound: true);
+        m_Debugging_DisplayFramerate = m_Debugging.FindAction("DisplayFramerate", throwIfNotFound: true);
         // Actions
         m_Actions = asset.FindActionMap("Actions", throwIfNotFound: true);
         m_Actions_Shoot = m_Actions.FindAction("Shoot", throwIfNotFound: true);
@@ -939,6 +960,7 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
     private readonly InputAction m_Debugging_Skill2;
     private readonly InputAction m_Debugging_Skill3;
     private readonly InputAction m_Debugging_Skill4;
+    private readonly InputAction m_Debugging_DisplayFramerate;
     public struct DebuggingActions
     {
         private @PlayerInputMap m_Wrapper;
@@ -954,6 +976,7 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
         public InputAction @Skill2 => m_Wrapper.m_Debugging_Skill2;
         public InputAction @Skill3 => m_Wrapper.m_Debugging_Skill3;
         public InputAction @Skill4 => m_Wrapper.m_Debugging_Skill4;
+        public InputAction @DisplayFramerate => m_Wrapper.m_Debugging_DisplayFramerate;
         public InputActionMap Get() { return m_Wrapper.m_Debugging; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -996,6 +1019,9 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                 @Skill4.started -= m_Wrapper.m_DebuggingActionsCallbackInterface.OnSkill4;
                 @Skill4.performed -= m_Wrapper.m_DebuggingActionsCallbackInterface.OnSkill4;
                 @Skill4.canceled -= m_Wrapper.m_DebuggingActionsCallbackInterface.OnSkill4;
+                @DisplayFramerate.started -= m_Wrapper.m_DebuggingActionsCallbackInterface.OnDisplayFramerate;
+                @DisplayFramerate.performed -= m_Wrapper.m_DebuggingActionsCallbackInterface.OnDisplayFramerate;
+                @DisplayFramerate.canceled -= m_Wrapper.m_DebuggingActionsCallbackInterface.OnDisplayFramerate;
             }
             m_Wrapper.m_DebuggingActionsCallbackInterface = instance;
             if (instance != null)
@@ -1033,6 +1059,9 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                 @Skill4.started += instance.OnSkill4;
                 @Skill4.performed += instance.OnSkill4;
                 @Skill4.canceled += instance.OnSkill4;
+                @DisplayFramerate.started += instance.OnDisplayFramerate;
+                @DisplayFramerate.performed += instance.OnDisplayFramerate;
+                @DisplayFramerate.canceled += instance.OnDisplayFramerate;
             }
         }
     }
@@ -1180,6 +1209,7 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
         void OnSkill2(InputAction.CallbackContext context);
         void OnSkill3(InputAction.CallbackContext context);
         void OnSkill4(InputAction.CallbackContext context);
+        void OnDisplayFramerate(InputAction.CallbackContext context);
     }
     public interface IActionsActions
     {
