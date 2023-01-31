@@ -34,6 +34,7 @@ public class MuseArm : Arm
 
     public override void StartIdle()
     {
+        Refilled();
     }
 
     public override void CheckLookedAt()

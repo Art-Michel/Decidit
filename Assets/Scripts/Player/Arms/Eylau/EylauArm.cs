@@ -22,7 +22,7 @@ public class EylauArm : Arm
 
     public override void StartIdle()
     {
-        _crossHairOutline.enabled = true;
+        Refilled();
         _previs.SetActive(false);
     }
 

@@ -11,6 +11,7 @@ public class Projectile : Hitbox
     [SerializeField] private PooledObject _pooledObject;
     [SerializeField] private GameObject _mesh;
     [SerializeField] private TrailRenderer _trailRenderer;
+    [SerializeField] private MonoBehaviour _trailMaterial;
     [SerializeField] private bool _bounces;
     [SerializeField][ShowIf("_bounces")][Range(0f, 1f)] protected float _bounciness;
     [SerializeField] private bool _explodesOnHit;
@@ -34,6 +35,7 @@ public class Projectile : Hitbox
         _lifeT = _lifeSpan;
         _trailDelayT = _trailDelay; //Delay before spawning the trail
         if (_trailRenderer) _trailRenderer.enabled = false;
+        if (_trailMaterial) _trailMaterial.enabled = false;
         _mesh.SetActive(false);
         _lasterFramePosition = position - _direction * _radius;
         _lastFramePosition = position - _direction * _radius;
@@ -93,6 +95,7 @@ public class Projectile : Hitbox
             {
                 // spawn trail after a bit
                 if (_trailRenderer) _trailRenderer.enabled = true;
+                if (_trailMaterial) _trailMaterial.enabled = true;
                 _mesh.SetActive(true);
             }
         }
@@ -169,6 +172,10 @@ public class Projectile : Hitbox
         {
             _trailRenderer.Clear();
             _trailRenderer.enabled = false;
+        }
+        if (_trailMaterial)
+        {
+            _trailMaterial.enabled = false;
         }
         _pooledObject.Pooler.Return(_pooledObject);
     }

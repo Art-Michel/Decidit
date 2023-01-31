@@ -129,13 +129,12 @@ public class Arm : MonoBehaviour
         if (_cooldownT <= 0f)
         {
             _fsm.ChangeState(ArmStateList.IDLE);
-            Refilled();
         }
     }
 
     public virtual void StartIdle()
     {
-
+        Refilled();
     }
 
     public virtual void CheckLookedAt()

@@ -45,7 +45,7 @@ public class GameManager : LocalManager<GameManager>
     private void DebugStart()
     {
 #if UNITY_EDITOR
-        if (_DebuggingCanvas)_DebuggingCanvas.SetActive(true);
+        if (_DebuggingCanvas) _DebuggingCanvas.SetActive(true);
 
         //Framerate
         _is30fps = false;
@@ -90,28 +90,24 @@ public class GameManager : LocalManager<GameManager>
         foreach (GameObject arm in _arms)
             arm.SetActive(false);
         _arms[3].SetActive(true);
-        PlaceHolderSoundManager.Instance.PlayArmEquip();
     }
     private void Skill3()
     {
         foreach (GameObject arm in _arms)
             arm.SetActive(false);
         _arms[2].SetActive(true);
-        PlaceHolderSoundManager.Instance.PlayArmEquip();
     }
     private void Skill2()
     {
         foreach (GameObject arm in _arms)
             arm.SetActive(false);
         _arms[1].SetActive(true);
-        PlaceHolderSoundManager.Instance.PlayArmEquip();
     }
     private void Skill1()
     {
         foreach (GameObject arm in _arms)
             arm.SetActive(false);
         _arms[0].SetActive(true);
-        PlaceHolderSoundManager.Instance.PlayArmEquip();
     }
     private void Gun4()
     {

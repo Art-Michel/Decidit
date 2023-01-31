@@ -68,7 +68,8 @@ public class Player : LocalManager<Player>
 
     #region Jumping, Falling and Ground Detection variables
     [Foldout("Jumping Settings")]
-    [Range(0, 50)][SerializeField] private float _jumpStrength = 14f;
+    [Range(0, 50)][SerializeField] private float _baseJumpStrength = 14f;
+    private float _currentJumpStrength;
     [Foldout("Jumping Settings")]
     [Range(0, 10)][SerializeField] private float _airborneDrag = 3f;
     [Foldout("Jumping Settings")]
@@ -144,6 +145,7 @@ public class Player : LocalManager<Player>
         _movementInputs = Vector2.zero;
         _globalMomentum = Vector3.zero;
         _currentSpeed = _baseSpeed;
+        _currentJumpStrength = _baseJumpStrength;
         _currentlyAppliedGravity = 0;
         _movementAcceleration = 0;
         _canMove = true;
@@ -379,7 +381,7 @@ public class Player : LocalManager<Player>
 
     public void StartJumping()
     {
-        _currentlyAppliedGravity = _jumpStrength;
+        _currentlyAppliedGravity = _currentJumpStrength;
         _justJumped = true;
         _coyoteTime = -1f;
         _currentFriction = _airborneFriction;
@@ -466,14 +468,16 @@ public class Player : LocalManager<Player>
 
     #region Shmovement Functions
 
-    public void SpeedUpMovement()
+    public void BuffMovement()
     {
-
+        _currentSpeed = _baseSpeed * 1.2f;
+        _currentJumpStrength = _baseJumpStrength * 1.2f;
     }
 
-    public void ResetMovementSpeed()
+    public void ResetMovement()
     {
-
+        _currentSpeed = _baseSpeed;
+        _currentJumpStrength = _baseJumpStrength;
     }
 
     private Vector3 MakeDirectionCameraRelative(Vector2 inputDirection)

@@ -153,7 +153,7 @@ Transform:
   m_GameObject: {fileID: 1822004407248124589}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.46, y: 0.46, z: 0.46}
+  m_LocalScale: {x: 0.16, y: 0.16, z: 0.16}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 8465386666873793416}
@@ -278,7 +278,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d66ae6fba963a7746acec4aeb0bf6b58, type: 2}
+  - {fileID: 2100000, guid: 525e437aaa21097439ada35493e763b0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -362,7 +362,11 @@ MonoBehaviour:
   _damage: 30
   _knockbackForce: 10
   _knockbackAngle: {x: 0, y: 0, z: 0}
+  _canHitThroughWalls: 0
   _canMultiHit: 0
+  _shouldNotHitThrough:
+    serializedVersion: 2
+    m_Bits: 0
   _delayBetweenHits: 0
   _lifeSpan: 1.2
   _explosionVfx: {fileID: 9125148645660124460}
@@ -517,11 +521,15 @@ MonoBehaviour:
   _shouldCollideWith:
     serializedVersion: 2
     m_Bits: 33280
-  _radius: 0.25
+  _radius: 0.12
   _damage: 30
   _knockbackForce: 10
   _knockbackAngle: {x: 0, y: 0, z: 0}
+  _canHitThroughWalls: 0
   _canMultiHit: 0
+  _shouldNotHitThrough:
+    serializedVersion: 2
+    m_Bits: 0
   _delayBetweenHits: 0
   _pooledObject: {fileID: 6950745005677804068}
   _mesh: {fileID: 1822004407248124589}
@@ -599,5 +607,9 @@ MonoBehaviour:
   _damage: 0
   _knockbackForce: 20
   _knockbackAngle: {x: 0, y: 0, z: 0}
+  _canHitThroughWalls: 0
   _canMultiHit: 0
+  _shouldNotHitThrough:
+    serializedVersion: 2
+    m_Bits: 0
   _delayBetweenHits: 0

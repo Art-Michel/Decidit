@@ -12,13 +12,11 @@ public class Hitbox : MonoBehaviour
     [SerializeField] protected float _knockbackForce = 10f;
     [SerializeField] protected Vector3 _knockbackAngle = Vector3.zero;
     [SerializeField] protected bool _canHitThroughWalls;
+    [HideIf("_canHitThroughWalls")][SerializeField] protected LayerMask _shouldNotHitThrough;
     [SerializeField] protected bool _canMultiHit = false;
-    [SerializeField] protected LayerMask _shouldNotHitThrough;
     [ShowIf("_canMultiHit")][SerializeField] protected float _delayBetweenHits = 0f;
 
     public Dictionary<Transform, float> Blacklist { get; set; }
-
-    // [SerializeField] protected float _targetInvulnerability;
 
     protected virtual void Awake()
     {

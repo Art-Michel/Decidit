@@ -41,13 +41,11 @@ public class EylauArea : MonoBehaviour
         _isPlayerInHere = Physics.OverlapCapsule(transform.position + Vector3.down * 100, transform.position + Vector3.up * 100, _radius, _shouldBuff).Length > 0;
         if (!_isPlayerInHere && _wasPlayerInHere)
         {
-            //Player.Instance.resetspeed
-            Debug.Log("non");
+            Player.Instance.ResetMovement();
         }
         if (_isPlayerInHere && !_wasPlayerInHere)
         {
-            //Player.Instance.Speedup();
-            Debug.Log("oui");
+            Player.Instance.BuffMovement();
         }
         _wasPlayerInHere = _isPlayerInHere;
     }
