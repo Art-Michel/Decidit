@@ -60,8 +60,6 @@ namespace State.AICAC
             deathAICACSO = Instantiate(deathAICACSO);
             dodgeAICACSO = Instantiate(dodgeAICACSO);
             surroundAICACSO = Instantiate(surroundAICACSO);
-
-            agent.updatePosition = false;
         }
 
         private void Update()

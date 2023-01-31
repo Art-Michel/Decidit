@@ -31,6 +31,10 @@ namespace State.AICAC
         Vector3 direction;
         Vector3 relativePos;
 
+        [Header("Rate Calcule Path")]
+        [SerializeField] float maxRateRepath;
+        [SerializeField] float currentRateRepath;
+
         public override void InitState(StateControllerAICAC stateController)
         {
             base.InitState(stateController);
@@ -138,7 +142,17 @@ namespace State.AICAC
 
             if (globalRef.agent.enabled && globalRef != null)
             {
-                if(!globalRef.agent.isOnOffMeshLink)
+                if(currentRateRepath >0)
+                {
+                    currentRateRepath -= Time.deltaTime;
+                }
+                else
+                {
+                    globalRef.agent.SetDestination(destination);
+                    currentRateRepath = maxRateRepath;
+                }
+
+               /* if (!globalRef.agent.isOnOffMeshLink)
                 {
                     globalRef.agent.updatePosition = false;
                     globalRef.agent.SetDestination(destination);
@@ -152,7 +166,7 @@ namespace State.AICAC
                 {
                     globalRef.agent.updatePosition = true;
                     globalRef.agent.SetDestination(destination);
-                }
+                }*/
             }
 
             if (globalRef.distPlayer < baseMoveAICACSO.attackRange)
@@ -243,6 +257,7 @@ namespace State.AICAC
         {
             globalRef.baseAttackAICACSO.isAttacking = false;
             baseMoveAICACSO.speedRot = 0;
+            currentRateRepath = 0;
         }
     }
 }
