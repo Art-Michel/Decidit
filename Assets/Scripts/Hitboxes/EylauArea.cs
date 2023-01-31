@@ -52,21 +52,16 @@ public class EylauArea : MonoBehaviour
         if (other.CompareTag("Ennemi"))
         {
             if (TryGetComponent<GlobalRefAICAC>(out GlobalRefAICAC cacAi))
-            {
                 cacAi.isInEylau = false;
-            }
             else if (TryGetComponent<GlobalRefBullAI>(out GlobalRefBullAI bullAi))
-            {
                 bullAi.isInEylau = false;
-            }
             else if (TryGetComponent<GlobalRefFlyAI>(out GlobalRefFlyAI flyAi))
-            {
                 flyAi.isInEylau = false;
-            }
             else if (TryGetComponent<GlobalRefWallAI>(out GlobalRefWallAI wallAi))
-            {
                 wallAi.isInEylau = false;
-            }
+
+            else
+                Debug.Log("found enemy but couldnt find ai script");
         }
     }
 
