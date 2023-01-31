@@ -3,11 +3,12 @@ using UnityEngine;
 public class Material_Instances : MonoBehaviour
 {
     public GameObject MeshGameObject;
-    public Color Color;
+    public Color ColorBase;
     public Color ColorPreAtatck;
     public Material Material;
 
-    public Texture2D Texture;
+    public Texture2D TextureBase;
+    public Texture2D TexturePreAttack;
 
     public Vector2 SetPixelTexture;
 
@@ -24,16 +25,25 @@ public class Material_Instances : MonoBehaviour
             Material = MeshGameObject.GetComponent<SkinnedMeshRenderer>().material;
         }
 
-        if (Texture == null)
+        if (TextureBase == null)
         {
             Debug.LogWarning("Aucune texture trouvee dans le shader, creation d'une nouvelle");
-            ChangeColorTexture(Color);
+            ChangeColorTexture(ColorBase);
         }
     }
 
     public void ChangeColorTexture(Color color)
     {
-        Texture = new Texture2D(128, 128);
+        if(color == ColorBase)
+        {
+            Material.SetTexture("_TextureToDissolve", TextureBase);
+        }
+        else if(color == ColorPreAtatck)
+        {
+            Material.SetTexture("_TextureToDissolve", TexturePreAttack);
+        }
+
+       /* Texture = new Texture2D(128, 128);
         for (int y = 0; y < Texture.height; y++)
         {
             for (int x = 0; x < Texture.width; x++)
@@ -42,12 +52,12 @@ public class Material_Instances : MonoBehaviour
             }
         }
         Texture.Apply();
-        Material.SetTexture("_TextureToDissolve", Texture);
+        Material.SetTexture("_TextureToDissolve", Texture);*/
     }
 
     // Update is called once per frame
     void Update()
     {
-        Material.color = Color;
+        Material.color = ColorBase;
     }
 }
