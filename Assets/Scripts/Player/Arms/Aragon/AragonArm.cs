@@ -41,6 +41,9 @@ public class AragonArm : Arm
     AnimationCurve _dashMovementCurve;
     [Foldout("Stats")]
     [SerializeField]
+    AnimationCurve _dashSpeedCurve;
+    [Foldout("Stats")]
+    [SerializeField]
     float _dashFovIncrease = 20f;
     [Foldout("Stats")]
     [SerializeField]
@@ -151,7 +154,7 @@ public class AragonArm : Arm
 
     public override void UpdateActive()
     {
-        _dashT += Time.deltaTime * currentDashSpeed;
+        _dashT += Time.deltaTime * currentDashSpeed * _dashSpeedCurve.Evaluate(_dashT);
         _player.transform.position = Vector3.LerpUnclamped(_dashStartPosition, _dashDestination, _dashMovementCurve.Evaluate(_dashT));
         if (_dashT >= 1)
         {
