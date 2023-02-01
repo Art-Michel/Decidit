@@ -77,7 +77,7 @@ public class Doors : MonoBehaviour
 
     public int CheckIA()
     {
-        return (GameObject.FindGameObjectsWithTag("Ennemi").Length);
+        return (GameObject.FindGameObjectsWithTag("Ennemi").Length -1);
     }
 
     #endregion
