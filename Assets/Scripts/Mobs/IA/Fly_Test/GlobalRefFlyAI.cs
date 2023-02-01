@@ -10,6 +10,8 @@ namespace State.FlyAI
         public Transform playerTransform;
         public StateControllerFlyAI stateControllerFlyAI;
         public EnemyHealth enemyHealth;
+        public AudioSource audioSourceFly;
+
 
         [Header("Slow Move References")]
         public bool isInEylau;
