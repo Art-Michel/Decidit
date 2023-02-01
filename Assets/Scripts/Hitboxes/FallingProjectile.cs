@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class FallingProjectile : Projectile
 {
-    float mario;
     [SerializeField] float _drag = 1f;
     [SerializeField] float _speedReductionFactor = 1f;
     const float _gravity = 9.81f;
