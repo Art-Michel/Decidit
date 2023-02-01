@@ -15,6 +15,7 @@ public class Hitbox : MonoBehaviour
     [HideIf("_canHitThroughWalls")][SerializeField] protected LayerMask _shouldNotHitThrough;
     [SerializeField] protected bool _canMultiHit = false;
     [ShowIf("_canMultiHit")][SerializeField] protected float _delayBetweenHits = 0f;
+    [SerializeField] private bool _shouldSplashBloodOnHit = false;
 
     public Dictionary<Transform, float> Blacklist { get; set; }
 
@@ -71,10 +72,21 @@ public class Hitbox : MonoBehaviour
         //Debug.Log(transform.name + " hit " + target.transform.name);
         if (targetCollider.parent.TryGetComponent<Health>(out Health health))
         {
-            if (targetCollider.CompareTag("WeakHurtbox"))
-                health.TakeCriticalDamage(_damage);
+            if (_shouldSplashBloodOnHit)
+            {
+                if (targetCollider.CompareTag("WeakHurtbox"))
+                    health.TakeCriticalDamage(_damage, transform.position, -transform.forward);
+                else
+                    health.TakeDamage(_damage, transform.position, -transform.forward);
+            }
             else
-                health.TakeDamage(_damage);
+            {
+                if (targetCollider.CompareTag("WeakHurtbox"))
+                    health.TakeCriticalDamage(_damage);
+                else
+                    health.TakeDamage(_damage);
+            }
+
             if (_knockbackForce > 0f)
             {
                 //direction

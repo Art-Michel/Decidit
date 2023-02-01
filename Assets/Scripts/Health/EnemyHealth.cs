@@ -11,7 +11,6 @@ public class EnemyHealth : Health
     [SerializeField] VisualEffect _deathVfx;
 
     float _regenValue;
-    Pooler _bloodVFXPooler;
     CanvasGroup _canvasGroup;
     Transform _playerCamera;
     Vector3 _camPos;
@@ -37,7 +36,6 @@ public class EnemyHealth : Health
         _regenValue = _hp;
         _playerCamera = Camera.main.transform;
         _canvasGroup = _canvas.GetComponent<CanvasGroup>();
-        _bloodVFXPooler = GetComponent<Pooler>();
     }
 
     protected override void Start()
@@ -74,29 +72,6 @@ public class EnemyHealth : Health
         PlaceHolderSoundManager.Instance.PlayCriticalHitSound();
     }
 
-    public void TakeDamage(int amount, Vector3 position, Vector3 forward)
-    {
-        this.TakeDamage(amount);
-        SplashBlood(position, forward);
-    }
-
-    public void TakeCriticalDamage(int amount, Vector3 position, Vector3 forward)
-    {
-        this.TakeCriticalDamage(amount);
-        SplashBlood(position, forward);
-    }
-
-    private void SplashBlood(Vector3 position, Vector3 forward)
-    {
-        if (!_bloodVFXPooler)
-        {
-            Debug.LogError("No bloodFX Pooler script found on same object as this script.");
-            return;
-        }
-        Transform splash = _bloodVFXPooler.Get().transform;
-        splash.position = position;
-        splash.forward = forward;
-    }
 
     //used to make healthbar face the camera
     void LookAtCamera()

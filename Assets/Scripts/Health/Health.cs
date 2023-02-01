@@ -10,6 +10,8 @@ public class Health : MonoBehaviour
     [SerializeField] protected Image _hpUi;
     [Foldout("References")]
     [SerializeField] protected Image _probHpUi;
+    [Foldout("References")]
+    [SerializeField] private Pooler _bloodVFXPooler;
 
     [Foldout("Stats")]
     [Range(1, 300)][SerializeField] protected float _maxHp = 100;
@@ -71,9 +73,33 @@ public class Health : MonoBehaviour
         StartProbHealth();
     }
 
+    public void TakeDamage(int amount, Vector3 position, Vector3 forward)
+    {
+        this.TakeDamage(amount);
+        SplashBlood(position, forward);
+    }
+
+    public void TakeCriticalDamage(int amount, Vector3 position, Vector3 forward)
+    {
+        this.TakeCriticalDamage(amount);
+        SplashBlood(position, forward);
+    }
+
     public virtual void Knockback(Vector3 direction)
     {
 
+    }
+
+    private void SplashBlood(Vector3 position, Vector3 forward)
+    {
+        if (!_bloodVFXPooler)
+        {
+            Debug.LogError("No bloodFX Pooler script found on same object as this script.");
+            return;
+        }
+        Transform splash = _bloodVFXPooler.Get().transform;
+        splash.position = position;
+        splash.forward = forward;
     }
 
     public void ProbRegen(int amount = 10)

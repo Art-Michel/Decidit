@@ -16,6 +16,8 @@ namespace State.AICAC
         public Material_Instances material_Instances;
         public float distPlayer;
         [SerializeField] StateControllerAICAC stateControllerAICAC;
+        public AudioSource audioSourceTrashMob;
+
 
         [Header("Slow Move References")]
         public bool isInEylau;

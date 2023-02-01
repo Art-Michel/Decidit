@@ -19,6 +19,7 @@ namespace State.AIBull
         public AgentLinkMover agentLinkMover;
         public CharacterController characterController;
         public RushManager rushManager;
+        public AudioSource audioSourceBull;
 
         [Header("Slow Move References")]
         public bool isInEylau;
