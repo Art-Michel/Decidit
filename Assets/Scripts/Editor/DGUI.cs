@@ -12,9 +12,9 @@ public class DGUI : Editor
 
         DungeonGenerator dGenerator = target as DungeonGenerator;
 
-        if (GUILayout.Button("Generate"))
-        {
-            dGenerator.Generate();
-        }
+        // if (GUILayout.Button("Generate"))
+        // {
+        //     dGenerator.Generate();
+        // }
     }
 }

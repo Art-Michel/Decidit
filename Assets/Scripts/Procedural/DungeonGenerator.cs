@@ -1,7 +1,7 @@
 using System.Collections.Generic;
+using NaughtyAttributes;
 using UnityEngine;
 
-[ExecuteInEditMode]
 public class DungeonGenerator : MonoBehaviour
 {
     public static DungeonGenerator Instance = null;
@@ -11,9 +11,10 @@ public class DungeonGenerator : MonoBehaviour
     [SerializeField] RoomSetup starterRoom;
     [SerializeField] RoomSetup finalRoom;
     [SerializeField] int length;
+    [SerializeField] int _currentRoom;
     [SerializeField] List<RoomSetup> rooms;
     [SerializeField] List<RoomSetup> corridors;
-    [SerializeField] List<GameObject> _referenceRoom;
+    List<GameObject> _referenceRooms;
 
     List<Room> roomGen;
 
@@ -25,11 +26,14 @@ public class DungeonGenerator : MonoBehaviour
             return;
         }
         Instance = this;
+        _referenceRooms = new List<GameObject>();
         Generate();
     }
 
+    [Button]
     public void Generate()
     {
+        ResetDungeon();
         if (transform.childCount > 0)
         {
             ClearDungeon();
@@ -71,8 +75,6 @@ public class DungeonGenerator : MonoBehaviour
         roomGen.Add(corridors[Random.Range(0, corridors.Count)].Get());
         roomGen.Add(finalRoom.Get());
         Build();
-
-        ResetDungeon();
     }
 
     private void Build()
@@ -84,7 +86,7 @@ public class DungeonGenerator : MonoBehaviour
             instance.gameObject.SetActive(true);
             if (instance.gameObject.CompareTag("LD"))
             {
-                _referenceRoom.Add(instance.gameObject);
+                _referenceRooms.Add(instance.gameObject);
             }
             // setup rotation
             instance.transform.rotation = Quaternion.Euler(0, dungeonRotation, 0);
@@ -96,10 +98,10 @@ public class DungeonGenerator : MonoBehaviour
             }
 
             lastDoor = instance.Exit;
-            for (int i = 0; i < _referenceRoom.Count; i++)
+            for (int i = 0; i < _referenceRooms.Count; i++)
             {
-                _referenceRoom[i].gameObject.SetActive(false);
-                _referenceRoom[0].gameObject.SetActive(true); // en gros je veux récupérer que les LD pour tous les désativer sauf le premier
+                _referenceRooms[i].gameObject.SetActive(false);
+                _referenceRooms[0].gameObject.SetActive(true);
             }
             transform.GetChild(0).gameObject.SetActive(true);
         }
@@ -108,21 +110,43 @@ public class DungeonGenerator : MonoBehaviour
     private void ResetDungeon()
     {
         //transform.DetachChildren();
-
         roomGen.Clear();
-        _referenceRoom.Clear();
+        _referenceRooms.Clear();
     }
 
     public void ClearDungeon()
     {
-        while(transform.childCount > 0)
+        while (transform.childCount > 0)
         {
             DestroyImmediate(transform.GetChild(0).gameObject);
         }
     }
 
-    public List<GameObject> GetRoom()
+    public GameObject GetRoom()
     {
-        return (_referenceRoom);
+        return (_referenceRooms[_currentRoom]);
+    }
+
+    public int GetReferenceRoom()
+    {
+        return(_currentRoom);
+    }
+    public void AddCurentRoom()
+    {
+        _currentRoom ++;
+    }
+
+    public List<GameObject> GetReferenceRooms()
+    {
+        return(_referenceRooms);
+    }
+    public void EnterRoom()
+    {
+
+    }
+
+    public void ExitRoom()
+    {
+
     }
 }

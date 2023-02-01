@@ -24,6 +24,7 @@ public class EnemyHealth : Health
     [SerializeField][Range(0.5f, 20f)] float _disappearSpeed = 4f;
     [SerializeField][Range(0f, 2f)] float _disappearMaxStartup = 1f;
     [SerializeField][Range(0f, 2f)] float _deathAnimationDuration = 1f;
+    [SerializeField] Room room;
     float _disappearStartup;
     float _appearT;
     bool _isVisible;
@@ -124,6 +125,7 @@ public class EnemyHealth : Health
             _deathT = _deathAnimationDuration;
             _isDying = true;
             _deathVfx.Play();
+            room.NbIA --;
             Player.Instance.gameObject.GetComponent<Health>().ProbRegen(Mathf.RoundToInt(_regenValue / 4f));
             Debug.Log(_regenValue + " Regen");
         }

@@ -354,7 +354,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 525e437aaa21097439ada35493e763b0, type: 2}
+  - {fileID: 2100000, guid: 25a2b3b7291da574188c6f47d6ff3cd2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -384,8 +384,8 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2288459895210140327}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
+  m_IsTrigger: 1
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -401,11 +401,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 580ba37ae491bbc4ebcc0e94d7066abe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NbIA: 0
-  indexRoom: 0
-  indexDoor: 0
-  Door: []
-  Room: []
+  _isExit: 1
+  room: {fileID: -5454422006560794810}
 --- !u!1 &2300192474006698394
 GameObject:
   m_ObjectHideFlags: 0
@@ -1097,11 +1094,11 @@ GameObject:
   - component: {fileID: -5454422006560794810}
   m_Layer: 0
   m_Name: Room_Start
-  m_TagString: Untagged
+  m_TagString: LD
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3844320843498882610
 Transform:
   m_ObjectHideFlags: 0
@@ -1157,6 +1154,9 @@ MonoBehaviour:
   size: {x: 3, y: 1, z: 3}
   enter: {fileID: 0}
   exit: {fileID: 2288459895210140327}
+  _IAList: []
+  _isStartEnd: 1
+  NbIA: 0
 --- !u!1 &3844320843911562156
 GameObject:
   m_ObjectHideFlags: 0
