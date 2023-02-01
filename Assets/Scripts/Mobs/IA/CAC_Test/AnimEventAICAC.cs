@@ -23,7 +23,6 @@ namespace State.AICAC
             globalRef.hitBox.SetActive(false);
             globalRef.baseAttackAICACSO.isAttacking = false;
             globalRef.myAnimator.SetBool("Attack", false);
-            Debug.Log("Stop attack");
         }
     }
 }

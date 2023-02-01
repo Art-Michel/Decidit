@@ -57,13 +57,11 @@ namespace State.AICAC
                 {
                     globalRef.agent.ActivateCurrentOffMeshLink(false);
                     linkIsActive = false;
-                    Debug.Log(linkIsActive + "Disable");
                     maxDurationNavLink -= Time.deltaTime;
                 }
                 else
                 {
                     linkIsActive = true;
-                    Debug.Log(linkIsActive + "Enable");
                     globalRef.agent.ActivateCurrentOffMeshLink(true);
                 }
 

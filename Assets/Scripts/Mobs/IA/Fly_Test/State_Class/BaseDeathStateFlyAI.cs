@@ -13,10 +13,6 @@ namespace State.FlyAI
 
         private void Update()
         {
-            if (state == StateControllerFlyAI.AIState.Death)
-            {
-                Debug.Log("Death");
-            }
         }
     }
 }

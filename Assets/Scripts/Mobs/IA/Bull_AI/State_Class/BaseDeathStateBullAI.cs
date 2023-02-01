@@ -21,7 +21,6 @@ namespace State.AIBull
                 //globalRef.bullCount.RemoveAI(globalRef.transform);
                 globalRef.agent.speed = 0;
                 globalRef.rushManager.RemoveDeadAI(globalRef);
-                Debug.Log("Death");
             }
         }
     }
