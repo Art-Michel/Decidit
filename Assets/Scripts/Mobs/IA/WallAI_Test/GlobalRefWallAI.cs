@@ -16,7 +16,7 @@ namespace State.WallAI
         public Transform playerTransform;
         public float orientation;
         public MeshRenderer meshRenderer;
-        public AudioSource audioSource;
+        public AudioSource audioSourceWallMob;
 
         [Header("Slow Move References")]
         public bool isInEylau;

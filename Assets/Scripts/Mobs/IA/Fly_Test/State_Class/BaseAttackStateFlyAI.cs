@@ -20,11 +20,25 @@ namespace State.FlyAI
             state = StateControllerFlyAI.AIState.BaseAttack;
         }
 
+
         private void Start()
         {
             lockPlayerFlySO = globalRef.lockPlayerFlySO;
             baseAttackFlySO = globalRef.baseAttackFlySO;
         }
+
+        private void OnEnable()
+        {
+            if (baseAttackFlySO != null)
+            {
+                baseAttackFlySO.speedRotationAIAttack = 0;
+                baseAttackFlySO.currentSpeedYAttack = 0;
+                baseAttackFlySO.lerpSpeedYValueAttack = 0;
+            }
+
+            SoundManager.instance.PlaySoundMobOneShot(globalRef.audioSourceFly, SoundManager.instance.soundAndVolumeFlyMob[1]);
+        }
+
 
         private void Update()
         {
@@ -39,16 +53,6 @@ namespace State.FlyAI
             if(hit.transform != null)
             {
                 stateControllerFlyAI.SetActiveState(StateControllerFlyAI.AIState.BaseMove);
-            }
-        }
-
-        private void OnEnable()
-        {
-            if(baseAttackFlySO != null)
-            {
-                baseAttackFlySO.speedRotationAIAttack = 0;
-                baseAttackFlySO.currentSpeedYAttack = 0;
-                baseAttackFlySO.lerpSpeedYValueAttack = 0;
             }
         }
 

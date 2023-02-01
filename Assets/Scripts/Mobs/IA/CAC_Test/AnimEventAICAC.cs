@@ -18,6 +18,10 @@ namespace State.AICAC
             globalRef.material_Instances.ChangeColorTexture(globalRef.material_Instances.ColorBase);
             globalRef.hitBox.SetActive(true);
         }
+        void LaunchSoundAttack()
+        {
+            SoundManager.instance.PlaySoundMobOneShot(globalRef.audioSourceTrashMob, SoundManager.instance.soundAndVolumeListTrashMob[1]);
+        }
         void EndAttack()
         {
             globalRef.hitBox.SetActive(false);

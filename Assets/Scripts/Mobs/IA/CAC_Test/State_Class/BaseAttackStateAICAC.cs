@@ -28,7 +28,9 @@ namespace State.AICAC
         private void OnEnable()
         {
             if (globalRef != null)
+            {
                 baseAttackAICACSO = globalRef.baseAttackAICACSO;
+            }
         }
 
         private void Update()
@@ -64,8 +66,11 @@ namespace State.AICAC
                 }
                 else if(material_Instances.Material.color != material_Instances.ColorPreAtatck)
                 {
-                    material_Instances.Material.color = material_Instances.ColorPreAtatck;
                     material_Instances.ChangeColorTexture(material_Instances.ColorPreAtatck);
+                }
+                if(globalRef.distPlayer < baseAttackAICACSO.attackRange && baseAttackAICACSO.currentAttackRate == baseAttackAICACSO.maxAttackRate)
+                {
+                    SoundManager.instance.PlaySoundMobOneShot(globalRef.audioSourceTrashMob, SoundManager.instance.soundAndVolumeListTrashMob[0]);
                 }
 
                 baseAttackAICACSO.currentAttackRate -= Time.deltaTime;
@@ -95,7 +100,6 @@ namespace State.AICAC
         {
             if(material_Instances != null)
             {
-                material_Instances.Material.color = material_Instances.ColorBase;
                 material_Instances.ChangeColorTexture(material_Instances.ColorBase);
             }
             baseAttackAICACSO.currentAttackRate = baseAttackAICACSO.maxAttackRate;

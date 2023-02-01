@@ -29,6 +29,7 @@ namespace State.FlyAI
             try
             {
                 globalRef.colliderBaseAttack.gameObject.SetActive(false);
+                SoundManager.instance.PlaySoundMobOneShot(globalRef.audioSourceFly, SoundManager.instance.soundAndVolumeFlyMob[0]);
             }
             catch
             {

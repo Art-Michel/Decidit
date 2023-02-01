@@ -6,37 +6,43 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
+    public static SoundManager instance;
+
+    [Header("List de son WallMob")] public List<SoundVolume> soundAndVolumeGlobalMob = new List<SoundVolume>();
+
     [Header("List de son WallMob")] public List<SoundVolume> soundAndVolumeWallMob = new List<SoundVolume>();
-    public static List<SoundVolume> soundAndVolumeWallMobStatic = new List<SoundVolume>();
+    //public static List<SoundVolume> soundAndVolumeWallMobStatic = new List<SoundVolume>();
 
     [Header("List de son Trash")] public List<SoundVolume> soundAndVolumeListTrashMob = new List<SoundVolume>();
-    public static List<SoundVolume> soundAndVolumeListTrashMobStatic = new List<SoundVolume>();
+   // public static List<SoundVolume> soundAndVolumeListTrashMobStatic = new List<SoundVolume>();
 
     [Header("List de son RushMob")] public List<SoundVolume> soundAndVolumeRushMob = new List<SoundVolume>();
-    public static List<SoundVolume> soundAndVolumeRushMobStatic = new List<SoundVolume>();
+    //public static List<SoundVolume> soundAndVolumeRushMobStatic = new List<SoundVolume>();
 
     [Header("List de son FlyMob")] public List<SoundVolume> soundAndVolumeFlyMob = new List<SoundVolume>();
-    public static List<SoundVolume> soundAndVolumeFlyMobStatic = new List<SoundVolume>();
+    //public static List<SoundVolume> soundAndVolumeFlyMobStatic = new List<SoundVolume>();
 
     private void Awake()
     {
-        soundAndVolumeWallMobStatic = soundAndVolumeWallMob;
+        instance = this;
+
+       /* soundAndVolumeWallMobStatic = soundAndVolumeWallMob;
 
         soundAndVolumeListTrashMobStatic = soundAndVolumeListTrashMob;
 
         soundAndVolumeRushMobStatic = soundAndVolumeRushMob;
 
-        soundAndVolumeFlyMobStatic = soundAndVolumeFlyMob;
+        soundAndVolumeFlyMobStatic = soundAndVolumeFlyMob;*/
     }
 
     //Player Sound
-    public static void PlaySoundMobOneShot(AudioSource sourceAudio, SoundVolume soundVolume)
+    public void PlaySoundMobOneShot(AudioSource sourceAudio, SoundVolume soundVolume)
     {
         sourceAudio.volume = soundVolume._volume;
         sourceAudio.PlayOneShot(soundVolume._clip);
     }
 
-    public static void PlaySoundMobByClip(AudioSource sourceAudio, SoundVolume soundVolume, bool active)
+    public void PlaySoundMobByClip(AudioSource sourceAudio, SoundVolume soundVolume, bool active)
     {
         if (active)
         {
@@ -52,7 +58,7 @@ public class SoundManager : MonoBehaviour
     }
 
     //2D sound continue
-    public static void PlaySound2DContinue(AudioSource sourceAudio, SoundVolume soundVolume, bool active)
+    public void PlaySound2DContinue(AudioSource sourceAudio, SoundVolume soundVolume, bool active)
     {
         if (active)
         {

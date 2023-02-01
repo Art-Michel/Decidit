@@ -93,6 +93,7 @@ namespace State.WallAI
                 Rigidbody cloneBullet = Instantiate(baseAttackWallAISO.bulletPrefab, globalRef.spawnBullet.position, globalRef.spawnBullet.rotation);
                 cloneBullet.AddRelativeForce(Vector3.forward * CalculateSpeedProjectile(), ForceMode.VelocityChange);
                 baseAttackWallAISO.bulletCount--;
+                SoundManager.instance.PlaySoundMobOneShot(globalRef.audioSourceWallMob, SoundManager.instance.soundAndVolumeWallMob[4]);
             }
         }
 
@@ -115,6 +116,14 @@ namespace State.WallAI
         public void EndAttack()
         {
             ReturnBaseMoveState();
+        }
+        public void PlayInWallSound()
+        {
+            SoundManager.instance.PlaySoundMobOneShot(globalRef.audioSourceWallMob, SoundManager.instance.soundAndVolumeWallMob[3]);
+        }
+        public void PlayOutWallSound()
+        {
+            SoundManager.instance.PlaySoundMobOneShot(globalRef.audioSourceWallMob, SoundManager.instance.soundAndVolumeWallMob[4]);
         }
     }
 }

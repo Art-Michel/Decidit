@@ -11,10 +11,18 @@ namespace State.WallAI
         {
             baseAttackWallAIState.StartAttack();
         }
-
         void EndAttack()
         {
             baseAttackWallAIState.EndAttack();
+        }
+
+        void PlayInWallSound()
+        {
+            baseAttackWallAIState.PlayInWallSound();
+        }
+        void PlayOutWallSound()
+        {
+            baseAttackWallAIState.PlayOutWallSound();
         }
     }
 }
