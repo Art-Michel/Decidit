@@ -16,7 +16,7 @@ public class DungeonGenerator : MonoBehaviour
     [SerializeField] List<RoomSetup> corridors;
     List<GameObject> _referenceRooms;
 
-    List<Room> roomGen;
+    [SerializeField] List<Room> roomGen;
 
     private void Awake()
     {
@@ -27,15 +27,15 @@ public class DungeonGenerator : MonoBehaviour
         }
         Instance = this;
         _referenceRooms = new List<GameObject>();
+        ResetDungeon();
         Generate();
     }
 
-    [Button]
     public void Generate()
     {
-        ResetDungeon();
         if (transform.childCount > 0)
         {
+            ResetDungeon();
             ClearDungeon();
         }
 
@@ -48,7 +48,7 @@ public class DungeonGenerator : MonoBehaviour
 
         Random.InitState(seed);
 
-        roomGen = new List<Room>(length + 2 + (length + 1));//IDK
+        roomGen = new List<Room>(length + 2 + (length + 1));
         roomGen.Add(starterRoom.Get());
 
         // variables pour r�partir la difficult� (difficulty) en fonction du nombre de salles et de la longueur du donjon (stackCount)
@@ -140,13 +140,5 @@ public class DungeonGenerator : MonoBehaviour
     {
         return(_referenceRooms);
     }
-    public void EnterRoom()
-    {
 
-    }
-
-    public void ExitRoom()
-    {
-
-    }
 }

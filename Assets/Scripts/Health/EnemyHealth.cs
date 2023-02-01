@@ -126,6 +126,7 @@ public class EnemyHealth : Health
             _isDying = true;
             _deathVfx.Play();
             room.NbIA --;
+            room.ExitDoor();
             Player.Instance.gameObject.GetComponent<Health>().ProbRegen(Mathf.RoundToInt(_regenValue / 4f));
             Debug.Log(_regenValue + " Regen");
         }

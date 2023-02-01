@@ -5,6 +5,7 @@ using UnityEngine;
 public class Doors : MonoBehaviour
 {
     [SerializeField] bool _isExit;
+    [SerializeField] bool _isStartEnd;
     [SerializeField] Room room;
     private void OnTriggerEnter(Collider other)
     {

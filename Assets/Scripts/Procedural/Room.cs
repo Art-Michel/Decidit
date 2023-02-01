@@ -13,29 +13,28 @@ public class Room : MonoBehaviour
 
     [SerializeField] List<EnemyHealth> _IAList;
 
-    [SerializeField] bool _isStartEnd;
-
     public int NbIA;
     int _currentRoom;
 
     private void Awake()
     {
         NbIA = _IAList.Count;
+        exit.GetComponent<MeshRenderer>().enabled = true;
+        exit.GetComponent<BoxCollider>().isTrigger = false;
+        ExitDoor();
     }
 
     private void Update()
     {
-        ExitDoor();
+
     }
 
     public void ExitDoor()
     {
-        if (!_isStartEnd)
+        if (NbIA <= 0)
         {
-            if (NbIA <= 0)
-            {
-                exit.SetActive(false);
-            }
+            exit.GetComponent<MeshRenderer>().enabled = false;
+            exit.GetComponent<BoxCollider>().isTrigger = true;
         }
     }
     public GameObject GetDoorsExit()
@@ -46,12 +45,19 @@ public class Room : MonoBehaviour
     public void RoomEnter()
     {
         enter.SetActive(true);
-        DungeonGenerator.Instance.GetRoom().SetActive(false);
-        DungeonGenerator.Instance.AddCurentRoom();
+        enter.GetComponent<MeshRenderer>().enabled = true;
+        enter.GetComponent<BoxCollider>().isTrigger = false;
     }
     public void RoomExit()
     {
+        if (exit.CompareTag("ExitDoor"))
+        {
+            DungeonGenerator.Instance.GetRoom().SetActive(false);
+            DungeonGenerator.Instance.AddCurentRoom();
+        }
         exit.SetActive(true);
+        exit.GetComponent<MeshRenderer>().enabled = true;
+        exit.GetComponent<BoxCollider>().isTrigger = false;
         DungeonGenerator.Instance.GetRoom().SetActive(true);
     }
 }
