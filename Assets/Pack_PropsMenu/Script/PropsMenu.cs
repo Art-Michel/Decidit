@@ -63,7 +63,7 @@ public class PropsMenu : MonoBehaviour
 
     void PrintUI()
     {
-        Debug.Log(m_EventSystem.currentSelectedGameObject);
+        //Debug.Log(m_EventSystem.currentSelectedGameObject);
 
         if (m_EventSystem.currentSelectedGameObject == this.gameObject)
         {
@@ -107,8 +107,9 @@ public class PropsMenu : MonoBehaviour
             cloneProps.transform.parent = spawnProps;
             cloneProps.transform.localPosition = Vector3.zero;
             cloneProps.transform.localRotation = Quaternion.Euler(0, 0, 0);
+            cloneProps.transform.localScale = new Vector3(1, 1, 1);
         }
 
-        Debug.Log(gameObject);
+       // Debug.Log(gameObject);
     }
 }
