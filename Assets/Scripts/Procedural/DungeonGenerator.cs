@@ -12,8 +12,8 @@ public class DungeonGenerator : MonoBehaviour
     [SerializeField] RoomSetup _finalRoom;
     [SerializeField] int _length;
     [SerializeField] int _currentRoom;
-    [SerializeField] List<RoomSetup> _rooms;
-    [SerializeField] List<RoomSetup> _corridors;
+    public List<RoomSetup> Rooms;
+    public List<RoomSetup> Corridors;
     List<GameObject> _roomsPrefabs;
 
     [SerializeField] List<Room> _roomGen;
@@ -61,22 +61,22 @@ public class DungeonGenerator : MonoBehaviour
 
         for (int i = 0; i < _length; i++)
         {
-            _roomGen.Add(_corridors[Random.Range(0, _corridors.Count)].Get());
+            _roomGen.Add(Corridors[Random.Range(0, Corridors.Count)].Get());
 
             // passe � la difficult� suivante
             if (stackCount <= 0)
             {
                 difficulty++;
-                difficulty = Mathf.Clamp(difficulty, 0, _rooms.Count - 1);
+                difficulty = Mathf.Clamp(difficulty, 0, Rooms.Count - 1);
                 stackCount = Mathf.RoundToInt(_length / 3f);
             }
 
             // ajoute une salle avec une difficult� pr�d�fini
-            _roomGen.Add(_rooms[difficulty].Get());
+            _roomGen.Add(Rooms[difficulty].Get());
             stackCount--;
         }
 
-        _roomGen.Add(_corridors[Random.Range(0, _corridors.Count)].Get());
+        _roomGen.Add(Corridors[Random.Range(0, Corridors.Count)].Get());
         _roomGen.Add(_finalRoom.Get());
         Build();
     }
@@ -88,6 +88,7 @@ public class DungeonGenerator : MonoBehaviour
         {
             Room instance = Instantiate(room, Vector3.zero, Quaternion.identity, transform);
             instance.gameObject.SetActive(true);
+            instance.Dungeon = this;
             if (instance.gameObject.CompareTag("LD"))
             {
                 _roomsPrefabs.Add(instance.gameObject);

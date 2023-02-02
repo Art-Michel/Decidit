@@ -13,9 +13,9 @@ public class EnemyHealth : Health
     [Foldout("References")]
     [SerializeField] VisualEffect _deathVfx;
     [Foldout("References")]
-    [SerializeField] List<Collider> _colliders;
-    [Foldout("References")]
     [SerializeField] Room _room;
+    [Foldout("References")]
+    [SerializeField] List<Collider> _colliders;
 
     float _regenValue;
     CanvasGroup _canvasGroup;
@@ -48,6 +48,11 @@ public class EnemyHealth : Health
         _regenValue = _hp;
         _playerCamera = Camera.main.transform;
         _canvasGroup = _canvas.GetComponent<CanvasGroup>();
+    }
+
+    private void FindRoom()
+    {
+        _room = GameObject.FindObjectOfType<Room>();
     }
 
     protected override void Start()
@@ -145,7 +150,7 @@ public class EnemyHealth : Health
             if (_room)
             {
                 _room.CurrentEnemiesInRoom--;
-                _room.ExitDoor();
+                _room.CheckForEnemies();
             }
 
             //regen player

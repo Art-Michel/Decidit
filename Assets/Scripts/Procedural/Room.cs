@@ -1,63 +1,75 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using NaughtyAttributes;
 using UnityEngine;
 
 public class Room : MonoBehaviour
 {
-    public Vector3 Size => _size;
-    public GameObject Enter => _enter;
-    public GameObject Exit => _exit;
-    [SerializeField] private Vector3 _size;
+    [Header("References")]
     [SerializeField] private GameObject _enter;
     [SerializeField] private GameObject _exit;
+    [SerializeField] List<EnemyHealth> _enemiesList;
+    public GameObject Enter => _enter;
+    public GameObject Exit => _exit;
 
-    [SerializeField] List<EnemyHealth> _IAList;
+    [Header("Settings")]
+    private bool _isCorridor;
 
-    public int CurrentEnemiesInRoom;
+    [System.NonSerialized] public int CurrentEnemiesInRoom;
+    [System.NonSerialized] public DungeonGenerator Dungeon;
     int _currentRoom;
 
-    private void Awake()
+    [Button]
+    private void CountEnemies()
     {
-        CurrentEnemiesInRoom = _IAList.Count;
-        _exit.GetComponent<MeshRenderer>().enabled = true;
-        _exit.GetComponent<BoxCollider>().isTrigger = false;
-        ExitDoor();
+        _enemiesList.Clear();
+        foreach (EnemyHealth enemy in GetComponentsInChildren<EnemyHealth>())
+        {
+            _enemiesList.Add(enemy);
+        }
     }
 
-    private void Update()
+    void Start()
     {
-
+        CurrentEnemiesInRoom = _enemiesList.Count;
+        CheckForEnemies();
     }
 
-    public void ExitDoor()
+    public void EnterRoom()
+    {
+        if (_isCorridor)
+        {
+            //Load Room+1
+            //Load Corridor+1
+        }
+
+        else
+        {
+
+        }
+    }
+
+    public void ExitRoom()
+    {
+        if (_isCorridor)
+        {
+
+        }
+
+        else
+        {
+            //Nothing
+        }
+    }
+
+    public void CheckForEnemies()
     {
         if (CurrentEnemiesInRoom <= 0)
         {
-            _exit.GetComponent<MeshRenderer>().enabled = false;
-            _exit.GetComponent<BoxCollider>().isTrigger = true;
+            //_exit.GetComponent<Door>().OpenDoor();
+            //Dungeon.Corridors[Dungeon.GetCurrentRoom() + 1].OpenDoor();;
+            //Corridor+1.OpenDoor()
         }
-    }
-    public GameObject GetDoorsExit()
-    {
-        return (_exit);
-    }
-
-    public void RoomEnter()
-    {
-        _enter.SetActive(true);
-        _enter.GetComponent<MeshRenderer>().enabled = true;
-        _enter.GetComponent<BoxCollider>().isTrigger = false;
-    }
-    public void RoomExit()
-    {
-        if (_exit.CompareTag("ExitDoor"))
-        {
-            DungeonGenerator.Instance.GetRoom().SetActive(false);
-            DungeonGenerator.Instance.IncrementCurrentRoom();
-        }
-        _exit.SetActive(true);
-        _exit.GetComponent<MeshRenderer>().enabled = true;
-        _exit.GetComponent<BoxCollider>().isTrigger = false;
-        DungeonGenerator.Instance.GetRoom().SetActive(true);
     }
 }
