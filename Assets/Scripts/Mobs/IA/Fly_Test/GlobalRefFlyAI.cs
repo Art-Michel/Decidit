@@ -45,6 +45,12 @@ namespace State.FlyAI
             playerTransform = GameObject.FindWithTag("Player").transform;
         }
 
+        private void Start()
+        {
+
+            transform.rotation = Quaternion.Euler(Vector3.zero);
+        }
+
         private void Update()
         {
             if (enemyHealth._hp <= 0 && !isDead)
