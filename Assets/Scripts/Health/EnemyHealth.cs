@@ -1,14 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.VFX;
 
 public class EnemyHealth : Health
 {
-    [Header("References")]
+    [Foldout("References")]
     [SerializeField] Canvas _canvas;
+    [Foldout("References")]
     [SerializeField] Material _material;
+    [Foldout("References")]
     [SerializeField] VisualEffect _deathVfx;
+    [Foldout("References")]
+    [SerializeField] List<Collider> _colliders;
+    [Foldout("References")]
+    [SerializeField] Room _room;
 
     float _regenValue;
     CanvasGroup _canvasGroup;
@@ -17,14 +24,18 @@ public class EnemyHealth : Health
     Vector3 _camForward;
     float _distance;
 
-    [Header("Values")]
+    [Foldout("Ui Values")]
     [SerializeField][Range(0.05f, 0.6f)] float _uiScale = 0.1f;
+    [Foldout("Ui Values")]
     [SerializeField][Range(0.0001f, 10f)] float _lookStrictness = 0.08f;
+    [Foldout("Ui Values")]
     [SerializeField][Range(0.5f, 20f)] float _appearSpeed = 15f;
+    [Foldout("Ui Values")]
     [SerializeField][Range(0.5f, 20f)] float _disappearSpeed = 4f;
+    [Foldout("Ui Values")]
     [SerializeField][Range(0f, 2f)] float _disappearMaxStartup = 1f;
+    [Foldout("Ui Values")]
     [SerializeField][Range(0f, 2f)] float _deathAnimationDuration = 1f;
-    [SerializeField] Room _room;
     float _disappearStartup;
     float _appearT;
     bool _isVisible;
@@ -121,14 +132,25 @@ public class EnemyHealth : Health
         //! Ici desactiver ia ou mettre l'ia en state Dying jsp
         if (!_isDying)
         {
-            //if (Doors.Instance) Doors.Instance.NbIASubqtract();
+            //die
             _deathT = _deathAnimationDuration;
             _isDying = true;
             _deathVfx.Play();
-            _room.CurrentEnemiesInRoom--;
-            _room.ExitDoor();
+            foreach (Collider collider in _colliders)
+            {
+                collider.enabled = false;
+            }
+
+            //update number of enemies in room
+            if (_room)
+            {
+                _room.CurrentEnemiesInRoom--;
+                _room.ExitDoor();
+            }
+
+            //regen player
             Player.Instance.gameObject.GetComponent<Health>().ProbRegen(Mathf.RoundToInt(_regenValue / 4f));
-            Debug.Log(_regenValue + " Regen");
+            Debug.Log(_regenValue + " HP restored!");
         }
     }
 

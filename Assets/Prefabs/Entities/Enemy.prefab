@@ -104,6 +104,7 @@ GameObject:
   - component: {fileID: 2126751611409770580}
   - component: {fileID: 3986499012447494068}
   - component: {fileID: 6982454923184648655}
+  - component: {fileID: 1413964971}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Ennemi
@@ -195,12 +196,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hpUi: {fileID: 2126751612799152399}
   _probHpUi: {fileID: 2126751611641074405}
+  _bloodVFXPooler: {fileID: 0}
   _maxHp: 100
   _probationMaxStartup: 1
   _probationSpeed: 15
   _canvas: {fileID: 2126751611621324501}
   _material: {fileID: 0}
   _deathVfx: {fileID: 6359839212021272516}
+  _colliders:
+  - {fileID: 3796987560304224001}
+  - {fileID: 2223420636143152346}
+  - {fileID: 9171034004295946763}
+  _room: {fileID: 0}
   _uiScale: 0.1
   _lookStrictness: 0.08
   _appearSpeed: 15
@@ -220,10 +227,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MeshGameObject: {fileID: 0}
-  Color: {r: 0, g: 0, b: 0, a: 0}
+  ColorBase: {r: 0, g: 0, b: 0, a: 0}
   ColorPreAtatck: {r: 0, g: 0, b: 0, a: 0}
   Material: {fileID: 2100000, guid: 579335bc1ab04274a8006d35f495ba12, type: 2}
-  Texture: {fileID: 2800000, guid: 83482549c13339e4098ddbead77b0b64, type: 3}
+  TextureBase: {fileID: 0}
+  TexturePreAttack: {fileID: 0}
   SetPixelTexture: {x: 0, y: 0}
 --- !u!114 &6982454923184648655
 MonoBehaviour:
@@ -237,9 +245,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 3028111322435012058, guid: 4de8fdf8ed2e8ea43a59f380247afa84, type: 3}
+  _prefab: {fileID: 2273504962484362914, guid: 4d0d93400b870594d93b9ea8023468e9, type: 3}
   _initialCount: 4
   _shouldBeParent: 1
+--- !u!135 &1413964971
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2126751611409770601}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 0.1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2126751611621324520
 GameObject:
   m_ObjectHideFlags: 0
