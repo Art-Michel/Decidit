@@ -15,7 +15,7 @@ namespace State.AICAC
         EnemyHealth enemyHealth;
         public Material_Instances material_Instances;
         public float distPlayer;
-        [SerializeField] StateControllerAICAC stateControllerAICAC;
+        [SerializeField] StateControllerAICAC stateControllerTrashMob;
         public AudioSource audioSourceTrashMob;
 
 
@@ -85,12 +85,12 @@ namespace State.AICAC
 
         public void ActiveState(StateControllerAICAC.AIState newState)
         {
-            stateControllerAICAC.SetActiveState(newState);
+            stateControllerTrashMob.SetActiveState(newState);
         }
 
         public void ActiveStateDodge()
         {
-            stateControllerAICAC.SetActiveState(StateControllerAICAC.AIState.Dodge);
+            stateControllerTrashMob.SetActiveState(StateControllerAICAC.AIState.Dodge);
         }
     }
 }
