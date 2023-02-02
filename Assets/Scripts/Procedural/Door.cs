@@ -24,6 +24,7 @@ public class Door : MonoBehaviour
                 _room.EnterRoom();
             }
         }
+        this.enabled = false;
     }
 
     public void CloseDoor()

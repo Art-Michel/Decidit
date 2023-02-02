@@ -7,17 +7,14 @@ using UnityEngine;
 public class Room : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private GameObject _enter;
-    [SerializeField] private GameObject _exit;
     [SerializeField] List<EnemyHealth> _enemiesList;
-    public GameObject Enter => _enter;
-    public GameObject Exit => _exit;
+    public Door Entry;
+    public Door Exit;
 
     [Header("Settings")]
     private bool _isCorridor;
 
     [System.NonSerialized] public int CurrentEnemiesInRoom;
-    [System.NonSerialized] public DungeonGenerator Dungeon;
     int _currentRoom;
 
     [Button]
@@ -38,15 +35,22 @@ public class Room : MonoBehaviour
 
     public void EnterRoom()
     {
+        DungeonGenerator.Instance.IncrementCurrentRoom();
+
         if (_isCorridor)
         {
-            //Load Room+1
-            //Load Corridor+1
+            DungeonGenerator.Instance.GetRoom().Entry.CloseDoor();
+            DungeonGenerator.Instance.GetRoom(-1).Entry.gameObject.SetActive(false);
+            DungeonGenerator.Instance.GetRoom(1).gameObject.SetActive(true);
+            DungeonGenerator.Instance.GetRoom(2).gameObject.SetActive(true);
         }
 
         else
         {
-
+            //Enable Enemies in current room;
+            DungeonGenerator.Instance.GetRoom().Entry.CloseDoor();
+            DungeonGenerator.Instance.GetRoom().Exit.CloseDoor();
+            DungeonGenerator.Instance.GetRoom(-1).gameObject.SetActive(false);
         }
     }
 
@@ -54,7 +58,7 @@ public class Room : MonoBehaviour
     {
         if (_isCorridor)
         {
-
+            this.Exit.GetComponent<Door>().OpenDoor();
         }
 
         else
@@ -67,9 +71,8 @@ public class Room : MonoBehaviour
     {
         if (CurrentEnemiesInRoom <= 0)
         {
-            //_exit.GetComponent<Door>().OpenDoor();
-            //Dungeon.Corridors[Dungeon.GetCurrentRoom() + 1].OpenDoor();;
-            //Corridor+1.OpenDoor()
+            this.Exit.OpenDoor();
+            DungeonGenerator.Instance.GetRoom(1).Entry.OpenDoor();
         }
     }
 }
