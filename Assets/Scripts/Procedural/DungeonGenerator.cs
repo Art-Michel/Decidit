@@ -11,16 +11,16 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
     [SerializeField] RoomSetup _finalRoom;
     [SerializeField] int _length;
     [SerializeField] int _currentRoom;
-    public List<RoomSetup> Rooms;
+    public List<RoomSetup> RoomSets;
     public List<RoomSetup> Corridors;
-    List<GameObject> _roomsPrefabs;
+    List<Room> _actualRooms;
 
     [SerializeField] List<Room> _rooms;
 
     protected override void Awake()
     {
         base.Awake();
-        _roomsPrefabs = new List<GameObject>();
+        _actualRooms = new List<Room>();
     }
 
     void Start()
@@ -61,12 +61,12 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
             if (stackCount <= 0)
             {
                 difficulty++;
-                difficulty = Mathf.Clamp(difficulty, 0, Rooms.Count - 1);
+                difficulty = Mathf.Clamp(difficulty, 0, RoomSets.Count - 1);
                 stackCount = Mathf.RoundToInt(_length / 3f);
             }
 
             // ajoute une salle avec une difficult� pr�d�fini
-            _rooms.Add(Rooms[difficulty].Get());
+            _rooms.Add(RoomSets[difficulty].Get());
             stackCount--;
         }
 
@@ -80,36 +80,39 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
         GameObject lastDoor = null;
         foreach (Room room in _rooms)
         {
+            //* Spawn room
             Room instance = Instantiate(room, Vector3.zero, Quaternion.identity, transform);
             instance.gameObject.SetActive(true);
-            if (instance.gameObject.CompareTag("LD"))
-            {
-                _roomsPrefabs.Add(instance.gameObject);
-            }
-            // setup rotation
+
+            //* set rotation
             instance.transform.rotation = Quaternion.Euler(0, _dungeonRotation, 0);
 
             if (lastDoor != null)
             {
-                Vector3 direction = lastDoor.transform.position - instance.Entry.transform.position;
-                instance.transform.position = direction;
+                Vector3 roomPosition = (lastDoor.transform.position + Vector3.forward * 3) - (instance.Entry.transform.position);
+                instance.transform.position = roomPosition;
             }
 
-            //lastDoor = instance.Exit;
-            for (int i = 0; i < _roomsPrefabs.Count; i++)
-            {
-                _roomsPrefabs[i].gameObject.SetActive(false);
-                _roomsPrefabs[0].gameObject.SetActive(true);
-            }
-            transform.GetChild(0).gameObject.SetActive(true);
+            lastDoor = instance.Exit.gameObject;
+            instance.gameObject.SetActive(false);
+
+            _actualRooms.Add(instance);
         }
+
+        EnableFirstRooms();
+    }
+
+    private void EnableFirstRooms()
+    {
+        _actualRooms[0].gameObject.SetActive(true);
+        _actualRooms[1].gameObject.SetActive(true);
     }
 
     private void ResetDungeon()
     {
         //transform.DetachChildren();
         _rooms.Clear();
-        _roomsPrefabs.Clear();
+        _actualRooms.Clear();
     }
 
     public void ClearDungeon()
@@ -122,17 +125,17 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
 
     public Room GetRoom(int i = 0)
     {
-        return _rooms[_currentRoom + i];
+        if (_currentRoom + i <= _actualRooms.Count)
+            return _actualRooms[_currentRoom + i];
+        else
+        {
+            Debug.Log("The room you are trying to access is out of bounds, returning last room in list");
+            return GetRoom(_actualRooms.Count + 1);
+        }
     }
 
     public void IncrementCurrentRoom()
     {
         _currentRoom++;
     }
-
-    public List<GameObject> GetRoomsPrefabs()
-    {
-        return (_roomsPrefabs);
-    }
-
 }

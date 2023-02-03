@@ -6,10 +6,17 @@ public class Door : MonoBehaviour
 {
     [Header("Reference")]
     [SerializeField] GameObject _doorMesh;
+    [SerializeField] Collider _doorTrigger;
     [SerializeField] Room _room;
 
     [Header("Door Settings")]
     [SerializeField] bool _isExit;
+
+    void Awake()
+    {
+        if (_room == null)
+            _room = GetComponentInParent<Room>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -24,18 +31,30 @@ public class Door : MonoBehaviour
                 _room.EnterRoom();
             }
         }
-        this.enabled = false;
+        _doorTrigger.enabled = false;
     }
 
     public void CloseDoor()
     {
-        _doorMesh.transform.localPosition = transform.position + Vector3.up * 3;
+        if (_doorMesh == null)
+        {
+            Debug.Log("No door to close");
+            return;
+        }
+
+        _doorMesh.transform.localPosition = Vector3.zero;
         //mettre animation ici à la place
     }
 
     public void OpenDoor()
     {
-        _doorMesh.transform.localPosition = transform.position;
+        if (_doorMesh == null)
+        {
+            Debug.Log("No door to open");
+            return;
+        }
+
+        _doorMesh.transform.localPosition = Vector3.up * 6;
         //là aussi
     }
 }

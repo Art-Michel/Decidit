@@ -3,19 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
+using System.Linq;
 
 public class Room : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] List<EnemyHealth> _enemiesList;
-    public Door Entry;
-    public Door Exit;
+    [SerializeField] List<Door> _doors;
+    public Door Entry => _doors[0];
+    public Door Exit => _doors[1];
 
     [Header("Settings")]
-    private bool _isCorridor;
+    [SerializeField] private bool _isCorridor = false;
 
-    [System.NonSerialized] public int CurrentEnemiesInRoom;
-    int _currentRoom;
+    public int CurrentEnemiesInRoom;
 
     [Button]
     private void CountEnemies()
@@ -24,6 +25,16 @@ public class Room : MonoBehaviour
         foreach (EnemyHealth enemy in GetComponentsInChildren<EnemyHealth>())
         {
             _enemiesList.Add(enemy);
+        }
+    }
+
+    [Button]
+    private void FindDoors()
+    {
+        _doors.Clear();
+        foreach (Door door in GetComponentsInChildren<Door>())
+        {
+            _doors.Add(door);
         }
     }
 
