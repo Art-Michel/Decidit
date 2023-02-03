@@ -89,7 +89,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
 
             if (lastDoor != null)
             {
-                Vector3 roomPosition = (lastDoor.transform.position + Vector3.forward * 3) - (instance.Entry.transform.position);
+                Vector3 roomPosition = (lastDoor.transform.position + Vector3.forward * 5) - (instance.Entry.transform.position);
                 instance.transform.position = roomPosition;
             }
 
@@ -130,7 +130,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
         else
         {
             Debug.Log("The room you are trying to access is out of bounds, returning last room in list");
-            return GetRoom(_actualRooms.Count + 1);
+            return _actualRooms[_actualRooms.Count + 1];
         }
     }
 

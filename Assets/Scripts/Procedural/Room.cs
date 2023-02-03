@@ -38,10 +38,14 @@ public class Room : MonoBehaviour
         }
     }
 
-    void Start()
+    public void OnEnable()
     {
         CurrentEnemiesInRoom = _enemiesList.Count;
         CheckForEnemies();
+        foreach (EnemyHealth enemyHealth in _enemiesList)
+        {
+            enemyHealth.gameObject.SetActive(true);
+        }
     }
 
     public void EnterRoom()
@@ -58,7 +62,6 @@ public class Room : MonoBehaviour
 
         else
         {
-            //Enable Enemies in current room;
             DungeonGenerator.Instance.GetRoom().Entry.CloseDoor();
             DungeonGenerator.Instance.GetRoom().Exit.CloseDoor();
             DungeonGenerator.Instance.GetRoom(-1).gameObject.SetActive(false);
@@ -69,7 +72,7 @@ public class Room : MonoBehaviour
     {
         if (_isCorridor)
         {
-            this.Exit.GetComponent<Door>().OpenDoor();
+            this.Exit.OpenDoor();
         }
 
         else
@@ -82,6 +85,7 @@ public class Room : MonoBehaviour
     {
         if (CurrentEnemiesInRoom <= 0)
         {
+            Debug.Log("room cleared");
             this.Exit.OpenDoor();
             DungeonGenerator.Instance.GetRoom(1).Entry.OpenDoor();
         }
