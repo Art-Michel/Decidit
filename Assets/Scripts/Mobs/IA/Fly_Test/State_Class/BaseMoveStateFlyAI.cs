@@ -8,6 +8,8 @@ namespace State.FlyAI
         [SerializeField] GlobalRefFlyAI globalRef;
         BaseMoveFlySO baseMoveFlySO;
 
+        RaycastHit hitObstacle;
+
         [SerializeField] GameObject flyAI;
         [SerializeField] Transform childflyAI;
 
@@ -15,6 +17,12 @@ namespace State.FlyAI
         [SerializeField] bool right;
         [SerializeField] float offset;
         Quaternion rotation;
+
+        [Header("Rotation")]
+        float currentMaxSpeedRotationAIDodgeObstacle;
+        float currentSmoothRotationDodgeObstacle;
+
+        [SerializeField] float velocity;
 
         public override void InitState(StateControllerFlyAI stateController)
         {
@@ -32,6 +40,8 @@ namespace State.FlyAI
         private void Update()
         {
             SmoothLookAtYAxisPatrol();
+
+            velocity = globalRef.agent.velocity.magnitude;
         }
 
         private void FixedUpdate()
@@ -41,22 +51,34 @@ namespace State.FlyAI
 
         void CheckObstacle()
         {
-            RaycastHit hit;
-
-            hit = RaycastAIManager.instanceRaycast.RaycastAI(transform.position, baseMoveFlySO.destinationFinal - flyAI.transform.position, baseMoveFlySO.maskObstacle, 
+            hitObstacle = RaycastAIManager.instanceRaycast.RaycastAI(transform.position, baseMoveFlySO.destinationFinal - flyAI.transform.position, baseMoveFlySO.maskObstacle, 
                 Color.red,Vector3.Distance(flyAI.transform.position, baseMoveFlySO.destinationFinal));
 
-            if(hit.transform != null)
+            if(hitObstacle.transform != null)
             {
                 dodgeObstacle = true;
                 SearchNewPos();
             }
             else
             {
-                if(dodgeObstacle)
+                if (dodgeObstacle)
                 {
                     dodgeObstacle = false;
                 }
+            }
+
+            RaycastHit hit = RaycastAIManager.instanceRaycast.RaycastAI(childflyAI.transform.position, childflyAI.transform.forward, baseMoveFlySO.maskObstacle,
+                Color.red, baseMoveFlySO.lenghtRayDetectObstacle);
+
+            if (hit.transform != null)
+            {
+                currentMaxSpeedRotationAIDodgeObstacle = baseMoveFlySO.maxSpeedRotationAIDodgeObstacle;
+                currentSmoothRotationDodgeObstacle = baseMoveFlySO.smoothRotationDodgeObstacle;
+            }
+            else
+            {
+                currentMaxSpeedRotationAIDodgeObstacle = baseMoveFlySO.maxSpeedRotationAIPatrol;
+                currentSmoothRotationDodgeObstacle = baseMoveFlySO.smoothRotationPatrol;
             }
         }
 
@@ -71,9 +93,9 @@ namespace State.FlyAI
             SlowRotation(globalRef.isInEylau, relativePos);
             childflyAI.localRotation = rotation;
 
-            if (baseMoveFlySO.speedRotationAIPatrol < baseMoveFlySO.maxSpeedRotationAIPatrol)
+            if (baseMoveFlySO.speedRotationAIPatrol < currentMaxSpeedRotationAIDodgeObstacle)
             {
-                baseMoveFlySO.speedRotationAIPatrol += (Time.deltaTime / baseMoveFlySO.smoothRotationPatrol);
+                baseMoveFlySO.speedRotationAIPatrol += (Time.deltaTime / currentSmoothRotationDodgeObstacle);
                 baseMoveFlySO.lerpSpeedYValuePatrol += (Time.deltaTime / baseMoveFlySO.ySpeedSmootherPatrol);
             }
 
@@ -110,18 +132,33 @@ namespace State.FlyAI
             }
             else
             {
-                baseMoveFlySO.newPosIsSet = true;
-                baseMoveFlySO.speedRotationAIPatrol = 0;
-                baseMoveFlySO.currentSpeedYPatrol = 0;
-                baseMoveFlySO.lerpSpeedYValuePatrol = 0;
+                Collider[] hitColliders = Physics.OverlapSphere(baseMoveFlySO.destinationFinal, 2f);
 
-                Vector3 destinationFinal2D = new Vector2(baseMoveFlySO.destinationFinal.x, baseMoveFlySO.destinationFinal.z);
-                Vector3 transformPos2D = new Vector2(flyAI.transform.position.x, flyAI.transform.position.z);
+                if(hitColliders.Length > 0)
+                {
+                    baseMoveFlySO.newPosIsSet = true;
+                    baseMoveFlySO.speedRotationAIPatrol = 0;
+                    baseMoveFlySO.currentSpeedYPatrol = 0;
+                    baseMoveFlySO.lerpSpeedYValuePatrol = 0;
 
-                baseMoveFlySO.timeGoToDestinationPatrol = Vector3.Distance(destinationFinal2D, transformPos2D) / globalRef.agent.speed;
-                baseMoveFlySO.maxSpeedYTranslationPatrol = Mathf.Abs(baseMoveFlySO.destinationFinal.y - flyAI.transform.position.y) / baseMoveFlySO.timeGoToDestinationPatrol;
+                    Vector3 destinationFinal2D = new Vector2(baseMoveFlySO.destinationFinal.x, baseMoveFlySO.destinationFinal.z);
+                    Vector3 transformPos2D = new Vector2(flyAI.transform.position.x, flyAI.transform.position.z);
 
-                return baseMoveFlySO.newPos = new Vector3(baseMoveFlySO.destinationFinal.x, baseMoveFlySO.destinationFinal.z);
+                    baseMoveFlySO.timeGoToDestinationPatrol = Vector3.Distance(destinationFinal2D, transformPos2D) / globalRef.agent.speed;
+                    baseMoveFlySO.maxSpeedYTranslationPatrol = Mathf.Abs(baseMoveFlySO.destinationFinal.y - flyAI.transform.position.y) / baseMoveFlySO.timeGoToDestinationPatrol;
+
+                    return baseMoveFlySO.newPos = new Vector3(baseMoveFlySO.destinationFinal.x, baseMoveFlySO.destinationFinal.z);
+                }
+                else
+                {
+                    baseMoveFlySO.destinationFinal = RandomPointInBounds(globalRef.myCollider.bounds);
+
+                    baseMoveFlySO.newPosIsSet = false;
+                    baseMoveFlySO.speedRotationAIPatrol = 0;
+                    baseMoveFlySO.currentSpeedYPatrol = 0;
+                    baseMoveFlySO.lerpSpeedYValuePatrol = 0;
+                    return baseMoveFlySO.newPos = new Vector3(baseMoveFlySO.destinationFinal.x, baseMoveFlySO.destinationFinal.z);
+                }
             }
         }
         Vector3 RandomPointInBounds(Bounds bounds) // renvoie une position aléatoire dans un trigger collider
@@ -185,7 +222,6 @@ namespace State.FlyAI
                 globalRef.slowSpeed = globalRef.agent.speed / globalRef.slowRatio;
                 globalRef.agent.speed = globalRef.slowSpeed;
                 globalRef.agent.SetDestination(CheckNavMeshPoint(new Vector3(flyAI.transform.position.x, 0, flyAI.transform.position.z) + childflyAI.TransformDirection(Vector3.forward)));
-
             }
             else
             {
@@ -204,8 +240,12 @@ namespace State.FlyAI
             }
             else
             {
-                stateControllerFlyAI.SetActiveState(StateControllerFlyAI.AIState.LockPlayer);
-                //flyAINavMesh.SwitchToNewState(1);
+                RaycastHit hit = RaycastAIManager.instanceRaycast.RaycastAI(transform.position, 
+                    new Vector3(globalRef.playerTransform.position.x, globalRef.playerTransform.position.y -1f, globalRef.playerTransform.position.z) - 
+                    globalRef.transform.position, baseMoveFlySO.maskCheckCanRush, Color.red, 100f);
+
+                if (hit.transform == globalRef.playerTransform)
+                    stateControllerFlyAI.SetActiveState(StateControllerFlyAI.AIState.LockPlayer);
             }
         }
 
@@ -227,6 +267,5 @@ namespace State.FlyAI
                 baseMoveFlySO.newPosIsSet = false;
             }
         }
-
     }
 }

@@ -11,6 +11,7 @@ public class BaseMoveFlySO : ScriptableObject
     public Vector3 newPos;
     public bool newPosIsSet;
     public LayerMask maskObstacle;
+    public LayerMask maskCheckCanRush;
     public float distDetectObstace;
 
     [Header("Speed Y Position Patrol")]
@@ -24,6 +25,12 @@ public class BaseMoveFlySO : ScriptableObject
     public float maxSpeedRotationAIPatrol;
     public float speedRotationAIPatrol;
     public float smoothRotationPatrol;
+
+    [Header("Speed Rotation Patrol")]
+    public float maxSpeedRotationAIDodgeObstacle;
+    public float speedRotationAIDodgeObstacle;
+    public float smoothRotationDodgeObstacle;
+    public float lenghtRayDetectObstacle;
 
     [Header("Rate Attack")]
     public float currentRateAttack;
