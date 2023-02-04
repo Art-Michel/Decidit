@@ -41,7 +41,6 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
         if (_randomizeSeed)
         {
             _seed = Random.Range(0, 1000);
-            Debug.Log(_seed.ToString());
         }
 
         Random.InitState(_seed);
@@ -105,7 +104,9 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
     private void EnableFirstRooms()
     {
         _actualRooms[0].gameObject.SetActive(true);
+        _actualRooms[0].Exit.OpenDoor();
         _actualRooms[1].gameObject.SetActive(true);
+        _actualRooms[1].Entry.OpenDoor();
     }
 
     private void ResetDungeon()
@@ -125,11 +126,14 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
 
     public Room GetRoom(int i = 0)
     {
-        if (_currentRoom + i <= _actualRooms.Count)
-            return _actualRooms[_currentRoom + i];
+        int roomToReturn = _currentRoom + i;
+        if (roomToReturn <= _actualRooms.Count)
+        {
+            return _actualRooms[roomToReturn];
+        }
         else
         {
-            Debug.Log("The room you are trying to access is out of bounds, returning last room in list");
+            Debug.LogWarning("The room you are trying to access is out of bounds, returning last room in list");
             return _actualRooms[_actualRooms.Count + 1];
         }
     }

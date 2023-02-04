@@ -30,8 +30,8 @@ public class Door : MonoBehaviour
             {
                 _room.EnterRoom();
             }
+            _doorTrigger.enabled = false;
         }
-        _doorTrigger.enabled = false;
     }
 
     public void CloseDoor()
