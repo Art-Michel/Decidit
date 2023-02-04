@@ -155,7 +155,6 @@ public class EnemyHealth : Health
 
             //regen player
             Player.Instance.gameObject.GetComponent<Health>().ProbRegen(Mathf.RoundToInt(_regenValue / 4f));
-            Debug.Log(_regenValue + " HP restored!");
         }
     }
 

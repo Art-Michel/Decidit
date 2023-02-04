@@ -86,14 +86,17 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
             //* set rotation
             instance.transform.rotation = Quaternion.Euler(0, _dungeonRotation, 0);
 
+            //*set position
             if (lastDoor != null)
             {
                 Vector3 roomPosition = (lastDoor.transform.position + Vector3.forward * 5) - (instance.Entry.transform.position);
                 instance.transform.position = roomPosition;
             }
 
+            //*Disable Room and its enemies
             lastDoor = instance.Exit.gameObject;
             instance.gameObject.SetActive(false);
+            instance.EnableEnemies(false);
 
             _actualRooms.Add(instance);
         }
@@ -127,14 +130,14 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
     public Room GetRoom(int i = 0)
     {
         int roomToReturn = _currentRoom + i;
-        if (roomToReturn <= _actualRooms.Count)
+        if (roomToReturn < _actualRooms.Count)
         {
             return _actualRooms[roomToReturn];
         }
         else
         {
             Debug.LogWarning("The room you are trying to access is out of bounds, returning last room in list");
-            return _actualRooms[_actualRooms.Count + 1];
+            return _actualRooms[_actualRooms.Count - 1];
         }
     }
 

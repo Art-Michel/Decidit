@@ -21,7 +21,7 @@ public class Player : LocalManager<Player>
     [Foldout("References")]
     [SerializeField] Transform _head;
     [Foldout("References")]
-    public CharacterController _charaCon;
+    public CharacterController CharaCon;
     [Foldout("References")]
     [SerializeField] LayerMask _collisionMask;
     PlayerInputMap _inputs;
@@ -325,7 +325,7 @@ public class Player : LocalManager<Player>
     {
         if (_groundHit.transform != null)
         {
-            if (Vector3.Angle(transform.up, _groundHit.normal) < _charaCon.slopeLimit && !_justJumped)
+            if (Vector3.Angle(transform.up, _groundHit.normal) < CharaCon.slopeLimit && !_justJumped)
                 _fsm.ChangeState(PlayerStatesList.GROUNDED);
         }
     }
@@ -334,7 +334,7 @@ public class Player : LocalManager<Player>
     {
         if (_groundHit.transform != null)
         {
-            if (Vector3.Angle(transform.up, _groundHit.normal) > _charaCon.slopeLimit)
+            if (Vector3.Angle(transform.up, _groundHit.normal) > CharaCon.slopeLimit)
                 _fsm.ChangeState(PlayerStatesList.FALLINGDOWNSLOPE);
         }
     }
@@ -553,13 +553,13 @@ public class Player : LocalManager<Player>
         //Move along slopes
         if (_fsm.currentState.Name == PlayerStatesList.GROUNDED || _fsm.currentState.Name == PlayerStatesList.SLIDING)
         {
-            if (Vector3.Angle(transform.up, _groundHit.normal) < _charaCon.slopeLimit)
+            if (Vector3.Angle(transform.up, _groundHit.normal) < CharaCon.slopeLimit)
                 direction = (direction - (Vector3.Dot(direction, _groundHit.normal)) * _groundHit.normal);
         }
 
         //Actually move
-        if (_charaCon.enabled)
-            _charaCon.Move(direction);
+        if (CharaCon.enabled)
+            CharaCon.Move(direction);
     }
 
     #endregion

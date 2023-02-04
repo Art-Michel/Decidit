@@ -241,7 +241,7 @@ MonoBehaviour:
   _dungeonRotation: -90
   _starterRoom: {fileID: 11400000, guid: a1f05291f2b5c044f8021effb3c78392, type: 2}
   _finalRoom: {fileID: 11400000, guid: 4e55197a1903ed844939add5b94d896c, type: 2}
-  _length: 5
+  _length: 6
   _currentRoom: 0
   RoomSets:
   - {fileID: 11400000, guid: 286b57ddd543d5148970a32919cdc331, type: 2}
@@ -437,6 +437,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 183938224, guid: 46abff79d02163140a0fa90ea074a789, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1914196447, guid: 46abff79d02163140a0fa90ea074a789, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1979195283, guid: 46abff79d02163140a0fa90ea074a789, type: 3}
       propertyPath: _maxAmmo
       value: 1000
@@ -509,6 +517,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 2200446484234949679, guid: 46abff79d02163140a0fa90ea074a789,
+        type: 3}
+      propertyPath: CharaCon
+      value: 
+      objectReference: {fileID: 2099248381}
     - target: {fileID: 2200446484234949679, guid: 46abff79d02163140a0fa90ea074a789,
         type: 3}
       propertyPath: _jumpingDrag
@@ -743,3 +756,9 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 92.177, y: 136.1, z: 136.121}
+--- !u!143 &2099248381 stripped
+CharacterController:
+  m_CorrespondingSourceObject: {fileID: 2200446484234949841, guid: 46abff79d02163140a0fa90ea074a789,
+    type: 3}
+  m_PrefabInstance: {fileID: 1503606048}
+  m_PrefabAsset: {fileID: 0}

@@ -42,7 +42,7 @@ public class Door : MonoBehaviour
             return;
         }
 
-        _doorMesh.transform.localPosition = Vector3.zero;
+        _doorMesh.transform.localPosition = Vector3.up * 2;
         //mettre animation ici à la place
     }
 
@@ -54,7 +54,7 @@ public class Door : MonoBehaviour
             return;
         }
 
-        _doorMesh.transform.localPosition = Vector3.up * 6;
+        _doorMesh.transform.localPosition = Vector3.up * 8;
         //là aussi
     }
 }

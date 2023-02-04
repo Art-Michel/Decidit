@@ -99,7 +99,7 @@ public class AragonArm : Arm
         PlaceHolderSoundManager.Instance.PlayDashSound();
         _player.AllowMovement(false);
         _player.KillMomentum();
-        _player._charaCon.enabled = false;
+        _player.CharaCon.detectCollisions = false;
         _dashStartPosition = _player.transform.position;
         _dashDestination = _vfx.transform.position;
         _adjustedTimesNb = 0;
@@ -138,7 +138,7 @@ public class AragonArm : Arm
             _dashDestination += Vector3.up * -.1f;
             yeah = true;
         }
-        if (Physics.Raycast(_dashDestination, Vector3.down, .5f, _detectionMask))
+        if (Physics.Raycast(_dashDestination, Vector3.down, .9f, _detectionMask))
         {
             _dashDestination += Vector3.down * -.1f;
             yeah = true;
@@ -155,7 +155,8 @@ public class AragonArm : Arm
     public override void UpdateActive()
     {
         _dashT += Time.deltaTime * currentDashSpeed * _dashSpeedCurve.Evaluate(_dashT);
-        _player.transform.position = Vector3.LerpUnclamped(_dashStartPosition, _dashDestination, _dashMovementCurve.Evaluate(_dashT));
+        //_player.transform.position = Vector3.LerpUnclamped(_dashStartPosition, _dashDestination, _dashMovementCurve.Evaluate(_dashT));
+        _player.CharaCon.Move(Vector3.LerpUnclamped(_dashStartPosition, _dashDestination, _dashMovementCurve.Evaluate(_dashT)) - _player.transform.position);
         if (_dashT >= 1)
         {
             _fsm.ChangeState(ArmStateList.RECOVERY);
@@ -173,7 +174,7 @@ public class AragonArm : Arm
     {
         _player.AllowMovement(true);
         _player.KillMomentum();
-        _player._charaCon.enabled = true;
+        _player.CharaCon.detectCollisions = true;
         StopDashFeedbacks();
     }
 
