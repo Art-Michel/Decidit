@@ -18,11 +18,14 @@ namespace State.FlyAI
         [SerializeField] float offset;
         Quaternion rotation;
 
+        [SerializeField] LayerMask maskSearchPos;
+
         [Header("Rotation")]
         float currentMaxSpeedRotationAIDodgeObstacle;
         float currentSmoothRotationDodgeObstacle;
 
-        [SerializeField] float velocity;
+        [SerializeField] float speedVelocity;
+        [SerializeField] Vector3 velocity;
 
         public override void InitState(StateControllerFlyAI stateController)
         {
@@ -40,13 +43,17 @@ namespace State.FlyAI
         private void Update()
         {
             SmoothLookAtYAxisPatrol();
-
-            velocity = globalRef.agent.velocity.magnitude;
         }
 
         private void FixedUpdate()
         {
             CheckObstacle();
+
+            if(baseMoveFlySO.newPosIsSet)
+                globalRef.agent.velocity = childflyAI.transform.forward * baseMoveFlySO.baseMoveSpeed;
+
+            velocity = globalRef.agent.velocity;
+            speedVelocity = globalRef.agent.velocity.magnitude;
         }
 
         void CheckObstacle()
@@ -132,10 +139,12 @@ namespace State.FlyAI
             }
             else
             {
-                Collider[] hitColliders = Physics.OverlapSphere(baseMoveFlySO.destinationFinal, 2f);
+                Collider[] hitColliders = Physics.OverlapSphere(baseMoveFlySO.destinationFinal, 2f, maskSearchPos);
 
-                if(hitColliders.Length > 0)
+                if(hitColliders.Length == 0)
                 {
+                    Debug.Log(hitColliders.Length);
+
                     baseMoveFlySO.newPosIsSet = true;
                     baseMoveFlySO.speedRotationAIPatrol = 0;
                     baseMoveFlySO.currentSpeedYPatrol = 0;
@@ -151,6 +160,7 @@ namespace State.FlyAI
                 }
                 else
                 {
+                    Debug.Log(hitColliders[0]);
                     baseMoveFlySO.destinationFinal = RandomPointInBounds(globalRef.myCollider.bounds);
 
                     baseMoveFlySO.newPosIsSet = false;
@@ -179,7 +189,7 @@ namespace State.FlyAI
             {
                 if (baseMoveFlySO.distDestinationFinal > 7)
                 {
-                    SlowSpeed(globalRef.isInEylau);
+                    //SlowSpeed(globalRef.isInEylau);
                     baseMoveFlySO.currentSpeedYPatrol = Mathf.Lerp(baseMoveFlySO.currentSpeedYPatrol, baseMoveFlySO.maxSpeedYTranslationPatrol, baseMoveFlySO.lerpSpeedYValuePatrol);
 
                     if (Mathf.Abs(flyAI.transform.position.y - baseMoveFlySO.destinationFinal.y) > 1)

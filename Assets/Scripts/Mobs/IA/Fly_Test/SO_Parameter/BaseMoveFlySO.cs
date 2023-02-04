@@ -6,13 +6,20 @@ using UnityEngine;
 public class BaseMoveFlySO : ScriptableObject
 {
     public float baseMoveSpeed;
+    public LayerMask maskObstacle;
+    public LayerMask maskCheckCanRush;
+    public float distDetectObstace;
+
+    [Header("Current Destination")]
     public Vector3 destinationFinal;
     public float distDestinationFinal;
     public Vector3 newPos;
     public bool newPosIsSet;
-    public LayerMask maskObstacle;
-    public LayerMask maskCheckCanRush;
-    public float distDetectObstace;
+
+    [Header("Next Destination")]
+    public Vector3 nextDestinationFinal;
+    public bool nextPosIsSet;
+    public float distNextDestinationFinal;
 
     [Header("Speed Y Position Patrol")]
     public float timeGoToDestinationPatrol;
