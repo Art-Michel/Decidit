@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.055217505, g: 0.052102298, b: 0.075573444, a: 1}
+  m_IndirectSpecularColor: {r: 0.055202603, g: 0.05208817, b: 0.07556379, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -437,25 +437,41 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 183938224, guid: 46abff79d02163140a0fa90ea074a789, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1914196447, guid: 46abff79d02163140a0fa90ea074a789, type: 3}
-      propertyPath: m_IsActive
-      value: 1
+    - target: {fileID: 1979195283, guid: 46abff79d02163140a0fa90ea074a789, type: 3}
+      propertyPath: _ui
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1979195283, guid: 46abff79d02163140a0fa90ea074a789, type: 3}
       propertyPath: _maxAmmo
-      value: 1000
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1979195283, guid: 46abff79d02163140a0fa90ea074a789, type: 3}
+      propertyPath: _vfxPooler
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1979195283, guid: 46abff79d02163140a0fa90ea074a789, type: 3}
       propertyPath: _recoilTime
-      value: 0
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1979195283, guid: 46abff79d02163140a0fa90ea074a789, type: 3}
+      propertyPath: _muzzleFlash
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1979195283, guid: 46abff79d02163140a0fa90ea074a789, type: 3}
+      propertyPath: _ammoCountText
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1979195283, guid: 46abff79d02163140a0fa90ea074a789, type: 3}
+      propertyPath: _canonPosition
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1979195283, guid: 46abff79d02163140a0fa90ea074a789, type: 3}
       propertyPath: _hitscanDamage
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1979195283, guid: 46abff79d02163140a0fa90ea074a789, type: 3}
+      propertyPath: _reloadingWarning
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2200446484234949676, guid: 46abff79d02163140a0fa90ea074a789,
         type: 3}
@@ -516,26 +532,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 2200446484234949679, guid: 46abff79d02163140a0fa90ea074a789,
-        type: 3}
-      propertyPath: CharaCon
-      value: 
-      objectReference: {fileID: 2099248381}
-    - target: {fileID: 2200446484234949679, guid: 46abff79d02163140a0fa90ea074a789,
-        type: 3}
-      propertyPath: _jumpingDrag
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 2200446484234949679, guid: 46abff79d02163140a0fa90ea074a789,
-        type: 3}
-      propertyPath: _airborneDrag
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2200446484234949679, guid: 46abff79d02163140a0fa90ea074a789,
-        type: 3}
-      propertyPath: _baseJumpStrength
-      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 46abff79d02163140a0fa90ea074a789, type: 3}
@@ -756,9 +752,3 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 92.177, y: 136.1, z: 136.121}
---- !u!143 &2099248381 stripped
-CharacterController:
-  m_CorrespondingSourceObject: {fileID: 2200446484234949841, guid: 46abff79d02163140a0fa90ea074a789,
-    type: 3}
-  m_PrefabInstance: {fileID: 1503606048}
-  m_PrefabAsset: {fileID: 0}

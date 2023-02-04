@@ -68,12 +68,12 @@ public class Player : LocalManager<Player>
 
     #region Jumping, Falling and Ground Detection variables
     [Foldout("Jumping Settings")]
-    [Range(0, 50)][SerializeField] private float _baseJumpStrength = 14f;
+    [Range(0, 100)][SerializeField] private float _baseJumpStrength = 14f;
     private float _currentJumpStrength;
     [Foldout("Jumping Settings")]
-    [Range(0, 10)][SerializeField] private float _airborneDrag = 3f;
+    [Range(0, 50)][SerializeField] private float _airborneDrag = 3f;
     [Foldout("Jumping Settings")]
-    [Range(0, 10)][SerializeField] private float _jumpingDrag = 3f;
+    [Range(0, 50)][SerializeField] private float _jumpingDrag = 3f;
     [Foldout("Jumping Settings")]
     [Range(0, 90)][SerializeField] private float _maxCeilingAngle = 30f;
 
