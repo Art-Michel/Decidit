@@ -13,7 +13,7 @@ public class EnemyHealth : Health
     [Foldout("References")]
     [SerializeField] VisualEffect _deathVfx;
     [Foldout("References")]
-    [SerializeField] Room _room;
+    public Room Room;
     [Foldout("References")]
     [SerializeField] List<Collider> _colliders;
 
@@ -52,7 +52,7 @@ public class EnemyHealth : Health
 
     private void FindRoom()
     {
-        _room = GameObject.FindObjectOfType<Room>();
+        Room = GameObject.FindObjectOfType<Room>();
     }
 
     protected override void Start()
@@ -147,10 +147,10 @@ public class EnemyHealth : Health
             }
 
             //update number of enemies in room
-            if (_room)
+            if (Room)
             {
-                _room.CurrentEnemiesInRoom--;
-                _room.CheckForEnemies();
+                Room.CurrentEnemiesInRoom--;
+                Room.CheckForEnemies();
             }
 
             //regen player

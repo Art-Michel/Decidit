@@ -25,6 +25,7 @@ public class Room : MonoBehaviour
         foreach (EnemyHealth enemy in GetComponentsInChildren<EnemyHealth>())
         {
             _enemiesList.Add(enemy);
+            enemy.Room = this;
         }
     }
 
