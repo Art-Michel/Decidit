@@ -36,6 +36,7 @@ public class Room : MonoBehaviour
         foreach (Door door in GetComponentsInChildren<Door>())
         {
             _doors.Add(door);
+            door.ThisDoorsRoom = this;
         }
     }
 

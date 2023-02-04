@@ -7,15 +7,15 @@ public class Door : MonoBehaviour
     [Header("Reference")]
     [SerializeField] GameObject _doorMesh;
     [SerializeField] Collider _doorTrigger;
-    [SerializeField] Room _room;
+    public Room ThisDoorsRoom;
 
     [Header("Door Settings")]
     [SerializeField] bool _isExit;
 
     void Awake()
     {
-        if (_room == null)
-            _room = GetComponentInParent<Room>();
+        if (this.ThisDoorsRoom == null)
+            Debug.LogError("No assigned Room! Click on this rooms ''Find Rooms'' button.");
     }
 
     private void OnTriggerEnter(Collider other)
@@ -24,11 +24,11 @@ public class Door : MonoBehaviour
         {
             if (_isExit)
             {
-                _room.ExitRoom();
+                this.ThisDoorsRoom.ExitRoom();
             }
             else
             {
-                _room.EnterRoom();
+                this.ThisDoorsRoom.EnterRoom();
             }
             _doorTrigger.enabled = false;
         }

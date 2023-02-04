@@ -5948,8 +5948,8 @@ Transform:
   - {fileID: 5851869868753560093}
   - {fileID: 4953353013367415915}
   - {fileID: 7269529477866137300}
-  - {fileID: 3241630770079285642}
-  - {fileID: 8114272732048203442}
+  - {fileID: 3685578787077562625}
+  - {fileID: 7575919439979437983}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
@@ -6008,13 +6008,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b06c4a844e38a34096c03859412570b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enter: {fileID: 0}
-  _exit: {fileID: 0}
   _enemiesList:
   - {fileID: 3400933193986105618}
   - {fileID: 1151976933247052991}
   - {fileID: 4153946222062532749}
   - {fileID: 4374404156774061731}
+  _doors:
+  - {fileID: 7212993534275065752}
+  - {fileID: 4476419223193512198}
+  _isCorridor: 0
+  CurrentEnemiesInRoom: 0
 --- !u!1 &5851869870162710727
 GameObject:
   m_ObjectHideFlags: 0
@@ -12485,6 +12488,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4953353013367415915}
     m_Modifications:
+    - target: {fileID: 925778650, guid: c24a58f537c8d6841a585d50ff610c4c, type: 3}
+      propertyPath: Room
+      value: 
+      objectReference: {fileID: 3961044147803805070}
     - target: {fileID: 3888318928632032891, guid: c24a58f537c8d6841a585d50ff610c4c,
         type: 3}
       propertyPath: m_RootOrder
@@ -12566,6 +12573,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5851869870158777865}
     m_Modifications:
+    - target: {fileID: 2462792871977853873, guid: 6d01d05523ecb0e46830d13ec7694ee5,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 4464405826092581690, guid: 6d01d05523ecb0e46830d13ec7694ee5,
         type: 3}
       propertyPath: m_RootOrder
@@ -12631,14 +12643,31 @@ PrefabInstance:
       propertyPath: m_Name
       value: Door_Enter
       objectReference: {fileID: 0}
+    - target: {fileID: 8435774368424138024, guid: 6d01d05523ecb0e46830d13ec7694ee5,
+        type: 3}
+      propertyPath: ThisDoorsRoom
+      value: 
+      objectReference: {fileID: 3961044147803805070}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d01d05523ecb0e46830d13ec7694ee5, type: 3}
---- !u!4 &3241630770079285642 stripped
+--- !u!4 &3685578787077562625 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 4464405826092581690, guid: 6d01d05523ecb0e46830d13ec7694ee5,
+  m_CorrespondingSourceObject: {fileID: 2462792871977853873, guid: 6d01d05523ecb0e46830d13ec7694ee5,
     type: 3}
   m_PrefabInstance: {fileID: 1227327039873450672}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7212993534275065752 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8435774368424138024, guid: 6d01d05523ecb0e46830d13ec7694ee5,
+    type: 3}
+  m_PrefabInstance: {fileID: 1227327039873450672}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 580ba37ae491bbc4ebcc0e94d7066abe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2201779567222039823
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15931,6 +15960,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4953353013367415915}
     m_Modifications:
+    - target: {fileID: 925778650, guid: c24a58f537c8d6841a585d50ff610c4c, type: 3}
+      propertyPath: Room
+      value: 
+      objectReference: {fileID: 3961044147803805070}
     - target: {fileID: 3888318928632032891, guid: c24a58f537c8d6841a585d50ff610c4c,
         type: 3}
       propertyPath: m_RootOrder
@@ -17617,6 +17650,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7269529477866137300}
     m_Modifications:
+    - target: {fileID: 925778650, guid: c24a58f537c8d6841a585d50ff610c4c, type: 3}
+      propertyPath: Room
+      value: 
+      objectReference: {fileID: 3961044147803805070}
     - target: {fileID: 3888318928632032891, guid: c24a58f537c8d6841a585d50ff610c4c,
         type: 3}
       propertyPath: m_RootOrder
@@ -17698,6 +17735,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7269529477866137300}
     m_Modifications:
+    - target: {fileID: 925778650, guid: c24a58f537c8d6841a585d50ff610c4c, type: 3}
+      propertyPath: Room
+      value: 
+      objectReference: {fileID: 3961044147803805070}
     - target: {fileID: 3888318928632032891, guid: c24a58f537c8d6841a585d50ff610c4c,
         type: 3}
       propertyPath: m_RootOrder
@@ -17839,16 +17880,38 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1255218857605386549, guid: b5bfdca8857fdbf46b41764497ced95e,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 2813461266668349474, guid: b5bfdca8857fdbf46b41764497ced95e,
         type: 3}
       propertyPath: m_Name
       value: Door_Exit
       objectReference: {fileID: 0}
+    - target: {fileID: 5068541762451957676, guid: b5bfdca8857fdbf46b41764497ced95e,
+        type: 3}
+      propertyPath: ThisDoorsRoom
+      value: 
+      objectReference: {fileID: 3961044147803805070}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5bfdca8857fdbf46b41764497ced95e, type: 3}
---- !u!4 &8114272732048203442 stripped
+--- !u!114 &4476419223193512198 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5068541762451957676, guid: b5bfdca8857fdbf46b41764497ced95e,
+    type: 3}
+  m_PrefabInstance: {fileID: 8667314311674433194}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 580ba37ae491bbc4ebcc0e94d7066abe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &7575919439979437983 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 636076818429677592, guid: b5bfdca8857fdbf46b41764497ced95e,
+  m_CorrespondingSourceObject: {fileID: 1255218857605386549, guid: b5bfdca8857fdbf46b41764497ced95e,
     type: 3}
   m_PrefabInstance: {fileID: 8667314311674433194}
   m_PrefabAsset: {fileID: 0}
