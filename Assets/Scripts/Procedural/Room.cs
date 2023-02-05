@@ -44,6 +44,11 @@ public class Room : MonoBehaviour
     {
         foreach (EnemyHealth enemyHealth in _enemiesList)
         {
+            if (enemyHealth == null)
+            {
+                Debug.LogError("Quelqu'un a oublié d'appuyer sur le bouton FindEnemies dans la salle " + this.gameObject.name);
+                return;
+            }
             enemyHealth.gameObject.SetActive(b);
         }
         CurrentEnemiesInRoom = _enemiesList.Count;
