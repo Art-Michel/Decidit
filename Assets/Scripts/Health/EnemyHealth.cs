@@ -106,9 +106,19 @@ public class EnemyHealth : Health
     ///<summary> Display Healthbar when looking at an enemy or when they take damage </summary>
     void AdjustVisibility()
     {
-        float minimumDot = 1 - _lookStrictness / _distance; //formula to make distance-relative the angle at which you must look at an enemy
-        //Display Healthbar if enemy is looked at or if enemy is taking damage
-        _healthBarIsVisible = Vector3.Dot(_camForward, (transform.position - _camPos).normalized) > minimumDot || _hasProbation;
+        if (!_isDying)
+        {
+            //formula to make distance-relative the angle at which you must look at an enemy
+            float minimumDot = 1 - _lookStrictness / _distance;
+
+            //Display Healthbar if enemy is looked at or if enemy is taking damage
+            _healthBarIsVisible = Vector3.Dot(_camForward, (transform.position - _camPos).normalized) > minimumDot || _hasProbation;
+        }
+        else
+        {
+            _healthBarIsVisible = false;
+            _disappearStartup = 0f;
+        }
 
         //progressively display healthbar
         if (_healthBarIsVisible && _appearT < 1)
@@ -151,6 +161,9 @@ public class EnemyHealth : Health
             Room.CurrentEnemiesInRoom--;
             Room.CheckForEnemies();
         }
+
+        //Adjust Visibility
+        _appearT = 1;
 
         //regen player
         Player.Instance.gameObject.GetComponent<Health>().ProbRegen(Mathf.RoundToInt(_regenValue / 4f));
