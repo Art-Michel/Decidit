@@ -47,6 +47,7 @@ public class Health : MonoBehaviour
     {
         _hp -= damage;
         DisplayHealth();
+        StartProbHealth();
 
         if (_hp <= 0)
         {
@@ -55,7 +56,6 @@ public class Health : MonoBehaviour
             return;
         }
 
-        StartProbHealth();
     }
 
     public virtual void TakeCriticalDamage(int damage)

@@ -38,7 +38,7 @@ public class EnemyHealth : Health
     [SerializeField][Range(0f, 2f)] float _deathAnimationDuration = 1f;
     float _disappearStartup;
     float _appearT;
-    bool _isVisible;
+    bool _healthBarIsVisible;
     float _deathT;
     bool _isDying;
 
@@ -107,11 +107,11 @@ public class EnemyHealth : Health
     void AdjustVisibility()
     {
         float minimumDot = 1 - _lookStrictness / _distance; //formula to make distance-relative the angle at which you must look at an enemy
-        _isVisible = Vector3.Dot(_camForward, (transform.position - _camPos).normalized) > minimumDot; //Display Healthbar if enemy is looked at
-        _isVisible = _isVisible || _hasProbation; //Display Healthbar if enemy is taking damage
+        //Display Healthbar if enemy is looked at or if enemy is taking damage
+        _healthBarIsVisible = Vector3.Dot(_camForward, (transform.position - _camPos).normalized) > minimumDot || _hasProbation;
 
         //progressively display healthbar
-        if (_isVisible && _appearT < 1)
+        if (_healthBarIsVisible && _appearT < 1)
         {
             _appearT = Mathf.Clamp01(_appearT + Time.deltaTime * _appearSpeed);
             _canvasGroup.alpha = Mathf.Lerp(0, 1, _appearT);
@@ -119,7 +119,7 @@ public class EnemyHealth : Health
         }
 
         //progressively undisplay healthbar
-        if (!_isVisible && _appearT > 0)
+        if (!_healthBarIsVisible && _appearT > 0)
         {
             if (_disappearStartup > 0f)
             {
@@ -134,28 +134,26 @@ public class EnemyHealth : Health
 
     protected override void Death()
     {
-        //! Ici desactiver ia ou mettre l'ia en state Dying jsp
-        if (!_isDying)
+        if (_isDying)
+            return;
+
+        _deathT = _deathAnimationDuration;
+        _isDying = true;
+        _deathVfx.Play();
+        foreach (Collider collider in _colliders)
         {
-            //die
-            _deathT = _deathAnimationDuration;
-            _isDying = true;
-            _deathVfx.Play();
-            foreach (Collider collider in _colliders)
-            {
-                collider.enabled = false;
-            }
-
-            //update number of enemies in room
-            if (Room)
-            {
-                Room.CurrentEnemiesInRoom--;
-                Room.CheckForEnemies();
-            }
-
-            //regen player
-            Player.Instance.gameObject.GetComponent<Health>().ProbRegen(Mathf.RoundToInt(_regenValue / 4f));
+            collider.enabled = false;
         }
+
+        //update number of enemies in room
+        if (Room)
+        {
+            Room.CurrentEnemiesInRoom--;
+            Room.CheckForEnemies();
+        }
+
+        //regen player
+        Player.Instance.gameObject.GetComponent<Health>().ProbRegen(Mathf.RoundToInt(_regenValue / 4f));
     }
 
     private void UpdateDeath()
