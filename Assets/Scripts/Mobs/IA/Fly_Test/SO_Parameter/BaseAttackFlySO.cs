@@ -17,9 +17,5 @@ public class BaseAttackFlySO : ScriptableObject
     public float smoothRotationAttack;
 
     [Header("Speed Y Position Attack")]
-    public float timeGoToDestinationAttack;
-    public float maxSpeedYTranslationAttack;
     public float currentSpeedYAttack;
-    public float ySpeedSmootherAttack;
-    public float lerpSpeedYValueAttack;
 }

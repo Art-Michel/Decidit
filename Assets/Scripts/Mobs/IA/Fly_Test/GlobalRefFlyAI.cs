@@ -12,7 +12,6 @@ namespace State.FlyAI
         public EnemyHealth enemyHealth;
         public AudioSource audioSourceFly;
 
-
         [Header("Slow Move References")]
         public bool isInEylau;
         public float slowSpeed;

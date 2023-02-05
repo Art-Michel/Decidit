@@ -175,6 +175,11 @@ MonoBehaviour:
   dodgeObstacle: 0
   right: 0
   offset: 0
+  maskSearchPos:
+    serializedVersion: 2
+    m_Bits: 512
+  speedVelocity: 0
+  velocity: {x: 0, y: 0, z: 0}
 --- !u!1 &772536186
 GameObject:
   m_ObjectHideFlags: 0
@@ -921,6 +926,7 @@ GameObject:
   - component: {fileID: 5407937164876577846}
   - component: {fileID: 5407937164876577847}
   - component: {fileID: 4500843322078464482}
+  - component: {fileID: 20593274}
   m_Layer: 7
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -935,14 +941,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5407937164876577845}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.87, z: 0.29}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: -3.3000004, z: -1.2900002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5407937165128473248}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!20 &5407937164876577847
 Camera:
   m_ObjectHideFlags: 0
@@ -980,7 +986,7 @@ Camera:
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 0
-  m_AllowMSAA: 1
+  m_AllowMSAA: 0
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
@@ -1111,6 +1117,14 @@ MonoBehaviour:
       enableFptlForForwardOpaque: 0
       enableBigTilePrepass: 0
       isFptlEnabled: 0
+--- !u!81 &20593274
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5407937164876577845}
+  m_Enabled: 1
 --- !u!1 &5407937165116737421
 GameObject:
   m_ObjectHideFlags: 0
@@ -1258,10 +1272,10 @@ MonoBehaviour:
   _material: {fileID: 2100000, guid: 0be94a39ccd205f4f9d884136bb4c52b, type: 2}
   _deathVfx: {fileID: 8782500626266542195, guid: 4e088f7fded15e04a95d92413fada8e4,
     type: 3}
+  Room: {fileID: 0}
   _colliders:
   - {fileID: 66523102954454127}
   - {fileID: 6188512027229414854}
-  _room: {fileID: 0}
   _uiScale: 0.1
   _lookStrictness: 0.08
   _appearSpeed: 15
@@ -1429,7 +1443,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8331719917996012698}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: -0.09999943, y: 1, z: -0.29999995}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

@@ -49,12 +49,6 @@ namespace State.FlyAI
 
             if (baseAttackFlySO.speedRotationAIAttack >= 1f)
             {
-                Vector3 destinationFinal2D = new Vector2(lockPlayerFlySO.destinationFinal.x, lockPlayerFlySO.destinationFinal.z);
-                Vector3 transformPos2D = new Vector2(globalRef.transform.position.x, globalRef.transform.position.z);
-
-                baseAttackFlySO.timeGoToDestinationAttack = Vector3.Distance(destinationFinal2D, transformPos2D) / baseAttackFlySO.baseAttackSpeed;
-                baseAttackFlySO.maxSpeedYTranslationAttack = Mathf.Abs(lockPlayerFlySO.destinationFinal.y - globalRef.transform.position.y) / baseAttackFlySO.timeGoToDestinationAttack;
-
                 stateControllerFlyAI.SetActiveState(StateControllerFlyAI.AIState.BaseAttack);
             }
             else
@@ -87,7 +81,6 @@ namespace State.FlyAI
                     baseAttackFlySO.speedRotationAIAttack += (Time.deltaTime / (baseAttackFlySO.smoothRotationAttack / 4));
                     //Debug.Log("Follow charge");
                 }
-                //lerpSpeedYValueAttack += (Time.deltaTime / ySpeedSmootherAttack);
             }
             else
             {

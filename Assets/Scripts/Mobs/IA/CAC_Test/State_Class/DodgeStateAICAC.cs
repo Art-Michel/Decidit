@@ -206,7 +206,8 @@ namespace State.AICAC
         }
         void StopDodge()
         {
-            stateControllerAICAC.SetActiveState(StateControllerAICAC.AIState.BaseIdle);
+            if(stateControllerAICAC != null)
+                stateControllerAICAC.SetActiveState(StateControllerAICAC.AIState.BaseIdle);
         }
 
         public void SmoothLookAt()

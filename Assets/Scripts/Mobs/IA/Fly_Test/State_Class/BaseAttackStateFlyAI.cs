@@ -32,16 +32,16 @@ namespace State.FlyAI
             if (baseAttackFlySO != null)
             {
                 baseAttackFlySO.speedRotationAIAttack = 0;
-                baseAttackFlySO.currentSpeedYAttack = 0;
-                baseAttackFlySO.lerpSpeedYValueAttack = 0;
             }
 
-            SoundManager.instance.PlaySoundMobOneShot(globalRef.audioSourceFly, SoundManager.instance.soundAndVolumeFlyMob[1]);
+            if (SoundManager.instance != null)
+                SoundManager.instance.PlaySoundMobOneShot(globalRef.audioSourceFly, SoundManager.instance.soundAndVolumeFlyMob[1]);
         }
 
 
         private void Update()
         {
+            AdjustingYspeed();
             Attack();
         }
 
@@ -54,9 +54,23 @@ namespace State.FlyAI
             {
                 stateControllerFlyAI.SetActiveState(StateControllerFlyAI.AIState.BaseMove);
             }
+
+            globalRef.agent.velocity = childflyAI.transform.forward * baseAttackFlySO.baseAttackSpeed;
         }
 
-        public void Attack()
+        void AdjustingYspeed()
+        {
+            float distHorizontal = Vector2.Distance(new Vector2(childflyAI.position.x, childflyAI.position.z),
+                    new Vector2(globalRef.playerTransform.position.x, globalRef.playerTransform.position.z));
+            float t = distHorizontal / baseAttackFlySO.baseAttackSpeed;
+
+            float distVertical = Mathf.Abs(childflyAI.position.y - (globalRef.playerTransform.position.y + 0.5f));
+
+            float v = distVertical / t;
+            baseAttackFlySO.currentSpeedYAttack = v;
+        }
+
+        void Attack()
         {
             baseAttackFlySO.distDestinationFinal = Vector3.Distance(lockPlayerFlySO.destinationFinal, globalRef.transform.position);
             globalRef.colliderBaseAttack.gameObject.SetActive(true);
@@ -91,28 +105,21 @@ namespace State.FlyAI
         {
             globalRef.agent.speed = baseAttackFlySO.baseAttackSpeed;
 
-            SlowSpeed(globalRef.isInEylau);
-            baseAttackFlySO.currentSpeedYAttack = Mathf.Lerp(baseAttackFlySO.currentSpeedYAttack, baseAttackFlySO.maxSpeedYTranslationAttack, baseAttackFlySO.lerpSpeedYValueAttack);
-
-            baseAttackFlySO.lerpSpeedYValueAttack += (Time.deltaTime / baseAttackFlySO.ySpeedSmootherAttack);
-
-            if (Mathf.Abs(globalRef.transform.position.y - lockPlayerFlySO.destinationFinal.y) > 1)
+            //SlowSpeed(globalRef.isInEylau);
+            if (globalRef.transform.position.y < lockPlayerFlySO.destinationFinal.y)
             {
-                if (globalRef.transform.position.y < lockPlayerFlySO.destinationFinal.y)
-                {
-                    if (globalRef.isInEylau)
-                        globalRef.agent.baseOffset += (baseAttackFlySO.currentSpeedYAttack * Time.deltaTime) / 2;
-                    else
-                        globalRef.agent.baseOffset += baseAttackFlySO.currentSpeedYAttack * Time.deltaTime;
-
-                }
+                if (globalRef.isInEylau)
+                    globalRef.agent.baseOffset += (baseAttackFlySO.currentSpeedYAttack * Time.deltaTime) / 2;
                 else
-                {
-                    if (globalRef.isInEylau)
-                        globalRef.agent.baseOffset -= (baseAttackFlySO.currentSpeedYAttack * Time.deltaTime) / 2;
-                    else
-                        globalRef.agent.baseOffset -= baseAttackFlySO.currentSpeedYAttack * Time.deltaTime;
-                }
+                    globalRef.agent.baseOffset += baseAttackFlySO.currentSpeedYAttack * Time.deltaTime;
+
+            }
+            else
+            {
+                if (globalRef.isInEylau)
+                    globalRef.agent.baseOffset -= (baseAttackFlySO.currentSpeedYAttack * Time.deltaTime) / 2;
+                else
+                    globalRef.agent.baseOffset -= baseAttackFlySO.currentSpeedYAttack * Time.deltaTime;
             }
         }
         void SlowSpeed(bool active)
@@ -141,7 +148,6 @@ namespace State.FlyAI
             {
                 baseAttackFlySO.speedRotationAIAttack = 0;
                 baseAttackFlySO.currentSpeedYAttack = 0;
-                baseAttackFlySO.lerpSpeedYValueAttack = 0;
             }
         }
     }

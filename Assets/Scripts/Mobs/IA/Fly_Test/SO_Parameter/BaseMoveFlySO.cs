@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "FlyBaseMoveParameter", menuName = "Fly/BaseMoveParameter")]
@@ -22,11 +20,11 @@ public class BaseMoveFlySO : ScriptableObject
     public float distNextDestinationFinal;
 
     [Header("Speed Y Position Patrol")]
-    public float timeGoToDestinationPatrol;
-    public float maxSpeedYTranslationPatrol;
+   /* public float timeGoToDestinationPatrol;
+    public float maxSpeedYTranslationPatrol;*/
     public float currentSpeedYPatrol;
-    public float ySpeedSmootherPatrol;
-    public float lerpSpeedYValuePatrol;
+  /*  public float ySpeedSmootherPatrol;
+    public float lerpSpeedYValuePatrol;*/
 
     [Header("Speed Rotation Patrol")]
     public float maxSpeedRotationAIPatrol;

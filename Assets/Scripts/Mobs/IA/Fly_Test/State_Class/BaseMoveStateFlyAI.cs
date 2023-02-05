@@ -42,6 +42,7 @@ namespace State.FlyAI
 
         private void Update()
         {
+            AdjustingYspeed();
             SmoothLookAtYAxisPatrol();
         }
 
@@ -54,6 +55,18 @@ namespace State.FlyAI
 
             velocity = globalRef.agent.velocity;
             speedVelocity = globalRef.agent.velocity.magnitude;
+        }
+
+        void AdjustingYspeed()
+        {
+            float distHorizontal = Vector2.Distance(new Vector2(childflyAI.position.x, childflyAI.position.z),
+                    new Vector2(baseMoveFlySO.destinationFinal.x, baseMoveFlySO.destinationFinal.z));
+            float t = distHorizontal / baseMoveFlySO.baseMoveSpeed;
+
+            float distVertical = Mathf.Abs(childflyAI.position.y - baseMoveFlySO.destinationFinal.y);
+
+            float v = distVertical / t;
+            baseMoveFlySO.currentSpeedYPatrol = v;
         }
 
         void CheckObstacle()
@@ -103,7 +116,6 @@ namespace State.FlyAI
             if (baseMoveFlySO.speedRotationAIPatrol < currentMaxSpeedRotationAIDodgeObstacle)
             {
                 baseMoveFlySO.speedRotationAIPatrol += (Time.deltaTime / currentSmoothRotationDodgeObstacle);
-                baseMoveFlySO.lerpSpeedYValuePatrol += (Time.deltaTime / baseMoveFlySO.ySpeedSmootherPatrol);
             }
 
             SlowRotation(globalRef.isInEylau, relativePos);
@@ -134,7 +146,6 @@ namespace State.FlyAI
                 baseMoveFlySO.newPosIsSet = false;
                 baseMoveFlySO.speedRotationAIPatrol = 0;
                 baseMoveFlySO.currentSpeedYPatrol = 0;
-                baseMoveFlySO.lerpSpeedYValuePatrol = 0;
                 return baseMoveFlySO.newPos = new Vector3(baseMoveFlySO.destinationFinal.x, baseMoveFlySO.destinationFinal.z);
             }
             else
@@ -148,13 +159,6 @@ namespace State.FlyAI
                     baseMoveFlySO.newPosIsSet = true;
                     baseMoveFlySO.speedRotationAIPatrol = 0;
                     baseMoveFlySO.currentSpeedYPatrol = 0;
-                    baseMoveFlySO.lerpSpeedYValuePatrol = 0;
-
-                    Vector3 destinationFinal2D = new Vector2(baseMoveFlySO.destinationFinal.x, baseMoveFlySO.destinationFinal.z);
-                    Vector3 transformPos2D = new Vector2(flyAI.transform.position.x, flyAI.transform.position.z);
-
-                    baseMoveFlySO.timeGoToDestinationPatrol = Vector3.Distance(destinationFinal2D, transformPos2D) / globalRef.agent.speed;
-                    baseMoveFlySO.maxSpeedYTranslationPatrol = Mathf.Abs(baseMoveFlySO.destinationFinal.y - flyAI.transform.position.y) / baseMoveFlySO.timeGoToDestinationPatrol;
 
                     return baseMoveFlySO.newPos = new Vector3(baseMoveFlySO.destinationFinal.x, baseMoveFlySO.destinationFinal.z);
                 }
@@ -166,7 +170,6 @@ namespace State.FlyAI
                     baseMoveFlySO.newPosIsSet = false;
                     baseMoveFlySO.speedRotationAIPatrol = 0;
                     baseMoveFlySO.currentSpeedYPatrol = 0;
-                    baseMoveFlySO.lerpSpeedYValuePatrol = 0;
                     return baseMoveFlySO.newPos = new Vector3(baseMoveFlySO.destinationFinal.x, baseMoveFlySO.destinationFinal.z);
                 }
             }
@@ -190,24 +193,20 @@ namespace State.FlyAI
                 if (baseMoveFlySO.distDestinationFinal > 7)
                 {
                     //SlowSpeed(globalRef.isInEylau);
-                    baseMoveFlySO.currentSpeedYPatrol = Mathf.Lerp(baseMoveFlySO.currentSpeedYPatrol, baseMoveFlySO.maxSpeedYTranslationPatrol, baseMoveFlySO.lerpSpeedYValuePatrol);
 
-                    if (Mathf.Abs(flyAI.transform.position.y - baseMoveFlySO.destinationFinal.y) > 1)
+                    if (flyAI.transform.position.y < baseMoveFlySO.destinationFinal.y)
                     {
-                        if (flyAI.transform.position.y < baseMoveFlySO.destinationFinal.y)
-                        {
-                            if (globalRef.isInEylau)
-                                globalRef.agent.baseOffset += (baseMoveFlySO.currentSpeedYPatrol * Time.deltaTime) / globalRef.slowRatio;
-                            else
-                                globalRef.agent.baseOffset += (baseMoveFlySO.currentSpeedYPatrol * Time.deltaTime);
-                        }
+                        if (globalRef.isInEylau)
+                            globalRef.agent.baseOffset += (baseMoveFlySO.currentSpeedYPatrol * Time.deltaTime) / globalRef.slowRatio;
                         else
-                        {
-                            if (globalRef.isInEylau)
-                                globalRef.agent.baseOffset -= (baseMoveFlySO.currentSpeedYPatrol * Time.deltaTime) / globalRef.slowRatio;
-                            else
-                                globalRef.agent.baseOffset -= (baseMoveFlySO.currentSpeedYPatrol * Time.deltaTime);
-                        }
+                            globalRef.agent.baseOffset += (baseMoveFlySO.currentSpeedYPatrol * Time.deltaTime);
+                    }
+                    else
+                    {
+                        if (globalRef.isInEylau)
+                            globalRef.agent.baseOffset -= (baseMoveFlySO.currentSpeedYPatrol * Time.deltaTime) / globalRef.slowRatio;
+                        else
+                            globalRef.agent.baseOffset -= (baseMoveFlySO.currentSpeedYPatrol * Time.deltaTime);
                     }
                 }
                 else
@@ -269,10 +268,7 @@ namespace State.FlyAI
             if(baseMoveFlySO != null)
             {
                 baseMoveFlySO.currentRateAttack = Random.Range(baseMoveFlySO.maxRateAttack.x, baseMoveFlySO.maxRateAttack.y);
-                baseMoveFlySO.timeGoToDestinationPatrol = 0;
-                baseMoveFlySO.maxSpeedYTranslationPatrol = 0;
                 baseMoveFlySO.currentSpeedYPatrol = 0;
-                baseMoveFlySO.lerpSpeedYValuePatrol = 0;
                 baseMoveFlySO.speedRotationAIPatrol = 0;
                 baseMoveFlySO.newPosIsSet = false;
             }
