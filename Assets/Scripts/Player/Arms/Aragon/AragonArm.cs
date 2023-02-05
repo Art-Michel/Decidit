@@ -32,6 +32,9 @@ public class AragonArm : Arm
     private LayerMask _detectionMask;
     [Foldout("Stats")]
     [SerializeField]
+    private LayerMask _triggerMask;
+    [Foldout("Stats")]
+    [SerializeField]
     private float _dashSpeed = 3f;
     [Foldout("Stats")]
     [SerializeField]
@@ -55,6 +58,8 @@ public class AragonArm : Arm
     private float _dashT;
     private float currentDashSpeed;
     int _adjustedTimesNb;
+
+    private Vector3 _lastFramePosition;
 
     protected override void Awake()
     {
@@ -95,6 +100,7 @@ public class AragonArm : Arm
 
     public override void StartActive()
     {
+        //Prepare
         _crossHairOutline.enabled = false;
         PlaceHolderSoundManager.Instance.PlayDashSound();
         _player.AllowMovement(false);
@@ -102,10 +108,16 @@ public class AragonArm : Arm
         _player.CharaCon.detectCollisions = false;
         _dashStartPosition = _player.transform.position;
         _dashDestination = _vfx.transform.position;
+
+        //Adjust Destination in order to stay away from walls!
         _adjustedTimesNb = 0;
         AdjustDestination();
+
+        //Actually move
         currentDashSpeed = _dashSpeed / Vector3.Distance(_dashStartPosition, _dashDestination);
         _dashT = 0;
+
+        //Feedbacks
         StartDashFeedbacks();
     }
 
@@ -154,14 +166,35 @@ public class AragonArm : Arm
 
     public override void UpdateActive()
     {
+        _lastFramePosition = transform.position;
+
+        //Move
         _dashT += Time.deltaTime * currentDashSpeed * _dashSpeedCurve.Evaluate(_dashT);
-        //_player.transform.position = Vector3.LerpUnclamped(_dashStartPosition, _dashDestination, _dashMovementCurve.Evaluate(_dashT));
         _player.CharaCon.Move(Vector3.LerpUnclamped(_dashStartPosition, _dashDestination, _dashMovementCurve.Evaluate(_dashT)) - _player.transform.position);
+
+        CheckForTriggers();
+
+        //End dash when lerped all the way
         if (_dashT >= 1)
         {
             _fsm.ChangeState(ArmStateList.RECOVERY);
         }
+
         DashFeedbacks();
+    }
+
+    private void CheckForTriggers()
+    {
+        Vector3 spaceTraveledLastFrame = transform.position - _lastFramePosition;
+        foreach (RaycastHit hit in Physics.RaycastAll(_lastFramePosition, spaceTraveledLastFrame.normalized, spaceTraveledLastFrame.magnitude, _triggerMask))
+        {
+            if (hit.transform.TryGetComponent<Door>(out Door door))
+                door.Trigger();
+            else if (hit.transform.parent.TryGetComponent<Door>(out Door door2))
+                door2.Trigger();
+            else
+                Debug.LogWarning("crossed a trigger without a door");
+        }
     }
 
     private void DashFeedbacks()

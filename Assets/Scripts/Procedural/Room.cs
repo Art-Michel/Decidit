@@ -51,7 +51,7 @@ public class Room : MonoBehaviour
 
     public void EnterRoom()
     {
-        DungeonGenerator.Instance.IncrementCurrentRoom();
+        DungeonGenerator.Instance.SetCurrentRoom(this);
         DungeonGenerator.Instance.GetRoom(-1).gameObject.SetActive(false);
         this.Entry.CloseDoor();
 

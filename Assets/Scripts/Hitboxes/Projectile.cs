@@ -146,7 +146,6 @@ public class Projectile : Hitbox
         }
     }
 
-    //bounces
     protected virtual void Bounce(RaycastHit hit)
     {
         transform.position = hit.point + hit.normal * (_radius + 0.1f);

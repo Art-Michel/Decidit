@@ -141,8 +141,8 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
         }
     }
 
-    public void IncrementCurrentRoom()
+    public void SetCurrentRoom(Room room)
     {
-        _currentRoom++;
+        _currentRoom = _actualRooms.IndexOf(room);
     }
 }
