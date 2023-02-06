@@ -74,6 +74,9 @@ public class Room : MonoBehaviour
 
     public void ExitRoom()
     {
+        if (DungeonGenerator.Instance.GetRoomIndex(this) != DungeonGenerator.Instance.CurrentRoom)
+            return;
+
         if (_isCorridor)
         {
             this.Exit.OpenDoor();
@@ -84,6 +87,8 @@ public class Room : MonoBehaviour
         {
             //Nothing
         }
+
+        this.Exit.HasBeenTriggered = true;
     }
 
     public void CheckForEnemies()

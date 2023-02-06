@@ -12,7 +12,7 @@ public class Door : MonoBehaviour
     [Header("Door Settings")]
     [SerializeField] bool _isExit;
 
-    bool _hasBeenTriggered = false;
+    public bool HasBeenTriggered = false;
 
     void Awake()
     {
@@ -22,7 +22,7 @@ public class Door : MonoBehaviour
 
     void Start()
     {
-        _hasBeenTriggered = false;
+        HasBeenTriggered = false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -35,7 +35,7 @@ public class Door : MonoBehaviour
 
     public void Trigger()
     {
-        if (_hasBeenTriggered)
+        if (HasBeenTriggered)
             return;
 
         if (_isExit)
@@ -46,7 +46,6 @@ public class Door : MonoBehaviour
         {
             this.ThisDoorsRoom.EnterRoom();
         }
-        _hasBeenTriggered = true;
     }
 
     public void CloseDoor()

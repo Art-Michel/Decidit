@@ -10,7 +10,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
     [SerializeField] RoomSetup _starterRoom;
     [SerializeField] RoomSetup _finalRoom;
     [SerializeField] int _length;
-    [SerializeField] int _currentRoom;
+    public int CurrentRoom { get; private set; }
     public List<RoomSetup> RoomSets;
     public List<RoomSetup> Corridors;
     List<Room> _actualRooms;
@@ -129,7 +129,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
 
     public Room GetRoom(int i = 0)
     {
-        int roomToReturn = _currentRoom + i;
+        int roomToReturn = CurrentRoom + i;
         if (roomToReturn < _actualRooms.Count)
         {
             return _actualRooms[roomToReturn];
@@ -143,6 +143,11 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
 
     public void SetCurrentRoom(Room room)
     {
-        _currentRoom = _actualRooms.IndexOf(room);
+        CurrentRoom = _actualRooms.IndexOf(room);
+    }
+
+    public int GetRoomIndex(Room room)
+    {
+        return _actualRooms.IndexOf(room);
     }
 }
