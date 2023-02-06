@@ -195,6 +195,15 @@ public class AragonArm : Arm
             else
                 Debug.LogWarning("crossed a trigger without a door");
         }
+        foreach (Collider collider in Physics.OverlapSphere(transform.position, .4f, _triggerMask))
+        {
+            if (collider.transform.TryGetComponent<Door>(out Door door))
+                door.Trigger();
+            else if (collider.transform.parent.TryGetComponent<Door>(out Door door2))
+                door2.Trigger();
+            else
+                Debug.LogWarning("crossed a trigger without a door");
+        }
     }
 
     private void DashFeedbacks()
