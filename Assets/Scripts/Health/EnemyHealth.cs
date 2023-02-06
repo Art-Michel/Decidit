@@ -50,11 +50,6 @@ public class EnemyHealth : Health
         _canvasGroup = _canvas.GetComponent<CanvasGroup>();
     }
 
-    private void FindRoom()
-    {
-        Room = GameObject.FindObjectOfType<Room>();
-    }
-
     protected override void Start()
     {
         base.Start();
@@ -62,6 +57,12 @@ public class EnemyHealth : Health
         _canvasGroup.alpha = 0f;
         _isDying = false;
         _material = GetComponent<Material_Instances>().Material;
+    }
+
+    void OnEnable()
+    {
+        if (this.Room == null)
+            this.Room = FindObjectOfType<Room>();
     }
 
     protected override void Update()
