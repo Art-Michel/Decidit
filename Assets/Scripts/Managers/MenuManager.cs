@@ -10,6 +10,7 @@ public class MenuManager : MonoBehaviour
     public static MenuManager Instance = null;
     [SerializeField] int _gameIndex;
     [SerializeField] int _optionIndex;
+    [SerializeField] int _mainIndex;
 
     [SerializeField] GameObject firstSelected;
 
@@ -24,6 +25,7 @@ public class MenuManager : MonoBehaviour
             return;
         }
         Instance = this;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     void Start()
@@ -53,6 +55,11 @@ public class MenuManager : MonoBehaviour
     {
         //fait entrer le joueur dans les options
         SceneManager.LoadScene(_optionIndex);
+    }
+    public void MainMenu()
+    {
+        //fait entrer le joueur dans le menu principal
+        SceneManager.LoadScene(_mainIndex);
     }
 
     public void SetSelectedGameObjectToSettings()

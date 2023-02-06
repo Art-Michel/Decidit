@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DungeonGenerator : LocalManager<DungeonGenerator>
 {
@@ -144,10 +145,20 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
     public void SetCurrentRoom(Room room)
     {
         CurrentRoom = _actualRooms.IndexOf(room);
+        if(CurrentRoom >= _actualRooms.Count -1)
+        {
+            Endgame();
+            Cursor.visible = true;
+        }
     }
 
     public int GetRoomIndex(Room room)
     {
         return _actualRooms.IndexOf(room);
+    }
+
+    public void Endgame()
+    {
+        SceneManager.LoadScene(3);
     }
 }
