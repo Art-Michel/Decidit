@@ -83,9 +83,9 @@ public class Player : LocalManager<Player>
 
     private RaycastHit _groundHit;
     private RaycastHit _ceilingHit;
-    private const float _groundSpherecastLength = .65f; // _charaCon.height/2 - _charaCon.radius
+    private const float _groundSpherecastLength = .75f; // _charaCon.height/2 - _charaCon.radius
     private const float _ceilingRaycastLength = 1f; // _charaCon.height/2 + 0.1f margin to mitigate skin width
-    private const float _groundSpherecastRadius = .35f; // _charaCon.radius + 0.1f margin to mitigate skin width
+    private const float _groundSpherecastRadius = .25f; // _charaCon.radius + 0.1f margin to mitigate skin width
     private const float _ceilingSpherecastRadius = .25f; // _charaCon.radius
     private bool _justJumped;
     private float _jumpCooldown;
