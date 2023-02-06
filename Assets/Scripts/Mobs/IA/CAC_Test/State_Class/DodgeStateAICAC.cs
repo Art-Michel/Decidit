@@ -24,6 +24,8 @@ namespace State.AICAC
         Vector3 direction;
         Vector3 relativePos;
 
+        float durationDodge;
+
         public override void InitState(StateControllerAICAC stateController)
         {
             base.InitState(stateController);
@@ -33,8 +35,10 @@ namespace State.AICAC
 
         private void OnEnable()
         {
+            durationDodge = globalRef.dodgeAICACSO.dodgeLenght / globalRef.dodgeAICACSO.dodgeSpeed;
+
             Invoke("CheckISMoving", 1f);
-            Invoke("DodgeMaxDuration", 1.5f);
+            Invoke("DodgeMaxDuration", durationDodge);
         }
 
         void CheckISMoving()
@@ -129,7 +133,7 @@ namespace State.AICAC
             right = -Vector3.Cross(dir, Vector3.up).normalized;
 
             Ray ray = new Ray(globalRef.spawnRayDodge.position, right);
-            globalRef.dodgeAICACSO.targetDodgeVector = ray.GetPoint(globalRef.dodgeAICACSO.dodgeLenght);
+            globalRef.dodgeAICACSO.targetDodgeVector = CheckNavMeshPoint(ray.GetPoint(globalRef.dodgeAICACSO.dodgeLenght));
             globalRef.dodgeAICACSO.dodgeIsSet = true;
         }
         void GetLeftPoint()
@@ -138,7 +142,7 @@ namespace State.AICAC
             left = Vector3.Cross(dir, Vector3.up).normalized;
 
             Ray ray = new Ray(globalRef.spawnRayDodge.position, left);
-            globalRef.dodgeAICACSO.targetDodgeVector = ray.GetPoint(globalRef.dodgeAICACSO.dodgeLenght);
+            globalRef.dodgeAICACSO.targetDodgeVector = CheckNavMeshPoint(ray.GetPoint(globalRef.dodgeAICACSO.dodgeLenght));
             globalRef.dodgeAICACSO.dodgeIsSet = true;
         }
 
@@ -189,7 +193,7 @@ namespace State.AICAC
                 globalRef.baseMoveAICACSO.speedRot = 0;
                 globalRef.agent.speed = globalRef.dodgeAICACSO.dodgeSpeed;
                 globalRef.dodgeAICACSO.isDodging = true;
-                globalRef.agent.SetDestination(CheckNavMeshPoint(globalRef.dodgeAICACSO.targetDodgeVector));
+                globalRef.agent.SetDestination(globalRef.dodgeAICACSO.targetDodgeVector);
             }
             else
             {
@@ -212,7 +216,8 @@ namespace State.AICAC
 
         public void SmoothLookAt()
         {
-            direction = globalRef.playerTransform.position;
+            //direction = globalRef.playerTransform.position;
+            direction = globalRef.transform.forward;
             relativePos.x = direction.x - globalRef.transform.position.x;
             relativePos.y = 0;
             relativePos.z = direction.z - globalRef.transform.position.z;
@@ -225,7 +230,7 @@ namespace State.AICAC
             }
 
             Quaternion rotation = Quaternion.Slerp(globalRef.transform.rotation, Quaternion.LookRotation(relativePos, Vector3.up), globalRef.dodgeAICACSO.speedRot);
-            globalRef.transform.rotation = rotation;
+            //globalRef.transform.rotation = rotation;
         }
 
         private void OnDisable()

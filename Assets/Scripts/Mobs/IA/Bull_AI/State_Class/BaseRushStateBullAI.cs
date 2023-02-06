@@ -339,13 +339,13 @@ namespace State.AIBull
                             if (angle > 0)
                             {
                                 globalRefAICAC.dodgeAICACSO.targetObjectToDodge = this.transform;
-                                globalRefAICAC.dodgeAICACSO.rightDodge = true;
+                                globalRefAICAC.dodgeAICACSO.leftDodge = true;
                                 globalRefAICAC.ActiveStateDodge();
                             }
                             else
                             {
                                 globalRefAICAC.dodgeAICACSO.targetObjectToDodge = this.transform;
-                                globalRefAICAC.dodgeAICACSO.leftDodge = true;
+                                globalRefAICAC.dodgeAICACSO.rightDodge = true;
                                 globalRefAICAC.dodgeAICACSO.dodgeRushBull = true;
                                 globalRefAICAC.ActiveStateDodge();
                             }

@@ -15,10 +15,7 @@ namespace State.AICAC
 
         private void Update()
         {
-            if (state == StateControllerAICAC.AIState.BaseIdle)
-            {
-                StateIdle();
-            }
+            StateIdle();
         }
 
         public void StateIdle()
