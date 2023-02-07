@@ -17,14 +17,18 @@ namespace State.AIBull
         private void Update()
         {
             BaseMovement();
-            if(globalRef.launchRush)
-                LaunchRush();
-            else if (globalRef.distPlayer < globalRef.baseMoveBullSO.distActiveRush)
+            Debug.Log(globalRef.agent.isOnOffMeshLink);
+            
+            if(!globalRef.agent.isOnOffMeshLink)
             {
-                globalRef.launchRush = true;
-                stateController.SetActiveState(StateControllerBull.AIState.Rush);
+                if (globalRef.launchRush)
+                    LaunchRush();
+                else if (globalRef.distPlayer < globalRef.baseMoveBullSO.distActiveRush)
+                {
+                    globalRef.launchRush = true;
+                    LaunchRush();
+                }
             }
-
         }
 
         void BaseMovement()

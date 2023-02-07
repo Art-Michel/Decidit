@@ -51,7 +51,7 @@ namespace State.AIBull
         {
             if (currentRangeTimeRush > 0)
                 currentRangeTimeRush -= Time.deltaTime;
-            else
+            else if(!globalRef.agent.isOnNavMesh)
                 SwitchToStateRush();
 
             ManageCurrentNavMeshLink();
@@ -60,7 +60,7 @@ namespace State.AIBull
             {
                 GoToStartRushPos();
             }
-            else
+            else if (!globalRef.agent.isOnNavMesh)
             {
                 SwitchToStateRush();
             }

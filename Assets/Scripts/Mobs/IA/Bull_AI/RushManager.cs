@@ -71,8 +71,11 @@ namespace State.AIBull
         void SelectAI()
         {
             int i = Random.Range(0, cloneListRefBullAI.Count - 1);
-            cloneListRefBullAI[i].launchRush = true;
-            cloneListRefBullAI.RemoveAt(i);
+            if(!cloneListRefBullAI[i].agent.isOnOffMeshLink)
+            {
+                cloneListRefBullAI[i].launchRush = true;
+                cloneListRefBullAI.RemoveAt(i);
+            }
         }
 
         public void RemoveDeadAI(GlobalRefBullAI globalRef)
