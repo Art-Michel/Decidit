@@ -21,6 +21,10 @@ namespace State.AIBull
         public RushManager rushManager;
         public AudioSource audioSourceBull;
 
+        [Header("Animation")]
+        public Animator myAnimator;
+        public GlobalRefAnimator globalRefAnimator;
+
         [Header("Slow Move References")]
         public bool isInEylau;
         public float slowSpeed;

@@ -921,6 +921,7 @@ GameObject:
   - component: {fileID: 2316416254645839507}
   - component: {fileID: 4926933427431696317}
   - component: {fileID: 4427916794497671896}
+  - component: {fileID: 1527049004980208940}
   m_Layer: 7
   m_Name: BullAI
   m_TagString: Ennemi
@@ -1119,6 +1120,8 @@ MonoBehaviour:
   characterController: {fileID: 4926933427431696317}
   rushManager: {fileID: 0}
   audioSourceBull: {fileID: 4427916794497671896}
+  myAnimator: {fileID: 0}
+  globalRefAnimator: {fileID: 0}
   isInEylau: 0
   slowSpeed: 0
   slowSpeedRot: 0
@@ -1187,7 +1190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 2273504962484362914, guid: 4d0d93400b870594d93b9ea8023468e9, type: 3}
+  _prefab: {fileID: 3182170922454913666, guid: 6d0652dad3cf50d4f90488da7361b8c7, type: 3}
   _initialCount: 4
   _shouldBeParent: 1
 --- !u!143 &4926933427431696317
@@ -1304,6 +1307,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1527049004980208940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5314086221994346189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ae3cf7fd4ff02b4ca5762edd765cc59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentAnimName: 
 --- !u!1001 &6404695434071592602
 PrefabInstance:
   m_ObjectHideFlags: 0

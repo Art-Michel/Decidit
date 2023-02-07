@@ -26,7 +26,8 @@ namespace State.AICAC
         {
             globalRef.hitBox.SetActive(false);
             globalRef.baseAttackAICACSO.isAttacking = false;
-            globalRef.myAnimator.SetBool("Attack", false);
+            AnimatorManager.instance.DisableAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Attack");
+            //globalRef.myAnimator.SetBool("Attack", false);
         }
     }
 }

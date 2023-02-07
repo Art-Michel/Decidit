@@ -51,7 +51,8 @@ namespace State.AICAC
 
             if (baseAttackAICACSO.currentAttackRate <= 0)
             {
-                globalRef.myAnimator.SetBool("Attack", true);
+                AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Attack");
+                ///globalRef.myAnimator.SetBool("Attack", true);
                 baseAttackAICACSO.isAttacking = true;
                 baseAttackAICACSO.currentAttackRate = baseAttackAICACSO.maxAttackRate;
             }

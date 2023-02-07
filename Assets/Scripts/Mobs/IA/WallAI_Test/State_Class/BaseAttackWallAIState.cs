@@ -55,7 +55,8 @@ namespace State.WallAI
             if(this.enabled)
             {
                 globalRef.agent.speed = baseAttackWallAISO.stopSpeed;
-                globalRef.animator.SetBool("LaunchAttack", true);
+                AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "LaunchAttack");
+                //globalRef.myAnimator.SetBool("LaunchAttack", true);
             }
         }
 
@@ -101,7 +102,8 @@ namespace State.WallAI
         {
             if(baseAttackWallAISO.bulletCount <=0)
             {
-                globalRef.animator.SetBool("LaunchAttack", false);
+                AnimatorManager.instance.DisableAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "LaunchAttack");
+                //globalRef.myAnimator.SetBool("LaunchAttack", false);
                 activeAttack = false;
                 stateControllerWallAI.SetActiveState(StateControllerWallAI.WallAIState.BaseMove, true);
             }

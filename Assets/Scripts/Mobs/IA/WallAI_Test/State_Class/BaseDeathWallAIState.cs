@@ -34,7 +34,7 @@ namespace State.WallAI
 
         public void Death()
         {
-            globalRef.animator.SetBool("IsDead", true);
+            globalRef.myAnimator.SetBool("IsDead", true);
         }
     }
 }

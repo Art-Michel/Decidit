@@ -9,7 +9,6 @@ namespace State.WallAI
         [Header("References")]
         public Transform areaWallAI;
         public NavMeshAgent agent;
-        public Animator animator;
         public Transform spawnBullet;
         public EnemyHealth enemyHealth;
         public List<BoxCollider> wallsList = new List<BoxCollider>();
@@ -17,6 +16,10 @@ namespace State.WallAI
         public float orientation;
         public MeshRenderer meshRenderer;
         public AudioSource audioSourceWallMob;
+
+        [Header("Animation")]
+        public Animator myAnimator;
+        public GlobalRefAnimator globalRefAnimator;
 
         [Header("Slow Move References")]
         public bool isInEylau;

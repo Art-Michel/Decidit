@@ -1053,6 +1053,7 @@ GameObject:
   - component: {fileID: 1015992914697596655}
   - component: {fileID: 5934521562026886925}
   - component: {fileID: 2341046240974596424}
+  - component: {fileID: 3995594547456311649}
   m_Layer: 7
   m_Name: AICAC
   m_TagString: Ennemi
@@ -1244,12 +1245,13 @@ MonoBehaviour:
   playerTransform: {fileID: 0}
   spawnSurroundDodge: {fileID: 0}
   agent: {fileID: 0}
-  myAnimator: {fileID: 0}
   aICACVarianteState: {fileID: 0}
   material_Instances: {fileID: 0}
   distPlayer: 0.3
   stateControllerTrashMob: {fileID: 686522203}
   audioSourceTrashMob: {fileID: 2341046240974596424}
+  myAnimator: {fileID: 0}
+  globalRefAnimator: {fileID: 3995594547456311649}
   isInEylau: 0
   slowSpeedMove: 0
   slowSpeedRot: 0
@@ -1311,7 +1313,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 2273504962484362914, guid: 4d0d93400b870594d93b9ea8023468e9, type: 3}
+  _prefab: {fileID: 3182170922454913666, guid: 6d0652dad3cf50d4f90488da7361b8c7, type: 3}
   _initialCount: 4
   _shouldBeParent: 1
 --- !u!114 &-8431705195059145478
@@ -1478,6 +1480,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3995594547456311649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3888318928632032895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ae3cf7fd4ff02b4ca5762edd765cc59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentAnimName: 
 --- !u!1 &3888318928693326222
 GameObject:
   m_ObjectHideFlags: 0

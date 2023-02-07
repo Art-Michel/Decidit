@@ -644,6 +644,7 @@ GameObject:
   - component: {fileID: 5407937164311034900}
   - component: {fileID: 5407937164311034899}
   - component: {fileID: -2163490113976411781}
+  - component: {fileID: 5160256997650002795}
   m_Layer: 7
   m_Name: Empty_FlyAINavMesh
   m_TagString: Ennemi
@@ -723,6 +724,8 @@ MonoBehaviour:
   stateControllerFlyAI: {fileID: 5407937164311034900}
   enemyHealth: {fileID: 1522482573}
   audioSourceFly: {fileID: -2163490113976411781}
+  myAnimator: {fileID: 0}
+  globalRefAnimator: {fileID: 0}
   isInEylau: 0
   slowSpeed: 0
   slowSpeedRot: 0
@@ -831,6 +834,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5160256997650002795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5407937164410842285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ae3cf7fd4ff02b4ca5762edd765cc59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentAnimName: 
 --- !u!1 &5407937164474220353
 GameObject:
   m_ObjectHideFlags: 0
@@ -1313,7 +1329,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 2273504962484362914, guid: 4d0d93400b870594d93b9ea8023468e9, type: 3}
+  _prefab: {fileID: 3182170922454913666, guid: 6d0652dad3cf50d4f90488da7361b8c7, type: 3}
   _initialCount: 4
   _shouldBeParent: 1
 --- !u!114 &6911205242574237349

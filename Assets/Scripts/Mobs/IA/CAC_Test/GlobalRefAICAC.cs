@@ -10,7 +10,6 @@ namespace State.AICAC
         public Transform playerTransform;
         public Transform spawnSurroundDodge;
         public NavMeshAgent agent;
-        public Animator myAnimator;
         public AICACVarianteState aICACVarianteState;
         EnemyHealth enemyHealth;
         public Material_Instances material_Instances;
@@ -18,6 +17,9 @@ namespace State.AICAC
         [SerializeField] StateControllerAICAC stateControllerTrashMob;
         public AudioSource audioSourceTrashMob;
 
+        [Header("Animation")]
+        public Animator myAnimator;
+        public GlobalRefAnimator globalRefAnimator;
 
         [Header("Slow Move References")]
         public bool isInEylau;
