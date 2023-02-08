@@ -339,5 +339,9 @@ namespace State.AICAC
             if (aiCACSurroundSelectedList.Count < maxAISurround)
                 aiCACSurroundSelectedList.Add(aiCACScriptsList[shortestDist]);
         }
+        public void RemoveAISelectedSurround(GlobalRefAICAC globalRef)
+        {
+            aiCACSurroundSelectedList.Remove(globalRef);
+        }
     }
 }
