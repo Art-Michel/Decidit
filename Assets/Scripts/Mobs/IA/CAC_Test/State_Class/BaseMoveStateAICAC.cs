@@ -52,8 +52,8 @@ namespace State.AICAC
             // globalRef.agent.areaMask |= (1 << NavMesh.GetAreaFromName("Jump"));
 
             SmoothLookAt();
-            BaseMovement();
             ManageCurrentNavMeshLink();
+            BaseMovement();
         }
 
         void ActiveJump()
@@ -104,16 +104,21 @@ namespace State.AICAC
                 
                 if (!triggerNavLink)
                 {
-                    if(Vector3.Distance(globalRef.transform.position, link.startPoint) < Vector3.Distance(globalRef.transform.position, link.endPoint))
+                    /*if(Vector3.Distance(globalRef.transform.GetChild(0).position, link.startPoint) < 
+                        Vector3.Distance(globalRef.transform.GetChild(0).position, link.endPoint))
                     {
-                        linkDestination = link.endPoint * 10f;
+                        linkDestination = link.endPoint - globalRef.transform.position;
+                        Debug.Log(link.endPoint);
                         triggerNavLink = true;
                     }
                     else
                     {
-                        linkDestination = -link.startPoint * 10f;
+                        linkDestination = link.startPoint - globalRef.transform.position;
+                        Debug.Log(link.startPoint);
                         triggerNavLink = true;
-                    }
+                    }*/
+                    linkDestination = link.transform.position - transform.position;
+                    triggerNavLink = true;
                 }
             }
             else
@@ -141,6 +146,7 @@ namespace State.AICAC
                 {
                     SlowSpeed(globalRef.isInEylau);
                     globalRef.agent.SetDestination(destination);
+
                     currentRateRepath = maxRateRepath;
                 }
             }
@@ -223,15 +229,16 @@ namespace State.AICAC
         {
             if (globalRef.agent.isOnOffMeshLink)
             {
-                direction = linkDestination;
+                direction = linkDestination - transform.position;
 
-                relativePos.x = direction.x - globalRef.transform.position.x;
+                relativePos.x = linkDestination.x;
                 relativePos.y = 0;
-                relativePos.z = direction.z - globalRef.transform.position.z;
+                relativePos.z = linkDestination.z;
+
             }
             else
             {
-               // direction = globalRef.transform.position + globalRef.agent.desiredVelocity;
+                // direction = globalRef.transform.position + globalRef.agent.desiredVelocity;
                 direction = globalRef.agent.desiredVelocity;
 
                 relativePos.x = direction.x;
