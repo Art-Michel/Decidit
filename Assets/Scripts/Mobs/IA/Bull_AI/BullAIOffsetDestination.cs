@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace State.AIBull
@@ -9,16 +10,19 @@ namespace State.AIBull
         [SerializeField] public float positiveOffeset;
         [SerializeField] public float negativeOffeset;
 
-        BullAIStartPosRush bullAIStartPosRush;
+        public List<GlobalRefBullAI> listRefBullAI = new List<GlobalRefBullAI>();
+
         void Start()
         {
-            Invoke("GetAiBullReference", 0.7f);
-            Invoke("SetOffsetDestination", 1f);
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                listRefBullAI.Add(transform.GetChild(i).GetComponent<GlobalRefBullAI>());
+            }
         }
 
-        void GetAiBullReference()
+        private void Update()
         {
-            bullAIStartPosRush = GetComponent<BullAIStartPosRush>();
+            SetOffsetDestination();
         }
 
         void SetOffsetDestination()
@@ -30,12 +34,12 @@ namespace State.AIBull
                     if (i % 2 == 0)
                     {
                         positiveOffeset += offeset;
-                        bullAIStartPosRush.listBullAIScript[i].offsetDestination = positiveOffeset;
+                        listRefBullAI[i].offsetDestination = positiveOffeset;
                     }
                     else
                     {
                         negativeOffeset -= offeset;
-                        bullAIStartPosRush.listBullAIScript[i].offsetDestination = negativeOffeset;
+                        listRefBullAI[i].offsetDestination = negativeOffeset;
                     }
                 }
             }
@@ -45,13 +49,13 @@ namespace State.AIBull
                 {
                     if (i % 2 == 0)
                     {
-                        bullAIStartPosRush.listBullAIScript[i].offsetDestination = positiveOffeset;
+                        listRefBullAI[i].offsetDestination = positiveOffeset;
                         positiveOffeset += offeset;
                     }
                     else
                     {
                         negativeOffeset -= offeset;
-                        bullAIStartPosRush.listBullAIScript[i].offsetDestination = negativeOffeset;
+                        listRefBullAI[i].offsetDestination = negativeOffeset;
                     }
                 }
             }

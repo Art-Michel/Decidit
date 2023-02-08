@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -39,7 +38,7 @@ namespace State.AICAC
             SetListActiveAI();
         }
 
-        void SetListActiveAI()
+        public void SetListActiveAI()
         {
             aiCACScriptsList.Clear();
             aiCACSurroundSelectedList.Clear();
@@ -339,14 +338,6 @@ namespace State.AICAC
             }
             if (aiCACSurroundSelectedList.Count < maxAISurround)
                 aiCACSurroundSelectedList.Add(aiCACScriptsList[shortestDist]);
-        }
-        public void RemoveAISelectedAnticip(GlobalRefAICAC globalRef)
-        {
-            aiCACScriptsList.Remove(globalRef);
-        }
-        public void RemoveAISelectedSurround(GlobalRefAICAC globalRef)
-        {
-            aiCACSurroundSelectedList.Remove(globalRef);
         }
     }
 }

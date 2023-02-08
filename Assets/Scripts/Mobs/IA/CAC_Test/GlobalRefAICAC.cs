@@ -78,9 +78,10 @@ namespace State.AICAC
 
             if (enemyHealth._hp <= 0 && !isDead)
             {
-                aICACVarianteState.RemoveAISelectedAnticip(this);
+                aICACVarianteState.SetListActiveAI();
                 ActiveState(StateControllerAICAC.AIState.BaseDeath);
-                myAnimator.SetBool("Death", true);
+                AnimatorManager.instance.SetAnimation(myAnimator, globalRefAnimator, "Death");
+                //myAnimator.SetBool("Death", true);
                 isDead = true;
             }
         }

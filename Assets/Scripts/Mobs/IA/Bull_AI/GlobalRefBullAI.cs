@@ -9,7 +9,6 @@ namespace State.AIBull
         public NavMeshAgent agent;
         public Transform playerTransform;
         public LayerMask ennemiMask;
-        public BullAIStartPosRush bullAIStartPosRush;
         public Material_Instances material_Instances;
         public EnemyHealth enemyHealth;
         public float distPlayer;
@@ -57,7 +56,6 @@ namespace State.AIBull
             playerTransform = GameObject.FindWithTag("Player").transform;
             enemyHealth = GetComponent<EnemyHealth>();
             material_Instances = GetComponent<Material_Instances>();
-            bullAIStartPosRush = GetComponentInParent<BullAIStartPosRush>();
             bullCount = GetComponentInParent<BullCount>();
             agentLinkMover = GetComponent<AgentLinkMover>();
             rushManager = GetComponentInParent<RushManager>();
@@ -72,8 +70,6 @@ namespace State.AIBull
 
         void Update()
         {
-           // sphereDebug.position = agent.destination;
-
             distPlayer = Vector3.Distance(transform.position, playerTransform.position);
 
             if (enemyHealth._hp <= 0 && !isDead)

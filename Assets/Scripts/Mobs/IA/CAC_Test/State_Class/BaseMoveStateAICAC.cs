@@ -228,12 +228,12 @@ namespace State.AICAC
             else
             {
                // direction = globalRef.transform.position + globalRef.agent.desiredVelocity;
-                direction = destination;
-            }
+                direction = globalRef.agent.desiredVelocity;
 
-            relativePos.x = direction.x - globalRef.transform.position.x;
-            relativePos.y = 0;
-            relativePos.z = direction.z - globalRef.transform.position.z;
+                relativePos.x = direction.x;
+                relativePos.y = 0;
+                relativePos.z = direction.z;
+            }
 
             SlowRotation(globalRef.isInEylau);
 
