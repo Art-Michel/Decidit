@@ -20,6 +20,10 @@ public class EylauArm : Arm
     [SerializeField]
     private LayerMask _detectionMask;
 
+    float _shakeT;
+    float _shakeInitialT;
+    float _shakeIntensity;
+
     public override void StartIdle()
     {
         Refilled();
@@ -66,5 +70,35 @@ public class EylauArm : Arm
     {
         // _area.SetActive(false);
         base.StartRecovery();
+    }
+
+    public void StartShake(float intensity, float duration)
+    {
+        if (duration > _shakeT)
+        {
+            _shakeInitialT = duration;
+            _shakeT = duration;
+        }
+        if (intensity > _shakeIntensity)
+            _shakeIntensity = intensity;
+    }
+
+    private void Shake()
+    {
+        if (_shakeT > 0)
+        {
+            float shakeIntensity = _shakeIntensity * Mathf.InverseLerp(0, _shakeInitialT, _shakeT);
+            transform.localPosition = _initialHeadPos + new Vector3(UnityEngine.Random.Range(-1, 1), UnityEngine.Random.Range(-1, 1), 0).normalized * shakeIntensity;
+            _shakeT -= Time.deltaTime;
+            if (_shakeT < 0)
+                StopShake();
+        }
+    }
+
+    public void StopShake()
+    {
+        _shakeIntensity = 0;
+        _shakeT = 0;
+        transform.localPosition = _initialHeadPos;
     }
 }
