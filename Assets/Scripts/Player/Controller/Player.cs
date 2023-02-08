@@ -262,15 +262,15 @@ public class Player : LocalManager<Player>
     private void MoveCameraWithMouse()
     {
         Vector2 mouseMovement = _inputs.Camera.Rotate.ReadValue<Vector2>()/* * Time.deltaTime */;
-        _cameraTargetYRotation = Mathf.Repeat(_cameraTargetYRotation, 360);
-        _cameraTargetYRotation += mouseMovement.x * _mouseSensitivityX * 0.01f * _mouseXInvertedValue;
-        _cameraTargetXRotation -= mouseMovement.y * _mouseSensitivityY * 0.01f * _mouseYInvertedValue;
+        // _cameraTargetYRotation = Mathf.Repeat(_cameraTargetYRotation, 360);
+        _cameraTargetYRotation += mouseMovement.x * _mouseSensitivityX * 0.01f * _mouseXInvertedValue * Time.timeScale;
+        _cameraTargetXRotation -= mouseMovement.y * _mouseSensitivityY * 0.01f * _mouseYInvertedValue * Time.timeScale;
 
         _cameraTargetXRotation = Mathf.Clamp(_cameraTargetXRotation, -85, 85);
 
         var targetRotation = Quaternion.Euler(Vector3.up * _cameraTargetYRotation) * Quaternion.Euler(Vector3.right * _cameraTargetXRotation);
 
-        _head.rotation = Quaternion.Lerp(_head.rotation, targetRotation, _cameraSmoothness * Time.deltaTime);
+        _head.rotation = Quaternion.Lerp(_head.rotation, targetRotation, Time.timeScale);
     }
 
     private void MoveCameraWithRightStick()

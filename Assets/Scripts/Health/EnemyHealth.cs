@@ -148,19 +148,19 @@ public class EnemyHealth : Health
         if (_isDying)
             return;
 
+        //update number of enemies in room
+        if (Room)
+        {
+            Room.CurrentEnemiesInRoom--;
+            Room.CheckForEnemies();
+        }
+
         _deathT = _deathAnimationDuration;
         _isDying = true;
         _deathVfx.Play();
         foreach (Collider collider in _colliders)
         {
             collider.enabled = false;
-        }
-
-        //update number of enemies in room
-        if (Room)
-        {
-            Room.CurrentEnemiesInRoom--;
-            Room.CheckForEnemies();
         }
 
         //Adjust Visibility

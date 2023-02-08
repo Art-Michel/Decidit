@@ -130,12 +130,10 @@ namespace State.AIBull
         void PreSelectingStartPos()
         {
             globalRef.coolDownRushBullSO.currentDurationStay = globalRef.coolDownRushBullSO.maxDurationStay;
-            globalRef.bullAIStartPosRush.ResetSelectedBox(globalRef.coolDownRushBullSO.boxSelected);
             SelectStartPos();
         }
         void SelectStartPos()
         {
-            globalRef.bullAIStartPosRush.SelectAI(globalRef);
             globalRef.agent.speed = globalRef.coolDownRushBullSO.speedPatrolToStartPos;
             SlowSpeed(globalRef.isInEylau);
         }
@@ -283,7 +281,6 @@ namespace State.AIBull
         private void OnDisable()
         {
             baseRushStateBullAI.captureBasePosDistance = globalRef.transform.position;
-            globalRef.bullAIStartPosRush.ResetSelectedBox(globalRef.coolDownRushBullSO.boxSelected);
             globalRef.coolDownRushBullSO.currentNumberOfPatrol = 0;
             globalRef.agent.speed = globalRef.coolDownRushBullSO.stopSpeed;
             globalRef.coolDownRushBullSO.startPos = Vector3.zero;
