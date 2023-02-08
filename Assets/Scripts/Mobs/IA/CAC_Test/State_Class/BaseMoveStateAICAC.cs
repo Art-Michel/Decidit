@@ -106,12 +106,12 @@ namespace State.AICAC
                 {
                     if(Vector3.Distance(globalRef.transform.position, link.startPoint) < Vector3.Distance(globalRef.transform.position, link.endPoint))
                     {
-                        linkDestination = link.endPoint;
+                        linkDestination = link.endPoint * 10f;
                         triggerNavLink = true;
                     }
                     else
                     {
-                        linkDestination = link.startPoint;
+                        linkDestination = -link.startPoint * 10f;
                         triggerNavLink = true;
                     }
                 }
@@ -224,6 +224,10 @@ namespace State.AICAC
             if (globalRef.agent.isOnOffMeshLink)
             {
                 direction = linkDestination;
+
+                relativePos.x = direction.x - globalRef.transform.position.x;
+                relativePos.y = 0;
+                relativePos.z = direction.z - globalRef.transform.position.z;
             }
             else
             {
