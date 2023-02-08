@@ -23,6 +23,7 @@ public class EylauArm : Arm
     float _shakeT;
     float _shakeInitialT;
     float _shakeIntensity;
+    private Vector3 _initialHeadPos;
 
     public override void StartIdle()
     {
