@@ -14,6 +14,7 @@ public class CheckPlayerDownPos : MonoBehaviour
 
     void FixedUpdate()
     {
-        positionPlayer = RaycastAIManager.instanceRaycast.RaycastAI(transform.position, Vector3.down, mask, Color.yellow, 100).point;
+        if (RaycastAIManager.instanceRaycast != null)
+            positionPlayer = RaycastAIManager.instanceRaycast.RaycastAI(transform.position, Vector3.down, mask, Color.yellow, 100).point;
     }
 }
