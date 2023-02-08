@@ -39,6 +39,7 @@ namespace State.WallAI
 
             playerTransform = GameObject.FindWithTag("Player").transform;
             audioSourceWallMob = GetComponentInChildren<AudioSource>();
+            areaWallAI = transform.parent.transform.Find("Area_WallAI").transform;
 
             for (int i = 0; i < areaWallAI.childCount; i++)
             {
