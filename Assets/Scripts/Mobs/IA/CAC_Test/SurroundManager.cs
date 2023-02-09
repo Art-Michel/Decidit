@@ -40,8 +40,11 @@ namespace State.AICAC
         void Update()
         {
             SetupPositionEnemy();
+        }
 
-            if(drawLineRenderer)
+        private void FixedUpdate()
+        {
+            if (drawLineRenderer)
                 DrawCicre(360, (int)radius);
         }
 
@@ -83,8 +86,7 @@ namespace State.AICAC
                 Vector3 currentPosition = CheckNavMeshPoint(new Vector3(CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer.x + x, 
                                                                          CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer.y, 
                                                                          CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer.z + z));
-                CheckNavMeshPoint(currentPosition);
-                circleRenderer.SetPosition(currentStep, CheckNavMeshPoint(currentPosition));
+                circleRenderer.SetPosition(currentStep, currentPosition);
             }
         }
         Vector3 CheckNavMeshPoint(Vector3 _destination)
