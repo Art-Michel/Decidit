@@ -12,15 +12,17 @@ public class RevolverStateIdle : RevolverState
     public override void Begin()
     {
         _revolver.CheckBuffer();
+        //_revolver.StartSwaying();
     }
 
     public override void StateUpdate()
     {
-
+        //_revolver.Sway();
     }
 
     public override void Exit()
     {
+        //_revolver.StopSwaying();
 
     }
 

@@ -47,6 +47,8 @@ public class Revolver : MonoBehaviour
     [SerializeField] Color _lowAmmoColor;
     [Foldout("Other")]
     [SerializeField] Color _noAmmoColor;
+    [Foldout("Other")]
+    [SerializeField] private float _smoothness;
 
 
     protected Vector3 _currentlyAimedAt;
@@ -80,7 +82,7 @@ public class Revolver : MonoBehaviour
         //Debugging();
     }
 
-    #region Debugging
+    //     #region Debugging
     //     void Debugging()
     //     {
     // #if UNITY_EDITOR
@@ -90,9 +92,27 @@ public class Revolver : MonoBehaviour
 
     //     public void DebugDisplayGunState()
     //     {
-    //         // if (_debugStateText && _fsm.currentState != null)
-    //         //     _debugStateText.text = ("Revolver state: " + _fsm.currentState.Name);
+    //         if (_debugStateText && _fsm.currentState != null)
+    //             _debugStateText.text = ("Revolver state: " + _fsm.currentState.Name);
     //     }
+    //     #endregion
+
+    #region Swaying
+    public void StartSwaying()
+    {
+
+    }
+
+    public void Sway()
+    {
+        //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler((_currentlyAimedAt - transform.position)), _smoothness * Time.deltaTime);
+        //transform.forward = Vector3.Slerp(transform.forward, (_currentlyAimedAt - transform.position).normalized, _smoothness * Time.deltaTime);
+    }
+
+    public void StopSwaying()
+    {
+        //transform.forward = (_currentlyAimedAt - transform.position).normalized;
+    }
     #endregion
 
     #region Aiming
