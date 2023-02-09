@@ -19,10 +19,10 @@ public class EylauRevolver : Revolver
     [Foldout("Screenshake values")]
     [SerializeField] private float _bulletShakeIntensity = .9f;
     [Foldout("Screenshake values")]
-    [SerializeField] private float _laserShakeIntensity = 2f;
+    [SerializeField] private float _bulletShakeDuration = .9f;
 
     [Foldout("Screenshake values")]
-    [SerializeField] private float _bulletShakeDuration = .9f;
+    [SerializeField] private float _laserShakeIntensity = 2f;
     [Foldout("Screenshake values")]
     [SerializeField] private float _laserShakeDuration = 2f;
 
@@ -41,13 +41,15 @@ public class EylauRevolver : Revolver
 
     private float _currentCharge;
     private bool _charged;
-    private Vector3 _initialGunPos;
+    private Vector3 _shakenDirection = Vector3.zero;
 
     public override void UpdateChargeLevel()
     {
-        if (!_charged)
+        if (_charged)
         {
-            transform.localPosition = _initialGunPos + new Vector3(UnityEngine.Random.Range(-1, 1), UnityEngine.Random.Range(-1, 1), 0).normalized * _chargedWeaponShakeIntensity;
+            transform.localPosition -= _shakenDirection;
+            _shakenDirection = new Vector3(UnityEngine.Random.Range(-1, 1), UnityEngine.Random.Range(-1, 1), 0).normalized * _chargedWeaponShakeIntensity;
+            transform.localPosition += _shakenDirection;
         }
         else
         {
@@ -67,9 +69,10 @@ public class EylauRevolver : Revolver
             shot = _projectilePooler.Get();
             shot.GetComponent<Projectile>().Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized);
 
-            Player.Instance.StartShake(_bulletShakeIntensity, _laserShakeDuration);
+            Player.Instance.StartShake(_bulletShakeIntensity, _bulletShakeDuration);
             _muzzleFlash.PlayAll();
         }
+
         else
         {
             if (_laserShouldPierce)
@@ -77,7 +80,7 @@ public class EylauRevolver : Revolver
             else
                 Laser();
 
-            Player.Instance.StartShake(_laserShakeIntensity, _laserShakeIntensity);
+            Player.Instance.StartShake(_laserShakeIntensity, _laserShakeDuration);
             _muzzleFlash.PlayAll();
         }
 
@@ -124,6 +127,8 @@ public class EylauRevolver : Revolver
         base.StartRecoil();
         if (_charged)
             _recoilT += _laserAdditionalRecoil;
+
+        ResetChargeLevel();
     }
 
     public override void LowerAmmoCount()
@@ -134,9 +139,11 @@ public class EylauRevolver : Revolver
 
     public override void ResetChargeLevel()
     {
+        _charged = false;
         _currentCharge = 0f;
         _chargeUi.fillAmount = _currentCharge;
-        transform.localPosition = _initialGunPos;
+        transform.localPosition -= _shakenDirection;
+        _shakenDirection = Vector3.zero;
     }
 
     protected override void OnEnable()

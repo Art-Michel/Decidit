@@ -892,7 +892,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &262988831
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1271,7 +1271,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &460814240
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1882,7 +1882,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &801612284
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1958,7 +1958,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &808484386
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2390,7 +2390,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1004400266
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2466,7 +2466,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1021199571
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4162,10 +4162,6 @@ GameObject:
   - component: {fileID: 7268849856978730495}
   - component: {fileID: 9161445646862943683}
   - component: {fileID: 2200446483770630229}
-  - component: {fileID: 2200446483770630230}
-  - component: {fileID: 2200446483770630231}
-  - component: {fileID: 8620154464695890639}
-  - component: {fileID: 3174289190664690925}
   - component: {fileID: 2200446483770630237}
   m_Layer: 6
   m_Name: EylauRevolver
@@ -4219,46 +4215,18 @@ MonoBehaviour:
   _fullAmmoColor: {r: 1, g: 1, b: 1, a: 1}
   _lowAmmoColor: {r: 1, g: 1, b: 0.34509805, a: 1}
   _noAmmoColor: {r: 0.7075472, g: 0, b: 0, a: 1}
-  _projectile0Pooler: {fileID: 2200446483770630229}
-  _projectile1Pooler: {fileID: 2200446483770630230}
-  _projectile2Pooler: {fileID: 2200446483770630231}
-  _projectile3Pooler: {fileID: 3174289190664690925}
-  _projectile4Pooler: {fileID: 8620154464695890639}
-  _projectile5Pooler: {fileID: 2200446483770630237}
+  _projectilePooler: {fileID: 2200446483770630229}
+  _laserVfxPooler: {fileID: 2200446483770630237}
   _chargeUi: {fileID: 7926085865351582358}
-  _additionalRecoilCharge0: 0
-  _additionalRecoilCharge1: 0.04
-  _additionalRecoilCharge2: 0.09
-  _additionalRecoilCharge3: 0.12
-  _additionalRecoilCharge4: 0.15
-  _additionalRecoilCharge5: 0.4
-  _shakeIntensity0: 0.1
-  _shakeIntensity1: 0.2
-  _shakeIntensity2: 0.3
-  _shakeIntensity3: 0.4
-  _shakeIntensity4: 0.5
-  _shakeIntensity5: 1
-  _shakeDuration0: 0.1
-  _shakeDuration1: 0.15
-  _shakeDuration2: 0.2
-  _shakeDuration3: 0.25
-  _shakeDuration4: 0.3
-  _shakeDuration5: 0.5
-  _bulletPrefab0: {fileID: 4939631121027515308, guid: 3bb5aafe2875b5c48b28766744164823,
-    type: 3}
-  _bulletPrefab1: {fileID: 4082346403535372032, guid: e4e52aa81f31d844e9058d9fe6921b57,
-    type: 3}
-  _bulletPrefab2: {fileID: 8026799233648510373, guid: b647177aeafa0d04482865a490b78bb5,
-    type: 3}
-  _bulletPrefab3: {fileID: 5777929842385905463, guid: e206da096f1eebd48b4289cc9e0e229c,
-    type: 3}
-  _bulletPrefab4: {fileID: 2818867246145638118, guid: 8679d7f9981d01c408ec3aaba7cfad29,
-    type: 3}
-  _bulletPrefab5: {fileID: 0}
-  _vfxPooler: {fileID: 2200446483770630237}
-  _chargeSpeed: 3.5
-  _hitscanMaxRange: 100
-  _hitscanDamage: 100
+  _bulletShakeIntensity: 0.2
+  _bulletShakeDuration: 0.2
+  _laserShakeIntensity: 0.4
+  _laserShakeDuration: 0.5
+  _chargeSpeed: 1
+  _chargedWeaponShakeIntensity: 0.002
+  _laserAdditionalRecoil: 1
+  _laserMaxRange: 1000
+  _laserDamage: 100
   _laserShouldPierce: 1
 --- !u!114 &9161445646862943683
 MonoBehaviour:
@@ -4286,66 +4254,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _prefab: {fileID: 4939631121027515308, guid: 3bb5aafe2875b5c48b28766744164823, type: 3}
   _initialCount: 6
-  _shouldBeParent: 0
---- !u!114 &2200446483770630230
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2113098007}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _prefab: {fileID: 4082346403535372032, guid: e4e52aa81f31d844e9058d9fe6921b57, type: 3}
-  _initialCount: 3
-  _shouldBeParent: 0
---- !u!114 &2200446483770630231
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2113098007}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _prefab: {fileID: 8026799233648510373, guid: b647177aeafa0d04482865a490b78bb5, type: 3}
-  _initialCount: 2
-  _shouldBeParent: 0
---- !u!114 &8620154464695890639
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2113098007}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _prefab: {fileID: 2818867246145638118, guid: 8679d7f9981d01c408ec3aaba7cfad29, type: 3}
-  _initialCount: 2
-  _shouldBeParent: 0
---- !u!114 &3174289190664690925
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2113098007}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _prefab: {fileID: 5777929842385905463, guid: e206da096f1eebd48b4289cc9e0e229c, type: 3}
-  _initialCount: 1
   _shouldBeParent: 0
 --- !u!114 &2200446483770630237
 MonoBehaviour:
@@ -5966,7 +5874,7 @@ MonoBehaviour:
   _stickSensitivityY: 22
   _controllerCameraXInverted: 0
   _controllerCameraYInverted: 0
-  _cameraSmoothness: 1000
+  _cameraSmoothness: 1
   _baseJumpStrength: 13
   _airborneDrag: 4.5
   _jumpingDrag: 3
