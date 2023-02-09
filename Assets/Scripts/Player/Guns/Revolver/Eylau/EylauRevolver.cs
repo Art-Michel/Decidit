@@ -10,158 +10,100 @@ using NaughtyAttributes;
 public class EylauRevolver : Revolver
 {
     [Foldout("References")]
-    [SerializeField] private Pooler _projectile0Pooler;
+    [SerializeField] private Pooler _projectilePooler;
     [Foldout("References")]
-    [SerializeField] private Pooler _projectile1Pooler;
-    [Foldout("References")]
-    [SerializeField] private Pooler _projectile2Pooler;
-    [Foldout("References")]
-    [SerializeField] private Pooler _projectile3Pooler;
-    [Foldout("References")]
-    [SerializeField] private Pooler _projectile4Pooler;
-    [Foldout("References")]
-    [SerializeField] private Pooler _projectile5Pooler;
+    [SerializeField] private Pooler _laserVfxPooler;
     [Foldout("References")]
     [SerializeField] private Image _chargeUi;
 
-    [Foldout("Recoils values")]
-    [SerializeField] private float _additionalRecoilCharge0 = .1f;
-    [Foldout("Recoils values")]
-    [SerializeField] private float _additionalRecoilCharge1 = .2f;
-    [Foldout("Recoils values")]
-    [SerializeField] private float _additionalRecoilCharge2 = .3f;
-    [Foldout("Recoils values")]
-    [SerializeField] private float _additionalRecoilCharge3 = .4f;
-    [Foldout("Recoils values")]
-    [SerializeField] private float _additionalRecoilCharge4 = .5f;
-    [Foldout("Recoils values")]
-    [SerializeField] private float _additionalRecoilCharge5 = .6f;
+    [Foldout("Screenshake values")]
+    [SerializeField] private float _bulletShakeIntensity = .9f;
+    [Foldout("Screenshake values")]
+    [SerializeField] private float _laserShakeIntensity = 2f;
 
     [Foldout("Screenshake values")]
-    [SerializeField] private float _shakeIntensity0 = .9f;
+    [SerializeField] private float _bulletShakeDuration = .9f;
     [Foldout("Screenshake values")]
-    [SerializeField] private float _shakeIntensity1 = 1f;
-    [Foldout("Screenshake values")]
-    [SerializeField] private float _shakeIntensity2 = 1.1f;
-    [Foldout("Screenshake values")]
-    [SerializeField] private float _shakeIntensity3 = 1.2f;
-    [Foldout("Screenshake values")]
-    [SerializeField] private float _shakeIntensity4 = 1.3f;
-    [Foldout("Screenshake values")]
-    [SerializeField] private float _shakeIntensity5 = 1.6f;
-    [Foldout("Screenshake values")]
-    [SerializeField] private float _shakeDuration0 = .9f;
-    [Foldout("Screenshake values")]
-    [SerializeField] private float _shakeDuration1 = 1f;
-    [Foldout("Screenshake values")]
-    [SerializeField] private float _shakeDuration2 = 1.1f;
-    [Foldout("Screenshake values")]
-    [SerializeField] private float _shakeDuration3 = 1.2f;
-    [Foldout("Screenshake values")]
-    [SerializeField] private float _shakeDuration4 = 1.3f;
-    [Foldout("Screenshake values")]
-    [SerializeField] private float _shakeDuration5 = 1.6f;
-
-    [Foldout("Projectiles")]
-    [SerializeField] private GameObject _bulletPrefab0;
-    [Foldout("Projectiles")]
-    [SerializeField] private GameObject _bulletPrefab1;
-    [Foldout("Projectiles")]
-    [SerializeField] private GameObject _bulletPrefab2;
-    [Foldout("Projectiles")]
-    [SerializeField] private GameObject _bulletPrefab3;
-    [Foldout("Projectiles")]
-    [SerializeField] private GameObject _bulletPrefab4;
-    [Foldout("Projectiles")]
-    [SerializeField] private GameObject _bulletPrefab5;
-    [Foldout("Projectiles")]
-    [SerializeField] private Pooler _vfxPooler;
+    [SerializeField] private float _laserShakeDuration = 2f;
 
     [Foldout("Stats")]
-    [SerializeField] private float _chargeSpeed = 2f;
+    [SerializeField] private float _chargeSpeed = 1f;
     [Foldout("Stats")]
-    [SerializeField] private int _hitscanMaxRange;
+    [SerializeField] private float _chargedWeaponShakeIntensity;
     [Foldout("Stats")]
-    [SerializeField] private int _hitscanDamage;
+    [SerializeField] private float _laserAdditionalRecoil = .3f;
+    [Foldout("Stats")]
+    [SerializeField] private int _laserMaxRange;
+    [Foldout("Stats")]
+    [SerializeField] private int _laserDamage;
     [Foldout("Stats")]
     [SerializeField] private bool _laserShouldPierce;
+
     private float _currentCharge;
-    private int _currentChargeStep;
-    private const int _maxCharge = 5;
+    private bool _charged;
+    private Vector3 _initialGunPos;
 
     public override void UpdateChargeLevel()
     {
-        _currentCharge = Mathf.Clamp(_currentCharge + Time.deltaTime * _chargeSpeed, 0, _maxCharge);
-        _chargeUi.fillAmount = Mathf.Lerp(0, 1, Mathf.InverseLerp(0, _maxCharge, _currentCharge));
-
-        if (_currentCharge >= _currentChargeStep + 1)
+        if (!_charged)
         {
-            _currentChargeStep += 1;
-            PlaceHolderSoundManager.Instance.PlayEylauCharge(_currentChargeStep);
+            transform.localPosition = _initialGunPos + new Vector3(UnityEngine.Random.Range(-1, 1), UnityEngine.Random.Range(-1, 1), 0).normalized * _chargedWeaponShakeIntensity;
+        }
+        else
+        {
+            _currentCharge = Mathf.Clamp(_currentCharge + Time.deltaTime * _chargeSpeed, 0, 1);
+            _chargeUi.fillAmount = _currentCharge;
+
+            if (_currentCharge >= 1)
+                _charged = true;
         }
     }
 
     public override void Shoot()
     {
         PooledObject shot = null;
-        switch (_currentChargeStep)
+        if (!_charged)
         {
-            case 0:
-                shot = _projectile0Pooler.Get();
-                Player.Instance.StartShake(_shakeIntensity0, _shakeDuration0);
-                break;
-            case 1:
-                shot = _projectile1Pooler.Get();
-                Player.Instance.StartShake(_shakeIntensity1, _shakeDuration1);
-                break;
-            case 2:
-                shot = _projectile2Pooler.Get();
-                Player.Instance.StartShake(_shakeIntensity2, _shakeDuration2);
-                break;
-            case 3:
-                shot = _projectile3Pooler.Get();
-                Player.Instance.StartShake(_shakeIntensity3, _shakeDuration3);
-                break;
-            case 4:
-                shot = _projectile4Pooler.Get();
-                Player.Instance.StartShake(_shakeIntensity4, _shakeDuration4);
-                break;
-            case 5:
-                if (_laserShouldPierce)
-                    PiercingLaser();
-                else
-                    Laser();
-                Player.Instance.StartShake(_shakeIntensity5, _shakeDuration5);
-                break;
-        }
-
-        if (shot != null)
+            shot = _projectilePooler.Get();
             shot.GetComponent<Projectile>().Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized);
 
-        PlaceHolderSoundManager.Instance.PlayEylauShot(_currentChargeStep);
-        _muzzleFlash.PlayAll();
+            Player.Instance.StartShake(_bulletShakeIntensity, _laserShakeDuration);
+            _muzzleFlash.PlayAll();
+        }
+        else
+        {
+            if (_laserShouldPierce)
+                PiercingLaser();
+            else
+                Laser();
+
+            Player.Instance.StartShake(_laserShakeIntensity, _laserShakeIntensity);
+            _muzzleFlash.PlayAll();
+        }
+
     }
 
     private void Laser()
     {
 
-        var vfx = _vfxPooler.Get().GetComponent<TwoPosTrail>();
-        if (Physics.Raycast(_camera.position, _camera.forward, out RaycastHit hit, _hitscanMaxRange, _mask) && hit.transform.parent.TryGetComponent<Health>(out Health health))
+        var vfx = _laserVfxPooler.Get().GetComponent<TwoPosTrail>();
+        if (Physics.Raycast(_camera.position, _camera.forward, out RaycastHit hit, _laserMaxRange, _mask) && hit.transform.parent.TryGetComponent<Health>(out Health health))
         {
             vfx.SetPos(_canonPosition.position, hit.point);
             if (hit.transform.CompareTag("WeakHurtbox"))
-                (health as EnemyHealth).TakeCriticalDamage(_hitscanDamage, hit.point, hit.normal);
+                (health as EnemyHealth).TakeCriticalDamage(_laserDamage, hit.point, hit.normal);
             else
-                (health as EnemyHealth).TakeDamage(_hitscanDamage, hit.point, hit.normal);
+                (health as EnemyHealth).TakeDamage(_laserDamage, hit.point, hit.normal);
         }
         else
-            vfx.SetPos(_canonPosition.position, _canonPosition.position + _camera.forward * _hitscanMaxRange);
+            vfx.SetPos(_canonPosition.position, _canonPosition.position + _camera.forward * _laserMaxRange);
     }
+
     private void PiercingLaser()
     {
 
-        var vfx = _vfxPooler.Get().GetComponent<TwoPosTrail>();
-        RaycastHit[] hits = Physics.RaycastAll(_camera.position, _camera.forward, _hitscanMaxRange, _mask);
+        var vfx = _laserVfxPooler.Get().GetComponent<TwoPosTrail>();
+        RaycastHit[] hits = Physics.RaycastAll(_camera.position, _camera.forward, _laserMaxRange, _mask);
         foreach (RaycastHit hit in hits)
         {
             hit.transform.parent.TryGetComponent<Health>(out Health health);
@@ -169,38 +111,19 @@ public class EylauRevolver : Revolver
             {
 
                 if (hit.transform.CompareTag("WeakHurtbox"))
-                    (health as EnemyHealth).TakeCriticalDamage(_hitscanDamage, hit.point, hit.normal);
+                    (health as EnemyHealth).TakeCriticalDamage(_laserDamage, hit.point, hit.normal);
                 else
-                    (health as EnemyHealth).TakeDamage(_hitscanDamage, hit.point, hit.normal);
+                    (health as EnemyHealth).TakeDamage(_laserDamage, hit.point, hit.normal);
             }
         }
-        vfx.SetPos(_canonPosition.position, _canonPosition.position + _camera.forward * _hitscanMaxRange);
+        vfx.SetPos(_canonPosition.position, _canonPosition.position + _camera.forward * _laserMaxRange);
     }
 
     public override void StartRecoil()
     {
         base.StartRecoil();
-        switch (_currentChargeStep)
-        {
-            case 0:
-                _recoilT += _additionalRecoilCharge0;
-                break;
-            case 1:
-                _recoilT += _additionalRecoilCharge1;
-                break;
-            case 2:
-                _recoilT += _additionalRecoilCharge2;
-                break;
-            case 3:
-                _recoilT += _additionalRecoilCharge3;
-                break;
-            case 4:
-                _recoilT += _additionalRecoilCharge4;
-                break;
-            case 5:
-                _recoilT += _additionalRecoilCharge5;
-                break;
-        }
+        if (_charged)
+            _recoilT += _laserAdditionalRecoil;
     }
 
     public override void LowerAmmoCount()
@@ -212,8 +135,8 @@ public class EylauRevolver : Revolver
     public override void ResetChargeLevel()
     {
         _currentCharge = 0f;
-        _currentChargeStep = 0;
-        _chargeUi.fillAmount = Mathf.Lerp(0, 1, Mathf.InverseLerp(0, _maxCharge, _currentCharge));
+        _chargeUi.fillAmount = _currentCharge;
+        transform.localPosition = _initialGunPos;
     }
 
     protected override void OnEnable()

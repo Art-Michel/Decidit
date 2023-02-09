@@ -12,6 +12,8 @@ public class EylauRevolverStateIdle : RevolverState
     public override void Begin()
     {
         _revolver.CheckBuffer();
+        EylauRevolver _eyRev = _revolver as EylauRevolver;
+        //_eyRev.u
     }
 
     public override void StateUpdate()
