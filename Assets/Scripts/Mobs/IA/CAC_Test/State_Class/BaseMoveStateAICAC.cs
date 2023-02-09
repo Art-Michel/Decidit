@@ -152,7 +152,7 @@ namespace State.AICAC
                     else
                     {
                         activeSurround = false;
-                        destination = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer;
+                        destination = CheckNavMeshPoint(CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer);
                     }
 
                     globalRef.agent.SetDestination(destination);

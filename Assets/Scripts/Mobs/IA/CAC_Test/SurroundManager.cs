@@ -1,10 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace State.AICAC
 {
     public class SurroundManager : MonoBehaviour
     {
+        NavMeshHit closestHit;
+
         [Header("List AI Surround")]
         [SerializeField] List<GlobalRefAICAC> aiCACScriptsList = new List<GlobalRefAICAC>();
        
@@ -55,7 +58,7 @@ namespace State.AICAC
                 float unitDirXposition = centerPosition.x + Mathf.Sin((currentAnglePlacement * Mathf.PI) / 180) * radius;//radius;
                 float unitDirZposition = centerPosition.z + Mathf.Cos((currentAnglePlacement * Mathf.PI) / 180) * radius;//radius;
 
-                destination = new Vector3(unitDirXposition, centerPosition.y, unitDirZposition);
+                destination = CheckNavMeshPoint(new Vector3(unitDirXposition, centerPosition.y, unitDirZposition));
                 aiCACScriptsList[i].destination = destination;
                 currentAnglePlacement += angleStep;
             }
@@ -77,11 +80,20 @@ namespace State.AICAC
                 float x = xScale * radius;
                 float z = zScale * radius;
 
-                Vector3 currentPosition = new Vector3(CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer.x + x, 
-                    CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer.y, CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer.z + z);
-
-                circleRenderer.SetPosition(currentStep, currentPosition);
+                Vector3 currentPosition = CheckNavMeshPoint(new Vector3(CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer.x + x, 
+                                                                         CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer.y, 
+                                                                         CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer.z + z));
+                CheckNavMeshPoint(currentPosition);
+                circleRenderer.SetPosition(currentStep, CheckNavMeshPoint(currentPosition));
             }
+        }
+        Vector3 CheckNavMeshPoint(Vector3 _destination)
+        {
+            if (NavMesh.SamplePosition(_destination, out closestHit, 20, 1))
+            {
+                _destination = closestHit.position;
+            }
+            return _destination;
         }
     }
 }
