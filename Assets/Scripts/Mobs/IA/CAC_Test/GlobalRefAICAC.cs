@@ -31,6 +31,7 @@ namespace State.AICAC
         public float offsetDestination;
         public Vector3 debugDestination;
         public AgentLinkMover agentLinkMover;
+        public Vector3 destination;
 
         [Header("Ref Dodge State")]
         public Transform spawnRayDodge;

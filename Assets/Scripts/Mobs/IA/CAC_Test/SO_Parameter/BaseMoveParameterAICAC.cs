@@ -8,6 +8,9 @@ public class BaseMoveParameterAICAC : ScriptableObject
     public float maxSpeedRot;
     public float smoothRot;
 
+    [Header("Take Back")]
+    public float lenghtBack;
+
     [Header("Speed Movement Parameter")]
     public float baseSpeed;
     public float smoothSpeedbase;

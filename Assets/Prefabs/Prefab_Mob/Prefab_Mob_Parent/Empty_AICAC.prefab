@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4941894825100094192}
   - component: {fileID: 4941894825100094193}
+  - component: {fileID: -5872501620631029024}
   m_Layer: 0
   m_Name: Empty_AICAC
   m_TagString: Untagged
@@ -39,13 +40,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4941894825100094199}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef7fc37251c74fa419ffc70dc92197bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offesetAnticipation: 3
-  offesetBase: 1
+  offesetAnticipation: 5
+  offesetBase: 5
   positiveOffeset: 0
   negativeOffeset: 0
   aiCACScriptsList: []
@@ -55,9 +56,27 @@ MonoBehaviour:
   numberAISurrouned: 0
   currentCoolDownSurround: 10
   maxCoolDownSurround: 10
-  currentCoolDownAnticipDirection: 5
-  maxCoolDownAnticipDirection: 5
+  currentCoolDownAnticipDirection: 1
+  maxCoolDownAnticipDirection: 1
   currentCoolDownStopAnticipDirection: 1
   maxCoolDownStopAnticipDirection: 1
   activeAnticip: 0
-  activeSurround: 0
+  activeSurround: 1
+--- !u!114 &-5872501620631029024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4941894825100094199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a155a4665ec9abd4b84299f11c8f9505, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aiCACScriptsList: []
+  aiCACSurroundSelectedList: []
+  listSurroundAICACSO: []
+  maxAngle: 360
+  currentAnglePlacement: 0
+  destination: {x: 0, y: 0, z: 0}

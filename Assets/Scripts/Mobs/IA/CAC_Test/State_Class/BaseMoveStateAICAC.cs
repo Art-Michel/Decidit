@@ -8,6 +8,8 @@ namespace State.AICAC
         [SerializeField] GlobalRefAICAC globalRef;
         BaseMoveParameterAICAC baseMoveAICACSO;
 
+        [SerializeField] Transform sphereDebug;
+
         [Header("Nav Link")]
         [SerializeField] float maxDurationNavLink;
         [SerializeField] bool linkIsActive;
@@ -33,6 +35,8 @@ namespace State.AICAC
         [SerializeField] float maxRateRepath;
         [SerializeField] float currentRateRepath;
 
+        bool activeSurround;
+
         public override void InitState(StateControllerAICAC stateController)
         {
             base.InitState(stateController);
@@ -47,6 +51,8 @@ namespace State.AICAC
 
         private void Update()
         {
+
+            //sphereDebug.position = destination;
             //globalRef.agent.areaMask |= (1 << NavMesh.GetAreaFromName("Walkable"));
             //globalRef.agent.areaMask |= (1 << NavMesh.GetAreaFromName("Not Walkable"));
             // globalRef.agent.areaMask |= (1 << NavMesh.GetAreaFromName("Jump"));
@@ -54,6 +60,12 @@ namespace State.AICAC
             SmoothLookAt();
             ManageCurrentNavMeshLink();
             BaseMovement();
+
+        }
+
+        void OnEnable()
+        {
+            activeSurround = true;
         }
 
         void ActiveJump()
@@ -97,26 +109,12 @@ namespace State.AICAC
             dir = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer - globalRef.transform.position;
             left = Vector3.Cross(dir, Vector3.up).normalized;
 
-
             if (globalRef.agent.isOnOffMeshLink)
             {
                 link = globalRef.agent.navMeshOwner as NavMeshLink;
                 
                 if (!triggerNavLink)
                 {
-                    /*if(Vector3.Distance(globalRef.transform.GetChild(0).position, link.startPoint) < 
-                        Vector3.Distance(globalRef.transform.GetChild(0).position, link.endPoint))
-                    {
-                        linkDestination = link.endPoint - globalRef.transform.position;
-                        Debug.Log(link.endPoint);
-                        triggerNavLink = true;
-                    }
-                    else
-                    {
-                        linkDestination = link.startPoint - globalRef.transform.position;
-                        Debug.Log(link.startPoint);
-                        triggerNavLink = true;
-                    }*/
                     linkDestination = link.transform.position - transform.position;
                     triggerNavLink = true;
                 }
@@ -126,7 +124,6 @@ namespace State.AICAC
                 offset = Mathf.Lerp(offset, globalRef.offsetDestination, baseMoveAICACSO.offsetTransitionSmooth * Time.deltaTime);
                 offset = Mathf.Clamp(offset, -Mathf.Abs(globalRef.offsetDestination), Mathf.Abs(globalRef.offsetDestination));
 
-                destination = CheckNavMeshPoint(CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer + left * offset);
 
                 if (triggerNavLink)
                 {
@@ -145,13 +142,25 @@ namespace State.AICAC
                 else
                 {
                     SlowSpeed(globalRef.isInEylau);
-                    globalRef.agent.SetDestination(destination);
 
+                    Vector3 playerPosAnticip = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer + left * offset;
+                    //destination = CheckNavMeshPoint(playerPosAnticip + (transform.forward * baseMoveAICACSO.lenghtBack));
+                    globalRef.agent.isStopped = false;
+                    //globalRef.agent.SetDestination(destination);
+                    if (Vector3.Distance(destination, globalRef.transform.position) > 1f && activeSurround)
+                        destination = CheckNavMeshPoint(globalRef.destination);
+                    else
+                    {
+                        activeSurround = false;
+                        destination = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer;
+                    }
+
+                    globalRef.agent.SetDestination(destination);
                     currentRateRepath = maxRateRepath;
                 }
             }
 
-            if (globalRef.distPlayer < baseMoveAICACSO.attackRange)
+            if (Vector3.Distance(CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer, globalRef.transform.position) < baseMoveAICACSO.attackRange)//(globalRef.distPlayer < baseMoveAICACSO.attackRange)
             {
                 stateControllerAICAC.SetActiveState(StateControllerAICAC.AIState.BaseAttack);
             }
@@ -214,14 +223,11 @@ namespace State.AICAC
             {
                 globalRef.slowSpeedRot = globalRef.agent.speed / globalRef.slowRatio;
                 globalRef.agent.speed = globalRef.slowSpeedRot;
-                globalRef.agent.SetDestination(destination);
             }
             else
             {
                 if(globalRef.agent.speed == globalRef.slowSpeedRot)
                     globalRef.agent.speed *= globalRef.slowRatio;
-
-                globalRef.agent.SetDestination(destination);
             }
         }
 
