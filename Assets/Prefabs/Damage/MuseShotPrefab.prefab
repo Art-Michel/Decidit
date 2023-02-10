@@ -370,12 +370,14 @@ MonoBehaviour:
   _delayBetweenHits: 0
   _shouldSplashBloodOnHit: 0
   _lifeSpan: 1.2
-  _explosionVfx: {fileID: 9125148645660124460}
-  _explosionAudioSource: {fileID: 4663864161350573083}
-  _explosionSfx: {fileID: 8300000, guid: fa3a4f7775a1c4247a3b32698a10ff92, type: 3}
+  _hitboxSpan: 0.2
   _shakeIntensity: 0.5
   _shakeRange: 50
   _shakeDuration: 0.3
+  _windBox: {fileID: 9109925886092690631}
+  _explosionVfx: {fileID: 9125148645660124460}
+  _explosionAudioSource: {fileID: 4663864161350573083}
+  _explosionSfx: {fileID: 8300000, guid: fa3a4f7775a1c4247a3b32698a10ff92, type: 3}
 --- !u!82 &4663864161350573083
 AudioSource:
   m_ObjectHideFlags: 0
@@ -538,7 +540,7 @@ MonoBehaviour:
   _trailRenderer: {fileID: 844423401451423738}
   _trailMaterial: {fileID: 0}
   _bounces: 1
-  _bounciness: 0.426
+  _bounciness: 0.48
   _explodesOnHit: 1
   _explosion: {fileID: 5177672588079378051}
   _speed: 47.63
@@ -546,7 +548,7 @@ MonoBehaviour:
   _lifeSpan: 1
   _trailDelay: 0.01
   _drag: 4.05
-  _speedReductionFactor: 10
+  _speedReductionFactor: 8.4
 --- !u!114 &6950745005677804068
 MonoBehaviour:
   m_ObjectHideFlags: 0
