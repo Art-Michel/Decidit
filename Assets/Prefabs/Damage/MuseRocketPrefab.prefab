@@ -55,17 +55,18 @@ MonoBehaviour:
   _knockbackForce: 10
   _knockbackAngle: {x: 0, y: 0, z: 0}
   _canHitThroughWalls: 0
-  _canMultiHit: 0
   _shouldNotHitThrough:
     serializedVersion: 2
     m_Bits: 0
+  _canMultiHit: 0
   _delayBetweenHits: 0
+  _shouldSplashBloodOnHit: 0
   _lifeSpan: 1
   _explosionVfx: {fileID: 7273302670933292421}
   _explosionAudioSource: {fileID: 1312107655132465192}
   _explosionSfx: {fileID: 8300000, guid: 66ee4c3090af06e44b3d11a40a74a054, type: 3}
   _shakeIntensity: 0.8
-  _shakeRange: 100
+  _shakeRange: 60
   _shakeDuration: 0.5
 --- !u!82 &1312107655132465192
 AudioSource:
@@ -230,14 +231,16 @@ MonoBehaviour:
   _knockbackForce: 0
   _knockbackAngle: {x: 0, y: 0, z: 0}
   _canHitThroughWalls: 0
-  _canMultiHit: 0
   _shouldNotHitThrough:
     serializedVersion: 2
     m_Bits: 0
+  _canMultiHit: 0
   _delayBetweenHits: 0
+  _shouldSplashBloodOnHit: 0
   _pooledObject: {fileID: 3673482139296001559}
   _mesh: {fileID: 4916648573247979232}
   _trailRenderer: {fileID: 0}
+  _trailMaterial: {fileID: 0}
   _bounces: 0
   _bounciness: 0
   _explodesOnHit: 1
@@ -298,11 +301,12 @@ MonoBehaviour:
   _knockbackForce: 40
   _knockbackAngle: {x: 0, y: 0, z: 0}
   _canHitThroughWalls: 0
-  _canMultiHit: 0
   _shouldNotHitThrough:
     serializedVersion: 2
     m_Bits: 0
+  _canMultiHit: 0
   _delayBetweenHits: 0
+  _shouldSplashBloodOnHit: 0
 --- !u!1001 &3597730748587997885
 PrefabInstance:
   m_ObjectHideFlags: 0

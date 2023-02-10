@@ -55,7 +55,8 @@ public class Explosion : Hitbox
     private void StartExplosionShake()
     {
         float intensity = _shakeIntensity * Mathf.InverseLerp(_shakeRange, 0, Vector3.Distance(Player.Instance.transform.position, transform.position));
-        Player.Instance.StartShake(intensity, _shakeDuration);
+        float duration = _shakeDuration * Mathf.InverseLerp(_shakeRange, 0, Vector3.Distance(Player.Instance.transform.position, transform.position));
+        Player.Instance.StartShake(intensity, duration);
 
     }
 
