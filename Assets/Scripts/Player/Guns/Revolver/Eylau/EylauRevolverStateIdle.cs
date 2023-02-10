@@ -18,11 +18,12 @@ public class EylauRevolverStateIdle : RevolverState
     public override void StateUpdate()
     {
         _revolver.UpdateChargeLevel();
+        _revolver.Sway();
     }
 
     public override void Exit()
     {
-
+        _revolver.StopSwaying();
     }
 
 }

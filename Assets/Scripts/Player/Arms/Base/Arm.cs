@@ -15,8 +15,18 @@ public class Arm : MonoBehaviour
     [Foldout("References")]
     [SerializeField] protected GameObject _ui;
     [Foldout("References")]
-    [SerializeField]
-    protected Transform _cameraTransform;
+    [SerializeField] protected Transform _cameraTransform;
+
+    [Foldout("Other")]
+    [SerializeField] private float _smoothness = 10;
+    [Foldout("Other")]
+    [SerializeField] private float _mouseSwayAmountX = -.2f;
+    [Foldout("Other")]
+    [SerializeField] private float _mouseSwayAmountY = -.1f;
+    [Foldout("Other")]
+    [SerializeField] private float _controllerSwayAmountX = -5f;
+    [Foldout("Other")]
+    [SerializeField] private float _controllerSwayAmountY = -3f;
 
 
     PlayerInputMap _inputs;
@@ -160,6 +170,28 @@ public class Arm : MonoBehaviour
     {
         if (_debugStateText && _fsm.currentState != null)
             _debugStateText.text = ("Arm state: " + _fsm.currentState.Name);
+    }
+    #endregion
+
+    #region Swaying
+    public void Sway()
+    {
+        float x = _inputs.Camera.Rotate.ReadValue<Vector2>().x * _mouseSwayAmountX;
+        float y = _inputs.Camera.Rotate.ReadValue<Vector2>().y * _mouseSwayAmountY;
+        x += _inputs.Camera.RotateX.ReadValue<float>() * _controllerSwayAmountX;
+        y += _inputs.Camera.RotateY.ReadValue<float>() * _controllerSwayAmountY;
+
+        Quaternion rotationX = Quaternion.AngleAxis(-y, Vector3.right);
+        Quaternion rotationY = Quaternion.AngleAxis(x, Vector3.up);
+
+        Quaternion targetRot = rotationX * rotationY;
+
+        transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRot, _smoothness * Time.deltaTime);
+    }
+
+    public void StopSwaying()
+    {
+        transform.localRotation = Quaternion.identity;
     }
     #endregion
 

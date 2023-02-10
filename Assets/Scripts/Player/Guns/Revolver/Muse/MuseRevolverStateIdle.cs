@@ -16,12 +16,12 @@ public class MuseRevolverStateIdle : RevolverState
 
     public override void StateUpdate()
     {
-
+        _revolver.Sway();
     }
 
     public override void Exit()
     {
-
+        _revolver.StopSwaying();
     }
 
 }

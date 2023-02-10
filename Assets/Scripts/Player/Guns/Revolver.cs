@@ -48,7 +48,15 @@ public class Revolver : MonoBehaviour
     [Foldout("Other")]
     [SerializeField] Color _noAmmoColor;
     [Foldout("Other")]
-    [SerializeField] private float _smoothness;
+    [SerializeField] private float _smoothness = 10;
+    [Foldout("Other")]
+    [SerializeField] private float _mouseSwayAmountX = -.2f;
+    [Foldout("Other")]
+    [SerializeField] private float _mouseSwayAmountY = -.1f;
+    [Foldout("Other")]
+    [SerializeField] private float _controllerSwayAmountX = -5f;
+    [Foldout("Other")]
+    [SerializeField] private float _controllerSwayAmountY = -3f;
 
 
     protected Vector3 _currentlyAimedAt;
@@ -105,13 +113,22 @@ public class Revolver : MonoBehaviour
 
     public void Sway()
     {
-        //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler((_currentlyAimedAt - transform.position)), _smoothness * Time.deltaTime);
-        //transform.forward = Vector3.Slerp(transform.forward, (_currentlyAimedAt - transform.position).normalized, _smoothness * Time.deltaTime);
+        float x = _inputs.Camera.Rotate.ReadValue<Vector2>().x * _mouseSwayAmountX;
+        float y = _inputs.Camera.Rotate.ReadValue<Vector2>().y * _mouseSwayAmountY;
+        x += _inputs.Camera.RotateX.ReadValue<float>() * _controllerSwayAmountX;
+        y += _inputs.Camera.RotateY.ReadValue<float>() * _controllerSwayAmountY;
+
+        Quaternion rotationX = Quaternion.AngleAxis(-y, Vector3.right);
+        Quaternion rotationY = Quaternion.AngleAxis(x, Vector3.up);
+
+        Quaternion targetRot = rotationX * rotationY;
+
+        transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRot, _smoothness * Time.deltaTime);
     }
 
     public void StopSwaying()
     {
-        //transform.forward = (_currentlyAimedAt - transform.position).normalized;
+        transform.localRotation = Quaternion.identity;
     }
     #endregion
 

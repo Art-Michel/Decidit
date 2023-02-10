@@ -16,12 +16,12 @@ public class ArmStateIdle : ArmState
 
     public override void StateUpdate()
     {
-
+        _arm.Sway();
     }
 
     public override void Exit()
     {
-
+        _arm.StopSwaying();
     }
 
 }
