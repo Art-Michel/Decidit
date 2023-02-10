@@ -44,35 +44,51 @@ public class EylauArea : MonoBehaviour
     {
         if (other.CompareTag("Ennemi"))
         {
-            if (TryGetComponent<GlobalRefAICAC>(out GlobalRefAICAC cacAi))
+            Debug.Log(other.transform.name + " entered");
+            if (other.TryGetComponent<GlobalRefAICAC>(out GlobalRefAICAC cacAi))
+            {
                 cacAi.isInEylau = true;
-
-            else if (TryGetComponent<GlobalRefBullAI>(out GlobalRefBullAI bullAi))
+            }
+            else if (other.TryGetComponent<GlobalRefBullAI>(out GlobalRefBullAI bullAi))
+            {
                 bullAi.isInEylau = true;
-
-            else if (TryGetComponent<GlobalRefFlyAI>(out GlobalRefFlyAI flyAi))
+            }
+            else if (other.TryGetComponent<GlobalRefFlyAI>(out GlobalRefFlyAI flyAi))
+            {
                 flyAi.isInEylau = true;
-
-            else if (TryGetComponent<GlobalRefWallAI>(out GlobalRefWallAI wallAi))
+            }
+            else if (other.TryGetComponent<GlobalRefWallAI>(out GlobalRefWallAI wallAi))
+            {
                 wallAi.isInEylau = true;
+            }
 
             else
-                Debug.Log("found enemy but couldnt find ai script");
+                Debug.Log("exited enemy but couldnt find ai script");
         }
     }
+
 
     void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Ennemi"))
         {
-            if (TryGetComponent<GlobalRefAICAC>(out GlobalRefAICAC cacAi))
+            Debug.Log(other.transform.name + " exited");
+            if (other.TryGetComponent<GlobalRefAICAC>(out GlobalRefAICAC cacAi))
+            {
                 cacAi.isInEylau = false;
-            else if (TryGetComponent<GlobalRefBullAI>(out GlobalRefBullAI bullAi))
+            }
+            else if (other.TryGetComponent<GlobalRefBullAI>(out GlobalRefBullAI bullAi))
+            {
                 bullAi.isInEylau = false;
-            else if (TryGetComponent<GlobalRefFlyAI>(out GlobalRefFlyAI flyAi))
+            }
+            else if (other.TryGetComponent<GlobalRefFlyAI>(out GlobalRefFlyAI flyAi))
+            {
                 flyAi.isInEylau = false;
-            else if (TryGetComponent<GlobalRefWallAI>(out GlobalRefWallAI wallAi))
+            }
+            else if (other.TryGetComponent<GlobalRefWallAI>(out GlobalRefWallAI wallAi))
+            {
                 wallAi.isInEylau = false;
+            }
 
             else
                 Debug.Log("exited enemy but couldnt find ai script");

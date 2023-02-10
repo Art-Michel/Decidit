@@ -96,7 +96,7 @@ public class Explosion : Hitbox
 
         //Explosion life span
         _hitboxT -= Time.deltaTime;
-        if (_hitboxT >= 0 && _hitboxIsActive)
+        if (_hitboxT <= 0 && _hitboxIsActive)
         {
             DisableHitboxes();
         }
@@ -106,6 +106,7 @@ public class Explosion : Hitbox
         _damage = Mathf.RoundToInt(_initialDamage * Mathf.InverseLerp(0f, _hitboxSpan, _hitboxT));
 
         //Check for collisions with hitbox
+        Debug.Log(_hitboxT);
         if (_hitboxIsActive)
             base.Update();
     }
