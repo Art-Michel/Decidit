@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class GameManager : LocalManager<GameManager>
+public class PlayerManager : LocalManager<PlayerManager>
 {
     float _slowMoT;
     float _slowMoInitialT;

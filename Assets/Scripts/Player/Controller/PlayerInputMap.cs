@@ -150,7 +150,7 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/rightShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Controller"",
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -205,7 +205,7 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/leftShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Controller"",
                     ""action"": ""Slide"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -398,7 +398,7 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/dpad/up"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Controller"",
                     ""action"": ""Gun1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -420,7 +420,7 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/dpad/left"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Controller"",
                     ""action"": ""Gun2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -442,7 +442,7 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/dpad/down"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Controller"",
                     ""action"": ""Gun4"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -464,7 +464,7 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/dpad/right"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Controller"",
                     ""action"": ""Gun3"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -486,7 +486,7 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/shift"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard Mouse"",
                     ""action"": ""Skill1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -497,7 +497,7 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/1"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard Mouse"",
                     ""action"": ""Skill1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -519,7 +519,7 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/buttonNorth"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Controller"",
                     ""action"": ""Skill1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -530,7 +530,7 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/dpad/up"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Controller"",
                     ""action"": ""Skill1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -552,7 +552,7 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/shift"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard Mouse"",
                     ""action"": ""Skill2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -563,7 +563,7 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/2"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard Mouse"",
                     ""action"": ""Skill2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -585,7 +585,7 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/buttonNorth"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Controller"",
                     ""action"": ""Skill2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -596,7 +596,7 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/dpad/left"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Controller"",
                     ""action"": ""Skill2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -618,7 +618,7 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/shift"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard Mouse"",
                     ""action"": ""Skill3"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -629,7 +629,7 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/3"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard Mouse"",
                     ""action"": ""Skill3"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -651,7 +651,7 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/buttonNorth"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Controller"",
                     ""action"": ""Skill3"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -662,7 +662,7 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/dpad/right"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Controller"",
                     ""action"": ""Skill3"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -684,7 +684,7 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/shift"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard Mouse"",
                     ""action"": ""Skill4"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -695,7 +695,7 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/4"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard Mouse"",
                     ""action"": ""Skill4"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -717,7 +717,7 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/buttonNorth"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Controller"",
                     ""action"": ""Skill4"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -728,7 +728,7 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/dpad/down"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Controller"",
                     ""action"": ""Skill4"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -945,6 +945,239 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""MenuNavigation"",
+            ""id"": ""af8510bc-e51f-4e70-bea0-bd7c238fa8b4"",
+            ""actions"": [
+                {
+                    ""name"": ""anyKey"",
+                    ""type"": ""Button"",
+                    ""id"": ""14845ec5-3f6f-42f8-8f6c-47d9ec87aa1f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""moveMouse"",
+                    ""type"": ""Value"",
+                    ""id"": ""8aceffda-da0a-4708-81f3-c56df32cfa97"",
+                    ""expectedControlType"": ""Delta"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""anyButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""de9a7ece-61ad-4cdd-898b-75374d395b39"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""bbfa21a3-77df-4771-830c-5fcd43102f06"",
+                    ""path"": ""<Keyboard>/anyKey"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""anyKey"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e2a08d90-d631-4360-b887-980ea239e246"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""moveMouse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""14db5166-e3cf-4b49-974e-7d37b4b2ef25"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""anyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e489b37e-7228-46ee-a5d3-fdaf7cbb33bd"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""anyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bef255e6-5948-41e8-b874-7b9508aa6d5f"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""anyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e161cb04-8da4-48f1-997d-827293b5e239"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""anyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8e207ece-cb8e-4fb5-9d03-abaf58f65a53"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""anyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""98febc67-5252-467e-a38e-bbb2ef4f886e"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""anyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8e332421-1b88-4842-8830-046c0f9dddf3"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""anyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0d912225-18fc-4b81-b71a-9a99fdb61881"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""anyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1060ea37-01f9-4961-a114-4b7f1d3c0e9a"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""anyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""05b11504-a203-47a4-b66c-690ef589b7d2"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""anyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""604f6eba-9fe5-4585-9569-566a67f89b51"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""anyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ef418e38-7b44-48a8-9ff3-5e5307171001"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""anyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""75c00ad7-ab44-432e-96ed-36a19200ade2"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""anyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""821a2e71-dcdb-4cac-a1f1-7bdaf6bc650b"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""anyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""670ff137-eca1-4fc1-b45f-d6b7bfafcc89"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""anyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f3d33881-f67a-46d8-b974-6780c840ad63"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""anyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -1017,6 +1250,11 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
         m_Camera_RotateY = m_Camera.FindAction("RotateY", throwIfNotFound: true);
         m_Camera_RotateX = m_Camera.FindAction("RotateX", throwIfNotFound: true);
         m_Camera_Rotate = m_Camera.FindAction("Rotate", throwIfNotFound: true);
+        // MenuNavigation
+        m_MenuNavigation = asset.FindActionMap("MenuNavigation", throwIfNotFound: true);
+        m_MenuNavigation_anyKey = m_MenuNavigation.FindAction("anyKey", throwIfNotFound: true);
+        m_MenuNavigation_moveMouse = m_MenuNavigation.FindAction("moveMouse", throwIfNotFound: true);
+        m_MenuNavigation_anyButton = m_MenuNavigation.FindAction("anyButton", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1348,6 +1586,55 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
         }
     }
     public CameraActions @Camera => new CameraActions(this);
+
+    // MenuNavigation
+    private readonly InputActionMap m_MenuNavigation;
+    private IMenuNavigationActions m_MenuNavigationActionsCallbackInterface;
+    private readonly InputAction m_MenuNavigation_anyKey;
+    private readonly InputAction m_MenuNavigation_moveMouse;
+    private readonly InputAction m_MenuNavigation_anyButton;
+    public struct MenuNavigationActions
+    {
+        private @PlayerInputMap m_Wrapper;
+        public MenuNavigationActions(@PlayerInputMap wrapper) { m_Wrapper = wrapper; }
+        public InputAction @anyKey => m_Wrapper.m_MenuNavigation_anyKey;
+        public InputAction @moveMouse => m_Wrapper.m_MenuNavigation_moveMouse;
+        public InputAction @anyButton => m_Wrapper.m_MenuNavigation_anyButton;
+        public InputActionMap Get() { return m_Wrapper.m_MenuNavigation; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MenuNavigationActions set) { return set.Get(); }
+        public void SetCallbacks(IMenuNavigationActions instance)
+        {
+            if (m_Wrapper.m_MenuNavigationActionsCallbackInterface != null)
+            {
+                @anyKey.started -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnAnyKey;
+                @anyKey.performed -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnAnyKey;
+                @anyKey.canceled -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnAnyKey;
+                @moveMouse.started -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnMoveMouse;
+                @moveMouse.performed -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnMoveMouse;
+                @moveMouse.canceled -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnMoveMouse;
+                @anyButton.started -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnAnyButton;
+                @anyButton.performed -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnAnyButton;
+                @anyButton.canceled -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnAnyButton;
+            }
+            m_Wrapper.m_MenuNavigationActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @anyKey.started += instance.OnAnyKey;
+                @anyKey.performed += instance.OnAnyKey;
+                @anyKey.canceled += instance.OnAnyKey;
+                @moveMouse.started += instance.OnMoveMouse;
+                @moveMouse.performed += instance.OnMoveMouse;
+                @moveMouse.canceled += instance.OnMoveMouse;
+                @anyButton.started += instance.OnAnyButton;
+                @anyButton.performed += instance.OnAnyButton;
+                @anyButton.canceled += instance.OnAnyButton;
+            }
+        }
+    }
+    public MenuNavigationActions @MenuNavigation => new MenuNavigationActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -1399,5 +1686,11 @@ public partial class @PlayerInputMap : IInputActionCollection2, IDisposable
         void OnRotateY(InputAction.CallbackContext context);
         void OnRotateX(InputAction.CallbackContext context);
         void OnRotate(InputAction.CallbackContext context);
+    }
+    public interface IMenuNavigationActions
+    {
+        void OnAnyKey(InputAction.CallbackContext context);
+        void OnMoveMouse(InputAction.CallbackContext context);
+        void OnAnyButton(InputAction.CallbackContext context);
     }
 }

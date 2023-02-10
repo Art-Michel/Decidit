@@ -95,7 +95,7 @@ public class Room : MonoBehaviour
     {
         if (CurrentEnemiesInRoom <= 0)
         {
-            GameManager.Instance.StartSlowMo(0.01f, 2f);
+            PlayerManager.Instance.StartSlowMo(0.01f, 2f);
             this.Exit.OpenDoor();
             DungeonGenerator.Instance.GetRoom(1).Entry.OpenDoor();
         }

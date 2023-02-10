@@ -4,40 +4,41 @@ using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using System;
 
-public class MenuManager : MonoBehaviour
+public class MenuManager : LocalManager<MenuManager>
 {
-    public static MenuManager Instance = null;
     [SerializeField] int _gameIndex;
     [SerializeField] int _optionIndex;
     [SerializeField] int _mainIndex;
 
-    [SerializeField] GameObject firstSelected;
+    [SerializeField] Submenu _currentMenu;
 
-    [SerializeField] EventSystem eventsys;
-    Gamepad gamepad = Gamepad.current;
+    [SerializeField] EventSystem _eventsys;
 
-    private void Awake()
+    PlayerInputMap _inputs;
+    bool _currentControlSchemeIsMouse;
+
+    protected override void Awake()
     {
-        if (Instance != null)
-        {
-            DestroyImmediate(this);
-            return;
-        }
-        Instance = this;
-        Cursor.lockState = CursorLockMode.None;
+        base.Awake();
+        _inputs = new PlayerInputMap();
+        _inputs.MenuNavigation.anyKey.performed += _ => SwitchToMK();
+        _inputs.MenuNavigation.anyButton.performed += _ => SwitchToMK();
+        _inputs.MenuNavigation.moveMouse.performed += _ => SwitchToController();
     }
 
     void Start()
     {
-
+        Cursor.lockState = CursorLockMode.None;
     }
 
     void Update()
     {
-        Switch();
+
     }
-    #region Butons fonctions
+
+    #region Buttons fonctions
     //toutes les fonctions pour les boutons 
     public void Quit()
     {
@@ -54,7 +55,6 @@ public class MenuManager : MonoBehaviour
     public void Options()
     {
         //fait entrer le joueur dans les options
-        SceneManager.LoadScene(_optionIndex);
     }
     public void MainMenu()
     {
@@ -62,29 +62,27 @@ public class MenuManager : MonoBehaviour
         SceneManager.LoadScene(_mainIndex);
     }
 
-    public void SetSelectedGameObjectToSettings()
+    #endregion
+
+    private void SwitchToController()
     {
-        //switch manette/clavier souris
-        if (eventsys.currentSelectedGameObject == null)
-        {
-            eventsys.SetSelectedGameObject(firstSelected);
-        }
+        _currentControlSchemeIsMouse = false;
     }
 
-    public void Switch()
+    private void SwitchToMK()
     {
-        if (gamepad.wasUpdatedThisFrame)
-        {
-            Debug.Log("mhidfnbjmnsbknksnb");
-            Cursor.visible = false;
-            SetSelectedGameObjectToSettings();
-        }
-        if (Input.anyKeyDown)
-        {
-            Debug.Log("Mouse");
-            Cursor.visible = true;
-        }
+        _currentControlSchemeIsMouse = true;
     }
 
+    #region Enable Disable Inputs
+    void OnEnable()
+    {
+        _inputs.Enable();
+    }
+
+    void OnDisable()
+    {
+        _inputs.Disable();
+    }
     #endregion
 }
