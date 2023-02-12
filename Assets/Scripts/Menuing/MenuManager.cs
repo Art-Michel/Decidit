@@ -49,7 +49,8 @@ public class MenuManager : LocalManager<MenuManager>
     }
 
     private Dictionary<Menus, Submenu> _submenus;
-    [SerializeField] Submenu _currentMenu;
+    [SerializeField] private Submenu _firstMenu;
+    public Submenu CurrentMenu;
 
     //Fade to black when loading a scene
     [Foldout("Fading")]
@@ -88,30 +89,45 @@ public class MenuManager : LocalManager<MenuManager>
 
     void Start()
     {
+        gameObject.SetActive(false);
+    }
+
+    void OnEnable()
+    {
         _currentDevice = Devices.Controller;
         _eventSys.SetSelectedGameObject(null);
+        _inputs.Enable();
+        CurrentMenu.gameObject.SetActive(false);
+        CurrentMenu = _firstMenu;
+        CurrentMenu.gameObject.SetActive(true);
+        _eventSys.SetSelectedGameObject(CurrentMenu.FirstButton);
+    }
+
+    void OnDisable()
+    {
+        _inputs.Disable();
     }
 
     #region Submenu navigation
     private void OpenSubmenu(Menus menu)
     {
-        if (_submenus[menu] == _currentMenu)
+        if (_submenus[menu] == CurrentMenu)
             return;
 
-        Submenu previousMenu = _currentMenu;
-        _currentMenu = _submenus[menu];
+        Submenu previousMenu = CurrentMenu;
+        CurrentMenu = _submenus[menu];
 
-        _currentMenu.gameObject.SetActive(true);
+        CurrentMenu.gameObject.SetActive(true);
         previousMenu.gameObject.SetActive(false);
 
         if (_currentDevice == Devices.Controller || _currentDevice == Devices.Keyboard)
-            _eventSys.SetSelectedGameObject(_currentMenu.FirstButton);
+            _eventSys.SetSelectedGameObject(CurrentMenu.FirstButton);
     }
 
     public void OpenPreviousMenu()
     {
-        if (_currentMenu.PreviousMenu != null)
-            OpenSubmenu(_currentMenu.PreviousMenu.Id);
+        if (CurrentMenu.PreviousMenu != null)
+            OpenSubmenu(CurrentMenu.PreviousMenu.Id);
     }
 
     public void OpenPlaySelect()
@@ -237,7 +253,7 @@ public class MenuManager : LocalManager<MenuManager>
         // Cursor.lockState = CursorLockMode.Locked;
 
         if (buttonUnderMouse == null)
-            _eventSys.SetSelectedGameObject(_currentMenu.FirstButton);
+            _eventSys.SetSelectedGameObject(CurrentMenu.FirstButton);
         else
             _eventSys.SetSelectedGameObject(buttonUnderMouse);
         _eventSys.sendNavigationEvents = false;
@@ -259,7 +275,7 @@ public class MenuManager : LocalManager<MenuManager>
         // Cursor.lockState = CursorLockMode.Locked;
 
         if (buttonUnderMouse == null)
-            _eventSys.SetSelectedGameObject(_currentMenu.FirstButton);
+            _eventSys.SetSelectedGameObject(CurrentMenu.FirstButton);
         else
             _eventSys.SetSelectedGameObject(buttonUnderMouse);
         _eventSys.sendNavigationEvents = false;
@@ -297,18 +313,6 @@ public class MenuManager : LocalManager<MenuManager>
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         _eventSys.SetSelectedGameObject(null);
-    }
-    #endregion
-
-    #region Enable Disable Inputs
-    void OnEnable()
-    {
-        _inputs.Enable();
-    }
-
-    void OnDisable()
-    {
-        _inputs.Disable();
     }
     #endregion
 }

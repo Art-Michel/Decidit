@@ -906,8 +906,9 @@ GameObject:
   - component: {fileID: 102230092}
   - component: {fileID: 102230094}
   - component: {fileID: 102230093}
+  - component: {fileID: 52327982}
   m_Layer: 0
-  m_Name: EventSystem_1
+  m_Name: MenuingManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -980,6 +981,30 @@ MonoBehaviour:
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
+--- !u!114 &52327982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 102230091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83560602eeb58ac408fa6ef0c99a925f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _eventSys: {fileID: 102230094}
+  _mainMenu: {fileID: 1699825492}
+  _videoSettings: {fileID: 2022799373}
+  _inputsSettings: {fileID: 498095030}
+  _audioSettings: {fileID: 220267841}
+  _playSelect: {fileID: 1936924218}
+  _credits: {fileID: 2077999494}
+  _quitConfirm: {fileID: 728822015}
+  _firstMenu: {fileID: 1699825492}
+  CurrentMenu: {fileID: 1699825492}
+  _fade: {fileID: 667945201}
+  _sceneFadingDuration: 0.5
 --- !u!1 &117825328
 GameObject:
   m_ObjectHideFlags: 0
@@ -2295,10 +2320,10 @@ RectTransform:
   m_Father: {fileID: 7977123}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 150, y: -262.5}
+  m_SizeDelta: {x: 300, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &247744591
 CanvasRenderer:
@@ -2927,7 +2952,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &358518980
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4808,10 +4833,10 @@ RectTransform:
   m_Father: {fileID: 7977123}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 150, y: -112.5}
+  m_SizeDelta: {x: 300, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &557030041
 CanvasRenderer:
@@ -6869,10 +6894,10 @@ RectTransform:
   m_Father: {fileID: 7977123}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 150, y: -187.5}
+  m_SizeDelta: {x: 300, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &794907545
 CanvasRenderer:
@@ -9217,10 +9242,10 @@ RectTransform:
   m_Father: {fileID: 7977123}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 150, y: -37.5}
+  m_SizeDelta: {x: 300, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1062308640
 CanvasRenderer:
@@ -15100,7 +15125,6 @@ GameObject:
   - component: {fileID: 2007368073}
   - component: {fileID: 2007368075}
   - component: {fileID: 2007368076}
-  - component: {fileID: 776044048}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -15138,6 +15162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _fps: {fileID: 2026873864726462320}
+  _pauseMenu: {fileID: 358518979}
   _DebuggingCanvas: {fileID: 2200446484852391364}
   _timescaleDebugUi: {fileID: 2200446484005636427}
   _guns:
@@ -15287,29 +15312,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &776044048
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2007368072}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83560602eeb58ac408fa6ef0c99a925f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _eventSys: {fileID: 102230094}
-  _mainMenu: {fileID: 1699825492}
-  _videoSettings: {fileID: 2022799373}
-  _inputsSettings: {fileID: 498095030}
-  _audioSettings: {fileID: 220267841}
-  _playSelect: {fileID: 1936924218}
-  _credits: {fileID: 2077999494}
-  _quitConfirm: {fileID: 728822015}
-  _currentMenu: {fileID: 1699825492}
-  _fade: {fileID: 667945201}
-  _sceneFadingDuration: 0.5
 --- !u!1 &2022799371
 GameObject:
   m_ObjectHideFlags: 0

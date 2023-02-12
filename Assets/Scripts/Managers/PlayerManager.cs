@@ -17,23 +17,55 @@ public class PlayerManager : LocalManager<PlayerManager>
     float _rumbleHighFreqIntensity;
     bool _isRumbling;
 
+    float _timescaleBeforePausing;
+    bool _isPaused;
+
     float _delayFramerateCalculation;
 
     [SerializeField] TextMeshProUGUI _fps;
+    [SerializeField] GameObject _pauseMenu;
 
-    #region Debug
     PlayerInputMap _inputs;
     [SerializeField] GameObject _DebuggingCanvas;
     [SerializeField] TextMeshProUGUI _timescaleDebugUi;
-    bool _is30fps;
+    bool _isLockedAt30;
     [SerializeField] List<GameObject> _guns;
     [SerializeField] List<GameObject> _arms;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        _inputs = new PlayerInputMap();
+        _inputs.Debugging.DisplayFramerate.started += _ => DisplayFramerate();
+        _inputs.MenuNavigation.Pause.started += _ => PressPause();
+
+        DebugAwake();
+    }
+
+    private void Start()
+    {
+        // curseurs
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+
+        _isPaused = false;
+
+        DebugStart();
+    }
+
+    private void Update()
+    {
+        SlowMo();
+        Rumble();
+
+        if (_fps.enabled)
+            UpdateFramerate();
+    }
+
     private void DebugAwake()
     {
-#if UNITY_EDITOR
-        _inputs.Debugging.ChangeFramerate.started += _ => DebugChangeFramerate();
-        _inputs.Debugging.ChangeTimeScale.started += _ => DebugChangeTimeScale();
+        _inputs.Debugging.ChangeFramerate.started += _ => DebugLockFramerate();
+        // _inputs.Debugging.ChangeTimeScale.started += _ => DebugChangeTimeScale();
         if (_guns != null)
         {
 
@@ -49,78 +81,90 @@ public class PlayerManager : LocalManager<PlayerManager>
             _inputs.Debugging.Skill3.started += _ => Skill3();
             _inputs.Debugging.Skill4.started += _ => Skill4();
         }
-#endif
     }
 
     private void DebugStart()
     {
-#if UNITY_EDITOR
-        if (_DebuggingCanvas) _DebuggingCanvas.SetActive(true);
-
         //Framerate
-        _is30fps = false;
-
-#endif
+        _isLockedAt30 = false;
     }
 
-    private void DebugChangeFramerate()
+    private void DebugLockFramerate()
     {
-        if (_is30fps)
+        if (_isPaused)
+            return;
+        if (_isLockedAt30)
         {
-            _is30fps = false;
+            _isLockedAt30 = false;
             Application.targetFrameRate = 0;
         }
         else
         {
-            _is30fps = true;
+            _isLockedAt30 = true;
             Application.targetFrameRate = 30;
         }
     }
 
-    private void DebugChangeTimeScale()
-    {
-        var direction = _inputs.Debugging.ChangeTimeScale.ReadValue<float>();
+    // private void DebugChangeTimeScale()
+    // {
+    //     var direction = _inputs.Debugging.ChangeTimeScale.ReadValue<float>();
 
-        if (Mathf.Sign(direction) > 0)
-            Time.timeScale = Mathf.Clamp(Time.timeScale + .1f, 0.01f, 10);
-        else if (Mathf.Sign(direction) < 0)
-            Time.timeScale = Mathf.Clamp(Time.timeScale - .1f, 0.01f, 10);
+    //     if (Mathf.Sign(direction) > 0)
+    //         Time.timeScale = Mathf.Clamp(Time.timeScale + .1f, 0.01f, 10);
+    //     else if (Mathf.Sign(direction) < 0)
+    //         Time.timeScale = Mathf.Clamp(Time.timeScale - .1f, 0.01f, 10);
 
-        DisplayTimeScale();
-    }
+    //     DisplayTimeScale();
+    // }
 
     private void DisplayTimeScale()
     {
         if (_timescaleDebugUi)
             _timescaleDebugUi.text = ("TimeScale: " + Time.timeScale.ToString("F3"));
     }
-    //Equipping
+
+    #region Equipping
     public void Skill4()
     {
+        if (_isPaused)
+            return;
+
         foreach (GameObject arm in _arms)
             arm.SetActive(false);
         _arms[3].SetActive(true);
     }
     public void Skill3()
     {
+        if (_isPaused)
+            return;
+
         foreach (GameObject arm in _arms)
             arm.SetActive(false);
         _arms[2].SetActive(true);
     }
     public void Skill2()
     {
+        if (_isPaused)
+            return;
+
         foreach (GameObject arm in _arms)
             arm.SetActive(false);
         _arms[1].SetActive(true);
     }
     public void Skill1()
     {
+        if (_isPaused)
+            return;
+
         foreach (GameObject arm in _arms)
             arm.SetActive(false);
         _arms[0].SetActive(true);
     }
     public void Gun4()
     {
+        if (_isPaused)
+            return;
+
         foreach (GameObject gun in _guns)
             gun.SetActive(false);
         _guns[3].SetActive(true);
@@ -128,6 +172,9 @@ public class PlayerManager : LocalManager<PlayerManager>
     }
     public void Gun3()
     {
+        if (_isPaused)
+            return;
+
         foreach (GameObject gun in _guns)
             gun.SetActive(false);
         _guns[2].SetActive(true);
@@ -135,6 +182,9 @@ public class PlayerManager : LocalManager<PlayerManager>
     }
     public void Gun2()
     {
+        if (_isPaused)
+            return;
+
         foreach (GameObject gun in _guns)
             gun.SetActive(false);
         _guns[1].SetActive(true);
@@ -142,6 +192,9 @@ public class PlayerManager : LocalManager<PlayerManager>
     }
     public void Gun1()
     {
+        if (_isPaused)
+            return;
+
         foreach (GameObject gun in _guns)
             gun.SetActive(false);
         _guns[0].SetActive(true);
@@ -149,32 +202,62 @@ public class PlayerManager : LocalManager<PlayerManager>
     }
     #endregion
 
-    protected override void Awake()
+    #region Pause
+    private void PressPause()
     {
-        base.Awake();
-        _inputs = new PlayerInputMap();
-        _inputs.Debugging.DisplayFramerate.started += _ => DisplayFramerate();
-        DebugAwake();
+        if (_isPaused)
+            Unpause();
+        else
+            Pause();
     }
 
-    private void Start()
+    public void Pause()
     {
-        // curseurs
-        Cursor.visible = false;
+        //timescale
+        _timescaleBeforePausing = Time.timeScale;
+        Time.timeScale = 0f;
+
+        //Enable Pause 
+        _isPaused = true;
+        _pauseMenu.SetActive(true);
+        MenuManager.Instance.gameObject.SetActive(true);
+
+        //Disable everything
+        Player.Instance.enabled = false;
+        foreach (GameObject gun in _guns)
+            gun.GetComponent<Revolver>().enabled = false;
+        foreach (GameObject arm in _arms)
+            arm.GetComponent<Arm>().enabled = false;
+
+        //cursor
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    public void Unpause()
+    {
+        //timescale
+        Time.timeScale = _timescaleBeforePausing;
+
+        //enable pause
+        _isPaused = false;
+        _pauseMenu.SetActive(false);
+        MenuManager.Instance.gameObject.SetActive(false);
+
+        //re enable everything
+        Player.Instance.enabled = true;
+        foreach (GameObject gun in _guns)
+            gun.GetComponent<Revolver>().enabled = true;
+        foreach (GameObject arm in _arms)
+            arm.GetComponent<Arm>().enabled = true;
+
+        //cursor
         Cursor.lockState = CursorLockMode.Locked;
-
-        DebugStart();
+        Cursor.visible = false;
     }
+    #endregion
 
-    private void Update()
-    {
-        SlowMo();
-        Rumble();
-
-        if (_fps.enabled)
-            UpdateFramerate();
-    }
-
+    #region Framerate Displayer
     private void DisplayFramerate()
     {
         _fps.enabled = !_fps.enabled;
@@ -190,7 +273,9 @@ public class PlayerManager : LocalManager<PlayerManager>
         else
             _delayFramerateCalculation -= Time.deltaTime;
     }
+    #endregion
 
+    #region Slow mo
     public void StartSlowMo(float speed, float duration)
     {
         if (duration > _slowMoT)
@@ -204,7 +289,7 @@ public class PlayerManager : LocalManager<PlayerManager>
 
     private void SlowMo()
     {
-        if (_slowMoT > 0)
+        if (_slowMoT > 0 || !_isPaused)
         {
             Time.timeScale = Mathf.Lerp(_timeSpeed, 1, Mathf.InverseLerp(_slowMoInitialT, 0, _slowMoT));
             DisplayTimeScale();
@@ -221,7 +306,9 @@ public class PlayerManager : LocalManager<PlayerManager>
         _slowMoT = 0;
         DisplayTimeScale();
     }
+    #endregion
 
+    #region Rumble
     public void StartRumbling(float lowFreqStrength, float highFreqStrength, float duration)
     {
         if (duration > _rumbleT)
@@ -276,6 +363,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         _rumbleT = 0;
         _isRumbling = false;
     }
+    #endregion
 
     #region Enable Disable Inputs
     void OnEnable()
