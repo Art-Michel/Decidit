@@ -11,9 +11,20 @@ public class MenuManager : LocalManager<MenuManager>
 {
     //Scenes
     [Foldout("References")]
-    [SerializeField] int _gameIndex;
+    const int _mainMenuIndex = 0;
     [Foldout("References")]
-    [SerializeField] int _mainIndex;
+    const int _gameIndex = 1;
+    [Foldout("References")]
+    const int _gameOverIndex = 2;
+    [Foldout("References")]
+    const int _winScreenIndex = 3;
+    [Foldout("References")]
+    const int _dioramaGreen = 4;
+    [Foldout("References")]
+    const int _dioramaRed = 5;
+    [Foldout("References")]
+    const int _dioramaYellow = 6;
+
     [Foldout("References")]
     [SerializeField] EventSystem _eventSys;
     PlayerInputMap _inputs;
@@ -90,7 +101,8 @@ public class MenuManager : LocalManager<MenuManager>
         _currentMenu.gameObject.SetActive(true);
         previousMenu.gameObject.SetActive(false);
 
-        _eventSys.SetSelectedGameObject(_currentMenu.FirstButton);
+        if (_currentDevice == Devices.Controller || _currentDevice == Devices.Keyboard)
+            _eventSys.SetSelectedGameObject(_currentMenu.FirstButton);
     }
 
     public void PreviousMenu()
@@ -147,14 +159,37 @@ public class MenuManager : LocalManager<MenuManager>
 
     public void LoadGame()
     {
-        //fait entrer le joueur dans la scene de jeu
         StartLoadingScene(_gameIndex);
     }
 
-    public void MainMenu()
+    public void LoadMainMenu()
     {
-        //fait entrer le joueur dans le menu principal
-        StartLoadingScene(_mainIndex);
+        StartLoadingScene(_mainMenuIndex);
+    }
+
+    public void LoadGameOver()
+    {
+        StartLoadingScene(_gameOverIndex);
+    }
+
+    public void LoadWinScreen()
+    {
+        StartLoadingScene(_winScreenIndex);
+    }
+
+    public void LoadDioramaRed()
+    {
+        StartLoadingScene(_dioramaRed);
+    }
+
+    public void LoadDioramaGreen()
+    {
+        StartLoadingScene(_dioramaGreen);
+    }
+
+    public void LoadDioramaYellow()
+    {
+        StartLoadingScene(_dioramaYellow);
     }
 
     #endregion
@@ -202,7 +237,7 @@ public class MenuManager : LocalManager<MenuManager>
 
         //remove cursor
         Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        // Cursor.lockState = CursorLockMode.Locked;
 
         if (buttonUnderMouse == null)
             _eventSys.SetSelectedGameObject(_currentMenu.FirstButton);
@@ -224,7 +259,7 @@ public class MenuManager : LocalManager<MenuManager>
 
         //remove cursor
         Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        // Cursor.lockState = CursorLockMode.Locked;
 
         if (buttonUnderMouse == null)
             _eventSys.SetSelectedGameObject(_currentMenu.FirstButton);
