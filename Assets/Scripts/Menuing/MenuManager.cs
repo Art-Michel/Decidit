@@ -45,14 +45,13 @@ public class MenuManager : LocalManager<MenuManager>
     [SerializeField] Image _fade;
     [Foldout("Fading")]
     [SerializeField]
-    float _sceneFadingDuration = 1;
+    float _sceneFadingDuration = 1f;
     private float _fadingT;
     private bool _isFading = false;
 
     //Devices 
     public enum Devices { Controller, Keyboard, Mouse }
     Devices _currentDevice;
-
 
     protected override void Awake()
     {
@@ -76,48 +75,23 @@ public class MenuManager : LocalManager<MenuManager>
         //Initialize Dictionnary
     }
 
-    #region Loading a scene
-
-    void StartLoadingScene(int scene)
+    void Start()
     {
-        _isFading = true;
-        _fadingT = 0f;
-        _fade.gameObject.SetActive(true);
-
-        SceneManager.LoadSceneAsync(scene);
+        _currentDevice = Devices.Controller;
+        _eventSys.SetSelectedGameObject(null);
     }
 
-    void StartExiting()
-    {
-        _isFading = true;
-        _fadingT = 0f;
-        _fade.gameObject.SetActive(true);
-        Application.Quit();
-    }
-
-    void Update()
-    {
-        if (_isFading)
-        {
-            _fadingT += Time.deltaTime;
-            _fade.color = new Color(_fade.color.r, _fade.color.g, _fade.color.b, Mathf.InverseLerp(0, _sceneFadingDuration, _fadingT));
-        }
-    }
-    #endregion
-
-    #region open a submenu
+    #region Submenu navigation
     private void OpenSubmenu(Menus menu)
     {
         Submenu previousMenu = _currentMenu;
         _currentMenu = _submenus[menu];
 
         _currentMenu.gameObject.SetActive(true);
-
-        if (_currentMenu.Depth > previousMenu.Depth)
-            previousMenu.gameObject.SetActive(false);
+        previousMenu.gameObject.SetActive(false);
     }
 
-    private void PreviousMenu()
+    public void PreviousMenu()
     {
         if (_currentMenu.PreviousMenu != null)
             OpenSubmenu(_currentMenu.PreviousMenu.Id);
@@ -156,12 +130,12 @@ public class MenuManager : LocalManager<MenuManager>
     public void Quit()
     {
         //fait entrer le joueur dans les options
-        OpenSubmenu(Menus.Credits);
+        OpenSubmenu(Menus.Quit);
     }
 
     #endregion
 
-    #region Scenes functions
+    #region Scene Loading
     //toutes les fonctions pour les boutons 
     public void ReallyQuit()
     {
@@ -178,9 +152,38 @@ public class MenuManager : LocalManager<MenuManager>
     public void MainMenu()
     {
         //fait entrer le joueur dans le menu principal
-        SceneManager.LoadScene(_mainIndex);
+        StartLoadingScene(_mainIndex);
     }
 
+    #endregion
+
+    #region Transitions
+
+    void StartLoadingScene(int scene)
+    {
+        _isFading = true;
+        _fadingT = 0f;
+        _fade.gameObject.SetActive(true);
+
+        SceneManager.LoadSceneAsync(scene);
+    }
+
+    void StartExiting()
+    {
+        _isFading = true;
+        _fadingT = 0f;
+        _fade.gameObject.SetActive(true);
+        Application.Quit();
+    }
+
+    void Update()
+    {
+        if (_isFading)
+        {
+            _fadingT += Time.deltaTime;
+            _fade.color = new Color(_fade.color.r, _fade.color.g, _fade.color.b, Mathf.InverseLerp(0, _sceneFadingDuration, _fadingT));
+        }
+    }
     #endregion
 
     #region Controller / Keyboard / Mouse Switching
@@ -188,24 +191,60 @@ public class MenuManager : LocalManager<MenuManager>
     {
         if (_currentDevice == Devices.Controller)
             return;
-
         _currentDevice = Devices.Controller;
+
+        //get button under mouse if there is any
+        GameObject buttonUnderMouse = CheckUnderMouse();
+
+        //remove cursor
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        _eventSys.SetSelectedGameObject(null);
-        _eventSys.SetSelectedGameObject(_currentMenu.FirstButton);
+
+        if (buttonUnderMouse == null)
+            _eventSys.SetSelectedGameObject(_currentMenu.FirstButton);
+        else
+            _eventSys.SetSelectedGameObject(buttonUnderMouse);
     }
 
     private void SwitchToKeyboard()
     {
         if (_currentDevice == Devices.Keyboard)
             return;
-
         _currentDevice = Devices.Keyboard;
+
+        //get button under mouse if there is any
+        GameObject buttonUnderMouse = CheckUnderMouse();
+
+        //remove cursor
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        _eventSys.SetSelectedGameObject(null);
-        _eventSys.SetSelectedGameObject(_currentMenu.FirstButton);
+
+        if (buttonUnderMouse == null)
+            _eventSys.SetSelectedGameObject(_currentMenu.FirstButton);
+        else
+            _eventSys.SetSelectedGameObject(buttonUnderMouse);
+    }
+
+    private GameObject CheckUnderMouse()
+    {
+        PointerEventData pointer = new PointerEventData(EventSystem.current);
+        pointer.position = Input.mousePosition;
+
+        List<RaycastResult> raycastResults = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(pointer, raycastResults);
+
+        if (raycastResults.Count > 0)
+        {
+            foreach (RaycastResult res in raycastResults)
+            {
+                if ((res.gameObject.TryGetComponent<Button>(out Button mario)))
+                {
+                    return mario.gameObject;
+                }
+            }
+            return null;
+        }
+        else return null;
     }
 
     private void SwitchToMouse()
