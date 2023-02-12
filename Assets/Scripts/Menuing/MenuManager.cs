@@ -89,6 +89,8 @@ public class MenuManager : LocalManager<MenuManager>
 
         _currentMenu.gameObject.SetActive(true);
         previousMenu.gameObject.SetActive(false);
+
+        _eventSys.SetSelectedGameObject(_currentMenu.FirstButton);
     }
 
     public void PreviousMenu()
@@ -189,6 +191,8 @@ public class MenuManager : LocalManager<MenuManager>
     #region Controller / Keyboard / Mouse Switching
     private void SwitchToController()
     {
+        _eventSys.sendNavigationEvents = true;
+
         if (_currentDevice == Devices.Controller)
             return;
         _currentDevice = Devices.Controller;
@@ -204,10 +208,13 @@ public class MenuManager : LocalManager<MenuManager>
             _eventSys.SetSelectedGameObject(_currentMenu.FirstButton);
         else
             _eventSys.SetSelectedGameObject(buttonUnderMouse);
+        _eventSys.sendNavigationEvents = false;
     }
 
     private void SwitchToKeyboard()
     {
+        _eventSys.sendNavigationEvents = true;
+
         if (_currentDevice == Devices.Keyboard)
             return;
         _currentDevice = Devices.Keyboard;
@@ -223,6 +230,8 @@ public class MenuManager : LocalManager<MenuManager>
             _eventSys.SetSelectedGameObject(_currentMenu.FirstButton);
         else
             _eventSys.SetSelectedGameObject(buttonUnderMouse);
+        _eventSys.sendNavigationEvents = false;
+
     }
 
     private GameObject CheckUnderMouse()
