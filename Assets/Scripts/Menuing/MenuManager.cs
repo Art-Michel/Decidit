@@ -68,10 +68,10 @@ public class MenuManager : LocalManager<MenuManager>
     {
         base.Awake();
         _inputs = new PlayerInputMap();
-        _inputs.MenuNavigation.anyKey.performed += _ => SwitchToKeyboard();
-        _inputs.MenuNavigation.anyButton.performed += _ => SwitchToController();
-        _inputs.MenuNavigation.moveMouse.performed += _ => SwitchToMouse();
-        _inputs.MenuNavigation.Cancel.performed += _ => PreviousMenu();
+        _inputs.MenuNavigation.anyKey.started += _ => SwitchToKeyboard();
+        _inputs.MenuNavigation.anyButton.started += _ => SwitchToController();
+        _inputs.MenuNavigation.moveMouse.started += _ => SwitchToMouse();
+        _inputs.MenuNavigation.Cancel.started += _ => PreviousMenu();
 
         _submenus = new Dictionary<Menus, Submenu>()
         {
