@@ -106,7 +106,6 @@ public class Explosion : Hitbox
         _damage = Mathf.RoundToInt(_initialDamage * Mathf.InverseLerp(0f, _hitboxSpan, _hitboxT));
 
         //Check for collisions with hitbox
-        Debug.Log(_hitboxT);
         if (_hitboxIsActive)
             base.Update();
     }

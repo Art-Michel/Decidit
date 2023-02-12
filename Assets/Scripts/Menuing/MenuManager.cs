@@ -71,7 +71,7 @@ public class MenuManager : LocalManager<MenuManager>
         _inputs.MenuNavigation.anyKey.started += _ => SwitchToKeyboard();
         _inputs.MenuNavigation.anyButton.started += _ => SwitchToController();
         _inputs.MenuNavigation.moveMouse.started += _ => SwitchToMouse();
-        _inputs.MenuNavigation.Cancel.started += _ => PreviousMenu();
+        _inputs.MenuNavigation.Cancel.started += _ => OpenPreviousMenu();
 
         _submenus = new Dictionary<Menus, Submenu>()
         {
@@ -95,6 +95,9 @@ public class MenuManager : LocalManager<MenuManager>
     #region Submenu navigation
     private void OpenSubmenu(Menus menu)
     {
+        if (_submenus[menu] == _currentMenu)
+            return;
+
         Submenu previousMenu = _currentMenu;
         _currentMenu = _submenus[menu];
 
@@ -105,45 +108,39 @@ public class MenuManager : LocalManager<MenuManager>
             _eventSys.SetSelectedGameObject(_currentMenu.FirstButton);
     }
 
-    public void PreviousMenu()
+    public void OpenPreviousMenu()
     {
         if (_currentMenu.PreviousMenu != null)
             OpenSubmenu(_currentMenu.PreviousMenu.Id);
     }
 
-    public void PlaySelect()
+    public void OpenPlaySelect()
     {
-        //fait entrer le joueur dans les options
         OpenSubmenu(Menus.Playselect);
     }
 
-    public void VideoSettings()
+    public void OpenVideoSettings()
     {
-        //fait entrer le joueur dans les options
         OpenSubmenu(Menus.Videosettings);
     }
 
-    public void AudioSettings()
+    public void OpenAudioSettings()
     {
-        //fait entrer le joueur dans les options
         OpenSubmenu(Menus.AudioSettings);
     }
 
-    public void InputSettings()
+    public void OpenInputSettings()
     {
-        //fait entrer le joueur dans les options
         OpenSubmenu(Menus.Inputsettings);
     }
 
-    public void Credits()
+    public void OpenCredits()
     {
-        //fait entrer le joueur dans les options
         OpenSubmenu(Menus.Credits);
     }
 
-    public void Quit()
+    public void OpenQuit()
     {
-        //fait entrer le joueur dans les options
         OpenSubmenu(Menus.Quit);
     }
 

@@ -3,12 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.InputSystem;
 
 public class PlayerManager : LocalManager<PlayerManager>
 {
     float _slowMoT;
     float _slowMoInitialT;
     float _timeSpeed;
+
+    float _rumbleT;
+    float _rumbleInitialT;
+    float _rumbleLowFreqIntensity;
+    float _rumbleHighFreqIntensity;
+    bool _isRumbling;
+
     float _delayFramerateCalculation;
 
     [SerializeField] TextMeshProUGUI _fps;
@@ -87,52 +95,52 @@ public class PlayerManager : LocalManager<PlayerManager>
             _timescaleDebugUi.text = ("TimeScale: " + Time.timeScale.ToString("F3"));
     }
     //Equipping
-    private void Skill4()
+    public void Skill4()
     {
         foreach (GameObject arm in _arms)
             arm.SetActive(false);
         _arms[3].SetActive(true);
     }
-    private void Skill3()
+    public void Skill3()
     {
         foreach (GameObject arm in _arms)
             arm.SetActive(false);
         _arms[2].SetActive(true);
     }
-    private void Skill2()
+    public void Skill2()
     {
         foreach (GameObject arm in _arms)
             arm.SetActive(false);
         _arms[1].SetActive(true);
     }
-    private void Skill1()
+    public void Skill1()
     {
         foreach (GameObject arm in _arms)
             arm.SetActive(false);
         _arms[0].SetActive(true);
     }
-    private void Gun4()
+    public void Gun4()
     {
         foreach (GameObject gun in _guns)
             gun.SetActive(false);
         _guns[3].SetActive(true);
         PlaceHolderSoundManager.Instance.PlayWeaponEquip();
     }
-    private void Gun3()
+    public void Gun3()
     {
         foreach (GameObject gun in _guns)
             gun.SetActive(false);
         _guns[2].SetActive(true);
         PlaceHolderSoundManager.Instance.PlayWeaponEquip();
     }
-    private void Gun2()
+    public void Gun2()
     {
         foreach (GameObject gun in _guns)
             gun.SetActive(false);
         _guns[1].SetActive(true);
         PlaceHolderSoundManager.Instance.PlayWeaponEquip();
     }
-    private void Gun1()
+    public void Gun1()
     {
         foreach (GameObject gun in _guns)
             gun.SetActive(false);
@@ -161,6 +169,7 @@ public class PlayerManager : LocalManager<PlayerManager>
     private void Update()
     {
         SlowMo();
+        Rumble();
 
         if (_fps.enabled)
             UpdateFramerate();
@@ -175,7 +184,7 @@ public class PlayerManager : LocalManager<PlayerManager>
     {
         if (_delayFramerateCalculation <= 0)
         {
-            _fps.text = (1 / Time.deltaTime).ToString("F1");
+            _fps.text = (1 / Time.unscaledDeltaTime).ToString("F1");
             _delayFramerateCalculation = 0.05f;
         }
         else
@@ -211,6 +220,61 @@ public class PlayerManager : LocalManager<PlayerManager>
         Time.timeScale = 1;
         _slowMoT = 0;
         DisplayTimeScale();
+    }
+
+    public void StartRumbling(float lowFreqStrength, float highFreqStrength, float duration)
+    {
+        if (duration > _rumbleT)
+        {
+            _rumbleInitialT = duration;
+            _rumbleT = duration;
+        }
+
+        if (lowFreqStrength > _rumbleLowFreqIntensity)
+        {
+            _rumbleLowFreqIntensity = lowFreqStrength;
+        }
+        if (highFreqStrength > _rumbleHighFreqIntensity)
+        {
+            _rumbleHighFreqIntensity = highFreqStrength;
+        }
+
+
+        if (Gamepad.current != null)
+            Gamepad.current.ResumeHaptics();
+        _isRumbling = true;
+    }
+
+    private void Rumble()
+    {
+        if (_isRumbling)
+        {
+            float low = _rumbleLowFreqIntensity * Mathf.InverseLerp(0, _rumbleInitialT, _rumbleT);
+            float high = _rumbleHighFreqIntensity * Mathf.InverseLerp(0, _rumbleInitialT, _rumbleT);
+            if (Gamepad.current != null)
+                Gamepad.current.SetMotorSpeeds(low, high);
+
+            Debug.Log(low);
+            Debug.Log(high);
+
+            _rumbleT -= Time.deltaTime;
+            if (_rumbleT <= 0.1f)
+                StopRumbling();
+        }
+    }
+
+    private void StopRumbling()
+    {
+        if (Gamepad.current != null)
+        {
+            Gamepad.current.SetMotorSpeeds(0, 0);
+            Gamepad.current.PauseHaptics();
+        }
+        _rumbleHighFreqIntensity = 0f;
+        _rumbleLowFreqIntensity = 0f;
+        _rumbleInitialT = 0f;
+        _rumbleT = 0;
+        _isRumbling = false;
     }
 
     #region Enable Disable Inputs
