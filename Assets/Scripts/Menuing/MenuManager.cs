@@ -238,6 +238,7 @@ public class MenuManager : LocalManager<MenuManager>
         _fade.gameObject.SetActive(true);
 
         SceneManager.LoadSceneAsync(scene);
+        Time.timeScale = 1;
     }
 
     void StartExiting()
@@ -252,7 +253,7 @@ public class MenuManager : LocalManager<MenuManager>
     {
         if (_isFading)
         {
-            _fadingT += Time.deltaTime;
+            _fadingT += Time.unscaledDeltaTime;
             _fade.color = new Color(_fade.color.r, _fade.color.g, _fade.color.b, Mathf.InverseLerp(0, _sceneFadingDuration, _fadingT));
         }
     }

@@ -62,7 +62,7 @@ public class PlayerManager : LocalManager<PlayerManager>
 
         _isPaused = false;
 
-        DebugStart();
+        _isLockedAt30 = false;
     }
 
     private void Update()
@@ -72,12 +72,6 @@ public class PlayerManager : LocalManager<PlayerManager>
 
         if (_fps.enabled)
             UpdateFramerate();
-    }
-
-    private void DebugStart()
-    {
-        //Framerate
-        _isLockedAt30 = false;
     }
 
     private void LockFramerate()
@@ -95,18 +89,6 @@ public class PlayerManager : LocalManager<PlayerManager>
             Application.targetFrameRate = 60;
         }
     }
-
-    // private void DebugChangeTimeScale()
-    // {
-    //     var direction = _inputs.Debugging.ChangeTimeScale.ReadValue<float>();
-
-    //     if (Mathf.Sign(direction) > 0)
-    //         Time.timeScale = Mathf.Clamp(Time.timeScale + .1f, 0.01f, 10);
-    //     else if (Mathf.Sign(direction) < 0)
-    //         Time.timeScale = Mathf.Clamp(Time.timeScale - .1f, 0.01f, 10);
-
-    //     DisplayTimeScale();
-    // }
 
     private void DisplayTimeScale()
     {
