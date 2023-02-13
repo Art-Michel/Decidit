@@ -13,7 +13,7 @@ namespace State.AICAC
        
         [Header("Angle Surround")]
         [SerializeField] float maxAngle;
-        [SerializeField] float radius;
+        public float radius;
         [SerializeField] float currentAnglePlacement;
 
         [SerializeField] Vector3 destination;
