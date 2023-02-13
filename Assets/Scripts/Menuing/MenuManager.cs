@@ -41,6 +41,8 @@ public class MenuManager : LocalManager<MenuManager>
     [SerializeField] Submenu _quitConfirm;
     [SerializeField] Submenu _cheats;
     [SerializeField] Submenu _restart;
+    [SerializeField] Submenu _win;
+    [SerializeField] Submenu _death;
     public enum Menus
     {
         Main,
@@ -51,7 +53,9 @@ public class MenuManager : LocalManager<MenuManager>
         Credits,
         Quit,
         Cheats,
-        Restart
+        Restart,
+        Death,
+        Win
     }
 
     private Dictionary<Menus, Submenu> _submenus;
@@ -91,6 +95,8 @@ public class MenuManager : LocalManager<MenuManager>
             { Menus.Quit, _quitConfirm },
             { Menus.Cheats, _cheats },
             { Menus.Restart, _restart },
+            { Menus.Death, _death },
+            { Menus.Win, _win },
         };
         //Initialize Dictionnary
     }
@@ -104,7 +110,7 @@ public class MenuManager : LocalManager<MenuManager>
     {
         _currentDevice = Devices.Controller;
         _eventSys.SetSelectedGameObject(null);
-        _inputs.Enable();
+        EnableMenuInputs();
         CurrentMenu.gameObject.SetActive(false);
         CurrentMenu = _firstMenu;
         CurrentMenu.gameObject.SetActive(true);
@@ -113,7 +119,19 @@ public class MenuManager : LocalManager<MenuManager>
 
     void OnDisable()
     {
+        DisableMenuInputs();
+    }
+
+    public void DisableMenuInputs()
+    {
         _inputs.Disable();
+
+    }
+
+    public void EnableMenuInputs()
+    {
+        _inputs.Enable();
+
     }
 
     #region Submenu navigation
@@ -180,6 +198,16 @@ public class MenuManager : LocalManager<MenuManager>
     public void OpenRestart()
     {
         OpenSubmenu(Menus.Restart);
+    }
+
+    public void OpenDeath()
+    {
+        OpenSubmenu(Menus.Death);
+    }
+
+    public void OpenWin()
+    {
+        OpenSubmenu(Menus.Win);
     }
 
     #endregion
@@ -340,7 +368,6 @@ public class MenuManager : LocalManager<MenuManager>
 
         _currentDevice = Devices.Mouse;
         Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
         _lastSelectedObject = _eventSys.currentSelectedGameObject;
         _eventSys.SetSelectedGameObject(null);
     }

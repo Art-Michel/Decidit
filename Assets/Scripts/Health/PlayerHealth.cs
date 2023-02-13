@@ -60,4 +60,10 @@ public class PlayerHealth : Health
     {
         _player.AddMomentum(direction);
     }
+
+    protected override void Death()
+    {
+        PlayerManager.Instance.StartDying();
+    }
+
 }

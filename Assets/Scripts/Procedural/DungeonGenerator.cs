@@ -145,10 +145,9 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
     public void SetCurrentRoom(Room room)
     {
         CurrentRoom = _actualRooms.IndexOf(room);
-        if(CurrentRoom >= _actualRooms.Count -1)
+        if (CurrentRoom >= _actualRooms.Count - 1)
         {
             Endgame();
-            Cursor.visible = true;
         }
     }
 

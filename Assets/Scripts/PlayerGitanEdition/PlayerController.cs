@@ -35,7 +35,6 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
-        Cursor.lockState = CursorLockMode.Locked;
         cam = transform.GetChild(0);
         hpStatic = hp;
         povCam = vCam.GetCinemachineComponent<CinemachinePOV>();
@@ -46,7 +45,7 @@ public class PlayerController : MonoBehaviour
 
         //rotX -= rotSpeed * Input.GetAxis("Mouse Y") * Time.deltaTime;
         //rotY += rotSpeed * Input.GetAxis("Mouse X") * Time.deltaTime;
-            
+
         transform.rotation = Quaternion.Euler(0, povCam.m_HorizontalAxis.Value, 0);
 
         //rotX = Mathf.Clamp(rotX ,-65f, 65f);
@@ -57,39 +56,39 @@ public class PlayerController : MonoBehaviour
         Deplacement();
     }
 
-   /* private void FixedUpdate()
-    {
-        hit = RaycastAIManager.RaycastAI(spawnRay.position, transform.forward, mask, Color.black, 100f);
+    /* private void FixedUpdate()
+     {
+         hit = RaycastAIManager.RaycastAI(spawnRay.position, transform.forward, mask, Color.black, 100f);
 
-        if (hit.transform != null)
-        {
-            if (hit.transform.CompareTag("Ennemi"))
-            {
-                if (hit.transform.GetComponent<StateManagerAICAC>() != null)
-                {
-                    if (Random.Range(0, 50) == 10)
-                    {
-                        RaycastHit hit = RaycastAIManager.RaycastAI(transform.position, transform.forward, mask, Color.red, 100f);
-                        float angle;
-                        angle = Vector3.SignedAngle(transform.forward, hit.normal, Vector3.up);
+         if (hit.transform != null)
+         {
+             if (hit.transform.CompareTag("Ennemi"))
+             {
+                 if (hit.transform.GetComponent<StateManagerAICAC>() != null)
+                 {
+                     if (Random.Range(0, 50) == 10)
+                     {
+                         RaycastHit hit = RaycastAIManager.RaycastAI(transform.position, transform.forward, mask, Color.red, 100f);
+                         float angle;
+                         angle = Vector3.SignedAngle(transform.forward, hit.normal, Vector3.up);
 
-                        if (angle > 0)
-                        {
-                            hit.transform.GetComponent<StateManagerAICAC>().dodgeParameterAICACSOInstance.targetObjectToDodge = this.transform;
-                            hit.transform.GetComponent<StateManagerAICAC>().dodgeParameterAICACSOInstance.rightDodge = true;
-                            hit.transform.GetComponent<StateManagerAICAC>().SwitchToNewState(2);
-                        }
-                        else
-                        {
-                            hit.transform.GetComponent<StateManagerAICAC>().dodgeParameterAICACSOInstance.targetObjectToDodge = this.transform;
-                            hit.transform.GetComponent<StateManagerAICAC>().dodgeParameterAICACSOInstance.leftDodge = true;
-                            hit.transform.GetComponent<StateManagerAICAC>().SwitchToNewState(2);
-                        }
-                    }
-                }
-            }
-        }
-    }*/
+                         if (angle > 0)
+                         {
+                             hit.transform.GetComponent<StateManagerAICAC>().dodgeParameterAICACSOInstance.targetObjectToDodge = this.transform;
+                             hit.transform.GetComponent<StateManagerAICAC>().dodgeParameterAICACSOInstance.rightDodge = true;
+                             hit.transform.GetComponent<StateManagerAICAC>().SwitchToNewState(2);
+                         }
+                         else
+                         {
+                             hit.transform.GetComponent<StateManagerAICAC>().dodgeParameterAICACSOInstance.targetObjectToDodge = this.transform;
+                             hit.transform.GetComponent<StateManagerAICAC>().dodgeParameterAICACSOInstance.leftDodge = true;
+                             hit.transform.GetComponent<StateManagerAICAC>().SwitchToNewState(2);
+                         }
+                     }
+                 }
+             }
+         }
+     }*/
 
     void Deplacement()
     {
@@ -97,7 +96,7 @@ public class PlayerController : MonoBehaviour
 
         Vector2 dirXZ = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
 
-        if(controller.isGrounded)
+        if (controller.isGrounded)
         {
             move.x = dirXZ.x;
             move.z = dirXZ.y;
@@ -122,7 +121,7 @@ public class PlayerController : MonoBehaviour
             move = transform.TransformDirection(move);
 
         move.y += gravityValue * Time.deltaTime;
-        controller.Move(move * playerSpeed *Time.deltaTime);
+        controller.Move(move * playerSpeed * Time.deltaTime);
 
         if (controller.velocity != Vector3.zero)
             isMooving = true;

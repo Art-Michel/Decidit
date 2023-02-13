@@ -14,6 +14,7 @@ public class PlayerManager : LocalManager<PlayerManager>
     float _slowMoT;
     float _slowMoInitialT;
     float _timeSpeed;
+    [Foldout("Debugging")]
     [SerializeField] TextMeshProUGUI _timescaleDebugUi;
 
     //Controller Rumble
@@ -24,16 +25,30 @@ public class PlayerManager : LocalManager<PlayerManager>
     bool _isRumbling;
 
     //Display framerate
+    [Foldout("Debugging")]
     [SerializeField] GameObject _DebuggingCanvas;
+    [Foldout("Debugging")]
     [SerializeField] TextMeshProUGUI _fps;
     float _delayFramerateCalculation;
 
-    bool _isLockedAt30;
+    //Lock framerate
+    bool _isLockedAt60;
 
+    //Pausing
     float _timescaleBeforePausing;
     bool _isPaused;
-    [Foldout("Things to disable on pause")]
-    [SerializeField] GameObject _pauseMenu;
+    [Foldout("Menu")]
+    [SerializeField] GameObject _menu;
+
+    //Death variables
+    bool _isDying;
+    float _dieT;
+    [Foldout("Death")]
+    [SerializeField] float _deathDuration = 1f;
+
+    //Victory variables
+
+    //StopGame stuff
     [Foldout("Things to disable on pause")]
     [SerializeField] List<GameObject> _guns;
     [Foldout("Things to disable on pause")]
@@ -62,13 +77,16 @@ public class PlayerManager : LocalManager<PlayerManager>
 
         _isPaused = false;
 
-        _isLockedAt30 = false;
+        _isLockedAt60 = false;
     }
 
     private void Update()
     {
         SlowMo();
         Rumble();
+
+        if (_isDying)
+            Die();
 
         if (_fps.enabled)
             UpdateFramerate();
@@ -78,14 +96,14 @@ public class PlayerManager : LocalManager<PlayerManager>
     {
         if (_isPaused)
             return;
-        if (_isLockedAt30)
+        if (_isLockedAt60)
         {
-            _isLockedAt30 = false;
+            _isLockedAt60 = false;
             Application.targetFrameRate = 0;
         }
         else
         {
-            _isLockedAt30 = true;
+            _isLockedAt60 = true;
             Application.targetFrameRate = 60;
         }
     }
@@ -151,7 +169,7 @@ public class PlayerManager : LocalManager<PlayerManager>
     }
     #endregion
 
-    #region Pause
+    #region Ingame menus
     private void PressPause()
     {
         if (_isPaused)
@@ -162,14 +180,27 @@ public class PlayerManager : LocalManager<PlayerManager>
 
     public void Pause()
     {
+        _isPaused = true;
+        _menu.SetActive(true);
+        //MenuManager.Instance.gameObject.SetActive(true);
+
+        StopGame();
+    }
+
+    public void Unpause()
+    {
+        _isPaused = false;
+        _menu.SetActive(false);
+        //MenuManager.Instance.gameObject.SetActive(false);
+
+        ResumeGame();
+    }
+
+    private void StopGame()
+    {
         //timescale
         _timescaleBeforePausing = Time.timeScale;
         Time.timeScale = 0f;
-
-        //Enable Pause 
-        _isPaused = true;
-        _pauseMenu.SetActive(true);
-        MenuManager.Instance.gameObject.SetActive(true);
 
         //blur
         _postProcessVolume.enabled = true;
@@ -182,23 +213,20 @@ public class PlayerManager : LocalManager<PlayerManager>
             arm.GetComponent<Arm>().enabled = false;
         _healthBar.SetActive(false);
 
+        Cursor.lockState = CursorLockMode.None;
+
+        MenuManager.Instance.EnableMenuInputs();
+
         //disable rumble
         StopRumbling();
-
-        //cursor
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
     }
 
-    public void Unpause()
+    private void ResumeGame()
     {
-        //timescale
-        Time.timeScale = _timescaleBeforePausing;
-
-        //enable pause
-        _isPaused = false;
-        _pauseMenu.SetActive(false);
-        MenuManager.Instance.gameObject.SetActive(false);
+        if (_timescaleBeforePausing != 0)
+            Time.timeScale = _timescaleBeforePausing;
+        else
+            Time.timeScale = 1;
 
         //blur
         _postProcessVolume.enabled = false;
@@ -211,9 +239,43 @@ public class PlayerManager : LocalManager<PlayerManager>
             arm.GetComponent<Arm>().enabled = true;
         _healthBar.SetActive(true);
 
+        MenuManager.Instance.DisableMenuInputs();
         //cursor
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+
+    public void StartDying()
+    {
+        _isDying = true;
+        _dieT = 0f;
+        StopRumbling();
+        StopSlowMo();
+    }
+
+    private void Die()
+    {
+        _dieT += Time.unscaledDeltaTime;
+
+        Time.timeScale = Mathf.Lerp(0, 1, Mathf.InverseLerp(_deathDuration, 0, _dieT));
+        StartRumbling(1, 1, _dieT);
+
+        if (_dieT >= _deathDuration)
+            Dead();
+    }
+
+    private void Dead()
+    {
+        _isDying = false;
+        _menu.SetActive(true);
+        MenuManager.Instance.OpenDeath();
+        StopGame();
+    }
+
+    public void OnPlayerWin()
+    {
+
     }
     #endregion
 

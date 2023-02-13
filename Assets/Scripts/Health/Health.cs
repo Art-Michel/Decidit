@@ -157,6 +157,6 @@ public class Health : MonoBehaviour
 
     protected virtual void Death()
     {
-        SceneManager.LoadScene("Game Over");
+
     }
 }
