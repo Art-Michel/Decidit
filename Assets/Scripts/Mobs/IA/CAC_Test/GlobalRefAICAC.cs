@@ -32,6 +32,7 @@ namespace State.AICAC
         public Vector3 debugDestination;
         public AgentLinkMover agentLinkMover;
         public Vector3 destination;
+        public SurroundManager surroundManager;
 
         [Header("Ref Dodge State")]
         public Transform spawnRayDodge;
@@ -54,7 +55,7 @@ namespace State.AICAC
         public DodgeParameterAICAC dodgeAICACSO;
         public SurroundParameterAICAC surroundAICACSO;
 
-        void Start()
+        void Awake()
         {
             agent = GetComponent<NavMeshAgent>();
             playerTransform = GameObject.FindWithTag("Player").transform.GetChild(0).transform;
@@ -64,6 +65,7 @@ namespace State.AICAC
             enemyHealth = GetComponent<EnemyHealth>();
             material_Instances = GetComponent<Material_Instances>();
             agentLinkMover = GetComponent<AgentLinkMover>();
+            surroundManager = GetComponentInParent<SurroundManager>();
 
             baseMoveAICACSO = Instantiate(baseMoveAICACSO);
             baseAttackAICACSO = Instantiate(baseAttackAICACSO);

@@ -35,7 +35,7 @@ namespace State.AICAC
         [SerializeField] float maxRateRepath;
         [SerializeField] float currentRateRepath;
 
-        bool activeSurround;
+        [SerializeField] bool activeSurround;
 
         public override void InitState(StateControllerAICAC stateController)
         {
@@ -46,12 +46,15 @@ namespace State.AICAC
 
         private void Awake()
         {
+        }
+
+        private void Start()
+        {
             baseMoveAICACSO = globalRef.baseMoveAICACSO;
         }
 
         private void Update()
         {
-
             //sphereDebug.position = destination;
             //globalRef.agent.areaMask |= (1 << NavMesh.GetAreaFromName("Walkable"));
             //globalRef.agent.areaMask |= (1 << NavMesh.GetAreaFromName("Not Walkable"));
@@ -66,6 +69,27 @@ namespace State.AICAC
         void OnEnable()
         {
             activeSurround = true;
+
+            if(baseMoveAICACSO !=null)
+                baseMoveAICACSO.currentCoolDownAttack = Random.Range(baseMoveAICACSO.maxCoolDownAttack.x, baseMoveAICACSO.maxCoolDownAttack.y);
+        }
+
+        void CoolDownAttack()
+        {
+            if(baseMoveAICACSO.currentCoolDownAttack >0)
+            {
+                baseMoveAICACSO.currentCoolDownAttack -= Time.deltaTime;
+                destination = CheckNavMeshPoint(globalRef.destination);
+
+                if(Vector3.Distance(destination, globalRef.transform.position) < 1f || globalRef.agent.velocity.magnitude <1f)
+                {
+                    baseMoveAICACSO.currentCoolDownAttack = 0.1f;
+                }
+            }
+            else
+            {
+                baseMoveAICACSO.currentCoolDownAttack = Random.Range(baseMoveAICACSO.maxCoolDownAttack.x, baseMoveAICACSO.maxCoolDownAttack.y);
+            }
         }
 
         void ActiveJump()
@@ -106,9 +130,6 @@ namespace State.AICAC
 
         void BaseMovement()
         {
-            dir = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer - globalRef.transform.position;
-            left = Vector3.Cross(dir, Vector3.up).normalized;
-
             if (globalRef.agent.isOnOffMeshLink)
             {
                 link = globalRef.agent.navMeshOwner as NavMeshLink;
@@ -141,20 +162,31 @@ namespace State.AICAC
                 }
                 else
                 {
-                    SlowSpeed(globalRef.isInEylau);
-
-                    Vector3 playerPosAnticip = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer + left * offset;
-                    //destination = CheckNavMeshPoint(playerPosAnticip + (transform.forward * baseMoveAICACSO.lenghtBack));
-                    globalRef.agent.isStopped = false;
-                    //globalRef.agent.SetDestination(destination);
-                    if (Vector3.Distance(destination, globalRef.transform.position) > 1f && activeSurround)
+                    if (Vector3.Distance(destination, globalRef.transform.position) < baseMoveAICACSO.distStopSurround && activeSurround)
+                    {
                         destination = CheckNavMeshPoint(globalRef.destination);
+                    }
                     else
                     {
                         activeSurround = false;
-                        destination = CheckNavMeshPoint(CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer);
+
+                        if (baseMoveAICACSO.currentCoolDownAttack > 0)
+                            CoolDownAttack();
+                        else
+                        {
+                            dir = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer - globalRef.transform.position;
+                            left = Vector3.Cross(dir, Vector3.up).normalized;
+                            Vector3 playerPosAnticip = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer + (left * offset);
+                            destination = CheckNavMeshPoint(playerPosAnticip);
+                        }
+
+                        if (Vector3.Distance(destination, globalRef.transform.position) >= globalRef.surroundManager.radius)
+                        {
+                            activeSurround = true;
+                        }
                     }
 
+                    SlowSpeed(globalRef.isInEylau);
                     globalRef.agent.SetDestination(destination);
                     currentRateRepath = maxRateRepath;
                 }
@@ -182,7 +214,7 @@ namespace State.AICAC
         {
             if (!baseMoveAICACSO.activeAnticipDestination)
             {
-                if (globalRef.distPlayer >= baseMoveAICACSO.distCanRun)
+                if (Vector3.Distance(destination, globalRef.transform.position) >= baseMoveAICACSO.distCanRun)
                 {
                     if (globalRef.agent.speed < baseMoveAICACSO.runSpeed)
                     {
@@ -191,7 +223,7 @@ namespace State.AICAC
                     else
                         globalRef.agent.speed = baseMoveAICACSO.runSpeed;
                 }
-                else if (globalRef.distPlayer <= baseMoveAICACSO.distStopRun)
+                else if (Vector3.Distance(destination, globalRef.transform.position) <= baseMoveAICACSO.distStopRun)
                 {
                     if (globalRef.agent.speed > baseMoveAICACSO.baseSpeed)
                         globalRef.agent.speed -= baseMoveAICACSO.smoothSpeedbase * Time.deltaTime;

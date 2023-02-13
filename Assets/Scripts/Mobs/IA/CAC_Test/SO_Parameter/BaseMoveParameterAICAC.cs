@@ -11,6 +11,11 @@ public class BaseMoveParameterAICAC : ScriptableObject
     [Header("Take Back")]
     public float lenghtBack;
 
+    [Header("Trigger Attack")]
+    public float attackRange;
+    public Vector2 maxCoolDownAttack;
+    public float currentCoolDownAttack;
+
     [Header("Speed Movement Parameter")]
     public float baseSpeed;
     public float smoothSpeedbase;
@@ -20,8 +25,10 @@ public class BaseMoveParameterAICAC : ScriptableObject
     public float smoothSpeedAnticip;
     public float distCanRun;
     public float distStopRun;
-    public float attackRange;
     public bool activeAnticipDestination;
     public float jumpRate;
     public float offsetTransitionSmooth;
+
+    [Header("Trigger Surround")]
+    public float distStopSurround; // IA proche du joueur
 }
