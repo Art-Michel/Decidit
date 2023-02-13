@@ -32,7 +32,7 @@ namespace State.AIBull
 
         private void OnEnable()
         {
-
+/*
             maxRangeTimeRush = (int)Random.Range(rangeTimerRush.x, rangeTimerRush.y);
             currentRangeTimeRush = maxRangeTimeRush;
 
@@ -44,12 +44,12 @@ namespace State.AIBull
             catch
             {
                 Debug.LogWarning("missing Reference");
-            }
+            }*/
         }
 
         private void Update()
         {
-            if (currentRangeTimeRush > 0)
+           /* if (currentRangeTimeRush > 0)
                 currentRangeTimeRush -= Time.deltaTime;
             else if(!globalRef.agent.isOnNavMesh)
                 SwitchToStateRush();
@@ -65,7 +65,7 @@ namespace State.AIBull
                 SwitchToStateRush();
             }
 
-            SmoothLookAtPlayer();
+            SmoothLookAtPlayer();*/
         }
         private void FixedUpdate()
         {

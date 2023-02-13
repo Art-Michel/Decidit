@@ -318,8 +318,10 @@ namespace State.AICAC
         private void OnDisable()
         {
             globalRef.baseAttackAICACSO.isAttacking = false;
-            baseMoveAICACSO.speedRot = 0;
             currentRateRepath = 0;
+
+            if (baseMoveAICACSO != null)
+                baseMoveAICACSO.speedRot = 0;
         }
     }
 }

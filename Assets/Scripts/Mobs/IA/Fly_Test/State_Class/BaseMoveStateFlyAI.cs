@@ -146,7 +146,7 @@ namespace State.FlyAI
             }
             else
             {
-                Collider[] hitColliders = Physics.OverlapSphere(baseMoveFlySO.destinationFinal, 2f, maskSearchPos);
+                Collider[] hitColliders = Physics.OverlapSphere(baseMoveFlySO.destinationFinal, 1f, maskSearchPos);
 
                 if(hitColliders.Length == 0)
                 {
@@ -229,11 +229,7 @@ namespace State.FlyAI
 
                 velocity = globalRef.agent.velocity;
                 speedVelocity = globalRef.agent.velocity.magnitude;
-
-               /* globalRef.slowSpeed = globalRef.agent.speed / globalRef.slowRatio;
-                globalRef.agent.speed = globalRef.slowSpeed;
-                globalRef.agent.SetDestination(CheckNavMeshPoint(new Vector3(flyAI.transform.position.x, 0, flyAI.transform.position.z) + childflyAI.TransformDirection(Vector3.forward)));
-    */        }
+            }
             else
             {
                 if (baseMoveFlySO.newPosIsSet)
@@ -241,12 +237,7 @@ namespace State.FlyAI
 
                 velocity = globalRef.agent.velocity;
                 speedVelocity = globalRef.agent.velocity.magnitude;
-
-                /*if (globalRef.agent.speed == globalRef.slowSpeed)
-                    globalRef.agent.speed *= globalRef.slowRatio;
-
-                globalRef.agent.SetDestination(CheckNavMeshPoint(new Vector3(flyAI.transform.position.x, 0, flyAI.transform.position.z) + childflyAI.TransformDirection(Vector3.forward)));
-*/            }
+            }
         }
 
         void DelayBeforeAttack()
