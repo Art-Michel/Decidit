@@ -1275,17 +1275,6 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""a76e2375-c30d-4eb4-b428-7265e4d50069"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Cancel"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""0f7a4a83-5c9a-41f8-8fee-6729a2e39bea"",
                     ""path"": ""<Gamepad>/dpad"",
                     ""interactions"": """",

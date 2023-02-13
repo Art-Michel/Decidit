@@ -4,33 +4,46 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.HighDefinition;
+using NaughtyAttributes;
 
 public class PlayerManager : LocalManager<PlayerManager>
 {
+    //Slow down time
     float _slowMoT;
     float _slowMoInitialT;
     float _timeSpeed;
+    [SerializeField] TextMeshProUGUI _timescaleDebugUi;
 
+    //Controller Rumble
     float _rumbleT;
     float _rumbleInitialT;
     float _rumbleLowFreqIntensity;
     float _rumbleHighFreqIntensity;
     bool _isRumbling;
 
-    float _timescaleBeforePausing;
-    bool _isPaused;
-
+    //Display framerate
+    [SerializeField] GameObject _DebuggingCanvas;
+    [SerializeField] TextMeshProUGUI _fps;
     float _delayFramerateCalculation;
 
-    [SerializeField] TextMeshProUGUI _fps;
+    bool _isLockedAt30;
+
+    float _timescaleBeforePausing;
+    bool _isPaused;
+    [Foldout("Things to disable on pause")]
     [SerializeField] GameObject _pauseMenu;
+    [Foldout("Things to disable on pause")]
+    [SerializeField] List<GameObject> _guns;
+    [Foldout("Things to disable on pause")]
+    [SerializeField] List<GameObject> _arms;
+    [Foldout("Things to disable on pause")]
+    [SerializeField] Volume _postProcessVolume;
+    [Foldout("Things to disable on pause")]
+    [SerializeField] GameObject _healthBar;
 
     PlayerInputMap _inputs;
-    [SerializeField] GameObject _DebuggingCanvas;
-    [SerializeField] TextMeshProUGUI _timescaleDebugUi;
-    bool _isLockedAt30;
-    [SerializeField] List<GameObject> _guns;
-    [SerializeField] List<GameObject> _arms;
 
     protected override void Awake()
     {
@@ -222,12 +235,16 @@ public class PlayerManager : LocalManager<PlayerManager>
         _pauseMenu.SetActive(true);
         MenuManager.Instance.gameObject.SetActive(true);
 
+        //blur
+        _postProcessVolume.enabled = true;
+
         //Disable everything
         Player.Instance.enabled = false;
         foreach (GameObject gun in _guns)
             gun.GetComponent<Revolver>().enabled = false;
         foreach (GameObject arm in _arms)
             arm.GetComponent<Arm>().enabled = false;
+        _healthBar.SetActive(false);
 
         //cursor
         Cursor.lockState = CursorLockMode.None;
@@ -244,12 +261,16 @@ public class PlayerManager : LocalManager<PlayerManager>
         _pauseMenu.SetActive(false);
         MenuManager.Instance.gameObject.SetActive(false);
 
+        //blur
+        _postProcessVolume.enabled = false;
+
         //re enable everything
         Player.Instance.enabled = true;
         foreach (GameObject gun in _guns)
             gun.GetComponent<Revolver>().enabled = true;
         foreach (GameObject arm in _arms)
             arm.GetComponent<Arm>().enabled = true;
+        _healthBar.SetActive(true);
 
         //cursor
         Cursor.lockState = CursorLockMode.Locked;

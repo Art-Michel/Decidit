@@ -37,6 +37,8 @@ public class MenuManager : LocalManager<MenuManager>
     [SerializeField] Submenu _playSelect;
     [SerializeField] Submenu _credits;
     [SerializeField] Submenu _quitConfirm;
+    [SerializeField] Submenu _cheats;
+    [SerializeField] Submenu _restart;
     public enum Menus
     {
         Main,
@@ -45,7 +47,9 @@ public class MenuManager : LocalManager<MenuManager>
         AudioSettings,
         Playselect,
         Credits,
-        Quit
+        Quit,
+        Cheats,
+        Restart
     }
 
     private Dictionary<Menus, Submenu> _submenus;
@@ -83,6 +87,8 @@ public class MenuManager : LocalManager<MenuManager>
             { Menus.Playselect, _playSelect },
             { Menus.Credits, _credits },
             { Menus.Quit, _quitConfirm },
+            { Menus.Cheats, _cheats },
+            { Menus.Restart, _restart },
         };
         //Initialize Dictionnary
     }
@@ -117,6 +123,7 @@ public class MenuManager : LocalManager<MenuManager>
         Submenu previousMenu = CurrentMenu;
         CurrentMenu = _submenus[menu];
 
+        previousMenu.FirstButton = _eventSys.currentSelectedGameObject;
         CurrentMenu.gameObject.SetActive(true);
         previousMenu.gameObject.SetActive(false);
 
@@ -158,6 +165,16 @@ public class MenuManager : LocalManager<MenuManager>
     public void OpenQuit()
     {
         OpenSubmenu(Menus.Quit);
+    }
+
+    public void OpenCheats()
+    {
+        OpenSubmenu(Menus.Cheats);
+    }
+
+    public void OpenRestart()
+    {
+        OpenSubmenu(Menus.Restart);
     }
 
     #endregion
