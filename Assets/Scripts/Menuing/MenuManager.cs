@@ -125,6 +125,7 @@ public class MenuManager : LocalManager<MenuManager>
         Submenu previousMenu = CurrentMenu;
         CurrentMenu = _submenus[menu];
 
+        _lastSelectedObject = null;
         previousMenu.FirstButton = _eventSys.currentSelectedGameObject;
         CurrentMenu.gameObject.SetActive(true);
         previousMenu.gameObject.SetActive(false);
