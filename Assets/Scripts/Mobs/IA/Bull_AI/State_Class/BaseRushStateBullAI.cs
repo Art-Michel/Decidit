@@ -152,9 +152,6 @@ namespace State.AIBull
 
         void RushDuration()
         {
-            /*distDestination = Vector3.Distance(new Vector2(globalRef.transform.position.x, globalRef.transform.position.z),
-                new Vector2(rushBullSO.rushDestination.x, rushBullSO.rushDestination.z));*/
-
             posPlayer = new Vector2(globalRef.transform.position.x, globalRef.transform.position.z);
             distDestination = Vector3.Distance(posPlayer, rushBullSO.targetPos);
 
@@ -162,16 +159,6 @@ namespace State.AIBull
             {
                 //Debug.Log("Distance Stop Rush");
                 StopRush();
-            }
-
-            /*if (!rushBullSO.isFall && !rushBullSO.isGround)
-            {
-                rushBullSO.isFall = true;
-            }*/
-            if (rushBullSO.isFall && rushBullSO.isGround)
-            {
-                //Debug.Log("Fall Stop Rush");
-                //StopRush();
             }
 
             rushBullSO.distRush = Vector3.Distance(captureBasePosDistance, globalRef.transform.position);

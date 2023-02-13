@@ -85,16 +85,36 @@ namespace State.AICAC
             relativePos.y = 0;
             relativePos.z = direction.z - globalRef.transform.position.z;
 
-            if (baseAttackAICACSO.speedRot < baseAttackAICACSO.maxSpeedRot)
-                baseAttackAICACSO.speedRot += Time.deltaTime / baseAttackAICACSO.smoothRot;
-            else
-            {
-                if (baseAttackAICACSO.speedRot != baseAttackAICACSO.maxSpeedRot)
-                    baseAttackAICACSO.speedRot = baseAttackAICACSO.maxSpeedRot;
-            }
+            SlowRotation(globalRef.isInEylau);
 
             rotation = Quaternion.Slerp(globalRef.transform.rotation, Quaternion.LookRotation(relativePos, Vector3.up), baseAttackAICACSO.speedRot);
             globalRef.transform.rotation = rotation;
+        }
+
+        void SlowRotation(bool active)
+        {
+            if (active)
+            {
+                if (baseAttackAICACSO.speedRot < (baseAttackAICACSO.maxSpeedRot / globalRef.slowRatio))
+                {
+                    baseAttackAICACSO.speedRot += Time.deltaTime / (baseAttackAICACSO.smoothRot * globalRef.slowRatio);
+                }
+                else
+                {
+                    baseAttackAICACSO.speedRot = (baseAttackAICACSO.maxSpeedRot / globalRef.slowRatio);
+                }
+            }
+            else
+            {
+                if (baseAttackAICACSO.speedRot < baseAttackAICACSO.maxSpeedRot)
+                {
+                    baseAttackAICACSO.speedRot += Time.deltaTime / baseAttackAICACSO.smoothRot;
+                }
+                else
+                {
+                    baseAttackAICACSO.speedRot = baseAttackAICACSO.maxSpeedRot;
+                }
+            }
         }
 
         private void OnDisable()
