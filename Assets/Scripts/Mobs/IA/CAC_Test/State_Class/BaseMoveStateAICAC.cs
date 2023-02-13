@@ -293,14 +293,13 @@ namespace State.AICAC
         {
             if(active)
             {
-                if (baseMoveAICACSO.speedRot < baseMoveAICACSO.maxSpeedRot)
+                if (baseMoveAICACSO.speedRot < (baseMoveAICACSO.maxSpeedRot / globalRef.slowRatio))
                 {
-                    globalRef.slowSpeedRot = baseMoveAICACSO.smoothRot* globalRef.slowRatio;
-                    baseMoveAICACSO.speedRot += Time.deltaTime / globalRef.slowSpeedRot;
+                    baseMoveAICACSO.speedRot += Time.deltaTime / (baseMoveAICACSO.smoothRot * globalRef.slowRatio);
                 }
                 else
                 {
-                    baseMoveAICACSO.speedRot = baseMoveAICACSO.maxSpeedRot;
+                    baseMoveAICACSO.speedRot = (baseMoveAICACSO.maxSpeedRot / globalRef.slowRatio);
                 }
             }
             else

@@ -45,7 +45,7 @@ namespace State.AICAC
         private void FixedUpdate()
         {
             if (drawLineRenderer)
-                DrawCicre(360, (int)radius);
+                DrawCicre((int)maxAngle, (int)radius);
         }
 
         void SetupPositionEnemy()
@@ -56,8 +56,6 @@ namespace State.AICAC
 
             for (int i = 0; i <= aiCACScriptsList.Count-1; i++)
             {
-                Debug.Log("Boucle");
-
                 float unitDirXposition = centerPosition.x + Mathf.Sin((currentAnglePlacement * Mathf.PI) / 180) * radius;//radius;
                 float unitDirZposition = centerPosition.z + Mathf.Cos((currentAnglePlacement * Mathf.PI) / 180) * radius;//radius;
 

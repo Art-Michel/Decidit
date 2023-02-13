@@ -50,11 +50,7 @@ namespace State.FlyAI
         {
             CheckObstacle();
 
-            if(baseMoveFlySO.newPosIsSet)
-                globalRef.agent.velocity = childflyAI.transform.forward * baseMoveFlySO.baseMoveSpeed;
-
-            velocity = globalRef.agent.velocity;
-            speedVelocity = globalRef.agent.velocity.magnitude;
+            SlowSpeed(globalRef.isInEylau);
         }
 
         void AdjustingYspeed()
@@ -228,17 +224,29 @@ namespace State.FlyAI
         {
             if (active)
             {
-                globalRef.slowSpeed = globalRef.agent.speed / globalRef.slowRatio;
+                if (baseMoveFlySO.newPosIsSet)
+                    globalRef.agent.velocity = (childflyAI.transform.forward * baseMoveFlySO.baseMoveSpeed) / globalRef.slowRatio;
+
+                velocity = globalRef.agent.velocity;
+                speedVelocity = globalRef.agent.velocity.magnitude;
+
+               /* globalRef.slowSpeed = globalRef.agent.speed / globalRef.slowRatio;
                 globalRef.agent.speed = globalRef.slowSpeed;
                 globalRef.agent.SetDestination(CheckNavMeshPoint(new Vector3(flyAI.transform.position.x, 0, flyAI.transform.position.z) + childflyAI.TransformDirection(Vector3.forward)));
-            }
+    */        }
             else
             {
-                if (globalRef.agent.speed == globalRef.slowSpeed)
+                if (baseMoveFlySO.newPosIsSet)
+                    globalRef.agent.velocity = childflyAI.transform.forward * baseMoveFlySO.baseMoveSpeed;
+
+                velocity = globalRef.agent.velocity;
+                speedVelocity = globalRef.agent.velocity.magnitude;
+
+                /*if (globalRef.agent.speed == globalRef.slowSpeed)
                     globalRef.agent.speed *= globalRef.slowRatio;
 
                 globalRef.agent.SetDestination(CheckNavMeshPoint(new Vector3(flyAI.transform.position.x, 0, flyAI.transform.position.z) + childflyAI.TransformDirection(Vector3.forward)));
-            }
+*/            }
         }
 
         void DelayBeforeAttack()

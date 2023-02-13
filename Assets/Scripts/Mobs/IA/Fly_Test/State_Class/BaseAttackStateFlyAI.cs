@@ -55,7 +55,7 @@ namespace State.FlyAI
                 stateControllerFlyAI.SetActiveState(StateControllerFlyAI.AIState.BaseMove);
             }
 
-            globalRef.agent.velocity = childflyAI.transform.forward * baseAttackFlySO.baseAttackSpeed;
+            SlowSpeed(globalRef.isInEylau);
         }
 
         void AdjustingYspeed()
@@ -103,7 +103,7 @@ namespace State.FlyAI
 
         void ApplyFlyingMove()
         {
-            globalRef.agent.speed = baseAttackFlySO.baseAttackSpeed;
+            //globalRef.agent.speed = baseAttackFlySO.baseAttackSpeed;
 
             //SlowSpeed(globalRef.isInEylau);
             if (globalRef.transform.position.y < lockPlayerFlySO.destinationFinal.y)
@@ -126,17 +126,11 @@ namespace State.FlyAI
         {
             if (active)
             {
-                globalRef.slowSpeed = globalRef.agent.speed / 2;
-                globalRef.agent.speed = globalRef.slowSpeed;
-                globalRef.agent.SetDestination(new Vector3(globalRef.transform.position.x, 0, globalRef.transform.position.z) + childflyAI.TransformDirection(Vector3.forward));
-
+                globalRef.agent.velocity = (childflyAI.transform.forward * baseAttackFlySO.baseAttackSpeed) / globalRef.slowRatio;
             }
             else
             {
-                if (globalRef.agent.speed == globalRef.slowSpeed)
-                    globalRef.agent.speed *= 2;
-
-                globalRef.agent.SetDestination(new Vector3(globalRef.transform.position.x, 0, globalRef.transform.position.z) + childflyAI.TransformDirection(Vector3.forward));
+                globalRef.agent.velocity = childflyAI.transform.forward * baseAttackFlySO.baseAttackSpeed;
             }
         }
 
