@@ -135,6 +135,8 @@ public class MenuManager : LocalManager<MenuManager>
     {
         if (CurrentMenu.PreviousMenu != null)
             OpenSubmenu(CurrentMenu.PreviousMenu.Id);
+        else if (PlayerManager.Instance != null)
+            PlayerManager.Instance.Unpause();
     }
 
     public void OpenPlaySelect()
@@ -262,17 +264,11 @@ public class MenuManager : LocalManager<MenuManager>
             return;
         _currentDevice = Devices.Controller;
 
-        //get button under mouse if there is any
-        GameObject buttonUnderMouse = CheckUnderMouse();
+        bool wasUsingMouse = _currentDevice == Devices.Mouse;
 
-        //remove cursor
-        Cursor.visible = false;
-        // Cursor.lockState = CursorLockMode.Locked;
+        if (wasUsingMouse)
+            TransitionFromMouse();
 
-        if (buttonUnderMouse == null)
-            _eventSys.SetSelectedGameObject(CurrentMenu.FirstButton);
-        else
-            _eventSys.SetSelectedGameObject(buttonUnderMouse);
         _eventSys.sendNavigationEvents = false;
     }
 
@@ -284,19 +280,26 @@ public class MenuManager : LocalManager<MenuManager>
             return;
         _currentDevice = Devices.Keyboard;
 
+        bool wasUsingMouse = _currentDevice == Devices.Mouse;
+
+        if (wasUsingMouse)
+            TransitionFromMouse();
+
+        _eventSys.sendNavigationEvents = false;
+    }
+
+    private void TransitionFromMouse()
+    {
         //get button under mouse if there is any
         GameObject buttonUnderMouse = CheckUnderMouse();
 
         //remove cursor
         Cursor.visible = false;
-        // Cursor.lockState = CursorLockMode.Locked;
 
         if (buttonUnderMouse == null)
             _eventSys.SetSelectedGameObject(CurrentMenu.FirstButton);
         else
             _eventSys.SetSelectedGameObject(buttonUnderMouse);
-        _eventSys.sendNavigationEvents = false;
-
     }
 
     private GameObject CheckUnderMouse()

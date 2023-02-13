@@ -217,99 +217,9 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
             ""id"": ""95214c0f-39c3-4ad9-b99c-fedda99eed54"",
             ""actions"": [
                 {
-                    ""name"": ""ChangeFramerate"",
+                    ""name"": ""Lock"",
                     ""type"": ""Button"",
                     ""id"": ""56ebfa07-7393-4cf0-b156-dbcde0e13491"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Unfocus"",
-                    ""type"": ""Button"",
-                    ""id"": ""4d60ddce-6e43-4645-8218-8488f175be8d"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""ChangeTimeScale"",
-                    ""type"": ""Button"",
-                    ""id"": ""ba7c64a0-68f6-4a5a-a281-f0ed735a51af"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Gun1"",
-                    ""type"": ""Button"",
-                    ""id"": ""7a3fe3ba-8f39-4ff1-9069-9971672ecf10"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Gun2"",
-                    ""type"": ""Button"",
-                    ""id"": ""caf670af-a360-4211-8380-ed6c19ac7441"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Gun3"",
-                    ""type"": ""Button"",
-                    ""id"": ""1347b817-829a-41df-bc09-1a7619e91ca4"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Gun4"",
-                    ""type"": ""Button"",
-                    ""id"": ""1f13490c-f1b2-4b18-b076-86c0f710b1dc"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Skill1"",
-                    ""type"": ""Button"",
-                    ""id"": ""56556aed-9db0-490a-b82a-f9948e2c0f46"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Skill2"",
-                    ""type"": ""Button"",
-                    ""id"": ""f5cc94f5-c99c-41f5-a255-5daea5aab0a3"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Skill3"",
-                    ""type"": ""Button"",
-                    ""id"": ""9606d852-5015-4058-ae40-9ffcff58a95c"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Skill4"",
-                    ""type"": ""Button"",
-                    ""id"": ""ea9c3391-0e30-4a72-8253-5fda05854f03"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -333,405 +243,9 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""ChangeFramerate"",
+                    ""action"": ""Lock"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""3513621d-be26-4cd5-a0bd-223721c8c63a"",
-                    ""path"": ""<Keyboard>/x"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard Mouse"",
-                    ""action"": ""Unfocus"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""1D Axis"",
-                    ""id"": ""189f3d25-7428-482c-a76d-d4635490d4f6"",
-                    ""path"": ""1DAxis"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""ChangeTimeScale"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""negative"",
-                    ""id"": ""e38c85f8-ec10-492c-8f17-e1da4f1b46cb"",
-                    ""path"": ""<Mouse>/scroll/down"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard Mouse"",
-                    ""action"": ""ChangeTimeScale"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""positive"",
-                    ""id"": ""bccc0c4f-b292-43d3-96ee-f15fe0279bdd"",
-                    ""path"": ""<Mouse>/scroll/up"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard Mouse"",
-                    ""action"": ""ChangeTimeScale"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""6552b25d-ac5c-46a6-998f-090d25298ebd"",
-                    ""path"": ""<Keyboard>/1"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard Mouse"",
-                    ""action"": ""Gun1"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""b3294ef9-e85d-4295-acf8-5f7bb27c37ac"",
-                    ""path"": ""<Gamepad>/dpad/up"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Controller"",
-                    ""action"": ""Gun1"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""b5658256-a918-43d1-a029-50e6a9392522"",
-                    ""path"": ""<Keyboard>/2"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard Mouse"",
-                    ""action"": ""Gun2"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""63184fe2-cf5f-4075-8a83-1454d19516fb"",
-                    ""path"": ""<Gamepad>/dpad/left"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Controller"",
-                    ""action"": ""Gun2"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""e98f0ec5-d10c-49bc-b370-6eff3328cf78"",
-                    ""path"": ""<Keyboard>/4"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard Mouse"",
-                    ""action"": ""Gun4"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""d4ea446e-acf0-491c-99f1-f67f1f75a11d"",
-                    ""path"": ""<Gamepad>/dpad/down"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Controller"",
-                    ""action"": ""Gun4"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""67d43327-56d0-42f2-abfd-c7668864536b"",
-                    ""path"": ""<Keyboard>/3"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard Mouse"",
-                    ""action"": ""Gun3"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""07e4fce3-292c-4b90-93ff-4ae4fc40f5d2"",
-                    ""path"": ""<Gamepad>/dpad/right"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Controller"",
-                    ""action"": ""Gun3"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""Shif 1"",
-                    ""id"": ""c55672cc-ae17-4d63-88c4-f3c50a3452b5"",
-                    ""path"": ""OneModifier"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Skill1"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""modifier"",
-                    ""id"": ""c2b33dd3-4127-44f9-99f1-9f98cd22ad1a"",
-                    ""path"": ""<Keyboard>/shift"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard Mouse"",
-                    ""action"": ""Skill1"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""binding"",
-                    ""id"": ""759f5c9a-240d-4d96-9f00-5b6ef422c972"",
-                    ""path"": ""<Keyboard>/1"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard Mouse"",
-                    ""action"": ""Skill1"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""Start + Up"",
-                    ""id"": ""25b959f9-6700-400a-9183-5c1cb3345ffc"",
-                    ""path"": ""OneModifier"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Skill1"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""modifier"",
-                    ""id"": ""7dd4b069-5b83-4861-8113-064a1af8984a"",
-                    ""path"": ""<Gamepad>/buttonNorth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Controller"",
-                    ""action"": ""Skill1"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""binding"",
-                    ""id"": ""2a780b8b-05a0-49a6-a7c7-62eb252a84d8"",
-                    ""path"": ""<Gamepad>/dpad/up"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Controller"",
-                    ""action"": ""Skill1"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""One Modifier"",
-                    ""id"": ""16409ffd-1f01-4671-92fb-875f4c093feb"",
-                    ""path"": ""OneModifier"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Skill2"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""modifier"",
-                    ""id"": ""323ab590-92f1-4f16-9394-f0e5767efe2f"",
-                    ""path"": ""<Keyboard>/shift"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard Mouse"",
-                    ""action"": ""Skill2"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""binding"",
-                    ""id"": ""69b975b2-2b20-49ab-b08d-929f96136b97"",
-                    ""path"": ""<Keyboard>/2"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard Mouse"",
-                    ""action"": ""Skill2"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""Start + Left"",
-                    ""id"": ""950262ef-867c-4a99-829c-54b8501b26df"",
-                    ""path"": ""OneModifier"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Skill2"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""modifier"",
-                    ""id"": ""eeb3c057-77e9-41b6-a279-2c21dd4ef871"",
-                    ""path"": ""<Gamepad>/buttonNorth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Controller"",
-                    ""action"": ""Skill2"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""binding"",
-                    ""id"": ""38279359-5d48-4ff0-b324-1167ad693556"",
-                    ""path"": ""<Gamepad>/dpad/left"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Controller"",
-                    ""action"": ""Skill2"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""One Modifier"",
-                    ""id"": ""af9f9d0e-807d-41a7-8465-a454c5676218"",
-                    ""path"": ""OneModifier"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Skill3"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""modifier"",
-                    ""id"": ""14b48b3b-4325-444d-bb69-a99831e91f69"",
-                    ""path"": ""<Keyboard>/shift"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard Mouse"",
-                    ""action"": ""Skill3"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""binding"",
-                    ""id"": ""028f1854-403c-422d-9fb6-406b2fe1c060"",
-                    ""path"": ""<Keyboard>/3"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard Mouse"",
-                    ""action"": ""Skill3"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""Start + Right"",
-                    ""id"": ""74ca45a1-425c-484b-8623-f8144e717f93"",
-                    ""path"": ""OneModifier"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Skill3"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""modifier"",
-                    ""id"": ""86a27a98-8486-4dff-8cec-a44713543ee8"",
-                    ""path"": ""<Gamepad>/buttonNorth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Controller"",
-                    ""action"": ""Skill3"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""binding"",
-                    ""id"": ""14ce73b4-ed67-4e16-9b6c-99d013fbf533"",
-                    ""path"": ""<Gamepad>/dpad/right"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Controller"",
-                    ""action"": ""Skill3"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""One Modifier"",
-                    ""id"": ""b36b4943-bea8-435f-95be-da938eec2e73"",
-                    ""path"": ""OneModifier"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Skill4"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""modifier"",
-                    ""id"": ""5c0df695-9f5d-4c63-a3d7-9073db4ccee6"",
-                    ""path"": ""<Keyboard>/shift"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard Mouse"",
-                    ""action"": ""Skill4"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""binding"",
-                    ""id"": ""b5d0b018-68e4-4142-a0de-4f70eb995baa"",
-                    ""path"": ""<Keyboard>/4"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard Mouse"",
-                    ""action"": ""Skill4"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""Start + Down"",
-                    ""id"": ""1a4dcbba-19ac-479b-92ff-6dd7681a98cc"",
-                    ""path"": ""OneModifier"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Skill4"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""modifier"",
-                    ""id"": ""4e2116e6-d73c-41c9-82e9-57695a3771e7"",
-                    ""path"": ""<Gamepad>/buttonNorth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Controller"",
-                    ""action"": ""Skill4"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""binding"",
-                    ""id"": ""2d64072e-5dc0-4bfb-9bd3-71a3d81d2d81"",
-                    ""path"": ""<Gamepad>/dpad/down"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Controller"",
-                    ""action"": ""Skill4"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
                 },
                 {
                     ""name"": """",
@@ -1565,17 +1079,7 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
         m_Movement_Slide = m_Movement.FindAction("Slide", throwIfNotFound: true);
         // Debugging
         m_Debugging = asset.FindActionMap("Debugging", throwIfNotFound: true);
-        m_Debugging_ChangeFramerate = m_Debugging.FindAction("ChangeFramerate", throwIfNotFound: true);
-        m_Debugging_Unfocus = m_Debugging.FindAction("Unfocus", throwIfNotFound: true);
-        m_Debugging_ChangeTimeScale = m_Debugging.FindAction("ChangeTimeScale", throwIfNotFound: true);
-        m_Debugging_Gun1 = m_Debugging.FindAction("Gun1", throwIfNotFound: true);
-        m_Debugging_Gun2 = m_Debugging.FindAction("Gun2", throwIfNotFound: true);
-        m_Debugging_Gun3 = m_Debugging.FindAction("Gun3", throwIfNotFound: true);
-        m_Debugging_Gun4 = m_Debugging.FindAction("Gun4", throwIfNotFound: true);
-        m_Debugging_Skill1 = m_Debugging.FindAction("Skill1", throwIfNotFound: true);
-        m_Debugging_Skill2 = m_Debugging.FindAction("Skill2", throwIfNotFound: true);
-        m_Debugging_Skill3 = m_Debugging.FindAction("Skill3", throwIfNotFound: true);
-        m_Debugging_Skill4 = m_Debugging.FindAction("Skill4", throwIfNotFound: true);
+        m_Debugging_Lock = m_Debugging.FindAction("Lock", throwIfNotFound: true);
         m_Debugging_DisplayFramerate = m_Debugging.FindAction("DisplayFramerate", throwIfNotFound: true);
         // Actions
         m_Actions = asset.FindActionMap("Actions", throwIfNotFound: true);
@@ -1723,33 +1227,13 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
     // Debugging
     private readonly InputActionMap m_Debugging;
     private List<IDebuggingActions> m_DebuggingActionsCallbackInterfaces = new List<IDebuggingActions>();
-    private readonly InputAction m_Debugging_ChangeFramerate;
-    private readonly InputAction m_Debugging_Unfocus;
-    private readonly InputAction m_Debugging_ChangeTimeScale;
-    private readonly InputAction m_Debugging_Gun1;
-    private readonly InputAction m_Debugging_Gun2;
-    private readonly InputAction m_Debugging_Gun3;
-    private readonly InputAction m_Debugging_Gun4;
-    private readonly InputAction m_Debugging_Skill1;
-    private readonly InputAction m_Debugging_Skill2;
-    private readonly InputAction m_Debugging_Skill3;
-    private readonly InputAction m_Debugging_Skill4;
+    private readonly InputAction m_Debugging_Lock;
     private readonly InputAction m_Debugging_DisplayFramerate;
     public struct DebuggingActions
     {
         private @PlayerInputMap m_Wrapper;
         public DebuggingActions(@PlayerInputMap wrapper) { m_Wrapper = wrapper; }
-        public InputAction @ChangeFramerate => m_Wrapper.m_Debugging_ChangeFramerate;
-        public InputAction @Unfocus => m_Wrapper.m_Debugging_Unfocus;
-        public InputAction @ChangeTimeScale => m_Wrapper.m_Debugging_ChangeTimeScale;
-        public InputAction @Gun1 => m_Wrapper.m_Debugging_Gun1;
-        public InputAction @Gun2 => m_Wrapper.m_Debugging_Gun2;
-        public InputAction @Gun3 => m_Wrapper.m_Debugging_Gun3;
-        public InputAction @Gun4 => m_Wrapper.m_Debugging_Gun4;
-        public InputAction @Skill1 => m_Wrapper.m_Debugging_Skill1;
-        public InputAction @Skill2 => m_Wrapper.m_Debugging_Skill2;
-        public InputAction @Skill3 => m_Wrapper.m_Debugging_Skill3;
-        public InputAction @Skill4 => m_Wrapper.m_Debugging_Skill4;
+        public InputAction @Lock => m_Wrapper.m_Debugging_Lock;
         public InputAction @DisplayFramerate => m_Wrapper.m_Debugging_DisplayFramerate;
         public InputActionMap Get() { return m_Wrapper.m_Debugging; }
         public void Enable() { Get().Enable(); }
@@ -1760,39 +1244,9 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_DebuggingActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_DebuggingActionsCallbackInterfaces.Add(instance);
-            @ChangeFramerate.started += instance.OnChangeFramerate;
-            @ChangeFramerate.performed += instance.OnChangeFramerate;
-            @ChangeFramerate.canceled += instance.OnChangeFramerate;
-            @Unfocus.started += instance.OnUnfocus;
-            @Unfocus.performed += instance.OnUnfocus;
-            @Unfocus.canceled += instance.OnUnfocus;
-            @ChangeTimeScale.started += instance.OnChangeTimeScale;
-            @ChangeTimeScale.performed += instance.OnChangeTimeScale;
-            @ChangeTimeScale.canceled += instance.OnChangeTimeScale;
-            @Gun1.started += instance.OnGun1;
-            @Gun1.performed += instance.OnGun1;
-            @Gun1.canceled += instance.OnGun1;
-            @Gun2.started += instance.OnGun2;
-            @Gun2.performed += instance.OnGun2;
-            @Gun2.canceled += instance.OnGun2;
-            @Gun3.started += instance.OnGun3;
-            @Gun3.performed += instance.OnGun3;
-            @Gun3.canceled += instance.OnGun3;
-            @Gun4.started += instance.OnGun4;
-            @Gun4.performed += instance.OnGun4;
-            @Gun4.canceled += instance.OnGun4;
-            @Skill1.started += instance.OnSkill1;
-            @Skill1.performed += instance.OnSkill1;
-            @Skill1.canceled += instance.OnSkill1;
-            @Skill2.started += instance.OnSkill2;
-            @Skill2.performed += instance.OnSkill2;
-            @Skill2.canceled += instance.OnSkill2;
-            @Skill3.started += instance.OnSkill3;
-            @Skill3.performed += instance.OnSkill3;
-            @Skill3.canceled += instance.OnSkill3;
-            @Skill4.started += instance.OnSkill4;
-            @Skill4.performed += instance.OnSkill4;
-            @Skill4.canceled += instance.OnSkill4;
+            @Lock.started += instance.OnLock;
+            @Lock.performed += instance.OnLock;
+            @Lock.canceled += instance.OnLock;
             @DisplayFramerate.started += instance.OnDisplayFramerate;
             @DisplayFramerate.performed += instance.OnDisplayFramerate;
             @DisplayFramerate.canceled += instance.OnDisplayFramerate;
@@ -1800,39 +1254,9 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
 
         private void UnregisterCallbacks(IDebuggingActions instance)
         {
-            @ChangeFramerate.started -= instance.OnChangeFramerate;
-            @ChangeFramerate.performed -= instance.OnChangeFramerate;
-            @ChangeFramerate.canceled -= instance.OnChangeFramerate;
-            @Unfocus.started -= instance.OnUnfocus;
-            @Unfocus.performed -= instance.OnUnfocus;
-            @Unfocus.canceled -= instance.OnUnfocus;
-            @ChangeTimeScale.started -= instance.OnChangeTimeScale;
-            @ChangeTimeScale.performed -= instance.OnChangeTimeScale;
-            @ChangeTimeScale.canceled -= instance.OnChangeTimeScale;
-            @Gun1.started -= instance.OnGun1;
-            @Gun1.performed -= instance.OnGun1;
-            @Gun1.canceled -= instance.OnGun1;
-            @Gun2.started -= instance.OnGun2;
-            @Gun2.performed -= instance.OnGun2;
-            @Gun2.canceled -= instance.OnGun2;
-            @Gun3.started -= instance.OnGun3;
-            @Gun3.performed -= instance.OnGun3;
-            @Gun3.canceled -= instance.OnGun3;
-            @Gun4.started -= instance.OnGun4;
-            @Gun4.performed -= instance.OnGun4;
-            @Gun4.canceled -= instance.OnGun4;
-            @Skill1.started -= instance.OnSkill1;
-            @Skill1.performed -= instance.OnSkill1;
-            @Skill1.canceled -= instance.OnSkill1;
-            @Skill2.started -= instance.OnSkill2;
-            @Skill2.performed -= instance.OnSkill2;
-            @Skill2.canceled -= instance.OnSkill2;
-            @Skill3.started -= instance.OnSkill3;
-            @Skill3.performed -= instance.OnSkill3;
-            @Skill3.canceled -= instance.OnSkill3;
-            @Skill4.started -= instance.OnSkill4;
-            @Skill4.performed -= instance.OnSkill4;
-            @Skill4.canceled -= instance.OnSkill4;
+            @Lock.started -= instance.OnLock;
+            @Lock.performed -= instance.OnLock;
+            @Lock.canceled -= instance.OnLock;
             @DisplayFramerate.started -= instance.OnDisplayFramerate;
             @DisplayFramerate.performed -= instance.OnDisplayFramerate;
             @DisplayFramerate.canceled -= instance.OnDisplayFramerate;
@@ -2129,17 +1553,7 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
     }
     public interface IDebuggingActions
     {
-        void OnChangeFramerate(InputAction.CallbackContext context);
-        void OnUnfocus(InputAction.CallbackContext context);
-        void OnChangeTimeScale(InputAction.CallbackContext context);
-        void OnGun1(InputAction.CallbackContext context);
-        void OnGun2(InputAction.CallbackContext context);
-        void OnGun3(InputAction.CallbackContext context);
-        void OnGun4(InputAction.CallbackContext context);
-        void OnSkill1(InputAction.CallbackContext context);
-        void OnSkill2(InputAction.CallbackContext context);
-        void OnSkill3(InputAction.CallbackContext context);
-        void OnSkill4(InputAction.CallbackContext context);
+        void OnLock(InputAction.CallbackContext context);
         void OnDisplayFramerate(InputAction.CallbackContext context);
     }
     public interface IActionsActions

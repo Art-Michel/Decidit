@@ -51,8 +51,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         _inputs = new PlayerInputMap();
         _inputs.Debugging.DisplayFramerate.started += _ => DisplayFramerate();
         _inputs.MenuNavigation.Pause.started += _ => PressPause();
-
-        DebugAwake();
+        _inputs.Debugging.Lock.started += _ => LockFramerate();
     }
 
     private void Start()
@@ -75,34 +74,13 @@ public class PlayerManager : LocalManager<PlayerManager>
             UpdateFramerate();
     }
 
-    private void DebugAwake()
-    {
-        _inputs.Debugging.ChangeFramerate.started += _ => DebugLockFramerate();
-        // _inputs.Debugging.ChangeTimeScale.started += _ => DebugChangeTimeScale();
-        if (_guns != null)
-        {
-
-            _inputs.Debugging.Gun1.started += _ => Gun1();
-            _inputs.Debugging.Gun2.started += _ => Gun2();
-            _inputs.Debugging.Gun3.started += _ => Gun3();
-            _inputs.Debugging.Gun4.started += _ => Gun4();
-        }
-        if (_arms != null)
-        {
-            _inputs.Debugging.Skill1.started += _ => Skill1();
-            _inputs.Debugging.Skill2.started += _ => Skill2();
-            _inputs.Debugging.Skill3.started += _ => Skill3();
-            _inputs.Debugging.Skill4.started += _ => Skill4();
-        }
-    }
-
     private void DebugStart()
     {
         //Framerate
         _isLockedAt30 = false;
     }
 
-    private void DebugLockFramerate()
+    private void LockFramerate()
     {
         if (_isPaused)
             return;
@@ -114,7 +92,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         else
         {
             _isLockedAt30 = true;
-            Application.targetFrameRate = 30;
+            Application.targetFrameRate = 60;
         }
     }
 
@@ -139,45 +117,30 @@ public class PlayerManager : LocalManager<PlayerManager>
     #region Equipping
     public void Skill4()
     {
-        if (_isPaused)
-            return;
-
         foreach (GameObject arm in _arms)
             arm.SetActive(false);
         _arms[3].SetActive(true);
     }
     public void Skill3()
     {
-        if (_isPaused)
-            return;
-
         foreach (GameObject arm in _arms)
             arm.SetActive(false);
         _arms[2].SetActive(true);
     }
     public void Skill2()
     {
-        if (_isPaused)
-            return;
-
         foreach (GameObject arm in _arms)
             arm.SetActive(false);
         _arms[1].SetActive(true);
     }
     public void Skill1()
     {
-        if (_isPaused)
-            return;
-
         foreach (GameObject arm in _arms)
             arm.SetActive(false);
         _arms[0].SetActive(true);
     }
     public void Gun4()
     {
-        if (_isPaused)
-            return;
-
         foreach (GameObject gun in _guns)
             gun.SetActive(false);
         _guns[3].SetActive(true);
@@ -185,9 +148,6 @@ public class PlayerManager : LocalManager<PlayerManager>
     }
     public void Gun3()
     {
-        if (_isPaused)
-            return;
-
         foreach (GameObject gun in _guns)
             gun.SetActive(false);
         _guns[2].SetActive(true);
@@ -195,9 +155,6 @@ public class PlayerManager : LocalManager<PlayerManager>
     }
     public void Gun2()
     {
-        if (_isPaused)
-            return;
-
         foreach (GameObject gun in _guns)
             gun.SetActive(false);
         _guns[1].SetActive(true);
@@ -205,9 +162,6 @@ public class PlayerManager : LocalManager<PlayerManager>
     }
     public void Gun1()
     {
-        if (_isPaused)
-            return;
-
         foreach (GameObject gun in _guns)
             gun.SetActive(false);
         _guns[0].SetActive(true);
@@ -361,9 +315,6 @@ public class PlayerManager : LocalManager<PlayerManager>
             float high = _rumbleHighFreqIntensity * Mathf.InverseLerp(0, _rumbleInitialT, _rumbleT);
             if (Gamepad.current != null)
                 Gamepad.current.SetMotorSpeeds(low, high);
-
-            Debug.Log(low);
-            Debug.Log(high);
 
             _rumbleT -= Time.deltaTime;
             if (_rumbleT <= 0.1f)
