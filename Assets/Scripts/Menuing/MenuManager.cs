@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using System;
 using NaughtyAttributes;
+using UnityEngine.Rendering;
 
 public class MenuManager : LocalManager<MenuManager>
 {
@@ -27,6 +28,7 @@ public class MenuManager : LocalManager<MenuManager>
 
     [Foldout("References")]
     [SerializeField] EventSystem _eventSys;
+    GameObject _lastSelectedObject;
     PlayerInputMap _inputs;
 
     //Submenus
@@ -95,7 +97,7 @@ public class MenuManager : LocalManager<MenuManager>
 
     void Start()
     {
-        gameObject.SetActive(false);
+        DebugManager.instance.enableRuntimeUI = false;
     }
 
     void OnEnable()
@@ -262,9 +264,9 @@ public class MenuManager : LocalManager<MenuManager>
 
         if (_currentDevice == Devices.Controller)
             return;
+        bool wasUsingMouse = _currentDevice == Devices.Mouse;
         _currentDevice = Devices.Controller;
 
-        bool wasUsingMouse = _currentDevice == Devices.Mouse;
 
         if (wasUsingMouse)
             TransitionFromMouse();
@@ -278,9 +280,9 @@ public class MenuManager : LocalManager<MenuManager>
 
         if (_currentDevice == Devices.Keyboard)
             return;
+        bool wasUsingMouse = _currentDevice == Devices.Mouse;
         _currentDevice = Devices.Keyboard;
 
-        bool wasUsingMouse = _currentDevice == Devices.Mouse;
 
         if (wasUsingMouse)
             TransitionFromMouse();
@@ -297,7 +299,12 @@ public class MenuManager : LocalManager<MenuManager>
         Cursor.visible = false;
 
         if (buttonUnderMouse == null)
-            _eventSys.SetSelectedGameObject(CurrentMenu.FirstButton);
+        {
+            if (_lastSelectedObject != null)
+                _eventSys.SetSelectedGameObject(_lastSelectedObject);
+            else
+                _eventSys.SetSelectedGameObject(CurrentMenu.FirstButton);
+        }
         else
             _eventSys.SetSelectedGameObject(buttonUnderMouse);
     }
@@ -332,6 +339,7 @@ public class MenuManager : LocalManager<MenuManager>
         _currentDevice = Devices.Mouse;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+        _lastSelectedObject = _eventSys.currentSelectedGameObject;
         _eventSys.SetSelectedGameObject(null);
     }
     #endregion

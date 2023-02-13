@@ -200,6 +200,9 @@ public class PlayerManager : LocalManager<PlayerManager>
             arm.GetComponent<Arm>().enabled = false;
         _healthBar.SetActive(false);
 
+        //disable rumble
+        StopRumbling();
+
         //cursor
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
