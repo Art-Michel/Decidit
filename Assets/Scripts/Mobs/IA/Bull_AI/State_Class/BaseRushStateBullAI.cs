@@ -78,19 +78,6 @@ namespace State.AIBull
 
         void SetDestination()
         {
-            /*if (globalRef.distPlayer > rushBullSO.stopLockDist && !lockPlayer)
-            {
-                rushBullSO.rushDestination = globalRef.playerTransform.position;
-            }
-            else
-            {
-                if (!lockPlayer)
-                {
-                    rushBullSO.rushDestination = globalRef.playerTransform.position + globalRef.transform.forward * rushBullSO.rushInertieSetDistance;
-                    lockPlayer = true;
-                }
-            }*/
-
             if (!canStartRush && !lockPlayer)
             {
                 rushBullSO.rushDestination = globalRef.playerTransform.position;
