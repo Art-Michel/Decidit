@@ -6,7 +6,7 @@ using UnityEngine;
 public class PooledVfx : PooledObject
 {
     [SerializeField] float _lifeSpan;
-    [SerializeField] float _lifeT;
+    float _lifeT;
 
     void OnEnable()
     {
