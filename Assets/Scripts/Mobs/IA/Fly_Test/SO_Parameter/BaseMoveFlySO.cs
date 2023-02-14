@@ -20,12 +20,8 @@ public class BaseMoveFlySO : ScriptableObject
     public float distNextDestinationFinal;
 
     [Header("Speed Y Position Patrol")]
-   /* public float timeGoToDestinationPatrol;
-    public float maxSpeedYTranslationPatrol;*/
     public float currentSpeedYPatrol;
-  /*  public float ySpeedSmootherPatrol;
-    public float lerpSpeedYValuePatrol;*/
-
+  
     [Header("Speed Rotation Patrol")]
     public float maxSpeedRotationAIPatrol;
     public float speedRotationAIPatrol;

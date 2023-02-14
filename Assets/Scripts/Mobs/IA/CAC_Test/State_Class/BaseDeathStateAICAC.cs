@@ -15,21 +15,18 @@ namespace State.AICAC
 
         private void Update()
         {
-            Death();
+            if(!once)
+                Death();
         }
 
         void Death()
         {
+            AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Death");
             globalRef.transform.parent = null;
             globalRef.agent.speed = globalRef.deathAICACSO.stopSpeed;
             globalRef.agent.enabled = false;
-            /*if (!once)
-            {
-                globalRef.transform.parent = null;
-                globalRef.agent.speed = globalRef.deathAICACSO.stopSpeed;
-                globalRef.agent.enabled = false;
-                once = true;
-            }*/
+            // PLAY SOUND DEATH TRASHMOB
+            once = true;
         }
     }
 }

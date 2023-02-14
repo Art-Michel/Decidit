@@ -4,6 +4,8 @@ namespace State.FlyAI
 {
     public class BaseDeathStateFlyAI : _StateFlyAI
     {
+        bool once;
+
         public override void InitState(StateControllerFlyAI stateController)
         {
             base.InitState(stateController);
@@ -13,6 +15,13 @@ namespace State.FlyAI
 
         private void Update()
         {
+            if (!once)
+                Death();
+        }
+
+        void Death()
+        {
+            // PLAY SOUND DEATH FLY AI
         }
     }
 }

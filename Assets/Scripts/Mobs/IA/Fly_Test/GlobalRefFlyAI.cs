@@ -10,7 +10,7 @@ namespace State.FlyAI
         public Transform playerTransform;
         public StateControllerFlyAI stateControllerFlyAI;
         public EnemyHealth enemyHealth;
-        public AudioSource audioSourceFly;
+        //public AudioSource audioSourceFly;
 
         [Header("Animation")]
         public Animator myAnimator;

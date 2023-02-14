@@ -36,7 +36,8 @@ namespace State.AIBull
             try
             {
                 globalRef.agent.enabled = false;
-                SoundManager.instance.PlaySoundMobOneShot(globalRef.audioSourceBull, SoundManager.instance.soundAndVolumeRushMob[0]);
+                //SoundManager.instance.PlaySoundMobOneShot(globalRef.audioSourceBull, SoundManager.instance.soundAndVolumeRushMob[0]);
+                //Play SOUND PRE ATTACK RUSHER
 
                 if (rushBullSO == null)
                     rushBullSO = globalRef.rushBullSO;
@@ -89,7 +90,6 @@ namespace State.AIBull
                     rushBullSO.rushDestination = globalRef.playerTransform.position + globalRef.transform.forward * rushBullSO.rushInertieSetDistance;
                     lockPlayer = true;
                     globalRef.launchRush = false;
-                    SoundManager.instance.PlaySoundMobOneShot(globalRef.audioSourceBull, SoundManager.instance.soundAndVolumeRushMob[1]);
                     Invoke("CheckSpeed", 1f);
                 }
             }

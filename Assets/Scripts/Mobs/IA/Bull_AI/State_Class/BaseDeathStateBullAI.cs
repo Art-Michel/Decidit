@@ -18,10 +18,16 @@ namespace State.AIBull
         {
             if(!once)
             {
-                //globalRef.bullCount.RemoveAI(globalRef.transform);
-                globalRef.agent.speed = 0;
-                globalRef.rushManager.RemoveDeadAI(globalRef);
+                Death();
             }
+        }
+
+        void Death()
+        {
+            globalRef.agent.speed = 0;
+            globalRef.rushManager.RemoveDeadAI(globalRef);
+            // PLAY SOUND DEATH RUSHER
+            once = true;
         }
     }
 }

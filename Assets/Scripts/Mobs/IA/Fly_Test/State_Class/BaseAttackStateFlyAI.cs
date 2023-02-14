@@ -34,8 +34,10 @@ namespace State.FlyAI
                 baseAttackFlySO.speedRotationAIAttack = 0;
             }
 
-            if (SoundManager.instance != null)
-                SoundManager.instance.PlaySoundMobOneShot(globalRef.audioSourceFly, SoundManager.instance.soundAndVolumeFlyMob[1]);
+            /*if (SoundManager.instance != null)
+                SoundManager.instance.PlaySoundMobOneShot(globalRef.audioSourceFly, SoundManager.instance.soundAndVolumeFlyMob[1]);*/
+
+            //PLAY SOUND PRE ATTACK FLY
         }
 
 

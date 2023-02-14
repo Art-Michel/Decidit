@@ -15,7 +15,8 @@ namespace State.WallAI
         public Transform playerTransform;
         public float orientation;
         public MeshRenderer meshRenderer;
-        public AudioSource audioSourceWallMob;
+        //public AudioSource audioSourceWallMob;
+        [SerializeField] StateControllerWallAI stateControllerWallAI;
 
         [Header("Animation")]
         public Animator myAnimator;
@@ -25,6 +26,9 @@ namespace State.WallAI
         public bool isInEylau;
         public float slowSpeed;
         public float slowRatio;
+
+        [Header("Death")]
+        public bool isDead;
 
         [Header("Scripatble")]
         public BaseMoveWallAISO baseMoveWallAISO;
@@ -38,13 +42,27 @@ namespace State.WallAI
             baseMoveWallAISO.lastWallCrack = Instantiate(baseMoveWallAISO.wallCrackPrefab, transform.position, Quaternion.Euler(0, orientation, 0));
 
             playerTransform = GameObject.FindWithTag("Player").transform;
-            audioSourceWallMob = GetComponentInChildren<AudioSource>();
+            //audioSourceWallMob = GetComponentInChildren<AudioSource>();
             areaWallAI = transform.parent.transform.Find("Area_WallAI").transform;
 
             for (int i = 0; i < areaWallAI.childCount; i++)
             {
                 wallsList.Add(areaWallAI.GetChild(i).GetComponent<BoxCollider>());
             }
+        }
+
+        private void Update()
+        {
+            if(enemyHealth._hp <=0 && !isDead)
+            {
+                ActiveState(StateControllerWallAI.WallAIState.Death);
+                isDead = true;
+            }
+        }
+
+        public void ActiveState(StateControllerWallAI.WallAIState newState)
+        {
+            stateControllerWallAI.SetActiveState(newState);
         }
 
         private void OnTriggerStay(Collider other)

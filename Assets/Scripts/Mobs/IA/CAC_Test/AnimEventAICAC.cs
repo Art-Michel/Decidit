@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace State.AICAC
@@ -20,7 +18,8 @@ namespace State.AICAC
         }
         void LaunchSoundAttack()
         {
-            SoundManager.instance.PlaySoundMobOneShot(globalRef.audioSourceTrashMob, SoundManager.instance.soundAndVolumeListTrashMob[1]);
+            // PLAY SOUND ATTACK TRASHMOB
+            //SoundManager.instance.PlaySoundMobOneShot(globalRef.audioSourceTrashMob, SoundManager.instance.soundAndVolumeListTrashMob[1]);
         }
         void EndAttack()
         {

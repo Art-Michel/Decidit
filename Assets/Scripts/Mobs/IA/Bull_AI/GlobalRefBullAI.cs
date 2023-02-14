@@ -18,7 +18,7 @@ namespace State.AIBull
         public AgentLinkMover agentLinkMover;
         public CharacterController characterController;
         public RushManager rushManager;
-        public AudioSource audioSourceBull;
+        //public AudioSource audioSourceBull;
 
         [Header("Animation")]
         public Animator myAnimator;

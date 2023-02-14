@@ -15,7 +15,7 @@ namespace State.AICAC
         public Material_Instances material_Instances;
         public float distPlayer;
         [SerializeField] StateControllerAICAC stateControllerTrashMob;
-        public AudioSource audioSourceTrashMob;
+        //public AudioSource audioSourceTrashMob;
 
         [Header("Animation")]
         public Animator myAnimator;
@@ -83,8 +83,6 @@ namespace State.AICAC
             {
                 aICACVarianteState.SetListActiveAI();
                 ActiveState(StateControllerAICAC.AIState.BaseDeath);
-                AnimatorManager.instance.SetAnimation(myAnimator, globalRefAnimator, "Death");
-                //myAnimator.SetBool("Death", true);
                 isDead = true;
             }
         }

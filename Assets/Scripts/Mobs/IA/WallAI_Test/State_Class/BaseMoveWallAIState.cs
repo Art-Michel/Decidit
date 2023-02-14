@@ -183,15 +183,16 @@ namespace State.WallAI
         {
             if (IsMoving())
             {
-                if(!globalRef.audioSourceWallMob.isPlaying)
-                    SoundManager.instance.PlaySoundMobByClip(globalRef.audioSourceWallMob, SoundManager.instance.soundAndVolumeWallMob[0], true);
+                /*if(!globalRef.audioSourceWallMob.isPlaying)
+                    SoundManager.instance.PlaySoundMobByClip(globalRef.audioSourceWallMob, SoundManager.instance.soundAndVolumeWallMob[0], true);*/
+
+                // PLAY SOUND MOVE IN WALL WALLMOB
             }
         }
 
         // Reset Value When Change State
         private void OnDisable()
         {
-            SoundManager.instance.PlaySoundMobByClip(globalRef.audioSourceWallMob, SoundManager.instance.soundAndVolumeWallMob[0], false);
             globalRef.baseAttackWallAISO.bulletCount = globalRef.baseAttackWallAISO.maxBulletCount;
             baseMoveWallAISO.rateAttack = baseMoveWallAISO.maxRateAttack;
             baseMoveWallAISO.findNewPos = false;

@@ -8,7 +8,6 @@ namespace State.AICAC
         [SerializeField] Material_Instances material_Instances;
         BaseAttackParameterAICAC baseAttackAICACSO;
 
-        RaycastHit hit;
         [SerializeField] Transform tongue;
 
         [SerializeField] bool endAttack;
@@ -71,7 +70,8 @@ namespace State.AICAC
                 }
                 if(globalRef.distPlayer < baseAttackAICACSO.attackRange && baseAttackAICACSO.currentAttackRate == baseAttackAICACSO.maxAttackRate)
                 {
-                    SoundManager.instance.PlaySoundMobOneShot(globalRef.audioSourceTrashMob, SoundManager.instance.soundAndVolumeListTrashMob[0]);
+                    //SoundManager.instance.PlaySoundMobOneShot(globalRef.audioSourceTrashMob, SoundManager.instance.soundAndVolumeListTrashMob[0]);
+                    //PLAY SOUND PRE ATTACK TRASH MOB
                 }
 
                 baseAttackAICACSO.currentAttackRate -= Time.deltaTime;

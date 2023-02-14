@@ -9,7 +9,9 @@ namespace State.WallAI
         public DeathWallAISO deathWallAISO;
         bool instanceSOIsCreate;
 
-        GlobalRefWallAI globalRef;
+        [SerializeField] GlobalRefWallAI globalRef;
+
+        bool once;
 
         public override void InitState(StateControllerWallAI stateController)
         {
@@ -26,14 +28,13 @@ namespace State.WallAI
 
         private void Update()
         {
-            if (state == StateControllerWallAI.WallAIState.Death)
-            {
-                Debug.Log("Death");
-            }
+            if (!once)
+                Death();
         }
 
         public void Death()
         {
+            //PLAY SOUND DEATH WALL IA
             globalRef.myAnimator.SetBool("IsDead", true);
         }
     }
