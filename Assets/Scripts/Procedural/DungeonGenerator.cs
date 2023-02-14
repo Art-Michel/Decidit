@@ -15,6 +15,8 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
     public List<RoomSetup> RoomSets;
     public List<RoomSetup> Corridors;
     List<Room> _actualRooms;
+    public int TotalRooms { get { return _actualRooms.Count - 1; } }
+
 
     [SerializeField] List<Room> _rooms;
 
@@ -145,10 +147,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
     public void SetCurrentRoom(Room room)
     {
         CurrentRoom = _actualRooms.IndexOf(room);
-        if (CurrentRoom >= _actualRooms.Count - 1)
-        {
-            Endgame();
-        }
+
     }
 
     public int GetRoomIndex(Room room)

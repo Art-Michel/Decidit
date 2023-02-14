@@ -11,20 +11,11 @@ using UnityEngine.Rendering;
 public class MenuManager : LocalManager<MenuManager>
 {
     //Scenes
-    [Foldout("References")]
     const int _mainMenuIndex = 0;
-    [Foldout("References")]
     const int _gameIndex = 1;
-    [Foldout("References")]
-    const int _gameOverIndex = 2;
-    [Foldout("References")]
-    const int _winScreenIndex = 3;
-    [Foldout("References")]
-    const int _dioramaGreen = 4;
-    [Foldout("References")]
-    const int _dioramaRed = 5;
-    [Foldout("References")]
-    const int _dioramaYellow = 6;
+    const int _dioramaGreen = 2;
+    const int _dioramaRed = 3;
+    const int _dioramaYellow = 4;
 
     [Foldout("References")]
     [SerializeField] EventSystem _eventSys;
@@ -108,9 +99,9 @@ public class MenuManager : LocalManager<MenuManager>
 
     void OnEnable()
     {
+        EnableMenuInputs();
         _currentDevice = Devices.Controller;
         _eventSys.SetSelectedGameObject(null);
-        EnableMenuInputs();
         CurrentMenu.gameObject.SetActive(false);
         CurrentMenu = _firstMenu;
         CurrentMenu.gameObject.SetActive(true);
@@ -125,13 +116,15 @@ public class MenuManager : LocalManager<MenuManager>
     public void DisableMenuInputs()
     {
         _inputs.Disable();
-
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     public void EnableMenuInputs()
     {
         _inputs.Enable();
-
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     #region Submenu navigation
@@ -156,7 +149,7 @@ public class MenuManager : LocalManager<MenuManager>
     {
         if (CurrentMenu.PreviousMenu != null)
             OpenSubmenu(CurrentMenu.PreviousMenu.Id);
-        else if (PlayerManager.Instance != null)
+        else if (PlayerManager.Instance != null && CurrentMenu.Id == Menus.Main)
             PlayerManager.Instance.Unpause();
     }
 
@@ -228,16 +221,6 @@ public class MenuManager : LocalManager<MenuManager>
     public void LoadMainMenu()
     {
         StartLoadingScene(_mainMenuIndex);
-    }
-
-    public void LoadGameOver()
-    {
-        StartLoadingScene(_gameOverIndex);
-    }
-
-    public void LoadWinScreen()
-    {
-        StartLoadingScene(_winScreenIndex);
     }
 
     public void LoadDioramaRed()
@@ -324,8 +307,6 @@ public class MenuManager : LocalManager<MenuManager>
     {
         //get button under mouse if there is any
         GameObject buttonUnderMouse = CheckUnderMouse();
-
-        //remove cursor
         Cursor.visible = false;
 
         if (buttonUnderMouse == null)
@@ -367,7 +348,6 @@ public class MenuManager : LocalManager<MenuManager>
             return;
 
         _currentDevice = Devices.Mouse;
-        Cursor.visible = true;
         _lastSelectedObject = _eventSys.currentSelectedGameObject;
         _eventSys.SetSelectedGameObject(null);
     }

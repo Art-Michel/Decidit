@@ -77,6 +77,11 @@ public class Room : MonoBehaviour
         if (DungeonGenerator.Instance.GetRoomIndex(this) != DungeonGenerator.Instance.CurrentRoom)
             return;
 
+        if (DungeonGenerator.Instance.GetRoomIndex(this) >= DungeonGenerator.Instance.TotalRooms)
+        {
+            PlayerManager.Instance.OnPlayerWin();
+        }
+
         if (_isCorridor)
         {
             this.Exit.OpenDoor();

@@ -71,12 +71,8 @@ public class PlayerManager : LocalManager<PlayerManager>
 
     private void Start()
     {
-        // curseurs
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-
         _isPaused = false;
-
+        MenuManager.Instance.gameObject.SetActive(false);
         _isLockedAt60 = false;
     }
 
@@ -182,7 +178,6 @@ public class PlayerManager : LocalManager<PlayerManager>
     {
         _isPaused = true;
         _menu.SetActive(true);
-        //MenuManager.Instance.gameObject.SetActive(true);
 
         StopGame();
     }
@@ -191,7 +186,6 @@ public class PlayerManager : LocalManager<PlayerManager>
     {
         _isPaused = false;
         _menu.SetActive(false);
-        //MenuManager.Instance.gameObject.SetActive(false);
 
         ResumeGame();
     }
@@ -213,10 +207,7 @@ public class PlayerManager : LocalManager<PlayerManager>
             arm.GetComponent<Arm>().enabled = false;
         _healthBar.SetActive(false);
 
-        Cursor.lockState = CursorLockMode.None;
-
-        MenuManager.Instance.EnableMenuInputs();
-
+        MenuManager.Instance.gameObject.SetActive(true);
         //disable rumble
         StopRumbling();
     }
@@ -231,6 +222,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         //blur
         _postProcessVolume.enabled = false;
 
+        MenuManager.Instance.gameObject.SetActive(false);
         //re enable everything
         Player.Instance.enabled = true;
         foreach (GameObject gun in _guns)
@@ -239,11 +231,6 @@ public class PlayerManager : LocalManager<PlayerManager>
             arm.GetComponent<Arm>().enabled = true;
         _healthBar.SetActive(true);
 
-        MenuManager.Instance.DisableMenuInputs();
-        //cursor
-
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
     }
 
     public void StartDying()
@@ -275,7 +262,9 @@ public class PlayerManager : LocalManager<PlayerManager>
 
     public void OnPlayerWin()
     {
-
+        _menu.SetActive(true);
+        MenuManager.Instance.OpenWin();
+        StopGame();
     }
     #endregion
 
