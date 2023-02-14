@@ -35,10 +35,11 @@ public class PlayerManager : LocalManager<PlayerManager>
     bool _isLockedAt60;
 
     //Pausing
+    private bool _canPause = true;
     float _timescaleBeforePausing;
     bool _isPaused;
     [Foldout("Menu")]
-    [SerializeField] GameObject _menu;
+    // [SerializeField] GameObject _menu;
 
     //Death variables
     bool _isDying;
@@ -49,14 +50,8 @@ public class PlayerManager : LocalManager<PlayerManager>
     //Victory variables
 
     //StopGame stuff
-    [Foldout("Things to disable on pause")]
-    [SerializeField] List<GameObject> _guns;
-    [Foldout("Things to disable on pause")]
-    [SerializeField] List<GameObject> _arms;
-    [Foldout("Things to disable on pause")]
-    [SerializeField] Volume _postProcessVolume;
-    [Foldout("Things to disable on pause")]
-    [SerializeField] GameObject _healthBar;
+    public List<GameObject> Guns;
+    public List<GameObject> Arms;
 
     PlayerInputMap _inputs;
 
@@ -113,54 +108,54 @@ public class PlayerManager : LocalManager<PlayerManager>
     #region Equipping
     public void Skill4()
     {
-        foreach (GameObject arm in _arms)
+        foreach (GameObject arm in Arms)
             arm.SetActive(false);
-        _arms[3].SetActive(true);
+        Arms[3].SetActive(true);
     }
     public void Skill3()
     {
-        foreach (GameObject arm in _arms)
+        foreach (GameObject arm in Arms)
             arm.SetActive(false);
-        _arms[2].SetActive(true);
+        Arms[2].SetActive(true);
     }
     public void Skill2()
     {
-        foreach (GameObject arm in _arms)
+        foreach (GameObject arm in Arms)
             arm.SetActive(false);
-        _arms[1].SetActive(true);
+        Arms[1].SetActive(true);
     }
     public void Skill1()
     {
-        foreach (GameObject arm in _arms)
+        foreach (GameObject arm in Arms)
             arm.SetActive(false);
-        _arms[0].SetActive(true);
+        Arms[0].SetActive(true);
     }
     public void Gun4()
     {
-        foreach (GameObject gun in _guns)
+        foreach (GameObject gun in Guns)
             gun.SetActive(false);
-        _guns[3].SetActive(true);
+        Guns[3].SetActive(true);
         PlaceHolderSoundManager.Instance.PlayWeaponEquip();
     }
     public void Gun3()
     {
-        foreach (GameObject gun in _guns)
+        foreach (GameObject gun in Guns)
             gun.SetActive(false);
-        _guns[2].SetActive(true);
+        Guns[2].SetActive(true);
         PlaceHolderSoundManager.Instance.PlayWeaponEquip();
     }
     public void Gun2()
     {
-        foreach (GameObject gun in _guns)
+        foreach (GameObject gun in Guns)
             gun.SetActive(false);
-        _guns[1].SetActive(true);
+        Guns[1].SetActive(true);
         PlaceHolderSoundManager.Instance.PlayWeaponEquip();
     }
     public void Gun1()
     {
-        foreach (GameObject gun in _guns)
+        foreach (GameObject gun in Guns)
             gun.SetActive(false);
-        _guns[0].SetActive(true);
+        Guns[0].SetActive(true);
         PlaceHolderSoundManager.Instance.PlayWeaponEquip();
     }
     #endregion
@@ -168,6 +163,9 @@ public class PlayerManager : LocalManager<PlayerManager>
     #region Ingame menus
     private void PressPause()
     {
+        if (!_canPause)
+            return;
+
         if (_isPaused)
             Unpause();
         else
@@ -177,16 +175,19 @@ public class PlayerManager : LocalManager<PlayerManager>
     public void Pause()
     {
         _isPaused = true;
-        _menu.SetActive(true);
+        // _menu.SetActive(true);
 
+        MenuManager.Instance.gameObject.SetActive(true);
+        MenuManager.Instance.OpenMain();
         StopGame();
     }
 
     public void Unpause()
     {
         _isPaused = false;
-        _menu.SetActive(false);
+        // _menu.SetActive(false);
 
+        MenuManager.Instance.gameObject.SetActive(false);
         ResumeGame();
     }
 
@@ -195,21 +196,6 @@ public class PlayerManager : LocalManager<PlayerManager>
         //timescale
         _timescaleBeforePausing = Time.timeScale;
         Time.timeScale = 0f;
-
-        //blur
-        _postProcessVolume.enabled = true;
-
-        //Disable everything
-        Player.Instance.enabled = false;
-        foreach (GameObject gun in _guns)
-            gun.GetComponent<Revolver>().enabled = false;
-        foreach (GameObject arm in _arms)
-            arm.GetComponent<Arm>().enabled = false;
-        _healthBar.SetActive(false);
-
-        MenuManager.Instance.gameObject.SetActive(true);
-        //disable rumble
-        StopRumbling();
     }
 
     private void ResumeGame()
@@ -218,19 +204,6 @@ public class PlayerManager : LocalManager<PlayerManager>
             Time.timeScale = _timescaleBeforePausing;
         else
             Time.timeScale = 1;
-
-        //blur
-        _postProcessVolume.enabled = false;
-
-        MenuManager.Instance.gameObject.SetActive(false);
-        //re enable everything
-        Player.Instance.enabled = true;
-        foreach (GameObject gun in _guns)
-            gun.GetComponent<Revolver>().enabled = true;
-        foreach (GameObject arm in _arms)
-            arm.GetComponent<Arm>().enabled = true;
-        _healthBar.SetActive(true);
-
     }
 
     public void StartDying()
@@ -239,6 +212,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         _dieT = 0f;
         StopRumbling();
         StopSlowMo();
+        _canPause = false;
     }
 
     private void Die()
@@ -255,14 +229,17 @@ public class PlayerManager : LocalManager<PlayerManager>
     private void Dead()
     {
         _isDying = false;
-        _menu.SetActive(true);
+        // _menu.SetActive(true);
+        MenuManager.Instance.gameObject.SetActive(true);
         MenuManager.Instance.OpenDeath();
         StopGame();
     }
 
     public void OnPlayerWin()
     {
-        _menu.SetActive(true);
+        // _menu.SetActive(true);
+        _canPause = false;
+        MenuManager.Instance.gameObject.SetActive(true);
         MenuManager.Instance.OpenWin();
         StopGame();
     }
@@ -358,7 +335,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         }
     }
 
-    private void StopRumbling()
+    public void StopRumbling()
     {
         if (Gamepad.current != null)
         {

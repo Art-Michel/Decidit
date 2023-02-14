@@ -19,6 +19,8 @@ public class MenuManager : LocalManager<MenuManager>
 
     [Foldout("References")]
     [SerializeField] EventSystem _eventSys;
+    [Foldout("References")]
+    [SerializeField] GameObject _menuParent;
     GameObject _lastSelectedObject;
     PlayerInputMap _inputs;
 
@@ -62,6 +64,11 @@ public class MenuManager : LocalManager<MenuManager>
     private float _fadingT;
     private bool _isFading = false;
 
+    [Foldout("Things to disable on pause")]
+    [SerializeField] Volume _postProcessVolume;
+    [Foldout("Things to disable on pause")]
+    [SerializeField] GameObject _healthBar;
+
     //Devices 
     public enum Devices { Controller, Keyboard, Mouse }
     Devices _currentDevice;
@@ -100,17 +107,46 @@ public class MenuManager : LocalManager<MenuManager>
     void OnEnable()
     {
         EnableMenuInputs();
-        _currentDevice = Devices.Controller;
+        _menuParent.SetActive(true);
         _eventSys.SetSelectedGameObject(null);
-        CurrentMenu.gameObject.SetActive(false);
-        CurrentMenu = _firstMenu;
-        CurrentMenu.gameObject.SetActive(true);
-        _eventSys.SetSelectedGameObject(CurrentMenu.FirstButton);
+
+        //blur
+        _postProcessVolume.enabled = true;
+
+        if (Player.Instance != null)
+        {
+            //Disable everything
+            Player.Instance.enabled = false;
+            foreach (GameObject gun in PlayerManager.Instance.Guns)
+                gun.GetComponent<Revolver>().enabled = false;
+            foreach (GameObject arm in PlayerManager.Instance.Arms)
+                arm.GetComponent<Arm>().enabled = false;
+            _healthBar.SetActive(false);
+
+            //Stop rumble
+            PlayerManager.Instance.StopRumbling();
+        }
     }
 
     void OnDisable()
     {
         DisableMenuInputs();
+        if (_menuParent)
+            _menuParent.SetActive(false);
+
+        //blur
+        _postProcessVolume.enabled = false;
+
+        //re enable everything
+        if (Player.Instance != null)
+        {
+            Player.Instance.enabled = true;
+            foreach (GameObject gun in PlayerManager.Instance.Guns)
+                gun.GetComponent<Revolver>().enabled = true;
+            foreach (GameObject arm in PlayerManager.Instance.Arms)
+                arm.GetComponent<Arm>().enabled = true;
+            _healthBar.SetActive(true);
+        }
     }
 
     public void DisableMenuInputs()
@@ -137,9 +173,12 @@ public class MenuManager : LocalManager<MenuManager>
         CurrentMenu = _submenus[menu];
 
         _lastSelectedObject = null;
-        previousMenu.FirstButton = _eventSys.currentSelectedGameObject;
+        if (previousMenu != null)
+        {
+            previousMenu.FirstButton = _eventSys.currentSelectedGameObject;
+            previousMenu.gameObject.SetActive(false);
+        }
         CurrentMenu.gameObject.SetActive(true);
-        previousMenu.gameObject.SetActive(false);
 
         if (_currentDevice == Devices.Controller || _currentDevice == Devices.Keyboard)
             _eventSys.SetSelectedGameObject(CurrentMenu.FirstButton);
@@ -151,6 +190,11 @@ public class MenuManager : LocalManager<MenuManager>
             OpenSubmenu(CurrentMenu.PreviousMenu.Id);
         else if (PlayerManager.Instance != null && CurrentMenu.Id == Menus.Main)
             PlayerManager.Instance.Unpause();
+    }
+
+    public void OpenMain()
+    {
+        OpenSubmenu(Menus.Main);
     }
 
     public void OpenPlaySelect()
@@ -347,6 +391,7 @@ public class MenuManager : LocalManager<MenuManager>
         if (_currentDevice == Devices.Mouse)
             return;
 
+        Cursor.visible = true;
         _currentDevice = Devices.Mouse;
         _lastSelectedObject = _eventSys.currentSelectedGameObject;
         _eventSys.SetSelectedGameObject(null);

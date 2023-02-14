@@ -1053,6 +1053,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _eventSys: {fileID: 102230094}
+  _menuParent: {fileID: 358518979}
   _mainMenu: {fileID: 1699825492}
   _videoSettings: {fileID: 2022799373}
   _inputsSettings: {fileID: 498095030}
@@ -1065,9 +1066,11 @@ MonoBehaviour:
   _win: {fileID: 921751916}
   _death: {fileID: 554037939}
   _firstMenu: {fileID: 1699825492}
-  CurrentMenu: {fileID: 1699825492}
+  CurrentMenu: {fileID: 0}
   _fade: {fileID: 667945201}
   _sceneFadingDuration: 0.5
+  _postProcessVolume: {fileID: 4341447266436893990}
+  _healthBar: {fileID: 2200446484116235283}
 --- !u!1 &103578319
 GameObject:
   m_ObjectHideFlags: 0
@@ -3072,14 +3075,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.8352941}
+  m_Color: {r: 0.028301895, g: 0.028301895, b: 0.028301895, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: d5f23e1de19a16146a81e5b67935c0c1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -16455,20 +16458,17 @@ MonoBehaviour:
   _timescaleDebugUi: {fileID: 2200446484005636427}
   _DebuggingCanvas: {fileID: 2200446484852391364}
   _fps: {fileID: 2026873864726462320}
-  _menu: {fileID: 358518979}
   _deathDuration: 1
-  _guns:
+  Guns:
   - {fileID: 525554331}
   - {fileID: 197478553}
   - {fileID: 1236369750}
   - {fileID: 2113098007}
-  _arms:
+  Arms:
   - {fileID: 1470377084}
   - {fileID: 183938224}
   - {fileID: 1914196447}
   - {fileID: 1447211704}
-  _postProcessVolume: {fileID: 4341447266436893990}
-  _healthBar: {fileID: 2200446484116235283}
 --- !u!114 &2007368075
 MonoBehaviour:
   m_ObjectHideFlags: 0
