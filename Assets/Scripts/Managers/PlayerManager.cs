@@ -208,6 +208,9 @@ public class PlayerManager : LocalManager<PlayerManager>
 
     public void StartDying()
     {
+        if (_isDying)
+            return;
+
         _isDying = true;
         _dieT = 0f;
         StopRumbling();
