@@ -4908,6 +4908,8 @@ GameObject:
   - component: {fileID: 525554336}
   - component: {fileID: 1979195283}
   - component: {fileID: 910275025}
+  - component: {fileID: 1927836826}
+  - component: {fileID: 3002430179848746325}
   m_Layer: 6
   m_Name: Revolver
   m_TagString: Untagged
@@ -4962,11 +4964,11 @@ MonoBehaviour:
   _reloadingWarning: {fileID: 1002511077}
   _mask:
     serializedVersion: 2
-    m_Bits: 33280
-  _recoilTime: 0.3
+    m_Bits: 295424
+  _recoilTime: 0.2
   _reloadMaxTime: 1
   _reloadMinTime: 0.9
-  _maxAmmo: 6
+  _maxAmmo: 10000
   _shootShakeIntensity: 0
   _shootShakeDuration: 0
   _fullAmmoColor: {r: 1, g: 1, b: 1, a: 1}
@@ -4977,7 +4979,9 @@ MonoBehaviour:
   _mouseSwayAmountY: -0.1
   _controllerSwayAmountX: -5
   _controllerSwayAmountY: -3
-  _vfxPooler: {fileID: 910275025}
+  _trailVfxPooler: {fileID: 910275025}
+  _impactVfxPooler: {fileID: 1927836826}
+  _flashSplashVfxPooler: {fileID: 3002430179848746325}
   _hitscanDamage: 20
   _hitscanMaxRange: 100
 --- !u!114 &910275025
@@ -4993,6 +4997,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _prefab: {fileID: 4725506551224192338, guid: 9589ee764ed142446aae44056dfc4f38, type: 3}
+  _initialCount: 4
+  _shouldBeParent: 0
+--- !u!114 &1927836826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 525554331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 8274879307854479454, guid: d521854542d23c44db515e5f8c607c5a, type: 3}
+  _initialCount: 4
+  _shouldBeParent: 0
+--- !u!114 &3002430179848746325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 525554331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 3182170922454913666, guid: 2a561355434aff84187213336881a17e, type: 3}
   _initialCount: 4
   _shouldBeParent: 0
 --- !u!1 &537168774
