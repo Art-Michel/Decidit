@@ -18,6 +18,12 @@ public class Revolver : MonoBehaviour
     [SerializeField] protected VFX_Particle _muzzleFlash;
     [Foldout("References")]
     [SerializeField] protected Image _reloadingWarning;
+    [Foldout("References")]
+    [SerializeField] protected Pooler _trailVfxPooler;
+    [Foldout("References")]
+    [SerializeField] protected Pooler _impactVfxPooler;
+    [Foldout("References")]
+    [SerializeField] protected Pooler _fleshSplashVfxPooler;
 
     private PlayerInputMap _inputs;
     private RevolverFSM _fsm;

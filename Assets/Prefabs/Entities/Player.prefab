@@ -1767,6 +1767,9 @@ MonoBehaviour:
   _ui: {fileID: 6069749010313910407}
   _muzzleFlash: {fileID: 5380604791945137139}
   _reloadingWarning: {fileID: 7195874}
+  _trailVfxPooler: {fileID: 0}
+  _impactVfxPooler: {fileID: 0}
+  _fleshSplashVfxPooler: {fileID: 0}
   _mask:
     serializedVersion: 2
     m_Bits: 33280
@@ -4962,13 +4965,16 @@ MonoBehaviour:
   _ui: {fileID: 1707585495512912266}
   _muzzleFlash: {fileID: 5380604791945137139}
   _reloadingWarning: {fileID: 1002511077}
+  _trailVfxPooler: {fileID: 910275025}
+  _impactVfxPooler: {fileID: 1927836826}
+  _fleshSplashVfxPooler: {fileID: 3002430179848746325}
   _mask:
     serializedVersion: 2
     m_Bits: 295424
   _recoilTime: 0.2
   _reloadMaxTime: 1
   _reloadMinTime: 0.9
-  _maxAmmo: 10000
+  _maxAmmo: 10
   _shootShakeIntensity: 0
   _shootShakeDuration: 0
   _fullAmmoColor: {r: 1, g: 1, b: 1, a: 1}
@@ -4979,9 +4985,6 @@ MonoBehaviour:
   _mouseSwayAmountY: -0.1
   _controllerSwayAmountX: -5
   _controllerSwayAmountY: -3
-  _trailVfxPooler: {fileID: 910275025}
-  _impactVfxPooler: {fileID: 1927836826}
-  _flashSplashVfxPooler: {fileID: 3002430179848746325}
   _hitscanDamage: 20
   _hitscanMaxRange: 100
 --- !u!114 &910275025
@@ -5026,7 +5029,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 3182170922454913666, guid: 2a561355434aff84187213336881a17e, type: 3}
+  _prefab: {fileID: 1790868541386878813, guid: ca054b847da950d4f95a94506c598d65, type: 3}
   _initialCount: 4
   _shouldBeParent: 0
 --- !u!1 &537168774
@@ -11207,6 +11210,9 @@ MonoBehaviour:
   _ui: {fileID: 1317959426112778458}
   _muzzleFlash: {fileID: 5380604791945137139}
   _reloadingWarning: {fileID: 849719140}
+  _trailVfxPooler: {fileID: 0}
+  _impactVfxPooler: {fileID: 0}
+  _fleshSplashVfxPooler: {fileID: 0}
   _mask:
     serializedVersion: 2
     m_Bits: 33280
@@ -17729,6 +17735,8 @@ GameObject:
   - component: {fileID: 9161445646862943683}
   - component: {fileID: 2200446483770630229}
   - component: {fileID: 2200446483770630237}
+  - component: {fileID: 1503606051}
+  - component: {fileID: 1503606052}
   m_Layer: 6
   m_Name: EylauRevolver
   m_TagString: Untagged
@@ -17769,13 +17777,16 @@ MonoBehaviour:
   _ui: {fileID: 8761049072276711247}
   _muzzleFlash: {fileID: 5380604791945137139}
   _reloadingWarning: {fileID: 1782689318}
+  _trailVfxPooler: {fileID: 2200446483770630237}
+  _impactVfxPooler: {fileID: 1503606052}
+  _fleshSplashVfxPooler: {fileID: 1503606051}
   _mask:
     serializedVersion: 2
-    m_Bits: 33280
+    m_Bits: 295424
   _recoilTime: 0.1
   _reloadMaxTime: 1.5
   _reloadMinTime: 1.3
-  _maxAmmo: 6
+  _maxAmmo: 12
   _shootShakeIntensity: 0
   _shootShakeDuration: 0
   _fullAmmoColor: {r: 1, g: 1, b: 1, a: 1}
@@ -17839,6 +17850,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _prefab: {fileID: 4725506551224192338, guid: 9589ee764ed142446aae44056dfc4f38, type: 3}
+  _initialCount: 4
+  _shouldBeParent: 0
+--- !u!114 &1503606051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2113098007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 1790868541386878813, guid: ca054b847da950d4f95a94506c598d65, type: 3}
+  _initialCount: 4
+  _shouldBeParent: 0
+--- !u!114 &1503606052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2113098007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 8274879307854479454, guid: d521854542d23c44db515e5f8c607c5a, type: 3}
   _initialCount: 4
   _shouldBeParent: 0
 --- !u!1 &2121665135
@@ -20370,7 +20411,7 @@ MonoBehaviour:
   CharaCon: {fileID: 2200446484234949841}
   _collisionMask:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 262656
   _mouseSensitivityX: 10
   _mouseSensitivityY: 10
   _mouseXInverted: 0

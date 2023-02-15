@@ -194,6 +194,8 @@ GameObject:
   - component: {fileID: 4939631121027515304}
   - component: {fileID: 4939631121027515311}
   - component: {fileID: 2586513628388323762}
+  - component: {fileID: 3901889236273074786}
+  - component: {fileID: 162964747664441100}
   m_Layer: 8
   m_Name: EylauShot0Prefab
   m_TagString: Untagged
@@ -231,7 +233,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _shouldCollideWith:
     serializedVersion: 2
-    m_Bits: 33280
+    m_Bits: 295424
   _radius: 0.05
   _damage: 10
   _knockbackForce: 10
@@ -247,8 +249,11 @@ MonoBehaviour:
   _mesh: {fileID: 2858103605905071009}
   _trailRenderer: {fileID: 4014255031000204583}
   _trailMaterial: {fileID: 0}
+  _impactVfxPooler: {fileID: 3901889236273074786}
+  _fleshSplashVfxPooler: {fileID: 162964747664441100}
+  _shouldLeaveImpact: 1
   _bounces: 0
-  _bounciness: 0.66
+  _bounciness: 1
   _explodesOnHit: 0
   _explosion: {fileID: 0}
   _speed: 50
@@ -267,3 +272,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88ae98f78f66b0a41b7fdb171237df2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3901889236273074786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4939631121027515308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 8274879307854479454, guid: d521854542d23c44db515e5f8c607c5a, type: 3}
+  _initialCount: 1
+  _shouldBeParent: 0
+--- !u!114 &162964747664441100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4939631121027515308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 1790868541386878813, guid: ca054b847da950d4f95a94506c598d65, type: 3}
+  _initialCount: 1
+  _shouldBeParent: 0

@@ -88,38 +88,79 @@ public class EylauRevolver : Revolver
 
     private void Laser()
     {
-
         var vfx = _laserVfxPooler.Get().GetComponent<TwoPosTrail>();
-        if (Physics.Raycast(_camera.position, _camera.forward, out RaycastHit hit, _laserMaxRange, _mask) && hit.transform.parent.TryGetComponent<Health>(out Health health))
+        if (Physics.Raycast(_camera.position, _camera.forward, out RaycastHit hit, _laserMaxRange, _mask))
         {
             vfx.SetPos(_canonPosition.position, hit.point);
-            if (hit.transform.CompareTag("WeakHurtbox"))
-                (health as EnemyHealth).TakeCriticalDamage(_laserDamage, hit.point, hit.normal);
-            else
-                (health as EnemyHealth).TakeDamage(_laserDamage, hit.point, hit.normal);
-        }
-        else
-            vfx.SetPos(_canonPosition.position, _canonPosition.position + _camera.forward * _laserMaxRange);
-    }
 
-    private void PiercingLaser()
-    {
-
-        var vfx = _laserVfxPooler.Get().GetComponent<TwoPosTrail>();
-        RaycastHit[] hits = Physics.RaycastAll(_camera.position, _camera.forward, _laserMaxRange, _mask);
-        foreach (RaycastHit hit in hits)
-        {
-            hit.transform.parent.TryGetComponent<Health>(out Health health);
-            if (health)
+            //wall or ground
+            if (hit.transform.gameObject.layer == 9)
             {
+                GameObject impactVfx = _impactVfxPooler.Get().gameObject;
+                impactVfx.transform.position = hit.point + hit.normal * 0.05f;
+                impactVfx.transform.forward = -hit.normal;
+            }
 
+            //flesh
+            if (hit.transform.gameObject.layer == 18)
+            {
+                GameObject splashVfx = _fleshSplashVfxPooler.Get().gameObject;
+                splashVfx.transform.position = hit.point + hit.normal * 0.05f;
+                splashVfx.transform.forward = hit.normal;
+            }
+
+            // = enemy hurtbox
+            else if (hit.transform.gameObject.layer == 15 && hit.transform.parent.TryGetComponent<Health>(out Health health))
+            {
+                vfx.SetPos(_canonPosition.position, hit.point);
                 if (hit.transform.CompareTag("WeakHurtbox"))
                     (health as EnemyHealth).TakeCriticalDamage(_laserDamage, hit.point, hit.normal);
                 else
                     (health as EnemyHealth).TakeDamage(_laserDamage, hit.point, hit.normal);
             }
         }
+
+        else
+            vfx.SetPos(_canonPosition.position, _canonPosition.position + _camera.forward * _laserMaxRange);
+
+        vfx.Play();
+    }
+
+    private void PiercingLaser()
+    {
+        var vfx = _laserVfxPooler.Get().GetComponent<TwoPosTrail>();
         vfx.SetPos(_canonPosition.position, _canonPosition.position + _camera.forward * _laserMaxRange);
+        vfx.Play();
+
+        RaycastHit[] hits = Physics.RaycastAll(_camera.position, _camera.forward, _laserMaxRange, _mask);
+        foreach (RaycastHit hit in hits)
+        {
+            //wall or ground
+            if (hit.transform.gameObject.layer == 9)
+            {
+                GameObject impactVfx = _impactVfxPooler.Get().gameObject;
+                impactVfx.transform.position = hit.point + hit.normal * 0.05f;
+                impactVfx.transform.forward = -hit.normal;
+            }
+
+            //flesh
+            if (hit.transform.gameObject.layer == 18)
+            {
+                GameObject splashVfx = _fleshSplashVfxPooler.Get().gameObject;
+                splashVfx.transform.position = hit.point + hit.normal * 0.05f;
+                splashVfx.transform.forward = hit.normal;
+            }
+
+            // = enemy hurtbox
+            else if (hit.transform.gameObject.layer == 15 && hit.transform.parent.TryGetComponent<Health>(out Health health))
+            {
+                vfx.SetPos(_canonPosition.position, hit.point);
+                if (hit.transform.CompareTag("WeakHurtbox"))
+                    (health as EnemyHealth).TakeCriticalDamage(_laserDamage, hit.point, hit.normal);
+                else
+                    (health as EnemyHealth).TakeDamage(_laserDamage, hit.point, hit.normal);
+            }
+        }
     }
 
     public override void StartRecoil()

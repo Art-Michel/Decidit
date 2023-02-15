@@ -7,13 +7,6 @@ using UnityEngine.VFX;
 
 public class BaseRevolver : Revolver
 {
-    [Foldout("References")]
-    [SerializeField] Pooler _trailVfxPooler;
-    [Foldout("References")]
-    [SerializeField] Pooler _impactVfxPooler;
-    [Foldout("References")]
-    [SerializeField] Pooler _flashSplashVfxPooler;
-
     [Foldout("Stats")]
     [SerializeField] int _hitscanDamage = 25;
     [Foldout("Stats")]
@@ -27,7 +20,7 @@ public class BaseRevolver : Revolver
             vfx.SetPos(_canonPosition.position, hit.point);
 
             //wall or ground
-            if (hit.transform.gameObject.layer == 9)
+            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
             {
                 GameObject impactVfx = _impactVfxPooler.Get().gameObject;
                 impactVfx.transform.position = hit.point + hit.normal * 0.05f;
@@ -35,15 +28,15 @@ public class BaseRevolver : Revolver
             }
 
             //flesh
-            if (hit.transform.gameObject.layer == 18)
+            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Flesh"))
             {
-                GameObject splashVfx = _flashSplashVfxPooler.Get().gameObject;
+                GameObject splashVfx = _fleshSplashVfxPooler.Get().gameObject;
                 splashVfx.transform.position = hit.point + hit.normal * 0.05f;
                 splashVfx.transform.forward = hit.normal;
             }
 
             // = enemy hurtbox
-            else if (hit.transform.gameObject.layer == 15 && hit.transform.parent.TryGetComponent<Health>(out Health health))
+            else if (hit.transform.gameObject.layer == LayerMask.NameToLayer("EnemyHurtbox") && hit.transform.parent.TryGetComponent<Health>(out Health health))
             {
                 if (hit.transform.CompareTag("WeakHurtbox"))
                     (health as EnemyHealth).TakeCriticalDamage(_hitscanDamage, hit.point, hit.normal);

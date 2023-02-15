@@ -12,6 +12,9 @@ public class Projectile : Hitbox
     [SerializeField] private GameObject _mesh;
     [SerializeField] private TrailRenderer _trailRenderer;
     [SerializeField] private MonoBehaviour _trailMaterial;
+    [SerializeField] private Pooler _impactVfxPooler;
+    [SerializeField] private Pooler _fleshSplashVfxPooler;
+    [SerializeField] protected bool _shouldLeaveImpact;
     [SerializeField] private bool _bounces;
     [SerializeField][ShowIf("_bounces")][Range(0f, 1f)] protected float _bounciness;
     [SerializeField] private bool _explodesOnHit;
@@ -110,6 +113,7 @@ public class Projectile : Hitbox
                 if (!AlreadyHit(hit.transform.parent))
                 {
                     Hit(hit.transform);
+                    LeaveImpact(hit);
                     _direction = _cameraDirection;
                 }
         }
@@ -130,13 +134,18 @@ public class Projectile : Hitbox
                         Disappear();
                 }
                 else
-                    Bounce(hit);
+                {
+                    LeaveImpact(hit);
+                    if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
+                        Bounce(hit);
+                }
             }
 
             //if does not bounce nor multihit, just hit and disappear
             else
             {
                 Hit(hit.transform);
+                LeaveImpact(hit);
                 //+ explostion if projectile should spawn an explosion.
                 if (_explodesOnHit)
                     Explode(hit.normal);
@@ -153,6 +162,25 @@ public class Projectile : Hitbox
         _direction = Vector3.Reflect(_direction, hit.normal).normalized;
         _lasterFramePosition = hit.point + hit.normal * (_radius + 0.1f);
         _lastFramePosition = hit.point + hit.normal * (_radius + 0.1f);
+    }
+
+    private void LeaveImpact(RaycastHit hit)
+    {
+        //wall or ground
+        if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        {
+            GameObject impactVfx = _impactVfxPooler.Get().gameObject;
+            impactVfx.transform.position = hit.point + hit.normal * 0.05f;
+            impactVfx.transform.forward = -hit.normal;
+        }
+
+        //flesh
+        if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Flesh"))
+        {
+            GameObject splashVfx = _fleshSplashVfxPooler.Get().gameObject;
+            splashVfx.transform.position = hit.point + hit.normal * 0.05f;
+            splashVfx.transform.forward = hit.normal;
+        }
     }
 
     private void Explode(Vector3 normal)
