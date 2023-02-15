@@ -13,7 +13,6 @@ namespace State.AICAC
 
         [Header("Nav Link")]
         [SerializeField] float maxDurationNavLink;
-        [SerializeField] bool linkIsActive;
         bool triggerNavLink;
         NavMeshLink link;
         NavMeshLink navLink;
@@ -56,12 +55,10 @@ namespace State.AICAC
                 if (maxDurationNavLink > 0)
                 {
                     globalRef.agent.ActivateCurrentOffMeshLink(false);
-                    linkIsActive = false;
                     maxDurationNavLink -= Time.deltaTime;
                 }
                 else
                 {
-                    linkIsActive = true;
                     globalRef.agent.ActivateCurrentOffMeshLink(true);
                 }
 

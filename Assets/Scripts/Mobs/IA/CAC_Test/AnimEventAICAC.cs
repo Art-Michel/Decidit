@@ -5,6 +5,7 @@ namespace State.AICAC
     public class AnimEventAICAC : MonoBehaviour
     {
         [SerializeField] GlobalRefAICAC globalRef;
+        [SerializeField] BaseMoveStateAICAC baseMoveState;
         /*void PreAttack()
         {
             globalRef.material_Instances.Material.color = globalRef.material_Instances.ColorPreAtatck;
@@ -27,6 +28,23 @@ namespace State.AICAC
             globalRef.baseAttackAICACSO.isAttacking = false;
             AnimatorManager.instance.DisableAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Attack");
             //globalRef.myAnimator.SetBool("Attack", false);
+        }
+
+
+        // JUMP ANIM
+        private void StartJump()
+        {
+            globalRef.agent.autoTraverseOffMeshLink = true;
+        }
+        public void EndJump()
+        {
+            Invoke("Walk", 0.4f);
+        }
+        void Walk()
+        {
+            baseMoveState.isOnNavLink = false;
+            globalRef.agent.autoTraverseOffMeshLink = true;
+            AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Walk");
         }
     }
 }

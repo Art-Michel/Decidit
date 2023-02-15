@@ -320,14 +320,9 @@ namespace State.AIBull
                             {
                                 globalRefAICAC.dodgeAICACSO.targetObjectToDodge = this.transform;
                                 globalRefAICAC.dodgeAICACSO.rightDodge = true;
-                                globalRefAICAC.dodgeAICACSO.dodgeRushBull = true;
                                 globalRefAICAC.ActiveStateDodge();
                             }
                         }
-
-                        /*if (rushBullSO.ennemiInCollider[i].GetComponent<GlobalRefAICAC>() != null)
-                        {
-                        }*/
                     }
                 }
             }

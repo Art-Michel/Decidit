@@ -13,7 +13,6 @@ public class DodgeParameterAICAC : ScriptableObject
     public float dodgeLenght;
     public float dodgeSpeed;
     public bool isDodging = false;
-    public bool dodgeRushBull = false;
     public bool rightDodge = false;
     public bool leftDodge = false;
     public bool dodgeIsSet = false;

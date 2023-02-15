@@ -211,16 +211,17 @@ namespace State.AICAC
         void StopDodge()
         {
             if(stateControllerAICAC != null)
-                stateControllerAICAC.SetActiveState(StateControllerAICAC.AIState.BaseIdle);
+                stateControllerAICAC.SetActiveState(StateControllerAICAC.AIState.BaseMove);
         }
 
         public void SmoothLookAt()
         {
             //direction = globalRef.playerTransform.position;
-            direction = globalRef.transform.forward;
-            relativePos.x = direction.x - globalRef.transform.position.x;
+            //direction = globalRef.transform.forward;
+            direction = globalRef.agent.desiredVelocity;
+            relativePos.x = direction.x;
             relativePos.y = 0;
-            relativePos.z = direction.z - globalRef.transform.position.z;
+            relativePos.z = direction.z;
 
             if (globalRef.dodgeAICACSO.speedRot < globalRef.dodgeAICACSO.maxSpeedRot)
                 globalRef.dodgeAICACSO.speedRot += Time.deltaTime / globalRef.dodgeAICACSO.smoothRot;
@@ -230,17 +231,17 @@ namespace State.AICAC
             }
 
             Quaternion rotation = Quaternion.Slerp(globalRef.transform.rotation, Quaternion.LookRotation(relativePos, Vector3.up), globalRef.dodgeAICACSO.speedRot);
-            //globalRef.transform.rotation = rotation;
+            globalRef.transform.rotation = rotation;
         }
 
         private void OnDisable()
         {
-            globalRef.dodgeAICACSO.dodgeRushBull = false;
             globalRef.dodgeAICACSO.speedRot = 0;
             globalRef.dodgeAICACSO.leftDodge = false;
             globalRef.dodgeAICACSO.rightDodge = false;
             globalRef.dodgeAICACSO.isDodging = false;
             globalRef.dodgeAICACSO.dodgeIsSet = false;
+            globalRef.agent.SetDestination(globalRef.playerTransform.position);
         }
     }
 }

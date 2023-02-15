@@ -23,6 +23,8 @@ public class BulletAI : MonoBehaviour
     private void OnTriggerEnter (Collider collider)
     {
         Debug.Log(collider.gameObject);
-        gameObject.SetActive(false);
+
+        if(collider.gameObject.layer == 9)
+            gameObject.SetActive(false);
     }
 }

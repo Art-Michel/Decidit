@@ -11,11 +11,11 @@ namespace State.AICAC
         [Header("Nav Link")]
         [SerializeField] float maxDurationNavLink;
         bool triggerNavLink;
+        public bool isOnNavLink;
         NavMeshLink link;
         NavMeshLink navLink;
         NavMeshHit closestHit;
         Vector3 linkDestination;
-
 
         [Header("Direction Movement")]
         [SerializeField] float offset;
@@ -27,6 +27,7 @@ namespace State.AICAC
         [Header("LookAt")]
         Vector3 direction;
         Vector3 relativePos;
+        bool lookForwardJump;
 
         [Header("Rate Calcule Path")]
         [SerializeField] float maxRateRepath;
@@ -41,8 +42,13 @@ namespace State.AICAC
             state = StateControllerAICAC.AIState.BaseMove;
         }
 
-        private void Awake()
+        void OnEnable()
         {
+            if (baseMoveAICACSO != null)
+                baseMoveAICACSO.currentCoolDownAttack = Random.Range(baseMoveAICACSO.maxCoolDownAttack.x, baseMoveAICACSO.maxCoolDownAttack.y);
+
+            if (globalRef != null && globalRef.myAnimator != null)
+                AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Walk");
         }
 
         private void Start()
@@ -60,15 +66,6 @@ namespace State.AICAC
             SmoothLookAt();
             ManageCurrentNavMeshLink();
             BaseMovement();
-
-        }
-
-        void OnEnable()
-        {
-            activeSurround = true;
-
-            if(baseMoveAICACSO !=null)
-                baseMoveAICACSO.currentCoolDownAttack = Random.Range(baseMoveAICACSO.maxCoolDownAttack.x, baseMoveAICACSO.maxCoolDownAttack.y);
         }
 
         void CoolDownAttack()
@@ -97,49 +94,64 @@ namespace State.AICAC
         {
             if (globalRef.agent.isOnOffMeshLink)
             {
-                if (maxDurationNavLink > 0)
+                lookForwardJump = true;
+                globalRef.agent.autoTraverseOffMeshLink = false;
+
+                if (navLink == null)
                 {
                     globalRef.agent.ActivateCurrentOffMeshLink(false);
+                    navLink = globalRef.agent.navMeshOwner as NavMeshLink;
+                    globalRef.agentLinkMover.m_Curve.AddKey(0.5f, Mathf.Abs((navLink.endPoint.y - navLink.startPoint.y)/1.5f));
+                }
+
+                if (!isOnNavLink)
+                {
+                    isOnNavLink = true;
+                    globalRef.agent.speed = 0;
+                    AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "StartJump");
+                }
+
+                if (maxDurationNavLink > 0) // jump Current duration
+                {
                     maxDurationNavLink -= Time.deltaTime;
                 }
-                else
+                else // jump End duration
                 {
                     globalRef.agent.ActivateCurrentOffMeshLink(true);
+                    AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "EndJump");
                 }
-
-                globalRef.agent.speed = 3;
-                if (navLink == null)
-                    navLink = globalRef.agent.navMeshOwner as NavMeshLink;
-
             }
             else
             {
+                lookForwardJump = false;
+
                 if (navLink != null)
                 {
+                    globalRef.animEventAICAC.EndJump();
                     navLink.UpdateLink();
                     navLink = null;
+                    maxDurationNavLink = globalRef.agentLinkMover._duration;
                 }
-                maxDurationNavLink = globalRef.agentLinkMover._duration;
             }
         }
 
         void BaseMovement()
         {
-            if (globalRef.agent.isOnOffMeshLink)
+            if (isOnNavLink)
             {
-                link = globalRef.agent.navMeshOwner as NavMeshLink;
-                
                 if (!triggerNavLink)
                 {
-                    linkDestination = link.transform.position - transform.position;
+                    linkDestination = navLink.transform.position - transform.position;
                     triggerNavLink = true;
                 }
             }
             else
             {
-                offset = Mathf.Lerp(offset, globalRef.offsetDestination, baseMoveAICACSO.offsetTransitionSmooth * Time.deltaTime);
-                offset = Mathf.Clamp(offset, -Mathf.Abs(globalRef.offsetDestination), Mathf.Abs(globalRef.offsetDestination));
-
+                if(globalRef.offsetDestination !=0)
+                {
+                    offset = Mathf.Lerp(offset, globalRef.offsetDestination, baseMoveAICACSO.offsetTransitionSmooth * Time.deltaTime);
+                    offset = Mathf.Clamp(offset, -Mathf.Abs(globalRef.offsetDestination), Mathf.Abs(globalRef.offsetDestination));
+                }
 
                 if (triggerNavLink)
                 {
@@ -175,25 +187,29 @@ namespace State.AICAC
                             destination = CheckNavMeshPoint(playerPosAnticip);
                         }
 
-                        if (Vector3.Distance(destination, globalRef.transform.position) >= globalRef.surroundManager.radius)
+                        if (Vector3.Distance(globalRef.playerTransform.position, globalRef.transform.position) >= globalRef.surroundManager.radius)
                         {
                             activeSurround = true;
                         }
                     }
 
                     SlowSpeed(globalRef.isInEylau);
-                    globalRef.agent.SetDestination(destination);
+                    if(!isOnNavLink)
+                        globalRef.agent.SetDestination(destination);
                     currentRateRepath = maxRateRepath;
                 }
             }
 
             if (Vector3.Distance(CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer, globalRef.transform.position) < baseMoveAICACSO.attackRange)//(globalRef.distPlayer < baseMoveAICACSO.attackRange)
             {
-                stateControllerAICAC.SetActiveState(StateControllerAICAC.AIState.BaseAttack);
+                if (!isOnNavLink)
+                {
+                    stateControllerAICAC.SetActiveState(StateControllerAICAC.AIState.BaseAttack);
+                }
             }
             else
             {
-                if (!globalRef.agent.isOnOffMeshLink)
+                if (!isOnNavLink)
                     SpeedAdjusting();
             }
         }
@@ -260,16 +276,17 @@ namespace State.AICAC
 
         void SmoothLookAt()
         {
-            if (globalRef.agent.isOnOffMeshLink)
+            if(lookForwardJump)
             {
-                direction = linkDestination - transform.position;
-
                 relativePos.x = linkDestination.x;
                 relativePos.y = 0;
                 relativePos.z = linkDestination.z;
 
+                SlowRotation(globalRef.isInEylau);
+                Quaternion rotation = Quaternion.Slerp(globalRef.transform.rotation, Quaternion.LookRotation(relativePos, Vector3.up), baseMoveAICACSO.speedRot);
+                globalRef.transform.rotation = rotation;
             }
-            else
+            else if(!isOnNavLink)
             {
                 // direction = globalRef.transform.position + globalRef.agent.desiredVelocity;
                 direction = globalRef.agent.desiredVelocity;
@@ -277,12 +294,11 @@ namespace State.AICAC
                 relativePos.x = direction.x;
                 relativePos.y = 0;
                 relativePos.z = direction.z;
+
+                SlowRotation(globalRef.isInEylau);
+                Quaternion rotation = Quaternion.Slerp(globalRef.transform.rotation, Quaternion.LookRotation(relativePos, Vector3.up), baseMoveAICACSO.speedRot);
+                globalRef.transform.rotation = rotation;
             }
-
-            SlowRotation(globalRef.isInEylau);
-
-            Quaternion rotation = Quaternion.Slerp(globalRef.transform.rotation, Quaternion.LookRotation(relativePos, Vector3.up), baseMoveAICACSO.speedRot);
-            globalRef.transform.rotation = rotation;
         }
         void SlowRotation(bool active)
         {

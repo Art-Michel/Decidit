@@ -42,8 +42,8 @@ namespace State.WallAI
             baseMoveWallAISO.lastWallCrack = Instantiate(baseMoveWallAISO.wallCrackPrefab, transform.position, Quaternion.Euler(0, orientation, 0));
 
             playerTransform = GameObject.FindWithTag("Player").transform;
-            //audioSourceWallMob = GetComponentInChildren<AudioSource>();
-            areaWallAI = transform.parent.transform.Find("Area_WallAI").transform;
+            if(areaWallAI == null)
+                areaWallAI = transform.parent.transform.Find("Area_WallAI").transform;
 
             for (int i = 0; i < areaWallAI.childCount; i++)
             {

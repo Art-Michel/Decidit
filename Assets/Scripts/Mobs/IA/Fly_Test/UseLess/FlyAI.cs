@@ -19,7 +19,6 @@ public class FlyAI : MonoBehaviour
     [SerializeField] float contournSpeed;
     [SerializeField] float chargeSpeed;
     [SerializeField] float stopSpeed;
-    [SerializeField] bool isRotating;
     [SerializeField] Vector3 currentRotation;
     [SerializeField] Vector3 oldRotation;
 
@@ -51,7 +50,6 @@ public class FlyAI : MonoBehaviour
     [SerializeField] bool obstacleTrigger;
     [SerializeField] bool obstacleOnPathDetected;
     [SerializeField] bool checkObstacleIsOnPass;
-    [SerializeField] bool contournDirChose;
     [SerializeField] float dirContourne;
     [SerializeField] Transform obstacleTransform;
     [SerializeField] Vector3 obstaclePos;
@@ -105,13 +103,11 @@ public class FlyAI : MonoBehaviour
 
         if (Vector3.Distance(oldRotation, transform.eulerAngles) == 0)
         {
-            isRotating = false;
             speedRotationAIPatrol = 0.01f;
         }
         else
         {
             oldRotation = transform.eulerAngles;
-            isRotating = true;
         }
     }
 
@@ -181,8 +177,6 @@ public class FlyAI : MonoBehaviour
     ////////////// Contourne Obstacle \\\\\\\\\\\\\\\\\\\\\
     void CheckDestinationDir() // si la destination est a droite ou à gauche, lance la fonction "ContourneDirection()"
     {
-        contournDirChose = true;
-
         if (dirContourne > 0)
         {
             ContourneDirection(Vector3.right);
@@ -415,7 +409,6 @@ public class FlyAI : MonoBehaviour
             else
             {
                 obstacleOnPathDetected = false;
-                contournDirChose = false;
                 checkObstacleIsOnPass = false;
             }
         }
@@ -466,7 +459,6 @@ public class FlyAI : MonoBehaviour
             if (hitRight.transform == null && hitLeft.transform == null)
             {
                 obstacleOnPathDetected = false;
-                contournDirChose = false;
                 checkObstacleIsOnPass = false;
             }
         }
@@ -476,7 +468,6 @@ public class FlyAI : MonoBehaviour
     {
         if (other.CompareTag("Obstacle") || other.CompareTag("Wall"))
         {
-            contournDirChose = false;
             obstacleTrigger = true;
             checkObstacleIsOnPass = true;
 
@@ -502,7 +493,6 @@ public class FlyAI : MonoBehaviour
         if (other.CompareTag("Obstacle") || other.CompareTag("Wall"))
         {
             obstacleTrigger = false;
-            contournDirChose = false;
         }
     }
 }

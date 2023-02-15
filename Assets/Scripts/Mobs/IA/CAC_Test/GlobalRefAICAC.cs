@@ -20,6 +20,7 @@ namespace State.AICAC
         [Header("Animation")]
         public Animator myAnimator;
         public GlobalRefAnimator globalRefAnimator;
+        public AnimEventAICAC animEventAICAC;
 
         [Header("Slow Move References")]
         public bool isInEylau;
@@ -33,6 +34,7 @@ namespace State.AICAC
         public AgentLinkMover agentLinkMover;
         public Vector3 destination;
         public SurroundManager surroundManager;
+
 
         [Header("Ref Dodge State")]
         public Transform spawnRayDodge;

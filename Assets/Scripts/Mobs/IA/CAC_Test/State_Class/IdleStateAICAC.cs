@@ -34,6 +34,9 @@ namespace State.AICAC
         private void OnDisable()
         {
             globalRef.baseIdleAICACSO.currentDelayIdleState = globalRef.baseIdleAICACSO.maxDelayIdleState;
+
+            if (globalRef != null && globalRef.myAnimator != null)
+                AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Idle");
         }
     }
 }

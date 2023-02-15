@@ -30,7 +30,7 @@ public class AgentLinkMover : MonoBehaviour
                 else if (m_Method == OffMeshLinkMoveMethod.Parabola)
                     yield return StartCoroutine(Parabola(agent, 2.0f, _duration));
                 else if (m_Method == OffMeshLinkMoveMethod.Curve)
-                    yield return StartCoroutine(Curve(agent, 0.5f));
+                    yield return StartCoroutine(Curve(agent, _duration));
                 agent.CompleteOffMeshLink();
             }
             yield return null;

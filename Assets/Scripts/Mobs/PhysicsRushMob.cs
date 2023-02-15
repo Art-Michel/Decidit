@@ -18,7 +18,6 @@ public class PhysicsRushMob : MonoBehaviour
     [Header("Gravity value")]
     [SerializeField] float gravity;
     [SerializeField] float fallingTime;
-    [SerializeField] float currentAcceleration;
 
 
     [Header("Movement value")]
@@ -70,7 +69,6 @@ public class PhysicsRushMob : MonoBehaviour
         {
             isGround = true;
             fallingTime = 1;
-            currentAcceleration = 0;
         }
         else
         {
