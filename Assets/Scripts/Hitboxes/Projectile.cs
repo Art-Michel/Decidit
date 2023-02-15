@@ -171,7 +171,7 @@ public class Projectile : Hitbox
         {
             GameObject impactVfx = _impactVfxPooler.Get().gameObject;
             impactVfx.transform.position = hit.point + hit.normal * 0.05f;
-            impactVfx.transform.forward = -hit.normal;
+            impactVfx.transform.forward = _direction;
         }
 
         //flesh
@@ -179,7 +179,7 @@ public class Projectile : Hitbox
         {
             GameObject splashVfx = _fleshSplashVfxPooler.Get().gameObject;
             splashVfx.transform.position = hit.point + hit.normal * 0.05f;
-            splashVfx.transform.forward = hit.normal;
+            splashVfx.transform.forward = -_direction;
         }
     }
 
