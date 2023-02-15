@@ -113,7 +113,7 @@ public class Projectile : Hitbox
                 if (!AlreadyHit(hit.transform.parent))
                 {
                     Hit(hit.transform);
-                    LeaveImpact(hit);
+                    if (_shouldLeaveImpact) LeaveImpact(hit);
                     _direction = _cameraDirection;
                 }
         }
@@ -135,7 +135,7 @@ public class Projectile : Hitbox
                 }
                 else
                 {
-                    LeaveImpact(hit);
+                    if (_shouldLeaveImpact) LeaveImpact(hit);
                     if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
                         Bounce(hit);
                 }
@@ -145,7 +145,7 @@ public class Projectile : Hitbox
             else
             {
                 Hit(hit.transform);
-                LeaveImpact(hit);
+                if (_shouldLeaveImpact) LeaveImpact(hit);
                 //+ explostion if projectile should spawn an explosion.
                 if (_explodesOnHit)
                     Explode(hit.normal);

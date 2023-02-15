@@ -94,7 +94,7 @@ public class Health : MonoBehaviour
     {
         if (!_bloodVFXPooler)
         {
-            Debug.LogError("No bloodFX Pooler script found on same object as this script.");
+            Debug.LogWarning("No bloodFX Pooler script found on same object as this script.");
             return;
         }
         Transform splash = _bloodVFXPooler.Get().transform;

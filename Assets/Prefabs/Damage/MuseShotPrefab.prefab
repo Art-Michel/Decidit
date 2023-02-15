@@ -485,6 +485,8 @@ GameObject:
   - component: {fileID: 8465386666873793416}
   - component: {fileID: 6174805314485455289}
   - component: {fileID: 6950745005677804068}
+  - component: {fileID: 7668674032994071447}
+  - component: {fileID: 5656096679912435111}
   m_Layer: 8
   m_Name: MuseShotPrefab
   m_TagString: Untagged
@@ -539,8 +541,8 @@ MonoBehaviour:
   _mesh: {fileID: 1822004407248124589}
   _trailRenderer: {fileID: 844423401451423738}
   _trailMaterial: {fileID: 0}
-  _impactVfxPooler: {fileID: 0}
-  _fleshSplashVfxPooler: {fileID: 0}
+  _impactVfxPooler: {fileID: 7668674032994071447}
+  _fleshSplashVfxPooler: {fileID: 5656096679912435111}
   _shouldLeaveImpact: 0
   _bounces: 1
   _bounciness: 0.48
@@ -564,6 +566,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88ae98f78f66b0a41b7fdb171237df2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7668674032994071447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8465386666873793412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 8274879307854479454, guid: d521854542d23c44db515e5f8c607c5a, type: 3}
+  _initialCount: 4
+  _shouldBeParent: 0
+--- !u!114 &5656096679912435111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8465386666873793412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 1790868541386878813, guid: ca054b847da950d4f95a94506c598d65, type: 3}
+  _initialCount: 14
+  _shouldBeParent: 0
 --- !u!1 &9109925886092690631
 GameObject:
   m_ObjectHideFlags: 0
