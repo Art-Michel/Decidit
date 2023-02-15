@@ -35,25 +35,25 @@ public class Material_Instances : MonoBehaviour
 
     public void ChangeColorTexture(Color color)
     {
-        if(color == ColorBase)
+        if (color == ColorBase)
         {
             Material.SetTexture("_TextureToDissolve", TextureBase);
         }
-        else if(color == ColorPreAtatck)
+        else if (color == ColorPreAtatck)
         {
             Material.SetTexture("_TextureToDissolve", TexturePreAttack);
         }
 
-       /* Texture = new Texture2D(128, 128);
-        for (int y = 0; y < Texture.height; y++)
-        {
-            for (int x = 0; x < Texture.width; x++)
-            {
-                Texture.SetPixel(x, y, color);
-            }
-        }
-        Texture.Apply();
-        Material.SetTexture("_TextureToDissolve", Texture);*/
+        /* Texture = new Texture2D(128, 128);
+         for (int y = 0; y < Texture.height; y++)
+         {
+             for (int x = 0; x < Texture.width; x++)
+             {
+                 Texture.SetPixel(x, y, color);
+             }
+         }
+         Texture.Apply();
+         Material.SetTexture("_TextureToDissolve", Texture);*/
     }
 
     // Update is called once per frame

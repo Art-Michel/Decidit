@@ -15,7 +15,7 @@ Preset:
   m_Properties:
   - target: {fileID: 0}
     propertyPath: m_Enabled
-    value: 1
+    value: 0
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_EditorHideFlags
@@ -46,8 +46,28 @@ Preset:
     value: 
     objectReference: {fileID: 0}
   - target: {fileID: 0}
+    propertyPath: _smoothness
+    value: 10
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: _mouseSwayAmountX
+    value: -0.2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: _mouseSwayAmountY
+    value: -0.1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: _controllerSwayAmountX
+    value: -5
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: _controllerSwayAmountY
+    value: -3
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
     propertyPath: _cooldown
-    value: 2
+    value: 0.43
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: _vfx
@@ -59,7 +79,7 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: _range
-    value: 30
+    value: 20
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: _player
@@ -74,8 +94,12 @@ Preset:
     value: 512
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: _dashSpeed
-    value: 95.2
+    propertyPath: _triggerMask.m_Bits
+    value: 131072
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: _dashDuration
+    value: 0.77
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: _dashFeedbacksCurve.m_Curve.Array.size
@@ -115,11 +139,11 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: _dashFeedbacksCurve.m_Curve.Array.data[1].time
-    value: 0.2434237
+    value: 0.15
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: _dashFeedbacksCurve.m_Curve.Array.data[1].value
-    value: 0.9994513
+    value: -0.1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: _dashFeedbacksCurve.m_Curve.Array.data[1].inSlope
@@ -131,7 +155,7 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: _dashFeedbacksCurve.m_Curve.Array.data[1].tangentMode
-    value: 0
+    value: 136
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: _dashFeedbacksCurve.m_Curve.Array.data[1].weightedMode
@@ -147,19 +171,19 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: _dashFeedbacksCurve.m_Curve.Array.data[2].time
-    value: 0.7502063
+    value: 0.6306329
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: _dashFeedbacksCurve.m_Curve.Array.data[2].value
-    value: 0.9993184
+    value: 0.99407816
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: _dashFeedbacksCurve.m_Curve.Array.data[2].inSlope
-    value: -0.0007832488
+    value: 0.031583324
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: _dashFeedbacksCurve.m_Curve.Array.data[2].outSlope
-    value: -0.0007832488
+    value: 0.031583324
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: _dashFeedbacksCurve.m_Curve.Array.data[2].tangentMode
@@ -179,11 +203,11 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: _dashFeedbacksCurve.m_Curve.Array.data[3].time
-    value: 0.9219246
+    value: 0.9
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: _dashFeedbacksCurve.m_Curve.Array.data[3].value
-    value: -0.15211612
+    value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: _dashFeedbacksCurve.m_Curve.Array.data[3].inSlope
@@ -227,7 +251,7 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: _dashFeedbacksCurve.m_Curve.Array.data[4].tangentMode
-    value: 0
+    value: 136
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: _dashFeedbacksCurve.m_Curve.Array.data[4].weightedMode
@@ -235,11 +259,11 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: _dashFeedbacksCurve.m_Curve.Array.data[4].inWeight
-    value: 0
+    value: 0.33333334
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: _dashFeedbacksCurve.m_Curve.Array.data[4].outWeight
-    value: 0
+    value: 0.33333334
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: _dashFeedbacksCurve.m_PreInfinity
@@ -255,7 +279,7 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: _dashMovementCurve.m_Curve.Array.size
-    value: 2
+    value: 3
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: _dashMovementCurve.m_Curve.Array.data[0].time
@@ -275,7 +299,7 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: _dashMovementCurve.m_Curve.Array.data[0].tangentMode
-    value: 0
+    value: 136
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: _dashMovementCurve.m_Curve.Array.data[0].weightedMode
@@ -283,31 +307,31 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: _dashMovementCurve.m_Curve.Array.data[0].inWeight
-    value: 0
+    value: 0.33333334
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: _dashMovementCurve.m_Curve.Array.data[0].outWeight
-    value: 0
+    value: 0.33333334
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: _dashMovementCurve.m_Curve.Array.data[1].time
-    value: 0.9968872
+    value: 0.15
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: _dashMovementCurve.m_Curve.Array.data[1].value
-    value: 0.99252313
+    value: -0.1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: _dashMovementCurve.m_Curve.Array.data[1].inSlope
-    value: -0.68150234
+    value: 0
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: _dashMovementCurve.m_Curve.Array.data[1].outSlope
-    value: -0.68150234
+    value: 0
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: _dashMovementCurve.m_Curve.Array.data[1].tangentMode
-    value: 0
+    value: 136
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: _dashMovementCurve.m_Curve.Array.data[1].weightedMode
@@ -315,11 +339,43 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: _dashMovementCurve.m_Curve.Array.data[1].inWeight
-    value: 0.11632645
+    value: 0.33333334
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: _dashMovementCurve.m_Curve.Array.data[1].outWeight
+    value: 0.33333334
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: _dashMovementCurve.m_Curve.Array.data[2].time
+    value: 0.9968872
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: _dashMovementCurve.m_Curve.Array.data[2].value
+    value: 0.99252313
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: _dashMovementCurve.m_Curve.Array.data[2].inSlope
     value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: _dashMovementCurve.m_Curve.Array.data[2].outSlope
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: _dashMovementCurve.m_Curve.Array.data[2].tangentMode
+    value: 136
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: _dashMovementCurve.m_Curve.Array.data[2].weightedMode
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: _dashMovementCurve.m_Curve.Array.data[2].inWeight
+    value: 0.33333334
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: _dashMovementCurve.m_Curve.Array.data[2].outWeight
+    value: 0.33333334
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: _dashMovementCurve.m_PreInfinity
@@ -415,10 +471,10 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: _dashFovIncrease
-    value: 20
+    value: 30
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: _maxVignetteAlpha
-    value: 0.3
+    value: 0.5
     objectReference: {fileID: 0}
   m_ExcludedProperties: []

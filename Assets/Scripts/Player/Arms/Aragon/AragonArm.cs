@@ -35,7 +35,7 @@ public class AragonArm : Arm
     private LayerMask _triggerMask;
     [Foldout("Stats")]
     [SerializeField]
-    private float _dashSpeed = 3f;
+    private float _dashDuration = 3f;
     [Foldout("Stats")]
     [SerializeField]
     AnimationCurve _dashFeedbacksCurve;
@@ -114,7 +114,7 @@ public class AragonArm : Arm
         AdjustDestination();
 
         //Actually move
-        currentDashSpeed = _dashSpeed / Vector3.Distance(_dashStartPosition, _dashDestination);
+        currentDashSpeed = _dashDuration / Vector3.Distance(_dashStartPosition, _dashDestination);
         _dashT = 0;
 
         //Feedbacks
@@ -140,7 +140,27 @@ public class AragonArm : Arm
             _dashDestination += Vector3.right * -.1f;
             yeah = true;
         }
+        if (Physics.Raycast(_dashDestination, Vector3.right + Vector3.back, .5f, _detectionMask))
+        {
+            _dashDestination += Vector3.left * -.1f;
+            yeah = true;
+        }
+        if (Physics.Raycast(_dashDestination, Vector3.right + Vector3.forward, .5f, _detectionMask))
+        {
+            _dashDestination += Vector3.left * -.1f;
+            yeah = true;
+        }
         if (Physics.Raycast(_dashDestination, Vector3.left, .5f, _detectionMask))
+        {
+            _dashDestination += Vector3.left * -.1f;
+            yeah = true;
+        }
+        if (Physics.Raycast(_dashDestination, Vector3.left + Vector3.back, .5f, _detectionMask))
+        {
+            _dashDestination += Vector3.left * -.1f;
+            yeah = true;
+        }
+        if (Physics.Raycast(_dashDestination, Vector3.left + Vector3.forward, .5f, _detectionMask))
         {
             _dashDestination += Vector3.left * -.1f;
             yeah = true;
@@ -169,7 +189,7 @@ public class AragonArm : Arm
         _lastFramePosition = transform.position;
 
         //Move
-        _dashT += Time.deltaTime * currentDashSpeed * _dashSpeedCurve.Evaluate(_dashT);
+        _dashT += Time.deltaTime / _dashDuration;
         _player.CharaCon.Move(Vector3.LerpUnclamped(_dashStartPosition, _dashDestination, _dashMovementCurve.Evaluate(_dashT)) - _player.transform.position);
 
         CheckForTriggers();
@@ -218,6 +238,7 @@ public class AragonArm : Arm
         _player.KillMomentum();
         _player.CharaCon.detectCollisions = true;
         StopDashFeedbacks();
+        _player.AddMomentum((_dashDestination - _dashStartPosition) * 2);
     }
 
     private void StopDashFeedbacks()
