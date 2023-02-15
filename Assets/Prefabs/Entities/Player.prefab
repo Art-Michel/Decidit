@@ -1438,7 +1438,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 183938224}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 629730ad1c35888488a42fc74fb75bea, type: 3}
   m_Name: 
@@ -1453,10 +1453,10 @@ MonoBehaviour:
   _mouseSwayAmountY: -0.1
   _controllerSwayAmountX: -5
   _controllerSwayAmountY: -3
-  _cooldown: 2
+  _cooldown: 3
   _vfx: {fileID: 7866625081794672881}
   _vfxGroundProjection: {fileID: 8093213824556858173}
-  _range: 30
+  _range: 14
   _player: {fileID: 2200446484234949679}
   _vignette: {fileID: 2006583777}
   _detectionMask:
@@ -1465,7 +1465,7 @@ MonoBehaviour:
   _triggerMask:
     serializedVersion: 2
     m_Bits: 131072
-  _dashSpeed: 90
+  _dashDuration: 0.6
   _dashFeedbacksCurve:
     serializedVersion: 2
     m_Curve:
@@ -1479,26 +1479,26 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.2434237
-      value: 0.9994513
+      time: 0.15
+      value: -0.1
       inSlope: 0
       outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.7502063
-      value: 0.9993184
-      inSlope: -0.0007832488
-      outSlope: -0.0007832488
       tangentMode: 136
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.9219246
-      value: -0.15211612
+      time: 0.6306329
+      value: 0.99407816
+      inSlope: 0.031583324
+      outSlope: 0.031583324
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.9
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 136
@@ -1508,12 +1508,12 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: -7.1397433
+      outSlope: -7.1397433
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
-      outWeight: 0
+      inWeight: 0.3775399
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -1525,19 +1525,28 @@ MonoBehaviour:
       value: 0
       inSlope: 0
       outSlope: 0
-      tangentMode: 0
+      tangentMode: 136
       weightedMode: 0
-      inWeight: 0
-      outWeight: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.2877912
+      value: -0.10471284
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 0.9968872
       value: 0.99252313
-      inSlope: -0.68150234
-      outSlope: -0.68150234
+      inSlope: 1.525524
+      outSlope: 1.525524
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.11632645
-      outWeight: 0
+      inWeight: 0.04661035
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -1565,8 +1574,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _dashFovIncrease: 20
-  _maxVignetteAlpha: 0.3
+  _dashFovIncrease: 30
+  _maxVignetteAlpha: 0.5
+  _momentumPostDash: 2.5
 --- !u!114 &950598985533358227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1774,9 +1784,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 33280
   _recoilTime: 0.3
-  _reloadMaxTime: 1.5
-  _reloadMinTime: 1.3
-  _maxAmmo: 6
+  _reloadMaxTime: 0.6
+  _reloadMinTime: 0.5
+  _maxAmmo: 8
   _shootShakeIntensity: 0.2
   _shootShakeDuration: 0.2
   _fullAmmoColor: {r: 1, g: 1, b: 1, a: 1}
@@ -4971,9 +4981,9 @@ MonoBehaviour:
   _mask:
     serializedVersion: 2
     m_Bits: 295424
-  _recoilTime: 0.2
-  _reloadMaxTime: 1
-  _reloadMinTime: 0.9
+  _recoilTime: 0.3
+  _reloadMaxTime: 0.6
+  _reloadMinTime: 0.5
   _maxAmmo: 10
   _shootShakeIntensity: 0
   _shootShakeDuration: 0
@@ -11217,8 +11227,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 33280
   _recoilTime: 0.4
-  _reloadMaxTime: 1
-  _reloadMinTime: 0.85
+  _reloadMaxTime: 0.6
+  _reloadMinTime: 0.5
   _maxAmmo: 6
   _shootShakeIntensity: 0.2
   _shootShakeDuration: 0.1
@@ -17784,8 +17794,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 295424
   _recoilTime: 0.1
-  _reloadMaxTime: 1.5
-  _reloadMinTime: 1.3
+  _reloadMaxTime: 0.6
+  _reloadMinTime: 0.5
   _maxAmmo: 12
   _shootShakeIntensity: 0
   _shootShakeDuration: 0

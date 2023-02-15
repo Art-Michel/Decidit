@@ -8,6 +8,7 @@ using UnityEngine.VFX;
 
 public class AragonArm : Arm
 {
+
     [Foldout("References")]
     [SerializeField]
     private GameObject _vfx;
@@ -51,6 +52,9 @@ public class AragonArm : Arm
     [Foldout("Stats")]
     [SerializeField]
     float _maxVignetteAlpha = 0.3f;
+    [Foldout("Stats")]
+    [SerializeField]
+    private float _momentumPostDash = 2.5f;
 
     float _defaultFov;
     private Vector3 _dashStartPosition;
@@ -238,7 +242,7 @@ public class AragonArm : Arm
         _player.KillMomentum();
         _player.CharaCon.detectCollisions = true;
         StopDashFeedbacks();
-        _player.AddMomentum((_dashDestination - _dashStartPosition) * 2);
+        _player.AddMomentum((_dashDestination - _dashStartPosition) * _momentumPostDash);
     }
 
     private void StopDashFeedbacks()
