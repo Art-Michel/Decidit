@@ -138,13 +138,11 @@ namespace State.WallAI
 
             if (hit.transform != globalRef.playerTransform)
             {
-                Debug.Log(hit.transform);
                 canTouchPlayer = false;
                 baseMoveWallAISO.findNewPos = false;
             }
             else
             {
-                Debug.Log("Touche Player");
                 canTouchPlayer = true;
                 baseMoveWallAISO.findNewPos = true;
             }
