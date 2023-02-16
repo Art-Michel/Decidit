@@ -32,7 +32,7 @@ namespace State.AICAC
         public float offsetDestination;
         public Vector3 debugDestination;
         public AgentLinkMover agentLinkMover;
-        public Vector3 destination;
+        public Vector3 destinationSurround;
         public SurroundManager surroundManager;
 
 

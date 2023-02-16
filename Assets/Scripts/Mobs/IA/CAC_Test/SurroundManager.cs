@@ -60,7 +60,7 @@ namespace State.AICAC
                 float unitDirZposition = centerPosition.z + Mathf.Cos((currentAnglePlacement * Mathf.PI) / 180) * radius;//radius;
 
                 destination = CheckNavMeshPoint(new Vector3(unitDirXposition, centerPosition.y, unitDirZposition));
-                aiCACScriptsList[i].destination = destination;
+                aiCACScriptsList[i].destinationSurround = destination;
                 currentAnglePlacement += angleStep;
             }
         }
@@ -89,7 +89,7 @@ namespace State.AICAC
         }
         Vector3 CheckNavMeshPoint(Vector3 _destination)
         {
-            if (NavMesh.SamplePosition(_destination, out closestHit, 20, 1))
+            if (NavMesh.SamplePosition(_destination, out closestHit, radius, 1))
             {
                 _destination = closestHit.position;
             }

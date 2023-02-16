@@ -62,6 +62,7 @@ namespace State.AIBull
                     navLink = globalRef.agent.navMeshOwner as NavMeshLink;
                     linkDestination = navLink.transform.position - transform.position;
                     globalRef.agentLinkMover.m_Curve.AddKey(0.5f, Mathf.Abs((navLink.endPoint.y - navLink.startPoint.y) / 1.5f));
+                    globalRef.agentLinkMover._height = Mathf.Abs((navLink.endPoint.y - navLink.startPoint.y) / 1.5f);
                 }
 
                 if (!isOnNavLink)

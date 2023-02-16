@@ -35,6 +35,8 @@ namespace State.AICAC
 
         [SerializeField] bool activeSurround;
 
+        [SerializeField] float distToCirclePos;
+
         public override void InitState(StateControllerAICAC stateController)
         {
             base.InitState(stateController);
@@ -62,6 +64,9 @@ namespace State.AICAC
             //globalRef.agent.areaMask |= (1 << NavMesh.GetAreaFromName("Walkable"));
             //globalRef.agent.areaMask |= (1 << NavMesh.GetAreaFromName("Not Walkable"));
             // globalRef.agent.areaMask |= (1 << NavMesh.GetAreaFromName("Jump"));
+            distToCirclePos = Vector3.Distance(destination, globalRef.transform.position);
+            distToCirclePos = Vector3.Distance(globalRef.playerTransform.position, globalRef.transform.position);
+
 
             SmoothLookAt();
             ManageCurrentNavMeshLink();
@@ -73,11 +78,11 @@ namespace State.AICAC
             if(baseMoveAICACSO.currentCoolDownAttack >0)
             {
                 baseMoveAICACSO.currentCoolDownAttack -= Time.deltaTime;
-                destination = CheckNavMeshPoint(globalRef.destination);
+                destination = CheckNavMeshPoint(globalRef.destinationSurround);
 
-                if(Vector3.Distance(destination, globalRef.transform.position) < 1f || globalRef.agent.velocity.magnitude <1f)
+                if (Vector3.Distance(destination, globalRef.transform.position) < baseMoveAICACSO.distStopSurround || globalRef.agent.velocity.magnitude <1f)
                 {
-                    baseMoveAICACSO.currentCoolDownAttack = 0.1f;
+                    baseMoveAICACSO.currentCoolDownAttack = 0;
                 }
             }
             else
@@ -102,6 +107,7 @@ namespace State.AICAC
                     globalRef.agent.ActivateCurrentOffMeshLink(false);
                     navLink = globalRef.agent.navMeshOwner as NavMeshLink;
                     globalRef.agentLinkMover.m_Curve.AddKey(0.5f, Mathf.Abs((navLink.endPoint.y - navLink.startPoint.y)/1.5f));
+                    globalRef.agentLinkMover._height = Mathf.Abs((navLink.endPoint.y - navLink.startPoint.y) / 1.5f);
                 }
 
                 if (!isOnNavLink)
@@ -169,9 +175,12 @@ namespace State.AICAC
                 }
                 else
                 {
-                    if (Vector3.Distance(destination, globalRef.transform.position) < baseMoveAICACSO.distStopSurround && activeSurround)
+                    if (activeSurround)
                     {
-                        destination = CheckNavMeshPoint(globalRef.destination);
+                        if (Vector3.Distance(globalRef.destinationSurround, globalRef.transform.position) > baseMoveAICACSO.distStopSurround)
+                            destination = CheckNavMeshPoint(globalRef.destinationSurround);
+                        else
+                            activeSurround = false;
                     }
                     else
                     {
@@ -187,7 +196,7 @@ namespace State.AICAC
                             destination = CheckNavMeshPoint(playerPosAnticip);
                         }
 
-                        if (Vector3.Distance(globalRef.playerTransform.position, globalRef.transform.position) >= globalRef.surroundManager.radius)
+                        if (Vector3.Distance(globalRef.playerTransform.position, globalRef.transform.position) > (globalRef.surroundManager.radius + baseMoveAICACSO.distStopSurround))
                         {
                             activeSurround = true;
                         }
