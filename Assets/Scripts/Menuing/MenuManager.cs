@@ -56,13 +56,25 @@ public class MenuManager : LocalManager<MenuManager>
     public Submenu CurrentMenu;
 
     //Fade to black when loading a scene
+    [Foldout("Loading")]
+    [SerializeField] Image _loading;
     [Foldout("Fading")]
     [SerializeField] Image _fade;
     [Foldout("Fading")]
     [SerializeField]
-    float _sceneFadingDuration = 1f;
-    private float _fadingT;
+    const float _sceneFadingDuration = 1f;
     private bool _isFading = false;
+    private float _currentFadeDuration;
+    private float _fadingT;
+    [Foldout("Fading")]
+    [SerializeField]
+    const float _sceneUnfadingDuration = .5f;
+    private bool _isUnfading = false;
+    private float _currentUnfadeDuration;
+    private float _unfadingT;
+    [Foldout("Fading")]
+    [SerializeField]
+    AnimationCurve _unfadingCurve;
 
     [Foldout("Things to disable on pause")]
     [SerializeField] Volume _postProcessVolume;
@@ -102,9 +114,10 @@ public class MenuManager : LocalManager<MenuManager>
     void Start()
     {
         DebugManager.instance.enableRuntimeUI = false;
+        StartUnfading(_sceneUnfadingDuration);
     }
 
-    void OnEnable()
+    public void StartMenuing()
     {
         EnableMenuInputs();
         _menuParent.SetActive(true);
@@ -128,7 +141,7 @@ public class MenuManager : LocalManager<MenuManager>
         }
     }
 
-    void OnDisable()
+    public void StopMenuing()
     {
         DisableMenuInputs();
         if (_menuParent)
@@ -288,20 +301,29 @@ public class MenuManager : LocalManager<MenuManager>
 
     void StartLoadingScene(int scene)
     {
-        _isFading = true;
-        _fadingT = 0f;
-        _fade.gameObject.SetActive(true);
+        StartFading(_sceneFadingDuration);
+        _loading.gameObject.SetActive(true);
 
+        DisableMenuInputs();
         SceneManager.LoadSceneAsync(scene);
         Time.timeScale = 1;
     }
 
     void StartExiting()
     {
+        StartFading(_sceneFadingDuration);
+        _loading.gameObject.SetActive(true);
+
+        DisableMenuInputs();
+        Application.Quit();
+    }
+
+    public void StartFading(float length)
+    {
         _isFading = true;
         _fadingT = 0f;
+        _currentFadeDuration = length;
         _fade.gameObject.SetActive(true);
-        Application.Quit();
     }
 
     void Update()
@@ -309,8 +331,32 @@ public class MenuManager : LocalManager<MenuManager>
         if (_isFading)
         {
             _fadingT += Time.unscaledDeltaTime;
-            _fade.color = new Color(_fade.color.r, _fade.color.g, _fade.color.b, Mathf.InverseLerp(0, _sceneFadingDuration, _fadingT));
+            _fade.color = new Color(0, 0, 0, Mathf.InverseLerp(0, _currentFadeDuration, _fadingT));
+            if (_fadingT >= _currentFadeDuration)
+            {
+                _isFading = false;
+                _fade.color = Color.black;
+            }
         }
+        if (_isUnfading)
+        {
+            _unfadingT += Time.unscaledDeltaTime;
+            _fade.color = new Color(0, 0, 0, Mathf.Lerp(1, 0, _unfadingCurve.Evaluate(Mathf.InverseLerp(0, _currentUnfadeDuration, _unfadingT))));
+            if (_unfadingT >= _currentUnfadeDuration)
+            {
+                _isUnfading = false;
+                _fade.color = new Color(0, 0, 0, 0);
+                _fade.gameObject.SetActive(false);
+            }
+        }
+    }
+
+    public void StartUnfading(float length)
+    {
+        _fade.gameObject.SetActive(true);
+        _isUnfading = true;
+        _unfadingT = 0f;
+        _currentUnfadeDuration = length;
     }
     #endregion
 

@@ -67,7 +67,7 @@ public class PlayerManager : LocalManager<PlayerManager>
     private void Start()
     {
         _isPaused = false;
-        MenuManager.Instance.gameObject.SetActive(false);
+        MenuManager.Instance.StopMenuing();
         _isLockedAt60 = false;
     }
 
@@ -177,7 +177,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         _isPaused = true;
         // _menu.SetActive(true);
 
-        MenuManager.Instance.gameObject.SetActive(true);
+        MenuManager.Instance.StartMenuing();
         MenuManager.Instance.OpenMain();
         StopGame();
     }
@@ -187,7 +187,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         _isPaused = false;
         // _menu.SetActive(false);
 
-        MenuManager.Instance.gameObject.SetActive(false);
+        MenuManager.Instance.StopMenuing();
         ResumeGame();
     }
 
@@ -233,7 +233,7 @@ public class PlayerManager : LocalManager<PlayerManager>
     {
         _isDying = false;
         // _menu.SetActive(true);
-        MenuManager.Instance.gameObject.SetActive(true);
+        MenuManager.Instance.StartMenuing();
         MenuManager.Instance.OpenDeath();
         StopGame();
     }
@@ -242,7 +242,7 @@ public class PlayerManager : LocalManager<PlayerManager>
     {
         // _menu.SetActive(true);
         _canPause = false;
-        MenuManager.Instance.gameObject.SetActive(true);
+        MenuManager.Instance.StartMenuing();
         MenuManager.Instance.OpenWin();
         StopGame();
     }

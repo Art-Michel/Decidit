@@ -98,6 +98,7 @@ public class Room : MonoBehaviour
 
     public void CheckForEnemies()
     {
+        Debug.Log(CurrentEnemiesInRoom + " left in " + gameObject.name);
         if (CurrentEnemiesInRoom <= 0)
         {
             PlayerManager.Instance.StartSlowMo(0.01f, 2f);
