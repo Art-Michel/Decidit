@@ -24,6 +24,7 @@ public class Health : MonoBehaviour
     protected float _probHp;
     protected bool _hasProbation;
     protected float _probationStartup;
+    public bool IsInvulnerable;
 
     protected virtual void Awake()
     {
@@ -31,6 +32,7 @@ public class Health : MonoBehaviour
     }
     protected virtual void Start()
     {
+        IsInvulnerable = false;
         _probHp = _hp;
         _hasProbation = false;
         DisplayHealth();
@@ -45,6 +47,9 @@ public class Health : MonoBehaviour
 
     public virtual void TakeDamage(int damage)
     {
+        if (IsInvulnerable)
+            return;
+
         _hp -= damage;
         DisplayHealth();
         StartProbHealth();

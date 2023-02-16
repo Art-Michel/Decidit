@@ -107,6 +107,7 @@ public class AragonArm : Arm
         //Prepare
         _crossHairOutline.enabled = false;
         PlaceHolderSoundManager.Instance.PlayDashSound();
+        _player.PlayerHealth.IsInvulnerable = true;
         _player.AllowMovement(false);
         _player.KillMomentum();
         _player.CharaCon.detectCollisions = false;
@@ -240,6 +241,7 @@ public class AragonArm : Arm
     {
         _player.AllowMovement(true);
         _player.KillMomentum();
+        _player.PlayerHealth.IsInvulnerable = false;
         _player.CharaCon.detectCollisions = true;
         StopDashFeedbacks();
         _player.AddMomentum((_dashDestination - _dashStartPosition) * _momentumPostDash);

@@ -24,6 +24,8 @@ public class Player : LocalManager<Player>
     public CharacterController CharaCon;
     [Foldout("References")]
     [SerializeField] LayerMask _collisionMask;
+    [Foldout("References")]
+    public PlayerHealth PlayerHealth;
     PlayerInputMap _inputs;
     PlayerFSM _fsm;
     PlayerHealth _playerHealth;

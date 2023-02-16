@@ -46,14 +46,15 @@ public class PlayerHealth : Health
 
     public override void TakeDamage(int amount)
     {
-        if (amount >= 1)
-        {
-            base.TakeDamage(amount);
-            PlaceHolderSoundManager.Instance.PlayHurt();
-            //cool magic numbers
-            float shakeIntensity = _playerHurtShakeMaxStrength * Mathf.InverseLerp(0, 40, amount + 10);
-            Player.Instance.StartShake(shakeIntensity, _playerHurtShakeDuration);
-        }
+        if (amount <= 1 || IsInvulnerable)
+            return;
+
+        base.TakeDamage(amount);
+        PlaceHolderSoundManager.Instance.PlayHurt();
+        //cool magic numbers
+        float shakeIntensity = _playerHurtShakeMaxStrength * Mathf.InverseLerp(0, 40, amount + 10);
+        Player.Instance.StartShake(shakeIntensity, _playerHurtShakeDuration);
+
     }
 
     public override void Knockback(Vector3 direction)
