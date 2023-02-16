@@ -193,9 +193,11 @@ namespace State.AICAC
                         }
                     }
 
-                    SlowSpeed(globalRef.isInEylau);
                     if(!isOnNavLink)
+                    {
+                        SlowSpeed(globalRef.isInEylau);
                         globalRef.agent.SetDestination(destination);
+                    }
                     currentRateRepath = maxRateRepath;
                 }
             }

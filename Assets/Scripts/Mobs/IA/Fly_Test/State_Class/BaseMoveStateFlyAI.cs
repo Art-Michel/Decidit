@@ -34,6 +34,12 @@ namespace State.FlyAI
             state = StateControllerFlyAI.AIState.BaseMove;
         }
 
+        private void OnEnable()
+        {
+            if (globalRef != null && globalRef.myAnimator != null)
+                AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "FlyIdle");
+        }
+
         private void Start()
         {
             baseMoveFlySO = globalRef.baseMoveFlySO;

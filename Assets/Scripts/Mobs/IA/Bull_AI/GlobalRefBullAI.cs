@@ -23,6 +23,7 @@ namespace State.AIBull
         [Header("Animation")]
         public Animator myAnimator;
         public GlobalRefAnimator globalRefAnimator;
+        public AnimEventRusher animEventRusher;
 
         [Header("Slow Move References")]
         public bool isInEylau;

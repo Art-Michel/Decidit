@@ -26,6 +26,9 @@ namespace State.FlyAI
 
         private void OnEnable()
         {
+            if (globalRef != null && globalRef.myAnimator != null)
+                AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "PreAttack");
+
             try
             {
                 globalRef.colliderBaseAttack.gameObject.SetActive(false);

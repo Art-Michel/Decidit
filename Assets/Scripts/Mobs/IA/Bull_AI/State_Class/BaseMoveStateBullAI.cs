@@ -7,6 +7,16 @@ namespace State.AIBull
     {
         [SerializeField] GlobalRefBullAI globalRef;
 
+        [Header("Nav Link")]
+        [SerializeField] float maxDurationNavLink;
+        bool triggerNavLink;
+        public bool isOnNavLink;
+        NavMeshLink link;
+        NavMeshLink navLink;
+        NavMeshHit closestHit;
+        Vector3 linkDestination;
+        bool lookForwardJump;
+
         public override void InitState(StateControllerBull stateController)
         {
             base.InitState(stateController);
@@ -14,13 +24,21 @@ namespace State.AIBull
             state = StateControllerBull.AIState.BaseMove;
         }
 
+        private void OnEnable()
+        {
+            if (globalRef != null && globalRef.myAnimator != null)
+                AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Walk");
+        }
+
         private void Update()
         {
-            BaseMovement();
-            Debug.Log(globalRef.agent.isOnOffMeshLink);
-            
-            if(!globalRef.agent.isOnOffMeshLink)
+            ManageCurrentNavMeshLink();
+            SmoothLookAtPlayer();
+
+            if (!isOnNavLink)
             {
+                BaseMovement();
+
                 if (globalRef.launchRush)
                     LaunchRush();
                 else if (globalRef.distPlayer < globalRef.baseMoveBullSO.distActiveRush)
@@ -31,14 +49,60 @@ namespace State.AIBull
             }
         }
 
+        void ManageCurrentNavMeshLink()
+        {
+            if (globalRef.agent.isOnOffMeshLink)
+            {
+                lookForwardJump = true;
+                globalRef.agent.autoTraverseOffMeshLink = false;
+
+                if (navLink == null)
+                {
+                    globalRef.agent.ActivateCurrentOffMeshLink(false);
+                    navLink = globalRef.agent.navMeshOwner as NavMeshLink;
+                    linkDestination = navLink.transform.position - transform.position;
+                    globalRef.agentLinkMover.m_Curve.AddKey(0.5f, Mathf.Abs((navLink.endPoint.y - navLink.startPoint.y) / 1.5f));
+                }
+
+                if (!isOnNavLink)
+                {
+                    isOnNavLink = true;
+                    globalRef.agent.speed = 0;
+                    AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "StartJump");
+                }
+
+                if (maxDurationNavLink > 0) // jump Current duration
+                {
+                    maxDurationNavLink -= Time.deltaTime;
+                }
+                else // jump End duration
+                {
+                    globalRef.agent.ActivateCurrentOffMeshLink(true);
+                    AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "EndJump");
+                }
+            }
+            else
+            {
+                lookForwardJump = false;
+
+                if (navLink != null)
+                {
+                    globalRef.animEventRusher.EndJump();
+                    navLink.UpdateLink();
+                    navLink = null;
+                    maxDurationNavLink = globalRef.agentLinkMover._duration;
+                }
+            }
+        }
+
         void BaseMovement()
         {
             Vector3 newDestination;
             globalRef.agent.speed = globalRef.baseMoveBullSO.baseSpeed;
             newDestination = globalRef.playerTransform.position + (globalRef.playerTransform.right * globalRef.offsetDestination);
 
+            SlowSpeed(globalRef.isInEylau);
             globalRef.agent.SetDestination(CheckNavMeshPoint(newDestination));
-            SmoothLookAtPlayer();
             if (globalRef.distPlayer < globalRef.baseAttackBullSO.attackRange)
             {
                 //stateController.SetActiveState(StateControllerBull.AIState.WaitBeforeRush);
@@ -53,6 +117,19 @@ namespace State.AIBull
             }
             return newDestination;
         }
+        void SlowSpeed(bool active)
+        {
+            if (active)
+            {
+                globalRef.slowSpeedRot = globalRef.agent.speed / globalRef.slowRatio;
+                globalRef.agent.speed = globalRef.slowSpeedRot;
+            }
+            else
+            {
+                if (globalRef.agent.speed == globalRef.slowSpeedRot)
+                    globalRef.agent.speed *= globalRef.slowRatio;
+            }
+        }
 
         void LaunchRush()
         {
@@ -64,21 +141,55 @@ namespace State.AIBull
             Vector3 direction;
             Vector3 relativePos;
 
-            direction = globalRef.agent.destination;
+            if(lookForwardJump)
+            {
+                direction = linkDestination;
 
-            relativePos.x = direction.x - globalRef.transform.position.x;
-            relativePos.y = 0;
-            relativePos.z = direction.z - globalRef.transform.position.z;
+                relativePos.x = direction.x;
+                relativePos.y = 0;
+                relativePos.z = direction.z;
 
-            if (globalRef.baseMoveBullSO.speedRot < globalRef.baseMoveBullSO.maxSpeedRot)
-                globalRef.baseMoveBullSO.speedRot += Time.deltaTime / globalRef.baseMoveBullSO.smoothRot;
+                SlowRotation(globalRef.isInEylau);
+                Quaternion rotation = Quaternion.Slerp(globalRef.transform.rotation, Quaternion.LookRotation(relativePos, Vector3.up), globalRef.baseMoveBullSO.speedRot);
+                globalRef.transform.rotation = rotation;
+            }
+            else if(!isOnNavLink)
+            {
+                direction = globalRef.agent.desiredVelocity;
+
+                relativePos.x = direction.x;
+                relativePos.y = 0;
+                relativePos.z = direction.z;
+
+                SlowRotation(globalRef.isInEylau);
+                Quaternion rotation = Quaternion.Slerp(globalRef.transform.rotation, Quaternion.LookRotation(relativePos, Vector3.up), globalRef.baseMoveBullSO.speedRot);
+                globalRef.transform.rotation = rotation;
+            }
+        }
+        void SlowRotation(bool active)
+        {
+            if (active)
+            {
+                if (globalRef.baseMoveBullSO.speedRot < (globalRef.baseMoveBullSO.maxSpeedRot / globalRef.slowRatio))
+                {
+                    globalRef.baseMoveBullSO.speedRot += Time.deltaTime / (globalRef.baseMoveBullSO.smoothRot * globalRef.slowRatio);
+                }
+                else
+                {
+                    globalRef.baseMoveBullSO.speedRot = (globalRef.baseMoveBullSO.maxSpeedRot / globalRef.slowRatio);
+                }
+            }
             else
             {
-                globalRef.baseMoveBullSO.speedRot = globalRef.baseMoveBullSO.maxSpeedRot;
+                if (globalRef.baseMoveBullSO.speedRot < globalRef.baseMoveBullSO.maxSpeedRot)
+                {
+                    globalRef.baseMoveBullSO.speedRot += Time.deltaTime / globalRef.baseMoveBullSO.smoothRot;
+                }
+                else
+                {
+                    globalRef.baseMoveBullSO.speedRot = globalRef.baseMoveBullSO.maxSpeedRot;
+                }
             }
-
-            Quaternion rotation = Quaternion.Slerp(globalRef.transform.rotation, Quaternion.LookRotation(relativePos, Vector3.up), globalRef.baseMoveBullSO.speedRot);
-            globalRef.transform.rotation = rotation;
         }
 
         private void OnDisable()

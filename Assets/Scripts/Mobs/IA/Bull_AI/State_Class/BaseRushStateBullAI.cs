@@ -18,7 +18,6 @@ namespace State.AIBull
 
         [Header("Rush Movement")]
         public Vector3 captureBasePosDistance;
-        [SerializeField] float debugSpeed;
 
         [Header("Position 2D")]
         Vector2 posPlayer;
@@ -36,6 +35,7 @@ namespace State.AIBull
             try
             {
                 globalRef.agent.enabled = false;
+                AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "PreAttack");
                 //SoundManager.instance.PlaySoundMobOneShot(globalRef.audioSourceBull, SoundManager.instance.soundAndVolumeRushMob[0]);
                 //Play SOUND PRE ATTACK RUSHER
 
@@ -50,8 +50,6 @@ namespace State.AIBull
 
         private void Update()
         {
-            debugSpeed = globalRef.characterController.velocity.magnitude;
-
             SetDestination();
             SmoothLookAtPlayer();
 
@@ -230,6 +228,7 @@ namespace State.AIBull
                         {
                             ShowSoonAttack(false);
                             rushBullSO.speedRot = rushBullSO.maxSpeedRot;
+                            AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Rush");
                             canStartRush = true;
                         }
                     }
@@ -247,6 +246,7 @@ namespace State.AIBull
                         {
                             ShowSoonAttack(false);
                             rushBullSO.speedRot = rushBullSO.maxSpeedRot;
+                            AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Rush");
                             canStartRush = true;
                         }
                     }

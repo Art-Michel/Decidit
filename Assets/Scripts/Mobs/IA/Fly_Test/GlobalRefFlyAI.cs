@@ -60,7 +60,6 @@ namespace State.FlyAI
             if (enemyHealth._hp <= 0 && !isDead)
             {
                 ActiveState(StateControllerFlyAI.AIState.Death);
-                //myAnimator.SetBool("Death", true);
                 isDead = true;
             }
         }

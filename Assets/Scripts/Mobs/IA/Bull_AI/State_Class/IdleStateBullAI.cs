@@ -13,6 +13,12 @@ namespace State.AIBull
             state = StateControllerBull.AIState.Idle;
         }
 
+        private void OnEnable()
+        {
+            if (globalRef != null && globalRef.myAnimator != null)
+                AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Idle");
+        }
+
         private void Update()
         {
             BaseIdle();

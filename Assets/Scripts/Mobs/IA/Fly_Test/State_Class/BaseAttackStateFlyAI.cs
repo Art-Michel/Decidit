@@ -34,6 +34,9 @@ namespace State.FlyAI
                 baseAttackFlySO.speedRotationAIAttack = 0;
             }
 
+            if (globalRef != null && globalRef.myAnimator != null)
+                AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Rush");
+
             /*if (SoundManager.instance != null)
                 SoundManager.instance.PlaySoundMobOneShot(globalRef.audioSourceFly, SoundManager.instance.soundAndVolumeFlyMob[1]);*/
 

@@ -348,6 +348,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c1426868ceeaa9438355d0ef38d88e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  globalRef: {fileID: 5407937164311034899}
 --- !u!1 &1167557322
 GameObject:
   m_ObjectHideFlags: 0
@@ -645,6 +646,7 @@ GameObject:
   - component: {fileID: 5407937164311034899}
   - component: {fileID: -2163490113976411781}
   - component: {fileID: 5160256997650002795}
+  - component: {fileID: 1154098350}
   m_Layer: 7
   m_Name: Empty_FlyAINavMesh
   m_TagString: Ennemi
@@ -723,9 +725,8 @@ MonoBehaviour:
   playerTransform: {fileID: 0}
   stateControllerFlyAI: {fileID: 5407937164311034900}
   enemyHealth: {fileID: 1522482573}
-  audioSourceFly: {fileID: -2163490113976411781}
-  myAnimator: {fileID: 0}
-  globalRefAnimator: {fileID: 0}
+  myAnimator: {fileID: 1154098350}
+  globalRefAnimator: {fileID: 5160256997650002795}
   isInEylau: 0
   slowSpeed: 8
   slowSpeedRot: 8
@@ -847,6 +848,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentAnimName: 
+--- !u!95 &1154098350
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5407937164410842285}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a8a2ed98e66ac054c90e70392310f7b3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5407937164474220353
 GameObject:
   m_ObjectHideFlags: 0
