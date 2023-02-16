@@ -5,7 +5,8 @@ using UnityEngine;
 public class Killplane : MonoBehaviour
 {
     [SerializeField] Transform _spawnPoint;
-    private const float _delay = 0.3f;
+    private const float _delay = 0.2f;
+    private const float _respawnUnfade = 0.1f;
     Queue<GameObject> _entitiesToRespawn;
 
     void Awake()
@@ -31,7 +32,7 @@ public class Killplane : MonoBehaviour
 
         if (entity.CompareTag("Player"))
         {
-            MenuManager.Instance.StartUnfading(_delay);
+            MenuManager.Instance.StartUnfading(_respawnUnfade);
             Player.Instance.KillMomentum();
 
             Player.Instance.CharaCon.detectCollisions = false;

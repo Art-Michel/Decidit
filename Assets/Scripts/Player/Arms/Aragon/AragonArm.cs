@@ -43,18 +43,18 @@ public class AragonArm : Arm
     [Foldout("Stats")]
     [SerializeField]
     AnimationCurve _dashMovementCurve;
+    // [Foldout("Stats")]
+    // [SerializeField]
+    // AnimationCurve _dashSpeedCurve;
     [Foldout("Stats")]
     [SerializeField]
-    AnimationCurve _dashSpeedCurve;
-    [Foldout("Stats")]
-    [SerializeField]
-    float _dashFovIncrease = 20f;
+    float _dashFovIncrease = 12f;
     [Foldout("Stats")]
     [SerializeField]
     float _maxVignetteAlpha = 0.3f;
     [Foldout("Stats")]
     [SerializeField]
-    private float _momentumPostDash = 2.5f;
+    private float _momentumPostDash = 1f;
 
     float _defaultFov;
     private Vector3 _dashStartPosition;
