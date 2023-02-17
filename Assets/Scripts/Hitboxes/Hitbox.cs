@@ -6,16 +6,27 @@ using System.Linq;
 
 public class Hitbox : MonoBehaviour
 {
+    [Foldout("Properties")]
     [SerializeField] protected LayerMask _shouldCollideWith;
-    [SerializeField] protected float _radius = .2f;
-    [SerializeField] protected int _damage = 10;
-    [SerializeField] protected float _knockbackForce = 10f;
-    [SerializeField] protected Vector3 _knockbackAngle = Vector3.zero;
+    [Foldout("Properties")]
     [SerializeField] protected bool _canHitThroughWalls;
+    [Foldout("Properties")]
     [HideIf("_canHitThroughWalls")][SerializeField] protected LayerMask _shouldNotHitThrough;
+    [Foldout("Properties")]
     [SerializeField] protected bool _canMultiHit = false;
-    [ShowIf("_canMultiHit")][SerializeField] protected float _delayBetweenHits = 0f;
+    [Foldout("Properties")]
     [SerializeField] private bool _shouldSplashBloodOnHit = false;
+
+    [Foldout("Stats")]
+    [SerializeField] protected float _radius = .2f;
+    [Foldout("Stats")]
+    [SerializeField] protected int _damage = 10;
+    [Foldout("Stats")]
+    [SerializeField] protected float _knockbackForce = 10f;
+    [Foldout("Stats")]
+    [SerializeField] protected Vector3 _knockbackAngle = Vector3.zero;
+    [Foldout("Stats")]
+    [ShowIf("_canMultiHit")][SerializeField] protected float _delayBetweenHits = 0f;
 
     public Dictionary<Transform, float> Blacklist { get; set; }
 

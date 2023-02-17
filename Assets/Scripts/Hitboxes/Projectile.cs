@@ -21,6 +21,7 @@ public class Projectile : Hitbox
     [SerializeField] private Pooler _impactVfxPooler;
     [Foldout("References")]
     [SerializeField] private Pooler _fleshSplashVfxPooler;
+
     [Foldout("Properties")]
     [SerializeField] protected bool _shouldLeaveImpact;
     [Foldout("Properties")]
@@ -31,6 +32,7 @@ public class Projectile : Hitbox
     [SerializeField] private bool _explodesOnHit;
     [Foldout("References")]
     [SerializeField][ShowIf("_explodesOnHit")] private GameObject _explosion;
+
     [Foldout("Stats")]
     [SerializeField] protected float _speed = 100f;
     [Foldout("Stats")]
