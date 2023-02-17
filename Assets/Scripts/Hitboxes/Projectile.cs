@@ -7,21 +7,37 @@ using NaughtyAttributes;
 [RequireComponent(typeof(PooledObject))]
 public class Projectile : Hitbox
 {
-    [Header("Projectile values")]
+    [Foldout("References")]
+    [SerializeField] ProjectileOscillator _oscillator;
+    [Foldout("References")]
     [SerializeField] private PooledObject _pooledObject;
+    [Foldout("References")]
     [SerializeField] private GameObject _mesh;
+    [Foldout("References")]
     [SerializeField] private TrailRenderer _trailRenderer;
+    [Foldout("References")]
     [SerializeField] private MonoBehaviour _trailMaterial;
+    [Foldout("References")]
     [SerializeField] private Pooler _impactVfxPooler;
+    [Foldout("References")]
     [SerializeField] private Pooler _fleshSplashVfxPooler;
+    [Foldout("Properties")]
     [SerializeField] protected bool _shouldLeaveImpact;
+    [Foldout("Properties")]
     [SerializeField] private bool _bounces;
+    [Foldout("Properties")]
     [SerializeField][ShowIf("_bounces")][Range(0f, 1f)] protected float _bounciness;
+    [Foldout("Properties")]
     [SerializeField] private bool _explodesOnHit;
+    [Foldout("References")]
     [SerializeField][ShowIf("_explodesOnHit")] private GameObject _explosion;
+    [Foldout("Stats")]
     [SerializeField] protected float _speed = 100f;
+    [Foldout("Stats")]
     [SerializeField] protected float _currentSpeed;
+    [Foldout("Stats")]
     [SerializeField] private float _lifeSpan = 5f;
+    [Foldout("Stats")]
     [SerializeField] private float _trailDelay = 0.025f;
     private float _lifeT;
     private float _trailDelayT;
@@ -34,6 +50,10 @@ public class Projectile : Hitbox
     public virtual void Setup(Vector3 position, Vector3 direction)
     {
         transform.position = position;
+        transform.rotation = Camera.main.transform.rotation;
+        if (_oscillator != null)
+            _oscillator.Setup();
+
         _direction = direction;
         _lifeT = _lifeSpan;
         _trailDelayT = _trailDelay; //Delay before spawning the trail
