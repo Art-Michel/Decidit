@@ -64,9 +64,8 @@ public class Explosion : Hitbox
         _hitboxT = _hitboxSpan;
         _knockbackForce = _initialKnockbackForce;
         _damage = (int)_initialDamage;
-        PlayMuseExplosion();
+        //!SFX Explosion 
         StartExplosionShake();
-
         ClearBlacklist();
     }
 

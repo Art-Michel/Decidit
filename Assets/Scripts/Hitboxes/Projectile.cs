@@ -7,8 +7,7 @@ using NaughtyAttributes;
 [RequireComponent(typeof(PooledObject))]
 public class Projectile : Hitbox
 {
-    [Foldout("References")]
-    [SerializeField] ProjectileOscillator _oscillator;
+
     [Foldout("References")]
     [SerializeField] private PooledObject _pooledObject;
     [Foldout("References")]
@@ -53,8 +52,6 @@ public class Projectile : Hitbox
     {
         transform.position = position;
         transform.rotation = Camera.main.transform.rotation;
-        if (_oscillator != null)
-            _oscillator.Setup();
 
         _direction = direction;
         _lifeT = _lifeSpan;
