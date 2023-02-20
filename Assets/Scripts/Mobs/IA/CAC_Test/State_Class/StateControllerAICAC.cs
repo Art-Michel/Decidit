@@ -9,7 +9,7 @@ namespace State.AICAC
 
         public enum AIState
         {
-            BaseIdle, BaseMove, Dodge, BaseAttack, BaseDeath, SurroundPlayer
+            BaseIdle, BaseMove, Dodge, BaseAttack, KnockBack, BaseDeath, SurroundPlayer
         }
 
         private Dictionary<AIState, _StateAICAC> stateDictionary = new Dictionary<AIState, _StateAICAC>();
