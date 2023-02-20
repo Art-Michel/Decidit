@@ -83,7 +83,7 @@ public class MenuManager : LocalManager<MenuManager>
 
     //Devices 
     public enum Devices { Controller, Keyboard, Mouse }
-    Devices _currentDevice;
+    public Devices CurrentDevice;
 
     protected override void Awake()
     {
@@ -193,7 +193,7 @@ public class MenuManager : LocalManager<MenuManager>
         }
         CurrentMenu.gameObject.SetActive(true);
 
-        if (_currentDevice == Devices.Controller || _currentDevice == Devices.Keyboard)
+        if (CurrentDevice == Devices.Controller || CurrentDevice == Devices.Keyboard)
             _eventSys.SetSelectedGameObject(CurrentMenu.FirstButton);
     }
 
@@ -365,10 +365,10 @@ public class MenuManager : LocalManager<MenuManager>
     {
         _eventSys.sendNavigationEvents = true;
 
-        if (_currentDevice == Devices.Controller)
+        if (CurrentDevice == Devices.Controller)
             return;
-        bool wasUsingMouse = _currentDevice == Devices.Mouse;
-        _currentDevice = Devices.Controller;
+        bool wasUsingMouse = CurrentDevice == Devices.Mouse;
+        CurrentDevice = Devices.Controller;
 
 
         if (wasUsingMouse)
@@ -381,10 +381,10 @@ public class MenuManager : LocalManager<MenuManager>
     {
         _eventSys.sendNavigationEvents = true;
 
-        if (_currentDevice == Devices.Keyboard)
+        if (CurrentDevice == Devices.Keyboard)
             return;
-        bool wasUsingMouse = _currentDevice == Devices.Mouse;
-        _currentDevice = Devices.Keyboard;
+        bool wasUsingMouse = CurrentDevice == Devices.Mouse;
+        CurrentDevice = Devices.Keyboard;
 
 
         if (wasUsingMouse)
@@ -397,7 +397,6 @@ public class MenuManager : LocalManager<MenuManager>
     {
         //get button under mouse if there is any
         GameObject buttonUnderMouse = CheckUnderMouse();
-        Cursor.visible = false;
 
         if (buttonUnderMouse == null)
         {
@@ -434,11 +433,11 @@ public class MenuManager : LocalManager<MenuManager>
 
     private void SwitchToMouse()
     {
-        if (_currentDevice == Devices.Mouse)
+        if (CurrentDevice == Devices.Mouse)
             return;
 
         Cursor.visible = true;
-        _currentDevice = Devices.Mouse;
+        CurrentDevice = Devices.Mouse;
         _lastSelectedObject = _eventSys.currentSelectedGameObject;
         _eventSys.SetSelectedGameObject(null);
     }

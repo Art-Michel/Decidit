@@ -62,6 +62,8 @@ public class PlayerManager : LocalManager<PlayerManager>
         _inputs.Debugging.DisplayFramerate.started += _ => DisplayFramerate();
         _inputs.MenuNavigation.Pause.started += _ => PressPause();
         _inputs.Debugging.Lock.started += _ => LockFramerate();
+        _inputs.MenuNavigation.anyButton.started += _ => SwitchToController();
+        _inputs.MenuNavigation.moveMouse.started += _ => SwitchToMouse();
     }
 
     private void Start()
@@ -351,6 +353,23 @@ public class PlayerManager : LocalManager<PlayerManager>
         _rumbleT = 0;
         _isRumbling = false;
     }
+    #endregion
+
+    #region Change current device
+    private void SwitchToMouse()
+    {
+        if (MenuManager.Instance.CurrentDevice == MenuManager.Devices.Mouse)
+            return;
+        MenuManager.Instance.CurrentDevice = MenuManager.Devices.Mouse;
+    }
+
+    private void SwitchToController()
+    {
+        if (MenuManager.Instance.CurrentDevice == MenuManager.Devices.Controller)
+            return;
+        MenuManager.Instance.CurrentDevice = MenuManager.Devices.Controller;
+    }
+
     #endregion
 
     #region Enable Disable Inputs
