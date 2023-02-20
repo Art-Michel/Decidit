@@ -9,7 +9,7 @@ namespace State.AIBull
 
         public enum AIState
         {
-            Idle, BaseMove, Rush, KnockBack, Death
+            Idle, BaseMove, Rush, Death
         }
 
         private Dictionary<AIState, _StateBull> stateDictionary = new Dictionary<AIState, _StateBull>();

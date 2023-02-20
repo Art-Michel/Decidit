@@ -85,10 +85,5 @@ namespace State.AIBull
         {
             stateControllerBull.SetActiveState(newState);
         }
-
-        public void ActiveKnockBackState()
-        {
-            ActiveState(StateControllerBull.AIState.KnockBack);
-        }
     }
 }

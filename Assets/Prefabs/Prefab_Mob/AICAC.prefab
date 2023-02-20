@@ -150,17 +150,17 @@ MonoBehaviour:
   _shouldCollideWith:
     serializedVersion: 2
     m_Bits: 16384
+  _radius: 0.2
+  _damage: 10
+  _knockbackForce: 40
+  _knockbackAngle: {x: 0, y: 0, z: 0}
   _canHitThroughWalls: 0
   _shouldNotHitThrough:
     serializedVersion: 2
     m_Bits: 0
   _canMultiHit: 0
-  _shouldSplashBloodOnHit: 0
-  _radius: 0.2
-  _damage: 10
-  _knockbackForce: 40
-  _knockbackAngle: {x: 0, y: 0, z: 0}
   _delayBetweenHits: 0
+  _shouldSplashBloodOnHit: 0
 --- !u!1 &564689861
 GameObject:
   m_ObjectHideFlags: 0
@@ -360,7 +360,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1576430254}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1130150010
 MonoBehaviour:
@@ -598,7 +598,6 @@ Transform:
   - {fileID: 564689862}
   - {fileID: 69837511}
   - {fileID: 1622473882}
-  - {fileID: 8966289886240283534}
   - {fileID: 1130150009}
   m_Father: {fileID: 3888318928632032891}
   m_RootOrder: 10
@@ -917,55 +916,6 @@ Transform:
   m_Father: {fileID: 3888318928632032891}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &3106220702997451898
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8966289886240283534}
-  - component: {fileID: 2659827835744889100}
-  m_Layer: 7
-  m_Name: KnockBack
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8966289886240283534
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3106220702997451898}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1576430254}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2659827835744889100
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3106220702997451898}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5388a92ecdbc769409645eb0549db26c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  globalRef: {fileID: 686522204}
-  knockBackDirection: {x: 0, y: 0, z: 0}
-  distDetectGround: 1
-  isGround: 0
-  isFall: 0
 --- !u!1 &3888318927419110193
 GameObject:
   m_ObjectHideFlags: 0
@@ -1136,7 +1086,6 @@ GameObject:
   - component: {fileID: 5934521562026886925}
   - component: {fileID: 2341046240974596424}
   - component: {fileID: 3995594547456311649}
-  - component: {fileID: 9001087971601091765}
   m_Layer: 7
   m_Name: AICAC
   m_TagString: Ennemi
@@ -1280,7 +1229,6 @@ MonoBehaviour:
   _maxHp: 40
   _probationMaxStartup: 1
   _probationSpeed: 15
-  IsInvulnerable: 0
   _canvas: {fileID: 1267908144}
   _material: {fileID: 2100000, guid: 1fa0c89a0057b564d95c65f7c6811243, type: 2}
   _deathVfx: {fileID: 8782500626266542195, guid: 4e088f7fded15e04a95d92413fada8e4,
@@ -1296,9 +1244,6 @@ MonoBehaviour:
   _disappearSpeed: 4
   _disappearMaxStartup: 1
   _deathAnimationDuration: 1
-  KnockBackDir: {x: 0, y: 0, z: 0}
-  globalRefAICAC: {fileID: 686522204}
-  globalRefBullAI: {fileID: 0}
 --- !u!114 &1127582834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1334,7 +1279,6 @@ MonoBehaviour:
   spawnSurroundDodge: {fileID: 0}
   agent: {fileID: 0}
   aICACVarianteState: {fileID: 0}
-  enemyHealth: {fileID: 0}
   material_Instances: {fileID: 0}
   distPlayer: 0.3
   stateControllerTrashMob: {fileID: 686522203}
@@ -1350,7 +1294,6 @@ MonoBehaviour:
   agentLinkMover: {fileID: 0}
   destinationSurround: {x: 0, y: 0, z: 0}
   surroundManager: {fileID: 0}
-  characterController: {fileID: 9001087971601091765}
   spawnRayDodge: {fileID: 3888318928596240787}
   hitBox: {fileID: 279298340}
   listOtherCACAI: []
@@ -1361,7 +1304,6 @@ MonoBehaviour:
   deathAICACSO: {fileID: 11400000, guid: dc8db8d5999a8bd4da97d511ab447c98, type: 2}
   dodgeAICACSO: {fileID: 11400000, guid: 1c92f91e1db20e944af1dacac5b67eb8, type: 2}
   surroundAICACSO: {fileID: 11400000, guid: d0dc0bc23cf4bff49bca5e1b6e419ff7, type: 2}
-  knockBackAICAC: {fileID: 11400000, guid: c7e0185d63a16284d90ed91a06651c85, type: 2}
 --- !u!114 &686522203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1380,7 +1322,6 @@ MonoBehaviour:
   - {fileID: 564689863}
   - {fileID: 69837512}
   - {fileID: 1622473883}
-  - {fileID: 2659827835744889100}
   - {fileID: 1130150010}
 --- !u!114 &591862396
 MonoBehaviour:
@@ -1459,7 +1400,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 3888318928632032895}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   m_Radius: 0.6
   m_Height: 1.9999999
   m_Direction: 2
@@ -1589,24 +1530,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentAnimName: 
---- !u!143 &9001087971601091765
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3888318928632032895}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Height: 0.5
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3888318928693326222
 GameObject:
   m_ObjectHideFlags: 0

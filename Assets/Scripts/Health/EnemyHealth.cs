@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.VFX;
-using State.AIBull;
-using State.AICAC;
 
 public class EnemyHealth : Health
 {
@@ -43,11 +41,6 @@ public class EnemyHealth : Health
     bool _healthBarIsVisible;
     float _deathT;
     bool _isDying;
-
-    [Header("KnockBack IA")]
-    public Vector3 KnockBackDir;
-    [SerializeField] GlobalRefAICAC globalRefAICAC;
-    [SerializeField] GlobalRefBullAI globalRefBullAI;
 
     protected override void Awake()
     {
@@ -148,17 +141,6 @@ public class EnemyHealth : Health
             _appearT = Mathf.Clamp01(_appearT - Time.deltaTime * _disappearSpeed);
             _canvasGroup.alpha = Mathf.Lerp(0, 1, _appearT);
         }
-    }
-
-    public override void Knockback(Vector3 direction)
-    {
-        KnockBackDir = direction;
-        Debug.Log("Launch KnockBack");
-
-        if (globalRefBullAI != null)
-            globalRefBullAI.ActiveKnockBackState();
-        else if (globalRefAICAC != null)
-            globalRefAICAC.ActiveKnockBackState();
     }
 
     protected override void Death()
