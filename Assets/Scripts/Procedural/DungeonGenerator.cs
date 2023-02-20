@@ -40,7 +40,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
             ClearDungeon();
         }
 
-        // randomizing seed
+        //* randomizing seed
         if (_randomizeSeed)
         {
             _seed = Random.Range(0, 1000);
@@ -51,7 +51,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
         _rooms = new List<Room>(_length + 2 + (_length + 1));
         _rooms.Add(_starterRoom.Get());
 
-        // variables pour r�partir la difficult� (difficulty) en fonction du nombre de salles et de la longueur du donjon (stackCount)
+        //* variables pour r�partir la difficult� (difficulty) en fonction du nombre de salles et de la longueur du donjon (stackCount)
         int stackCount = Mathf.RoundToInt(_length / 3f);
         int difficulty = 0;
 
@@ -59,7 +59,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
         {
             _rooms.Add(Corridors[Random.Range(0, Corridors.Count)].Get());
 
-            // passe � la difficult� suivante
+            //* passe � la difficult� suivante
             if (stackCount <= 0)
             {
                 difficulty++;
@@ -67,7 +67,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
                 stackCount = Mathf.RoundToInt(_length / 3f);
             }
 
-            // ajoute une salle avec une difficult� pr�d�fini
+            //* ajoute une salle avec une difficult� pr�d�fini
             _rooms.Add(RoomSets[difficulty].Get());
             stackCount--;
         }
