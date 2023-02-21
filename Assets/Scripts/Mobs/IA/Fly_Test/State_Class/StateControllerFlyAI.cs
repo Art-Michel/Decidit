@@ -9,7 +9,7 @@ namespace State.FlyAI
 
         public enum AIState
         {
-            BaseMove, LockPlayer, BaseAttack, Death
+            BaseMove, LockPlayer, BaseAttack, KnockBack, Death
         }
 
         private Dictionary<AIState, _StateFlyAI> stateDictionary = new Dictionary<AIState, _StateFlyAI>();

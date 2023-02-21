@@ -13,6 +13,8 @@ public class BaseMoveBullParameterSO : ScriptableObject
     [Header("Speed Movement Parameter")]
     public float baseSpeed;
     public float stopSpeed;
+    public float delayBeforeJump;
+    public float maxDelayBeforeJump;
 
     [Header("Distance Player Active Rush")]
     public float distActiveRush;

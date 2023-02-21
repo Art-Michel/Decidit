@@ -334,7 +334,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1824420021}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1098985820
 MonoBehaviour:
@@ -472,17 +472,17 @@ MonoBehaviour:
   _shouldCollideWith:
     serializedVersion: 2
     m_Bits: 16384
-  _radius: 0.3
-  _damage: 25
-  _knockbackForce: 10
-  _knockbackAngle: {x: 0, y: 0, z: 0}
   _canHitThroughWalls: 0
   _shouldNotHitThrough:
     serializedVersion: 2
     m_Bits: 0
   _canMultiHit: 0
-  _delayBetweenHits: 0
   _shouldSplashBloodOnHit: 0
+  _radius: 0.3
+  _damage: 25
+  _knockbackForce: 10
+  _knockbackAngle: {x: 0, y: 0, z: 0}
+  _delayBetweenHits: 0
 --- !u!1 &1824420020
 GameObject:
   m_ObjectHideFlags: 0
@@ -514,6 +514,7 @@ Transform:
   - {fileID: 612212353}
   - {fileID: 506913319}
   - {fileID: 910883178}
+  - {fileID: 7226811890516005274}
   - {fileID: 1098985819}
   m_Father: {fileID: 5407937165128473248}
   m_RootOrder: 6
@@ -632,6 +633,56 @@ CanvasGroup:
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
+--- !u!1 &4159217019097026705
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7226811890516005274}
+  - component: {fileID: 8470461023389455444}
+  m_Layer: 7
+  m_Name: KnockBack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7226811890516005274
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4159217019097026705}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1824420021}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8470461023389455444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4159217019097026705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c6a052260a4ae4cafe06cf63810927, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  globalRef: {fileID: 5407937164311034899}
+  childflyAI: {fileID: 9027603613902104941}
+  knockBackDirection: {x: 0, y: 0, z: 0}
+  distDetectGround: 1
+  isGround: 0
+  isFall: 0
 --- !u!1 &5407937164410842285
 GameObject:
   m_ObjectHideFlags: 0
@@ -708,6 +759,7 @@ MonoBehaviour:
   - {fileID: 612212354}
   - {fileID: 506913318}
   - {fileID: 910883179}
+  - {fileID: 8470461023389455444}
   - {fileID: 1098985820}
 --- !u!114 &5407937164311034899
 MonoBehaviour:
@@ -727,6 +779,7 @@ MonoBehaviour:
   enemyHealth: {fileID: 1522482573}
   myAnimator: {fileID: 1154098350}
   globalRefAnimator: {fileID: 5160256997650002795}
+  characterController: {fileID: 484338305460112917}
   isInEylau: 0
   slowSpeed: 8
   slowSpeedRot: 8
@@ -739,6 +792,7 @@ MonoBehaviour:
   lockPlayerFlySO: {fileID: 11400000, guid: 25c0fb318df974e4a91a2444ebdd24dc, type: 2}
   baseAttackFlySO: {fileID: 11400000, guid: 183c942ec85d835449e68c69d5cbeabc, type: 2}
   deathFlySO: {fileID: 11400000, guid: 6416866076bd0a14e944d961efe394d0, type: 2}
+  KnockBackFlySO: {fileID: 11400000, guid: c79e1a733201f1646b8416199a1a8a22, type: 2}
 --- !u!82 &-2163490113976411781
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1296,6 +1350,7 @@ MonoBehaviour:
   _maxHp: 25
   _probationMaxStartup: 1
   _probationSpeed: 15
+  IsInvulnerable: 0
   _canvas: {fileID: 1872300975}
   _material: {fileID: 2100000, guid: 0be94a39ccd205f4f9d884136bb4c52b, type: 2}
   _deathVfx: {fileID: 8782500626266542195, guid: 4e088f7fded15e04a95d92413fada8e4,
@@ -1310,6 +1365,10 @@ MonoBehaviour:
   _disappearSpeed: 4
   _disappearMaxStartup: 1
   _deathAnimationDuration: 1
+  KnockBackDir: {x: 0, y: 0, z: 0}
+  globalRefAICAC: {fileID: 0}
+  globalRefBullAI: {fileID: 0}
+  globalRefFlyAI: {fileID: 5407937164311034899}
 --- !u!114 &1467130709
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1456,6 +1515,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9027603613902104941}
+  - component: {fileID: 484338305460112917}
   m_Layer: 7
   m_Name: GameObject
   m_TagString: Untagged
@@ -1480,6 +1540,24 @@ Transform:
   m_Father: {fileID: 5407937164410842286}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!143 &484338305460112917
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8331719917996012698}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 1
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &6945262328015393997
 PrefabInstance:
   m_ObjectHideFlags: 0

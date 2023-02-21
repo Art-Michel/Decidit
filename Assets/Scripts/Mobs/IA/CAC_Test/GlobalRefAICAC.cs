@@ -58,7 +58,7 @@ namespace State.AICAC
         public DeathParameterAICAC deathAICACSO;
         public DodgeParameterAICAC dodgeAICACSO;
         public SurroundParameterAICAC surroundAICACSO;
-        public KnockBackParameterAICAC knockBackAICAC;
+        public KnockBackParameterAICAC knockBackAICACSO;
 
         void Awake()
         {
@@ -78,7 +78,7 @@ namespace State.AICAC
             deathAICACSO = Instantiate(deathAICACSO);
             dodgeAICACSO = Instantiate(dodgeAICACSO);
             surroundAICACSO = Instantiate(surroundAICACSO);
-            knockBackAICAC = Instantiate(knockBackAICAC);
+            knockBackAICACSO = Instantiate(knockBackAICACSO);
         }
 
         private void Update()

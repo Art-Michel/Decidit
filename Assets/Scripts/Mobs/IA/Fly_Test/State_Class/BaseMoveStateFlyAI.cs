@@ -73,7 +73,8 @@ namespace State.FlyAI
 
         void CheckObstacle()
         {
-            hitObstacle = RaycastAIManager.instanceRaycast.RaycastAI(transform.position, baseMoveFlySO.destinationFinal - flyAI.transform.position, baseMoveFlySO.maskObstacle, 
+            hitObstacle = RaycastAIManager.instanceRaycast.RaycastAI(transform.position, baseMoveFlySO.destinationFinal - 
+                flyAI.transform.position, baseMoveFlySO.maskObstacle, 
                 Color.red,Vector3.Distance(flyAI.transform.position, baseMoveFlySO.destinationFinal));
 
             if(hitObstacle.transform != null)

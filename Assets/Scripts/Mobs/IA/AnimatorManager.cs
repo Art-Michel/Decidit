@@ -18,7 +18,8 @@ public class AnimatorManager : MonoBehaviour
             animator.SetBool(globalRefAnimator.currentAnimName, false);
 
         //Enable Next Animation
-        animator.SetBool(nextAnimation, true);
+        if(nextAnimation != globalRefAnimator.currentAnimName)
+            animator.SetBool(nextAnimation, true);
 
         //Enable Current Animation
         globalRefAnimator.currentAnimName = nextAnimation;

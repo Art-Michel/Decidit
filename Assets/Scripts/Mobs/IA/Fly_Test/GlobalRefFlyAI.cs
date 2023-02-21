@@ -16,6 +16,8 @@ namespace State.FlyAI
         public Animator myAnimator;
         public GlobalRefAnimator globalRefAnimator;
 
+        [Header("Ref KnockBack")]
+        public CharacterController characterController;
 
         [Header("Slow Move References")]
         public bool isInEylau;
@@ -38,6 +40,8 @@ namespace State.FlyAI
         public LockPlayerFlySO lockPlayerFlySO;
         public BaseAttackFlySO baseAttackFlySO;
         public DeathFlySO deathFlySO;
+        public KnockBackFlySO KnockBackFlySO;
+
 
         // Start is called before the first frame update
         void Awake()
@@ -68,6 +72,11 @@ namespace State.FlyAI
         {
             Debug.Log(stateControllerFlyAI);
             stateControllerFlyAI.SetActiveState(newState);
+        }
+
+        public void ActiveKnockBackState()
+        {
+            ActiveState(StateControllerFlyAI.AIState.KnockBack);
         }
     }
 }

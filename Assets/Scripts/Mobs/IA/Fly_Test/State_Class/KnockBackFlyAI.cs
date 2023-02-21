@@ -1,13 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace State.AICAC
+namespace State.FlyAI
 {
-    public class KnockBackAICAC : _StateAICAC
+    public class KnockBackFlyAI : _StateFlyAI
     {
         [SerializeField] private const float friction = 20f;
-        [SerializeField] GlobalRefAICAC globalRef;
+        [SerializeField] GlobalRefFlyAI globalRef;
+        [SerializeField] Transform childflyAI;
 
         [Header("KnockBack Direction")]
         [SerializeField] Vector3 knockBackDirection;
@@ -17,11 +16,11 @@ namespace State.AICAC
 
         float deltaTime;
 
-        public override void InitState(StateControllerAICAC stateController)
+        public override void InitState(StateControllerFlyAI stateController)
         {
             base.InitState(stateController);
 
-            state = StateControllerAICAC.AIState.KnockBack;
+            state = StateControllerFlyAI.AIState.KnockBack;
         }
 
         private void OnEnable()
@@ -52,19 +51,11 @@ namespace State.AICAC
                 isFall = true;
             }
 
-           /* if (knockBackDirection == Vector3.zero)
-                ActiveIdleState();*/
-
             if (isGround && isFall)
             {
                 knockBackDirection = Vector3.zero;
                 ActiveIdleState();
             }
-           /* else if (globalRef.characterController.velocity.magnitude == 0)
-            {
-                knockBackDirection = Vector3.zero;
-                ActiveIdleState();
-            }*/
         }
 
         private void FixedUpdate()
@@ -74,8 +65,8 @@ namespace State.AICAC
 
         void CheckGround()
         {
-            RaycastHit hit = RaycastAIManager.instanceRaycast.RaycastAI(globalRef.transform.position, -globalRef.transform.up,
-                                                                        globalRef.knockBackAICACSO.maskCheckObstacle, Color.red, distDetectGround);
+            RaycastHit hit = RaycastAIManager.instanceRaycast.RaycastAI(childflyAI.position, -childflyAI.up,
+                                                                        globalRef.KnockBackFlySO.maskCheckObstacle, Color.red, distDetectGround);
             if (hit.transform != null)
                 isGround = true;
             else
@@ -89,7 +80,7 @@ namespace State.AICAC
             SetGravity();
             knockBackDirection = (knockBackDirection.normalized * (knockBackDirection.magnitude - friction * deltaTime));
 
-            move = new Vector3(knockBackDirection.x, knockBackDirection.y + (globalRef.knockBackAICACSO.AIVelocity.y), knockBackDirection.z);
+            move = new Vector3(knockBackDirection.x, knockBackDirection.y + (globalRef.KnockBackFlySO.AIVelocity.y), knockBackDirection.z);
             globalRef.characterController.Move(move * deltaTime);
         }
 
@@ -97,21 +88,25 @@ namespace State.AICAC
         {
             if (!isGround)
             {
-                globalRef.knockBackAICACSO.AIVelocity.y = globalRef.knockBackAICACSO.AIVelocity.y - 9.8f * 4 * deltaTime;
+                globalRef.KnockBackFlySO.AIVelocity.y = globalRef.KnockBackFlySO.AIVelocity.y - 9.8f * 4 * deltaTime;
             }
             else
             {
-                globalRef.knockBackAICACSO.AIVelocity.y = 0;
+                globalRef.KnockBackFlySO.AIVelocity.y = 0;
             }
         }
 
         void ActiveIdleState()
         {
-            stateControllerAICAC.SetActiveState(StateControllerAICAC.AIState.BaseIdle);
+            stateControllerFlyAI.SetActiveState(StateControllerFlyAI.AIState.BaseMove);
         }
 
         private void OnDisable()
         {
+            Vector3 positionChild = childflyAI.transform.position;
+            globalRef.transform.position = positionChild;
+            childflyAI.transform.position = globalRef.transform.position;
+            globalRef.agent.baseOffset = 0.3f;
             globalRef.agent.enabled = true;
         }
     }

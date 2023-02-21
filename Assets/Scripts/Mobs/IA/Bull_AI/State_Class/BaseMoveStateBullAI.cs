@@ -55,39 +55,57 @@ namespace State.AIBull
             {
                 lookForwardJump = true;
                 globalRef.agent.autoTraverseOffMeshLink = false;
-
-                if (navLink == null)
+                if (globalRef.agentLinkMover._StopJump)
                 {
-                    globalRef.agent.ActivateCurrentOffMeshLink(false);
-                    navLink = globalRef.agent.navMeshOwner as NavMeshLink;
-                    linkDestination = navLink.transform.position - transform.position;
-                    globalRef.agentLinkMover.m_Curve.AddKey(0.5f, Mathf.Abs((navLink.endPoint.y - navLink.startPoint.y) / 1.5f));
-                    globalRef.agentLinkMover._height = Mathf.Abs((navLink.endPoint.y - navLink.startPoint.y) / 1.5f);
-                }
-
-                if (!isOnNavLink)
-                {
-                    isOnNavLink = true;
-                    globalRef.agent.speed = 0;
                     AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "StartJump");
-                }
 
-                if (maxDurationNavLink > 0) // jump Current duration
-                {
-                    maxDurationNavLink -= Time.deltaTime;
+                    if (globalRef.baseMoveBullSO.delayBeforeJump <= 0)
+                    {
+                        globalRef.agentLinkMover._StopJump = false;
+                    }
+                    else
+                    {
+                        globalRef.baseMoveBullSO.delayBeforeJump -= Time.deltaTime;
+                    }
                 }
-                else // jump End duration
+                else
                 {
-                    globalRef.agent.ActivateCurrentOffMeshLink(true);
-                    AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "EndJump");
-                }
+                    if (navLink == null)
+                    {
+                        globalRef.agent.ActivateCurrentOffMeshLink(false);
+                        navLink = globalRef.agent.navMeshOwner as NavMeshLink;
+                        linkDestination = navLink.transform.position - transform.position;
+                        globalRef.agentLinkMover.m_Curve.AddKey(0.5f, Mathf.Abs((navLink.endPoint.y - navLink.startPoint.y) / 1.5f));
+                        globalRef.agentLinkMover._height = Mathf.Abs((navLink.endPoint.y - navLink.startPoint.y) / 1.5f);
+                    }
+
+                    if (!isOnNavLink)
+                    {
+                        isOnNavLink = true;
+                        globalRef.agent.speed = 0;
+                    }
+
+                    if (maxDurationNavLink > 0) // jump Current duration
+                    {
+                        maxDurationNavLink -= Time.deltaTime;
+                    }
+                    else // jump End duration
+                    {
+                        Debug.Log("End Jump");
+                        globalRef.agent.ActivateCurrentOffMeshLink(true);
+                        AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "EndJump");
+                    }
+                }   
             }
             else
             {
+                globalRef.agentLinkMover._StopJump = true;
+                globalRef.baseMoveBullSO.delayBeforeJump = globalRef.baseMoveBullSO.maxDelayBeforeJump;
                 lookForwardJump = false;
 
                 if (navLink != null)
                 {
+                    AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "EndJump");
                     globalRef.animEventRusher.EndJump();
                     navLink.UpdateLink();
                     navLink = null;

@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.VFX;
 using State.AIBull;
 using State.AICAC;
+using State.FlyAI;
 
 public class EnemyHealth : Health
 {
@@ -48,6 +49,7 @@ public class EnemyHealth : Health
     public Vector3 KnockBackDir;
     [SerializeField] GlobalRefAICAC globalRefAICAC;
     [SerializeField] GlobalRefBullAI globalRefBullAI;
+    [SerializeField] GlobalRefFlyAI globalRefFlyAI;
 
     protected override void Awake()
     {
@@ -100,12 +102,13 @@ public class EnemyHealth : Health
     public override void Knockback(Vector3 direction)
     {
         KnockBackDir = direction;
-        Debug.Log("Launch KnockBack");
 
         if (globalRefBullAI != null)
             globalRefBullAI.ActiveKnockBackState();
         else if (globalRefAICAC != null)
             globalRefAICAC.ActiveKnockBackState();
+        else if (globalRefFlyAI != null)
+            globalRefFlyAI.ActiveKnockBackState();
     }
 
     //used to make healthbar face the camera

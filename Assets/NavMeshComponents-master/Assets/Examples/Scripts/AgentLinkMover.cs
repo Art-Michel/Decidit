@@ -17,6 +17,7 @@ public class AgentLinkMover : MonoBehaviour
     public AnimationCurve m_Curve = new AnimationCurve();
     public float _duration;
     public float _height;
+    public bool _StopJump;
 
     IEnumerator Start()
     {
@@ -57,9 +58,12 @@ public class AgentLinkMover : MonoBehaviour
         float normalizedTime = 0.0f;
         while (normalizedTime < 1.0f)
         {
-            float yOffset = height * 4.0f * (normalizedTime - normalizedTime * normalizedTime);
-            agent.transform.position = Vector3.Lerp(startPos, endPos, normalizedTime) + yOffset * Vector3.up;
-            normalizedTime += Time.deltaTime / duration;
+            if (!_StopJump)
+            {
+                float yOffset = height * 4.0f * (normalizedTime - normalizedTime * normalizedTime);
+                agent.transform.position = Vector3.Lerp(startPos, endPos, normalizedTime) + yOffset * Vector3.up;
+                normalizedTime += Time.deltaTime / duration;
+            }
             yield return null;
         }
     }
@@ -72,9 +76,12 @@ public class AgentLinkMover : MonoBehaviour
         float normalizedTime = 0.0f;
         while (normalizedTime < 1.0f)
         {
-            float yOffset = m_Curve.Evaluate(normalizedTime);
-            agent.transform.position = Vector3.Lerp(startPos, endPos, normalizedTime) + yOffset * Vector3.up;
-            normalizedTime += Time.deltaTime / duration;
+            if(!_StopJump)
+            {
+                float yOffset = m_Curve.Evaluate(normalizedTime);
+                agent.transform.position = Vector3.Lerp(startPos, endPos, normalizedTime) + yOffset * Vector3.up;
+                normalizedTime += Time.deltaTime / duration;
+            }
             yield return null;
         }
     }
