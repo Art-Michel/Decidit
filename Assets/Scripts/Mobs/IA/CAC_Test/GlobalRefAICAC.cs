@@ -11,7 +11,7 @@ namespace State.AICAC
         public Transform spawnSurroundDodge;
         public NavMeshAgent agent;
         public AICACVarianteState aICACVarianteState;
-        EnemyHealth enemyHealth;
+        public EnemyHealth enemyHealth;
         public Material_Instances material_Instances;
         public float distPlayer;
         [SerializeField] StateControllerAICAC stateControllerTrashMob;
@@ -35,6 +35,8 @@ namespace State.AICAC
         public Vector3 destinationSurround;
         public SurroundManager surroundManager;
 
+        [Header("Ref KnockBack")]
+        public CharacterController characterController;
 
         [Header("Ref Dodge State")]
         public Transform spawnRayDodge;
@@ -56,6 +58,7 @@ namespace State.AICAC
         public DeathParameterAICAC deathAICACSO;
         public DodgeParameterAICAC dodgeAICACSO;
         public SurroundParameterAICAC surroundAICACSO;
+        public KnockBackParameterAICAC knockBackAICAC;
 
         void Awake()
         {
@@ -75,6 +78,7 @@ namespace State.AICAC
             deathAICACSO = Instantiate(deathAICACSO);
             dodgeAICACSO = Instantiate(dodgeAICACSO);
             surroundAICACSO = Instantiate(surroundAICACSO);
+            knockBackAICAC = Instantiate(knockBackAICAC);
         }
 
         private void Update()
@@ -97,6 +101,11 @@ namespace State.AICAC
         public void ActiveStateDodge()
         {
             stateControllerTrashMob.SetActiveState(StateControllerAICAC.AIState.Dodge);
+        }
+
+        public void ActiveKnockBackState()
+        {
+            ActiveState(StateControllerAICAC.AIState.KnockBack);
         }
     }
 }
