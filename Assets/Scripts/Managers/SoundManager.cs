@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using FMODUnity;
 
-public class SoundManager : ProjectManager<SoundManager>
+public class SoundManager : LocalManager<SoundManager>
 {
     private FMOD.Studio.EventInstance MenuSoundInstance;
     private FMOD.Studio.EventInstance ThemeSoundInstance;

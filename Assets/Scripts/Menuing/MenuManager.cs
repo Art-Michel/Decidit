@@ -115,7 +115,7 @@ public class MenuManager : LocalManager<MenuManager>
     {
         DebugManager.instance.enableRuntimeUI = false;
         StartUnfading(_sceneUnfadingDuration);
-        SoundManager.Instance.PlayMenu();
+        //SoundManager.Instance.PlayMenu();
         //Start the main menu Theme
     }
 
@@ -136,7 +136,8 @@ public class MenuManager : LocalManager<MenuManager>
                 gun.GetComponent<Revolver>().enabled = false;
             foreach (GameObject arm in PlayerManager.Instance.Arms)
                 arm.GetComponent<Arm>().enabled = false;
-            _healthBar.SetActive(false);
+            if (_healthBar != null)
+                _healthBar.SetActive(false);
 
             //Stop rumble
             PlayerManager.Instance.StopRumbling();
@@ -160,7 +161,8 @@ public class MenuManager : LocalManager<MenuManager>
                 gun.GetComponent<Revolver>().enabled = true;
             foreach (GameObject arm in PlayerManager.Instance.Arms)
                 arm.GetComponent<Arm>().enabled = true;
-            _healthBar.SetActive(true);
+            if (_healthBar != null)
+                _healthBar.SetActive(true);
         }
     }
 
@@ -304,7 +306,8 @@ public class MenuManager : LocalManager<MenuManager>
     void StartLoadingScene(int scene)
     {
         StartFading(_sceneFadingDuration);
-        _loading.gameObject.SetActive(true);
+        if (_loading != null)
+            _loading.gameObject.SetActive(true);
 
         DisableMenuInputs();
         SceneManager.LoadSceneAsync(scene);
@@ -314,7 +317,8 @@ public class MenuManager : LocalManager<MenuManager>
     void StartExiting()
     {
         StartFading(_sceneFadingDuration);
-        _loading.gameObject.SetActive(true);
+        if (_loading != null)
+            _loading.gameObject.SetActive(true);
 
         DisableMenuInputs();
         Application.Quit();
