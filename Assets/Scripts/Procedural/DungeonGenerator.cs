@@ -52,8 +52,9 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
 
     private void InitializeDifficultiesToUse()
     {
+        _difficultiesLeftToUse = new int[6];
         for (int i = 0; i < _numberOfRooms; i++)
-        {
+        { 
             _difficultiesLeftToUse[i] = i;
         }
     }
