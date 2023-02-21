@@ -1,3 +1,4 @@
+using System.Collections.Specialized;
 using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
@@ -8,11 +9,13 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
     [SerializeField] bool _randomizeSeed;
     [SerializeField] float _dungeonRotation;
     [SerializeField] int _numberOfRooms;
+    [SerializeField] Dictionary<int, 
     [SerializeField] int _firstPowerupAfterRoom;
     [SerializeField] int _secondPowerupAfterRoom;
+
     [SerializeField] AnimationCurve _difficultyCurve;
     private float _difficultySum;
-    private int[] _difficultiesLeftToUse;
+    private List<int> _difficultiesLeftToUse;
 
     [SerializeField] RoomSetup _starterRoom;
     [SerializeField] RoomSetup _finalRoom;
@@ -52,9 +55,8 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
 
     private void InitializeDifficultiesToUse()
     {
-        _difficultiesLeftToUse = new int[6];
         for (int i = 0; i < _numberOfRooms; i++)
-        { 
+        {
             _difficultiesLeftToUse[i] = i;
         }
     }
