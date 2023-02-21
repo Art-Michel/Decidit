@@ -9,7 +9,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
     [SerializeField] bool _randomizeSeed;
     [SerializeField] float _dungeonRotation;
     [SerializeField] int _numberOfRooms;
-    [SerializeField] Dictionary<int, 
+    // [SerializeField] Dictionary<int, 
     [SerializeField] int _firstPowerupAfterRoom;
     [SerializeField] int _secondPowerupAfterRoom;
 

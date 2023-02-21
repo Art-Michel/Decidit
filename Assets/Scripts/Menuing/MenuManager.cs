@@ -115,6 +115,8 @@ public class MenuManager : LocalManager<MenuManager>
     {
         DebugManager.instance.enableRuntimeUI = false;
         StartUnfading(_sceneUnfadingDuration);
+        SoundManager.Instance.PlayMenu();
+        //Start the main menu Theme
     }
 
     public void StartMenuing()
