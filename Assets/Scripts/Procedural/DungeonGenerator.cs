@@ -55,9 +55,10 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
 
     private void InitializeDifficultiesToUse()
     {
+        _difficultiesLeftToUse = new List<int>();
         for (int i = 0; i < _numberOfRooms; i++)
         {
-            _difficultiesLeftToUse[i] = i;
+            _difficultiesLeftToUse.Add(i);
         }
     }
 
