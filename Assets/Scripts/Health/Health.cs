@@ -14,7 +14,7 @@ public class Health : MonoBehaviour
     [SerializeField] private Pooler _bloodVFXPooler;
 
     [Foldout("Stats")]
-    [Range(1, 300)][SerializeField] protected float _maxHp = 100;
+    [Range(1, 1000)][SerializeField] protected float _maxHp = 100;
     [Foldout("Stats")]
     [Range(0, 3)][SerializeField] float _probationMaxStartup = 1;
     [Foldout("Stats")]
