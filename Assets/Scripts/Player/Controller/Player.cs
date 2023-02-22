@@ -358,7 +358,8 @@ public class Player : LocalManager<Player>
         _globalMomentum.y = 0;
         _coyoteTime = _coyoteMaxTime;
 
-        PlaceHolderSoundManager.Instance.PlayLand();
+        //!PlaceHolderSoundManager.Instance.PlayLand();
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/Landing");
 
         //Jump immediately if player is pressing jump
         if (_inputs.Movement.Jump.IsPressed()) PressJump();

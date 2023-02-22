@@ -5,13 +5,11 @@ using FMODUnity;
 
 public class SoundManager : LocalManager<SoundManager>
 {
-    private FMOD.Studio.EventInstance MenuSoundInstance;
-    private FMOD.Studio.EventInstance ThemeSoundInstance;
+    [SerializeField] StudioListener AudioListener;
 
-    private void Awake()
+    protected void Awake()
     {
-        MenuSoundInstance = RuntimeManager.CreateInstance("event:/Theme/MenuTheme");
-        ThemeSoundInstance = RuntimeManager.CreateInstance("event:/Theme/GameTheme");
+        base.Awake();
     }
     // Start is called before the first frame update
     void Start()
@@ -28,16 +26,5 @@ public class SoundManager : LocalManager<SoundManager>
     public void PlaySound(string PathLink)
     {
         FMODUnity.RuntimeManager.PlayOneShot(PathLink);
-    }
-
-    public void PlayMenu()
-    {
-        ThemeSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-        MenuSoundInstance.start();
-    }
-    public void PlayTheme(string PathLink)
-    {
-        MenuSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-        ThemeSoundInstance.start();
     }
 }
