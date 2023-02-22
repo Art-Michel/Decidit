@@ -117,7 +117,7 @@ namespace State.AICAC
 
                 for (int i = 0; i < maxAngle; i++)
                 {
-                    Debug.Log(checkAdjustRadius);
+                    //Debug.Log(checkAdjustRadius);
 
                     float unitDirXposition = centerPosition.x + Mathf.Sin((currentAnglePlacementAdjust2 * Mathf.PI) / 180) * checkAdjustRadius;//radius;
                     float unitDirZposition = centerPosition.z + Mathf.Cos((currentAnglePlacementAdjust2 * Mathf.PI) / 180) * checkAdjustRadius;//radius;
