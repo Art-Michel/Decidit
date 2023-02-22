@@ -77,7 +77,6 @@ namespace State.AIBull
             {
                 isDead = true;
                 ActiveState(StateControllerBull.AIState.Death);
-                //myAnimator.SetBool("Death", true);
             }
         }
 

@@ -34,6 +34,7 @@ namespace State.FlyAI
                 globalRef.colliderBaseAttack.gameObject.SetActive(false);
                 //SoundManager.instance.PlaySoundMobOneShot(globalRef.audioSourceFly, SoundManager.instance.soundAndVolumeFlyMob[0]);
                 //PLAY SOUND PRE ATTACK FLY IA
+                // TO DO lucas va te faire enculé
             }
             catch
             {
@@ -59,7 +60,6 @@ namespace State.FlyAI
             {
                 if (ThisStateIsActive())
                 {
-                    //Debug.Log("Set Red color");
                     material_Instances.Material.color = material_Instances.ColorPreAtatck;
                     material_Instances.ChangeColorTexture(material_Instances.ColorPreAtatck);
                 }
@@ -83,7 +83,6 @@ namespace State.FlyAI
                 else
                 {
                     baseAttackFlySO.speedRotationAIAttack += (Time.deltaTime / (baseAttackFlySO.smoothRotationAttack / 4));
-                    //Debug.Log("Follow charge");
                 }
             }
             else
@@ -102,7 +101,6 @@ namespace State.FlyAI
 
         private void OnDisable()
         {
-           // Debug.Log("Set Black color");
             material_Instances.Material.color = material_Instances.ColorBase;
             material_Instances.ChangeColorTexture(material_Instances.ColorBase);
         }

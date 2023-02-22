@@ -103,7 +103,8 @@ public class Room : MonoBehaviour
         {
             PlayerManager.Instance.StartSlowMo(0.01f, 2f);
             this.Exit.OpenDoor();
-            DungeonGenerator.Instance.GetRoom(1).Entry.OpenDoor();
+            if(DungeonGenerator.Instance != null)
+                DungeonGenerator.Instance.GetRoom(1).Entry.OpenDoor();
         }
     }
 }

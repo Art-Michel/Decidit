@@ -123,10 +123,6 @@ namespace State.AIBull
 
             SlowSpeed(globalRef.isInEylau);
             globalRef.agent.SetDestination(CheckNavMeshPoint(newDestination));
-            if (globalRef.distPlayer < globalRef.baseAttackBullSO.attackRange)
-            {
-                //stateController.SetActiveState(StateControllerBull.AIState.WaitBeforeRush);
-            }
         }
         Vector3 CheckNavMeshPoint(Vector3 newDestination)
         {

@@ -68,11 +68,6 @@ namespace State.WallAI
 
             SlowSpeed(globalRef.isInEylau);
 
-            /*if (!baseMoveWallAISO.findNewPos)
-                globalRef.agent.speed = 0;
-            else
-                globalRef.agent.speed = baseMoveWallAISO.speedMovement;*/
-
             LaunchDelayBeforeAttack();
         }
         void SlowSpeed(bool active)
@@ -168,12 +163,8 @@ namespace State.WallAI
             }
             else
             {
-                /*if (!globalRef.agent.isOnOffMeshLink && !IsMoving())
-                    stateControllerWallAI.SetActiveState(StateControllerWallAI.WallAIState.BaseAttack);*/
-
                 if (canTouchPlayer)
                     stateControllerWallAI.SetActiveState(StateControllerWallAI.WallAIState.BaseAttack);
-
             }
         }
 
@@ -181,10 +172,8 @@ namespace State.WallAI
         {
             if (IsMoving())
             {
-                /*if(!globalRef.audioSourceWallMob.isPlaying)
-                    SoundManager.instance.PlaySoundMobByClip(globalRef.audioSourceWallMob, SoundManager.instance.soundAndVolumeWallMob[0], true);*/
-
                 // PLAY SOUND MOVE IN WALL WALLMOB
+                // TO DO lucas va te faire enculé
             }
         }
 

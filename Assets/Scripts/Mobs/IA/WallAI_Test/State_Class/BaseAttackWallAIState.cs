@@ -55,7 +55,6 @@ namespace State.WallAI
             {
                 globalRef.agent.speed = baseAttackWallAISO.stopSpeed;
                 AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "LaunchAttack");
-                //globalRef.myAnimator.SetBool("LaunchAttack", true);
             }
         }
 
@@ -95,6 +94,7 @@ namespace State.WallAI
                 baseAttackWallAISO.bulletCount--;
                 //SoundManager.instance.PlaySoundMobOneShot(globalRef.audioSourceWallMob, SoundManager.instance.soundAndVolumeWallMob[4]);
                 //PLAY SOUND SHOOT WALL AI
+                // TO DO lucas va te faire enculé
             }
         }
 
@@ -103,7 +103,6 @@ namespace State.WallAI
             if(baseAttackWallAISO.bulletCount <=0)
             {
                 AnimatorManager.instance.DisableAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "LaunchAttack");
-                //globalRef.myAnimator.SetBool("LaunchAttack", false);
                 activeAttack = false;
                 stateControllerWallAI.SetActiveState(StateControllerWallAI.WallAIState.BaseMove, true);
             }
@@ -123,11 +122,13 @@ namespace State.WallAI
         {
             //SoundManager.instance.PlaySoundMobOneShot(globalRef.audioSourceWallMob, SoundManager.instance.soundAndVolumeWallMob[3]);
             //PLAY IN WALL AI
+            // TO DO lucas va te faire enculé
         }
         public void PlayOutWallSound()
         {
             //SoundManager.instance.PlaySoundMobOneShot(globalRef.audioSourceWallMob, SoundManager.instance.soundAndVolumeWallMob[4]);
             //PLAY OUT WALL AI
+            // TO DO lucas va te faire enculé
         }
     }
 }

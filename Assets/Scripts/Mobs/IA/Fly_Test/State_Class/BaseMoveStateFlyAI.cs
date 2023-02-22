@@ -157,8 +157,6 @@ namespace State.FlyAI
 
                 if(hitColliders.Length == 0)
                 {
-                    Debug.Log(hitColliders.Length);
-
                     baseMoveFlySO.newPosIsSet = true;
                     baseMoveFlySO.speedRotationAIPatrol = 0;
                     baseMoveFlySO.currentSpeedYPatrol = 0;
@@ -167,7 +165,6 @@ namespace State.FlyAI
                 }
                 else
                 {
-                    Debug.Log(hitColliders[0]);
                     baseMoveFlySO.destinationFinal = RandomPointInBounds(globalRef.myCollider.bounds);
 
                     baseMoveFlySO.newPosIsSet = false;

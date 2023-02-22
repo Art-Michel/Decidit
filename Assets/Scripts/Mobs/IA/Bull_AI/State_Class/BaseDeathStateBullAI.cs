@@ -28,6 +28,7 @@ namespace State.AIBull
             globalRef.agent.speed = 0;
             globalRef.rushManager.RemoveDeadAI(globalRef);
             // PLAY SOUND DEATH RUSHER
+            // TO DO lucas va te faire enculé
             once = true;
         }
     }

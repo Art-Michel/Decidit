@@ -51,14 +51,11 @@ namespace State.AICAC
             if (baseAttackAICACSO.currentAttackRate <= 0)
             {
                 AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Attack");
-                ///globalRef.myAnimator.SetBool("Attack", true);
                 baseAttackAICACSO.isAttacking = true;
                 baseAttackAICACSO.currentAttackRate = baseAttackAICACSO.maxAttackRate;
             }
             else if (!baseAttackAICACSO.isAttacking)
             {
-                //Debug.Log("Red Color préattack");
-
                 if (globalRef.distPlayer > baseAttackAICACSO.attackRange && baseAttackAICACSO.currentAttackRate == baseAttackAICACSO.maxAttackRate)
                 {
                     stateControllerAICAC.SetActiveState(StateControllerAICAC.AIState.BaseMove);
@@ -71,7 +68,8 @@ namespace State.AICAC
                 if(globalRef.distPlayer < baseAttackAICACSO.attackRange && baseAttackAICACSO.currentAttackRate == baseAttackAICACSO.maxAttackRate)
                 {
                     //SoundManager.instance.PlaySoundMobOneShot(globalRef.audioSourceTrashMob, SoundManager.instance.soundAndVolumeListTrashMob[0]);
-                    //PLAY SOUND PRE ATTACK TRASH MOB
+                    // TO DO lucas va te faire enculé
+                    // PLAY SOUND PRE ATTACK TRASH MOB
                 }
 
                 baseAttackAICACSO.currentAttackRate -= Time.deltaTime;

@@ -813,6 +813,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   globalRef: {fileID: 5314086220186537620}
   knockBackDirection: {x: 0, y: 0, z: 0}
+  distDetectGround: 0
+  isGround: 0
+  isFall: 0
 --- !u!1 &5314086220701509004
 GameObject:
   m_ObjectHideFlags: 0
@@ -1035,7 +1038,7 @@ MonoBehaviour:
   _hpUi: {fileID: 93250625}
   _probHpUi: {fileID: 1430261731}
   _bloodVFXPooler: {fileID: 2316416254645839507}
-  _maxHp: 70
+  _maxHp: 140
   _probationMaxStartup: 1
   _probationSpeed: 15
   IsInvulnerable: 0
@@ -1056,6 +1059,7 @@ MonoBehaviour:
   KnockBackDir: {x: 0, y: 0, z: 0}
   globalRefAICAC: {fileID: 0}
   globalRefBullAI: {fileID: 5314086220186537620}
+  globalRefFlyAI: {fileID: 0}
 --- !u!114 &1585214519
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1179,6 +1183,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   _duration: 1
   _height: 0
+  _StopJump: 0
 --- !u!114 &2316416254645839507
 MonoBehaviour:
   m_ObjectHideFlags: 0

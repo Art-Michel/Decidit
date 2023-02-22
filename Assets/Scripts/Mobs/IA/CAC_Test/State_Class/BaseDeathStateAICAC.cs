@@ -26,6 +26,7 @@ namespace State.AICAC
             globalRef.agent.speed = globalRef.deathAICACSO.stopSpeed;
             globalRef.agent.enabled = false;
             // PLAY SOUND DEATH TRASHMOB
+            // TO DO lucas va te faire enculé
             once = true;
         }
     }

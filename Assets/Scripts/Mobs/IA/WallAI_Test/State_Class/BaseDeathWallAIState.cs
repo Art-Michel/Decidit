@@ -35,6 +35,7 @@ namespace State.WallAI
         public void Death()
         {
             //PLAY SOUND DEATH WALL IA
+            // TO DO lucas va te faire enculé
             AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "IsDead");
         }
     }

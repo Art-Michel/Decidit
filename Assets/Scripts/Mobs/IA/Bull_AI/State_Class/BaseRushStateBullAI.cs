@@ -32,11 +32,13 @@ namespace State.AIBull
 
         private void OnEnable()
         {
+            captureBasePosDistance = globalRef.transform.position;
             try
             {
                 globalRef.agent.enabled = false;
                 AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "PreAttack");
                 //SoundManager.instance.PlaySoundMobOneShot(globalRef.audioSourceBull, SoundManager.instance.soundAndVolumeRushMob[0]);
+                // TO DO lucas va te faire enculé
                 //Play SOUND PRE ATTACK RUSHER
 
                 if (rushBullSO == null)
@@ -50,24 +52,27 @@ namespace State.AIBull
 
         private void Update()
         {
-            SetDestination();
-            SmoothLookAtPlayer();
+            if (Time.timeScale > 0)
+            {
+                SetDestination();
+                SmoothLookAtPlayer();
 
-            if (!canStartRush)
-            {
-                if (material_Instances.Material.color != material_Instances.ColorPreAtatck)
-                    ShowSoonAttack(true);
-            }
-            else
-            {
-                if(material_Instances.Material.color == material_Instances.ColorPreAtatck)
-                    ShowSoonAttack(false);
-            }
+                if (!canStartRush)
+                {
+                    if (material_Instances.Material.color != material_Instances.ColorPreAtatck)
+                        ShowSoonAttack(true);
+                }
+                else
+                {
+                    if (material_Instances.Material.color == material_Instances.ColorPreAtatck)
+                        ShowSoonAttack(false);
+                }
 
-            if(canStartRush)
-            {
-                RushMovement();
-                RushDuration();
+                if (canStartRush)
+                {
+                    RushMovement();
+                    RushDuration();
+                }
             }
         }
         private void FixedUpdate()
@@ -95,6 +100,9 @@ namespace State.AIBull
 
         void RushMovement()
         {
+            // TO DO lucas va te faire enculé
+            //Play SOUND ATTACK RUSHER
+
             rushBullSO.targetPos = new Vector2(rushBullSO.rushDestination.x, rushBullSO.rushDestination.z);
             posAI = new Vector2(globalRef.transform.position.x, globalRef.transform.position.z);
 
@@ -109,19 +117,19 @@ namespace State.AIBull
             globalRef.detectOtherAICollider.enabled = true;
             globalRef.hitBox.gameObject.SetActive(true);
         }
+
         void SetGravity()
         {
             if (!rushBullSO.isGround)
             {
-                rushBullSO.fallingTime += Time.deltaTime;
-                rushBullSO.effectiveGravity = rushBullSO.gravity * rushBullSO.fallingTime;
-                rushBullSO.AIVelocity.y += rushBullSO.effectiveGravity;
+                globalRef.rushBullSO.AIVelocity.y = globalRef.rushBullSO.AIVelocity.y - 9.8f * 4 * Time.deltaTime;
             }
             else
             {
-                rushBullSO.AIVelocity.y = 0;
+                globalRef.rushBullSO.AIVelocity.y = 0;
             }
         }
+
         void SlowSpeed(bool active)
         {
             if (active)
@@ -142,13 +150,13 @@ namespace State.AIBull
 
             if (distDestination <= 1)
             {
-                //Debug.Log("Distance Stop Rush");
                 StopRush();
             }
 
             rushBullSO.distRush = Vector3.Distance(captureBasePosDistance, globalRef.transform.position);
             if (rushBullSO.distRush >= rushBullSO.rushDistance)
             {
+                Debug.Log(rushBullSO.distRush);
                 StopRush();
             }
         }
@@ -186,7 +194,6 @@ namespace State.AIBull
             }
             else
             {
-               // Debug.Log("Is Falling");
                 rushBullSO.isGround = false;
             }
 
@@ -194,7 +201,6 @@ namespace State.AIBull
             rushBullSO.hitObstacle = RaycastAIManager.instanceRaycast.RaycastAI(globalRef.transform.position, globalRef.transform.forward, rushBullSO.maskCheckObstacle, Color.red, distDetectObstacle);
             if (rushBullSO.hitObstacle.transform != null)
             {
-              //  Debug.Log("Obstacle Stop Rush");
               if (!rushBullSO.hitObstacle.transform.CompareTag("Ennemi"))
                 StopRush();
             }

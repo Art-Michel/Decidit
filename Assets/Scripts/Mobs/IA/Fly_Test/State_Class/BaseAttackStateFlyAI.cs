@@ -41,6 +41,7 @@ namespace State.FlyAI
                 SoundManager.instance.PlaySoundMobOneShot(globalRef.audioSourceFly, SoundManager.instance.soundAndVolumeFlyMob[1]);*/
 
             //PLAY SOUND PRE ATTACK FLY
+            // TO DO lucas va te faire enculé
         }
 
 
@@ -92,7 +93,7 @@ namespace State.FlyAI
                 stopLock = true;
             }
 
-            if (baseAttackFlySO.distDestinationFinal <= 1.5f)  // (globalRef.agent.remainingDistance <= 1f)// (baseAttackFlySO.distDestinationFinal <= 1.5f)
+            if (baseAttackFlySO.distDestinationFinal <= 1.5f)
             {
                 stateControllerFlyAI.SetActiveState(StateControllerFlyAI.AIState.BaseMove);
             }
@@ -108,9 +109,6 @@ namespace State.FlyAI
 
         void ApplyFlyingMove()
         {
-            //globalRef.agent.speed = baseAttackFlySO.baseAttackSpeed;
-
-            //SlowSpeed(globalRef.isInEylau);
             if (globalRef.transform.position.y < lockPlayerFlySO.destinationFinal.y)
             {
                 if (globalRef.isInEylau)
