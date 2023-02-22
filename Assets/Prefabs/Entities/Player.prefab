@@ -1800,7 +1800,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &199591847
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4888,7 +4888,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &525554332
 Transform:
   m_ObjectHideFlags: 0
@@ -4944,8 +4944,8 @@ MonoBehaviour:
   _reloadMaxTime: 0.6
   _reloadMinTime: 0.5
   _maxAmmo: 10
-  _shootShakeIntensity: 0
-  _shootShakeDuration: 0
+  _shootShakeIntensity: 0.2
+  _shootShakeDuration: 0.15
   _fullAmmoColor: {r: 1, g: 1, b: 1, a: 1}
   _lowAmmoColor: {r: 1, g: 1, b: 0.34509805, a: 1}
   _noAmmoColor: {r: 0.70980394, g: 0, b: 0, a: 1}
@@ -10845,7 +10845,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1186558932
 RectTransform:
   m_ObjectHideFlags: 0
@@ -17402,16 +17402,14 @@ GameObject:
   - component: {fileID: 7268849856978730495}
   - component: {fileID: 9161445646862943683}
   - component: {fileID: 2200446483770630229}
-  - component: {fileID: 2200446483770630237}
-  - component: {fileID: 1503606051}
-  - component: {fileID: 1503606052}
+  - component: {fileID: 1245929515946563833}
   m_Layer: 6
   m_Name: EylauRevolver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2113098008
 Transform:
   m_ObjectHideFlags: 0
@@ -17445,9 +17443,9 @@ MonoBehaviour:
   _ui: {fileID: 8761049072276711247}
   _muzzleFlash: {fileID: 5380604791945137139}
   _reloadingWarning: {fileID: 1782689318}
-  _trailVfxPooler: {fileID: 2200446483770630237}
-  _impactVfxPooler: {fileID: 1503606052}
-  _fleshSplashVfxPooler: {fileID: 1503606051}
+  _trailVfxPooler: {fileID: 0}
+  _impactVfxPooler: {fileID: 0}
+  _fleshSplashVfxPooler: {fileID: 0}
   _mask:
     serializedVersion: 2
     m_Bits: 295424
@@ -17465,8 +17463,8 @@ MonoBehaviour:
   _mouseSwayAmountY: -0.1
   _controllerSwayAmountX: -5
   _controllerSwayAmountY: -3
-  _projectilePooler: {fileID: 2200446483770630229}
-  _laserVfxPooler: {fileID: 2200446483770630237}
+  _unchargedProjectilePooler: {fileID: 2200446483770630229}
+  _chargedProjectilePooler: {fileID: 1245929515946563833}
   _chargeUi: {fileID: 7926085865351582358}
   _bulletShakeIntensity: 0.2
   _bulletShakeDuration: 0.2
@@ -17475,9 +17473,6 @@ MonoBehaviour:
   _chargeSpeed: 1
   _chargedWeaponShakeIntensity: 0.002
   _laserAdditionalRecoil: 1
-  _laserMaxRange: 1000
-  _laserDamage: 100
-  _laserShouldPierce: 1
 --- !u!114 &9161445646862943683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17502,10 +17497,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 4939631121027515308, guid: 3bb5aafe2875b5c48b28766744164823, type: 3}
-  _initialCount: 6
+  _prefab: {fileID: 4816787179881094742, guid: c0a0869f1ec22b14a90652fd33424078, type: 3}
+  _initialCount: 12
   _shouldBeParent: 0
---- !u!114 &2200446483770630237
+--- !u!114 &1245929515946563833
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -17517,38 +17512,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 4725506551224192338, guid: 9589ee764ed142446aae44056dfc4f38, type: 3}
-  _initialCount: 4
-  _shouldBeParent: 0
---- !u!114 &1503606051
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2113098007}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _prefab: {fileID: 1790868541386878813, guid: ca054b847da950d4f95a94506c598d65, type: 3}
-  _initialCount: 4
-  _shouldBeParent: 0
---- !u!114 &1503606052
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2113098007}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _prefab: {fileID: 8274879307854479454, guid: d521854542d23c44db515e5f8c607c5a, type: 3}
-  _initialCount: 4
+  _prefab: {fileID: 4934306892844130343, guid: d4d784b04030ad846a631e1c395f6045, type: 3}
+  _initialCount: 2
   _shouldBeParent: 0
 --- !u!1 &2121665135
 GameObject:
@@ -18692,7 +18657,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7014440091281630618
 RectTransform:
   m_ObjectHideFlags: 0
@@ -23325,7 +23290,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5521657772868206815
 RectTransform:
   m_ObjectHideFlags: 0
@@ -23598,6 +23563,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: FX_Spell_Fugue_Warmup_Ground
+      objectReference: {fileID: 0}
+    - target: {fileID: 7019780315918520770, guid: c42241cfed3ea19469905af7731854f9,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c42241cfed3ea19469905af7731854f9, type: 3}

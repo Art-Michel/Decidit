@@ -10,9 +10,9 @@ using NaughtyAttributes;
 public class EylauRevolver : Revolver
 {
     [Foldout("References")]
-    [SerializeField] private Pooler _projectilePooler;
+    [SerializeField] private Pooler _unchargedProjectilePooler;
     [Foldout("References")]
-    [SerializeField] private Pooler _laserVfxPooler;
+    [SerializeField] private Pooler _chargedProjectilePooler;
     [Foldout("References")]
     [SerializeField] private Image _chargeUi;
 
@@ -32,12 +32,12 @@ public class EylauRevolver : Revolver
     [SerializeField] private float _chargedWeaponShakeIntensity;
     [Foldout("Stats")]
     [SerializeField] private float _laserAdditionalRecoil = .3f;
-    [Foldout("Stats")]
-    [SerializeField] private int _laserMaxRange;
-    [Foldout("Stats")]
-    [SerializeField] private int _laserDamage;
-    [Foldout("Stats")]
-    [SerializeField] private bool _laserShouldPierce;
+    // [Foldout("Stats")]
+    // [SerializeField] private int _laserMaxRange;
+    // [Foldout("Stats")]
+    // [SerializeField] private int _laserDamage;
+    // [Foldout("Stats")]
+    // [SerializeField] private bool _laserShouldPierce;
 
     private float _currentCharge;
     private bool _charged;
@@ -66,7 +66,7 @@ public class EylauRevolver : Revolver
         PooledObject shot = null;
         if (!_charged)
         {
-            shot = _projectilePooler.Get();
+            shot = _unchargedProjectilePooler.Get();
             shot.GetComponent<Projectile>().Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized);
 
             Player.Instance.StartShake(_bulletShakeIntensity, _bulletShakeDuration);
@@ -75,10 +75,13 @@ public class EylauRevolver : Revolver
 
         else
         {
-            if (_laserShouldPierce)
-                PiercingLaser();
-            else
-                Laser();
+            // if (_laserShouldPierce)
+            //     PiercingLaser();
+            // else
+            //Laser();
+            shot = _chargedProjectilePooler.Get();
+            shot.GetComponent<Projectile>().Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized);
+
 
             Player.Instance.StartShake(_laserShakeIntensity, _laserShakeDuration);
             _muzzleFlash.PlayAll();
@@ -86,82 +89,82 @@ public class EylauRevolver : Revolver
 
     }
 
-    private void Laser()
-    {
-        var vfx = _laserVfxPooler.Get().GetComponent<TwoPosTrail>();
-        if (Physics.Raycast(_camera.position, _camera.forward, out RaycastHit hit, _laserMaxRange, _mask))
-        {
-            vfx.SetPos(_canonPosition.position, hit.point);
+    // private void Laser()
+    // {
+    //     var vfx = _laserVfxPooler.Get().GetComponent<TwoPosTrail>();
+    //     if (Physics.Raycast(_camera.position, _camera.forward, out RaycastHit hit, _laserMaxRange, _mask))
+    //     {
+    //         vfx.SetPos(_canonPosition.position, hit.point);
 
-            //wall or ground
-            if (hit.transform.gameObject.layer == 9)
-            {
-                GameObject impactVfx = _impactVfxPooler.Get().gameObject;
-                impactVfx.transform.position = hit.point + hit.normal * 0.05f;
-                impactVfx.transform.forward = -hit.normal;
-            }
+    //         //wall or ground
+    //         if (hit.transform.gameObject.layer == 9)
+    //         {
+    //             GameObject impactVfx = _impactVfxPooler.Get().gameObject;
+    //             impactVfx.transform.position = hit.point + hit.normal * 0.05f;
+    //             impactVfx.transform.forward = -hit.normal;
+    //         }
 
-            //flesh
-            if (hit.transform.gameObject.layer == 18)
-            {
-                GameObject splashVfx = _fleshSplashVfxPooler.Get().gameObject;
-                splashVfx.transform.position = hit.point + hit.normal * 0.05f;
-                splashVfx.transform.forward = hit.normal;
-            }
+    //         //flesh
+    //         if (hit.transform.gameObject.layer == 18)
+    //         {
+    //             GameObject splashVfx = _fleshSplashVfxPooler.Get().gameObject;
+    //             splashVfx.transform.position = hit.point + hit.normal * 0.05f;
+    //             splashVfx.transform.forward = hit.normal;
+    //         }
 
-            // = enemy hurtbox
-            else if (hit.transform.gameObject.layer == 15 && hit.transform.parent.TryGetComponent<Health>(out Health health))
-            {
-                vfx.SetPos(_canonPosition.position, hit.point);
-                if (hit.transform.CompareTag("WeakHurtbox"))
-                    (health as EnemyHealth).TakeCriticalDamage(_laserDamage, hit.point, hit.normal);
-                else
-                    (health as EnemyHealth).TakeDamage(_laserDamage, hit.point, hit.normal);
-            }
-        }
+    //         // = enemy hurtbox
+    //         else if (hit.transform.gameObject.layer == 15 && hit.transform.parent.TryGetComponent<Health>(out Health health))
+    //         {
+    //             vfx.SetPos(_canonPosition.position, hit.point);
+    //             if (hit.transform.CompareTag("WeakHurtbox"))
+    //                 (health as EnemyHealth).TakeCriticalDamage(_laserDamage, hit.point, hit.normal);
+    //             else
+    //                 (health as EnemyHealth).TakeDamage(_laserDamage, hit.point, hit.normal);
+    //         }
+    //     }
 
-        else
-            vfx.SetPos(_canonPosition.position, _canonPosition.position + _camera.forward * _laserMaxRange);
+    //     else
+    //         vfx.SetPos(_canonPosition.position, _canonPosition.position + _camera.forward * _laserMaxRange);
 
-        vfx.Play();
-    }
+    //     vfx.Play();
+    // }
 
-    private void PiercingLaser()
-    {
-        var vfx = _laserVfxPooler.Get().GetComponent<TwoPosTrail>();
-        vfx.SetPos(_canonPosition.position, _canonPosition.position + _camera.forward * _laserMaxRange);
-        vfx.Play();
+    // private void PiercingLaser()
+    // {
+    //     var vfx = _laserVfxPooler.Get().GetComponent<TwoPosTrail>();
+    //     vfx.SetPos(_canonPosition.position, _canonPosition.position + _camera.forward * _laserMaxRange);
+    //     vfx.Play();
 
-        RaycastHit[] hits = Physics.RaycastAll(_camera.position, _camera.forward, _laserMaxRange, _mask);
-        foreach (RaycastHit hit in hits)
-        {
-            //wall or ground
-            if (hit.transform.gameObject.layer == 9)
-            {
-                GameObject impactVfx = _impactVfxPooler.Get().gameObject;
-                impactVfx.transform.position = hit.point + hit.normal * 0.05f;
-                impactVfx.transform.forward = -hit.normal;
-            }
+    //     RaycastHit[] hits = Physics.RaycastAll(_camera.position, _camera.forward, _laserMaxRange, _mask);
+    //     foreach (RaycastHit hit in hits)
+    //     {
+    //         //wall or ground
+    //         if (hit.transform.gameObject.layer == 9)
+    //         {
+    //             GameObject impactVfx = _impactVfxPooler.Get().gameObject;
+    //             impactVfx.transform.position = hit.point + hit.normal * 0.05f;
+    //             impactVfx.transform.forward = -hit.normal;
+    //         }
 
-            //flesh
-            if (hit.transform.gameObject.layer == 18)
-            {
-                GameObject splashVfx = _fleshSplashVfxPooler.Get().gameObject;
-                splashVfx.transform.position = hit.point + hit.normal * 0.05f;
-                splashVfx.transform.forward = hit.normal;
-            }
+    //         //flesh
+    //         if (hit.transform.gameObject.layer == 18)
+    //         {
+    //             GameObject splashVfx = _fleshSplashVfxPooler.Get().gameObject;
+    //             splashVfx.transform.position = hit.point + hit.normal * 0.05f;
+    //             splashVfx.transform.forward = hit.normal;
+    //         }
 
-            // = enemy hurtbox
-            else if (hit.transform.gameObject.layer == 15 && hit.transform.parent.TryGetComponent<Health>(out Health health))
-            {
-                vfx.SetPos(_canonPosition.position, hit.point);
-                if (hit.transform.CompareTag("WeakHurtbox"))
-                    (health as EnemyHealth).TakeCriticalDamage(_laserDamage, hit.point, hit.normal);
-                else
-                    (health as EnemyHealth).TakeDamage(_laserDamage, hit.point, hit.normal);
-            }
-        }
-    }
+    //         // = enemy hurtbox
+    //         else if (hit.transform.gameObject.layer == 15 && hit.transform.parent.TryGetComponent<Health>(out Health health))
+    //         {
+    //             vfx.SetPos(_canonPosition.position, hit.point);
+    //             if (hit.transform.CompareTag("WeakHurtbox"))
+    //                 (health as EnemyHealth).TakeCriticalDamage(_laserDamage, hit.point, hit.normal);
+    //             else
+    //                 (health as EnemyHealth).TakeDamage(_laserDamage, hit.point, hit.normal);
+    //         }
+    //     }
+    // }
 
     public override void StartRecoil()
     {
