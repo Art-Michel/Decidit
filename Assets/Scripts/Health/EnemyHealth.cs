@@ -90,13 +90,15 @@ public class EnemyHealth : Health
     public override void TakeDamage(int amount)
     {
         base.TakeDamage(amount);
-        PlaceHolderSoundManager.Instance.PlayHitSound();
+        ////PlaceHolderSoundManager.Instance.PlayHitSound();
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/HitMarker", 1f);
     }
 
     public override void TakeCriticalDamage(int amount)
     {
         base.TakeCriticalDamage(amount);
-        PlaceHolderSoundManager.Instance.PlayCriticalHitSound();
+        ////PlaceHolderSoundManager.Instance.PlayCriticalHitSound();
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/HitMarkerHead", 1f);
     }
 
     public override void Knockback(Vector3 direction)

@@ -21,7 +21,8 @@ public class AragonRevolver : Revolver
         shot2.GetComponent<ProjectileOscillator>().Setup(Vector3.down);
 
         Player.Instance.StartShake(_shootShakeIntensity, _shootShakeDuration);
-        PlaceHolderSoundManager.Instance.PlayAragonShot();
+        ////PlaceHolderSoundManager.Instance.PlayAragonShot();
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/FugueAragon/BaseShoot", 1f);
         _muzzleFlash.PlayAll();
     }
 }

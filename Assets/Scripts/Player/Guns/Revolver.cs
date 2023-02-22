@@ -223,7 +223,8 @@ public class Revolver : MonoBehaviour
         _reloadT = _reloadMaxTime;
         _reloadingWarning.fillAmount = 0f;
         _reloadingWarning.enabled = true;
-        PlaceHolderSoundManager.Instance.PlayReload();
+        ////PlaceHolderSoundManager.Instance.PlayReload();
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/BaseShoot/Realod", 1f);//TODO Art
     }
 
     // update reloading state
@@ -246,7 +247,7 @@ public class Revolver : MonoBehaviour
     {
         _ammo = _maxAmmo;
         _reloadingWarning.enabled = false;
-        PlaceHolderSoundManager.Instance.PlayReloaded();
+        //TODO lucas PlaceHolderSoundManager.Instance.PlayReloaded();
         DisplayAmmo();
     }
 
@@ -262,7 +263,7 @@ public class Revolver : MonoBehaviour
                     _ammoCountText.color = _lowAmmoColor;
                 else
                 {
-                    PlaceHolderSoundManager.Instance.PlayLastBulletClick();
+                    //TODO Lucas PlaceHolderSoundManager.Instance.PlayLastBulletClick();
                     _ammoCountText.color = _noAmmoColor;
                 }
             }

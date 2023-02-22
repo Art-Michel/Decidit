@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using FMODUnity;
+using FMOD;
+using System;
 
 public class SoundManager : LocalManager<SoundManager>
 {
     [SerializeField] StudioListener AudioListener;
+    FMOD.Studio.Bus SFX;
 
     protected override void Awake()
     {
@@ -23,8 +26,10 @@ public class SoundManager : LocalManager<SoundManager>
 
     }
 
-    public void PlaySound(string PathLink)
+    public void PlaySound(string PathLink, float Volume)
     {
-        FMODUnity.RuntimeManager.PlayOneShot(PathLink);
+        FMODUnity.RuntimeManager.PlayOneShot(PathLink, Volume, Vector3.zero);
+        //SFX.setVolume(Volume);
+        //SFX.
     }
 }

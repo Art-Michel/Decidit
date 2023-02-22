@@ -15,7 +15,8 @@ public class MuseRevolver : Revolver
         shot.GetComponent<Projectile>().Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized, _camera.forward);
 
         Player.Instance.StartShake(_shootShakeIntensity, _shootShakeDuration);
-        PlaceHolderSoundManager.Instance.PlayMuseShot();
+        ////PlaceHolderSoundManager.Instance.PlayMuseShot();
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/MuseMalade/Shoot", 1f);
         _muzzleFlash.PlayAll();
     }
 }
