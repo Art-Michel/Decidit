@@ -162,7 +162,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
 
     public Room GetRoom(int i = 0)
     {
-        return _actualRooms[Mathf.Clamp(0, _actualRooms.Count - 1, CurrentRoom + i)];
+        return _actualRooms[Mathf.Clamp(CurrentRoom + i, 0, TotalRooms)];
     }
 
     public void SetCurrentRoom(Room room)
