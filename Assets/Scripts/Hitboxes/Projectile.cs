@@ -110,10 +110,10 @@ public class Projectile : Hitbox
             else
                 Disappear();
         }
-        if (_trailDelayT > 0)
+        if (_trailDelayT >= 0)
         {
             _trailDelayT -= Time.deltaTime;
-            if (_trailDelayT <= 0)
+            if (_trailDelayT < 0)
             {
                 // spawn trail after a bit
                 if (_trailRenderer) _trailRenderer.enabled = true;
