@@ -55,6 +55,22 @@ namespace State.AIBull
             {
                 lookForwardJump = true;
                 globalRef.agent.autoTraverseOffMeshLink = false;
+
+                if (!isOnNavLink)
+                {
+                    isOnNavLink = true;
+                    globalRef.agent.speed = 0;
+                }
+
+                if (navLink == null)
+                {
+                    globalRef.agent.ActivateCurrentOffMeshLink(false);
+                    navLink = globalRef.agent.navMeshOwner as NavMeshLink;
+                    linkDestination = navLink.transform.position - transform.position;
+                    globalRef.agentLinkMover.m_Curve.AddKey(0.5f, Mathf.Abs((navLink.endPoint.y - navLink.startPoint.y) / 1.5f));
+                    globalRef.agentLinkMover._height = Mathf.Abs((navLink.endPoint.y - navLink.startPoint.y) / 1.5f);
+                }
+
                 if (globalRef.agentLinkMover._StopJump)
                 {
                     AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "StartJump");
@@ -70,21 +86,6 @@ namespace State.AIBull
                 }
                 else
                 {
-                    if (navLink == null)
-                    {
-                        globalRef.agent.ActivateCurrentOffMeshLink(false);
-                        navLink = globalRef.agent.navMeshOwner as NavMeshLink;
-                        linkDestination = navLink.transform.position - transform.position;
-                        globalRef.agentLinkMover.m_Curve.AddKey(0.5f, Mathf.Abs((navLink.endPoint.y - navLink.startPoint.y) / 1.5f));
-                        globalRef.agentLinkMover._height = Mathf.Abs((navLink.endPoint.y - navLink.startPoint.y) / 1.5f);
-                    }
-
-                    if (!isOnNavLink)
-                    {
-                        isOnNavLink = true;
-                        globalRef.agent.speed = 0;
-                    }
-
                     if (maxDurationNavLink > 0) // jump Current duration
                     {
                         maxDurationNavLink -= Time.deltaTime;

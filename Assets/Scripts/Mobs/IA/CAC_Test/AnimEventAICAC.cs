@@ -38,7 +38,7 @@ namespace State.AICAC
         }
         public void EndJump()
         {
-            Invoke("Walk", 0.4f);
+            Invoke("Walk", 1f);
         }
         void Walk()
         {

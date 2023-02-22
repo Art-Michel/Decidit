@@ -10,12 +10,12 @@ namespace State.AICAC
 
         [Header("Nav Link")]
         [SerializeField] float maxDurationNavLink;
-        bool triggerNavLink;
+        [SerializeField] bool triggerNavLink;
         public bool isOnNavLink;
         NavMeshLink link;
         NavMeshLink navLink;
         NavMeshHit closestHit;
-        Vector3 linkDestination;
+        [SerializeField] Vector3 linkDestination;
 
         [Header("Direction Movement")]
         [SerializeField] float offset;
@@ -102,37 +102,53 @@ namespace State.AICAC
                 lookForwardJump = true;
                 globalRef.agent.autoTraverseOffMeshLink = false;
 
-                if (navLink == null)
-                {
-                    globalRef.agent.ActivateCurrentOffMeshLink(false);
-                    navLink = globalRef.agent.navMeshOwner as NavMeshLink;
-                    globalRef.agentLinkMover.m_Curve.AddKey(0.5f, Mathf.Abs((navLink.endPoint.y - navLink.startPoint.y)/1.5f));
-                    globalRef.agentLinkMover._height = Mathf.Abs((navLink.endPoint.y - navLink.startPoint.y) / 1.5f);
-                }
-
                 if (!isOnNavLink)
                 {
                     isOnNavLink = true;
                     globalRef.agent.speed = 0;
-                    AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "StartJump");
                 }
 
-                if (maxDurationNavLink > 0) // jump Current duration
+                if (navLink == null) // Recover Current NavMEshLink
                 {
-                    maxDurationNavLink -= Time.deltaTime;
+                    globalRef.agent.ActivateCurrentOffMeshLink(false);
+                    navLink = globalRef.agent.navMeshOwner as NavMeshLink;
+                    globalRef.agentLinkMover.m_Curve.AddKey(0.5f, Mathf.Abs((navLink.endPoint.y - navLink.startPoint.y) / 1.5f));
+                    globalRef.agentLinkMover._height = Mathf.Abs((navLink.endPoint.y - navLink.startPoint.y) / 1.5f);
                 }
-                else // jump End duration
+
+                if (globalRef.agentLinkMover._StopJump) // Lock Jump
                 {
-                    globalRef.agent.ActivateCurrentOffMeshLink(true);
-                    AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "EndJump");
+                    AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "StartJump");
+                    if (baseMoveAICACSO.delayBeforeJump <= 0) // Delay Befor Jump
+                    {
+                        globalRef.agentLinkMover._StopJump = false;
+                    }
+                    else
+                    {
+                        baseMoveAICACSO.delayBeforeJump -= Time.deltaTime;
+                    }
+                }
+                else // Active Jump 
+                {
+                    if (maxDurationNavLink > 0) // jump Current duration
+                    {
+                        maxDurationNavLink -= Time.deltaTime;
+                    }
+                    else // jump End duration
+                    {
+                        globalRef.agent.ActivateCurrentOffMeshLink(true);
+                    }
                 }
             }
-            else
+            else // End Jump
             {
+                globalRef.agentLinkMover._StopJump = true;
+                baseMoveAICACSO.delayBeforeJump = baseMoveAICACSO.maxDelayBeforeJump;
                 lookForwardJump = false;
 
                 if (navLink != null)
                 {
+                    AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "EndJump");
                     globalRef.animEventAICAC.EndJump();
                     navLink.UpdateLink();
                     navLink = null;

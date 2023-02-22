@@ -16,6 +16,10 @@ public class BaseMoveParameterAICAC : ScriptableObject
     public Vector2 maxCoolDownAttack;
     public float currentCoolDownAttack;
 
+    [Header("Jump")]
+    public float delayBeforeJump;
+    public float maxDelayBeforeJump;
+
     [Header("Speed Movement Parameter")]
     public float baseSpeed;
     public float smoothSpeedbase;
