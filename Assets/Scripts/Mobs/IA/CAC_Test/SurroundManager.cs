@@ -13,18 +13,30 @@ namespace State.AICAC
        
         [Header("Angle Surround")]
         [SerializeField] float maxAngle;
+        public float maxRadius;
         public float radius;
+        public float adjustRadius;
+        public float offsetRadius;
         [SerializeField] float currentAnglePlacement;
+        [SerializeField] float currentAnglePlacementAdjust;
+        [SerializeField] float currentAnglePlacementAdjust2;
 
         [SerializeField] Vector3 destination;
 
         [SerializeField] LineRenderer circleRenderer;
         [SerializeField] bool drawLineRenderer;
 
+        [SerializeField] List<float> posYcircle = new List<float>();
+
         // Start is called before the first frame update
         void Start()
         {
             SetListActiveAI();
+
+            for (int i = 0; i < maxAngle; i++)
+            {
+                posYcircle.Add(0);
+            }
         }
         public void SetListActiveAI()
         {
@@ -63,6 +75,85 @@ namespace State.AICAC
                 aiCACScriptsList[i].destinationSurround = destination;
                 currentAnglePlacement += angleStep;
             }
+            CheckYPos();
+        }
+
+        void CheckYPos()
+        {
+            currentAnglePlacementAdjust = 0f;
+            Vector3 centerPosition = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer;
+
+            for (int i = 0; i < maxAngle; i++)
+            {
+                float unitDirXposition = centerPosition.x + Mathf.Sin((currentAnglePlacementAdjust * Mathf.PI) / 180) * adjustRadius;//radius;
+                float unitDirZposition = centerPosition.z + Mathf.Cos((currentAnglePlacementAdjust * Mathf.PI) / 180) * adjustRadius;//radius;
+
+                posYcircle[i] = CheckNavMeshPoint(new Vector3(unitDirXposition, centerPosition.y, unitDirZposition)).y;
+
+                if (i > 0)
+                {
+                    if ((int)posYcircle[i] != (int)posYcircle[i - 1])
+                    {
+                        Debug.Log(i);
+                        adjustRadius--;
+                        radius = adjustRadius - offsetRadius;
+                        return;
+                    }
+                }
+                currentAnglePlacementAdjust += 1;
+            }
+
+            CheckNextPosCircle();
+        }
+
+        void CheckNextPosCircle()
+        {
+            Vector3 centerPosition = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer;
+
+            if (PositionAreSame())
+            {
+                float checkAdjustRadius = adjustRadius + 2;
+                currentAnglePlacementAdjust2 = 0f;
+
+                for (int i = 0; i < maxAngle; i++)
+                {
+                    Debug.Log(checkAdjustRadius);
+
+                    float unitDirXposition = centerPosition.x + Mathf.Sin((currentAnglePlacementAdjust2 * Mathf.PI) / 180) * checkAdjustRadius;//radius;
+                    float unitDirZposition = centerPosition.z + Mathf.Cos((currentAnglePlacementAdjust2 * Mathf.PI) / 180) * checkAdjustRadius;//radius;
+
+                    posYcircle[i] = CheckNavMeshPoint(new Vector3(unitDirXposition, centerPosition.y, unitDirZposition)).y;
+
+                    if (i > 0)
+                    {
+                        if ((int)posYcircle[i] != (int)posYcircle[i - 1])
+                        {
+                            Debug.Log(i);
+                            Debug.Log("Not Up Circle");
+                            return;
+                        }
+                    }
+                    currentAnglePlacementAdjust2 += 1;
+                }
+                if (adjustRadius < maxRadius)
+                {
+                    Debug.Log("Up Circle");
+                    adjustRadius++;
+                    radius = adjustRadius - offsetRadius;
+                }
+            }
+        }
+
+        bool PositionAreSame()
+        {
+            for (int i = 0; i < posYcircle.Count-1; i++)
+            {
+                if ((int)posYcircle[i] != (int)posYcircle[i + 1])
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         void DrawCicre(int steps, int radius)
