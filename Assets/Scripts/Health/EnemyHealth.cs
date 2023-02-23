@@ -102,7 +102,7 @@ public class EnemyHealth : Health
         else if (globalRefWallAI != null)
             globalRefWallAI.CheckHP();
 
-        SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/HitMarker", 1f);
+        //SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/HitMarker", 1f);
         base.TakeDamage(amount);
     }
 
@@ -120,7 +120,7 @@ public class EnemyHealth : Health
             globalRefWallAI.CheckHP();
 
         ////PlaceHolderSoundManager.Instance.PlayCriticalHitSound();
-        SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/HitMarkerHead", 1f);
+        //SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/HitMarkerHead", 1f);
     }
 
     public override void Knockback(Vector3 direction)

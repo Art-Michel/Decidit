@@ -50,8 +50,7 @@ namespace State.AICAC
 
             if (baseAttackAICACSO.currentAttackRate <= 0)
             {
-                Debug.Log("sound attack");
-                SoundManager.Instance.PlaySound("event:/SFX_IA/Voras_SFX(Trash)/Attack", 10f);
+                //SoundManager.Instance.PlaySound("event:/SFX_IA/Voras_SFX(Trash)/Attack", 10f);
                 AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Attack");
                 baseAttackAICACSO.isAttacking = true;
                 baseAttackAICACSO.currentAttackRate = baseAttackAICACSO.maxAttackRate;

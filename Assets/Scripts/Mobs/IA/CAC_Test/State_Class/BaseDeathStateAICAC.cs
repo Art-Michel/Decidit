@@ -21,15 +21,13 @@ namespace State.AICAC
 
         void Death()
         {
-            Debug.Log("Death AI");
-
             AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Death");
             globalRef.transform.parent = null;
             globalRef.agent.speed = globalRef.deathAICACSO.stopSpeed;
             globalRef.agent.enabled = false;
             // PLAY SOUND DEATH TRASHMOB
-            // TO DO lucas va te faire encul�
-            SoundManager.Instance.PlaySound("event:/SFX_IA/DeathIA", 1f);
+            // TODO lucas va te faire encul�
+            //SoundManager.Instance.PlaySound("event:/SFX_IA/DeathIA", 1f);
             once = true;
         }
     }
