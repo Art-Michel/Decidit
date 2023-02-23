@@ -84,13 +84,6 @@ namespace State.AICAC
         private void Update()
         {
             distPlayer = Vector3.Distance(playerTransform.position, transform.position);
-
-            if (enemyHealth._hp <= 0 && !isDead)
-            {
-                aICACVarianteState.SetListActiveAI();
-                ActiveState(StateControllerAICAC.AIState.BaseDeath);
-                isDead = true;
-            }
         }
 
         public void ActiveState(StateControllerAICAC.AIState newState)
@@ -106,6 +99,16 @@ namespace State.AICAC
         public void ActiveKnockBackState()
         {
             ActiveState(StateControllerAICAC.AIState.KnockBack);
+        }
+
+        public void CheckHP()
+        {
+            if (enemyHealth._hp <= 0 && !isDead)
+            {
+                aICACVarianteState.SetListActiveAI();
+                ActiveState(StateControllerAICAC.AIState.BaseDeath);
+                isDead = true;
+            }
         }
     }
 }

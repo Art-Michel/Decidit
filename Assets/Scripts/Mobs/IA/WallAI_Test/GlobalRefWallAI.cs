@@ -51,15 +51,6 @@ namespace State.WallAI
             }
         }
 
-        private void Update()
-        {
-            if(enemyHealth._hp <=0 && !isDead)
-            {
-                ActiveState(StateControllerWallAI.WallAIState.Death);
-                isDead = true;
-            }
-        }
-
         public void ActiveState(StateControllerWallAI.WallAIState newState)
         {
             stateControllerWallAI.SetActiveState(newState);
@@ -70,6 +61,15 @@ namespace State.WallAI
             if (other.CompareTag("WallAI"))
             {
                 orientation = other.transform.localEulerAngles.y - 90 + 180;
+            }
+        }
+
+        public void CheckHP()
+        {
+            if (enemyHealth._hp <= 0 && !isDead)
+            {
+                ActiveState(StateControllerWallAI.WallAIState.Death);
+                isDead = true;
             }
         }
     }

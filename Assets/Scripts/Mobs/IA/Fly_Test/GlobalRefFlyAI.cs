@@ -59,15 +59,6 @@ namespace State.FlyAI
             transform.rotation = Quaternion.Euler(Vector3.zero);
         }
 
-        private void Update()
-        {
-            if (enemyHealth._hp <= 0 && !isDead)
-            {
-                ActiveState(StateControllerFlyAI.AIState.Death);
-                isDead = true;
-            }
-        }
-
         public void ActiveState(StateControllerFlyAI.AIState newState)
         {
             Debug.Log(stateControllerFlyAI);
@@ -77,6 +68,15 @@ namespace State.FlyAI
         public void ActiveKnockBackState()
         {
             ActiveState(StateControllerFlyAI.AIState.KnockBack);
+        }
+
+        public void CheckHP()
+        {
+            if (enemyHealth._hp <= 0 && !isDead)
+            {
+                ActiveState(StateControllerFlyAI.AIState.Death);
+                isDead = true;
+            }
         }
     }
 }

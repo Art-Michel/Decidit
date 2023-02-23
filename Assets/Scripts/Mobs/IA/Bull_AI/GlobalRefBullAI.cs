@@ -72,12 +72,6 @@ namespace State.AIBull
         void Update()
         {
             distPlayer = Vector3.Distance(transform.position, playerTransform.position);
-
-            if (enemyHealth._hp <= 0 && !isDead)
-            {
-                isDead = true;
-                ActiveState(StateControllerBull.AIState.Death);
-            }
         }
 
         public void ActiveState(StateControllerBull.AIState newState)
@@ -88,6 +82,15 @@ namespace State.AIBull
         public void ActiveKnockBackState()
         {
             ActiveState(StateControllerBull.AIState.KnockBack);
+        }
+
+        public void CheckHP()
+        {
+            if (enemyHealth._hp <= 0 && !isDead)
+            {
+                isDead = true;
+                ActiveState(StateControllerBull.AIState.Death);
+            }
         }
     }
 }

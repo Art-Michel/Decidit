@@ -6,6 +6,7 @@ using UnityEngine.VFX;
 using State.AIBull;
 using State.AICAC;
 using State.FlyAI;
+using State.WallAI;
 
 public class EnemyHealth : Health
 {
@@ -50,6 +51,7 @@ public class EnemyHealth : Health
     [SerializeField] GlobalRefAICAC globalRefAICAC;
     [SerializeField] GlobalRefBullAI globalRefBullAI;
     [SerializeField] GlobalRefFlyAI globalRefFlyAI;
+    [SerializeField] GlobalRefWallAI globalRefWallAI;
 
     protected override void Awake()
     {
@@ -92,6 +94,15 @@ public class EnemyHealth : Health
         base.TakeDamage(amount);
         ////PlaceHolderSoundManager.Instance.PlayHitSound();
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/HitMarker", 1f);
+
+        if (globalRefBullAI != null)
+            globalRefBullAI.CheckHP();
+        else if (globalRefAICAC != null)
+            globalRefAICAC.CheckHP();
+        else if (globalRefFlyAI != null)
+            globalRefFlyAI.CheckHP();
+        else if (globalRefFlyAI != null)
+            globalRefWallAI.CheckHP();
     }
 
     public override void TakeCriticalDamage(int amount)

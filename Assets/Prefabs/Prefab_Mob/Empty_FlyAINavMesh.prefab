@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   globalRef: {fileID: 5407937164311034899}
-  material_Instances: {fileID: 6464373961638207613}
+  material_Instances: {fileID: 1727383931119251868}
   childflyAI: {fileID: 9027603613902104941}
 --- !u!1 &612212352
 GameObject:
@@ -698,8 +698,6 @@ GameObject:
   - component: {fileID: -2163490113976411781}
   - component: {fileID: 5160256997650002795}
   - component: {fileID: 1154098350}
-  - component: {fileID: 530880894584698555}
-  - component: {fileID: 6464373961638207613}
   m_Layer: 7
   m_Name: Empty_FlyAINavMesh
   m_TagString: Ennemi
@@ -778,7 +776,7 @@ MonoBehaviour:
   agent: {fileID: 5407937164410842287}
   playerTransform: {fileID: 0}
   stateControllerFlyAI: {fileID: 5407937164311034900}
-  enemyHealth: {fileID: 530880894584698555}
+  enemyHealth: {fileID: 2067911473255968063}
   myAnimator: {fileID: 1154098350}
   globalRefAnimator: {fileID: 5160256997650002795}
   characterController: {fileID: 484338305460112917}
@@ -924,62 +922,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &530880894584698555
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5407937164410842285}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7769d4d0a1f19c4eb09eb4379604c79, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _hpUi: {fileID: 1167557324}
-  _probHpUi: {fileID: 772536188}
-  _bloodVFXPooler: {fileID: 3943648564459389494}
-  _maxHp: 25
-  _probationMaxStartup: 1
-  _probationSpeed: 15
-  IsInvulnerable: 0
-  _canvas: {fileID: 1872300975}
-  _material: {fileID: 2100000, guid: 0be94a39ccd205f4f9d884136bb4c52b, type: 2}
-  _deathVfx: {fileID: 8782500626266542195, guid: 4e088f7fded15e04a95d92413fada8e4,
-    type: 3}
-  Room: {fileID: 0}
-  _colliders:
-  - {fileID: 66523102954454127}
-  - {fileID: 6188512027229414854}
-  _uiScale: 0.1
-  _lookStrictness: 0.08
-  _appearSpeed: 15
-  _disappearSpeed: 4
-  _disappearMaxStartup: 1
-  _deathAnimationDuration: 1
-  KnockBackDir: {x: 0, y: 0, z: 0}
-  globalRefAICAC: {fileID: 0}
-  globalRefBullAI: {fileID: 0}
-  globalRefFlyAI: {fileID: 5407937164311034899}
---- !u!114 &6464373961638207613
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5407937164410842285}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 696edb1499390144ba6e6e6526406c5c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MeshGameObject: {fileID: 8688693978693153689}
-  ColorBase: {r: 0, g: 0, b: 0, a: 0}
-  ColorPreAtatck: {r: 0.5943396, g: 0, b: 0, a: 1}
-  Material: {fileID: 0}
-  TextureBase: {fileID: 2800000, guid: 28a4b69bf75bbba4c8596e324096193a, type: 3}
-  TexturePreAttack: {fileID: 2800000, guid: 3a2ae6e068448a14294728a46cc890b5, type: 3}
-  SetPixelTexture: {x: 0, y: 0}
 --- !u!1 &5407937164474220353
 GameObject:
   m_ObjectHideFlags: 0
@@ -1309,6 +1251,8 @@ GameObject:
   - component: {fileID: 5407937165128473250}
   - component: {fileID: 3943648564459389494}
   - component: {fileID: 6911205242574237349}
+  - component: {fileID: 2067911473255968063}
+  - component: {fileID: 1727383931119251868}
   m_Layer: 7
   m_Name: Ennemi_FlyNavMesh (1)
   m_TagString: Ennemi
@@ -1415,6 +1359,63 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6710f03ff1c41064088ccced29e28e05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2067911473255968063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5407937165128473279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7769d4d0a1f19c4eb09eb4379604c79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _hpUi: {fileID: 1167557324}
+  _probHpUi: {fileID: 772536188}
+  _bloodVFXPooler: {fileID: 3943648564459389494}
+  _maxHp: 25
+  _probationMaxStartup: 1
+  _probationSpeed: 15
+  IsInvulnerable: 0
+  _canvas: {fileID: 1872300975}
+  _material: {fileID: 2100000, guid: 0be94a39ccd205f4f9d884136bb4c52b, type: 2}
+  _deathVfx: {fileID: 8782500626266542195, guid: 4e088f7fded15e04a95d92413fada8e4,
+    type: 3}
+  Room: {fileID: 0}
+  _colliders:
+  - {fileID: 66523102954454127}
+  - {fileID: 6188512027229414854}
+  _uiScale: 0.1
+  _lookStrictness: 0.08
+  _appearSpeed: 15
+  _disappearSpeed: 4
+  _disappearMaxStartup: 1
+  _deathAnimationDuration: 1
+  KnockBackDir: {x: 0, y: 0, z: 0}
+  globalRefAICAC: {fileID: 0}
+  globalRefBullAI: {fileID: 0}
+  globalRefFlyAI: {fileID: 5407937164311034899}
+  globalRefWallAI: {fileID: 0}
+--- !u!114 &1727383931119251868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5407937165128473279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 696edb1499390144ba6e6e6526406c5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MeshGameObject: {fileID: 8688693978693153689}
+  ColorBase: {r: 0, g: 0, b: 0, a: 0}
+  ColorPreAtatck: {r: 0.5943396, g: 0, b: 0, a: 1}
+  Material: {fileID: 0}
+  TextureBase: {fileID: 2800000, guid: 28a4b69bf75bbba4c8596e324096193a, type: 3}
+  TexturePreAttack: {fileID: 2800000, guid: 3a2ae6e068448a14294728a46cc890b5, type: 3}
+  SetPixelTexture: {x: 0, y: 0}
 --- !u!1 &6300504266062117377
 GameObject:
   m_ObjectHideFlags: 0

@@ -687,6 +687,8 @@ GameObject:
   - component: {fileID: 514505303248324779}
   - component: {fileID: 6361566959551655630}
   - component: {fileID: 5713824913523710932}
+  - component: {fileID: 1007057623919306927}
+  - component: {fileID: 861224076797160588}
   m_Layer: 7
   m_Name: WallEnemy
   m_TagString: Ennemi
@@ -901,6 +903,63 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1007057623919306927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7333516157775419203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7769d4d0a1f19c4eb09eb4379604c79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _hpUi: {fileID: 0}
+  _probHpUi: {fileID: 0}
+  _bloodVFXPooler: {fileID: 0}
+  _maxHp: 40
+  _probationMaxStartup: 1
+  _probationSpeed: 15
+  IsInvulnerable: 0
+  _canvas: {fileID: 0}
+  _material: {fileID: 2100000, guid: 4f464c633df81524a9235c1407baf01e, type: 2}
+  _deathVfx: {fileID: 8782500626266542195, guid: 4e088f7fded15e04a95d92413fada8e4,
+    type: 3}
+  Room: {fileID: 0}
+  _colliders:
+  - {fileID: 0}
+  - {fileID: 0}
+  _uiScale: 0.1
+  _lookStrictness: 0.08
+  _appearSpeed: 15
+  _disappearSpeed: 4
+  _disappearMaxStartup: 1
+  _deathAnimationDuration: 1
+  KnockBackDir: {x: 0, y: 0, z: 0}
+  globalRefAICAC: {fileID: 0}
+  globalRefBullAI: {fileID: 0}
+  globalRefFlyAI: {fileID: 0}
+  globalRefWallAI: {fileID: 0}
+--- !u!114 &861224076797160588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7333516157775419203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 696edb1499390144ba6e6e6526406c5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MeshGameObject: {fileID: 7333516157775419203}
+  ColorBase: {r: 1, g: 1, b: 1, a: 0}
+  ColorPreAtatck: {r: 0.6698113, g: 0, b: 0, a: 1}
+  Material: {fileID: 0}
+  TextureBase: {fileID: 2800000, guid: 0ba45ce9b0da91c479af485c18c61728, type: 3}
+  TexturePreAttack: {fileID: 2800000, guid: 3a2ae6e068448a14294728a46cc890b5, type: 3}
+  SetPixelTexture: {x: 0, y: 0}
 --- !u!1 &7333516158302212432
 GameObject:
   m_ObjectHideFlags: 0
@@ -917,8 +976,6 @@ GameObject:
   - component: {fileID: 7333516156728121281}
   - component: {fileID: 1776645733}
   - component: {fileID: -1170506944532699751}
-  - component: {fileID: 5751861392797281327}
-  - component: {fileID: 7725461509576660708}
   m_Layer: 7
   m_Name: WallAI
   m_TagString: Untagged
@@ -1012,7 +1069,7 @@ MonoBehaviour:
   areaWallAI: {fileID: 0}
   agent: {fileID: 7333516158302212430}
   spawnBullet: {fileID: 7333516157666857980}
-  enemyHealth: {fileID: 5751861392797281327}
+  enemyHealth: {fileID: 1007057623919306927}
   wallsList: []
   playerTransform: {fileID: 0}
   orientation: 0
@@ -1071,59 +1128,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentAnimName: 
---- !u!114 &5751861392797281327
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7333516158302212432}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7769d4d0a1f19c4eb09eb4379604c79, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _hpUi: {fileID: 1849567365}
-  _probHpUi: {fileID: 995362221}
-  _bloodVFXPooler: {fileID: 6361566959551655630}
-  _maxHp: 40
-  _probationMaxStartup: 1
-  _probationSpeed: 15
-  IsInvulnerable: 0
-  _canvas: {fileID: 484671541}
-  _material: {fileID: 2100000, guid: 4f464c633df81524a9235c1407baf01e, type: 2}
-  _deathVfx: {fileID: 8782500626266542195, guid: 4e088f7fded15e04a95d92413fada8e4,
-    type: 3}
-  Room: {fileID: 0}
-  _colliders:
-  - {fileID: 851489939178235476}
-  - {fileID: 5819445517737031388}
-  _uiScale: 0.1
-  _lookStrictness: 0.08
-  _appearSpeed: 15
-  _disappearSpeed: 4
-  _disappearMaxStartup: 1
-  _deathAnimationDuration: 1
-  KnockBackDir: {x: 0, y: 0, z: 0}
-  globalRefAICAC: {fileID: 0}
-  globalRefBullAI: {fileID: 0}
-  globalRefFlyAI: {fileID: 0}
---- !u!114 &7725461509576660708
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7333516158302212432}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 696edb1499390144ba6e6e6526406c5c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MeshGameObject: {fileID: 7333516157775419203}
-  ColorBase: {r: 1, g: 1, b: 1, a: 0}
-  ColorPreAtatck: {r: 0.6698113, g: 0, b: 0, a: 1}
-  Material: {fileID: 0}
-  TextureBase: {fileID: 2800000, guid: 0ba45ce9b0da91c479af485c18c61728, type: 3}
-  TexturePreAttack: {fileID: 2800000, guid: 3a2ae6e068448a14294728a46cc890b5, type: 3}
-  SetPixelTexture: {x: 0, y: 0}
