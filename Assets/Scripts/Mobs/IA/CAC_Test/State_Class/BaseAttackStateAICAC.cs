@@ -50,6 +50,8 @@ namespace State.AICAC
 
             if (baseAttackAICACSO.currentAttackRate <= 0)
             {
+                Debug.Log("sound attack");
+                SoundManager.Instance.PlaySound("event:/SFX_IA/Voras_SFX(Trash)/Attack", 10f);
                 AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Attack");
                 baseAttackAICACSO.isAttacking = true;
                 baseAttackAICACSO.currentAttackRate = baseAttackAICACSO.maxAttackRate;
@@ -69,7 +71,6 @@ namespace State.AICAC
                 {
                     //SoundManager.instance.PlaySoundMobOneShot(globalRef.audioSourceTrashMob, SoundManager.instance.soundAndVolumeListTrashMob[0]);
                     // TO DO lucas va te faire encul�
-                    SoundManager.Instance.PlaySound("event:/SFX_IA/Voras_SFX(Trash)/Attack", 1f);
                     // PLAY SOUND PRE ATTACK TRASH MOB
                 }
 
