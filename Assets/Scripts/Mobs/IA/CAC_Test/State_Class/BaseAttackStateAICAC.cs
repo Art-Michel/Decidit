@@ -68,7 +68,8 @@ namespace State.AICAC
                 if(globalRef.distPlayer < baseAttackAICACSO.attackRange && baseAttackAICACSO.currentAttackRate == baseAttackAICACSO.maxAttackRate)
                 {
                     //SoundManager.instance.PlaySoundMobOneShot(globalRef.audioSourceTrashMob, SoundManager.instance.soundAndVolumeListTrashMob[0]);
-                    // TO DO lucas va te faire enculé
+                    // TO DO lucas va te faire enculï¿½
+                    SoundManager.Instance.PlaySound("event:/SFX_IA/Voras_SFX(Trash)/Attack", 1f);
                     // PLAY SOUND PRE ATTACK TRASH MOB
                 }
 

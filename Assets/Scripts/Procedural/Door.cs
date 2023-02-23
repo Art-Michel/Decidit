@@ -58,6 +58,8 @@ public class Door : MonoBehaviour
 
         _doorMesh.transform.localPosition = Vector3.up * 2;
         //mettre animation ici à la place
+        //!SoundManager.Instance.PlaySound("event:/SFX_Environement/DoorClosing", 1f);
+        //!SoundManager.Instance.PlaySound("event:/SFX_Environement/StartFight", 1f);
     }
 
     public void OpenDoor()
@@ -69,6 +71,7 @@ public class Door : MonoBehaviour
         }
 
         _doorMesh.transform.localPosition = Vector3.up * 8;
+        //!SoundManager.Instance.PlaySound("event:/SFX_Environement/DoorOpening", 1f);
         //là aussi
     }
 }

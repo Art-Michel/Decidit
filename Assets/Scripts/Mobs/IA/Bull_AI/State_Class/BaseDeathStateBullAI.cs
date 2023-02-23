@@ -28,7 +28,8 @@ namespace State.AIBull
             globalRef.agent.speed = 0;
             globalRef.rushManager.RemoveDeadAI(globalRef);
             // PLAY SOUND DEATH RUSHER
-            // TO DO lucas va te faire enculé
+            // TODO lucas va te faire enculï¿½
+            SoundManager.Instance.PlaySound("event:/SFX_IA/DeathIA", 1f);
             once = true;
         }
     }

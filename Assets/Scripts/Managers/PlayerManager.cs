@@ -284,6 +284,7 @@ public class PlayerManager : LocalManager<PlayerManager>
     {
         if (_slowMoT > 0 || !_isPaused)
         {
+            ////SoundManager.Instance.PlaySound("event:/SFX_Environement/SlowMo", 5f);
             Time.timeScale = Mathf.Lerp(_timeSpeed, 1, Mathf.InverseLerp(_slowMoInitialT, 0, _slowMoT));
             DisplayTimeScale();
 

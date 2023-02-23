@@ -38,7 +38,7 @@ namespace State.AIBull
                 globalRef.agent.enabled = false;
                 AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "PreAttack");
                 //SoundManager.instance.PlaySoundMobOneShot(globalRef.audioSourceBull, SoundManager.instance.soundAndVolumeRushMob[0]);
-                // TO DO lucas va te faire enculé
+                // TO DO lucas va te faire enculï¿½
                 //Play SOUND PRE ATTACK RUSHER
 
                 if (rushBullSO == null)
@@ -100,7 +100,8 @@ namespace State.AIBull
 
         void RushMovement()
         {
-            // TO DO lucas va te faire enculé
+            // TO DO lucas va te faire enculï¿½
+            SoundManager.Instance.PlaySound("event:/SFX_IA/ShredNoss_SFX(Dash)/Attack", 1f);
             //Play SOUND ATTACK RUSHER
 
             rushBullSO.targetPos = new Vector2(rushBullSO.rushDestination.x, rushBullSO.rushDestination.z);

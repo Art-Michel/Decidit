@@ -26,7 +26,8 @@ namespace State.AICAC
             globalRef.agent.speed = globalRef.deathAICACSO.stopSpeed;
             globalRef.agent.enabled = false;
             // PLAY SOUND DEATH TRASHMOB
-            // TO DO lucas va te faire enculé
+            // TO DO lucas va te faire enculï¿½
+            SoundManager.Instance.PlaySound("event:/SFX_IA/DeathIA", 1f);
             once = true;
         }
     }

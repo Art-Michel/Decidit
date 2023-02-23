@@ -41,7 +41,8 @@ namespace State.FlyAI
                 SoundManager.instance.PlaySoundMobOneShot(globalRef.audioSourceFly, SoundManager.instance.soundAndVolumeFlyMob[1]);*/
 
             //PLAY SOUND PRE ATTACK FLY
-            // TO DO lucas va te faire enculé
+            // TO DO lucas va te faire enculï¿½
+            SoundManager.Instance.PlaySound("event:/SFX_IA/Vorice_SFX(Vol)/Attack", 1f);
         }
 
 

@@ -55,7 +55,7 @@ public class MuseArm : Arm
 
         Player.Instance.StartShake(_launchShakeIntensity, _launchShakeDuration);
         ////PlaceHolderSoundManager.Instance.PlayMuseRocketLaunch();
-        SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/MuseMalade/Launch", 1f);
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/MuseMalade/Launch", 5f);
         //_muzzleFlash.PlayAll();
     }
 }

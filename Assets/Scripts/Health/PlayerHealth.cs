@@ -51,7 +51,7 @@ public class PlayerHealth : Health
 
         base.TakeDamage(amount);
         ////PlaceHolderSoundManager.Instance.PlayHurt();
-        SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/HitMarker", 1f);
+        ////SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/HitMarker", 1f);
         //cool magic numbers
         float shakeIntensity = _playerHurtShakeMaxStrength * Mathf.InverseLerp(0, 40, amount + 10);
         Player.Instance.StartShake(shakeIntensity, _playerHurtShakeDuration);

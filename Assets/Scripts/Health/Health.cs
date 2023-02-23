@@ -114,7 +114,7 @@ public class Health : MonoBehaviour
             _hp = Mathf.Clamp(_hp + amount, 0, _probHp);
             DisplayHealth();
             ////PlaceHolderSoundManager.Instance.PlayRegen();
-            SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/BaseHeal", 1f);
+            ////SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/BaseHeal", 1f);
             //StartProbHealth(); //uncomment if we want to reset prob timer upon regen
         }
     }
