@@ -66,6 +66,7 @@ public class EylauRevolver : Revolver
         PooledObject shot = null;
         if (!_charged)
         {
+            SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/CimetièreEyleau/BasedShoot", 1f);
             shot = _unchargedProjectilePooler.Get();
             shot.GetComponent<Projectile>().Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized);
 
@@ -79,6 +80,7 @@ public class EylauRevolver : Revolver
             //     PiercingLaser();
             // else
             //Laser();
+            SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/CimetièreEyleau/ChargedShoot", 1f);
             shot = _chargedProjectilePooler.Get();
             shot.GetComponent<Projectile>().Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized);
 
