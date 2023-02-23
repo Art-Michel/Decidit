@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fc3590df12c8a448b4a652f035e9a9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 819.8
+  _speed: 9407.88
 --- !u!1 &2836480217421133866
 GameObject:
   m_ObjectHideFlags: 0
@@ -135,27 +135,30 @@ MonoBehaviour:
   _shouldNotHitThrough:
     serializedVersion: 2
     m_Bits: 0
-  _canMultiHit: 0
+  _canMultiHit: 1
   _shouldSplashBloodOnHit: 1
   _radius: 0.11
   _damage: 100
   _knockbackForce: 20
   _knockbackAngle: {x: 0, y: 0, z: 0}
-  _delayBetweenHits: 0
+  _delayBetweenHits: 0.1
   _pooledObject: {fileID: 2527101979113148985}
   _mesh: {fileID: 2836480217421133866}
-  _trailRenderer: {fileID: 3453753400250165723}
+  _trailRenderer:
+  - {fileID: 3453753400250165723}
+  - {fileID: 3915605616248414445}
+  - {fileID: 2272087414736991597}
   _trailMaterial: {fileID: 0}
   _impactVfxPooler: {fileID: 3950077139277656553}
   _fleshSplashVfxPooler: {fileID: 195275737341631623}
   _shouldLeaveImpact: 1
-  _bounces: 1
+  _bounces: 0
   _bounciness: 1
   _explodesOnHit: 0
   _explosion: {fileID: 0}
-  _speed: 50
+  _speed: 260.3
   _currentSpeed: 0
-  _lifeSpan: 3
+  _lifeSpan: 1
   _trailDelay: 0
 --- !u!114 &2527101979113148985
 MonoBehaviour:
@@ -329,6 +332,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 130913010004685085}
   m_PrefabAsset: {fileID: 0}
+--- !u!96 &2272087414736991597 stripped
+TrailRenderer:
+  m_CorrespondingSourceObject: {fileID: 2186792044864128112, guid: 80ccb65881c103a42a2519c153da8344,
+    type: 3}
+  m_PrefabInstance: {fileID: 130913010004685085}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2886259017213289629
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -453,6 +462,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 80ccb65881c103a42a2519c153da8344, type: 3}
+--- !u!96 &3915605616248414445 stripped
+TrailRenderer:
+  m_CorrespondingSourceObject: {fileID: 2186792044864128112, guid: 80ccb65881c103a42a2519c153da8344,
+    type: 3}
+  m_PrefabInstance: {fileID: 2886259017213289629}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4602816005106642484 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1724440560621128361, guid: 80ccb65881c103a42a2519c153da8344,

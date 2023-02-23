@@ -13,7 +13,7 @@ public class Projectile : Hitbox
     [Foldout("References")]
     [SerializeField] private GameObject _mesh;
     [Foldout("References")]
-    [SerializeField] private TrailRenderer _trailRenderer;
+    [SerializeField] private TrailRenderer[] _trailRenderer;
     [Foldout("References")]
     [SerializeField] private MonoBehaviour _trailMaterial;
     [Foldout("References")]
@@ -56,7 +56,9 @@ public class Projectile : Hitbox
         _direction = direction;
         _lifeT = _lifeSpan;
         _trailDelayT = _trailDelay; //Delay before spawning the trail
-        if (_trailRenderer) _trailRenderer.enabled = false;
+        if (_trailRenderer.Length > 0)
+            foreach (TrailRenderer trail in _trailRenderer)
+                trail.enabled = false;
         if (_trailMaterial) _trailMaterial.enabled = false;
         _mesh.SetActive(false);
         _lasterFramePosition = position - _direction * _radius;
@@ -116,7 +118,9 @@ public class Projectile : Hitbox
             if (_trailDelayT < 0)
             {
                 // spawn trail after a bit
-                if (_trailRenderer) _trailRenderer.enabled = true;
+                if (_trailRenderer.Length > 0)
+                    foreach (TrailRenderer trail in _trailRenderer)
+                        trail.enabled = true;
                 if (_trailMaterial) _trailMaterial.enabled = true;
                 _mesh.SetActive(true);
             }
@@ -214,11 +218,13 @@ public class Projectile : Hitbox
 
     public void Disappear()
     {
-        if (_trailRenderer)
-        {
-            _trailRenderer.Clear();
-            _trailRenderer.enabled = false;
-        }
+        if (_trailRenderer.Length > 0)
+            foreach (TrailRenderer trail in _trailRenderer)
+            {
+
+                trail.Clear();
+                trail.enabled = false;
+            }
         if (_trailMaterial)
         {
             _trailMaterial.enabled = false;
