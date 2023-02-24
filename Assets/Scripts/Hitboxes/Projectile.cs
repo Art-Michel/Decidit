@@ -136,9 +136,19 @@ public class Projectile : Hitbox
                 if (!AlreadyHit(hit.transform.parent))
                 {
                     Hit(hit.transform);
-                    if (_shouldLeaveImpact) LeaveImpact(hit);
+                    if (_shouldLeaveImpact)
+                        LeaveImpact(hit);
+
+                    //Reset direction to camera direction in order to cancel the fact we initially sent the
+                    //projectile slightly angled to compensate the gun's offset
                     _direction = _cameraDirection;
                 }
+
+            //second raycast backwards to leave impact after exiting a surface
+            if (_shouldLeaveImpact)
+                foreach (RaycastHit hit in Physics.RaycastAll(transform.position, -_spaceTraveledLast2Frames.normalized, _spaceTraveledLast2Frames.magnitude, _shouldCollideWith))
+                    LeaveImpact(hit);
+
         }
 
         //if the bullet should disappear on hit, we gotta first check whether it is a bouncing ball
@@ -168,7 +178,9 @@ public class Projectile : Hitbox
             else
             {
                 Hit(hit.transform);
-                if (_shouldLeaveImpact) LeaveImpact(hit);
+                if (_shouldLeaveImpact)
+                    LeaveImpact(hit);
+
                 //+ explostion if projectile should spawn an explosion.
                 if (_explodesOnHit)
                     Explode(hit.normal);
