@@ -17,7 +17,7 @@ public class AragonArm : Arm
     private Transform _vfxGroundProjection;
     [Foldout("Stats")]
     [SerializeField]
-    private float _range;
+    private float _dashRange;
     [Foldout("References")]
     [SerializeField]
     private Player _player;
@@ -55,6 +55,9 @@ public class AragonArm : Arm
     [Foldout("Stats")]
     [SerializeField]
     private float _momentumPostDash = 1f;
+    [Foldout("Stats")]
+    [SerializeField]
+    private bool _uniformMomentumAfterDash = true;
 
     float _defaultFov;
     private Vector3 _dashStartPosition;
@@ -85,11 +88,11 @@ public class AragonArm : Arm
 
     public override void UpdatePrevis()
     {
-        Physics.Raycast(_cameraTransform.position, _cameraTransform.forward, out RaycastHit hit, _range, _detectionMask);
+        Physics.Raycast(_cameraTransform.position, _cameraTransform.forward, out RaycastHit hit, _dashRange, _detectionMask);
         if (hit.transform != null)
             _vfx.transform.position = hit.point + hit.normal * 0.2f;
         else
-            _vfx.transform.position = _cameraTransform.transform.position + _cameraTransform.forward * _range;
+            _vfx.transform.position = _cameraTransform.transform.position + _cameraTransform.forward * _dashRange;
 
         _vfx.transform.up = hit.normal;
         Physics.Raycast(_vfx.transform.position, Vector3.down, out RaycastHit groundHit, 100f, _detectionMask);
@@ -195,7 +198,8 @@ public class AragonArm : Arm
         _lastFramePosition = transform.position;
 
         //Move
-        _dashT += Time.deltaTime / _dashDuration;
+        _dashT += Time.deltaTime / _dashDuration / (Mathf.InverseLerp(0, _dashRange, (_dashDestination - _dashStartPosition).magnitude));
+
         _player.CharaCon.Move(Vector3.LerpUnclamped(_dashStartPosition, _dashDestination, _dashMovementCurve.Evaluate(_dashT)) - _player.transform.position);
 
         CheckForTriggers();
@@ -245,7 +249,11 @@ public class AragonArm : Arm
         _player.PlayerHealth.IsInvulnerable = false;
         _player.CharaCon.detectCollisions = true;
         StopDashFeedbacks();
-        _player.AddMomentum((_dashDestination - _dashStartPosition) * _momentumPostDash);
+
+        if (_uniformMomentumAfterDash)
+            _player.AddMomentum((_dashDestination - _dashStartPosition).normalized * _momentumPostDash);
+        else
+            _player.AddMomentum((_dashDestination - _dashStartPosition) * _momentumPostDash);
     }
 
     private void StopDashFeedbacks()

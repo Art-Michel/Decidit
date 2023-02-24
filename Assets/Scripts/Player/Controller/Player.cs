@@ -585,10 +585,13 @@ public class Player : LocalManager<Player>
 
     #endregion
 
-    #region Enable Disable Inputs
+    #region Enable Disable
     void OnEnable()
     {
         _inputs.Enable();
+
+        //Buffer jump is jump was pressed when enabled
+        if (_inputs.Movement.Jump.IsPressed()) PressJump();
     }
 
     void OnDisable()
