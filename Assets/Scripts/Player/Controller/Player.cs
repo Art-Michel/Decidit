@@ -268,7 +268,7 @@ public class Player : LocalManager<Player>
         _cameraTargetYRotation += mouseMovement.x * _mouseSensitivityX * 0.01f * _mouseXInvertedValue * Time.timeScale;
         _cameraTargetXRotation -= mouseMovement.y * _mouseSensitivityY * 0.01f * _mouseYInvertedValue * Time.timeScale;
 
-        _cameraTargetXRotation = Mathf.Clamp(_cameraTargetXRotation, -85, 85);
+        _cameraTargetXRotation = Mathf.Clamp(_cameraTargetXRotation, -89.5f, 89.5f);
 
         var targetRotation = Quaternion.Euler(Vector3.up * _cameraTargetYRotation) * Quaternion.Euler(Vector3.right * _cameraTargetXRotation);
 
@@ -283,7 +283,7 @@ public class Player : LocalManager<Player>
         _cameraTargetYRotation += RStickMovementX * _stickSensitivityX * 10 * _controllerCameraXInvertedValue;
         _cameraTargetXRotation -= RStickMovementY * _stickSensitivityY * 10 * _controllerCameraYInvertedValue;
 
-        _cameraTargetXRotation = Mathf.Clamp(_cameraTargetXRotation, -85, 85f);
+        _cameraTargetXRotation = Mathf.Clamp(_cameraTargetXRotation, -89.5f, 89.5f);
 
         var targetRotation = Quaternion.Euler(Vector3.up * _cameraTargetYRotation) * Quaternion.Euler(Vector3.right * _cameraTargetXRotation);
 
