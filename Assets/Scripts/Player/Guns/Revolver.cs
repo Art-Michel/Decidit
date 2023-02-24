@@ -246,9 +246,14 @@ public class Revolver : MonoBehaviour
     private void Reloaded()
     {
         _ammo = _maxAmmo;
-        _reloadingWarning.enabled = false;
         //TODO lucas PlaceHolderSoundManager.Instance.PlayReloaded();
         DisplayAmmo();
+    }
+
+    public void DisableReloadUI()
+    {
+        _reloadingWarning.enabled = false;
+        _reloadingWarning.fillAmount = 0f;
     }
 
     private void DisplayAmmo()
