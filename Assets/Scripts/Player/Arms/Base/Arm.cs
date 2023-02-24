@@ -156,6 +156,8 @@ public class Arm : MonoBehaviour
     {
         _crossHairOutline.enabled = true;
         PlaceHolderSoundManager.Instance.PlayArmFilled();
+        if (_inputs.Actions.Skill.IsPressed())
+            PressSong();
     }
 
     #region Debugging

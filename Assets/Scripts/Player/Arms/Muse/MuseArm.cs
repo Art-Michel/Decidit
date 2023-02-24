@@ -47,6 +47,7 @@ public class MuseArm : Arm
 
     public override void StartActive()
     {
+        CheckLookedAt();
         _crossHairOutline.enabled = false;
         PooledObject shot = _pooler.Get();
         shot.transform.rotation = transform.rotation;

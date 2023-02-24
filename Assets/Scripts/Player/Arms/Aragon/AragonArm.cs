@@ -76,8 +76,8 @@ public class AragonArm : Arm
 
     public override void StartIdle()
     {
-        Refilled();
         _vfx.SetActive(false);
+        Refilled();
     }
 
     public override void StartPrevis()
