@@ -1431,7 +1431,7 @@ MonoBehaviour:
   _cooldown: 1
   _vfx: {fileID: 603117771566878093}
   _vfxGroundProjection: {fileID: 9040691190137722522}
-  _range: 14
+  _dashRange: 14
   _player: {fileID: 2200446484234949679}
   _vignette: {fileID: 2006583777}
   _detectionMask:
@@ -1535,8 +1535,9 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _dashFovIncrease: 30
-  _maxVignetteAlpha: 0.5
-  _momentumPostDash: 1.8
+  _maxVignetteAlpha: 0.8
+  _momentumPostDash: 28
+  _uniformMomentumAfterDash: 1
 --- !u!114 &950598985533358227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20315,7 +20316,7 @@ MonoBehaviour:
   dithering: 1
   stopNaNs: 0
   taaSharpenStrength: 0.5
-  TAAQuality: 1
+  TAAQuality: 0
   taaHistorySharpening: 0.35
   taaAntiFlicker: 0.5
   taaMotionVectorRejection: 0
