@@ -11,9 +11,13 @@ public class BaseAttackFlySO : ScriptableObject
     public float distDetectWall;
     public LayerMask wallMask;
 
-    [Header("Speed Rotation Attack")]
-    public float maxSpeedRotationAIAttack;
+    [HideInInspector]
     public float speedRotationAIAttack;
+
+    [Header("Speed Rotation Attack")]
+    public float maxSpeedRotationAILock;
+    public float maxSpeedRotationAIAttack;
+    public float smoothRotationLock;
     public float smoothRotationAttack;
 
     [Header("Speed Y Position Attack")]

@@ -61,7 +61,6 @@ namespace State.FlyAI
 
         public void ActiveState(StateControllerFlyAI.AIState newState)
         {
-            Debug.Log(stateControllerFlyAI);
             stateControllerFlyAI.SetActiveState(newState);
         }
 

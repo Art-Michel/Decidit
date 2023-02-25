@@ -4,7 +4,8 @@ namespace State.FlyAI
 {
     public class KnockBackFlyAI : _StateFlyAI
     {
-        [SerializeField] private const float friction = 20f;
+        [SerializeField] private float friction = 20f;
+
         [SerializeField] GlobalRefFlyAI globalRef;
         [SerializeField] Transform childflyAI;
 

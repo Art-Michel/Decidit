@@ -50,6 +50,7 @@ namespace State.FlyAI
         {
             AdjustingYspeed();
             Attack();
+            StopAttack();
         }
 
         private void FixedUpdate()
@@ -93,19 +94,6 @@ namespace State.FlyAI
             {
                 stopLock = true;
             }
-
-            if (baseAttackFlySO.distDestinationFinal <= 1.5f)
-            {
-                stateControllerFlyAI.SetActiveState(StateControllerFlyAI.AIState.BaseMove);
-            }
-            else
-            {
-                if(globalRef.hitbox.Blacklist.Count >0)
-                {
-                    globalRef.colliderBaseAttack.gameObject.SetActive(false);
-                    stateControllerFlyAI.SetActiveState(StateControllerFlyAI.AIState.BaseMove);
-                }
-            }
         }
 
         void ApplyFlyingMove()
@@ -135,6 +123,24 @@ namespace State.FlyAI
             else
             {
                 globalRef.agent.velocity = childflyAI.transform.forward * baseAttackFlySO.baseAttackSpeed;
+            }
+        }
+
+        void StopAttack()
+        {
+            if (CheckPlayerCover.instance.isCover)
+            {
+                stateControllerFlyAI.SetActiveState(StateControllerFlyAI.AIState.BaseMove);
+            }
+            if (baseAttackFlySO.distDestinationFinal <= 1.5f)
+                stateControllerFlyAI.SetActiveState(StateControllerFlyAI.AIState.BaseMove);
+            else
+            {
+                if (globalRef.hitbox.Blacklist.Count > 0)
+                {
+                    globalRef.colliderBaseAttack.gameObject.SetActive(false);
+                    stateControllerFlyAI.SetActiveState(StateControllerFlyAI.AIState.BaseMove);
+                }
             }
         }
 

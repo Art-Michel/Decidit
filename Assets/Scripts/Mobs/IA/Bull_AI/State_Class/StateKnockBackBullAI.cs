@@ -4,6 +4,8 @@ namespace State.AIBull
 {
     public class StateKnockBackBullAI : _StateBull
     {
+        [SerializeField] private float friction = 20f;
+
         [SerializeField] GlobalRefBullAI globalRef;
 
         [Header("KnockBack Direction")]
@@ -90,7 +92,7 @@ namespace State.AIBull
             Vector3 move;
 
             SetGravity();
-            knockBackDirection = (knockBackDirection.normalized * (knockBackDirection.magnitude - 2f * deltaTime));
+            knockBackDirection = (knockBackDirection.normalized * (knockBackDirection.magnitude - friction * deltaTime));
 
             move = new Vector3(knockBackDirection.x, knockBackDirection.y + (globalRef.rushBullSO.AIVelocity.y), knockBackDirection.z);
             globalRef.characterController.Move(move * deltaTime);

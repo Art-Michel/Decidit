@@ -94,7 +94,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   globalRef: {fileID: 686522204}
   maxDurationNavLink: 0
+  triggerNavLink: 0
   isOnNavLink: 0
+  linkDestination: {x: 0, y: 0, z: 0}
   offset: 0
   mask:
     serializedVersion: 2
@@ -961,6 +963,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5388a92ecdbc769409645eb0549db26c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  friction: 5
   globalRef: {fileID: 686522204}
   knockBackDirection: {x: 0, y: 0, z: 0}
   distDetectGround: 1
@@ -1300,6 +1303,7 @@ MonoBehaviour:
   globalRefAICAC: {fileID: 686522204}
   globalRefBullAI: {fileID: 0}
   globalRefFlyAI: {fileID: 0}
+  globalRefWallAI: {fileID: 0}
 --- !u!114 &1127582834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1354,6 +1358,7 @@ MonoBehaviour:
   characterController: {fileID: 9001087971601091765}
   spawnRayDodge: {fileID: 3888318928596240787}
   hitBox: {fileID: 279298340}
+  isDead: 0
   listOtherCACAI: []
   listOtherAIContact: []
   baseMoveAICACSO: {fileID: 11400000, guid: 6c8526f8a5c8cad4e8304ba634795910, type: 2}

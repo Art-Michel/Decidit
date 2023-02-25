@@ -45,7 +45,7 @@ namespace State.AICAC
         public GameObject hitBox;
 
         [Header("Ref Death State")]
-        bool isDead;
+        public bool isDead;
 
         [Header("Ref Surround State")]
         public List<GameObject> listOtherCACAI = new List<GameObject>();

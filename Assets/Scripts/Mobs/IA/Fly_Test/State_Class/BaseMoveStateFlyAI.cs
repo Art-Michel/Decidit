@@ -253,11 +253,13 @@ namespace State.FlyAI
             else
             {
                 RaycastHit hit = RaycastAIManager.instanceRaycast.RaycastAI(transform.position, 
-                    new Vector3(globalRef.playerTransform.position.x, globalRef.playerTransform.position.y -1f, globalRef.playerTransform.position.z) - 
+                    new Vector3(globalRef.playerTransform.position.x, globalRef.playerTransform.position.y -0.5f, globalRef.playerTransform.position.z) - 
                     globalRef.transform.position, baseMoveFlySO.maskCheckCanRush, Color.red, 100f);
 
                 if (hit.transform == globalRef.playerTransform)
+                {
                     stateControllerFlyAI.SetActiveState(StateControllerFlyAI.AIState.LockPlayer);
+                }
             }
         }
 

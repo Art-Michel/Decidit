@@ -76,18 +76,19 @@ namespace State.FlyAI
             Quaternion rotation = Quaternion.Slerp(childflyAI.localRotation, Quaternion.LookRotation(relativePos, Vector3.up), baseAttackFlySO.speedRotationAIAttack);
             childflyAI.localRotation = rotation;
 
-            if (baseAttackFlySO.speedRotationAIAttack < baseAttackFlySO.maxSpeedRotationAIAttack)
+            if(this.isActiveAndEnabled == true)
             {
-                if (this.enabled == true)
-                    baseAttackFlySO.speedRotationAIAttack += (Time.deltaTime / baseAttackFlySO.smoothRotationAttack);
+                if (baseAttackFlySO.speedRotationAIAttack < baseAttackFlySO.maxSpeedRotationAILock)
+                    baseAttackFlySO.speedRotationAIAttack += (Time.deltaTime / baseAttackFlySO.smoothRotationLock);
                 else
-                {
-                    baseAttackFlySO.speedRotationAIAttack += (Time.deltaTime / (baseAttackFlySO.smoothRotationAttack / 4));
-                }
+                    baseAttackFlySO.speedRotationAIAttack = baseAttackFlySO.maxSpeedRotationAILock;
             }
             else
             {
-                baseAttackFlySO.speedRotationAIAttack = baseAttackFlySO.maxSpeedRotationAIAttack;
+                if (baseAttackFlySO.speedRotationAIAttack < baseAttackFlySO.maxSpeedRotationAIAttack)
+                    baseAttackFlySO.speedRotationAIAttack += (Time.deltaTime / baseAttackFlySO.smoothRotationAttack);
+                else
+                    baseAttackFlySO.speedRotationAIAttack = baseAttackFlySO.maxSpeedRotationAIAttack;
             }
         }
 
@@ -101,6 +102,7 @@ namespace State.FlyAI
 
         private void OnDisable()
         {
+            baseAttackFlySO.speedRotationAIAttack = 0;
             material_Instances.Material.color = material_Instances.ColorBase;
             material_Instances.ChangeColorTexture(material_Instances.ColorBase);
         }

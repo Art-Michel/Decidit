@@ -42,9 +42,12 @@ namespace State.AICAC
         }
         void Walk()
         {
-            baseMoveState.isOnNavLink = false;
-            globalRef.agent.autoTraverseOffMeshLink = true;
-            AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Walk");
+            if(!globalRef.isDead)
+            {
+                baseMoveState.isOnNavLink = false;
+                globalRef.agent.autoTraverseOffMeshLink = true;
+                AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Walk");
+            }
         }
     }
 }

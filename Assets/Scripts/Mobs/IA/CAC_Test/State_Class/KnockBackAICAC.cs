@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace State.AICAC
 {
     public class KnockBackAICAC : _StateAICAC
     {
-        [SerializeField] private const float friction = 20f;
+        [SerializeField] private float friction = 20f;
         [SerializeField] GlobalRefAICAC globalRef;
 
         [Header("KnockBack Direction")]
