@@ -23,7 +23,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
     public List<RoomSetup> Corridors;
     public int TotalRooms { get { return _actualRooms.Count - 1; } }
     List<Room> _actualRooms;
-    public int CurrentRoom { get; private set; }
+    public int CurrentRoom;
 
 
     [SerializeField] List<Room> _rooms;
@@ -113,25 +113,25 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
         foreach (Room room in _rooms)
         {
             //* Spawn room
-            Room instance = Instantiate(room, Vector3.zero, Quaternion.identity, transform);
-            instance.gameObject.SetActive(true);
+            Room roomInstance = Instantiate(room, Vector3.zero, Quaternion.identity, transform);
+            roomInstance.gameObject.SetActive(true);
 
             //* set rotation
-            instance.transform.rotation = Quaternion.Euler(0, _dungeonRotation, 0);
+            roomInstance.transform.rotation = Quaternion.Euler(0, _dungeonRotation, 0);
 
             //*set position
             if (lastDoor != null)
             {
-                Vector3 roomPosition = (lastDoor.transform.position + Vector3.forward * 5) - (instance.Entry.transform.position);
-                instance.transform.position = roomPosition;
+                Vector3 roomPosition = (lastDoor.transform.position + Vector3.forward * 5) - (roomInstance.Entry.transform.position);
+                roomInstance.transform.position = roomPosition;
             }
 
             //*Disable Room and its enemies
-            lastDoor = instance.Exit.gameObject;
-            instance.gameObject.SetActive(false);
-            instance.EnableEnemies(false);
+            lastDoor = roomInstance.Exit.gameObject;
+            roomInstance.gameObject.SetActive(false);
+            roomInstance.EnableEnemies(false);
 
-            _actualRooms.Add(instance);
+            _actualRooms.Add(roomInstance);
         }
 
         EnableFirstRooms();

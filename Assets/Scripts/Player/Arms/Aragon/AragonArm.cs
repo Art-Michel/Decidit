@@ -179,7 +179,7 @@ public class AragonArm : Arm
             _dashDestination += Vector3.up * -.1f;
             yeah = true;
         }
-        if (Physics.Raycast(_dashDestination, Vector3.down, .9f, _detectionMask))
+        if (Physics.Raycast(_dashDestination, Vector3.down, .5f, _detectionMask))
         {
             _dashDestination += Vector3.down * -.1f;
             yeah = true;

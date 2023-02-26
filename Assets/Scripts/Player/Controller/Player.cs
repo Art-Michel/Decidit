@@ -597,6 +597,7 @@ public class Player : LocalManager<Player>
     void OnDisable()
     {
         _inputs.Disable();
+        _fsm.ChangeState(PlayerStatesList.AIRBORNE);
     }
     #endregion
 }

@@ -56,18 +56,18 @@ public class EnemyHealth : Health
     protected override void Awake()
     {
         base.Awake();
-        _regenValue = _hp;
         _playerCamera = Camera.main.transform;
+        _material = GetComponent<Material_Instances>().Material;
         _canvasGroup = _canvas.GetComponent<CanvasGroup>();
     }
 
     protected override void Start()
     {
         base.Start();
+        _regenValue = _hp;
         _appearT = 0f;
         _canvasGroup.alpha = 0f;
         _isDying = false;
-        _material = GetComponent<Material_Instances>().Material;
     }
 
     void OnEnable()
@@ -221,7 +221,7 @@ public class EnemyHealth : Health
         _appearT = 1;
 
         //regen player
-        Player.Instance.gameObject.GetComponent<Health>().ProbRegen(Mathf.RoundToInt(_regenValue / 4f));
+        Player.Instance.gameObject.GetComponent<Health>().ProbRegen(Mathf.RoundToInt(_regenValue));
     }
 
     private void UpdateDeath()
