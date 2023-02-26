@@ -98,7 +98,11 @@ public class EnemyHealth : Health
         else if (globalRefAICAC != null)
             globalRefAICAC.CheckHP();
         else if (globalRefFlyAI != null)
+        {
             globalRefFlyAI.CheckHP();
+            globalRefFlyAI.LaunchAttack();
+
+        }
         else if (globalRefWallAI != null)
             globalRefWallAI.CheckHP();
 
@@ -115,7 +119,11 @@ public class EnemyHealth : Health
         else if (globalRefAICAC != null)
             globalRefAICAC.CheckHP();
         else if (globalRefFlyAI != null)
+        {
             globalRefFlyAI.CheckHP();
+            globalRefFlyAI.LaunchAttack();
+
+        }
         else if (globalRefWallAI != null)
             globalRefWallAI.CheckHP();
 

@@ -142,7 +142,7 @@ namespace State.FlyAI
         ////////////// Set Destination \\\\\\\\\\\\\\\\\\\\\
         Vector3 SearchNewPos() // défini la position aléatoire choisi dans la fonction "RandomPointInBounds()" si la distance entre le point et l'IA est suffisament grande
         {
-            if (baseMoveFlySO.distDestinationFinal < 20 || dodgeObstacle)
+            if (baseMoveFlySO.distDestinationFinal < 10 || dodgeObstacle)
             {
                 baseMoveFlySO.destinationFinal = RandomPointInBounds(globalRef.myCollider.bounds);
 

@@ -23,6 +23,8 @@ namespace State.AIBull
         Vector2 posPlayer;
         Vector2 posAI;
 
+        int indexRay;
+
         public override void InitState(StateControllerBull stateController)
         {
             base.InitState(stateController);
@@ -198,13 +200,35 @@ namespace State.AIBull
                 rushBullSO.isGround = false;
             }
 
+
             //Check obstacle Wall
-            rushBullSO.hitObstacle = RaycastAIManager.instanceRaycast.RaycastAI(globalRef.transform.position, globalRef.transform.forward, rushBullSO.maskCheckObstacle, Color.red, distDetectObstacle);
+            switch(indexRay)
+            {
+                case 0:
+                    CheckWall(globalRef.RayRushRight);
+                    break;
+                case 1:
+                    CheckWall(globalRef.RayRushMiddle);
+                    break;
+                case 2:
+                    CheckWall(globalRef.RayRushLeft);
+                    break;
+            }
+        }
+        void CheckWall(Transform rayRush)
+        {
+            rushBullSO.hitObstacle = RaycastAIManager.instanceRaycast.RaycastAI(rayRush.position, rayRush.forward, 
+                                                      rushBullSO.maskCheckObstacle, Color.red, distDetectObstacle);
             if (rushBullSO.hitObstacle.transform != null)
             {
-              if (!rushBullSO.hitObstacle.transform.CompareTag("Ennemi"))
-                StopRush();
+                if (!rushBullSO.hitObstacle.transform.CompareTag("Ennemi"))
+                    StopRush();
             }
+
+            if (indexRay < 2)
+                indexRay++;
+            else
+                indexRay = 0;
         }
 
         void SmoothLookAtPlayer()
@@ -289,6 +313,10 @@ namespace State.AIBull
                 rushBullSO.stopLockPlayer = false;
                 rushBullSO.ennemiInCollider.Clear();
             }
+
+            if (material_Instances.Material.color == material_Instances.ColorPreAtatck)
+                ShowSoonAttack(false);
+
             globalRef.launchRush = false;
             canStartRush = false;
             lockPlayer = false;

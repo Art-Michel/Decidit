@@ -18,6 +18,8 @@ namespace State.FlyAI
 
         private Stack<AIState> stateHistory = new Stack<AIState>();
 
+        public static AIState currentState;
+
         void Start()
         {
             //Put all state into a dictionary
@@ -73,6 +75,8 @@ namespace State.FlyAI
             activeState = stateDictionary[newState];
 
             activeState.gameObject.SetActive(true);
+
+            currentState = newState;
 
             //If we are jumping back we shouldn't add to history because then we will get doubles
             if (!isJumpingBack)

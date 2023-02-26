@@ -39,6 +39,9 @@ namespace State.AIBull
         public Hitbox hitBox;
         public BoxCollider detectOtherAICollider;
         public bool launchRush;
+        public Transform RayRushRight;
+        public Transform RayRushMiddle;
+        public Transform RayRushLeft;
 
         [Header("Ref Death State")]
         public bool isDead;

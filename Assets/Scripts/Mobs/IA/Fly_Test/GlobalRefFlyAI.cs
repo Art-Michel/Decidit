@@ -55,7 +55,6 @@ namespace State.FlyAI
 
         private void Start()
         {
-
             transform.rotation = Quaternion.Euler(Vector3.zero);
         }
 
@@ -67,6 +66,14 @@ namespace State.FlyAI
         public void ActiveKnockBackState()
         {
             ActiveState(StateControllerFlyAI.AIState.KnockBack);
+        }
+
+        public void LaunchAttack()
+        {
+            if (StateControllerFlyAI.currentState == StateControllerFlyAI.AIState.BaseMove)
+            {
+                ActiveState(StateControllerFlyAI.AIState.LockPlayer);
+            }
         }
 
         public void CheckHP()
