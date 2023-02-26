@@ -17,25 +17,23 @@ namespace State.AICAC
         public float radius;
         public float adjustRadius;
         public float offsetRadius;
-        [SerializeField] float currentAnglePlacement;
-        [SerializeField] float currentAnglePlacementAdjust;
-        [SerializeField] float currentAnglePlacementAdjust2;
-
-        [SerializeField] Vector3 destination;
+        float currentAnglePlacement;
+        float currentAnglePlacementAdjust;
+        float currentAnglePlacementAdjust2;
+        Vector3 destination;
 
         [SerializeField] LineRenderer circleRenderer;
         [SerializeField] bool drawLineRenderer;
 
-        [SerializeField] List<float> posYcircle = new List<float>();
+        List<Vector3> posCircle = new List<Vector3>();
 
-        // Start is called before the first frame update
         void Start()
         {
             SetListActiveAI();
 
             for (int i = 0; i < maxAngle; i++)
             {
-                posYcircle.Add(0);
+                posCircle.Add(Vector3.zero);
             }
         }
         public void SetListActiveAI()
@@ -48,10 +46,16 @@ namespace State.AICAC
             }
         }
 
-        // Update is called once per frame
         void Update()
         {
-            SetupPositionEnemy();
+            CheckYPos();
+            CheckNextPosCircle();
+            if (PositionAreSame(posCircle))
+                SetupPositionEnemy();
+            else
+            {
+                adjustRadius--;
+            }
         }
 
         private void FixedUpdate()
@@ -62,6 +66,7 @@ namespace State.AICAC
 
         void SetupPositionEnemy()
         {
+            radius = adjustRadius - offsetRadius;
             currentAnglePlacement = 0f;
             float angleStep = maxAngle / aiCACScriptsList.Count;
             Vector3 centerPosition = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer;
@@ -75,7 +80,6 @@ namespace State.AICAC
                 aiCACScriptsList[i].destinationSurround = destination;
                 currentAnglePlacement += angleStep;
             }
-            CheckYPos();
         }
 
         void CheckYPos()
@@ -88,67 +92,67 @@ namespace State.AICAC
                 float unitDirXposition = centerPosition.x + Mathf.Sin((currentAnglePlacementAdjust * Mathf.PI) / 180) * adjustRadius;//radius;
                 float unitDirZposition = centerPosition.z + Mathf.Cos((currentAnglePlacementAdjust * Mathf.PI) / 180) * adjustRadius;//radius;
 
-                posYcircle[i] = CheckNavMeshPoint(new Vector3(unitDirXposition, centerPosition.y, unitDirZposition)).y;
+                posCircle[i] = CheckNavMeshPoint(new Vector3(unitDirXposition, centerPosition.y, unitDirZposition));
 
                 if (i > 0)
                 {
-                    if ((int)posYcircle[i] != (int)posYcircle[i - 1])
+                    if ((int)posCircle[i].y != (int)posCircle[i - 1].y)
                     {
-                        Debug.Log(i);
                         adjustRadius--;
-                        radius = adjustRadius - offsetRadius;
                         return;
                     }
                 }
                 currentAnglePlacementAdjust += 1;
             }
-
-            CheckNextPosCircle();
         }
 
         void CheckNextPosCircle()
         {
             Vector3 centerPosition = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer;
 
-            if (PositionAreSame())
+            if (PositionAreSame(posCircle))
             {
-                float checkAdjustRadius = adjustRadius + 2;
+                float checkAdjustRadius = adjustRadius;
+                checkAdjustRadius += 1;
                 currentAnglePlacementAdjust2 = 0f;
 
                 for (int i = 0; i < maxAngle; i++)
                 {
-                    //Debug.Log(checkAdjustRadius);
-
                     float unitDirXposition = centerPosition.x + Mathf.Sin((currentAnglePlacementAdjust2 * Mathf.PI) / 180) * checkAdjustRadius;//radius;
                     float unitDirZposition = centerPosition.z + Mathf.Cos((currentAnglePlacementAdjust2 * Mathf.PI) / 180) * checkAdjustRadius;//radius;
 
-                    posYcircle[i] = CheckNavMeshPoint(new Vector3(unitDirXposition, centerPosition.y, unitDirZposition)).y;
+                    posCircle[i] = CheckNavMeshPoint(new Vector3(unitDirXposition, centerPosition.y, unitDirZposition));
 
                     if (i > 0)
                     {
-                        if ((int)posYcircle[i] != (int)posYcircle[i - 1])
+                        if (posCircle[i].x == posCircle[i - 1].x)
                         {
-                            Debug.Log(i);
-                            Debug.Log("Not Up Circle");
+                            return;
+                        }
+                        else if (posCircle[i].z == posCircle[i - 1].z)
+                        {
+                            return;
+                        }
+                        else if ((int)posCircle[i].y != (int)posCircle[i - 1].y)
+                        {
                             return;
                         }
                     }
                     currentAnglePlacementAdjust2 += 1;
-                }
-                if (adjustRadius < maxRadius)
-                {
-                    Debug.Log("Up Circle");
-                    adjustRadius++;
-                    radius = adjustRadius - offsetRadius;
+
+                    if (adjustRadius < maxRadius && i == maxAngle-1)
+                    {
+                        adjustRadius++;
+                    }
                 }
             }
         }
 
-        bool PositionAreSame()
+        bool PositionAreSame(List<Vector3> posYcircle)
         {
             for (int i = 0; i < posYcircle.Count-1; i++)
             {
-                if ((int)posYcircle[i] != (int)posYcircle[i + 1])
+                if ((int)posYcircle[i].y != (int)posYcircle[i + 1].y)
                 {
                     return false;
                 }
@@ -180,7 +184,7 @@ namespace State.AICAC
         }
         Vector3 CheckNavMeshPoint(Vector3 _destination)
         {
-            if (NavMesh.SamplePosition(_destination, out closestHit, radius, 1))
+            if (NavMesh.SamplePosition(_destination, out closestHit, radius*2, 1))
             {
                 _destination = closestHit.position;
             }
