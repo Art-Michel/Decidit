@@ -137,7 +137,7 @@ public class Projectile : Hitbox
                 {
                     Hit(hit.transform);
                     if (_shouldLeaveImpact)
-                        LeaveImpact(hit);
+                        LeaveImpact(hit, false);
 
                     //Reset direction to camera direction in order to cancel the fact we initially sent the
                     //projectile slightly angled to compensate the gun's offset
@@ -147,7 +147,7 @@ public class Projectile : Hitbox
             //second raycast backwards to leave impact after exiting a surface
             if (_shouldLeaveImpact)
                 foreach (RaycastHit hit in Physics.RaycastAll(transform.position, -_spaceTraveledLast2Frames.normalized, _spaceTraveledLast2Frames.magnitude, _shouldCollideWith))
-                    LeaveImpact(hit);
+                    LeaveImpact(hit, true);
 
         }
 
@@ -168,7 +168,7 @@ public class Projectile : Hitbox
                 }
                 else
                 {
-                    if (_shouldLeaveImpact) LeaveImpact(hit);
+                    if (_shouldLeaveImpact) LeaveImpact(hit, false);
                     if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
                         Bounce(hit);
                 }
@@ -179,7 +179,7 @@ public class Projectile : Hitbox
             {
                 Hit(hit.transform);
                 if (_shouldLeaveImpact)
-                    LeaveImpact(hit);
+                    LeaveImpact(hit, false);
 
                 //+ explostion if projectile should spawn an explosion.
                 if (_explodesOnHit)
@@ -199,14 +199,17 @@ public class Projectile : Hitbox
         _lastFramePosition = hit.point + hit.normal * (_radius + 0.1f);
     }
 
-    private void LeaveImpact(RaycastHit hit)
+    private void LeaveImpact(RaycastHit hit, bool fromBehind)
     {
         //wall or ground
         if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             GameObject impactVfx = _impactVfxPooler.Get().gameObject;
             impactVfx.transform.position = hit.point + hit.normal * 0.05f;
-            impactVfx.transform.forward = _direction;
+            if (fromBehind)
+                impactVfx.transform.forward = -_direction;
+            else
+                impactVfx.transform.forward = _direction;
         }
 
         //flesh
@@ -214,7 +217,11 @@ public class Projectile : Hitbox
         {
             GameObject splashVfx = _fleshSplashVfxPooler.Get().gameObject;
             splashVfx.transform.position = hit.point + hit.normal * 0.05f;
-            splashVfx.transform.forward = -_direction;
+
+            if (fromBehind) // upside down for some reason
+                splashVfx.transform.forward = _direction;
+            else
+                splashVfx.transform.forward = -_direction;
         }
     }
 
