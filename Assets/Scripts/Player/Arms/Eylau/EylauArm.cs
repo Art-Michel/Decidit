@@ -59,7 +59,7 @@ public class EylauArm : Arm
 
     public override void StopActive()
     {
-        _area.transform.parent = null;
+        _area.transform.parent = this.gameObject.transform;
     }
 
     public override void StartRecovery()
