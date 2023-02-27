@@ -47,29 +47,24 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
 
         //* randomizing seed
         if (_randomizeSeed)
-        {
             _seed = Random.Range(0, 1000);
-        }
-
         Random.InitState(_seed);
 
         _rooms = new List<Room>(_numberOfRooms + 2 + (_numberOfRooms + 1));
         _rooms.Add(_starterRoom.Get());
 
-        //* variables pour r�partir la difficult� (difficulty) en fonction du nombre de salles et de la longueur du donjon (stackCount)
         int stackCount = Mathf.RoundToInt(_numberOfRooms / 3f);
-
         for (int i = 0; i < _numberOfRooms; i++)
         {
             _rooms.Add(Corridors[Random.Range(0, Corridors.Count)].Get());
 
-            //* passe � la difficult� suivante
+            //* passe a la difficulte suivante
             if (stackCount <= 0)
             {
                 stackCount = Mathf.RoundToInt(_numberOfRooms / 3f);
             }
 
-            //* ajoute une salle avec une difficult� pr�d�fini
+            //* ajoute une salle avec une difficulte predefinie
             _rooms.Add(RoomSets[_difficultyPerRoom[i]].Get());
             stackCount--;
         }
@@ -91,14 +86,14 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
             //* set rotation
             roomInstance.transform.rotation = Quaternion.Euler(0, _dungeonRotation, 0);
 
-            //*set position
+            //* set position
             if (lastDoor != null)
             {
                 Vector3 roomPosition = (lastDoor.transform.position + Vector3.forward * 5) - (roomInstance.Entry.transform.position);
                 roomInstance.transform.position = roomPosition;
             }
 
-            //*Disable Room and its enemies
+            //* Disable Room and its enemies
             lastDoor = roomInstance.Exit.gameObject;
             roomInstance.gameObject.SetActive(false);
             roomInstance.EnableEnemies(false);
@@ -127,9 +122,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
     public void ClearDungeon()
     {
         while (transform.childCount > 0)
-        {
             DestroyImmediate(transform.GetChild(0).gameObject);
-        }
     }
 
     public Room GetRoom(int i = 0)
