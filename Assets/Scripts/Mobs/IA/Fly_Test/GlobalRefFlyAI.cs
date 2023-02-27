@@ -65,12 +65,13 @@ namespace State.FlyAI
 
         public void ActiveKnockBackState()
         {
-            ActiveState(StateControllerFlyAI.AIState.KnockBack);
+            if(enemyHealth._hp >0)
+                ActiveState(StateControllerFlyAI.AIState.KnockBack);
         }
 
         public void LaunchAttack()
         {
-            if (StateControllerFlyAI.currentState == StateControllerFlyAI.AIState.BaseMove)
+            if (StateControllerFlyAI.currentState == StateControllerFlyAI.AIState.BaseMove && enemyHealth._hp > 0)
             {
                 ActiveState(StateControllerFlyAI.AIState.LockPlayer);
             }

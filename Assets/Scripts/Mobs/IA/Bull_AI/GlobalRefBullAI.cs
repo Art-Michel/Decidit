@@ -84,15 +84,16 @@ namespace State.AIBull
 
         public void ActiveKnockBackState()
         {
-            ActiveState(StateControllerBull.AIState.KnockBack);
+            if(enemyHealth._hp >0)
+                ActiveState(StateControllerBull.AIState.KnockBack);
         }
 
         public void CheckHP()
         {
             if (enemyHealth._hp <= 0 && !isDead)
             {
-                isDead = true;
                 ActiveState(StateControllerBull.AIState.Death);
+                isDead = true;
             }
         }
     }

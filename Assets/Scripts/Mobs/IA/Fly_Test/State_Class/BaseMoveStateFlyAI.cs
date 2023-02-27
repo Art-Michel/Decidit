@@ -90,8 +90,8 @@ namespace State.FlyAI
                 }
             }
 
-            RaycastHit hit = RaycastAIManager.instanceRaycast.RaycastAI(childflyAI.transform.position, childflyAI.transform.forward, baseMoveFlySO.maskObstacle,
-                Color.red, baseMoveFlySO.lenghtRayDetectObstacle);
+            RaycastHit hit = RaycastAIManager.instanceRaycast.RaycastAI(childflyAI.transform.position, childflyAI.transform.forward, 
+                baseMoveFlySO.maskObstacle, Color.red, baseMoveFlySO.lenghtRayDetectObstacle);
 
             if (hit.transform != null)
             {
@@ -102,6 +102,18 @@ namespace State.FlyAI
             {
                 currentMaxSpeedRotationAIDodgeObstacle = baseMoveFlySO.maxSpeedRotationAIPatrol;
                 currentSmoothRotationDodgeObstacle = baseMoveFlySO.smoothRotationPatrol;
+            }
+
+            if (baseMoveFlySO.currentRateAttack <= 0)
+            {
+                RaycastHit hitCheckPlayer = RaycastAIManager.instanceRaycast.RaycastAI(childflyAI.position,
+                   new Vector3(globalRef.playerTransform.GetChild(0).position.x, globalRef.playerTransform.GetChild(0).position.y, 
+                   globalRef.playerTransform.GetChild(0).position.z) - childflyAI.position, baseMoveFlySO.maskCheckCanRush, Color.red, 100f);
+
+                if (hitCheckPlayer.transform == globalRef.playerTransform)
+                {
+                    stateControllerFlyAI.SetActiveState(StateControllerFlyAI.AIState.LockPlayer);
+                }
             }
         }
 
@@ -249,17 +261,6 @@ namespace State.FlyAI
             if (baseMoveFlySO.currentRateAttack > 0)
             {
                 baseMoveFlySO.currentRateAttack -= Time.deltaTime;
-            }
-            else
-            {
-                RaycastHit hit = RaycastAIManager.instanceRaycast.RaycastAI(transform.position, 
-                    new Vector3(globalRef.playerTransform.position.x, globalRef.playerTransform.position.y -0.5f, globalRef.playerTransform.position.z) - 
-                    globalRef.transform.position, baseMoveFlySO.maskCheckCanRush, Color.red, 100f);
-
-                if (hit.transform == globalRef.playerTransform)
-                {
-                    stateControllerFlyAI.SetActiveState(StateControllerFlyAI.AIState.LockPlayer);
-                }
             }
         }
 
