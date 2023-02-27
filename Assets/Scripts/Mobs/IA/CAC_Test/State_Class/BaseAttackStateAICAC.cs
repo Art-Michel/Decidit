@@ -52,7 +52,7 @@ namespace State.AICAC
             {
                 // TODO lucas va te faire encul�
                 // PLAY SOUND PRE ATTACK TRASH MOB
-                SoundManager.Instance.PlaySound("event:/SFX_IA/Voras_SFX(Trash)/Attack", 1f);
+                SoundManager.Instance.PlaySound("event:/SFX_IA/Voras_SFX(Trash)/Attack", 1f, transform.position);
                 AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Attack");
                 baseAttackAICACSO.isAttacking = true;
                 baseAttackAICACSO.currentAttackRate = baseAttackAICACSO.maxAttackRate;
@@ -71,8 +71,6 @@ namespace State.AICAC
                 /*if(globalRef.distPlayer < baseAttackAICACSO.attackRange && baseAttackAICACSO.currentAttackRate == baseAttackAICACSO.maxAttackRate)
                 {
                 }*/
-                    SoundManager.Instance.PlaySound("event:/SFX_IA/Voras_SFX(Trash)/Attack", 1f, transform.position);
-
                 baseAttackAICACSO.currentAttackRate -= Time.deltaTime;
             }
         }

@@ -174,7 +174,7 @@ namespace State.WallAI
             {
                 // PLAY SOUND MOVE IN WALL WALLMOB
                 // TODO lucas va te faire encul�
-                SoundManager.Instance.PlaySound("event:/SFX_IA/Menas_SFX(Mur)/Moove", 1f);
+                SoundManager.Instance.PlaySound("event:/SFX_IA/Menas_SFX(Mur)/Moove", 1f, transform.position);
             }
         }
 
