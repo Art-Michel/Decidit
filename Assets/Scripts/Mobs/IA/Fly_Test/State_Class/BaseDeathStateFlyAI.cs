@@ -26,6 +26,7 @@ namespace State.FlyAI
                 AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Death");
 
             globalRef.agent.enabled = false;
+            globalRef.colliderBaseAttack.SetActive(false);
 
             // PLAY SOUND DEATH FLY AI
             // TO DO lucas va te faire enculé

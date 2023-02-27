@@ -25,6 +25,7 @@ namespace State.AICAC
             globalRef.transform.parent = null;
             globalRef.agent.speed = globalRef.deathAICACSO.stopSpeed;
             globalRef.agent.enabled = false;
+            globalRef.hitBox.gameObject.SetActive(false);
             // PLAY SOUND DEATH TRASHMOB
             // TODO lucas va te faire encul�
             //SoundManager.Instance.PlaySound("event:/SFX_IA/DeathIA", 1f);

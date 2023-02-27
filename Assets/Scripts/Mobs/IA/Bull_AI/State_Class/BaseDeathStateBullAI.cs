@@ -29,6 +29,8 @@ namespace State.AIBull
             globalRef.rushManager.RemoveDeadAI(globalRef);
             // PLAY SOUND DEATH RUSHER
             // TODO lucas va te faire encul�
+
+            globalRef.hitBox.gameObject.SetActive(false);
             SoundManager.Instance.PlaySound("event:/SFX_IA/DeathIA", 1f);
             once = true;
         }
