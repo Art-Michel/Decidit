@@ -7,7 +7,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
 {
     [SerializeField] int _seed;
     [SerializeField] bool _randomizeSeed;
-    [SerializeField] float _dungeonRotation;
+    //[SerializeField] float _dungeonRotation;
     [SerializeField] int[] _difficultyPerRoom;
     private int _numberOfRooms;
     [SerializeField] int _firstPowerupAfterRoom;
@@ -76,7 +76,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
 
     private void Build()
     {
-        GameObject lastDoor = null;
+        Transform lastDoor = null;
         foreach (Room room in _rooms)
         {
             //* Spawn room
@@ -86,23 +86,23 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
             //* set rotation
             if (lastDoor != null)
             {
-                roomInstance.transform.rotation = lastDoor.transform.rotation;
+                roomInstance.transform.rotation = lastDoor.rotation;
                 roomInstance.transform.Rotate(0, 180, 0);
             }
             else
-                roomInstance.transform.rotation = Quaternion.Euler(0, _dungeonRotation, 0);
+                roomInstance.transform.rotation = Quaternion.identity;
 
             //* set position
             if (lastDoor != null)
             {
-                Vector3 roomPosition = (lastDoor.transform.position + Vector3.forward * 5) - (roomInstance.Entry.transform.position);
+                Vector3 roomPosition = lastDoor.position;
                 roomInstance.transform.position = roomPosition;
             }
 
             //* Disable Room and its enemies
-            lastDoor = roomInstance.Exit.gameObject;
-            roomInstance.gameObject.SetActive(false);
+            lastDoor = roomInstance.Exit.transform;
             roomInstance.EnableEnemies(false);
+            roomInstance.gameObject.SetActive(false);
 
             _actualRooms.Add(roomInstance);
         }
