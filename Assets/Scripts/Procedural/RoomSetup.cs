@@ -11,6 +11,6 @@ public class RoomSetup : ScriptableObject
 
     public Room Get()
     {
-        return rooms[Random.Range(0, rooms.Count)];
+        return rooms[Random.Range(0, rooms.Count - 1)];
     }
 }
