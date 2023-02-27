@@ -32,9 +32,8 @@ namespace State.FlyAI
             try
             {
                 globalRef.colliderBaseAttack.gameObject.SetActive(false);
-                //SoundManager.instance.PlaySoundMobOneShot(globalRef.audioSourceFly, SoundManager.instance.soundAndVolumeFlyMob[0]);
                 //PLAY SOUND PRE ATTACK FLY IA
-                // TO DO lucas va te faire enculé
+                // TODO lucas va te faire enculé
             }
             catch
             {

@@ -48,6 +48,8 @@ namespace State.FlyAI
 
         private void Update()
         {
+            //SoundManager.Instance.PlaySound("event:/SFX_IA/Voras_SFX(Trash)/Attack", 1f);
+
             AdjustingYspeed();
             SmoothLookAtYAxisPatrol();
         }

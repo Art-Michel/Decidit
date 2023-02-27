@@ -26,7 +26,7 @@ namespace State.AICAC
 
         private void OnEnable()
         {
-            if (globalRef != null)
+            if (globalRef != null && baseAttackAICACSO == null)
             {
                 baseAttackAICACSO = globalRef.baseAttackAICACSO;
             }
@@ -50,7 +50,9 @@ namespace State.AICAC
 
             if (baseAttackAICACSO.currentAttackRate <= 0)
             {
-                //SoundManager.Instance.PlaySound("event:/SFX_IA/Voras_SFX(Trash)/Attack", 10f);
+                // TODO lucas va te faire encul�
+                // PLAY SOUND PRE ATTACK TRASH MOB
+                SoundManager.Instance.PlaySound("event:/SFX_IA/Voras_SFX(Trash)/Attack", 1f);
                 AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Attack");
                 baseAttackAICACSO.isAttacking = true;
                 baseAttackAICACSO.currentAttackRate = baseAttackAICACSO.maxAttackRate;
@@ -66,12 +68,9 @@ namespace State.AICAC
                 {
                     material_Instances.ChangeColorTexture(material_Instances.ColorPreAtatck);
                 }
-                if(globalRef.distPlayer < baseAttackAICACSO.attackRange && baseAttackAICACSO.currentAttackRate == baseAttackAICACSO.maxAttackRate)
+                /*if(globalRef.distPlayer < baseAttackAICACSO.attackRange && baseAttackAICACSO.currentAttackRate == baseAttackAICACSO.maxAttackRate)
                 {
-                    //SoundManager.instance.PlaySoundMobOneShot(globalRef.audioSourceTrashMob, SoundManager.instance.soundAndVolumeListTrashMob[0]);
-                    // TO DO lucas va te faire encul�
-                    // PLAY SOUND PRE ATTACK TRASH MOB
-                }
+                }*/
 
                 baseAttackAICACSO.currentAttackRate -= Time.deltaTime;
             }

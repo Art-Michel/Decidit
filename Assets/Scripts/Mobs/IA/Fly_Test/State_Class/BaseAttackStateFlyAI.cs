@@ -37,12 +37,9 @@ namespace State.FlyAI
             if (globalRef != null && globalRef.myAnimator != null)
                 AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Rush");
 
-            /*if (SoundManager.instance != null)
-                SoundManager.instance.PlaySoundMobOneShot(globalRef.audioSourceFly, SoundManager.instance.soundAndVolumeFlyMob[1]);*/
-
             //PLAY SOUND PRE ATTACK FLY
-            // TO DO lucas va te faire encul�
-           // SoundManager.Instance.PlaySound("event:/SFX_IA/Vorice_SFX(Vol)/Attack", 1f);
+            // TODO lucas va te faire encul�
+            SoundManager.Instance.PlaySound("event:/SFX_IA/Vorice_SFX(Vol)/Attack", 1f);
         }
 
 
