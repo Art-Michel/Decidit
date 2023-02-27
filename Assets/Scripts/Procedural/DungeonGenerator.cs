@@ -8,14 +8,13 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
     [SerializeField] int _seed;
     [SerializeField] bool _randomizeSeed;
     [SerializeField] float _dungeonRotation;
-    [SerializeField] int _numberOfRooms;
-    // [SerializeField] Dictionary<int, 
+    [SerializeField] int[] _difficultyPerRoom;
+    private int _numberOfRooms;
     [SerializeField] int _firstPowerupAfterRoom;
     [SerializeField] int _secondPowerupAfterRoom;
 
-    [SerializeField] AnimationCurve _difficultyCurve;
-    private float _difficultySum;
-    private List<int> _difficultiesLeftToUse;
+    private List<int> _subdifficultiesLeftToUse;
+
 
     [SerializeField] RoomSetup _starterRoom;
     [SerializeField] RoomSetup _finalRoom;
@@ -36,29 +35,18 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
 
     void Start()
     {
-        _difficultySum = TriangleNumber(_numberOfRooms);
+        _numberOfRooms = _difficultyPerRoom.Length;
         InitializeDifficultiesToUse();
         ResetDungeon();
         Generate();
     }
 
-    private int TriangleNumber(int n)
-    {
-        int value = 0;
-        for (int i = 0; i <= n; i++)
-        {
-            value += i;
-        }
-        Debug.Log(value);
-        return value;
-    }
-
     private void InitializeDifficultiesToUse()
     {
-        _difficultiesLeftToUse = new List<int>();
+        _subdifficultiesLeftToUse = new List<int>();
         for (int i = 0; i < _numberOfRooms; i++)
         {
-            _difficultiesLeftToUse.Add(i);
+            _subdifficultiesLeftToUse.Add(i);
         }
     }
 
