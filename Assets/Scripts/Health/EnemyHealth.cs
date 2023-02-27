@@ -63,6 +63,7 @@ public class EnemyHealth : Health
     protected override void Start()
     {
         base.Start();
+        _material = GetComponent<Material_Instances>().Material;
         _regenValue = _hp;
         _appearT = 0f;
         _canvasGroup.alpha = 0f;

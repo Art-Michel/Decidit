@@ -25,6 +25,8 @@ namespace State.FlyAI
             if (globalRef != null && globalRef.myAnimator != null)
                 AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Death");
 
+            globalRef.agent.enabled = false;
+
             // PLAY SOUND DEATH FLY AI
             // TO DO lucas va te faire enculé
             once = true;
