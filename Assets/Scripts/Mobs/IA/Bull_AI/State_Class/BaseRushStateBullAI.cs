@@ -103,7 +103,7 @@ namespace State.AIBull
         void RushMovement()
         {
             // TODO lucas va te faire encul�
-            //SoundManager.Instance.PlaySound("event:/SFX_IA/ShredNoss_SFX(Dash)/Attack", 1f);
+            SoundManager.Instance.PlaySound("event:/SFX_IA/ShredNoss_SFX(Dash)/Attack", 1f, transform.position);
             //Play SOUND ATTACK RUSHER
 
             rushBullSO.targetPos = new Vector2(rushBullSO.rushDestination.x, rushBullSO.rushDestination.z);

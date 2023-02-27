@@ -39,7 +39,7 @@ namespace State.FlyAI
 
             //PLAY SOUND PRE ATTACK FLY
             // TODO lucas va te faire encul�
-            SoundManager.Instance.PlaySound("event:/SFX_IA/Vorice_SFX(Vol)/Attack", 1f);
+           SoundManager.Instance.PlaySound("event:/SFX_IA/Vorice_SFX(Vol)/Attack", 1f, transform.position);
         }
 
 

@@ -29,7 +29,8 @@ namespace State.FlyAI
             globalRef.colliderBaseAttack.SetActive(false);
 
             // PLAY SOUND DEATH FLY AI
-            // TO DO lucas va te faire enculé
+            SoundManager.Instance.PlaySound("event:/SFX_IA/DeathIA", 1f, transform.position);
+            // TO DO lucas va te faire enculï¿½
             once = true;
         }
     }

@@ -22,7 +22,7 @@ public class AragonRevolver : Revolver
 
         Player.Instance.StartShake(_shootShakeIntensity, _shootShakeDuration);
         ////PlaceHolderSoundManager.Instance.PlayAragonShot();
-        SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/FugueAragon/BaseShoot", 1f);
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/FugueAragon/BaseShoot", 1f, transform.position);
         _muzzleFlash.PlayAll();
     }
 }

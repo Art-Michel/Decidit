@@ -51,7 +51,7 @@ public class BaseRevolver : Revolver
         vfx.Play();
 
         ////PlaceHolderSoundManager.Instance.PlayRevolverShot();
-        SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/BaseShoot/BaseShoot", 1f);
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/BaseShoot/BaseShoot", 1f, transform.position);
         Player.Instance.StartShake(_shootShakeIntensity, _shootShakeDuration);
 
         //va te faire enculer unity

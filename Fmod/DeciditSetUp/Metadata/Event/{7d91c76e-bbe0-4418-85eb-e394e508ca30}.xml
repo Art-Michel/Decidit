@@ -89,11 +89,20 @@
 	</object>
 	<object class="MixerBusPanner" id="{00ef8879-c9e2-4ed6-a482-32210d6626cc}" />
 	<object class="SingleSound" id="{a70d23dc-b2f7-4c12-8246-fec06071a70d}">
+		<property name="length">
+			<value>0.94999999999999996</value>
+		</property>
+		<property name="timelockedOffset">
+			<value>0.050000000000000003</value>
+		</property>
 		<relationship name="audioFile">
 			<destination>{17fc0140-b5ac-4857-9dc5-0658beb02ffe}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{7227c21a-35f4-4eef-92dd-9ed8436995f4}">
+		<property name="volume">
+			<value>10</value>
+		</property>
 		<property name="name">
 			<value>Audio 1</value>
 		</property>
@@ -112,6 +121,7 @@
 			<destination>{c72075e0-362a-4bb7-b05a-a09503d5d7a5}</destination>
 			<destination>{b791de89-f299-4a79-897f-f72a3968ca61}</destination>
 			<destination>{8f028548-25fc-4c53-9e1d-858697516aa7}</destination>
+			<destination>{5efb826d-dc86-4a84-8f2b-aaf899cee8ba}</destination>
 			<destination>{62d4f7cf-f1c5-4b72-b2d1-798d23bf8fe3}</destination>
 		</relationship>
 	</object>
@@ -132,6 +142,14 @@
 		<relationship name="modulators">
 			<destination>{0d430e1e-f0d5-48ce-aded-c4885c9261a3}</destination>
 		</relationship>
+	</object>
+	<object class="ThreeEQEffect" id="{5efb826d-dc86-4a84-8f2b-aaf899cee8ba}">
+		<property name="midGain">
+			<value>-41</value>
+		</property>
+		<property name="highGain">
+			<value>-26.5</value>
+		</property>
 	</object>
 	<object class="SFXReverbEffect" id="{62d4f7cf-f1c5-4b72-b2d1-798d23bf8fe3}">
 		<property name="decayTime">

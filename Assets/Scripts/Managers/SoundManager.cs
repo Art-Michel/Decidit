@@ -26,9 +26,9 @@ public class SoundManager : LocalManager<SoundManager>
 
     }
 
-    public void PlaySound(string PathLink, float Volume)
+    public void PlaySound(string PathLink, float Volume, Vector3 position)
     {
-        FMODUnity.RuntimeManager.PlayOneShot(PathLink, Volume, Vector3.zero);
+        FMODUnity.RuntimeManager.PlayOneShot(PathLink, Volume, position);
         //SFX.setVolume(Volume);
         //SFX.
     }

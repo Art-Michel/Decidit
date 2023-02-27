@@ -71,6 +71,7 @@ namespace State.AICAC
                 /*if(globalRef.distPlayer < baseAttackAICACSO.attackRange && baseAttackAICACSO.currentAttackRate == baseAttackAICACSO.maxAttackRate)
                 {
                 }*/
+                    SoundManager.Instance.PlaySound("event:/SFX_IA/Voras_SFX(Trash)/Attack", 1f, transform.position);
 
                 baseAttackAICACSO.currentAttackRate -= Time.deltaTime;
             }
