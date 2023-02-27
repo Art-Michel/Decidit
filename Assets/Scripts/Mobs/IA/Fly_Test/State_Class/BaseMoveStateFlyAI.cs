@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections.Generic;
 
 namespace State.FlyAI
 {
@@ -27,6 +28,8 @@ namespace State.FlyAI
         [SerializeField] float speedVelocity;
         [SerializeField] Vector3 velocity;
 
+        [SerializeField] bool isInCover;
+
         public override void InitState(StateControllerFlyAI stateController)
         {
             base.InitState(stateController);
@@ -48,24 +51,44 @@ namespace State.FlyAI
 
         private void Update()
         {
-            //SoundManager.Instance.PlaySound("event:/SFX_IA/Voras_SFX(Trash)/Attack", 1f);
-
             AdjustingYspeed();
             SmoothLookAtYAxisPatrol();
+            AdjustSpeed();
         }
 
         private void FixedUpdate()
         {
             CheckObstacle();
+            //SlowSpeed(globalRef.isInEylau);
+        }
 
-            SlowSpeed(globalRef.isInEylau);
+        void AdjustSpeed()
+        {
+            if(!dodgeObstacle)
+            {
+                if(baseMoveFlySO.currentSpeed < baseMoveFlySO.baseMoveSpeed)
+                {
+                    baseMoveFlySO.currentSpeed += Time.deltaTime * 1f;
+                }
+                else
+                {
+                    baseMoveFlySO.currentSpeed = baseMoveFlySO.baseMoveSpeed;
+                }
+            }
+            else
+            {
+                if (baseMoveFlySO.currentSpeed != baseMoveFlySO.lowSpeed)
+                {
+                    baseMoveFlySO.currentSpeed = baseMoveFlySO.lowSpeed;
+                }
+            }
         }
 
         void AdjustingYspeed()
         {
             float distHorizontal = Vector2.Distance(new Vector2(childflyAI.position.x, childflyAI.position.z),
                     new Vector2(baseMoveFlySO.destinationFinal.x, baseMoveFlySO.destinationFinal.z));
-            float t = distHorizontal / baseMoveFlySO.baseMoveSpeed;
+            float t = distHorizontal / baseMoveFlySO.currentSpeed;
 
             float distVertical = Mathf.Abs(childflyAI.position.y - baseMoveFlySO.destinationFinal.y);
 
@@ -112,16 +135,30 @@ namespace State.FlyAI
                    new Vector3(globalRef.playerTransform.GetChild(0).position.x, globalRef.playerTransform.GetChild(0).position.y, 
                    globalRef.playerTransform.GetChild(0).position.z) - childflyAI.position, baseMoveFlySO.maskCheckCanRush, Color.red, 100f);
 
-                if (hitCheckPlayer.transform == globalRef.playerTransform)
+                if (hitCheckPlayer.transform == globalRef.playerTransform && !CheckPlayerCover.instance.isCover)
                 {
                     stateControllerFlyAI.SetActiveState(StateControllerFlyAI.AIState.LockPlayer);
                 }
+            }
+
+            // check if is in collider cover
+            Collider [] col = Physics.OverlapSphere(transform.position, 0.7f, 19);
+            if(col.Length >0)
+            {
+                isInCover = true;
+            }
+            else
+            {
+                isInCover = false;
             }
         }
 
         public void SmoothLookAtYAxisPatrol()
         {
             Vector3 relativePos;
+
+            if(isInCover)
+                baseMoveFlySO.destinationFinal.y = childflyAI.transform.position.y;
 
             relativePos.x = baseMoveFlySO.destinationFinal.x - flyAI.transform.position.x;
             relativePos.y = baseMoveFlySO.destinationFinal.y - flyAI.transform.position.y;
@@ -132,11 +169,8 @@ namespace State.FlyAI
 
             if (baseMoveFlySO.speedRotationAIPatrol < currentMaxSpeedRotationAIDodgeObstacle)
             {
-                baseMoveFlySO.speedRotationAIPatrol += (Time.deltaTime / currentSmoothRotationDodgeObstacle);
+                baseMoveFlySO.speedRotationAIPatrol += (Time.deltaTime / (currentSmoothRotationDodgeObstacle * globalRef.slowRatio));
             }
-
-            SlowRotation(globalRef.isInEylau, relativePos);
-
 
             ApplyFlyingMove();
             DelayBeforeAttack();
@@ -145,7 +179,7 @@ namespace State.FlyAI
         {
             if (active)
             {
-                rotation = Quaternion.Slerp(childflyAI.localRotation, Quaternion.LookRotation(relativePos, Vector3.up), baseMoveFlySO.speedRotationAIPatrol*2);
+                rotation = Quaternion.Slerp(childflyAI.localRotation, Quaternion.LookRotation(relativePos, Vector3.up), baseMoveFlySO.speedRotationAIPatrol);
             }
             else
             {
@@ -200,13 +234,13 @@ namespace State.FlyAI
         void ApplyFlyingMove()
         {
             baseMoveFlySO.distDestinationFinal = Vector3.Distance(flyAI.transform.position, baseMoveFlySO.destinationFinal);
-            globalRef.agent.speed = baseMoveFlySO.baseMoveSpeed;
+            //globalRef.agent.speed = baseMoveFlySO.currentSpeed;
 
             if (baseMoveFlySO.newPosIsSet)
             {
                 if (baseMoveFlySO.distDestinationFinal > 7)
                 {
-                    //SlowSpeed(globalRef.isInEylau);
+                    SlowSpeed(globalRef.isInEylau);
 
                     if (flyAI.transform.position.y < baseMoveFlySO.destinationFinal.y)
                     {
@@ -243,7 +277,7 @@ namespace State.FlyAI
             if (active)
             {
                 if (baseMoveFlySO.newPosIsSet)
-                    globalRef.agent.velocity = (childflyAI.transform.forward * baseMoveFlySO.baseMoveSpeed) / globalRef.slowRatio;
+                    globalRef.agent.velocity = (childflyAI.transform.forward * (baseMoveFlySO.currentSpeed / globalRef.slowRatio));
 
                 velocity = globalRef.agent.velocity;
                 speedVelocity = globalRef.agent.velocity.magnitude;
@@ -251,7 +285,7 @@ namespace State.FlyAI
             else
             {
                 if (baseMoveFlySO.newPosIsSet)
-                    globalRef.agent.velocity = childflyAI.transform.forward * baseMoveFlySO.baseMoveSpeed;
+                    globalRef.agent.velocity = childflyAI.transform.forward * baseMoveFlySO.currentSpeed;
 
                 velocity = globalRef.agent.velocity;
                 speedVelocity = globalRef.agent.velocity.magnitude;

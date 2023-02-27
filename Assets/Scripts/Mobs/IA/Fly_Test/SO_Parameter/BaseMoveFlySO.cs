@@ -3,8 +3,13 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "FlyBaseMoveParameter", menuName = "Fly/BaseMoveParameter")]
 public class BaseMoveFlySO : ScriptableObject
 {
+    [Header("Speed Move")]
+    public float currentSpeed;
     public float baseMoveSpeed;
+    public float lowSpeed;
+
     public LayerMask maskObstacle;
+    public LayerMask maskCover;
     public LayerMask maskCheckCanRush;
     public float distDetectObstace;
 

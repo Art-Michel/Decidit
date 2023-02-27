@@ -8,6 +8,7 @@ namespace State.FlyAI
         [SerializeField] Material_Instances material_Instances;
         LockPlayerFlySO lockPlayerFlySO;
         BaseAttackFlySO baseAttackFlySO;
+        Quaternion rotation;
 
         [SerializeField] Transform childflyAI;
 
@@ -43,6 +44,9 @@ namespace State.FlyAI
 
         private void Update()
         {
+            if(CheckPlayerCover.instance.isCover)
+                stateControllerFlyAI.SetActiveState(StateControllerFlyAI.AIState.BaseMove);
+
             LockPlayer();
             SmoothLookAtYAxisAttack();
         }
@@ -72,22 +76,46 @@ namespace State.FlyAI
             relativePos.y = lockPlayerFlySO.destinationFinal.y - globalRef.transform.position.y;
             relativePos.z = lockPlayerFlySO.destinationFinal.z - globalRef.transform.position.z;
 
+            SlowRotation(globalRef.isInEylau, relativePos);
+
             Quaternion rotation = Quaternion.Slerp(childflyAI.localRotation, Quaternion.LookRotation(relativePos, Vector3.up), baseAttackFlySO.speedRotationAIAttack);
             childflyAI.localRotation = rotation;
-
-            if(this.isActiveAndEnabled == true)
+        }
+        void SlowRotation(bool active, Vector3 relativePos)
+        {
+            if(active)
             {
-                if (baseAttackFlySO.speedRotationAIAttack < baseAttackFlySO.maxSpeedRotationAILock)
-                    baseAttackFlySO.speedRotationAIAttack += (Time.deltaTime / baseAttackFlySO.smoothRotationLock);
+                if (this.isActiveAndEnabled == true)
+                {
+                    if (baseAttackFlySO.speedRotationAIAttack < baseAttackFlySO.maxSpeedRotationAILock)
+                        baseAttackFlySO.speedRotationAIAttack += (Time.deltaTime / (baseAttackFlySO.smoothRotationLock * globalRef.slowRatio));
+                    else
+                        baseAttackFlySO.speedRotationAIAttack = baseAttackFlySO.maxSpeedRotationAILock;
+                }
                 else
-                    baseAttackFlySO.speedRotationAIAttack = baseAttackFlySO.maxSpeedRotationAILock;
+                {
+                    if (baseAttackFlySO.speedRotationAIAttack < baseAttackFlySO.maxSpeedRotationAIAttack)
+                        baseAttackFlySO.speedRotationAIAttack += (Time.deltaTime / (baseAttackFlySO.smoothRotationAttack * globalRef.slowRatio));
+                    else
+                        baseAttackFlySO.speedRotationAIAttack = baseAttackFlySO.maxSpeedRotationAIAttack;
+                }
             }
             else
             {
-                if (baseAttackFlySO.speedRotationAIAttack < baseAttackFlySO.maxSpeedRotationAIAttack)
-                    baseAttackFlySO.speedRotationAIAttack += (Time.deltaTime / baseAttackFlySO.smoothRotationAttack);
+                if (this.isActiveAndEnabled == true)
+                {
+                    if (baseAttackFlySO.speedRotationAIAttack < baseAttackFlySO.maxSpeedRotationAILock)
+                        baseAttackFlySO.speedRotationAIAttack += (Time.deltaTime / baseAttackFlySO.smoothRotationLock);
+                    else
+                        baseAttackFlySO.speedRotationAIAttack = baseAttackFlySO.maxSpeedRotationAILock;
+                }
                 else
-                    baseAttackFlySO.speedRotationAIAttack = baseAttackFlySO.maxSpeedRotationAIAttack;
+                {
+                    if (baseAttackFlySO.speedRotationAIAttack < baseAttackFlySO.maxSpeedRotationAIAttack)
+                        baseAttackFlySO.speedRotationAIAttack += (Time.deltaTime / baseAttackFlySO.smoothRotationAttack);
+                    else
+                        baseAttackFlySO.speedRotationAIAttack = baseAttackFlySO.maxSpeedRotationAIAttack;
+                }
             }
         }
 
