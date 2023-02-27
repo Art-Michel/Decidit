@@ -13,9 +13,6 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
     [SerializeField] int _firstPowerupAfterRoom;
     [SerializeField] int _secondPowerupAfterRoom;
 
-    private List<int> _subdifficultiesLeftToUse;
-
-
     [SerializeField] RoomSetup _starterRoom;
     [SerializeField] RoomSetup _finalRoom;
     public List<RoomSetup> RoomSets;
@@ -36,18 +33,8 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
     void Start()
     {
         _numberOfRooms = _difficultyPerRoom.Length;
-        InitializeDifficultiesToUse();
         ResetDungeon();
         Generate();
-    }
-
-    private void InitializeDifficultiesToUse()
-    {
-        _subdifficultiesLeftToUse = new List<int>();
-        for (int i = 0; i < _numberOfRooms; i++)
-        {
-            _subdifficultiesLeftToUse.Add(i);
-        }
     }
 
     public void Generate()
@@ -71,7 +58,6 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
 
         //* variables pour r�partir la difficult� (difficulty) en fonction du nombre de salles et de la longueur du donjon (stackCount)
         int stackCount = Mathf.RoundToInt(_numberOfRooms / 3f);
-        int difficulty = 0;
 
         for (int i = 0; i < _numberOfRooms; i++)
         {
@@ -80,13 +66,11 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
             //* passe � la difficult� suivante
             if (stackCount <= 0)
             {
-                difficulty++;
-                difficulty = Mathf.Clamp(difficulty, 0, RoomSets.Count - 1);
                 stackCount = Mathf.RoundToInt(_numberOfRooms / 3f);
             }
 
             //* ajoute une salle avec une difficult� pr�d�fini
-            _rooms.Add(RoomSets[difficulty].Get());
+            _rooms.Add(RoomSets[_difficultyPerRoom[i]].Get());
             stackCount--;
         }
 

@@ -207,7 +207,7 @@ public class EnemyHealth : Health
             Room.CheckForEnemies();
         }
         else
-            Debug.LogError("This enemy was not assigned a room");
+            Debug.LogWarning("This enemy was not assigned a room");
 
         _deathT = _deathAnimationDuration;
         _isDying = true;
