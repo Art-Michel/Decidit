@@ -84,7 +84,13 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
             roomInstance.gameObject.SetActive(true);
 
             //* set rotation
-            roomInstance.transform.rotation = Quaternion.Euler(0, _dungeonRotation, 0);
+            if (lastDoor != null)
+            {
+                roomInstance.transform.rotation = lastDoor.transform.rotation;
+                roomInstance.transform.Rotate(0, 180, 0);
+            }
+            else
+                roomInstance.transform.rotation = Quaternion.Euler(0, _dungeonRotation, 0);
 
             //* set position
             if (lastDoor != null)

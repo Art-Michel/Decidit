@@ -46,7 +46,7 @@ public class Room : MonoBehaviour
         {
             if (enemyHealth == null)
             {
-                Debug.LogError("Quelqu'un a oublié d'appuyer sur le bouton FindEnemies dans la salle " + this.gameObject.name);
+                Debug.LogError("Antonio a oublié d'appuyer sur le bouton FindEnemies dans la salle " + this.gameObject.name);
                 return;
             }
             enemyHealth.gameObject.SetActive(b);
@@ -103,7 +103,7 @@ public class Room : MonoBehaviour
         {
             PlayerManager.Instance.StartSlowMo(0.01f, 2f);
             this.Exit.OpenDoor();
-            if(DungeonGenerator.Instance != null)
+            if (DungeonGenerator.Instance != null)
                 DungeonGenerator.Instance.GetRoom(1).Entry.OpenDoor();
         }
     }
