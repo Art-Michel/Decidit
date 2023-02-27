@@ -57,7 +57,6 @@ public class EnemyHealth : Health
     {
         base.Awake();
         _playerCamera = Camera.main.transform;
-        _material = GetComponent<Material_Instances>().Material;
         _canvasGroup = _canvas.GetComponent<CanvasGroup>();
     }
 
