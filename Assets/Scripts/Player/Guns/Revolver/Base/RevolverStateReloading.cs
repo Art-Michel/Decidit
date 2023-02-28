@@ -22,7 +22,7 @@ public class RevolverStateReloading : RevolverState
 
     public override void Exit()
     {
-        _revolver.DisableReloadUI();
+        _revolver.EmptyReloadUI();
     }
 
 }

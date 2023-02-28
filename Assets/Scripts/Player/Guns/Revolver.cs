@@ -142,10 +142,10 @@ public class Revolver : MonoBehaviour
     //raycast forward to aim gun in that direction
     public void CheckLookedAt()
     {
-        if (Physics.Raycast(_camera.position, _camera.forward, out RaycastHit hit, 9999999999f, _mask))
+        if (Physics.Raycast(_camera.position, _camera.forward, out RaycastHit hit, 999f, _mask))
             _currentlyAimedAt = hit.point;
         else
-            _currentlyAimedAt = _camera.forward * 9999999999f;
+            _currentlyAimedAt = _camera.forward * 9999f;
     }
     #endregion
 
@@ -250,9 +250,8 @@ public class Revolver : MonoBehaviour
         DisplayAmmo();
     }
 
-    public void DisableReloadUI()
+    public void EmptyReloadUI()
     {
-        _reloadingWarning.enabled = false;
         _reloadingWarning.fillAmount = 0f;
     }
 

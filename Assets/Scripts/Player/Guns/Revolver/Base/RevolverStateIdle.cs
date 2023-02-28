@@ -12,6 +12,7 @@ public class RevolverStateIdle : RevolverState
     public override void Begin()
     {
         _revolver.CheckBuffer();
+        _revolver.EmptyReloadUI();
     }
 
     public override void StateUpdate()
