@@ -20,6 +20,11 @@ public class EylauArea : MonoBehaviour
     private bool _isPlayerInHere = false;
     private bool _wasPlayerInHere = false;
 
+    private List<GlobalRefAICAC> _aiCacInArea;
+    private List<GlobalRefBullAI> _aiBullInArea;
+    private List<GlobalRefFlyAI> _aiFlyInArea;
+    private List<GlobalRefWallAI> _aiWallInArea;
+
     void OnEnable()
     {
         _lifeT = _lifeSpan;
@@ -37,6 +42,24 @@ public class EylauArea : MonoBehaviour
     private void Disappear()
     {
         gameObject.SetActive(false);
+        Player.Instance.ResetEylauMovementBuff();
+        _isPlayerInHere = false;
+        _wasPlayerInHere = false;
+
+        //again terrible terrible
+        foreach (GlobalRefAICAC aiCac in _aiCacInArea)
+            aiCac.isInEylau = false;
+        foreach (GlobalRefBullAI aiBull in _aiBullInArea)
+            aiBull.isInEylau = false;
+        foreach (GlobalRefFlyAI aiFly in _aiFlyInArea)
+            aiFly.isInEylau = false;
+        foreach (GlobalRefWallAI aiWall in _aiWallInArea)
+            aiWall.isInEylau = false;
+
+        _aiCacInArea.Clear();
+        _aiBullInArea.Clear();
+        _aiFlyInArea.Clear();
+        _aiWallInArea.Clear();
     }
 
     #region worst detection of all time due to AIs not having a commmon parent class
@@ -101,11 +124,11 @@ public class EylauArea : MonoBehaviour
         _isPlayerInHere = Physics.OverlapCapsule(transform.position + Vector3.down * 100, transform.position + Vector3.up * 100, _radius, _shouldBuff).Length > 0;
         if (!_isPlayerInHere && _wasPlayerInHere)
         {
-            Player.Instance.ResetMovement();
+            Player.Instance.ResetEylauMovementBuff();
         }
         if (_isPlayerInHere && !_wasPlayerInHere)
         {
-            Player.Instance.BuffMovement();
+            Player.Instance.EylauMovementBuff();
         }
         _wasPlayerInHere = _isPlayerInHere;
     }

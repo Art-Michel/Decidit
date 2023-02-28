@@ -93,6 +93,8 @@ public class Player : LocalManager<Player>
     private float _jumpCooldown;
     private float _coyoteTime;
     private const float _coyoteMaxTime = 0.3f;
+    [Foldout("Eylau Settings")]
+    private float _eylauBuffFactor = 1.5f;
 
     #endregion
 
@@ -474,13 +476,13 @@ public class Player : LocalManager<Player>
 
     #region Shmovement Functions
 
-    public void BuffMovement()
+    public void EylauMovementBuff()
     {
-        _currentSpeed = _baseSpeed * 1.2f;
-        _currentJumpStrength = _baseJumpStrength * 1.2f;
+        _currentSpeed = _baseSpeed * _eylauBuffFactor;
+        _currentJumpStrength = _baseJumpStrength * _eylauBuffFactor;
     }
 
-    public void ResetMovement()
+    public void ResetEylauMovementBuff()
     {
         _currentSpeed = _baseSpeed;
         _currentJumpStrength = _baseJumpStrength;
