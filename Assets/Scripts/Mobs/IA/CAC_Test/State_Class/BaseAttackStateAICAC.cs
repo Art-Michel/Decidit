@@ -26,10 +26,12 @@ namespace State.AICAC
 
         private void OnEnable()
         {
-            if (globalRef != null && baseAttackAICACSO == null)
-            {
-                baseAttackAICACSO = globalRef.baseAttackAICACSO;
-            }
+            if(globalRef != null)
+                globalRef.agent.speed = 0;
+        }
+        private void Start()
+        {
+            baseAttackAICACSO = globalRef.baseAttackAICACSO;
         }
 
         private void Update()
@@ -46,13 +48,11 @@ namespace State.AICAC
 
         public void BaseAttack()
         {
-            globalRef.agent.speed = 0;
-
             if (baseAttackAICACSO.currentAttackRate <= 0)
             {
                 // TODO lucas va te faire encul�
                 // PLAY SOUND PRE ATTACK TRASH MOB
-                SoundManager.Instance.PlaySound("event:/SFX_IA/Voras_SFX(Trash)/Attack", 1f, gameObject);
+                SoundManager.Instance.PlaySound("event:/SFX_IA/Voras_SFX(Trash)/Attack", 1f, transform.position);
                 AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Attack");
                 baseAttackAICACSO.isAttacking = true;
                 baseAttackAICACSO.currentAttackRate = baseAttackAICACSO.maxAttackRate;

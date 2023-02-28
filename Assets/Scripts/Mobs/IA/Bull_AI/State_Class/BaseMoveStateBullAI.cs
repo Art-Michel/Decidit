@@ -137,12 +137,12 @@ namespace State.AIBull
         {
             if (active)
             {
-                globalRef.slowSpeedRot = globalRef.agent.speed / globalRef.slowRatio;
-                globalRef.agent.speed = globalRef.slowSpeedRot;
+                globalRef.slowSpeed = globalRef.agent.speed / globalRef.slowRatio;
+                globalRef.agent.speed = globalRef.slowSpeed;
             }
             else
             {
-                if (globalRef.agent.speed == globalRef.slowSpeedRot)
+                if (globalRef.agent.speed == globalRef.slowRatio)
                     globalRef.agent.speed *= globalRef.slowRatio;
             }
         }

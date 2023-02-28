@@ -67,7 +67,9 @@ namespace State.AIBull
                 else
                 {
                     if (material_Instances.Material.color == material_Instances.ColorPreAtatck)
+                    {
                         ShowSoonAttack(false);
+                    }
                 }
 
                 if (canStartRush)
@@ -103,7 +105,7 @@ namespace State.AIBull
         void RushMovement()
         {
             // TODO lucas va te faire encul�
-            SoundManager.Instance.PlaySound("event:/SFX_IA/ShredNoss_SFX(Dash)/Attack", 1f, gameObject);
+            SoundManager.Instance.PlaySound("event:/SFX_IA/ShredNoss_SFX(Dash)/Attack", 1f, transform.position);
             //Play SOUND ATTACK RUSHER
 
             rushBullSO.targetPos = new Vector2(rushBullSO.rushDestination.x, rushBullSO.rushDestination.z);
@@ -250,7 +252,6 @@ namespace State.AIBull
                 case true:
                     if (rushBullSO.speedRot < rushBullSO.maxSpeedRot)
                     {
-                        globalRef.slowSpeedRot = globalRef.coolDownRushBullSO.smoothRot * globalRef.slowRatio;
                         rushBullSO.speedRot += Time.deltaTime / globalRef.slowSpeedRot;
                     }
                     else
@@ -275,6 +276,7 @@ namespace State.AIBull
                     {
                         if (!canStartRush)
                         {
+                            SoundManager.Instance.PlaySound("event:/SFX_IA/ShredNoss_SFX(Dash)/Attack", 10f, transform.position);
                             ShowSoonAttack(false);
                             rushBullSO.speedRot = rushBullSO.maxSpeedRot;
                             AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Rush");
