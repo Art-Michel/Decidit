@@ -31,6 +31,7 @@ namespace State.WallAI
             catch
             {
             }
+            PlaySound();
         }
 
         private void Update()
@@ -42,7 +43,7 @@ namespace State.WallAI
                 stateControllerWallAI.SetActiveState(StateControllerWallAI.WallAIState.Death, true);
             }
 
-            PlaySound();
+            //PlaySound();
         }
 
         private void FixedUpdate()
@@ -174,7 +175,7 @@ namespace State.WallAI
             {
                 // PLAY SOUND MOVE IN WALL WALLMOB
                 // TODO lucas va te faire encul�
-                SoundManager.Instance.PlaySound("event:/SFX_IA/Menas_SFX(Mur)/Moove", 1f, transform.position);
+                SoundManager.Instance.PlaySound("event:/SFX_IA/Menas_SFX(Mur)/Moove", 1f, gameObject);
             }
         }
 

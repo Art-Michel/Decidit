@@ -220,6 +220,7 @@ namespace State.AICAC
 
                     if(!isOnNavLink)
                     {
+                        SpeedAdjusting();
                         SlowSpeed(globalRef.isInEylau);
                         globalRef.agent.SetDestination(destination);
                     }
@@ -233,11 +234,6 @@ namespace State.AICAC
                 {
                     stateControllerAICAC.SetActiveState(StateControllerAICAC.AIState.BaseAttack);
                 }
-            }
-            else
-            {
-                if (!isOnNavLink)
-                    SpeedAdjusting();
             }
         }
         Vector3 CheckNavMeshPoint(Vector3 _destination)

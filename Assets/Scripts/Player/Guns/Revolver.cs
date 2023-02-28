@@ -224,7 +224,7 @@ public class Revolver : MonoBehaviour
         _reloadingWarning.fillAmount = 0f;
         _reloadingWarning.enabled = true;
         ////PlaceHolderSoundManager.Instance.PlayReload();
-        SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/BaseShoot/Realod", 1f, transform.position);//TODO Art
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/BaseShoot/Realod", 1f, gameObject);//TODO Art
     }
 
     // update reloading state
