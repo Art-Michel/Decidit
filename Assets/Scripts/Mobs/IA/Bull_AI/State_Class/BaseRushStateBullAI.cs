@@ -105,7 +105,7 @@ namespace State.AIBull
         void RushMovement()
         {
             // TODO lucas va te faire encul�
-            SoundManager.Instance.PlaySound("event:/SFX_IA/ShredNoss_SFX(Dash)/Attack", 1f, transform.position);
+            SoundManager.Instance.PlaySound("event:/SFX_IA/ShredNoss_SFX(Dash)/Attack", 1f, gameObject);
             //Play SOUND ATTACK RUSHER
 
             rushBullSO.targetPos = new Vector2(rushBullSO.rushDestination.x, rushBullSO.rushDestination.z);
@@ -276,7 +276,7 @@ namespace State.AIBull
                     {
                         if (!canStartRush)
                         {
-                            SoundManager.Instance.PlaySound("event:/SFX_IA/ShredNoss_SFX(Dash)/Attack", 10f, transform.position);
+                            SoundManager.Instance.PlaySound("event:/SFX_IA/ShredNoss_SFX(Dash)/Attack", 10f, gameObject);
                             ShowSoonAttack(false);
                             rushBullSO.speedRot = rushBullSO.maxSpeedRot;
                             AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Rush");
