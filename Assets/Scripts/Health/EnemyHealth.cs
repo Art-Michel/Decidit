@@ -72,8 +72,8 @@ public class EnemyHealth : Health
 
     void OnEnable()
     {
-        if (this.Room == null)
-            Debug.LogError("Room non assignée: l'ennemi [" + transform.name + "] dans la salle [" + DungeonGenerator.Instance.GetRoom(0).name + "]");
+        if (this.Room == null && DungeonGenerator.Instance != null)
+            Debug.LogError("Room non assignée: l'ennemi [" + transform.name + "] dans la salle [" + DungeonGenerator.Instance.GetRoom(0).transform.name + "]");
     }
 
     protected override void Update()
