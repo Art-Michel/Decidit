@@ -46,6 +46,7 @@ public class Door : MonoBehaviour
         {
             this.ThisDoorsRoom.EnterRoom();
         }
+        HasBeenTriggered = true;
     }
 
     public void CloseDoor()

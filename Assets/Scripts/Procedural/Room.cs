@@ -42,16 +42,15 @@ public class Room : MonoBehaviour
 
     public void EnableEnemies(bool b)
     {
+        CurrentEnemiesInRoom = _enemiesList.Count;
         foreach (EnemyHealth enemyHealth in _enemiesList)
         {
             if (enemyHealth == null)
             {
                 Debug.LogError("La room [" + this.gameObject.name + "] n'a pas d'ennemi assigné");
-                return;
             }
             enemyHealth.gameObject.SetActive(b);
         }
-        CurrentEnemiesInRoom = _enemiesList.Count;
     }
 
     public void EnterRoom()
