@@ -44,7 +44,7 @@ namespace State.FlyAI
 
         private void Update()
         {
-            if(CheckPlayerCover.instance.isCover)
+            if(CheckPlayerCover.isCover)
                 stateControllerFlyAI.SetActiveState(StateControllerFlyAI.AIState.BaseMove);
 
             LockPlayer();

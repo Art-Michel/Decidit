@@ -3,11 +3,16 @@ using UnityEngine;
 public class CheckPlayerCover : MonoBehaviour
 {
     public static CheckPlayerCover instance;
-    public bool isCover;
+    public static bool isCover;
 
     private void Awake()
     {
         instance = this;
+    }
+
+    private void Update()
+    {
+        Debug.Log(isCover);
     }
 
     private void OnTriggerEnter(Collider other)

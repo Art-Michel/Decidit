@@ -135,14 +135,14 @@ namespace State.FlyAI
                    new Vector3(globalRef.playerTransform.GetChild(0).position.x, globalRef.playerTransform.GetChild(0).position.y, 
                    globalRef.playerTransform.GetChild(0).position.z) - childflyAI.position, baseMoveFlySO.maskCheckCanRush, Color.red, 100f);
 
-                if (hitCheckPlayer.transform == globalRef.playerTransform && !CheckPlayerCover.instance.isCover)
+                if (hitCheckPlayer.transform == globalRef.playerTransform && !CheckPlayerCover.isCover)
                 {
                     stateControllerFlyAI.SetActiveState(StateControllerFlyAI.AIState.LockPlayer);
                 }
             }
 
             // check if is in collider cover
-            Collider [] col = Physics.OverlapSphere(transform.position, 0.7f, 19);
+            Collider [] col = Physics.OverlapSphere(transform.position, 0.7f, baseMoveFlySO.maskCover);
             if(col.Length >0)
             {
                 isInCover = true;

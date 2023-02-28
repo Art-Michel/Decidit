@@ -125,7 +125,7 @@ namespace State.FlyAI
 
         void StopAttack()
         {
-            if (CheckPlayerCover.instance.isCover)
+            if (CheckPlayerCover.isCover)
             {
                 stateControllerFlyAI.SetActiveState(StateControllerFlyAI.AIState.BaseMove);
             }
