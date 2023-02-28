@@ -73,7 +73,7 @@ public class EnemyHealth : Health
     void OnEnable()
     {
         if (this.Room == null)
-            this.Room = FindObjectOfType<Room>();
+            Debug.LogError("Room non assignée: [" + transform.name + "] dans la salle [" + DungeonGenerator.Instance.GetRoom(0).name + "]");
     }
 
     protected override void Update()
