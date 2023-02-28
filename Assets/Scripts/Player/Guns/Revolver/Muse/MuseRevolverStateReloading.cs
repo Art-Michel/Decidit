@@ -22,6 +22,7 @@ public class MuseRevolverStateReloading : RevolverState
 
     public override void Exit()
     {
+        _revolver.EmptyReloadUI();
 
     }
 

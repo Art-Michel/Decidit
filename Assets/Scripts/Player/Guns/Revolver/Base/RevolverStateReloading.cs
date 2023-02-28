@@ -12,6 +12,7 @@ public class RevolverStateReloading : RevolverState
     public override void Begin()
     {
         //animation
+        _revolver.EmptyReloadUI();
         _revolver.StartReload();
     }
 

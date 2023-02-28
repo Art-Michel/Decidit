@@ -23,6 +23,7 @@ public class EylauRevolverStateReloading : RevolverState
 
     public override void Exit()
     {
+        _revolver.EmptyReloadUI();
 
     }
 }

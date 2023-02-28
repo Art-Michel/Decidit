@@ -22,6 +22,7 @@ public class AragonRevolverStateReloading : RevolverState
 
     public override void Exit()
     {
+        _revolver.EmptyReloadUI();
 
     }
 

@@ -11,6 +11,7 @@ public class AragonRevolverStateIdle : RevolverState
 
     public override void Begin()
     {
+        _revolver.EmptyReloadUI();
         _revolver.CheckBuffer();
     }
 

@@ -11,6 +11,7 @@ public class MuseRevolverStateIdle : RevolverState
 
     public override void Begin()
     {
+        _revolver.EmptyReloadUI();
         _revolver.CheckBuffer();
     }
 
