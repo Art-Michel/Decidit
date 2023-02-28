@@ -16,13 +16,14 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
     [SerializeField] RoomSetup _starterRoom;
     [SerializeField] RoomSetup _finalRoom;
     public List<RoomSetup> RoomSets;
+    private List<List<Room>> _usableRooms;
     public List<RoomSetup> Corridors;
     public int TotalRooms { get { return _actualRooms.Count - 1; } }
     List<Room> _actualRooms;
     public int CurrentRoom;
 
 
-    [SerializeField] List<Room> _rooms;
+    [SerializeField] List<Room> _roomsToBuild;
 
     protected override void Awake()
     {
@@ -34,7 +35,22 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
     {
         _numberOfRooms = _difficultyPerRoom.Length;
         ResetDungeon();
+        SetUsableRooms();
         Generate();
+    }
+
+    public void SetUsableRooms()
+    {
+        //* basically a new instance of the rooms setup so we can delete a room once it has been instanced in order to avoid repeats.
+        _usableRooms = new List<List<Room>>();
+        for (int i = 0; i < RoomSets.Count; i++)
+        {
+            _usableRooms.Add(new List<Room>());
+            foreach (Room room in RoomSets[i].rooms)
+            {
+                _usableRooms[i].Add(room);
+            }
+        }
     }
 
     public void Generate()
@@ -50,13 +66,13 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
             _seed = Random.Range(0, 1000);
         Random.InitState(_seed);
 
-        _rooms = new List<Room>(_numberOfRooms + 2 + (_numberOfRooms + 1));
-        _rooms.Add(_starterRoom.Get());
+        _roomsToBuild = new List<Room>(_numberOfRooms + 2 + (_numberOfRooms + 1));
+        _roomsToBuild.Add(_starterRoom.Get());
 
         int stackCount = Mathf.RoundToInt(_numberOfRooms / 3f);
         for (int i = 0; i < _numberOfRooms; i++)
         {
-            _rooms.Add(Corridors[Random.Range(0, Corridors.Count)].Get());
+            _roomsToBuild.Add(Corridors[Random.Range(0, Corridors.Count)].Get());
 
             //* passe a la difficulte suivante
             if (stackCount <= 0)
@@ -64,20 +80,61 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
                 stackCount = Mathf.RoundToInt(_numberOfRooms / 3f);
             }
 
-            //* ajoute une salle avec une difficulte predefinie
-            _rooms.Add(RoomSets[_difficultyPerRoom[i]].Get());
+            //* ajoute une salle avec une difficulte predefinie et la retire du Set pour ne pas retomber dessus.
+            AddRandomRoom(_difficultyPerRoom[i]);
+
             stackCount--;
         }
 
-        _rooms.Add(Corridors[Random.Range(0, Corridors.Count)].Get());
-        _rooms.Add(_finalRoom.Get());
+        _roomsToBuild.Add(Corridors[Random.Range(0, Corridors.Count)].Get());
+        _roomsToBuild.Add(_finalRoom.Get());
         Build();
+    }
+
+    private void AddRandomRoom(int difficulty)
+    {
+        int roomToAddIndex = Random.Range(0, _usableRooms[difficulty].Count - 1);
+        if (_usableRooms[difficulty][roomToAddIndex])
+        {
+            string roomSetDifficulty = "";
+            switch (difficulty)
+            {
+                case 0:
+                    roomSetDifficulty = "EASY";
+                    break;
+                case 1:
+                    roomSetDifficulty = "MEDIUM";
+                    break;
+                case 2:
+                    roomSetDifficulty = "HARD";
+                    break;
+            }
+            Debug.LogError("Not enough room in RoomSet [" + roomSetDifficulty + "]");
+        }
+
+        Room roomToAdd = _usableRooms[difficulty][roomToAddIndex];
+        _roomsToBuild.Add(roomToAdd);
+        _usableRooms[difficulty].RemoveAt(roomToAddIndex);
+    }
+
+
+    private void ResetDungeon()
+    {
+        //transform.DetachChildren();
+        _roomsToBuild.Clear();
+        _actualRooms.Clear();
+    }
+
+    public void ClearDungeon()
+    {
+        while (transform.childCount > 0)
+            DestroyImmediate(transform.GetChild(0).gameObject);
     }
 
     private void Build()
     {
         Transform lastDoor = null;
-        foreach (Room room in _rooms)
+        foreach (Room room in _roomsToBuild)
         {
             //* Spawn room
             Room roomInstance = Instantiate(room, Vector3.zero, Quaternion.identity, transform);
@@ -116,19 +173,6 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
         _actualRooms[0].Exit.OpenDoor();
         _actualRooms[1].gameObject.SetActive(true);
         _actualRooms[1].Entry.OpenDoor();
-    }
-
-    private void ResetDungeon()
-    {
-        //transform.DetachChildren();
-        _rooms.Clear();
-        _actualRooms.Clear();
-    }
-
-    public void ClearDungeon()
-    {
-        while (transform.childCount > 0)
-            DestroyImmediate(transform.GetChild(0).gameObject);
     }
 
     public Room GetRoom(int i = 0)
