@@ -95,7 +95,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
             //* set position
             if (lastDoor != null)
             {
-                Vector3 roomPosition = lastDoor.position;
+                Vector3 roomPosition = lastDoor.position + (roomInstance.transform.position - roomInstance.Entry.transform.position);
                 roomInstance.transform.position = roomPosition;
             }
 

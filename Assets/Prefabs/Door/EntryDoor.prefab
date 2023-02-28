@@ -151,6 +151,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2462792871977853873}
+  - component: {fileID: 7358359442948507562}
   m_Layer: 9
   m_Name: EntryDoor
   m_TagString: EntryDoor
@@ -175,6 +176,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7358359442948507562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3414713277256734904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 580ba37ae491bbc4ebcc0e94d7066abe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _doorMesh: {fileID: 758095876783087880}
+  _doorTrigger: {fileID: 5510285619378938388}
+  ThisDoorsRoom: {fileID: 0}
+  _isExit: 0
+  HasBeenTriggered: 0
 --- !u!1 &5510285619378938388
 GameObject:
   m_ObjectHideFlags: 0
@@ -185,7 +203,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5669078215762885292}
   - component: {fileID: 7617993932385240319}
-  - component: {fileID: 8435774368424138024}
   m_Layer: 17
   m_Name: EntryDoor_Trigger
   m_TagString: Untagged
@@ -223,23 +240,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 11, y: 6, z: 3}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8435774368424138024
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5510285619378938388}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 580ba37ae491bbc4ebcc0e94d7066abe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _doorMesh: {fileID: 758095876783087880}
-  _doorTrigger: {fileID: 5510285619378938388}
-  ThisDoorsRoom: {fileID: 0}
-  _isExit: 0
-  HasBeenTriggered: 0
 --- !u!1 &8113907622157954299
 GameObject:
   m_ObjectHideFlags: 0
