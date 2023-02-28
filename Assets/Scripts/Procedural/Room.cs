@@ -46,7 +46,7 @@ public class Room : MonoBehaviour
         {
             if (enemyHealth == null)
             {
-                Debug.LogError("Antonio a oublié d'appuyer sur le bouton FindEnemies dans la salle " + this.gameObject.name);
+                Debug.LogError("La room [" + this.gameObject.name + "] n'a pas d'ennemi assigné");
                 return;
             }
             enemyHealth.gameObject.SetActive(b);
