@@ -1151,11 +1151,11 @@ retry:
             instance.release();
         }
 
-        public static void PlayOneShotAttached(EventReference eventReference, GameObject gameObject)
+        public static void PlayOneShotAttached(EventReference eventReference, float volume, GameObject gameObject)
         {
             try
             {
-                PlayOneShotAttached(eventReference.Guid, gameObject);
+                PlayOneShotAttached(eventReference.Guid, volume, gameObject);
             }
             catch (EventNotFoundException)
             {
@@ -1163,11 +1163,11 @@ retry:
             }
         }
 
-        public static void PlayOneShotAttached(string path, GameObject gameObject)
+        public static void PlayOneShotAttached(string path, float volume, GameObject gameObject)
         {
             try
             {
-                PlayOneShotAttached(PathToGUID(path), gameObject);
+                PlayOneShotAttached(PathToGUID(path),volume, gameObject);
             }
             catch (EventNotFoundException)
             {
@@ -1175,7 +1175,7 @@ retry:
             }
         }
 
-        public static void PlayOneShotAttached(FMOD.GUID guid, GameObject gameObject)
+        public static void PlayOneShotAttached(FMOD.GUID guid, float volume, GameObject gameObject)
         {
             var instance = CreateInstance(guid);
             #if UNITY_PHYSICS_EXIST
@@ -1185,6 +1185,7 @@ retry:
             #else
             AttachInstanceToGameObject(instance, gameObject.transform);
             #endif
+            instance.setVolume(volume);
             instance.start();
             instance.release();
         }

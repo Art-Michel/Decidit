@@ -29,6 +29,7 @@ namespace State.FlyAI
 
         private void OnEnable()
         {
+            SoundManager.Instance.PlaySound("event:/SFX_IA/Vorice_SFX(Vol)/Attack", 1f, gameObject);
             if (baseAttackFlySO != null)
             {
                 baseAttackFlySO.speedRotationAIAttack = 0;
@@ -39,7 +40,6 @@ namespace State.FlyAI
 
             //PLAY SOUND PRE ATTACK FLY
             // TODO lucas va te faire encul�
-           SoundManager.Instance.PlaySound("event:/SFX_IA/Vorice_SFX(Vol)/Attack", 1f, transform.position);
         }
 
 
@@ -55,7 +55,7 @@ namespace State.FlyAI
             RaycastHit hit = RaycastAIManager.instanceRaycast.RaycastAI(childflyAI.position, transform.forward,
                                                         globalRef.baseAttackFlySO.wallMask, Color.blue, globalRef.baseAttackFlySO.distDetectWall);
 
-            if(hit.transform != null)
+            if (hit.transform != null)
             {
                 stateControllerFlyAI.SetActiveState(StateControllerFlyAI.AIState.BaseMove);
             }
@@ -87,7 +87,7 @@ namespace State.FlyAI
                 lockPlayerStateFlyAI.LockPlayer();
                 lockPlayerStateFlyAI.SmoothLookAtYAxisAttack();
             }
-            else if(!stopLock)
+            else if (!stopLock)
             {
                 stopLock = true;
             }
@@ -145,7 +145,7 @@ namespace State.FlyAI
         {
             stopLock = false;
 
-            if(baseAttackFlySO != null)
+            if (baseAttackFlySO != null)
             {
                 baseAttackFlySO.speedRotationAIAttack = 0;
                 baseAttackFlySO.currentSpeedYAttack = 0;

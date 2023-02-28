@@ -31,7 +31,7 @@ namespace State.AIBull
             // TODO lucas va te faire encul�
 
             globalRef.hitBox.gameObject.SetActive(false);
-            SoundManager.Instance.PlaySound("event:/SFX_IA/DeathIA", 1f, transform.position);
+            SoundManager.Instance.PlaySound("event:/SFX_IA/DeathIA", 1f, gameObject);
             once = true;
         }
     }

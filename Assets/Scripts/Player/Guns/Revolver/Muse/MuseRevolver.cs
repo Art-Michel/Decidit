@@ -16,7 +16,7 @@ public class MuseRevolver : Revolver
 
         Player.Instance.StartShake(_shootShakeIntensity, _shootShakeDuration);
         ////PlaceHolderSoundManager.Instance.PlayMuseShot();
-        SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/MuseMalade/Shoot", 5f, transform.position);
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/MuseMalade/Shoot", 5f, gameObject);
         _muzzleFlash.PlayAll();
     }
 }

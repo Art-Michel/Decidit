@@ -110,7 +110,7 @@ public class AragonArm : Arm
         //Prepare
         _crossHairOutline.enabled = false;
         ////PlaceHolderSoundManager.Instance.PlayDashSound();
-        SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/FugueAragon/Dash", 1f, transform.position);
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/FugueAragon/Dash", 1f, gameObject);
         _player.PlayerHealth.IsInvulnerable = true;
         _player.AllowMovement(false);
         _player.KillMomentum();
