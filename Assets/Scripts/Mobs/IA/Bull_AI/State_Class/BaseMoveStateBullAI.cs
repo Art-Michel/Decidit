@@ -17,10 +17,7 @@ namespace State.AIBull
         Vector3 linkDestination;
         bool lookForwardJump;
 
-
-        int indexRay;
         [SerializeField] float distDetectObstacle;
-        [SerializeField] bool canRush;
 
         public override void InitState(StateControllerBull stateController)
         {
@@ -44,66 +41,15 @@ namespace State.AIBull
             {
                 BaseMovement();
 
-                if(canRush)
+                if (globalRef.launchRush)
+                    LaunchRush();
+                else if (globalRef.distPlayer < globalRef.baseMoveBullSO.distActiveRush)
                 {
-                    if (globalRef.launchRush)
-                        LaunchRush();
-                    else if (globalRef.distPlayer < globalRef.baseMoveBullSO.distActiveRush)
-                    {
-                        globalRef.launchRush = true;
-                        LaunchRush();
-                    }
+                    globalRef.launchRush = true;
+                    LaunchRush();
                 }
             }
         }
-
-        private void FixedUpdate()
-        {
-            //Check obstacle Wall
-            switch (indexRay)
-            {
-                case 0:
-                    CheckWall(globalRef.RayRushRight);
-                    break;
-                case 1:
-                    CheckWall(globalRef.RayRushMiddle);
-                    break;
-                case 2:
-                    CheckWall(globalRef.RayRushLeft);
-                    break;
-            }
-        }
-        void CheckWall(Transform rayRush)
-        {
-            Vector3 direction = rayRush.TransformDirection(new Vector3(0, globalRef.playerTransform.position.y - rayRush.position.y, 1));
-
-            RaycastHit hitObstacle = RaycastAIManager.instanceRaycast.RaycastAI(rayRush.position,
-                                                    direction, globalRef.rushBullSO.maskCheckCanRush, Color.blue, distDetectObstacle);
-            if (hitObstacle.transform != null)
-            {
-                if(!hitObstacle.transform.CompareTag("Player"))
-                {
-                    Debug.Log("hit wall");
-                    canRush = false;
-                }
-                else
-                {
-                    Debug.Log("hit Player");
-                    canRush = true;
-                }
-            }
-            else
-            {
-                Debug.Log("Hit null");
-                canRush = true;
-            }
-
-            if (indexRay < 2)
-                indexRay++;
-            else
-                indexRay = 0;
-        }
-
         void ManageCurrentNavMeshLink()
         {
             if (globalRef.agent.isOnOffMeshLink)
@@ -173,8 +119,17 @@ namespace State.AIBull
         void BaseMovement()
         {
             Vector3 newDestination;
+            float distPlayer = Vector3.Distance(globalRef.transform.position, globalRef.playerTransform.position);
             globalRef.agent.speed = globalRef.baseMoveBullSO.baseSpeed;
-            newDestination = globalRef.playerTransform.position + (globalRef.playerTransform.right * globalRef.offsetDestination);
+
+            if(distPlayer > Mathf.Abs(globalRef.offsetDestination)+1)
+            {
+                newDestination = globalRef.playerTransform.position + (globalRef.playerTransform.right * globalRef.offsetDestination);
+            }
+            else
+            {
+                newDestination = globalRef.playerTransform.position;
+            }
 
             SlowSpeed(globalRef.isInEylau);
             globalRef.agent.SetDestination(CheckNavMeshPoint(newDestination));
@@ -267,7 +222,6 @@ namespace State.AIBull
         {
             globalRef.baseMoveBullSO.speedRot = 0;
             globalRef.agent.speed = globalRef.baseMoveBullSO.stopSpeed;
-            canRush = false;
         }
     }
 }

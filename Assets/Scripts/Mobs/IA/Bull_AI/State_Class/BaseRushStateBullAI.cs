@@ -24,6 +24,8 @@ namespace State.AIBull
         Vector2 posAI;
 
         int indexRay;
+        float delayInertieRushInWall;
+        [SerializeField] float maxDelayInertieRushInWall;
 
         public override void InitState(StateControllerBull stateController)
         {
@@ -105,7 +107,7 @@ namespace State.AIBull
         void RushMovement()
         {
             // TODO lucas va te faire encul�
-            SoundManager.Instance.PlaySound("event:/SFX_IA/ShredNoss_SFX(Dash)/Attack", 1f, gameObject);
+            //SoundManager.Instance.PlaySound("event:/SFX_IA/ShredNoss_SFX(Dash)/Attack", 1f, gameObject);
             //Play SOUND ATTACK RUSHER
 
             rushBullSO.targetPos = new Vector2(rushBullSO.rushDestination.x, rushBullSO.rushDestination.z);
@@ -204,17 +206,20 @@ namespace State.AIBull
 
 
             //Check obstacle Wall
-            switch(indexRay)
+            if(canStartRush)
             {
-                case 0:
-                    CheckWall(globalRef.RayRushRight);
-                    break;
-                case 1:
-                    CheckWall(globalRef.RayRushMiddle);
-                    break;
-                case 2:
-                    CheckWall(globalRef.RayRushLeft);
-                    break;
+                switch (indexRay)
+                {
+                    case 0:
+                        CheckWall(globalRef.RayRushRight);
+                        break;
+                    case 1:
+                        CheckWall(globalRef.RayRushMiddle);
+                        break;
+                    case 2:
+                        CheckWall(globalRef.RayRushLeft);
+                        break;
+                }
             }
         }
         void CheckWall(Transform rayRush)
@@ -222,7 +227,12 @@ namespace State.AIBull
             rushBullSO.hitObstacle = RaycastAIManager.instanceRaycast.RaycastAI(rayRush.position, rayRush.forward, 
                                                       rushBullSO.maskCheckObstacle, Color.red, distDetectObstacle);
             if (rushBullSO.hitObstacle.transform != null)
-                StopRush();
+            {
+                if (delayInertieRushInWall > 0)
+                    delayInertieRushInWall -= Time.fixedDeltaTime;
+                else
+                    StopRush();
+            }
 
             if (indexRay < 2)
                 indexRay++;
@@ -304,7 +314,8 @@ namespace State.AIBull
         }
         private void OnDisable()
         {
-            if(rushBullSO != null)
+            delayInertieRushInWall = maxDelayInertieRushInWall;
+            if (rushBullSO != null)
             {
                 rushBullSO.isFall = false;
                 rushBullSO.isGround = true;
@@ -312,9 +323,6 @@ namespace State.AIBull
                 rushBullSO.stopLockPlayer = false;
                 rushBullSO.ennemiInCollider.Clear();
             }
-
-            if (material_Instances.Material.color == material_Instances.ColorPreAtatck)
-                ShowSoonAttack(false);
 
             globalRef.launchRush = false;
             canStartRush = false;
