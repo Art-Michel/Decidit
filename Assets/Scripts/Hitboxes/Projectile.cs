@@ -143,6 +143,21 @@ public class Projectile : Hitbox
                     //projectile slightly angled to compensate the gun's offset
                     _direction = _cameraDirection;
                 }
+            //TODO Art overlapsphere sur place pour fix le multihit
+            // foreach (Collider collider in Physics.OverlapSphere(transform.position, _radius, _shouldCollideWith))
+            // {
+
+            //     if (!AlreadyHit(hit.transform.parent))
+            //     {
+            //         Hit(hit.transform);
+            //         if (_shouldLeaveImpact)
+            //             LeaveImpact(collider, false);
+
+            //         //Reset direction to camera direction in order to cancel the fact we initially sent the
+            //         //projectile slightly angled to compensate the gun's offset
+            //         _direction = _cameraDirection;
+            //     }
+            // }
 
             //second raycast backwards to leave impact after exiting a surface
             if (_shouldLeaveImpact)
