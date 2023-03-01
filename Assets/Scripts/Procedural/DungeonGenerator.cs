@@ -93,7 +93,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
 
     private void AddRandomRoom(int difficulty)
     {
-        int roomToAddIndex = Random.Range(0, _usableRooms[difficulty].Count - 1);
+        int roomToAddIndex = Random.Range(0, _usableRooms[difficulty].Count);
         if (_usableRooms[difficulty].Count <= 0)
         {
             string roomSetDifficulty = "";
