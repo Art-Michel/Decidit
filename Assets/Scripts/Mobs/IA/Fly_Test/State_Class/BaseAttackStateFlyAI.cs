@@ -29,7 +29,15 @@ namespace State.FlyAI
 
         private void OnEnable()
         {
-            SoundManager.Instance.PlaySound("event:/SFX_IA/Vorice_SFX(Vol)/Attack", 1f, gameObject);
+            try
+            {
+                SoundManager.Instance.PlaySound("event:/SFX_IA/Vorice_SFX(Vol)/Attack", 1f, gameObject);
+            }
+            catch
+            {
+                //
+            }
+
             if (baseAttackFlySO != null)
             {
                 baseAttackFlySO.speedRotationAIAttack = 0;

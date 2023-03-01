@@ -12,7 +12,6 @@ public class CheckPlayerCover : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(isCover);
     }
 
     private void OnTriggerEnter(Collider other)
