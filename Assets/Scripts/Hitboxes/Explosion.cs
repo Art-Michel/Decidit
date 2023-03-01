@@ -85,6 +85,8 @@ public class Explosion : Hitbox
 
     protected override void Update()
     {
+        if (_hitboxIsActive)
+            base.Update();
 
         //Object life span (equal to duration of the VFX)
         _lifeT -= Time.deltaTime;
@@ -106,8 +108,6 @@ public class Explosion : Hitbox
         _damage = Mathf.RoundToInt(_initialDamage * Mathf.InverseLerp(0f, _hitboxSpan, _hitboxT));
 
         //Check for collisions with hitbox
-        if (_hitboxIsActive)
-            base.Update();
     }
 
     private void DisableHitboxes()

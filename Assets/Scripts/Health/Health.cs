@@ -53,6 +53,7 @@ public class Health : MonoBehaviour
         _hp -= damage;
         DisplayHealth();
         StartProbHealth();
+        Debug.Log("Received " + damage + " damage");
 
         if (_hp <= 0)
         {
@@ -65,17 +66,7 @@ public class Health : MonoBehaviour
 
     public virtual void TakeCriticalDamage(int damage)
     {
-        _hp -= damage * 2;
-        DisplayHealth();
-
-        if (_hp <= 0)
-        {
-            _hp = 0f;
-            Death();
-            return;
-        }
-
-        StartProbHealth();
+        TakeDamage(damage * 2);
     }
 
     public void TakeDamage(int amount, Vector3 position, Vector3 forward)

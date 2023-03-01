@@ -699,7 +699,7 @@ GameObject:
   - component: {fileID: 3757828332054071203}
   m_Layer: 0
   m_Name: Big Enemy
-  m_TagString: Untagged
+  m_TagString: Ennemi
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -741,18 +741,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hpUi: {fileID: 3651693590633806078}
   _probHpUi: {fileID: 3651693591291406445}
+  _bloodVFXPooler: {fileID: 3757828332054071203}
   _maxHp: 300
   _probationMaxStartup: 0.5
   _probationSpeed: 50
+  IsInvulnerable: 0
   _canvas: {fileID: 3651693591180118756}
   _material: {fileID: 0}
   _deathVfx: {fileID: 8439734090078822253}
+  Room: {fileID: 0}
+  _colliders: []
   _uiScale: 0.1
   _lookStrictness: 0.08
   _appearSpeed: 15
   _disappearSpeed: 4
   _disappearMaxStartup: 1
   _deathAnimationDuration: 1
+  KnockBackDir: {x: 0, y: 0, z: 0}
+  globalRefAICAC: {fileID: 0}
+  globalRefBullAI: {fileID: 0}
+  globalRefFlyAI: {fileID: 0}
+  globalRefWallAI: {fileID: 0}
 --- !u!114 &3482775155419962180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -760,16 +769,17 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3651693591780365186}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 696edb1499390144ba6e6e6526406c5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   MeshGameObject: {fileID: 3651693591585181975}
-  Color: {r: 1, g: 1, b: 1, a: 0}
+  ColorBase: {r: 0, g: 0, b: 0, a: 0}
   ColorPreAtatck: {r: 1, g: 1, b: 1, a: 0}
   Material: {fileID: 2100000, guid: fac4f5123abcb13498c83e0f60767f78, type: 2}
-  Texture: {fileID: 2800000, guid: 83482549c13339e4098ddbead77b0b64, type: 3}
+  TextureBase: {fileID: 0}
+  TexturePreAttack: {fileID: 0}
   SetPixelTexture: {x: 0, y: 0}
 --- !u!114 &3757828332054071203
 MonoBehaviour:
@@ -783,7 +793,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 3028111322435012058, guid: 4de8fdf8ed2e8ea43a59f380247afa84, type: 3}
+  _prefab: {fileID: 3182170922454913666, guid: 6d0652dad3cf50d4f90488da7361b8c7, type: 3}
   _initialCount: 4
   _shouldBeParent: 1
 --- !u!1 &3651693591963884957

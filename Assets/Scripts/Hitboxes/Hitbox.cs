@@ -16,6 +16,8 @@ public class Hitbox : MonoBehaviour
     [SerializeField] protected bool _canMultiHit = false;
     [Foldout("Properties")]
     [SerializeField] private bool _shouldSplashBloodOnHit = false;
+    [Foldout("Properties")]
+    [SerializeField] private bool _canCriticalHit = true;
 
     [Foldout("Stats")]
     [SerializeField] protected float _radius = .2f;
@@ -85,14 +87,14 @@ public class Hitbox : MonoBehaviour
         {
             if (_shouldSplashBloodOnHit)
             {
-                if (targetCollider.CompareTag("WeakHurtbox"))
+                if (targetCollider.CompareTag("WeakHurtbox") && _canCriticalHit)
                     health.TakeCriticalDamage(_damage, transform.position, -transform.forward);
                 else
                     health.TakeDamage(_damage, transform.position, -transform.forward);
             }
             else
             {
-                if (targetCollider.CompareTag("WeakHurtbox"))
+                if (targetCollider.CompareTag("WeakHurtbox") && _canCriticalHit)
                     health.TakeCriticalDamage(_damage);
                 else
                     health.TakeDamage(_damage);
