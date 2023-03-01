@@ -120,8 +120,11 @@ namespace State.AICAC
             {
                 material_Instances.ChangeColorTexture(material_Instances.ColorBase);
             }
-            baseAttackAICACSO.currentAttackRate = baseAttackAICACSO.maxAttackRate;
-            baseAttackAICACSO.speedRot = 0;
+            if(baseAttackAICACSO != null)
+            {
+                baseAttackAICACSO.currentAttackRate = baseAttackAICACSO.maxAttackRate;
+                baseAttackAICACSO.speedRot = 0;
+            }
         }
     }
 }

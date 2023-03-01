@@ -241,7 +241,8 @@ namespace State.AICAC
             globalRef.dodgeAICACSO.rightDodge = false;
             globalRef.dodgeAICACSO.isDodging = false;
             globalRef.dodgeAICACSO.dodgeIsSet = false;
-            globalRef.agent.SetDestination(globalRef.playerTransform.position);
+            if (globalRef.agent != null)
+                globalRef.agent.SetDestination(globalRef.playerTransform.position);
         }
     }
 }

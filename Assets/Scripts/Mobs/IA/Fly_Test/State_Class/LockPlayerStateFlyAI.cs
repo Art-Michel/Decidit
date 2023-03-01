@@ -129,7 +129,9 @@ namespace State.FlyAI
 
         private void OnDisable()
         {
-            baseAttackFlySO.speedRotationAIAttack = 0;
+            if(baseAttackFlySO != null)
+                baseAttackFlySO.speedRotationAIAttack = 0;
+
             material_Instances.Material.color = material_Instances.ColorBase;
             material_Instances.ChangeColorTexture(material_Instances.ColorBase);
         }
