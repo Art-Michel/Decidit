@@ -29,6 +29,7 @@ namespace State.FlyAI
         [SerializeField] Vector3 velocity;
 
         [SerializeField] bool isInCover;
+        [SerializeField] bool obstacleUp;
 
         public override void InitState(StateControllerFlyAI stateController)
         {
@@ -54,11 +55,15 @@ namespace State.FlyAI
             AdjustingYspeed();
             SmoothLookAtYAxisPatrol();
             AdjustSpeed();
+
+            velocity = globalRef.agent.velocity;
+            speedVelocity = globalRef.agent.velocity.magnitude;
         }
 
         private void FixedUpdate()
         {
             CheckObstacle();
+            CheckUpObstacle();
             //SlowSpeed(globalRef.isInEylau);
         }
 
@@ -104,8 +109,18 @@ namespace State.FlyAI
 
             if(hitObstacle.transform != null)
             {
-                dodgeObstacle = true;
-                SearchNewPos();
+                if(Vector3.Distance(hitObstacle.point, childflyAI.position) <10f)
+                {
+                    dodgeObstacle = true;
+                    SearchNewPos();
+                }
+                else
+                {
+                    if (dodgeObstacle)
+                    {
+                        dodgeObstacle = false;
+                    }
+                }
             }
             else
             {
@@ -152,13 +167,28 @@ namespace State.FlyAI
                 isInCover = false;
             }
         }
+        void CheckUpObstacle()
+        {
+            RaycastHit hit = RaycastAIManager.instanceRaycast.RaycastAI(childflyAI.transform.position, childflyAI.transform.up,
+                baseMoveFlySO.maskObstacle, Color.red, baseMoveFlySO.lenghtRayDetectObstacle);
+            if(hit.transform != null)
+            {
+                obstacleUp = true;
+            }
+            else
+            {
+                obstacleUp = false;
+            }
+        }
 
         public void SmoothLookAtYAxisPatrol()
         {
             Vector3 relativePos;
 
             if(isInCover)
+            {
                 baseMoveFlySO.destinationFinal.y = childflyAI.transform.position.y;
+            }
 
             relativePos.x = baseMoveFlySO.destinationFinal.x - flyAI.transform.position.x;
             relativePos.y = baseMoveFlySO.destinationFinal.y - flyAI.transform.position.y;
@@ -167,11 +197,6 @@ namespace State.FlyAI
             SlowRotation(globalRef.isInEylau, relativePos);
             childflyAI.localRotation = rotation;
 
-            if (baseMoveFlySO.speedRotationAIPatrol < currentMaxSpeedRotationAIDodgeObstacle)
-            {
-                baseMoveFlySO.speedRotationAIPatrol += (Time.deltaTime / (currentSmoothRotationDodgeObstacle * globalRef.slowRatio));
-            }
-
             ApplyFlyingMove();
             DelayBeforeAttack();
         }
@@ -179,10 +204,18 @@ namespace State.FlyAI
         {
             if (active)
             {
+                if (baseMoveFlySO.speedRotationAIPatrol < currentMaxSpeedRotationAIDodgeObstacle)
+                {
+                    baseMoveFlySO.speedRotationAIPatrol += (Time.deltaTime / (currentSmoothRotationDodgeObstacle * globalRef.slowRatio));
+                }
                 rotation = Quaternion.Slerp(childflyAI.localRotation, Quaternion.LookRotation(relativePos, Vector3.up), baseMoveFlySO.speedRotationAIPatrol);
             }
             else
             {
+                if (baseMoveFlySO.speedRotationAIPatrol < currentMaxSpeedRotationAIDodgeObstacle)
+                {
+                    baseMoveFlySO.speedRotationAIPatrol += (Time.deltaTime / (currentSmoothRotationDodgeObstacle));
+                }
                 rotation = Quaternion.Slerp(childflyAI.localRotation, Quaternion.LookRotation(relativePos, Vector3.up), baseMoveFlySO.speedRotationAIPatrol);
             }
         }
@@ -278,17 +311,11 @@ namespace State.FlyAI
             {
                 if (baseMoveFlySO.newPosIsSet)
                     globalRef.agent.velocity = (childflyAI.transform.forward * (baseMoveFlySO.currentSpeed / globalRef.slowRatio));
-
-                velocity = globalRef.agent.velocity;
-                speedVelocity = globalRef.agent.velocity.magnitude;
             }
             else
             {
                 if (baseMoveFlySO.newPosIsSet)
                     globalRef.agent.velocity = childflyAI.transform.forward * baseMoveFlySO.currentSpeed;
-
-                velocity = globalRef.agent.velocity;
-                speedVelocity = globalRef.agent.velocity.magnitude;
             }
         }
 
