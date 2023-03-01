@@ -31,6 +31,7 @@ public class Material_Instances : MonoBehaviour
         {
             Debug.LogWarning("Aucune texture trouvee dans le shader, creation d'une nouvelle");
         }
+        Material.color = ColorBase;
     }
 
     public void ChangeColorTexture(Color color)

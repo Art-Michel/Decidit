@@ -60,4 +60,5 @@ public class RushBullParameterSO : ScriptableObject
     public LayerMask maskCheckEnnemi;
     public LayerMask maskCheckObstacle;
     public LayerMask noMask;
+    public LayerMask maskCheckCanRush;
 }

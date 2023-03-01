@@ -14,13 +14,27 @@ public class MaterialInstance : Editor
             return;
         }
 
-        if (Selection.activeGameObject.GetComponent<MeshRenderer>() == null && Selection.activeGameObject.GetComponent<SkinnedMeshRenderer>() == null)
+        if (Selection.activeGameObject.GetComponent<MeshRenderer>() == null && Selection.activeGameObject.GetComponent<SkinnedMeshRenderer>() == null
+            && Selection.activeGameObject.GetComponent<ParticleSystemRenderer>() == null)
         {
             Debug.LogError("No Skinned Mesh Renderer or No renderer on this GameObject");
             return;
         }
 
-        Material mat = Selection.activeGameObject.GetComponent<MeshRenderer>().sharedMaterial;
-        Selection.activeGameObject.GetComponent<MeshRenderer>().sharedMaterial = new Material(mat);
+        if(Selection.activeGameObject.GetComponent<MeshRenderer>() != null)
+        {
+            Material mat = Selection.activeGameObject.GetComponent<MeshRenderer>().sharedMaterial;
+            Selection.activeGameObject.GetComponent<MeshRenderer>().sharedMaterial = new Material(mat);
+        }
+        else if(Selection.activeGameObject.GetComponent<SkinnedMeshRenderer>() != null)
+        {
+            Material mat = Selection.activeGameObject.GetComponent<SkinnedMeshRenderer>().sharedMaterial;
+            Selection.activeGameObject.GetComponent<SkinnedMeshRenderer>().sharedMaterial = new Material(mat);
+        }
+        else if(Selection.activeGameObject.GetComponent<ParticleSystemRenderer>())
+        {
+            Material mat2 = Selection.activeGameObject.GetComponent<ParticleSystemRenderer>().sharedMaterial;
+            Selection.activeGameObject.GetComponent<ParticleSystemRenderer>().sharedMaterial = new Material(mat2);
+        }
     }
 }

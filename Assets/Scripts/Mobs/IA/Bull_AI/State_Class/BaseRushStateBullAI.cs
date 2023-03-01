@@ -222,10 +222,7 @@ namespace State.AIBull
             rushBullSO.hitObstacle = RaycastAIManager.instanceRaycast.RaycastAI(rayRush.position, rayRush.forward, 
                                                       rushBullSO.maskCheckObstacle, Color.red, distDetectObstacle);
             if (rushBullSO.hitObstacle.transform != null)
-            {
-                if (!rushBullSO.hitObstacle.transform.CompareTag("Ennemi"))
-                    StopRush();
-            }
+                StopRush();
 
             if (indexRay < 2)
                 indexRay++;
