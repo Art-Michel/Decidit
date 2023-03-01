@@ -15,7 +15,7 @@ public class MaterialInstance : Editor
         }
 
         if (Selection.activeGameObject.GetComponent<MeshRenderer>() == null && Selection.activeGameObject.GetComponent<SkinnedMeshRenderer>() == null
-            && Selection.activeGameObject.GetComponent<TrailRenderer>() == null)
+            && Selection.activeGameObject.GetComponent<ParticleSystemRenderer>() == null)
         {
             Debug.LogError("No Skinned Mesh Renderer or No renderer on this GameObject");
             return;
@@ -31,10 +31,10 @@ public class MaterialInstance : Editor
             Material mat = Selection.activeGameObject.GetComponent<SkinnedMeshRenderer>().sharedMaterial;
             Selection.activeGameObject.GetComponent<SkinnedMeshRenderer>().sharedMaterial = new Material(mat);
         }
-        else if(Selection.activeGameObject.GetComponent<TrailRenderer>())
+        else if(Selection.activeGameObject.GetComponent<ParticleSystemRenderer>())
         {
-            Material mat2 = Selection.activeGameObject.GetComponent<TrailRenderer>().sharedMaterial;
-            Selection.activeGameObject.GetComponent<TrailRenderer>().sharedMaterial = new Material(mat2);
+            Material mat2 = Selection.activeGameObject.GetComponent<ParticleSystemRenderer>().trailMaterial;
+            Selection.activeGameObject.GetComponent<ParticleSystemRenderer>().trailMaterial = new Material(mat2);
         }
     }
 }
