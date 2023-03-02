@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AnimatorManager : MonoBehaviour
@@ -14,7 +12,7 @@ public class AnimatorManager : MonoBehaviour
     public void SetAnimation(Animator animator, GlobalRefAnimator globalRefAnimator, string nextAnimation)
     {
         //Disable Current Animation
-        if(globalRefAnimator.currentAnimName != null)
+        if(globalRefAnimator.currentAnimName != "")
             animator.SetBool(globalRefAnimator.currentAnimName, false);
 
         //Enable Next Animation
