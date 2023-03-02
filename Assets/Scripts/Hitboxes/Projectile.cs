@@ -137,32 +137,29 @@ public class Projectile : Hitbox
                 {
                     Hit(hit.transform);
                     if (_shouldLeaveImpact)
-                        LeaveImpact(hit, false);
+                        LeaveImpact(hit.transform, hit.point, false);
 
                     //Reset direction to camera direction in order to cancel the fact we initially sent the
                     //projectile slightly angled to compensate the gun's offset
                     _direction = _cameraDirection;
                 }
-            //TODO Art overlapsphere sur place pour fix le multihit
-            // foreach (Collider collider in Physics.OverlapSphere(transform.position, _radius, _shouldCollideWith))
-            // {
+            foreach (Collider collider in Physics.OverlapSphere(transform.position, _radius, _shouldCollideWith))
+            {
 
-            //     if (!AlreadyHit(hit.transform.parent))
-            //     {
-            //         Hit(hit.transform);
-            //         if (_shouldLeaveImpact)
-            //             LeaveImpact(collider, false);
+                if (!AlreadyHit(collider.transform.parent))
+                {
+                    Hit(collider.transform);
+                    if (_shouldLeaveImpact)
+                        LeaveImpact(collider.transform, transform.position, false);
 
-            //         //Reset direction to camera direction in order to cancel the fact we initially sent the
-            //         //projectile slightly angled to compensate the gun's offset
-            //         _direction = _cameraDirection;
-            //     }
-            // }
+                    _direction = _cameraDirection;
+                }
+            }
 
             //second raycast backwards to leave impact after exiting a surface
             if (_shouldLeaveImpact)
                 foreach (RaycastHit hit in Physics.RaycastAll(transform.position, -_spaceTraveledLast2Frames.normalized, _spaceTraveledLast2Frames.magnitude, _shouldCollideWith))
-                    LeaveImpact(hit, true);
+                    LeaveImpact(hit.transform, hit.point, true);
 
         }
 
@@ -183,7 +180,7 @@ public class Projectile : Hitbox
                 }
                 else
                 {
-                    if (_shouldLeaveImpact) LeaveImpact(hit, false);
+                    if (_shouldLeaveImpact) LeaveImpact(hit.transform, hit.point, false);
                     if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
                         Bounce(hit);
                 }
@@ -194,7 +191,7 @@ public class Projectile : Hitbox
             {
                 Hit(hit.transform);
                 if (_shouldLeaveImpact)
-                    LeaveImpact(hit, false);
+                    LeaveImpact(hit.transform, hit.point, false);
 
                 //+ explostion if projectile should spawn an explosion.
                 if (_explodesOnHit)
@@ -214,13 +211,13 @@ public class Projectile : Hitbox
         _lastFramePosition = hit.point + hit.normal * (_radius + 0.1f);
     }
 
-    private void LeaveImpact(RaycastHit hit, bool fromBehind)
+    private void LeaveImpact(Transform obj, Vector3 point, bool fromBehind)
     {
         //wall or ground
-        if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        if (obj.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             GameObject impactVfx = _impactVfxPooler.Get().gameObject;
-            impactVfx.transform.position = hit.point + hit.normal * 0.05f;
+            impactVfx.transform.position = point - _direction * 0.05f;
             if (fromBehind)
                 impactVfx.transform.forward = -_direction;
             else
@@ -228,10 +225,10 @@ public class Projectile : Hitbox
         }
 
         //flesh
-        if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Flesh"))
+        if (obj.gameObject.layer == LayerMask.NameToLayer("Flesh"))
         {
             GameObject splashVfx = _fleshSplashVfxPooler.Get().gameObject;
-            splashVfx.transform.position = hit.point + hit.normal * 0.05f;
+            splashVfx.transform.position = point - _direction * 0.05f;
 
             if (fromBehind) // upside down for some reason
                 splashVfx.transform.forward = _direction;
