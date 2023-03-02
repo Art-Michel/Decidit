@@ -218,10 +218,14 @@ public class Projectile : Hitbox
         {
             GameObject impactVfx = _impactVfxPooler.Get().gameObject;
             impactVfx.transform.position = point - _direction * 0.05f;
-            if (fromBehind)
-                impactVfx.transform.forward = -_direction;
-            else
-                impactVfx.transform.forward = _direction;
+
+            if (_direction != Vector3.zero)
+            {
+                if (fromBehind)
+                    impactVfx.transform.forward = -_direction;
+                else
+                    impactVfx.transform.forward = _direction;
+            }
         }
 
         //flesh
@@ -230,10 +234,13 @@ public class Projectile : Hitbox
             GameObject splashVfx = _fleshSplashVfxPooler.Get().gameObject;
             splashVfx.transform.position = point - _direction * 0.05f;
 
-            if (fromBehind) // upside down for some reason
-                splashVfx.transform.forward = _direction;
-            else
-                splashVfx.transform.forward = -_direction;
+            if (_direction != Vector3.zero)
+            {
+                if (fromBehind) // upside down for some reason
+                    splashVfx.transform.forward = _direction;
+                else
+                    splashVfx.transform.forward = -_direction;
+            }
         }
     }
 
