@@ -3,7 +3,6 @@ using UnityEngine;
 public class CheckPlayerCover : MonoBehaviour
 {
     public static CheckPlayerCover instance;
-    public static bool isCover;
 
     private void Awake()
     {
@@ -18,7 +17,6 @@ public class CheckPlayerCover : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            isCover = true;
         }
     }
 
@@ -26,7 +24,6 @@ public class CheckPlayerCover : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            isCover = false;
         }
     }
 
