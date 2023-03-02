@@ -12,8 +12,7 @@ namespace State.AICAC
         [SerializeField] float maxDurationNavLink;
         [SerializeField] bool triggerNavLink;
         public bool isOnNavLink;
-        NavMeshLink link;
-        NavMeshLink navLink;
+        [SerializeField] NavMeshLink navLink;
         NavMeshHit closestHit;
         [SerializeField] Vector3 linkDestination;
 
