@@ -35,6 +35,10 @@ public class Revolver : MonoBehaviour
     [Foldout("Stats")]
     [SerializeField] protected LayerMask _mask;
     [Foldout("Stats")]
+    [SerializeField] protected LayerMask _secondaryMask;
+    [Foldout("Stats")]
+    [SerializeField] protected float _aimAssistRadius;
+    [Foldout("Stats")]
     [SerializeField] protected float _recoilTime = .3f;
     [Foldout("Stats")]
     [SerializeField][Tooltip("total reload animation duration")] private float _reloadMaxTime = 1f;
@@ -144,6 +148,10 @@ public class Revolver : MonoBehaviour
     {
         if (Physics.Raycast(_camera.position, _camera.forward, out RaycastHit hit, 999f, _mask))
             _currentlyAimedAt = hit.point;
+        else if (Physics.SphereCast(_camera.position, _aimAssistRadius, _camera.forward, out RaycastHit hit2, 999f, _mask))
+            _currentlyAimedAt = hit2.point;
+        else if (Physics.Raycast(_camera.position, _camera.forward, out RaycastHit hit3, 999f, _secondaryMask))
+            _currentlyAimedAt = hit3.point;
         else
             _currentlyAimedAt = _camera.forward * 9999f;
     }
