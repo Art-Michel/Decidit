@@ -53,7 +53,7 @@ public class Health : MonoBehaviour
         _hp -= damage;
         DisplayHealth();
         StartProbHealth();
-        Debug.Log("Received " + damage + " damage");
+        //Debug.Log("Received " + damage + " damage");
 
         if (_hp <= 0)
         {

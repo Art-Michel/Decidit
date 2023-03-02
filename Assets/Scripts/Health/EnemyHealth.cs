@@ -106,7 +106,7 @@ public class EnemyHealth : Health
         else if (globalRefWallAI != null)
             globalRefWallAI.CheckHP();
 
-        //SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/HitMarker", 1f);
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/HitMarker", .2f, gameObject);
         base.TakeDamage(amount);
     }
 
