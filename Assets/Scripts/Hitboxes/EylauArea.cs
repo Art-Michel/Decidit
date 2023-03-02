@@ -25,23 +25,12 @@ public class EylauArea : MonoBehaviour
     private List<GlobalRefFlyAI> _aiFlyInArea;
     private List<GlobalRefWallAI> _aiWallInArea;
 
-    void Setup()
+    public void Reset()
     {
         _lifeT = _lifeSpan;
-    }
+        _isPlayerInHere = false;
+        _wasPlayerInHere = false;
 
-    void Update()
-    {
-        CheckForPlayer();
-
-        _lifeT -= Time.deltaTime;
-        if (_lifeT <= 0)
-            Disappear();
-    }
-
-    private void Disappear()
-    {
-        gameObject.SetActive(false);
         Player.Instance.ResetEylauMovementBuff();
         _isPlayerInHere = false;
         _wasPlayerInHere = false;
@@ -60,6 +49,21 @@ public class EylauArea : MonoBehaviour
         _aiBullInArea.Clear();
         _aiFlyInArea.Clear();
         _aiWallInArea.Clear();
+    }
+
+    void Update()
+    {
+        CheckForPlayer();
+
+        _lifeT -= Time.deltaTime;
+        if (_lifeT <= 0)
+            Disappear();
+    }
+
+    private void Disappear()
+    {
+        Reset();
+        gameObject.SetActive(false);
     }
 
     #region worst detection of all time due to AIs not having a commmon parent class
