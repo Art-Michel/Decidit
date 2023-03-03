@@ -91,12 +91,13 @@ public class EnemyHealth : Health
 
     public override void TakeDamage(int amount)
     {
-        ////PlaceHolderSoundManager.Instance.PlayHitSound();
 
         if (globalRefBullAI != null)
             globalRefBullAI.CheckHP();
+
         else if (globalRefAICAC != null)
             globalRefAICAC.CheckHP();
+
         else if (globalRefFlyAI != null)
         {
             globalRefFlyAI.CheckHP();
@@ -112,12 +113,14 @@ public class EnemyHealth : Health
 
     public override void TakeCriticalDamage(int amount)
     {
-        base.TakeCriticalDamage(amount);
+        base.TakeDamage(amount * 2);
 
         if (globalRefBullAI != null)
             globalRefBullAI.CheckHP();
+
         else if (globalRefAICAC != null)
             globalRefAICAC.CheckHP();
+
         else if (globalRefFlyAI != null)
         {
             globalRefFlyAI.CheckHP();
@@ -127,8 +130,7 @@ public class EnemyHealth : Health
         else if (globalRefWallAI != null)
             globalRefWallAI.CheckHP();
 
-        ////PlaceHolderSoundManager.Instance.PlayCriticalHitSound();
-        //SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/HitMarkerHead", 1f);
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/HitMarkerHead", .2f, gameObject);
     }
 
     public override void Knockback(Vector3 direction)
