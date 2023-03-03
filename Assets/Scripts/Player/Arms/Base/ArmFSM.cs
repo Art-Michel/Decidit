@@ -7,8 +7,8 @@ public class ArmFSM : MonoBehaviour
     private Dictionary<string, ArmState> states;
     Arm _arm;
 
-    public ArmState currentState { get; private set; }
-    public ArmState previousState { get; private set; }
+    public ArmState CurrentState { get; private set; }
+    public ArmState PreviousState { get; private set; }
 
     void Awake()
     {
@@ -44,17 +44,17 @@ public class ArmFSM : MonoBehaviour
             return;
         }
 
-        if (nextState == currentState)
+        if (nextState == CurrentState)
         {
             Debug.LogWarning("Tried entering " + nextStateName + " state which you were already in");
             return;
         }
 
-        if (currentState != null)
-            currentState.Exit();
+        if (CurrentState != null)
+            CurrentState.Exit();
 
-        previousState = currentState;
-        currentState = nextState;
-        currentState.Begin();
+        PreviousState = CurrentState;
+        CurrentState = nextState;
+        CurrentState.Begin();
     }
 }

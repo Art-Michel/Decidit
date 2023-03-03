@@ -7,8 +7,8 @@ public class RevolverFSM : MonoBehaviour
     protected Dictionary<string, RevolverState> _states;
     protected Revolver _revolver;
 
-    public RevolverState currentState { get; private set; }
-    public RevolverState previousState { get; private set; }
+    public RevolverState CurrentState { get; private set; }
+    public RevolverState PreviousState { get; private set; }
 
     protected virtual void Awake()
     {
@@ -43,17 +43,17 @@ public class RevolverFSM : MonoBehaviour
             return;
         }
 
-        if (nextState == currentState)
+        if (nextState == CurrentState)
         {
             Debug.LogWarning("Tried entering " + nextStateName + " state which you were already in");
             return;
         }
 
-        if (currentState != null)
-            currentState.Exit();
+        if (CurrentState != null)
+            CurrentState.Exit();
 
-        previousState = currentState;
-        currentState = nextState;
-        currentState.Begin();
+        PreviousState = CurrentState;
+        CurrentState = nextState;
+        CurrentState.Begin();
     }
 }

@@ -84,7 +84,7 @@ public class PlayerHealth : Health
 
         base.TakeDamage(amount);
         ////PlaceHolderSoundManager.Instance.PlayHurt();
-        ////SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/HitMarker", 1f);
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/DamageTaken", 2f, gameObject);
         //cool magic numbers
         float shakeIntensity = _playerHurtShakeMaxStrength * Mathf.InverseLerp(0.0f, 40.0f, amount + 10.0f);
         Player.Instance.StartShake(shakeIntensity, _playerHurtShakeDuration);
@@ -167,6 +167,7 @@ public class PlayerHealth : Health
 
     public override void Knockback(Vector3 direction)
     {
+
         _player.AddMomentum(direction);
     }
 

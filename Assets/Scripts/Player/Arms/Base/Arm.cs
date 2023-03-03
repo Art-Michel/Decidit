@@ -56,9 +56,9 @@ public class Arm : MonoBehaviour
     void Update()
     {
         //State update
-        if (_fsm.currentState != null)
+        if (_fsm.CurrentState != null)
         {
-            _fsm.currentState.StateUpdate();
+            _fsm.CurrentState.StateUpdate();
         }
 
         Debugging();
@@ -67,14 +67,14 @@ public class Arm : MonoBehaviour
     #region Input presses
     protected virtual void PressCancelSong()
     {
-        bool canCancel = _fsm.currentState.Name == ArmStateList.PREVIS;
+        bool canCancel = _fsm.CurrentState.Name == ArmStateList.PREVIS;
         if (canCancel)
             CancelSong();
     }
 
     protected virtual void PressSong()
     {
-        bool canSong = _fsm.currentState.Name == ArmStateList.IDLE;
+        bool canSong = _fsm.CurrentState.Name == ArmStateList.IDLE;
         if (canSong)
         {
             _fsm.ChangeState(ArmStateList.PREVIS);
@@ -83,7 +83,7 @@ public class Arm : MonoBehaviour
 
     protected virtual void ReleaseSong()
     {
-        bool canRelease = _fsm.currentState.Name == ArmStateList.PREVIS;
+        bool canRelease = _fsm.CurrentState.Name == ArmStateList.PREVIS;
         if (canRelease)
         {
             _fsm.ChangeState(ArmStateList.ACTIVE);
@@ -170,8 +170,8 @@ public class Arm : MonoBehaviour
 
     public void DebugDisplayArmState()
     {
-        if (_debugStateText && _fsm.currentState != null)
-            _debugStateText.text = ("Arm state: " + _fsm.currentState.Name);
+        if (_debugStateText && _fsm.CurrentState != null)
+            _debugStateText.text = ("Arm state: " + _fsm.CurrentState.Name);
     }
     #endregion
 

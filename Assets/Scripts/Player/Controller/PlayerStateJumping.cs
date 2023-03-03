@@ -8,7 +8,7 @@ public class PlayerStateJumping : PlayerState
 
     public override void Begin()
     {
-        if (_fsm.previousState.Name != PlayerStatesList.JUMPINGUPSLOPE)
+        if (_fsm.PreviousState.Name != PlayerStatesList.JUMPINGUPSLOPE)
             _player.StartJumping();
     }
 

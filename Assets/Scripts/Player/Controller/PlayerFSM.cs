@@ -7,8 +7,8 @@ public class PlayerFSM : MonoBehaviour
     private Dictionary<string, PlayerState> states;
     Player _player;
 
-    public PlayerState currentState { get; private set; }
-    public PlayerState previousState { get; private set; }
+    public PlayerState CurrentState { get; private set; }
+    public PlayerState PreviousState { get; private set; }
 
     void Awake()
     {
@@ -48,17 +48,17 @@ public class PlayerFSM : MonoBehaviour
             return;
         }
 
-        if (nextState == currentState)
+        if (nextState == CurrentState)
         {
-            Debug.LogWarning("Tried entering "+ nextStateName + " state which you were already in");
+            Debug.LogWarning("Tried entering " + nextStateName + " state which you were already in");
             return;
         }
 
-        if (currentState != null)
-            currentState.Exit();
+        if (CurrentState != null)
+            CurrentState.Exit();
 
-        previousState = currentState;
-        currentState = nextState;
-        currentState.Begin();
+        PreviousState = CurrentState;
+        CurrentState = nextState;
+        CurrentState.Begin();
     }
 }

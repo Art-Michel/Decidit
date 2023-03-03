@@ -93,8 +93,8 @@ public class Revolver : MonoBehaviour
     void Update()
     {
         //State update
-        if (_fsm.currentState != null)
-            _fsm.currentState.StateUpdate();
+        if (_fsm.CurrentState != null)
+            _fsm.CurrentState.StateUpdate();
 
         CheckLookedAt();
         //Debugging();
@@ -110,8 +110,8 @@ public class Revolver : MonoBehaviour
 
     //     public void DebugDisplayGunState()
     //     {
-    //         if (_debugStateText && _fsm.currentState != null)
-    //             _debugStateText.text = ("Revolver state: " + _fsm.currentState.Name);
+    //         if (_debugStateText && _fsm.CurrentState != null)
+    //             _debugStateText.text = ("Revolver state: " + _fsm.CurrentState.Name);
     //     }
     //     #endregion
 
@@ -162,7 +162,7 @@ public class Revolver : MonoBehaviour
     {
         if (_fsm)
         {
-            if ((_fsm.currentState.Name == RevolverStateList.IDLE || _fsm.currentState.Name == RevolverStateList.RELOADING) && _ammo > 0)
+            if ((_fsm.CurrentState.Name == RevolverStateList.IDLE || _fsm.CurrentState.Name == RevolverStateList.RELOADING) && _ammo > 0)
                 _fsm.ChangeState(RevolverStateList.SHOOTING);
         }
     }
@@ -219,9 +219,9 @@ public class Revolver : MonoBehaviour
     //register input then enter reloading state
     private void PressReload()
     {
-        if (_fsm.currentState.Name == RevolverStateList.IDLE && _ammo < _maxAmmo)
+        if (_fsm.CurrentState.Name == RevolverStateList.IDLE && _ammo < _maxAmmo)
             _fsm.ChangeState(RevolverStateList.RELOADING);
-        else if (_fsm.currentState.Name == RevolverStateList.SHOOTING && _ammo < _maxAmmo)
+        else if (_fsm.CurrentState.Name == RevolverStateList.SHOOTING && _ammo < _maxAmmo)
             _reloadBuffered = true;
     }
 

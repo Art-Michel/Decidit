@@ -32,6 +32,7 @@ public class EylauArea : MonoBehaviour
         _aiFlyInArea = new List<GlobalRefFlyAI>();
         _aiWallInArea = new List<GlobalRefWallAI>();
     }
+    
     public void Reset()
     {
         _lifeT = _lifeSpan;

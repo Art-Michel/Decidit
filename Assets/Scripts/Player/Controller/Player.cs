@@ -182,8 +182,8 @@ public class Player : LocalManager<Player>
         UpdateGlobalMomentum();
 
         //State update
-        if (_fsm.currentState != null)
-            _fsm.currentState.StateUpdate();
+        if (_fsm.CurrentState != null)
+            _fsm.CurrentState.StateUpdate();
 
         //Final Movement Formula //I got lost with the deltatime stuff but i swear it works perfectly
         FinalMovement = (_globalMomentum * Time.deltaTime) + (_movementInputs) + (Vector3.up * _currentlyAppliedGravity * Time.deltaTime) + (_steepSlopesMovement * Time.deltaTime);
@@ -203,7 +203,7 @@ public class Player : LocalManager<Player>
     {
 #if UNITY_EDITOR
         if (_debugStateText)
-            _debugStateText.text = ("Character state: " + _fsm.currentState.Name);
+            _debugStateText.text = ("Character state: " + _fsm.CurrentState.Name);
 
         if (_debugInputVelocityText)
             _debugInputVelocityText.text =
@@ -369,7 +369,7 @@ public class Player : LocalManager<Player>
     public void StartFalling()
     {
         _currentFriction = _airborneFriction;
-        if (_fsm.previousState.Name != PlayerStatesList.FALLINGDOWNSLOPE)
+        if (_fsm.PreviousState.Name != PlayerStatesList.FALLINGDOWNSLOPE)
             _currentlyAppliedGravity *= 0.8f;
     }
 
@@ -379,9 +379,9 @@ public class Player : LocalManager<Player>
     private void PressJump()
     {
         bool jumpCondition;
-        jumpCondition = _fsm.currentState.Name == PlayerStatesList.GROUNDED;
-        jumpCondition = jumpCondition || (_fsm.currentState.Name == PlayerStatesList.AIRBORNE && _coyoteTime > 0f);
-        jumpCondition = jumpCondition || (_fsm.currentState.Name == PlayerStatesList.FALLINGDOWNSLOPE && _coyoteTime > 0f);
+        jumpCondition = _fsm.CurrentState.Name == PlayerStatesList.GROUNDED;
+        jumpCondition = jumpCondition || (_fsm.CurrentState.Name == PlayerStatesList.AIRBORNE && _coyoteTime > 0f);
+        jumpCondition = jumpCondition || (_fsm.CurrentState.Name == PlayerStatesList.FALLINGDOWNSLOPE && _coyoteTime > 0f);
         if (jumpCondition)
             _fsm.ChangeState(PlayerStatesList.JUMPING);
     }
@@ -417,7 +417,7 @@ public class Player : LocalManager<Player>
                 _currentlyAppliedGravity = 0f;
 
             // ceiling is slopey -> slide along
-            else if (_fsm.currentState.Name != PlayerStatesList.JUMPINGUPSLOPE)
+            else if (_fsm.CurrentState.Name != PlayerStatesList.JUMPINGUPSLOPE)
                 _fsm.ChangeState(PlayerStatesList.JUMPINGUPSLOPE);
         }
     }
@@ -535,7 +535,15 @@ public class Player : LocalManager<Player>
 
     public void AddMomentum(Vector3 blow)
     {
-        _fsm.ChangeState(PlayerStatesList.AIRBORNE);
+        if (_fsm.CurrentState.Name == PlayerStatesList.JUMPING || _fsm.CurrentState.Name == PlayerStatesList.JUMPINGUPSLOPE)
+        {
+            _fsm.ChangeState(PlayerStatesList.JUMPING);
+        }
+        else
+        {
+            KillMomentum();
+            _fsm.ChangeState(PlayerStatesList.AIRBORNE);
+        }
         FinalMovement += blow.normalized;
         _globalMomentum += blow;
     }
@@ -559,7 +567,7 @@ public class Player : LocalManager<Player>
     private void ApplyMovementsToCharacter(Vector3 direction)
     {
         //Move along slopes
-        if (_fsm.currentState.Name == PlayerStatesList.GROUNDED || _fsm.currentState.Name == PlayerStatesList.SLIDING)
+        if (_fsm.CurrentState.Name == PlayerStatesList.GROUNDED || _fsm.CurrentState.Name == PlayerStatesList.SLIDING)
         {
             if (Vector3.Angle(transform.up, _groundHit.normal) < CharaCon.slopeLimit)
                 direction = (direction - (Vector3.Dot(direction, _groundHit.normal)) * _groundHit.normal);

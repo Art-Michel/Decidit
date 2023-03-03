@@ -110,10 +110,10 @@ public class Hitbox : MonoBehaviour
                     direction = MakeDirectionRelative(_knockbackAngle.normalized);
 
                 //weaker over distance
-                float force = _knockbackForce * Mathf.InverseLerp(_radius, 2, direction.magnitude);
+                //float force = _knockbackForce * Mathf.InverseLerp(_radius, 2, direction.magnitude);
 
                 //apply knockback
-                health.Knockback(direction.normalized * force);
+                health.Knockback(direction.normalized * _knockbackForce);
             }
             Blacklist.Add(targetCollider.parent, _delayBetweenHits);
         }
