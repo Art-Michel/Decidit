@@ -13,13 +13,17 @@ public class PlayerHealth : Health
     [SerializeField] RectTransform _hpBarStart;
     [Foldout("References")]
     [SerializeField] RectTransform _hpBarEnd;
+
     [Foldout("References")]
     [SerializeField] Image _lowHpVignette;
+
     [Foldout("References")]
     [SerializeField] Image _probVignette;
+    [Foldout("Properties")]
+    [SerializeField] AnimationCurve _vignetteAlphaOnProb;
+
     [Foldout("References")]
     [SerializeField] Image _healVignette;
-
     [Foldout("Properties")]
     [SerializeField] AnimationCurve _vignetteAlphaOnHeal;
     private float _healVignetteT;
@@ -115,6 +119,13 @@ public class PlayerHealth : Health
             _healVignette.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
             _isHealing = false;
         }
+    }
+
+    protected override void DisplayProbHealth()
+    {
+        base.DisplayProbHealth();
+        float alpha = _vignetteAlphaOnProb.Evaluate(_probHp - _hp);
+        _probVignette.color = new Color(1.0f, 1.0f, 1.0f, alpha);
     }
 
     public override void Knockback(Vector3 direction)
