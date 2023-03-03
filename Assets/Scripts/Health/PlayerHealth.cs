@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using NaughtyAttributes;
@@ -18,6 +19,12 @@ public class PlayerHealth : Health
     [SerializeField] Image _probVignette;
     [Foldout("References")]
     [SerializeField] Image _healVignette;
+
+    [Foldout("Properties")]
+    [SerializeField] AnimationCurve _vignetteAlphaOnHeal;
+    private float _healVignetteT;
+    private bool _isHealing;
+    private const float _healVignetteSpeed = 2.0f;
 
     [Foldout("Stats")]
     [SerializeField]
@@ -41,6 +48,12 @@ public class PlayerHealth : Health
     protected override void Awake()
     {
         base.Awake();
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+        if (_isHealing) HandleHealVignette();
     }
 
     protected override void DisplayHealth()
@@ -70,6 +83,38 @@ public class PlayerHealth : Health
         //* vignette starts being visible at [25%]HP and is at full opacity at [10%]hp
         float value = Mathf.Lerp(1.0f, 0.0f, Mathf.InverseLerp(_maxHp * 0.1f, _maxHp * 0.25f, _hp));
         _lowHpVignette.color = new Color(1.0f, 1.0f, 1.0f, value);
+    }
+
+    public override void ProbRegen(int amount = 10)
+    {
+        if (_hp < _probHp)
+        {
+            base.ProbRegen(amount);
+            SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/BaseHeal", 2f, gameObject);
+            StartHealVignette();
+        }
+    }
+
+    private void StartHealVignette()
+    {
+        _isHealing = true;
+        _healVignetteT = 0.0f;
+    }
+
+    private void HandleHealVignette()
+    {
+        if (_healVignetteT <= 1)
+        {
+            _healVignetteT += Time.deltaTime * _healVignetteSpeed;
+            float alpha = _vignetteAlphaOnHeal.Evaluate(_healVignetteT);
+            _healVignette.color = new Color(1.0f, 1.0f, 1.0f, alpha);
+        }
+        else
+        {
+            _healVignetteT = 1.0f;
+            _healVignette.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
+            _isHealing = false;
+        }
     }
 
     public override void Knockback(Vector3 direction)

@@ -98,15 +98,13 @@ public class Health : MonoBehaviour
         splash.forward = forward;
     }
 
-    public void ProbRegen(int amount = 10)
+    public virtual void ProbRegen(int amount = 10)
     {
         if (_hp < _probHp)
         {
             _hp = Mathf.Clamp(_hp + amount, 0, _probHp);
             DisplayHealth();
-            ////PlaceHolderSoundManager.Instance.PlayRegen();
-            ////SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/BaseHeal", 1f);
-            //StartProbHealth(); //uncomment if we want to reset prob timer upon regen
+            //StartProbHealth(); //*uncomment if we want to reset prob timer upon regen
         }
     }
 
