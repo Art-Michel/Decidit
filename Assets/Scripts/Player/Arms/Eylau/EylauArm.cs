@@ -52,8 +52,8 @@ public class EylauArm : Arm
         _area.transform.position = _previs.transform.position;
         _area.transform.parent = null;
         _area.transform.rotation = Quaternion.identity;
-        _area.GetComponent<EylauArea>().Reset();
         _area.SetActive(true);
+        _area.GetComponent<EylauArea>().Reset();
         _previs.SetActive(false);
         _fsm.ChangeState(ArmStateList.RECOVERY);
     }
