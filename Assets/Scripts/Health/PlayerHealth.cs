@@ -28,7 +28,7 @@ public class PlayerHealth : Health
     [SerializeField] AnimationCurve _vignetteAlphaOnHeal;
     private float _healVignetteT;
     private bool _isHealing;
-    private const float _healVignetteSpeed = 2.0f;
+    private const float _healVignetteSpeed = 1.5f;
 
     [Foldout("References")]
     [SerializeField] Image _damageVignette;
@@ -36,7 +36,7 @@ public class PlayerHealth : Health
     [SerializeField] AnimationCurve _vignetteAlphaOnDamage;
     private float _damageVignetteT;
     private bool _isBeingDamaged;
-    private const float _damageVignetteSpeed = 2.0f;
+    private const float _damageVignetteSpeed = 2.5f;
     private float _currentDamageVignetteMaxAlpha;
 
     [Foldout("Stats")]
