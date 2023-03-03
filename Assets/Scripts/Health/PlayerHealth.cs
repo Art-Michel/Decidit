@@ -30,6 +30,15 @@ public class PlayerHealth : Health
     private bool _isHealing;
     private const float _healVignetteSpeed = 2.0f;
 
+    [Foldout("References")]
+    [SerializeField] Image _damageVignette;
+    [Foldout("Properties")]
+    [SerializeField] AnimationCurve _vignetteAlphaOnDamage;
+    private float _damageVignetteT;
+    private bool _isBeingDamaged;
+    private const float _damageVignetteSpeed = 2.0f;
+    private float _currentDamageVignetteMaxAlpha;
+
     [Foldout("Stats")]
     [SerializeField]
     [Tooltip("How much Screen will shake when player gets hit.")]
@@ -58,6 +67,7 @@ public class PlayerHealth : Health
     {
         base.Update();
         if (_isHealing) HandleHealVignette();
+        if (_isBeingDamaged) HandleDamageVignette();
     }
 
     protected override void DisplayHealth()
@@ -80,6 +90,8 @@ public class PlayerHealth : Health
         Player.Instance.StartShake(shakeIntensity, _playerHurtShakeDuration);
 
         HandleLowHpVignette();
+        StartDamageVignette(amount);
+        DisplayProbHealth();
     }
 
     private void HandleLowHpVignette()
@@ -118,6 +130,31 @@ public class PlayerHealth : Health
             _healVignetteT = 1.0f;
             _healVignette.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
             _isHealing = false;
+        }
+    }
+
+    private void StartDamageVignette(float damage)
+    {
+        _isBeingDamaged = true;
+        _damageVignetteT = 0.0f;
+
+        //*Minimum vignette intensity from 5hp lost (30% opacity) to 20 hp lost (100% opacity)
+        _currentDamageVignetteMaxAlpha = Mathf.Lerp(0.3f, 1.0f, Mathf.InverseLerp(5.0f, 20.0f, damage));
+    }
+
+    private void HandleDamageVignette()
+    {
+        if (_damageVignetteT <= 1)
+        {
+            _damageVignetteT += Time.deltaTime * _damageVignetteSpeed;
+            float alpha = _vignetteAlphaOnDamage.Evaluate(_damageVignetteT);
+            _damageVignette.color = new Color(0.7f, 0.0f, 0.0f, alpha * _currentDamageVignetteMaxAlpha);
+        }
+        else
+        {
+            _damageVignetteT = 1.0f;
+            _damageVignette.color = new Color(0.7f, 0.0f, 0.0f, 0.0f);
+            _isBeingDamaged = false;
         }
     }
 

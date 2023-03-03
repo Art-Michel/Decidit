@@ -106,7 +106,7 @@ public class Health : MonoBehaviour
             _hp = Mathf.Clamp(_hp + amount, 0, _probHp);
             DisplayHealth();
             DisplayProbHealth();
-            //StartProbHealth(); //*uncomment if we want to reset prob timer upon regen
+            StartProbHealth(); //*uncomment if we want to reset prob timer upon regen
         }
     }
 
