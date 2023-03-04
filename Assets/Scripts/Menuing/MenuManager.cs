@@ -36,6 +36,9 @@ public class MenuManager : LocalManager<MenuManager>
     [SerializeField] Submenu _restart;
     [SerializeField] Submenu _win;
     [SerializeField] Submenu _death;
+    [SerializeField] Submenu _fugueSelect;
+    [SerializeField] Submenu _museSelect;
+    [SerializeField] Submenu _cimetiereSelect;
     public enum Menus
     {
         Main,
@@ -48,7 +51,10 @@ public class MenuManager : LocalManager<MenuManager>
         Cheats,
         Restart,
         Death,
-        Win
+        Win,
+        FugueSelect,
+        MuseSelect,
+        CimetiereSelect
     }
 
     private Dictionary<Menus, Submenu> _submenus;
@@ -107,6 +113,9 @@ public class MenuManager : LocalManager<MenuManager>
             { Menus.Restart, _restart },
             { Menus.Death, _death },
             { Menus.Win, _win },
+            { Menus.FugueSelect, _fugueSelect },
+            { Menus.MuseSelect, _museSelect },
+            { Menus.CimetiereSelect, _cimetiereSelect },
         };
         //Initialize Dictionnary
     }
@@ -166,6 +175,21 @@ public class MenuManager : LocalManager<MenuManager>
         }
     }
 
+    public void GreyOutItem(Menus menu, int i)
+    {
+        if (_submenus[menu].GreyOuts == null)
+        {
+            Debug.LogError("No greyouts array initialized");
+            return;
+        }
+        if (_submenus[menu].GreyOuts[i] == null)
+        {
+            Debug.LogError("No greyout object to enable");
+            return;
+        }
+        _submenus[menu].GreyOuts[i].SetActive(true);
+    }
+
     public void DisableMenuInputs()
     {
         _inputs.Disable();
@@ -181,7 +205,7 @@ public class MenuManager : LocalManager<MenuManager>
     }
 
     #region Submenu navigation
-    private void OpenSubmenu(Menus menu)
+    public void OpenSubmenu(Menus menu)
     {
         if (_submenus[menu] == CurrentMenu)
             return;
@@ -262,6 +286,21 @@ public class MenuManager : LocalManager<MenuManager>
     public void OpenWin()
     {
         OpenSubmenu(Menus.Win);
+    }
+
+    public void OpenFugue()
+    {
+        OpenSubmenu(Menus.FugueSelect);
+    }
+
+    public void OpenMuse()
+    {
+        OpenSubmenu(Menus.MuseSelect);
+    }
+
+    public void OpenCimetiere()
+    {
+        OpenSubmenu(Menus.CimetiereSelect);
     }
 
     #endregion

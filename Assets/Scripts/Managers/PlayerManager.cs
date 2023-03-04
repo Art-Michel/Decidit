@@ -35,7 +35,7 @@ public class PlayerManager : LocalManager<PlayerManager>
     bool _isLockedAt60;
 
     //Pausing
-    private bool _canPause = true;
+    public bool _canPause = true;
     float _timescaleBeforePausing;
     bool _isPaused;
     [Foldout("Menu")]
@@ -52,6 +52,9 @@ public class PlayerManager : LocalManager<PlayerManager>
     //StopGame stuff
     public List<GameObject> Guns;
     public List<GameObject> Arms;
+
+    //Altar usage
+    Altar _currentAltar = null;
 
     PlayerInputMap _inputs;
 
@@ -108,52 +111,142 @@ public class PlayerManager : LocalManager<PlayerManager>
     }
 
     #region Equipping
-    public void Skill4()
+
+    public void AltarEquipGun2()
+    {
+        ForceEquipGun2();
+        if (DungeonGenerator.Instance != null)
+            DungeonGenerator.Instance.ChoseAGun = true;
+
+        StopAltarMenuing();
+    }
+
+    public void AltarEquipGun3()
+    {
+        ForceEquipGun3();
+        if (DungeonGenerator.Instance != null)
+            DungeonGenerator.Instance.ChoseAGun = true;
+
+        StopAltarMenuing();
+    }
+
+    public void AltarEquipGun4()
+    {
+        ForceEquipGun4();
+        if (DungeonGenerator.Instance != null)
+            DungeonGenerator.Instance.ChoseAGun = true;
+
+        StopAltarMenuing();
+    }
+
+    public void AltarEquipSkill2()
+    {
+        ForceEquipSkill2();
+        if (DungeonGenerator.Instance != null)
+            DungeonGenerator.Instance.ChoseASkill = true;
+
+        StopAltarMenuing();
+    }
+
+    public void AltarEquipSkill3()
+    {
+        ForceEquipSkill3();
+        if (DungeonGenerator.Instance != null)
+            DungeonGenerator.Instance.ChoseASkill = true;
+
+        StopAltarMenuing();
+    }
+
+    public void AltarEquipSkill4()
+    {
+        ForceEquipSkill4();
+        if (DungeonGenerator.Instance != null)
+            DungeonGenerator.Instance.ChoseASkill = true;
+
+        StopAltarMenuing();
+    }
+    #endregion
+
+    #region AltarMenuing
+    public void StartAltarMenuing(Altar altar)
+    {
+        Player.Instance.PlayerHealth.IsInvulnerable = true;
+        Player.Instance.AllowMovement(false);
+        Player.Instance.KillMomentum();
+        Player.Instance.CharaCon.enabled = false;
+        MenuManager.Instance.StartMenuing();
+        MenuManager.Instance.OpenSubmenu(altar.MenuToOpen);
+        _currentAltar = altar;
+        _canPause = false;
+
+        if (DungeonGenerator.Instance != null)
+        {
+            if (DungeonGenerator.Instance.ChoseAGun)
+                MenuManager.Instance.GreyOutItem(altar.MenuToOpen, 0);
+            if (DungeonGenerator.Instance.ChoseASkill)
+                MenuManager.Instance.GreyOutItem(altar.MenuToOpen, 1);
+        }
+    }
+
+    public void StopAltarMenuing()
+    {
+        _currentAltar.TurnOff();
+        _currentAltar = null;
+        MenuManager.Instance.StopMenuing();
+        Player.Instance.PlayerHealth.IsInvulnerable = true;
+        Player.Instance.AllowMovement(true);
+        Player.Instance.CharaCon.enabled = true;
+        _canPause = true;
+    }
+    #endregion
+
+    #region ForceEquipping
+    public void ForceEquipSkill4()
     {
         foreach (GameObject arm in Arms)
             arm.SetActive(false);
         Arms[3].SetActive(true);
     }
-    public void Skill3()
+    public void ForceEquipSkill3()
     {
         foreach (GameObject arm in Arms)
             arm.SetActive(false);
         Arms[2].SetActive(true);
     }
-    public void Skill2()
+    public void ForceEquipSkill2()
     {
         foreach (GameObject arm in Arms)
             arm.SetActive(false);
         Arms[1].SetActive(true);
     }
-    public void Skill1()
+    public void ForceEquipSkill1()
     {
         foreach (GameObject arm in Arms)
             arm.SetActive(false);
         Arms[0].SetActive(true);
     }
-    public void Gun4()
+    public void ForceEquipGun4()
     {
         foreach (GameObject gun in Guns)
             gun.SetActive(false);
         Guns[3].SetActive(true);
         PlaceHolderSoundManager.Instance.PlayWeaponEquip();
     }
-    public void Gun3()
+    public void ForceEquipGun3()
     {
         foreach (GameObject gun in Guns)
             gun.SetActive(false);
         Guns[2].SetActive(true);
         PlaceHolderSoundManager.Instance.PlayWeaponEquip();
     }
-    public void Gun2()
+    public void ForceEquipGun2()
     {
         foreach (GameObject gun in Guns)
             gun.SetActive(false);
         Guns[1].SetActive(true);
         PlaceHolderSoundManager.Instance.PlayWeaponEquip();
     }
-    public void Gun1()
+    public void ForceEquipGun1()
     {
         foreach (GameObject gun in Guns)
             gun.SetActive(false);
@@ -162,7 +255,7 @@ public class PlayerManager : LocalManager<PlayerManager>
     }
     #endregion
 
-    #region Ingame menus
+    #region Pause unpause
     private void PressPause()
     {
         if (!_canPause)

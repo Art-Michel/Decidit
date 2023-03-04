@@ -19,7 +19,7 @@ public class Player : LocalManager<Player>
     [Foldout("Debug References")]
     [SerializeField] TextMeshProUGUI _debugSpeedText;
     [Foldout("References")]
-    [SerializeField] Transform _head;
+    public Transform Head;
     [Foldout("References")]
     public CharacterController CharaCon;
     [Foldout("References")]
@@ -274,7 +274,7 @@ public class Player : LocalManager<Player>
 
         var targetRotation = Quaternion.Euler(Vector3.up * _cameraTargetYRotation) * Quaternion.Euler(Vector3.right * _cameraTargetXRotation);
 
-        _head.rotation = Quaternion.Lerp(_head.rotation, targetRotation, Time.timeScale);
+        Head.rotation = Quaternion.Lerp(Head.rotation, targetRotation, Time.timeScale);
     }
 
     private void MoveCameraWithRightStick()
@@ -289,7 +289,7 @@ public class Player : LocalManager<Player>
 
         var targetRotation = Quaternion.Euler(Vector3.up * _cameraTargetYRotation) * Quaternion.Euler(Vector3.right * _cameraTargetXRotation);
 
-        _head.rotation = Quaternion.Lerp(_head.rotation, targetRotation, _cameraSmoothness * Time.deltaTime);
+        Head.rotation = Quaternion.Lerp(Head.rotation, targetRotation, _cameraSmoothness * Time.deltaTime);
     }
 
     public void StartShake(float intensity, float duration)
@@ -311,7 +311,7 @@ public class Player : LocalManager<Player>
         if (_shakeT > 0)
         {
             float shakeIntensity = _shakeIntensity * Mathf.InverseLerp(0, _shakeInitialT, _shakeT);
-            _head.localPosition = _initialHeadPos + new Vector3(UnityEngine.Random.Range(-1, 1), UnityEngine.Random.Range(-1, 1), 0).normalized * shakeIntensity;
+            Head.localPosition = _initialHeadPos + new Vector3(UnityEngine.Random.Range(-1, 1), UnityEngine.Random.Range(-1, 1), 0).normalized * shakeIntensity;
             _shakeT -= Time.deltaTime;
             if (_shakeT < 0)
                 StopShake();
@@ -322,7 +322,7 @@ public class Player : LocalManager<Player>
     {
         _shakeIntensity = 0;
         _shakeT = 0;
-        _head.localPosition = _initialHeadPos;
+        Head.localPosition = _initialHeadPos;
     }
     #endregion
 
@@ -490,8 +490,8 @@ public class Player : LocalManager<Player>
 
     private Vector3 MakeDirectionCameraRelative(Vector2 inputDirection)
     {
-        Vector3 forward = _head.forward;
-        Vector3 right = _head.right;
+        Vector3 forward = Head.forward;
+        Vector3 right = Head.right;
         forward.y = 0;
         right.y = 0;
         forward = forward.normalized;

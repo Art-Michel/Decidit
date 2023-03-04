@@ -19,9 +19,13 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
     private List<List<Room>> _usableRooms;
     public List<RoomSetup> Corridors;
     public int TotalRooms { get { return _actualRooms.Count - 1; } }
+
     List<Room> _actualRooms;
     public int CurrentRoom;
 
+    //Progression
+    [System.NonSerialized] public bool ChoseASkill;
+    [System.NonSerialized] public bool ChoseAGun;
 
     [SerializeField] List<Room> _roomsToBuild;
 
@@ -37,6 +41,9 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
         ResetDungeon();
         SetUsableRooms();
         Generate();
+
+        ChoseAGun = false;
+        ChoseASkill = false;
     }
 
     public void SetUsableRooms()
