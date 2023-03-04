@@ -124,7 +124,6 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
         _usableRooms[difficulty].RemoveAt(roomToAddIndex);
     }
 
-
     private void ResetDungeon()
     {
         //transform.DetachChildren();

@@ -118,6 +118,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         if (DungeonGenerator.Instance != null)
             DungeonGenerator.Instance.ChoseAGun = true;
 
+        _currentAltar.TurnOff();
         StopAltarMenuing();
     }
 
@@ -127,6 +128,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         if (DungeonGenerator.Instance != null)
             DungeonGenerator.Instance.ChoseAGun = true;
 
+        _currentAltar.TurnOff();
         StopAltarMenuing();
     }
 
@@ -136,6 +138,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         if (DungeonGenerator.Instance != null)
             DungeonGenerator.Instance.ChoseAGun = true;
 
+        _currentAltar.TurnOff();
         StopAltarMenuing();
     }
 
@@ -145,6 +148,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         if (DungeonGenerator.Instance != null)
             DungeonGenerator.Instance.ChoseASkill = true;
 
+        _currentAltar.TurnOff();
         StopAltarMenuing();
     }
 
@@ -154,6 +158,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         if (DungeonGenerator.Instance != null)
             DungeonGenerator.Instance.ChoseASkill = true;
 
+        _currentAltar.TurnOff();
         StopAltarMenuing();
     }
 
@@ -163,6 +168,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         if (DungeonGenerator.Instance != null)
             DungeonGenerator.Instance.ChoseASkill = true;
 
+        _currentAltar.TurnOff();
         StopAltarMenuing();
     }
     #endregion
@@ -190,7 +196,6 @@ public class PlayerManager : LocalManager<PlayerManager>
 
     public void StopAltarMenuing()
     {
-        _currentAltar.TurnOff();
         _currentAltar = null;
         MenuManager.Instance.StopMenuing();
         Player.Instance.PlayerHealth.IsInvulnerable = true;

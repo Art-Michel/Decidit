@@ -33,12 +33,14 @@ public class Altar : MonoBehaviour
 
     //? General
     private bool _hasBeenUsed;
+    private bool _isPlayerInside;
 
     void Start()
     {
         SetChant(_chant);
         _shouldMovePlayer = false;
         _hasBeenUsed = false;
+        _isPlayerInside = false;
     }
 
     public void SetChant(Chants chant)
@@ -66,12 +68,26 @@ public class Altar : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && !_hasBeenUsed)
+        if (other.CompareTag("Player") && !_hasBeenUsed && !_isPlayerInside)
         {
             PlayerManager.Instance.StartAltarMenuing(this);
-
             StartMovingPlayer();
+            _isPlayerInside = true;
         }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player") )
+        {
+            _isPlayerInside = false;
+        }
+    }
+
+    void Update()
+    {
+        if (_shouldMovePlayer && !_hasBeenUsed)
+            MovePlayer();
     }
 
     private void StartMovingPlayer()
@@ -87,12 +103,6 @@ public class Altar : MonoBehaviour
         _targetRotation = _targetPositionReference.rotation;
     }
 
-    void Update()
-    {
-        if (_shouldMovePlayer && !_hasBeenUsed)
-            MovePlayer();
-    }
-
     private void MovePlayer()
     {
         _movementT += Time.deltaTime * 2.0f;
@@ -101,19 +111,12 @@ public class Altar : MonoBehaviour
         Player.Instance.Head.rotation = Quaternion.Slerp(_initialPlayerRotation, _targetRotation, _movementT);
 
         if (_movementT >= 1)
-        {
-            StopMovingPlayer();
-        }
-    }
-
-    private void StopMovingPlayer()
-    {
-        _hasBeenUsed = true;
-        _shouldMovePlayer = false;
+            _shouldMovePlayer = false;
     }
 
     public void TurnOff()
     {
+        _hasBeenUsed = true;
         AestheticsParent.SetActive(false);
     }
 }
