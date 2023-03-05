@@ -13,6 +13,7 @@ public class Altar : MonoBehaviour
         Muse,
         Cimetiere
     }
+
     [SerializeField] private Chants _chant;
     [Foldout("References for each Chant")]
     [SerializeField] private GameObject[] AestheticsParentsPerSong;
@@ -29,6 +30,7 @@ public class Altar : MonoBehaviour
     private Vector3 _targetPosition;
     private Quaternion _targetRotation;
     private bool _shouldMovePlayer;
+    private const float _lerpSpeed = 5.0f;
     private float _movementT;
 
     //? General
@@ -78,7 +80,7 @@ public class Altar : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player") )
+        if (other.CompareTag("Player"))
         {
             _isPlayerInside = false;
         }
@@ -105,7 +107,7 @@ public class Altar : MonoBehaviour
 
     private void MovePlayer()
     {
-        _movementT += Time.deltaTime * 2.0f;
+        _movementT += Time.deltaTime * _lerpSpeed;
 
         Player.Instance.transform.position = (Vector3.Lerp(_initialPlayerPosition, _targetPosition, _movementT));
         Player.Instance.Head.rotation = Quaternion.Slerp(_initialPlayerRotation, _targetRotation, _movementT);
