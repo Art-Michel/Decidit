@@ -295,7 +295,7 @@ public class Player : LocalManager<Player>
     public void StartShake(float intensity, float duration)
     {
         //pour l'instant je synchro juste les deux
-        PlayerManager.Instance.StartRumbling(intensity, intensity, duration);
+        //TODO reenable PlayerManager.Instance.StartRumbling(intensity, intensity, duration);
 
         if (duration > _shakeT)
         {

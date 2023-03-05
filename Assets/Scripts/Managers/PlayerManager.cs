@@ -198,7 +198,7 @@ public class PlayerManager : LocalManager<PlayerManager>
     {
         _currentAltar = null;
         MenuManager.Instance.StopMenuing();
-        Player.Instance.PlayerHealth.IsInvulnerable = true;
+        Player.Instance.PlayerHealth.IsInvulnerable = false;
         Player.Instance.AllowMovement(true);
         Player.Instance.CharaCon.enabled = true;
         _canPause = true;
@@ -323,7 +323,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         _dieT += Time.unscaledDeltaTime;
 
         Time.timeScale = Mathf.Lerp(0, 1, Mathf.InverseLerp(_deathDuration, 0, _dieT));
-        StartRumbling(1, 1, _dieT);
+        //TODO reenable StartRumbling(1, 1, _dieT);
 
         if (_dieT >= _deathDuration)
             Dead();

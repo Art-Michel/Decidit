@@ -7,6 +7,7 @@ public class Pooler : MonoBehaviour
     [SerializeField] protected GameObject _prefab;
     [SerializeField] int _initialCount = 4;
     [SerializeField] bool _shouldBeParent;
+    [SerializeField] bool _canCreateNewPrefabs = true;
     Queue<PooledObject> _prefabs;
 
     void Awake()
@@ -30,12 +31,14 @@ public class Pooler : MonoBehaviour
             obj.gameObject.SetActive(true);
             return obj;
         }
-        else
+        else if (_canCreateNewPrefabs)
         {
             PooledObject obj = Create();
             obj.gameObject.SetActive(true);
             return obj;
         }
+        else
+            return null;
     }
 
     public void Return(PooledObject obj)

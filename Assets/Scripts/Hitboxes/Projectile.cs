@@ -216,7 +216,10 @@ public class Projectile : Hitbox
         //wall or ground
         if (obj.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
-            GameObject impactVfx = _impactVfxPooler.Get().gameObject;
+            PooledObject impactVfx = _impactVfxPooler.Get();
+            if (impactVfx == null)
+                return;
+
             impactVfx.transform.position = point - _direction * 0.05f;
 
             if (_direction != Vector3.zero)
@@ -231,7 +234,10 @@ public class Projectile : Hitbox
         //flesh
         if (obj.gameObject.layer == LayerMask.NameToLayer("Flesh"))
         {
-            GameObject splashVfx = _fleshSplashVfxPooler.Get().gameObject;
+            PooledObject splashVfx = _fleshSplashVfxPooler.Get();
+            if (splashVfx == null)
+                return;
+
             splashVfx.transform.position = point - _direction * 0.05f;
 
             if (_direction != Vector3.zero)

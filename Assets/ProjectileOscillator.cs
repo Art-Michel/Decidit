@@ -3,7 +3,7 @@ using UnityEngine;
 // Makes a transform oscillate relative to its start position
 public class ProjectileOscillator : MonoBehaviour
 {
-    public const float Amplitude = .35f;
+    public const float Amplitude = .3f;
     [SerializeField] float _frequency = 10f;
     Vector3 _actualDirection;
     float _t = 0f;
@@ -11,7 +11,7 @@ public class ProjectileOscillator : MonoBehaviour
 
     public void Setup(Vector3 direction, bool centered)
     {
-        _t = 0f;
+        _t = -.1f;
 
         _actualDirection = transform.right * direction.x + transform.up * direction.y + transform.forward * direction.z;
         if (centered)
