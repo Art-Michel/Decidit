@@ -26,6 +26,7 @@ namespace State.AIBull
         {
             AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Death");
             globalRef.agent.speed = 0;
+            globalRef.transform.parent = null;
             globalRef.rushManager.RemoveDeadAI(globalRef);
             // PLAY SOUND DEATH RUSHER
             // TODO lucas va te faire encul�

@@ -73,7 +73,13 @@ namespace State.FlyAI
         {
             if (StateControllerFlyAI.currentState == StateControllerFlyAI.AIState.BaseMove && enemyHealth._hp > 0)
             {
-                ActiveState(StateControllerFlyAI.AIState.LockPlayer);
+                if (enemyHealth._hp > 0)
+                    ActiveState(StateControllerFlyAI.AIState.LockPlayer);
+                else
+                {
+                    ActiveState(StateControllerFlyAI.AIState.Death);
+                    isDead = true;
+                }
             }
         }
 

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -71,10 +70,13 @@ namespace State.AIBull
         void SelectAI()
         {
             int i = Random.Range(0, cloneListRefBullAI.Count - 1);
-            if(!cloneListRefBullAI[i].agent.isOnOffMeshLink)
+            if(cloneListRefBullAI[i].enemyHealth._hp >0)
             {
-                cloneListRefBullAI[i].launchRush = true;
-                cloneListRefBullAI.RemoveAt(i);
+                if (!cloneListRefBullAI[i].agent.isOnOffMeshLink)
+                {
+                    cloneListRefBullAI[i].launchRush = true;
+                    cloneListRefBullAI.RemoveAt(i);
+                }
             }
         }
 

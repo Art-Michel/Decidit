@@ -15,6 +15,10 @@ namespace State.WallAI
         {
             baseAttackWallAIState.EndAttack();
         }
+        void ReturnBaseMoveState()
+        {
+            baseAttackWallAIState.ReturnBaseMove();
+        }
 
         void PlayInWallSound()
         {
