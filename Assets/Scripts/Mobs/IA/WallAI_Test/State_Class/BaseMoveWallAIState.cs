@@ -25,7 +25,7 @@ namespace State.WallAI
         {
             try
             {
-                globalRef.meshRenderer.enabled = false;
+                //globalRef.meshRenderer.enabled = false;
                 baseMoveWallAISO = globalRef.baseMoveWallAISO;
             }
             catch

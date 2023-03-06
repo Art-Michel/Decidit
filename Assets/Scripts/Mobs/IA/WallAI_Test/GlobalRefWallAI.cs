@@ -11,16 +11,17 @@ namespace State.WallAI
         public NavMeshAgent agent;
         public Transform spawnBullet;
         public EnemyHealth enemyHealth;
-        public List<BoxCollider> wallsList = new List<BoxCollider>();
+        public List<Collider> wallsList = new List<Collider>();
         public Transform playerTransform;
         public float orientation;
-        public MeshRenderer meshRenderer;
+        //public MeshRenderer meshRenderer;
         //public AudioSource audioSourceWallMob;
         [SerializeField] StateControllerWallAI stateControllerWallAI;
 
         [Header("Animation")]
         public Animator myAnimator;
         public GlobalRefAnimator globalRefAnimator;
+        public AnimationClip animationAttack;
 
         [Header("Slow Move References")]
         public bool isInEylau;
@@ -47,7 +48,14 @@ namespace State.WallAI
 
             for (int i = 0; i < areaWallAI.childCount; i++)
             {
-                wallsList.Add(areaWallAI.GetChild(i).GetComponent<BoxCollider>());
+                try
+                {
+                    wallsList.Add(areaWallAI.GetChild(i).GetComponent<BoxCollider>());
+                }
+                catch
+                {
+                    wallsList.Add(areaWallAI.GetChild(i).GetComponent<MeshCollider>());
+                }
             }
         }
 

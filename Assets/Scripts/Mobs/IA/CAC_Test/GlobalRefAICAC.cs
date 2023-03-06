@@ -93,7 +93,8 @@ namespace State.AICAC
 
         public void ActiveStateDodge()
         {
-            stateControllerTrashMob.SetActiveState(StateControllerAICAC.AIState.Dodge);
+            if (enemyHealth._hp > 0)
+                stateControllerTrashMob.SetActiveState(StateControllerAICAC.AIState.Dodge);
         }
 
         public void ActiveKnockBackState()

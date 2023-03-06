@@ -5,7 +5,7 @@ namespace State.WallAI
     public class BaseAttackWallAIState : _StateWallAI
     {
         protected StateControllerWallAI stateControllerWallAI;
-        bool activeAttack;
+        [SerializeField] bool activeAttack;
 
         BaseAttackWallAISO baseAttackWallAISO;
         [SerializeField] GlobalRefWallAI globalRef;
@@ -19,17 +19,17 @@ namespace State.WallAI
             state = StateControllerWallAI.WallAIState.BaseAttack;
         }
 
-        private void OnEnable()
+       /* private void OnEnable()
         {
             try
             {
-                globalRef.meshRenderer.enabled = true;
+                //globalRef.meshRenderer.enabled = true;
             }
             catch
             {
             }
         }
-
+*/
         private void Start()
         {
             baseAttackWallAISO = globalRef.baseAttackWallAISO;
@@ -37,10 +37,9 @@ namespace State.WallAI
 
         private void Update()
         {
-            if (!activeAttack)
+            if (!activeAttack && baseAttackWallAISO.bulletCount >0)
             {
                 LaunchAttack();
-                activeAttack = true;
             }
 
             if (globalRef.enemyHealth._hp <= 0)
@@ -53,6 +52,8 @@ namespace State.WallAI
         {
             if(this.enabled)
             {
+                globalRef.animationAttack.wrapMode = WrapMode.Loop;
+                activeAttack = true;
                 globalRef.agent.speed = baseAttackWallAISO.stopSpeed;
                 AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "LaunchAttack");
             }
@@ -99,13 +100,13 @@ namespace State.WallAI
             }
         }
 
-        public void ReturnBaseMoveState()
+        void ReturnInWall()
         {
             if(baseAttackWallAISO.bulletCount <=0)
             {
+                globalRef.animationAttack.wrapMode = WrapMode.Default;
                 AnimatorManager.instance.DisableAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "LaunchAttack");
                 activeAttack = false;
-                stateControllerWallAI.SetActiveState(StateControllerWallAI.WallAIState.BaseMove, true);
             }
         }
 
@@ -117,7 +118,7 @@ namespace State.WallAI
         }
         public void EndAttack()
         {
-            ReturnBaseMoveState();
+            ReturnInWall();
         }
         public void PlayInWallSound()
         {
@@ -130,6 +131,11 @@ namespace State.WallAI
         {
             SoundManager.Instance.PlaySound("event:/SFX_IA/Menas_SFX(Mur)/ExitEnterWall", 1f, gameObject);
             SoundManager.Instance.PlaySound("event:/SFX_IA/Menas_SFX(Mur)/PreShoot", 1f, gameObject);
+        }
+
+        public void ReturnBaseMove()
+        {
+            stateControllerWallAI.SetActiveState(StateControllerWallAI.WallAIState.BaseMove, true);
         }
     }
 }
