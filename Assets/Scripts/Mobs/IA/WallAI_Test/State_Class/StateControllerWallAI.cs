@@ -1,6 +1,7 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace State.WallAI
 {
@@ -48,9 +49,25 @@ namespace State.WallAI
             {
                 stateDictionary[state].gameObject.SetActive(false);
             }
+        }
 
+        private void OnEnable()
+        {
             //Activate the default state
+            StartCoroutine(LaunchFirstState());
+        }
+
+        IEnumerator LaunchFirstState()
+        {
+            yield return new WaitForSeconds(1f);
             SetActiveState(WallAIState.BaseMove);
+            Debug.Log("Active");
+            yield break;
+        }
+
+        private void StartCoroutine(object v)
+        {
+            throw new NotImplementedException();
         }
 
         //Activate a state
@@ -80,6 +97,11 @@ namespace State.WallAI
             {
                 stateHistory.Push(newState);
             }
+        }
+
+        private void OnDisable()
+        {
+            
         }
     }
 }
