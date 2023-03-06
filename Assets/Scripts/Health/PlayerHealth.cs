@@ -148,7 +148,7 @@ public class PlayerHealth : Health
         {
             _damageVignetteT += Time.deltaTime * _damageVignetteSpeed;
             float alpha = _vignetteAlphaOnDamage.Evaluate(_damageVignetteT);
-            _damageVignette.color = new Color(0.7f, 0.0f, 0.0f, alpha * _currentDamageVignetteMaxAlpha);
+            _damageVignette.color = new Color(1.0f, 0.45f, 0.0f, alpha * _currentDamageVignetteMaxAlpha);
         }
         else
         {
