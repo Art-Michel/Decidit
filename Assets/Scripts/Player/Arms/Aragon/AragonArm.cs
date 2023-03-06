@@ -108,9 +108,12 @@ public class AragonArm : Arm
     public override void StartActive()
     {
         //Prepare
-        _crossHairOutline.enabled = false;
-        ////PlaceHolderSoundManager.Instance.PlayDashSound();
+        _crossHairGlow.SetActive(false);
+        foreach (Image crosshair in _crossHairs)
+            crosshair.fillAmount = 0.0f;
+
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/FugueAragon/Dash", 1f, gameObject);
+
         _player.PlayerHealth.IsInvulnerable = true;
         _player.AllowMovement(false);
         _player.KillMomentum();

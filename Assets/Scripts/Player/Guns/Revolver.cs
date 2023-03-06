@@ -11,6 +11,8 @@ public class Revolver : MonoBehaviour
     [Foldout("References")]
     [SerializeField] private TextMeshProUGUI _ammoCountText;
     [Foldout("References")]
+    [SerializeField] private Image _ammoBar;
+    [Foldout("References")]
     [SerializeField] protected Transform _canonPosition;
     [Foldout("References")]
     [SerializeField] protected GameObject _ui;
@@ -265,26 +267,23 @@ public class Revolver : MonoBehaviour
 
     private void DisplayAmmo()
     {
-        if (_ammoCountText)
+        _ammoCountText.text = _ammo.ToString() + "/" + _maxAmmo.ToString();
+        //Color
+        if (_ammo <= 1)
         {
-            _ammoCountText.text = _ammo.ToString() + "/" + _maxAmmo.ToString();
-            //Color
-            if (_ammo <= 1)
+            if (_ammo == 1)
+                _ammoCountText.color = _lowAmmoColor;
+            else
             {
-                if (_ammo == 1)
-                    _ammoCountText.color = _lowAmmoColor;
-                else
-                {
-                    //TODO Lucas PlaceHolderSoundManager.Instance.PlayLastBulletClick();
-                    _ammoCountText.color = _noAmmoColor;
-                }
+                //TODO Lucas PlaceHolderSoundManager.Instance.PlayLastBulletClick();
+                _ammoCountText.color = _noAmmoColor;
             }
-            else _ammoCountText.color = _fullAmmoColor;
-
         }
+        else _ammoCountText.color = _fullAmmoColor;
 
-        else
-            Debug.LogError("AmmoCount UI Text unassigned.");
+        float fillAmount = (_ammo * 100) / _maxAmmo;
+        _ammoBar.fillAmount = fillAmount / 100.0f;
+
     }
     #endregion
 
