@@ -9,9 +9,9 @@ public class Arm : MonoBehaviour
     [Foldout("References")]
     [SerializeField] TextMeshProUGUI _debugStateText;
     [Foldout("References")]
-    [SerializeField] protected Image _crossHair;
+    [SerializeField] protected Image[] _crossHairs;
     [Foldout("References")]
-    [SerializeField] protected Image _crossHairOutline;
+    [SerializeField] protected GameObject _crossHairGlow;
     [Foldout("References")]
     [SerializeField] protected GameObject _ui;
     [Foldout("References")]
@@ -114,7 +114,7 @@ public class Arm : MonoBehaviour
     public virtual void StartActive()
     {
         _fsm.ChangeState(ArmStateList.RECOVERY);
-        _crossHairOutline.enabled = false;
+        _crossHairGlow.SetActive(false);
     }
 
     public virtual void UpdateActive()
@@ -135,7 +135,9 @@ public class Arm : MonoBehaviour
     public void UpdateCooldown()
     {
         _cooldownT -= Time.deltaTime;
-        _crossHair.fillAmount = Mathf.Lerp(0, 1, Mathf.InverseLerp(_cooldown, 0, _cooldownT));
+        foreach (Image crosshair in _crossHairs)
+            crosshair.fillAmount = Mathf.Lerp(0, 1, Mathf.InverseLerp(_cooldown, 0, _cooldownT));
+
         if (_cooldownT <= 0f)
         {
             _fsm.ChangeState(ArmStateList.IDLE);
@@ -154,7 +156,7 @@ public class Arm : MonoBehaviour
 
     protected void Refilled()
     {
-        _crossHairOutline.enabled = true;
+        _crossHairGlow.SetActive(true);
         PlaceHolderSoundManager.Instance.PlayArmFilled();
         if (_inputs.Actions.Skill.IsPressed())
             PressSong();

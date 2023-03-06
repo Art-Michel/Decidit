@@ -26,6 +26,8 @@ namespace State.AICAC
 
         float durationDodge;
 
+        bool scotch;
+
         public override void InitState(StateControllerAICAC stateController)
         {
             base.InitState(stateController);
@@ -210,8 +212,10 @@ namespace State.AICAC
         }
         void StopDodge()
         {
-            if(stateControllerAICAC != null)
+            if(stateControllerAICAC != null && scotch)
                 stateControllerAICAC.SetActiveState(StateControllerAICAC.AIState.BaseMove);
+
+            scotch = true;
         }
 
         public void SmoothLookAt()

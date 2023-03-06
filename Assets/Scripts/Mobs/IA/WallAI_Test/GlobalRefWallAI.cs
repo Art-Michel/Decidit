@@ -46,13 +46,13 @@ namespace State.WallAI
 
             for (int i = 0; i < areaWallAI.childCount; i++)
             {
-                try
-                {
-                    wallsList.Add(areaWallAI.GetChild(i).GetComponent<BoxCollider>());
-                }
-                catch
+                if(areaWallAI.GetChild(i).GetComponent<BoxCollider>() == null)
                 {
                     wallsList.Add(areaWallAI.GetChild(i).GetComponent<MeshCollider>());
+                }
+                else
+                {
+                    wallsList.Add(areaWallAI.GetChild(i).GetComponent<BoxCollider>());
                 }
             }
         }

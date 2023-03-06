@@ -48,7 +48,7 @@ public class EylauArm : Arm
 
     public override void StartActive()
     {
-        _crossHairOutline.enabled = false;
+        _crossHairGlow.SetActive(false);
         _area.transform.position = _previs.transform.position;
         _area.transform.parent = null;
         _area.transform.rotation = Quaternion.identity;
