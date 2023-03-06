@@ -21,6 +21,7 @@ public class BaseMoveParameterAICAC : ScriptableObject
     public float maxDelayBeforeJump;
 
     [Header("Speed Movement Parameter")]
+    public float currentSpeed;
     public float baseSpeed;
     public float smoothSpeedbase;
     public float runSpeed;
