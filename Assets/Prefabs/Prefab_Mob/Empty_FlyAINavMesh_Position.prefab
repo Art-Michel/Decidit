@@ -699,7 +699,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5407937164410842286}
   - component: {fileID: 5407937164410842287}
-  - component: {fileID: 5407937164311034900}
   - component: {fileID: 5407937164311034899}
   - component: {fileID: -2163490113976411781}
   - component: {fileID: 5160256997650002795}
@@ -749,24 +748,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &5407937164311034900
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5407937164410842285}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 254fb5b80ebefae4f87092c45e37e7b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  allStates:
-  - {fileID: 612212354}
-  - {fileID: 506913318}
-  - {fileID: 910883179}
-  - {fileID: 8470461023389455444}
-  - {fileID: 1098985820}
 --- !u!114 &5407937164311034899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -781,7 +762,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 5407937164410842287}
   playerTransform: {fileID: 0}
-  stateControllerFlyAI: {fileID: 5407937164311034900}
+  stateControllerFlyAI: {fileID: 1850210981321352449}
   enemyHealth: {fileID: 2067911473255968063}
   myAnimator: {fileID: 1154098350}
   globalRefAnimator: {fileID: 5160256997650002795}
@@ -1259,6 +1240,7 @@ GameObject:
   - component: {fileID: 6911205242574237349}
   - component: {fileID: 2067911473255968063}
   - component: {fileID: 1727383931119251868}
+  - component: {fileID: 1850210981321352449}
   m_Layer: 7
   m_Name: Empty
   m_TagString: Ennemi
@@ -1354,6 +1336,7 @@ MonoBehaviour:
   _prefab: {fileID: 3182170922454913666, guid: 6d0652dad3cf50d4f90488da7361b8c7, type: 3}
   _initialCount: 4
   _shouldBeParent: 1
+  _canCreateNewPrefabs: 1
 --- !u!114 &6911205242574237349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1423,6 +1406,24 @@ MonoBehaviour:
   TextureBase: {fileID: 2800000, guid: 28a4b69bf75bbba4c8596e324096193a, type: 3}
   TexturePreAttack: {fileID: 2800000, guid: 3a2ae6e068448a14294728a46cc890b5, type: 3}
   SetPixelTexture: {x: 0, y: 0}
+--- !u!114 &1850210981321352449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5407937165128473279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 254fb5b80ebefae4f87092c45e37e7b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allStates:
+  - {fileID: 612212354}
+  - {fileID: 506913318}
+  - {fileID: 910883179}
+  - {fileID: 8470461023389455444}
+  - {fileID: 1098985820}
 --- !u!1 &6300504266062117377
 GameObject:
   m_ObjectHideFlags: 0

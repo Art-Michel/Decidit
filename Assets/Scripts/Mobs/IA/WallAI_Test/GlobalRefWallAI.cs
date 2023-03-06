@@ -14,14 +14,12 @@ namespace State.WallAI
         public List<Collider> wallsList = new List<Collider>();
         public Transform playerTransform;
         public float orientation;
-        //public MeshRenderer meshRenderer;
-        //public AudioSource audioSourceWallMob;
+        public MeshRenderer meshRenderer;
         [SerializeField] StateControllerWallAI stateControllerWallAI;
 
         [Header("Animation")]
         public Animator myAnimator;
         public GlobalRefAnimator globalRefAnimator;
-        public AnimationClip animationAttack;
 
         [Header("Slow Move References")]
         public bool isInEylau;

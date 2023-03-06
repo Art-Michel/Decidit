@@ -438,6 +438,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 691c4441c610bdb41be05d61d6880068, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeAttack: 0
   globalRef: {fileID: 7333516156728121282}
   delayAttack: 0
 --- !u!1 &1849567362
@@ -689,6 +690,7 @@ GameObject:
   - component: {fileID: 5713824913523710932}
   - component: {fileID: 1007057623919306927}
   - component: {fileID: 861224076797160588}
+  - component: {fileID: 7777212579200712985}
   m_Layer: 7
   m_Name: WallEnemy
   m_TagString: Ennemi
@@ -807,6 +809,7 @@ MonoBehaviour:
   _prefab: {fileID: 3182170922454913666, guid: 6d0652dad3cf50d4f90488da7361b8c7, type: 3}
   _initialCount: 4
   _shouldBeParent: 1
+  _canCreateNewPrefabs: 1
 --- !u!82 &5713824913523710932
 AudioSource:
   m_ObjectHideFlags: 0
@@ -960,6 +963,22 @@ MonoBehaviour:
   TextureBase: {fileID: 2800000, guid: 0ba45ce9b0da91c479af485c18c61728, type: 3}
   TexturePreAttack: {fileID: 2800000, guid: 3a2ae6e068448a14294728a46cc890b5, type: 3}
   SetPixelTexture: {x: 0, y: 0}
+--- !u!114 &7777212579200712985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7333516157775419203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eddc03770086f24e98d49a0714e5208, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allStates:
+  - {fileID: 1708337759}
+  - {fileID: 1714682581}
+  - {fileID: 411397619}
 --- !u!1 &7333516158302212432
 GameObject:
   m_ObjectHideFlags: 0
@@ -973,7 +992,6 @@ GameObject:
   - component: {fileID: 7333516158302212426}
   - component: {fileID: 7333516158302212428}
   - component: {fileID: 7333516156728121282}
-  - component: {fileID: 7333516156728121281}
   - component: {fileID: 1776645733}
   - component: {fileID: -1170506944532699751}
   m_Layer: 7
@@ -1074,7 +1092,7 @@ MonoBehaviour:
   playerTransform: {fileID: 0}
   orientation: 0
   meshRenderer: {fileID: 7333516157775419070}
-  stateControllerWallAI: {fileID: 7333516156728121281}
+  stateControllerWallAI: {fileID: 0}
   myAnimator: {fileID: 7333516158302212428}
   globalRefAnimator: {fileID: -1170506944532699751}
   isInEylau: 0
@@ -1083,22 +1101,6 @@ MonoBehaviour:
   isDead: 0
   baseMoveWallAISO: {fileID: 11400000, guid: 2d85b8170f55db34f9e21e4bd2d588b8, type: 2}
   baseAttackWallAISO: {fileID: 11400000, guid: 76196c520fc01eb4e968528241807d21, type: 2}
---- !u!114 &7333516156728121281
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7333516158302212432}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5eddc03770086f24e98d49a0714e5208, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  allStates:
-  - {fileID: 1708337759}
-  - {fileID: 1714682581}
-  - {fileID: 411397619}
 --- !u!54 &1776645733
 Rigidbody:
   m_ObjectHideFlags: 0

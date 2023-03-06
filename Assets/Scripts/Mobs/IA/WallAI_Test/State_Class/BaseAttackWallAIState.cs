@@ -19,17 +19,6 @@ namespace State.WallAI
             state = StateControllerWallAI.WallAIState.BaseAttack;
         }
 
-       /* private void OnEnable()
-        {
-            try
-            {
-                //globalRef.meshRenderer.enabled = true;
-            }
-            catch
-            {
-            }
-        }
-*/
         private void Start()
         {
             baseAttackWallAISO = globalRef.baseAttackWallAISO;
@@ -52,7 +41,6 @@ namespace State.WallAI
         {
             if(this.enabled)
             {
-                globalRef.animationAttack.wrapMode = WrapMode.Loop;
                 activeAttack = true;
                 globalRef.agent.speed = baseAttackWallAISO.stopSpeed;
                 AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "LaunchAttack");
@@ -104,7 +92,6 @@ namespace State.WallAI
         {
             if(baseAttackWallAISO.bulletCount <=0)
             {
-                globalRef.animationAttack.wrapMode = WrapMode.Default;
                 AnimatorManager.instance.DisableAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "LaunchAttack");
                 activeAttack = false;
             }
@@ -129,12 +116,14 @@ namespace State.WallAI
         }
         public void PlayOutWallSound()
         {
+            globalRef.meshRenderer.enabled = true;
             SoundManager.Instance.PlaySound("event:/SFX_IA/Menas_SFX(Mur)/ExitEnterWall", 1f, gameObject);
             SoundManager.Instance.PlaySound("event:/SFX_IA/Menas_SFX(Mur)/PreShoot", 1f, gameObject);
         }
 
         public void ReturnBaseMove()
         {
+            globalRef.meshRenderer.enabled = false;
             stateControllerWallAI.SetActiveState(StateControllerWallAI.WallAIState.BaseMove, true);
         }
     }
