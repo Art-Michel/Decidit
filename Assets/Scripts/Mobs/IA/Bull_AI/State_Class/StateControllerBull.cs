@@ -7,6 +7,8 @@ namespace State.AIBull
     {
         public _StateBull[] allStates;
 
+        EnemyHealth enemyHealth;
+
         public enum AIState
         {
             Idle, BaseMove, Rush, KnockBack, Death
@@ -17,6 +19,12 @@ namespace State.AIBull
         private _StateBull activeState;
 
         private Stack<AIState> stateHistory = new Stack<AIState>();
+
+        private void Awake()
+        {
+            enemyHealth = GetComponent<EnemyHealth>();
+        }
+
 
         void Start()
         {
@@ -47,9 +55,20 @@ namespace State.AIBull
             {
                 stateDictionary[state].gameObject.SetActive(false);
             }
+            enemyHealth.IsInvulnerable = true;
+        }
 
+        private void OnEnable()
+        {
+            //Activate the default state
+            Invoke("LaunchFirstState", 10f);
+        }
+
+        void LaunchFirstState()
+        {
             //Activate the default state
             SetActiveState(AIState.Idle);
+            enemyHealth.IsInvulnerable = false;
         }
 
         //Activate a state
@@ -79,6 +98,21 @@ namespace State.AIBull
             {
                 stateHistory.Push(newState);
             }
+        }
+
+        void DisableState()
+        {
+            //Deactivate the old state
+            if (activeState != null)
+            {
+                activeState.gameObject.SetActive(false);
+            }
+        }
+
+        private void OnDisable()
+        {
+            DisableState();
+            enemyHealth.IsInvulnerable = true;
         }
     }
 }

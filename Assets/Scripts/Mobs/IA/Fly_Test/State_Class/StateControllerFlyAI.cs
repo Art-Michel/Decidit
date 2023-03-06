@@ -6,6 +6,7 @@ namespace State.FlyAI
     public class StateControllerFlyAI : MonoBehaviour
     {
         public _StateFlyAI[] allStates;
+        EnemyHealth enemyHealth;
 
         public enum AIState
         {
@@ -19,6 +20,12 @@ namespace State.FlyAI
         private Stack<AIState> stateHistory = new Stack<AIState>();
 
         public static AIState currentState;
+
+        private void Awake()
+        {
+            enemyHealth = GetComponent<EnemyHealth>();
+        }
+
 
         void Start()
         {
@@ -49,9 +56,20 @@ namespace State.FlyAI
             {
                 stateDictionary[state].gameObject.SetActive(false);
             }
+            enemyHealth.IsInvulnerable = true;
+        }
 
+        private void OnEnable()
+        {
+            //Activate the default state
+            Invoke("LaunchFirstState", 10f);
+        }
+
+        void LaunchFirstState()
+        {
             //Activate the default state
             SetActiveState(AIState.BaseMove);
+            enemyHealth.IsInvulnerable = false;
         }
 
         //Activate a state
@@ -83,6 +101,21 @@ namespace State.FlyAI
             {
                 stateHistory.Push(newState);
             }
+        }
+
+        void DisableState()
+        {
+            //Deactivate the old state
+            if (activeState != null)
+            {
+                activeState.gameObject.SetActive(false);
+            }
+        }
+
+        private void OnDisable()
+        {
+            DisableState();
+            enemyHealth.IsInvulnerable = true;
         }
     }
 }

@@ -6,6 +6,7 @@ namespace State.AICAC
     public class StateControllerAICAC : MonoBehaviour
     {
         public _StateAICAC[] allStates;
+        EnemyHealth enemyHealth;
 
         public enum AIState
         {
@@ -17,6 +18,11 @@ namespace State.AICAC
         private _StateAICAC activeState;
 
         private Stack<AIState> stateHistory = new Stack<AIState>();
+
+        private void Awake()
+        {
+            enemyHealth = GetComponent<EnemyHealth>();
+        }
 
         void Start()
         {
@@ -56,8 +62,20 @@ namespace State.AICAC
                 }
             }
 
+            enemyHealth.IsInvulnerable = true;
+        }
+
+        private void OnEnable()
+        {
+            //Activate the default state
+            Invoke("LaunchFirstState", 10f);
+        }
+
+        void LaunchFirstState()
+        {
             //Activate the default state
             SetActiveState(AIState.BaseIdle);
+            enemyHealth.IsInvulnerable = false;
         }
 
         //Activate a state
@@ -87,6 +105,21 @@ namespace State.AICAC
             {
                 stateHistory.Push(newState);
             }
+        }
+
+        void DisableState()
+        {
+            //Deactivate the old state
+            if (activeState != null)
+            {
+                activeState.gameObject.SetActive(false);
+            }
+        }
+
+        private void OnDisable()
+        {
+            DisableState();
+            enemyHealth.IsInvulnerable = true;
         }
     }
 }

@@ -32,7 +32,7 @@ public class Health : MonoBehaviour
     }
     protected virtual void Start()
     {
-        IsInvulnerable = false;
+        //IsInvulnerable = false;
         _probHp = _hp;
         _hasProbation = false;
         DisplayHealth();

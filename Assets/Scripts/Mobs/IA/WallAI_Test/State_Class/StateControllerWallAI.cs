@@ -9,6 +9,8 @@ namespace State.WallAI
     {
         public _StateWallAI[] allStates;
 
+        EnemyHealth enemyHealth;
+
         public enum WallAIState
         {
             BaseMove, BaseAttack, Death
@@ -19,6 +21,12 @@ namespace State.WallAI
         private _StateWallAI activeState;
 
         private Stack<WallAIState> stateHistory = new Stack<WallAIState>();
+
+        private void Awake()
+        {
+            enemyHealth = GetComponent<EnemyHealth>();
+        }
+
 
         void Start()
         {
@@ -49,25 +57,19 @@ namespace State.WallAI
             {
                 stateDictionary[state].gameObject.SetActive(false);
             }
+            enemyHealth.IsInvulnerable = true;
         }
 
         private void OnEnable()
         {
             //Activate the default state
-            StartCoroutine(LaunchFirstState());
+            Invoke("LaunchFirstState", 10f);
         }
 
-        IEnumerator LaunchFirstState()
+        void LaunchFirstState()
         {
-            yield return new WaitForSeconds(1f);
             SetActiveState(WallAIState.BaseMove);
-            Debug.Log("Active");
-            yield break;
-        }
-
-        private void StartCoroutine(object v)
-        {
-            throw new NotImplementedException();
+            enemyHealth.IsInvulnerable = false;
         }
 
         //Activate a state
@@ -99,9 +101,19 @@ namespace State.WallAI
             }
         }
 
+        void DisableState()
+        {
+            //Deactivate the old state
+            if (activeState != null)
+            {
+                activeState.gameObject.SetActive(false);
+            }
+        }
+
         private void OnDisable()
         {
-            
+            DisableState();
+            enemyHealth.IsInvulnerable = true;
         }
     }
 }
