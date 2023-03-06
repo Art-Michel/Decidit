@@ -63,7 +63,7 @@ namespace State.WallAI
         private void OnEnable()
         {
             //Activate the default state
-            Invoke("LaunchFirstState", 10f);
+            Invoke("LaunchFirstState", 1f);
         }
 
         void LaunchFirstState()
