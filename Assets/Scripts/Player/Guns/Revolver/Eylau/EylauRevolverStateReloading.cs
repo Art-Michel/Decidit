@@ -13,6 +13,9 @@ public class EylauRevolverStateReloading : RevolverState
     {
         //animation
         _revolver.StartReload();
+
+        //* Comment line below if we want to reset charge level on reload
+        // if (_fsm.PreviousState.Name == RevolverStateList.RELOADING)
         _revolver.ResetChargeLevel();
     }
 

@@ -87,6 +87,7 @@ public class EylauRevolver : Revolver
 
             Player.Instance.StartShake(_laserShakeIntensity, _laserShakeDuration);
             _muzzleFlash.PlayAll();
+            //Additionnal ammo cost
         }
 
     }
@@ -172,7 +173,10 @@ public class EylauRevolver : Revolver
     {
         base.StartRecoil();
         if (_charged)
+        {
             _recoilT += _laserAdditionalRecoil;
+            LowerAmmoCount();
+        }
 
         ResetChargeLevel();
     }
@@ -195,6 +199,6 @@ public class EylauRevolver : Revolver
     protected override void OnEnable()
     {
         base.OnEnable();
-        ResetChargeLevel();
+        //ResetChargeLevel();
     }
 }
