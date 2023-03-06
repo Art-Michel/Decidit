@@ -249,36 +249,36 @@ namespace State.AICAC
             {
                 if (Vector3.Distance(destination, globalRef.transform.position) >= baseMoveAICACSO.distCanRun)
                 {
-                    if (globalRef.agent.speed < baseMoveAICACSO.runSpeed)
+                    if (baseMoveAICACSO.currentSpeed < baseMoveAICACSO.runSpeed)
                     {
-                        globalRef.agent.speed += baseMoveAICACSO.smoothSpeedRun * Time.deltaTime;
+                        baseMoveAICACSO.currentSpeed += baseMoveAICACSO.smoothSpeedRun * Time.deltaTime;
                     }
                     else
-                        globalRef.agent.speed = baseMoveAICACSO.runSpeed;
+                        baseMoveAICACSO.currentSpeed = baseMoveAICACSO.runSpeed;
                 }
                 else if (Vector3.Distance(destination, globalRef.transform.position) <= baseMoveAICACSO.distStopRun)
                 {
-                    if (globalRef.agent.speed > baseMoveAICACSO.baseSpeed)
-                        globalRef.agent.speed -= baseMoveAICACSO.smoothSpeedbase * Time.deltaTime;
+                    if (baseMoveAICACSO.currentSpeed > baseMoveAICACSO.baseSpeed)
+                        baseMoveAICACSO.currentSpeed -= baseMoveAICACSO.smoothSpeedbase * Time.deltaTime;
                     else
-                        globalRef.agent.speed = baseMoveAICACSO.baseSpeed;
+                        baseMoveAICACSO.currentSpeed = baseMoveAICACSO.baseSpeed;
                 }
                 else
                 {
-                    if (globalRef.agent.speed < baseMoveAICACSO.baseSpeed)
+                    if (baseMoveAICACSO.currentSpeed < baseMoveAICACSO.baseSpeed)
                     {
-                        globalRef.agent.speed += baseMoveAICACSO.smoothSpeedbase * Time.deltaTime;
+                        baseMoveAICACSO.currentSpeed += baseMoveAICACSO.smoothSpeedbase * Time.deltaTime;
                     }
                     else
-                        globalRef.agent.speed = baseMoveAICACSO.baseSpeed;
+                        baseMoveAICACSO.currentSpeed = baseMoveAICACSO.baseSpeed;
                 }
             }
             else
             {
-                if (globalRef.agent.speed < baseMoveAICACSO.anticipSpeed)
-                    globalRef.agent.speed += baseMoveAICACSO.smoothSpeedAnticip * Time.deltaTime;
+                if (baseMoveAICACSO.currentSpeed < baseMoveAICACSO.anticipSpeed)
+                    baseMoveAICACSO.currentSpeed += baseMoveAICACSO.smoothSpeedAnticip * Time.deltaTime;
                 else
-                    globalRef.agent.speed = baseMoveAICACSO.anticipSpeed;
+                    baseMoveAICACSO.currentSpeed = baseMoveAICACSO.anticipSpeed;
             }
         }
 
@@ -286,13 +286,11 @@ namespace State.AICAC
         {
             if(active)
             {
-                globalRef.slowSpeedRot = globalRef.agent.speed / globalRef.slowRatio;
-                globalRef.agent.speed = globalRef.slowSpeedRot;
+                globalRef.agent.speed = baseMoveAICACSO.currentSpeed / globalRef.slowRatio;
             }
             else
             {
-                if(globalRef.agent.speed == globalRef.slowSpeedRot)
-                    globalRef.agent.speed *= globalRef.slowRatio;
+                globalRef.agent.speed = baseMoveAICACSO.currentSpeed;
             }
         }
 
