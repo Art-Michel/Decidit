@@ -102,7 +102,7 @@ namespace State.WallAI
         {
             if (!IsMoving())
             {
-                baseMoveWallAISO.selectedWall = Random.Range(0, 4);
+                baseMoveWallAISO.selectedWall = Random.Range(0, globalRef.wallsList.Count);
                 baseMoveWallAISO.newPos = SearchNewPos(globalRef.wallsList[baseMoveWallAISO.selectedWall].bounds);
 
                 hit = RaycastAIManager.instanceRaycast.RaycastAI(baseMoveWallAISO.newPos, globalRef.playerTransform.position - baseMoveWallAISO.newPos, baseMoveWallAISO.maskCheckTouchPlayer,
@@ -131,16 +131,23 @@ namespace State.WallAI
         {
             hit = RaycastAIManager.instanceRaycast.RaycastAI(globalRef.transform.position, globalRef.playerTransform.position - globalRef.transform.position, baseMoveWallAISO.maskCheckTouchPlayer,
                     Color.blue, Vector3.Distance(globalRef.transform.position, globalRef.playerTransform.position));
-
-            if (hit.transform != globalRef.playerTransform)
+            if(hit.transform != null)
             {
-                canTouchPlayer = false;
-                baseMoveWallAISO.findNewPos = false;
+                if (hit.transform != globalRef.playerTransform)
+                {
+                    canTouchPlayer = false;
+                    baseMoveWallAISO.findNewPos = false;
+                }
+                else
+                {
+                    canTouchPlayer = true;
+                    baseMoveWallAISO.findNewPos = true;
+                }
             }
             else
             {
-                canTouchPlayer = true;
-                baseMoveWallAISO.findNewPos = true;
+                canTouchPlayer = false;
+                baseMoveWallAISO.findNewPos = false;
             }
         }
 
