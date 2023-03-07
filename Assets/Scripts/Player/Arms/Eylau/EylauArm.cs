@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
+using FMODUnity;
 
 public class EylauArm : Arm
 {
@@ -19,6 +20,8 @@ public class EylauArm : Arm
     [Foldout("Stats")]
     [SerializeField]
     private LayerMask _detectionMask;
+    private FMOD.Studio.EventInstance loopInstance;
+    
 
     public override void StartIdle()
     {
@@ -27,8 +30,11 @@ public class EylauArm : Arm
     }
 
     public override void StartPrevis()
-    {
+    { 
+        loopInstance = FMODUnity.RuntimeManager.CreateInstance("event:/SFX_Controller/Chants/CimetièreEyleau/DuiringPreview");
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/CimetièreEyleau/Preview", 1f, gameObject);
         _previs.SetActive(true);
+        loopInstance.start();
     }
 
     public override void UpdatePrevis()
@@ -48,6 +54,9 @@ public class EylauArm : Arm
 
     public override void StartActive()
     {
+        loopInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        loopInstance.release();
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/CimetièreEyleau/Launch", 1f, gameObject);
         _crossHairGlow.SetActive(false);
         _area.transform.position = _previs.transform.position;
         _area.transform.parent = null;
@@ -60,6 +69,7 @@ public class EylauArm : Arm
 
     public override void StopActive()
     {
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/CimetièreEyleau/End", 1f, gameObject);
         _area.transform.parent = this.gameObject.transform;
     }
 

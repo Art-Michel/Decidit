@@ -216,6 +216,7 @@ public class Projectile : Hitbox
         //wall or ground
         if (obj.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
+            SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/BaseShoot/BaseShootImpactObject", 1f, gameObject);
             PooledObject impactVfx = _impactVfxPooler.Get();
             if (impactVfx == null)
                 return;
@@ -234,6 +235,7 @@ public class Projectile : Hitbox
         //flesh
         if (obj.gameObject.layer == LayerMask.NameToLayer("Flesh"))
         {
+            SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/BaseShoot/BaseShootImpactFlesh", 1f, gameObject);
             PooledObject splashVfx = _fleshSplashVfxPooler.Get();
             if (splashVfx == null)
                 return;

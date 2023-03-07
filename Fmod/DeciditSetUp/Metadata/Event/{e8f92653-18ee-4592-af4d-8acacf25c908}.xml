@@ -89,14 +89,20 @@
 	</object>
 	<object class="MixerBusPanner" id="{02847c0b-a6f6-4319-8fde-11da848f850d}" />
 	<object class="SingleSound" id="{52dc776e-18c8-4375-9f32-6c8aed1af3bf}">
+		<property name="length">
+			<value>0.98999999999999999</value>
+		</property>
 		<property name="timelockedOffset">
-			<value>0.040000000000000001</value>
+			<value>0.050000000000000003</value>
 		</property>
 		<relationship name="audioFile">
 			<destination>{96334458-0433-4c8d-9b11-8b05b710c298}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{02ceda8c-e732-42c2-aefc-15a010210651}">
+		<property name="volume">
+			<value>10</value>
+		</property>
 		<property name="name">
 			<value>Audio 1</value>
 		</property>
@@ -125,6 +131,7 @@
 			<destination>{c8173cf7-274a-4ab9-8cb3-e6bd6ef42f16}</destination>
 			<destination>{fd1638b1-8f6e-41f0-b1f8-74e87ae64c8b}</destination>
 			<destination>{aba23955-9fe5-4190-9f45-e0126575444a}</destination>
+			<destination>{9b7bc180-3ece-4167-9adc-f5cd747fe283}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{23c66855-891d-489d-9e82-1bcd3240c1a0}" />
@@ -146,7 +153,7 @@
 	</object>
 	<object class="DistortionEffect" id="{fd1638b1-8f6e-41f0-b1f8-74e87ae64c8b}">
 		<property name="level">
-			<value>0.299999982</value>
+			<value>0.629999995</value>
 		</property>
 	</object>
 	<object class="ChorusEffect" id="{aba23955-9fe5-4190-9f45-e0126575444a}">
@@ -155,6 +162,11 @@
 		</property>
 		<property name="depth">
 			<value>50</value>
+		</property>
+	</object>
+	<object class="ThreeEQEffect" id="{9b7bc180-3ece-4167-9adc-f5cd747fe283}">
+		<property name="midGain">
+			<value>-14.5</value>
 		</property>
 	</object>
 	<object class="RandomizerModulator" id="{29736e80-1d82-487a-80d0-cfe4c2dd2bb9}">

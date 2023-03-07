@@ -106,7 +106,7 @@ public class PlayerHealth : Health
         if (_hp < _probHp)
         {
             base.ProbRegen(amount);
-            SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/BaseHeal", 2f, gameObject);
+            SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/BaseHeal", 5f, gameObject);
             StartHealVignette();
         }
     }
