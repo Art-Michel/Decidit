@@ -590,7 +590,7 @@ public class Player : LocalManager<Player>
         _globalMomentum = Vector3.zero;
         _currentlyAppliedGravity = 0f;
         _steepSlopesMovement = Vector3.zero;
-        _currentSpeed = 0.0f;
+        _movementAcceleration = 0.0f;
     }
 
     public void AllowMovement(bool boolean)
