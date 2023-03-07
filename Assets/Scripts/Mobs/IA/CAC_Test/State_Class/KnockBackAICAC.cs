@@ -4,7 +4,9 @@ namespace State.AICAC
 {
     public class KnockBackAICAC : _StateAICAC
     {
-        [SerializeField] private float friction = 20f;
+        [SerializeField] private float friction;
+        [SerializeField] private float knockBackMultiplier;
+
         [SerializeField] GlobalRefAICAC globalRef;
 
         [Header("KnockBack Direction")]
@@ -88,7 +90,7 @@ namespace State.AICAC
             knockBackDirection = (knockBackDirection.normalized * (knockBackDirection.magnitude - friction * deltaTime));
 
             move = new Vector3(knockBackDirection.x, knockBackDirection.y + (globalRef.knockBackAICACSO.AIVelocity.y), knockBackDirection.z);
-            globalRef.characterController.Move(move * deltaTime);
+            globalRef.characterController.Move(move * knockBackMultiplier * deltaTime);
         }
 
         void SetGravity()
