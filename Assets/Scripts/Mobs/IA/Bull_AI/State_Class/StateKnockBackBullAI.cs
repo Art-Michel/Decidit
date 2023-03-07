@@ -4,7 +4,8 @@ namespace State.AIBull
 {
     public class StateKnockBackBullAI : _StateBull
     {
-        [SerializeField] private float friction = 20f;
+        [SerializeField] private float friction;
+        [SerializeField] private float knockBackMultiplier;
 
         [SerializeField] GlobalRefBullAI globalRef;
 
@@ -58,16 +59,12 @@ namespace State.AIBull
                 isFall = true;
             }
 
-            /*if (knockBackDirection == Vector3.zero)
-                ActiveIdleState();*/
-
             if (isGround && isFall)
             {
-                knockBackDirection = Vector3.zero;
+                ActiveIdleState();
             }
             else if (globalRef.characterController.velocity.magnitude == 0)
             {
-                knockBackDirection = Vector3.zero;
                 ActiveIdleState();
             }
         }
@@ -93,9 +90,8 @@ namespace State.AIBull
 
             SetGravity();
             knockBackDirection = (knockBackDirection.normalized * (knockBackDirection.magnitude - friction * deltaTime));
-
             move = new Vector3(knockBackDirection.x, knockBackDirection.y + (globalRef.rushBullSO.AIVelocity.y), knockBackDirection.z);
-            globalRef.characterController.Move(move * deltaTime);
+            globalRef.characterController.Move(move * knockBackMultiplier * deltaTime);
         }
 
         void SetGravity()
@@ -117,6 +113,7 @@ namespace State.AIBull
 
         private void OnDisable()
         {
+            knockBackDirection = Vector3.zero;
             globalRef.agent.enabled = true;
         }
     }

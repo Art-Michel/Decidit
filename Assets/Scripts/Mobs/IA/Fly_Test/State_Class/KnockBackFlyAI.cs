@@ -4,7 +4,8 @@ namespace State.FlyAI
 {
     public class KnockBackFlyAI : _StateFlyAI
     {
-        [SerializeField] private float friction = 20f;
+        [SerializeField] private float friction;
+        [SerializeField] private float knockBackMultiplier;
 
         [SerializeField] GlobalRefFlyAI globalRef;
         [SerializeField] Transform childflyAI;
@@ -16,6 +17,8 @@ namespace State.FlyAI
         [SerializeField] bool isFall;
 
         float deltaTime;
+
+        bool once;
 
         public override void InitState(StateControllerFlyAI stateController)
         {
@@ -57,6 +60,10 @@ namespace State.FlyAI
                 knockBackDirection = Vector3.zero;
                 ActiveIdleState();
             }
+            else if (globalRef.characterController.velocity.magnitude == 0)
+            {
+                ActiveIdleState();
+            }
         }
 
         private void FixedUpdate()
@@ -78,11 +85,12 @@ namespace State.FlyAI
         {
             Vector3 move;
 
-            SetGravity();
+            //SetGravity();
             knockBackDirection = (knockBackDirection.normalized * (knockBackDirection.magnitude - friction * deltaTime));
 
-            move = new Vector3(knockBackDirection.x, knockBackDirection.y + (globalRef.KnockBackFlySO.AIVelocity.y), knockBackDirection.z);
-            globalRef.characterController.Move(move * deltaTime);
+            //move = new Vector3(knockBackDirection.x, knockBackDirection.y + (globalRef.KnockBackFlySO.AIVelocity.y), knockBackDirection.z);
+            move = new Vector3(knockBackDirection.x, 0, knockBackDirection.z);
+            globalRef.characterController.Move(move * knockBackMultiplier * deltaTime);
         }
 
         void SetGravity()
@@ -104,11 +112,18 @@ namespace State.FlyAI
 
         private void OnDisable()
         {
-            Vector3 positionChild = childflyAI.transform.position;
-            globalRef.transform.position = positionChild;
-            childflyAI.transform.position = globalRef.transform.position;
-            globalRef.agent.baseOffset = 0.3f;
             globalRef.agent.enabled = true;
+            if (once)
+            {
+                globalRef.agent.baseOffset = childflyAI.transform.position.y;
+                Vector3 positionChild = new Vector3(childflyAI.transform.position.x,
+                                                    globalRef.transform.position.y,
+                                                    childflyAI.transform.position.z);
+
+                globalRef.transform.position = positionChild;
+                childflyAI.transform.position = globalRef.transform.position;
+            }
+            once = true;
         }
     }
 }
