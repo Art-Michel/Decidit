@@ -292,6 +292,12 @@ public class Player : LocalManager<Player>
         Head.rotation = Quaternion.Lerp(Head.rotation, targetRotation, _cameraSmoothness * Time.deltaTime);
     }
 
+    public void ForceRotation(Transform obj)
+    {
+        _cameraTargetXRotation = obj.eulerAngles.x;
+        _cameraTargetYRotation = obj.eulerAngles.y;
+    }
+
     public void StartShake(float intensity, float duration)
     {
         //pour l'instant je synchro juste les deux
@@ -578,25 +584,20 @@ public class Player : LocalManager<Player>
             CharaCon.Move(direction);
     }
 
-    #endregion
 
     public void KillMomentum()
     {
         _globalMomentum = Vector3.zero;
         _currentlyAppliedGravity = 0f;
         _steepSlopesMovement = Vector3.zero;
+        _currentSpeed = 0.0f;
     }
 
     public void AllowMovement(bool boolean)
     {
         _canMove = boolean;
     }
-
-    public void ForceRotation(Transform obj)
-    {
-        _cameraTargetXRotation = obj.eulerAngles.x;
-        _cameraTargetYRotation = obj.eulerAngles.y;
-    }
+    #endregion
 
     #region Enable Disable
     void OnEnable()
