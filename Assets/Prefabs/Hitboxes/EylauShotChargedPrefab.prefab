@@ -139,7 +139,7 @@ MonoBehaviour:
   _shouldSplashBloodOnHit: 1
   _canCriticalHit: 1
   _radius: 0.11
-  _damage: 60
+  _damage: 150
   _knockbackForce: 20
   _knockbackAngle: {x: 0, y: 0, z: 0}
   _delayBetweenHits: 0.1
@@ -161,7 +161,6 @@ MonoBehaviour:
   _currentSpeed: 0
   _lifeSpan: 1
   _trailDelay: 0
-  _superDirection: {x: 0, y: 0, z: 0}
 --- !u!114 &2527101979113148985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,6 +188,7 @@ MonoBehaviour:
   _prefab: {fileID: 8274879307854479454, guid: d521854542d23c44db515e5f8c607c5a, type: 3}
   _initialCount: 1
   _shouldBeParent: 0
+  _canCreateNewPrefabs: 1
 --- !u!114 &195275737341631623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -204,6 +204,7 @@ MonoBehaviour:
   _prefab: {fileID: 1790868541386878813, guid: ca054b847da950d4f95a94506c598d65, type: 3}
   _initialCount: 1
   _shouldBeParent: 0
+  _canCreateNewPrefabs: 1
 --- !u!1001 &130913010004685085
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -304,7 +305,7 @@ PrefabInstance:
     - target: {fileID: 2186792044864128112, guid: 80ccb65881c103a42a2519c153da8344,
         type: 3}
       propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].value
-      value: 0.125
+      value: 0.6544118
       objectReference: {fileID: 0}
     - target: {fileID: 2186792044864128112, guid: 80ccb65881c103a42a2519c153da8344,
         type: 3}
@@ -313,18 +314,38 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2186792044864128112, guid: 80ccb65881c103a42a2519c153da8344,
         type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].inSlope
+      value: -0.6544118
+      objectReference: {fileID: 0}
+    - target: {fileID: 2186792044864128112, guid: 80ccb65881c103a42a2519c153da8344,
+        type: 3}
       propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[1].inSlope
-      value: 0
+      value: -0.6544118
+      objectReference: {fileID: 0}
+    - target: {fileID: 2186792044864128112, guid: 80ccb65881c103a42a2519c153da8344,
+        type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].outSlope
+      value: -0.6544118
       objectReference: {fileID: 0}
     - target: {fileID: 2186792044864128112, guid: 80ccb65881c103a42a2519c153da8344,
         type: 3}
       propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[1].inWeight
-      value: 0.31182796
+      value: 0.33333334
       objectReference: {fileID: 0}
     - target: {fileID: 2186792044864128112, guid: 80ccb65881c103a42a2519c153da8344,
         type: 3}
       propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[1].outSlope
-      value: 0
+      value: -0.6544118
+      objectReference: {fileID: 0}
+    - target: {fileID: 2186792044864128112, guid: 80ccb65881c103a42a2519c153da8344,
+        type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].tangentMode
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 2186792044864128112, guid: 80ccb65881c103a42a2519c153da8344,
+        type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[1].tangentMode
+      value: 34
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 80ccb65881c103a42a2519c153da8344, type: 3}
