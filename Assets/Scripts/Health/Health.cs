@@ -27,6 +27,8 @@ public class Health : MonoBehaviour
     [Range(0.1f, 60)][SerializeField] float _probationSpeed = 15;
     [Foldout("Stats")]
     [SerializeField] private float _healthBarSpeed = 2.0f;
+    private float _hpBefore;
+    private float _healthBarCurrentSpeed;
 
     public float _hp { get; protected set; }
     protected float _probHp;
@@ -43,8 +45,10 @@ public class Health : MonoBehaviour
     {
         //IsInvulnerable = false;
         _healthT = 0f;
+        _hpBefore = 0.0f;
         _probHp = _hp;
         _hasProbation = false;
+        ResetBarFillage(false);
         DisplayProbHealth();
     }
 
@@ -60,10 +64,11 @@ public class Health : MonoBehaviour
         if (IsInvulnerable)
             return;
 
+        _hpBefore = Mathf.InverseLerp(0, _maxHp, _hp);
         _hp -= damage;
+        ResetBarFillage(true);
         DisplayProbHealth();
         StartProbHealth();
-        _healthT = 0.0f;
         //Debug.Log("Received " + damage + " damage");
 
         if (_hp <= 0)
@@ -114,20 +119,30 @@ public class Health : MonoBehaviour
     {
         if (_hp < _probHp)
         {
+            _hpBefore = Mathf.InverseLerp(0, _maxHp, _hp);
             _hp = Mathf.Clamp(_hp + amount, 0, _probHp);
-            _healthT = 0.0f;
+            ResetBarFillage(false);
             DisplayProbHealth();
             StartProbHealth(); //*uncomment if we want to reset prob timer upon regen
         }
+    }
+
+    private void ResetBarFillage(bool tookDamage)
+    {
+        _healthT = 0.0f;
+        if (!tookDamage)
+            _healthBarCurrentSpeed = Mathf.InverseLerp(0, _maxHp, _hp) - _hpBefore;
+        else
+            _healthBarCurrentSpeed = _hpBefore - Mathf.InverseLerp(0, _maxHp, _hp);
     }
 
     protected virtual void DisplayHealth()
     {
         if (_hpUi)
         {
-            _healthT += Time.deltaTime * _healthBarSpeed;
+            _healthT += (Time.deltaTime * _healthBarSpeed) / _healthBarCurrentSpeed;
             // _hpUi.fillAmount = Mathf.InverseLerp(0, _maxHp, _hp);
-            _hpUi.fillAmount = Mathf.Lerp(_hpUi.fillAmount, Mathf.InverseLerp(0, _maxHp, _hp), _healthT);
+            _hpUi.fillAmount = Mathf.Lerp(_hpBefore, Mathf.InverseLerp(0, _maxHp, _hp), _healthT);
         }
         if (_hpCursor)
             _hpCursor.rectTransform.anchoredPosition = Vector2.Lerp(_hpBarStart.anchoredPosition, _hpBarEnd.anchoredPosition, Mathf.InverseLerp(0, _maxHp, _hp));
