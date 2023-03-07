@@ -379,7 +379,7 @@ namespace State.FlyAI
         {
             if (active)
             {
-                globalRef.agent.velocity = (childflyAI.transform.forward * (baseMoveFlySO.currentSpeed / globalRef.slowRatio));
+                globalRef.agent.velocity = (childflyAI.transform.forward * (baseMoveFlySO.currentSpeed)) / globalRef.slowRatio;
             }
             else
             {
