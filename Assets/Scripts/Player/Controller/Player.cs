@@ -145,7 +145,7 @@ public class Player : LocalManager<Player>
 
     private void Start()
     {
-        transform.rotation = Quaternion.identity;
+        ForceRotation(transform);
         _movementInputs = Vector2.zero;
         _globalMomentum = Vector3.zero;
         _currentSpeed = _baseSpeed;
@@ -290,6 +290,12 @@ public class Player : LocalManager<Player>
         var targetRotation = Quaternion.Euler(Vector3.up * _cameraTargetYRotation) * Quaternion.Euler(Vector3.right * _cameraTargetXRotation);
 
         Head.rotation = Quaternion.Lerp(Head.rotation, targetRotation, _cameraSmoothness * Time.deltaTime);
+    }
+
+    public void ForceRotation(Transform obj)
+    {
+        _cameraTargetXRotation = obj.eulerAngles.x;
+        _cameraTargetYRotation = obj.eulerAngles.y;
     }
 
     public void StartShake(float intensity, float duration)
@@ -578,21 +584,19 @@ public class Player : LocalManager<Player>
             CharaCon.Move(direction);
     }
 
-    #endregion
 
-    #region Dashing Functions
     public void KillMomentum()
     {
         _globalMomentum = Vector3.zero;
         _currentlyAppliedGravity = 0f;
         _steepSlopesMovement = Vector3.zero;
+        _currentSpeed = 0.0f;
     }
 
     public void AllowMovement(bool boolean)
     {
         _canMove = boolean;
     }
-
     #endregion
 
     #region Enable Disable
