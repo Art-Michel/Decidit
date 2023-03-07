@@ -201,6 +201,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         Player.Instance.PlayerHealth.IsInvulnerable = false;
         Player.Instance.AllowMovement(true);
         Player.Instance.CharaCon.enabled = true;
+        Player.Instance.ForceRotation(Player.Instance.Head);
         _canPause = true;
     }
     #endregion

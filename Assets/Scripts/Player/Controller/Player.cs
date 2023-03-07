@@ -145,7 +145,7 @@ public class Player : LocalManager<Player>
 
     private void Start()
     {
-        transform.rotation = Quaternion.identity;
+        ForceRotation(transform);
         _movementInputs = Vector2.zero;
         _globalMomentum = Vector3.zero;
         _currentSpeed = _baseSpeed;
@@ -580,7 +580,6 @@ public class Player : LocalManager<Player>
 
     #endregion
 
-    #region Dashing Functions
     public void KillMomentum()
     {
         _globalMomentum = Vector3.zero;
@@ -593,7 +592,11 @@ public class Player : LocalManager<Player>
         _canMove = boolean;
     }
 
-    #endregion
+    public void ForceRotation(Transform obj)
+    {
+        _cameraTargetXRotation = obj.eulerAngles.x;
+        _cameraTargetYRotation = obj.eulerAngles.y;
+    }
 
     #region Enable Disable
     void OnEnable()
