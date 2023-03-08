@@ -58,7 +58,11 @@
 			<destination>{0d75fca2-1144-40e3-8e23-fa84d22a82a8}</destination>
 		</relationship>
 	</object>
-	<object class="EventAutomatableProperties" id="{0d1c8d6b-1977-4e71-a77b-d2c4b49ac67c}" />
+	<object class="EventAutomatableProperties" id="{0d1c8d6b-1977-4e71-a77b-d2c4b49ac67c}">
+		<property name="maximumDistance">
+			<value>40</value>
+		</property>
+	</object>
 	<object class="MarkerTrack" id="{41cb4184-8032-4d7f-b196-3014ccc3a7a8}" />
 	<object class="GroupTrack" id="{daedb307-c201-4016-acb2-2aba8de26f1b}">
 		<relationship name="modules">
@@ -214,10 +218,23 @@
 	</object>
 	<object class="MixerBusPanner" id="{f6a0c4b5-d35e-432b-b306-36e59ed4948c}" />
 	<object class="MixerBusFader" id="{c4b48a96-af81-491e-9990-43bb7805254a}" />
-	<object class="SpatialiserEffect" id="{5f12bd6e-04bb-489f-a31c-12d7616dfa10}" />
+	<object class="SpatialiserEffect" id="{5f12bd6e-04bb-489f-a31c-12d7616dfa10}">
+		<property name="distanceRolloffType">
+			<value>1</value>
+		</property>
+		<property name="maximumDistance">
+			<value>80</value>
+		</property>
+		<property name="overrideRange">
+			<value>true</value>
+		</property>
+	</object>
 	<object class="SFXReverbEffect" id="{3a019c55-826a-40ae-81b2-1cb44c9614aa}">
 		<property name="decayTime">
 			<value>2500</value>
+		</property>
+		<property name="diffusion">
+			<value>0</value>
 		</property>
 	</object>
 	<object class="MixerBusFader" id="{88d030d5-1c0d-4acd-bebc-191998c6e7eb}" />
