@@ -90,7 +90,7 @@ public class Projectile : Hitbox
     {
         if (_isDisappearing)
             UpdateDisappearance();
-            
+
         else
         {
             _lasterFramePosition = _lastFramePosition;
@@ -276,7 +276,6 @@ public class Projectile : Hitbox
     public void StartDisappearing()
     {
         _isDisappearing = true;
-        Debug.Log("mario");
         if (_trailRenderers.Length > 0)
         {
             foreach (TrailRenderer trail in _trailRenderers)
