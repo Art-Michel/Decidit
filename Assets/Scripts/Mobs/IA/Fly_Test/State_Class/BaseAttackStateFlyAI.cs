@@ -65,10 +65,10 @@ namespace State.FlyAI
 
             if (hit.transform != null)
             {
-                Debug.Log(hit.transform.tag);
-
                 if(hit.transform.gameObject.layer == 9)
+                {
                     stateControllerFlyAI.SetActiveState(StateControllerFlyAI.AIState.BaseMove);
+                }
             }
 
             SlowSpeed(globalRef.isInEylau);
@@ -139,10 +139,6 @@ namespace State.FlyAI
 
         void StopAttack()
         {
-           /* if (CheckPlayerCover.isCover)
-            {
-                stateControllerFlyAI.SetActiveState(StateControllerFlyAI.AIState.BaseMove);
-            }*/
             if (baseAttackFlySO.distDestinationFinal <= 1.5f)
                 stateControllerFlyAI.SetActiveState(StateControllerFlyAI.AIState.BaseMove);
             else
