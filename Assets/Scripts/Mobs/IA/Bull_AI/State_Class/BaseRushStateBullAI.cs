@@ -44,14 +44,17 @@ namespace State.AIBull
                 //SoundManager.instance.PlaySoundMobOneShot(globalRef.audioSourceBull, SoundManager.instance.soundAndVolumeRushMob[0]);
                 // TO DO lucas va te faire encul�
                 //Play SOUND PRE ATTACK RUSHER
-
-                if (rushBullSO == null)
-                    rushBullSO = globalRef.rushBullSO;
             }
             catch
             {
                 //Debug.LogWarning("Missing Ref");
             }
+        }
+
+        private void Start()
+        {
+            if (rushBullSO == null)
+                rushBullSO = globalRef.rushBullSO;
         }
 
         private void Update()
@@ -186,7 +189,7 @@ namespace State.AIBull
 
             if (rushBullSO.hitGround.transform != null)
             {
-                if(rushBullSO.isGround && rushBullSO.hitGround.distance > distFallStopRush)
+                if (rushBullSO.isGround && rushBullSO.hitGround.distance > distFallStopRush)
                 {
                     rushBullSO.isFall = true;
                 }
@@ -196,6 +199,7 @@ namespace State.AIBull
                 }
                 else
                 {
+                    Debug.Log(rushBullSO.hitGround.distance);
                     rushBullSO.isGround = false;
                 }
             }
