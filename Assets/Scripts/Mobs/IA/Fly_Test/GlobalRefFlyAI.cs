@@ -27,7 +27,6 @@ namespace State.FlyAI
 
         [Header("Ref Base Move")]
         public BoxCollider myCollider;
-        [SerializeField] float velovityAgent;
 
         [Header("Ref Base Attack")]
         public GameObject colliderBaseAttack;
@@ -61,7 +60,7 @@ namespace State.FlyAI
 
         private void Update()
         {
-            velovityAgent = agent.velocity.magnitude;
+            CheckHP();
         }
 
         public void ActiveState(StateControllerFlyAI.AIState newState)

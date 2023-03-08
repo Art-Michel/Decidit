@@ -57,6 +57,11 @@ namespace State.WallAI
             }
         }
 
+        private void Update()
+        {
+            CheckHP();
+        }
+
         public void ActiveState(StateControllerWallAI.WallAIState newState)
         {
             stateControllerWallAI.SetActiveState(newState);

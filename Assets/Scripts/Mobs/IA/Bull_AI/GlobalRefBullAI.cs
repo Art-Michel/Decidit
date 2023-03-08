@@ -74,6 +74,7 @@ namespace State.AIBull
 
         void Update()
         {
+            CheckHP();
             distPlayer = Vector3.Distance(transform.position, playerTransform.position);
         }
 

@@ -84,6 +84,7 @@ namespace State.AICAC
         private void Update()
         {
             distPlayer = Vector3.Distance(playerTransform.position, transform.position);
+            CheckHP();
         }
 
         public void ActiveState(StateControllerAICAC.AIState newState)

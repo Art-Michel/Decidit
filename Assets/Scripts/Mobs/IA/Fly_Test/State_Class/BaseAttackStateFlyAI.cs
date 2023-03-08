@@ -29,6 +29,8 @@ namespace State.FlyAI
 
         private void OnEnable()
         {
+            globalRef.colliderBaseAttack.SetActive(true);
+
             try
             {
                 SoundManager.Instance.PlaySound("event:/SFX_IA/Vorice_SFX(Vol)/Attack", 1f, gameObject);
@@ -159,6 +161,7 @@ namespace State.FlyAI
             {
                 baseAttackFlySO.speedRotationAIAttack = 0;
                 baseAttackFlySO.currentSpeedYAttack = 0;
+                globalRef.colliderBaseAttack.SetActive(false);
             }
         }
     }
