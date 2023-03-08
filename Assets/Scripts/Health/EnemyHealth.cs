@@ -238,7 +238,7 @@ public class EnemyHealth : Health
 
     private void ActuallyDie()
     {
-        //TODO Lucas un ptit son quand ils meurent stp
+        SoundManager.Instance.PlaySound("event:/SFX_IA/DeathIA", 1f, gameObject);
         Destroy(gameObject);
     }
 }
