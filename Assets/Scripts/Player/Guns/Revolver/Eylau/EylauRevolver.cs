@@ -57,8 +57,15 @@ public class EylauRevolver : Revolver
             _chargeUi.fillAmount = _currentCharge;
 
             if (_currentCharge >= 1)
-                _charged = true;
+                GetCharged();
         }
+    }
+
+    private void GetCharged()
+    {
+        //TODO Lucas Son quand le gun est chargé à fond, si tu veux aussi un bool pour -
+        //jouer en boucle un son quand il est chargé genre vwooooom
+        _charged = true;
     }
 
     public override void Shoot()

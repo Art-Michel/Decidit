@@ -21,7 +21,7 @@ public class EylauArm : Arm
     [SerializeField]
     private LayerMask _detectionMask;
     private FMOD.Studio.EventInstance loopInstance;
-    
+
 
     public override void StartIdle()
     {
@@ -30,7 +30,8 @@ public class EylauArm : Arm
     }
 
     public override void StartPrevis()
-    { 
+    {
+        //TODOLucas un ptit son one shot au début de la preview pour pas que le son sorte de nulle part comme ça
         loopInstance = FMODUnity.RuntimeManager.CreateInstance("event:/SFX_Controller/Chants/CimetièreEyleau/DuiringPreview");
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/CimetièreEyleau/Preview", 1f, gameObject);
         _previs.SetActive(true);

@@ -231,7 +231,14 @@ public class EnemyHealth : Health
         _deathT -= Time.deltaTime;
         _material.SetFloat("_clip", Mathf.InverseLerp(_deathAnimationDuration, 0, _deathT));
         if (_deathT <= 0)
-            Destroy(gameObject);
+        {
+            ActuallyDie();
+        }
     }
 
+    private void ActuallyDie()
+    {
+        //TODO Lucas un ptit son quand ils meurent stp
+        Destroy(gameObject);
+    }
 }

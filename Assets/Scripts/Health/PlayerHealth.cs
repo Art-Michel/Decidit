@@ -70,9 +70,9 @@ public class PlayerHealth : Health
             return;
 
         base.TakeDamage(amount);
-        ////PlaceHolderSoundManager.Instance.PlayHurt();
-        SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/DamageTaken", 2f, gameObject);
-        //cool magic numbers
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/DamageTaken", 4f, gameObject);
+
+        //cool magic numbers proportionnal screenshake when getting hurt
         float shakeIntensity = _playerHurtShakeMaxStrength * Mathf.InverseLerp(0.0f, 40.0f, amount + 10.0f);
         Player.Instance.StartShake(shakeIntensity, _playerHurtShakeDuration);
 
@@ -93,7 +93,7 @@ public class PlayerHealth : Health
         if (_hp < _probHp)
         {
             base.ProbRegen(100);
-            SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/BaseHeal", 5f, gameObject);
+            SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/BaseHeal", 3f, gameObject);
             StartHealVignette();
         }
     }

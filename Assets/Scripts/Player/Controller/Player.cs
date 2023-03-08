@@ -484,12 +484,14 @@ public class Player : LocalManager<Player>
 
     public void EylauMovementBuff()
     {
+        //TODO Lucas son quand le player se fait buff en mode jayce qui traverse son portail ou speed boost de lucio (en + court)
         _currentSpeed = _baseSpeed * _eylauBuffFactor;
         _currentJumpStrength = _baseJumpStrength * _eylauBuffFactor;
     }
 
     public void ResetEylauMovementBuff()
     {
+        //TODO Lucas son quand le buff de vitesse du cimetière s'arrête
         _currentSpeed = _baseSpeed;
         _currentJumpStrength = _baseJumpStrength;
     }
