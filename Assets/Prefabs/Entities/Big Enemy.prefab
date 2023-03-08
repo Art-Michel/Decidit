@@ -742,9 +742,13 @@ MonoBehaviour:
   _hpUi: {fileID: 3651693590633806078}
   _probHpUi: {fileID: 3651693591291406445}
   _bloodVFXPooler: {fileID: 3757828332054071203}
-  _maxHp: 300
-  _probationMaxStartup: 0.5
-  _probationSpeed: 50
+  _hpCursor: {fileID: 0}
+  _hpBarStart: {fileID: 0}
+  _hpBarEnd: {fileID: 0}
+  _maxHp: 200
+  _probationMaxStartup: 0
+  _probationSpeed: 30
+  _healthBarSpeed: 7
   IsInvulnerable: 0
   _canvas: {fileID: 3651693591180118756}
   _material: {fileID: 0}
@@ -769,7 +773,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3651693591780365186}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 696edb1499390144ba6e6e6526406c5c, type: 3}
   m_Name: 
@@ -796,6 +800,7 @@ MonoBehaviour:
   _prefab: {fileID: 3182170922454913666, guid: 6d0652dad3cf50d4f90488da7361b8c7, type: 3}
   _initialCount: 4
   _shouldBeParent: 1
+  _canCreateNewPrefabs: 1
 --- !u!1 &3651693591963884957
 GameObject:
   m_ObjectHideFlags: 0

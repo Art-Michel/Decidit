@@ -104,6 +104,7 @@ GameObject:
   - component: {fileID: 2126751611409770580}
   - component: {fileID: 3986499012447494068}
   - component: {fileID: 6982454923184648655}
+  - component: {fileID: 1899808943}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Ennemi
@@ -199,10 +200,10 @@ MonoBehaviour:
   _hpCursor: {fileID: 0}
   _hpBarStart: {fileID: 0}
   _hpBarEnd: {fileID: 0}
-  _maxHp: 40
-  _probationMaxStartup: 1
-  _probationSpeed: 15
-  _healthBarSpeed: 5
+  _maxHp: 60
+  _probationMaxStartup: 0
+  _probationSpeed: 30
+  _healthBarSpeed: 7
   IsInvulnerable: 0
   _canvas: {fileID: 2126751611621324501}
   _material: {fileID: 2100000, guid: 1fa0c89a0057b564d95c65f7c6811243, type: 2}
@@ -258,6 +259,19 @@ MonoBehaviour:
   _initialCount: 4
   _shouldBeParent: 1
   _canCreateNewPrefabs: 1
+--- !u!135 &1899808943
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2126751611409770601}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 0.1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2126751611621324520
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,7 +445,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3207547, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.5849056, g: 0, b: 0.01057049, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
