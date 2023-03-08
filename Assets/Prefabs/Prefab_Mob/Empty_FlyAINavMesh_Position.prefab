@@ -702,11 +702,9 @@ GameObject:
   - component: {fileID: 5407937164410842286}
   - component: {fileID: 5407937164410842287}
   - component: {fileID: 5407937164311034899}
-  - component: {fileID: -2163490113976411781}
   - component: {fileID: 5160256997650002795}
   - component: {fileID: 1154098350}
-  - component: {fileID: 4832928734046459811}
-  - component: {fileID: -361777595154836553}
+  - component: {fileID: 5275448971077831047}
   m_Layer: 7
   m_Name: Empty_FlyAINavMesh_Position
   m_TagString: Ennemi
@@ -785,102 +783,6 @@ MonoBehaviour:
   baseAttackFlySO: {fileID: 11400000, guid: 183c942ec85d835449e68c69d5cbeabc, type: 2}
   deathFlySO: {fileID: 11400000, guid: 6416866076bd0a14e944d961efe394d0, type: 2}
   KnockBackFlySO: {fileID: 11400000, guid: c79e1a733201f1646b8416199a1a8a22, type: 2}
---- !u!82 &-2163490113976411781
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5407937164410842285}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 20
-  Pan2D: 0
-  rolloffMode: 2
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0.05
-      value: 1
-      inSlope: -2.70143
-      outSlope: -2.70143
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.10260976
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: -1.0526316
-      outSlope: -1.0526316
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!114 &5160256997650002795
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -914,36 +816,24 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!136 &4832928734046459811
-CapsuleCollider:
+--- !u!143 &5275448971077831047
+CharacterController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5407937164410842285}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 100
-  m_Direction: 1
-  m_Center: {x: 0, y: 48.95, z: 0}
---- !u!54 &-361777595154836553
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5407937164410842285}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 1
+  m_Height: 100
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 49, z: 0}
 --- !u!1 &5407937164474220353
 GameObject:
   m_ObjectHideFlags: 0
