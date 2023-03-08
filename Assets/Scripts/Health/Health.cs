@@ -123,7 +123,7 @@ public class Health : MonoBehaviour
             _hp = Mathf.Clamp(_hp + amount, 0, _probHp);
             ResetBarFillage(false);
             DisplayProbHealth();
-            StartProbHealth(); //*uncomment if we want to reset prob timer upon regen
+            //StartProbHealth(); //*uncomment if we want to reset prob timer upon regen
         }
     }
 
@@ -150,7 +150,8 @@ public class Health : MonoBehaviour
 
     protected void StartProbHealth()
     {
-        _probationStartup = _probationMaxStartup;
+        if (!_hasProbation)
+            _probationStartup = _probationMaxStartup;
         _hasProbation = true;
     }
 
