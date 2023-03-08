@@ -78,7 +78,7 @@ namespace State.FlyAI
 
         void AdjustSpeed()
         {
-            if(!dodgeObstacle && !dodgeObstacleForward)
+            if(!CheckObstacleDestination() && !CheckObstacleForward())
             {
                 if(baseMoveFlySO.currentSpeed < baseMoveFlySO.baseMoveSpeed)
                 {
@@ -93,13 +93,11 @@ namespace State.FlyAI
             {
                 if (baseMoveFlySO.currentSpeed >= baseMoveFlySO.lowSpeed)
                 {
-                   // baseMoveFlySO.currentSpeed = baseMoveFlySO.lowSpeed;
                     globalRef.agent.velocity = Vector3.zero;
                 }
                 if (baseMoveFlySO.currentSpeed < baseMoveFlySO.lowSpeed)
                 {
                     globalRef.agent.velocity = Vector3.zero;
-                    //baseMoveFlySO.currentSpeed += Time.deltaTime * 1f;
                 }
             }
         }
@@ -118,62 +116,9 @@ namespace State.FlyAI
 
         void CheckObstacle()
         {
-            hitObstacle = RaycastAIManager.instanceRaycast.RaycastAI(transform.position, baseMoveFlySO.destinationFinal - 
-                flyAI.transform.position, baseMoveFlySO.maskObstacle, 
-                Color.red,Vector3.Distance(flyAI.transform.position, baseMoveFlySO.destinationFinal));
-
-            if(hitObstacle.transform != null)
-            {
-                float distObstacle = Vector3.Distance(hitObstacle.point, childflyAI.position);
-
-                if (distObstacle < 10f)
-                {
-                    dodgeObstacle = true;
-                    SearchNewPos();
-                }
-                else
-                {
-                    if (dodgeObstacle)
-                    {
-                        dodgeObstacle = false;
-                    }
-                }
-            }
-            else
-            {
-                if (dodgeObstacle)
-                {
-                    dodgeObstacle = false;
-                }
-            }
-
-            RaycastHit hit = RaycastAIManager.instanceRaycast.RaycastAI(childflyAI.transform.position, childflyAI.transform.forward, 
-                baseMoveFlySO.maskObstacle, Color.red, baseMoveFlySO.lenghtRayDetectObstacle);
-
-            if (hit.transform != null)
-            {
-                currentMaxSpeedRotationAIDodgeObstacle = baseMoveFlySO.maxSpeedRotationAIDodgeObstacle;
-                currentSmoothRotationDodgeObstacle = baseMoveFlySO.smoothRotationDodgeObstacle;
-                dodgeObstacleForward = true;
-            }
-            else
-            {
-                currentMaxSpeedRotationAIDodgeObstacle = baseMoveFlySO.maxSpeedRotationAIPatrol;
-                currentSmoothRotationDodgeObstacle = baseMoveFlySO.smoothRotationPatrol;
-                dodgeObstacleForward = false;
-            }
-
-            if (baseMoveFlySO.currentRateAttack <= 0)
-            {
-                RaycastHit hitCheckPlayer = RaycastAIManager.instanceRaycast.RaycastAI(childflyAI.position,
-                   new Vector3(globalRef.playerTransform.GetChild(0).position.x, globalRef.playerTransform.GetChild(0).position.y, 
-                   globalRef.playerTransform.GetChild(0).position.z) - childflyAI.position, baseMoveFlySO.maskCheckCanRush, Color.red, 100f);
-
-                if (hitCheckPlayer.transform == globalRef.playerTransform && !isInCover)
-                {
-                    stateControllerFlyAI.SetActiveState(StateControllerFlyAI.AIState.LockPlayer);
-                }
-            }
+            CheckObstacleDestination();
+            CheckObstacleForward();
+            CheckObstaclePlayer();
 
             // check if is in collider cover
             Collider [] col = Physics.OverlapSphere(transform.position, 0.7f, baseMoveFlySO.maskCover);
@@ -186,6 +131,81 @@ namespace State.FlyAI
                 isInCover = false;
             }
         }
+        bool CheckObstacleDestination()
+        {
+            hitObstacle = RaycastAIManager.instanceRaycast.RaycastAI(transform.position, baseMoveFlySO.destinationFinal -
+                flyAI.transform.position, baseMoveFlySO.maskObstacle,
+                Color.red, Vector3.Distance(flyAI.transform.position, baseMoveFlySO.destinationFinal));
+
+            if (hitObstacle.transform != null)
+            {
+                float distObstacle = Vector3.Distance(hitObstacle.point, childflyAI.position);
+
+                if (distObstacle < 10f)
+                {
+                    dodgeObstacle = true;
+                    SearchNewPos();
+                    return true;
+                }
+                else
+                {
+                    if (dodgeObstacle)
+                    {
+                        dodgeObstacle = false;
+                        return false;
+                    }
+                }
+            }
+            else
+            {
+                if (dodgeObstacle)
+                {
+                    dodgeObstacle = false;
+                    return false;
+                }
+            }
+            return false;
+        }
+        bool CheckObstacleForward()
+        {
+            RaycastHit hit = RaycastAIManager.instanceRaycast.RaycastAI(childflyAI.transform.position, childflyAI.transform.forward,
+                baseMoveFlySO.maskObstacle, Color.red, baseMoveFlySO.lenghtRayDetectObstacle);
+
+            if (hit.transform != null)
+            {
+                currentMaxSpeedRotationAIDodgeObstacle = baseMoveFlySO.maxSpeedRotationAIDodgeObstacle;
+                currentSmoothRotationDodgeObstacle = baseMoveFlySO.smoothRotationDodgeObstacle;
+                dodgeObstacleForward = true;
+                return true;
+            }
+            else
+            {
+                currentMaxSpeedRotationAIDodgeObstacle = baseMoveFlySO.maxSpeedRotationAIPatrol;
+                currentSmoothRotationDodgeObstacle = baseMoveFlySO.smoothRotationPatrol;
+                dodgeObstacleForward = false;
+                return false;
+            }
+        }
+        bool CheckObstaclePlayer()
+        {
+            if (baseMoveFlySO.currentRateAttack <= 0)
+            {
+                RaycastHit hitCheckPlayer = RaycastAIManager.instanceRaycast.RaycastAI(childflyAI.position,
+                  globalRef.playerTransform.GetChild(0).position - childflyAI.position, baseMoveFlySO.maskCheckCanRush, Color.red, 100f);
+
+                if (hitCheckPlayer.transform == globalRef.playerTransform && !isInCover)
+                {
+                    stateControllerFlyAI.SetActiveState(StateControllerFlyAI.AIState.LockPlayer);
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         void CheckUpObstacle()
         {
             RaycastHit hit = RaycastAIManager.instanceRaycast.RaycastAI(childflyAI.transform.position, childflyAI.transform.up,
