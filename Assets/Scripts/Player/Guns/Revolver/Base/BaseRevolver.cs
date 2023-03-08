@@ -22,19 +22,19 @@ public class BaseRevolver : Revolver
             //wall or ground
             if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
             {
-                SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/BaseShoot/BaseShootImpactObject", 1f, gameObject);
                 GameObject impactVfx = _impactVfxPooler.Get().gameObject;
                 impactVfx.transform.position = hit.point + hit.normal * 0.05f;
                 impactVfx.transform.forward = -hit.normal;
+                SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/BaseShoot/BaseShootImpactObject", 1f, impactVfx.gameObject);
             }
 
             //flesh
             if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Flesh"))
             {
-                SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/BaseShoot/BaseShootImpactFlesh", 1f, gameObject);
                 GameObject splashVfx = _fleshSplashVfxPooler.Get().gameObject;
                 splashVfx.transform.position = hit.point + hit.normal * 0.05f;
                 splashVfx.transform.forward = hit.normal;
+                SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/BaseShoot/BaseShootImpactFlesh", 1f, splashVfx.gameObject);
             }
 
             // = enemy hurtbox
