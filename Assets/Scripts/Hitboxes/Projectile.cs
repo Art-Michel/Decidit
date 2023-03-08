@@ -60,10 +60,7 @@ public class Projectile : Hitbox
         _trailDelayT = _trailDelay; //Delay before spawning the trail
         if (_trailRenderers.Length > 0)
             foreach (TrailRenderer trail in _trailRenderers)
-            {
-                trail.emitting = true;
-                trail.enabled = false;
-            }
+                trail.Clear();
         if (_trailMaterial) _trailMaterial.enabled = false;
         _mesh.SetActive(false);
         _lasterFramePosition = position - _direction * _radius;
@@ -131,8 +128,13 @@ public class Projectile : Hitbox
                 // spawn trail after a bit
                 if (_trailRenderers.Length > 0)
                     foreach (TrailRenderer trail in _trailRenderers)
+                    {
                         trail.enabled = true;
-                if (_trailMaterial) _trailMaterial.enabled = true;
+                        trail.Clear();
+                        trail.emitting = true;
+                    }
+                if (_trailMaterial)
+                    _trailMaterial.enabled = true;
                 _mesh.SetActive(true);
             }
         }
@@ -303,7 +305,6 @@ public class Projectile : Hitbox
         _isDisappearing = false;
         foreach (TrailRenderer trail in _trailRenderers)
         {
-            trail.Clear();
             trail.enabled = false;
         }
         _pooledObject.Pooler.Return(_pooledObject);
