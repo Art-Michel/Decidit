@@ -32,7 +32,7 @@ public class EylauArea : MonoBehaviour
         _aiFlyInArea = new List<GlobalRefFlyAI>();
         _aiWallInArea = new List<GlobalRefWallAI>();
     }
-    
+
     public void Reset()
     {
         _lifeT = _lifeSpan;
@@ -84,18 +84,22 @@ public class EylauArea : MonoBehaviour
             if (other.TryGetComponent<GlobalRefAICAC>(out GlobalRefAICAC cacAi))
             {
                 cacAi.isInEylau = true;
+                _aiCacInArea.Add(cacAi);
             }
             else if (other.TryGetComponent<GlobalRefBullAI>(out GlobalRefBullAI bullAi))
             {
                 bullAi.isInEylau = true;
+                _aiBullInArea.Add(bullAi);
             }
             else if (other.TryGetComponent<GlobalRefFlyAI>(out GlobalRefFlyAI flyAi))
             {
                 flyAi.isInEylau = true;
+                _aiFlyInArea.Add(flyAi);
             }
             else if (other.TryGetComponent<GlobalRefWallAI>(out GlobalRefWallAI wallAi))
             {
                 wallAi.isInEylau = true;
+                _aiWallInArea.Add(wallAi);
             }
 
             else
@@ -113,18 +117,22 @@ public class EylauArea : MonoBehaviour
             if (other.TryGetComponent<GlobalRefAICAC>(out GlobalRefAICAC cacAi))
             {
                 cacAi.isInEylau = false;
+                _aiCacInArea.Remove(cacAi);
             }
             else if (other.TryGetComponent<GlobalRefBullAI>(out GlobalRefBullAI bullAi))
             {
                 bullAi.isInEylau = false;
+                _aiBullInArea.Remove(bullAi);
             }
             else if (other.TryGetComponent<GlobalRefFlyAI>(out GlobalRefFlyAI flyAi))
             {
                 flyAi.isInEylau = false;
+                _aiFlyInArea.Remove(flyAi);
             }
             else if (other.TryGetComponent<GlobalRefWallAI>(out GlobalRefWallAI wallAi))
             {
                 wallAi.isInEylau = false;
+                _aiWallInArea.Remove(wallAi);
             }
 
             else
