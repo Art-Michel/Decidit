@@ -75,6 +75,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{042bc41d-d1fc-4462-822c-ae911ed7bdb7}">
+		<property name="volume">
+			<value>10</value>
+		</property>
 		<relationship name="effectChain">
 			<destination>{8039a4b8-edef-408c-8499-1304ca2a0f2d}</destination>
 		</relationship>
@@ -93,16 +96,19 @@
 	<object class="MixerBusPanner" id="{ba295e3f-a81e-4a30-ad25-5f9d292600db}" />
 	<object class="SingleSound" id="{f0136463-d21d-4399-ac41-2940f3b46321}">
 		<property name="length">
-			<value>5</value>
+			<value>4.7000000000000046</value>
 		</property>
 		<property name="timelockedOffset">
-			<value>0.90000000000000002</value>
+			<value>1.2000000000000002</value>
 		</property>
 		<relationship name="audioFile">
 			<destination>{7faae4b3-fbcc-485f-adf9-b0171d579671}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{98dc8968-ed02-4805-8168-1c9bf9254ceb}">
+		<property name="volume">
+			<value>10</value>
+		</property>
 		<property name="name">
 			<value>Audio 2</value>
 		</property>
@@ -118,10 +124,10 @@
 	</object>
 	<object class="LoopRegion" id="{7b977995-a6f5-4e86-8424-47dec90f2f5e}">
 		<property name="position">
-			<value>0.30000000000000004</value>
+			<value>0</value>
 		</property>
 		<property name="length">
-			<value>0.69999999999999996</value>
+			<value>0.40000000000000002</value>
 		</property>
 		<relationship name="timeline">
 			<destination>{df601fee-077e-4f95-ba0b-31662feee478}</destination>
@@ -141,6 +147,7 @@
 		<relationship name="effects">
 			<destination>{67fce6f7-fa0c-47aa-8a6b-a2033ffd8b2b}</destination>
 			<destination>{0088e90d-bdbc-42e7-8d82-21fd012c01b5}</destination>
+			<destination>{3ec1bb6e-5965-4639-be4c-ba0acdfee0b1}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{fc52d0eb-de7a-4e3b-ad69-3e1d4ec98743}" />
@@ -148,7 +155,12 @@
 	<object class="MixerBusFader" id="{67fce6f7-fa0c-47aa-8a6b-a2033ffd8b2b}" />
 	<object class="PitchShifterEffect" id="{0088e90d-bdbc-42e7-8d82-21fd012c01b5}">
 		<property name="pitch">
-			<value>0.829999983</value>
+			<value>0.699999988</value>
+		</property>
+	</object>
+	<object class="ThreeEQEffect" id="{3ec1bb6e-5965-4639-be4c-ba0acdfee0b1}">
+		<property name="midGain">
+			<value>-48</value>
 		</property>
 	</object>
 </objects>

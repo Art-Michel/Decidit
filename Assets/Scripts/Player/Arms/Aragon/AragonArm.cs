@@ -5,6 +5,7 @@ using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.VFX;
+using FMODUnity;
 
 public class AragonArm : Arm
 {
@@ -66,6 +67,8 @@ public class AragonArm : Arm
     private float currentDashSpeed;
     int _adjustedTimesNb;
 
+    private FMOD.Studio.EventInstance loopInstance;
+
     private Vector3 _lastFramePosition;
 
     protected override void Awake()
@@ -82,6 +85,9 @@ public class AragonArm : Arm
 
     public override void StartPrevis()
     {
+        loopInstance = FMODUnity.RuntimeManager.CreateInstance("event:/SFX_Controller/Chants/FugueAragon/DuringPreveiw");
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/FugueAragon/StartPreveiw", 1f, gameObject);
+        loopInstance.start();
         _vfx.SetActive(true);
         PlaceHolderSoundManager.Instance.PlayDashPrevisSound();
     }
@@ -112,7 +118,9 @@ public class AragonArm : Arm
         foreach (Image crosshair in _crossHairs)
             crosshair.fillAmount = 0.0f;
 
-        SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/FugueAragon/Dash", 1f, gameObject);
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/FugueAragon/DashStart", 1f, gameObject);
+        loopInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        loopInstance.release();
 
         _player.PlayerHealth.IsInvulnerable = true;
         _player.AllowMovement(false);
@@ -247,6 +255,7 @@ public class AragonArm : Arm
 
     public override void StopActive()
     {
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/FugueAragon/DashEnd", 1f, gameObject);
         _player.AllowMovement(true);
         _player.KillMomentum();
         _player.PlayerHealth.IsInvulnerable = false;

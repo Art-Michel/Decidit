@@ -99,11 +99,19 @@ public class Room : MonoBehaviour
     {
         Debug.Log(CurrentEnemiesInRoom + " left in " + gameObject.name);
         if (CurrentEnemiesInRoom <= 0)
-        {
-            PlayerManager.Instance.StartSlowMo(0.01f, 2f);
-            this.Exit.OpenDoor();
-            if (DungeonGenerator.Instance != null)
-                DungeonGenerator.Instance.GetRoom(1).Entry.OpenDoor();
-        }
+            FinishRoom();
+    }
+
+    private void FinishRoom()
+    {
+        //Feedbacks
+        //TODO Lucas Son quand on termine la room
+        //TODO Lucas calmer la musique ici
+        PlayerManager.Instance.StartSlowMo(0.01f, 2f);
+
+        //Progress in dungeon
+        this.Exit.OpenDoor();
+        if (DungeonGenerator.Instance != null)
+            DungeonGenerator.Instance.GetRoom(1).Entry.OpenDoor();
     }
 }

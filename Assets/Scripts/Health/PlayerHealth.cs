@@ -7,12 +7,6 @@ public class PlayerHealth : Health
 {
     [Foldout("References")]
     [SerializeField] Player _player;
-    [Foldout("References")]
-    [SerializeField] Image _hpCursor;
-    [Foldout("References")]
-    [SerializeField] RectTransform _hpBarStart;
-    [Foldout("References")]
-    [SerializeField] RectTransform _hpBarEnd;
 
     [Foldout("References")]
     [SerializeField] Image _lowHpVignette;
@@ -70,13 +64,6 @@ public class PlayerHealth : Health
         if (_isBeingDamaged) HandleDamageVignette();
     }
 
-    protected override void DisplayHealth()
-    {
-        base.DisplayHealth();
-        if (_hpCursor)
-            _hpCursor.rectTransform.anchoredPosition = Vector2.Lerp(_hpBarStart.anchoredPosition, _hpBarEnd.anchoredPosition, _hpUi.fillAmount);
-    }
-
     public override void TakeDamage(int amount)
     {
         if (amount <= 1 || IsInvulnerable)
@@ -101,12 +88,12 @@ public class PlayerHealth : Health
         _lowHpVignette.color = new Color(1.0f, 1.0f, 1.0f, value);
     }
 
-    public override void ProbRegen(int amount = 10)
+    public override void ProbRegen(int i = 100)
     {
         if (_hp < _probHp)
         {
-            base.ProbRegen(amount);
-            SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/BaseHeal", 2f, gameObject);
+            base.ProbRegen(100);
+            SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/BaseHeal", 5f, gameObject);
             StartHealVignette();
         }
     }

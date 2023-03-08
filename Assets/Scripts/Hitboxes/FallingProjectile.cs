@@ -10,16 +10,19 @@ public class FallingProjectile : Projectile
     const float _gravity = 9.81f;
     float _currentlyAppliedGravity = 0f;
 
+    //pour un peu de peps
+    private const float _initialGravity = 4.0f;
+
     public override void Setup(Vector3 position, Vector3 direction)
     {
         base.Setup(position, direction);
-        _currentlyAppliedGravity = 0f;
+        _currentlyAppliedGravity = _initialGravity;
     }
 
     public override void Setup(Vector3 position, Vector3 direction, Vector3 cameraDirection)
     {
         base.Setup(position, direction, cameraDirection);
-        _currentlyAppliedGravity = 0f;
+        _currentlyAppliedGravity = _initialGravity;
     }
 
     protected override void Move()

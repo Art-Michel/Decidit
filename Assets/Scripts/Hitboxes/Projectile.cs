@@ -13,7 +13,7 @@ public class Projectile : Hitbox
     [Foldout("References")]
     [SerializeField] private GameObject _mesh;
     [Foldout("References")]
-    [SerializeField] private TrailRenderer[] _trailRenderer;
+    [SerializeField] private TrailRenderer[] _trailRenderers;
     [Foldout("References")]
     [SerializeField] private MonoBehaviour _trailMaterial;
     [Foldout("References")]
@@ -47,6 +47,8 @@ public class Projectile : Hitbox
     protected Vector3 _lasterFramePosition;
     protected Vector3 _lastFramePosition;
     protected Vector3 _spaceTraveledLast2Frames;
+    private bool _isDisappearing;
+    private float _disappearanceT;
 
     public virtual void Setup(Vector3 position, Vector3 direction)
     {
@@ -56,9 +58,12 @@ public class Projectile : Hitbox
         _direction = direction;
         _lifeT = _lifeSpan;
         _trailDelayT = _trailDelay; //Delay before spawning the trail
-        if (_trailRenderer.Length > 0)
-            foreach (TrailRenderer trail in _trailRenderer)
+        if (_trailRenderers.Length > 0)
+            foreach (TrailRenderer trail in _trailRenderers)
+            {
+                trail.emitting = true;
                 trail.enabled = false;
+            }
         if (_trailMaterial) _trailMaterial.enabled = false;
         _mesh.SetActive(false);
         _lasterFramePosition = position - _direction * _radius;
@@ -83,18 +88,24 @@ public class Projectile : Hitbox
 
     protected override void Update()
     {
-        _lasterFramePosition = _lastFramePosition;
-        _lastFramePosition = transform.position;
+        if (_isDisappearing)
+            UpdateDisappearance();
 
-        Move();
-        _spaceTraveledLast2Frames = transform.position - _lasterFramePosition;
+        else
+        {
+            _lasterFramePosition = _lastFramePosition;
+            _lastFramePosition = transform.position;
 
-        CheckForCollision();
+            Move();
+            _spaceTraveledLast2Frames = transform.position - _lasterFramePosition;
 
-        UpdateLifeSpan();
+            CheckForCollision();
 
-        if (_canMultiHit)
-            UpdateBlackList();
+            UpdateLifeSpan();
+
+            if (_canMultiHit)
+                UpdateBlackList();
+        }
     }
 
     protected virtual void Move()
@@ -110,7 +121,7 @@ public class Projectile : Hitbox
             if (_explodesOnHit)
                 Explode(Vector3.zero);
             else
-                Disappear();
+                StartDisappearing();
         }
         if (_trailDelayT >= 0)
         {
@@ -118,8 +129,8 @@ public class Projectile : Hitbox
             if (_trailDelayT < 0)
             {
                 // spawn trail after a bit
-                if (_trailRenderer.Length > 0)
-                    foreach (TrailRenderer trail in _trailRenderer)
+                if (_trailRenderers.Length > 0)
+                    foreach (TrailRenderer trail in _trailRenderers)
                         trail.enabled = true;
                 if (_trailMaterial) _trailMaterial.enabled = true;
                 _mesh.SetActive(true);
@@ -176,7 +187,7 @@ public class Projectile : Hitbox
                     if (_explodesOnHit)
                         Explode(hit.normal);
                     else
-                        Disappear();
+                        StartDisappearing();
                 }
                 else
                 {
@@ -197,7 +208,7 @@ public class Projectile : Hitbox
                 if (_explodesOnHit)
                     Explode(hit.normal);
                 else
-                    Disappear();
+                    StartDisappearing();
             }
         }
     }
@@ -216,6 +227,7 @@ public class Projectile : Hitbox
         //wall or ground
         if (obj.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
+            SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/BaseShoot/BaseShootImpactObject", 1f, gameObject);
             PooledObject impactVfx = _impactVfxPooler.Get();
             if (impactVfx == null)
                 return;
@@ -234,6 +246,7 @@ public class Projectile : Hitbox
         //flesh
         if (obj.gameObject.layer == LayerMask.NameToLayer("Flesh"))
         {
+            SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/BaseShoot/BaseShootImpactFlesh", 1f, gameObject);
             PooledObject splashVfx = _fleshSplashVfxPooler.Get();
             if (splashVfx == null)
                 return;
@@ -260,18 +273,38 @@ public class Projectile : Hitbox
         this.enabled = false;
     }
 
-    public void Disappear()
+    public void StartDisappearing()
     {
-        if (_trailRenderer.Length > 0)
-            foreach (TrailRenderer trail in _trailRenderer)
+        _isDisappearing = true;
+        if (_trailRenderers.Length > 0)
+        {
+            foreach (TrailRenderer trail in _trailRenderers)
             {
-
-                trail.Clear();
-                trail.enabled = false;
+                trail.emitting = false;
             }
+            _disappearanceT = _trailRenderers[0].time;
+        }
+
         if (_trailMaterial)
         {
             _trailMaterial.enabled = false;
+        }
+    }
+
+    private void UpdateDisappearance()
+    {
+        _disappearanceT -= Time.deltaTime;
+        if (_disappearanceT <= 0.0f)
+            Disappear();
+    }
+
+    private void Disappear()
+    {
+        _isDisappearing = false;
+        foreach (TrailRenderer trail in _trailRenderers)
+        {
+            trail.Clear();
+            trail.enabled = false;
         }
         _pooledObject.Pooler.Return(_pooledObject);
     }

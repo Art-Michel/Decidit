@@ -93,7 +93,7 @@ public class Explosion : Hitbox
         if (_lifeT <= 0)
         {
             gameObject.SetActive(false);
-            _parentProjectile.Disappear();
+            _parentProjectile.StartDisappearing();
         }
 
         //Explosion life span

@@ -275,7 +275,6 @@ public class Revolver : MonoBehaviour
                 _ammoCountText.color = _lowAmmoColor;
             else
             {
-                //TODO Lucas PlaceHolderSoundManager.Instance.PlayLastBulletClick();
                 _ammoCountText.color = _noAmmoColor;
             }
         }

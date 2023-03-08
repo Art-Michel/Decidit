@@ -25,6 +25,7 @@ public class BaseRevolver : Revolver
                 GameObject impactVfx = _impactVfxPooler.Get().gameObject;
                 impactVfx.transform.position = hit.point + hit.normal * 0.05f;
                 impactVfx.transform.forward = -hit.normal;
+                SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/BaseShoot/BaseShootImpactObject", 1f, impactVfx.gameObject);
             }
 
             //flesh
@@ -33,6 +34,7 @@ public class BaseRevolver : Revolver
                 GameObject splashVfx = _fleshSplashVfxPooler.Get().gameObject;
                 splashVfx.transform.position = hit.point + hit.normal * 0.05f;
                 splashVfx.transform.forward = hit.normal;
+                SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/BaseShoot/BaseShootImpactFlesh", 1f, splashVfx.gameObject);
             }
 
             // = enemy hurtbox

@@ -12,6 +12,12 @@ public class Health : MonoBehaviour
     [SerializeField] protected Image _probHpUi;
     [Foldout("References")]
     [SerializeField] private Pooler _bloodVFXPooler;
+    [Foldout("References")]
+    [SerializeField] Image _hpCursor;
+    [Foldout("References")]
+    [SerializeField] RectTransform _hpBarStart;
+    [Foldout("References")]
+    [SerializeField] RectTransform _hpBarEnd;
 
     [Foldout("Stats")]
     [Range(1, 1000)][SerializeField] protected float _maxHp = 100;
@@ -19,12 +25,17 @@ public class Health : MonoBehaviour
     [Range(0, 3)][SerializeField] float _probationMaxStartup = 1;
     [Foldout("Stats")]
     [Range(0.1f, 60)][SerializeField] float _probationSpeed = 15;
+    [Foldout("Stats")]
+    [SerializeField] private float _healthBarSpeed = 2.0f;
+    private float _hpBefore;
+    private float _healthBarCurrentSpeed;
 
     public float _hp { get; protected set; }
     protected float _probHp;
     protected bool _hasProbation;
     protected float _probationStartup;
     public bool IsInvulnerable;
+    private float _healthT;
 
     protected virtual void Awake()
     {
@@ -33,9 +44,11 @@ public class Health : MonoBehaviour
     protected virtual void Start()
     {
         //IsInvulnerable = false;
+        _healthT = 0f;
+        _hpBefore = 0.0f;
         _probHp = _hp;
         _hasProbation = false;
-        DisplayHealth();
+        ResetBarFillage(false);
         DisplayProbHealth();
     }
 
@@ -43,6 +56,7 @@ public class Health : MonoBehaviour
     {
         if (_hasProbation)
             UpdateProbHealth();
+        DisplayHealth();
     }
 
     public virtual void TakeDamage(int damage)
@@ -50,8 +64,9 @@ public class Health : MonoBehaviour
         if (IsInvulnerable)
             return;
 
+        _hpBefore = Mathf.InverseLerp(0, _maxHp, _hp);
         _hp -= damage;
-        DisplayHealth();
+        ResetBarFillage(true);
         DisplayProbHealth();
         StartProbHealth();
         //Debug.Log("Received " + damage + " damage");
@@ -94,6 +109,7 @@ public class Health : MonoBehaviour
             Debug.LogWarning("No bloodFX Pooler script found on same object as this script.");
             return;
         }
+
         Transform splash = _bloodVFXPooler.Get().transform;
         splash.position = position;
         splash.forward = forward;
@@ -103,19 +119,33 @@ public class Health : MonoBehaviour
     {
         if (_hp < _probHp)
         {
+            _hpBefore = Mathf.InverseLerp(0, _maxHp, _hp);
             _hp = Mathf.Clamp(_hp + amount, 0, _probHp);
-            DisplayHealth();
+            ResetBarFillage(false);
             DisplayProbHealth();
             StartProbHealth(); //*uncomment if we want to reset prob timer upon regen
         }
+    }
+
+    private void ResetBarFillage(bool tookDamage)
+    {
+        _healthT = 0.0f;
+        if (!tookDamage)
+            _healthBarCurrentSpeed = Mathf.InverseLerp(0, _maxHp, _hp) - _hpBefore;
+        else
+            _healthBarCurrentSpeed = _hpBefore - Mathf.InverseLerp(0, _maxHp, _hp);
     }
 
     protected virtual void DisplayHealth()
     {
         if (_hpUi)
         {
-            _hpUi.fillAmount = Mathf.InverseLerp(0, _maxHp, _hp);
+            _healthT += (Time.deltaTime * _healthBarSpeed) / _healthBarCurrentSpeed;
+            // _hpUi.fillAmount = Mathf.InverseLerp(0, _maxHp, _hp);
+            _hpUi.fillAmount = Mathf.Lerp(_hpBefore, Mathf.InverseLerp(0, _maxHp, _hp), _healthT);
         }
+        if (_hpCursor)
+            _hpCursor.rectTransform.anchoredPosition = Vector2.Lerp(_hpBarStart.anchoredPosition, _hpBarEnd.anchoredPosition, Mathf.InverseLerp(0, _maxHp, _hp));
     }
 
     protected void StartProbHealth()

@@ -15,6 +15,7 @@ namespace State.FlyAI
         [SerializeField] Transform childflyAI;
 
         [SerializeField] bool dodgeObstacle;
+        [SerializeField] bool dodgeObstacleForward;
         [SerializeField] bool right;
         [SerializeField] float offset;
         Quaternion rotation;
@@ -77,11 +78,11 @@ namespace State.FlyAI
 
         void AdjustSpeed()
         {
-            if(!dodgeObstacle)
+            if(!dodgeObstacle && !dodgeObstacleForward)
             {
                 if(baseMoveFlySO.currentSpeed < baseMoveFlySO.baseMoveSpeed)
                 {
-                    baseMoveFlySO.currentSpeed += Time.deltaTime * 1f;
+                    baseMoveFlySO.currentSpeed += Time.deltaTime * 3f;
                 }
                 else
                 {
@@ -90,9 +91,15 @@ namespace State.FlyAI
             }
             else
             {
-                if (baseMoveFlySO.currentSpeed != baseMoveFlySO.lowSpeed)
+                if (baseMoveFlySO.currentSpeed >= baseMoveFlySO.lowSpeed)
                 {
-                    baseMoveFlySO.currentSpeed = baseMoveFlySO.lowSpeed;
+                   // baseMoveFlySO.currentSpeed = baseMoveFlySO.lowSpeed;
+                    globalRef.agent.velocity = Vector3.zero;
+                }
+                if (baseMoveFlySO.currentSpeed < baseMoveFlySO.lowSpeed)
+                {
+                    globalRef.agent.velocity = Vector3.zero;
+                    //baseMoveFlySO.currentSpeed += Time.deltaTime * 1f;
                 }
             }
         }
@@ -117,7 +124,9 @@ namespace State.FlyAI
 
             if(hitObstacle.transform != null)
             {
-                if(Vector3.Distance(hitObstacle.point, childflyAI.position) <10f)
+                float distObstacle = Vector3.Distance(hitObstacle.point, childflyAI.position);
+
+                if (distObstacle < 10f)
                 {
                     dodgeObstacle = true;
                     SearchNewPos();
@@ -145,11 +154,13 @@ namespace State.FlyAI
             {
                 currentMaxSpeedRotationAIDodgeObstacle = baseMoveFlySO.maxSpeedRotationAIDodgeObstacle;
                 currentSmoothRotationDodgeObstacle = baseMoveFlySO.smoothRotationDodgeObstacle;
+                dodgeObstacleForward = true;
             }
             else
             {
                 currentMaxSpeedRotationAIDodgeObstacle = baseMoveFlySO.maxSpeedRotationAIPatrol;
                 currentSmoothRotationDodgeObstacle = baseMoveFlySO.smoothRotationPatrol;
+                dodgeObstacleForward = false;
             }
 
             if (baseMoveFlySO.currentRateAttack <= 0)
@@ -310,7 +321,6 @@ namespace State.FlyAI
         void ApplyFlyingMove()
         {
             baseMoveFlySO.distDestinationFinal = Vector3.Distance(flyAI.transform.position, baseMoveFlySO.destinationFinal);
-            //globalRef.agent.speed = baseMoveFlySO.currentSpeed;
 
             if (baseMoveFlySO.newPosIsSet)
             {
@@ -379,7 +389,7 @@ namespace State.FlyAI
         {
             if (active)
             {
-                globalRef.agent.velocity = (childflyAI.transform.forward * (baseMoveFlySO.currentSpeed / globalRef.slowRatio));
+                globalRef.agent.velocity = (childflyAI.transform.forward * (baseMoveFlySO.currentSpeed)) / globalRef.slowRatio;
             }
             else
             {
