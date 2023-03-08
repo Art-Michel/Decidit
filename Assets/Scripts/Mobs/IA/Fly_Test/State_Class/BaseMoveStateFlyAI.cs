@@ -30,7 +30,6 @@ namespace State.FlyAI
         [SerializeField] Vector3 velocity;
 
         [SerializeField] bool isInCover;
-        [SerializeField] bool obstacleUp;
         [SerializeField] bool canCheckLateralPos;
         [SerializeField] float lateralRayLenght;
 
@@ -71,9 +70,6 @@ namespace State.FlyAI
             CheckObstacle();
             if(!globalRef.baseMoveFlySO.newPosIsSet && !globalRef.baseMoveFlySO.nextPosIsSet)
                 CheckLateralPos();
-
-            CheckUpObstacle();
-            //SlowSpeed(globalRef.isInEylau);
         }
 
         void AdjustSpeed()
@@ -204,20 +200,6 @@ namespace State.FlyAI
                 }
             }
             return false;
-        }
-
-        void CheckUpObstacle()
-        {
-            RaycastHit hit = RaycastAIManager.instanceRaycast.RaycastAI(childflyAI.transform.position, childflyAI.transform.up,
-                baseMoveFlySO.maskObstacle, Color.red, baseMoveFlySO.lenghtRayDetectObstacle);
-            if(hit.transform != null)
-            {
-                obstacleUp = true;
-            }
-            else
-            {
-                obstacleUp = false;
-            }
         }
 
         void CheckLateralPos()
