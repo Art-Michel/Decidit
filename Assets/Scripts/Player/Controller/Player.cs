@@ -484,14 +484,15 @@ public class Player : LocalManager<Player>
 
     public void EylauMovementBuff()
     {
-        //TODO Lucas son quand le player se fait buff en mode jayce qui traverse son portail ou speed boost de lucio (en + court)
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/CimetièreEyleau/BuffStart", 1f, gameObject);
         _currentSpeed = _baseSpeed * _eylauBuffFactor;
         _currentJumpStrength = _baseJumpStrength * _eylauBuffFactor;
     }
 
     public void ResetEylauMovementBuff()
     {
-        //TODO Lucas son quand le buff de vitesse du cimetière s'arrête
+        //TODO ART le son se produit quand on lance le sort
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/CimetièreEyleau/BuffEnd", 1f, gameObject);
         _currentSpeed = _baseSpeed;
         _currentJumpStrength = _baseJumpStrength;
     }
