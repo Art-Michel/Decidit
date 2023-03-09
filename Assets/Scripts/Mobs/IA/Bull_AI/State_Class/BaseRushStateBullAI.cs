@@ -198,7 +198,6 @@ namespace State.AIBull
                 }
                 else
                 {
-                    Debug.Log(rushBullSO.hitGround.distance);
                     rushBullSO.isGround = false;
                 }
             }

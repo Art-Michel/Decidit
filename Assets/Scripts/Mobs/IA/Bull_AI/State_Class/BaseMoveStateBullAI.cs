@@ -16,6 +16,8 @@ namespace State.AIBull
         NavMeshHit closestHit;
         Vector3 linkDestination;
         bool lookForwardJump;
+        bool hitPlayer;
+        bool disableOffsetDestination;
 
         [SerializeField] float distDetectObstacle;
 
@@ -28,6 +30,8 @@ namespace State.AIBull
 
         private void OnEnable()
         {
+            disableOffsetDestination = false;
+
             if (globalRef != null && globalRef.myAnimator != null)
                 AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Walk");
         }
@@ -50,8 +54,7 @@ namespace State.AIBull
 
         private void FixedUpdate()
         {
-            if(globalRef.launchRush)
-                CheckObstacle();
+            CheckObstacle();
         }
         void CheckObstacle()
         {
@@ -61,7 +64,14 @@ namespace State.AIBull
                                                         Vector3.Distance(globalRef.transform.position, globalRef.playerTransform.position));
             if(hit.transform == globalRef.playerTransform)
             {
-                LaunchRush();
+                if(globalRef.launchRush)
+                    LaunchRush();
+
+                hitPlayer = true;
+            }
+            else
+            {
+                hitPlayer = false;
             }
         }
         void ManageCurrentNavMeshLink()
@@ -136,13 +146,14 @@ namespace State.AIBull
             float distPlayer = Vector3.Distance(globalRef.transform.position, globalRef.playerTransform.position);
             globalRef.agent.speed = globalRef.baseMoveBullSO.baseSpeed;
 
-            if(distPlayer > Mathf.Abs(globalRef.offsetDestination)+1)
+            if(distPlayer > Mathf.Abs(globalRef.offsetDestination)+1 && hitPlayer && !disableOffsetDestination)
             {
                 newDestination = globalRef.playerTransform.position + (globalRef.playerTransform.right * globalRef.offsetDestination);
             }
             else
             {
                 newDestination = globalRef.playerTransform.position;
+                disableOffsetDestination = true;
             }
 
             SlowSpeed(globalRef.isInEylau);
@@ -151,7 +162,7 @@ namespace State.AIBull
         Vector3 CheckNavMeshPoint(Vector3 newDestination)
         {
             NavMeshHit closestHit;
-            if (NavMesh.SamplePosition(newDestination, out closestHit, 20, 1))
+            if (NavMesh.SamplePosition(newDestination, out closestHit, 1, 1))
             {
                 newDestination = closestHit.position;
             }
