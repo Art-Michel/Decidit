@@ -10,8 +10,6 @@ namespace State.WallAI
         BaseAttackWallAISO baseAttackWallAISO;
         [SerializeField] GlobalRefWallAI globalRef;
 
-        [SerializeField] float delayAttack;
-
         public override void InitState(StateControllerWallAI stateController)
         {
             base.InitState(stateController);
@@ -64,7 +62,7 @@ namespace State.WallAI
                     break;
                 default:
                     baseAttackWallAISO.playerPredicDir = globalRef.playerTransform.position + (directionPlayer * baseAttackWallAISO.distAnticipGround);
-                    baseAttackWallAISO.vPlayer = directionPlayer.magnitude * 8f;
+                    baseAttackWallAISO.vPlayer = directionPlayer.magnitude * baseAttackWallAISO.vMultiplier;
 
                     baseAttackWallAISO.timePlayerGoToPredicPos = Vector3.Distance(globalRef.playerTransform.position, baseAttackWallAISO.playerPredicDir) / baseAttackWallAISO.vPlayer;
                     baseAttackWallAISO.vProjectileGotToPredicPos = Vector3.Distance(globalRef.transform.position, baseAttackWallAISO.playerPredicDir) / baseAttackWallAISO.timePlayerGoToPredicPos;

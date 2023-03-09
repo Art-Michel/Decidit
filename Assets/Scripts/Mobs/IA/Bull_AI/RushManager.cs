@@ -5,11 +5,12 @@ namespace State.AIBull
 {
     public class RushManager : MonoBehaviour
     {
+        RushBullParameterSO rushBullSO;
+
         public List<GlobalRefBullAI> listRefBullAI = new List<GlobalRefBullAI>();
         public List<GlobalRefBullAI> cloneListRefBullAI = new List<GlobalRefBullAI>();
 
         [Header("CoolDown Rush")]
-        public Vector2 rangeTimerRush;
         public float currentRangeTimeRush;
 
         // Start is called before the first frame update
@@ -20,13 +21,15 @@ namespace State.AIBull
                 listRefBullAI.Add(transform.GetChild(i).GetComponent<GlobalRefBullAI>());
             }
 
+            rushBullSO = listRefBullAI[0].rushBullSO;
+
             GetAIList();
             ResetCoolDown();
         }
 
         void ResetCoolDown()
         {
-            currentRangeTimeRush = (int)Random.Range(rangeTimerRush.x, rangeTimerRush.y);
+            currentRangeTimeRush = (int)Random.Range(rushBullSO.rangeTimerRush.x, rushBullSO.rangeTimerRush.y);
         }
         void GetAIList()
         {

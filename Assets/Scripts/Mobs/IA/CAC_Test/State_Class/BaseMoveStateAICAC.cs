@@ -350,6 +350,7 @@ namespace State.AICAC
         {
             globalRef.baseAttackAICACSO.isAttacking = false;
             currentRateRepath = 0;
+            baseMoveAICACSO.currentSpeed = 0;
 
             if (baseMoveAICACSO != null)
                 baseMoveAICACSO.speedRot = 0;

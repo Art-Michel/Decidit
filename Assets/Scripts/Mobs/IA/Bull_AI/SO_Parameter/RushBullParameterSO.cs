@@ -4,6 +4,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "RushParameter", menuName = "Bull/RushParameter")]
 public class RushBullParameterSO : ScriptableObject
 {
+    [Header("Rate Rush")]
+    public Vector2 rangeTimerRush;
+
     [Header("Look At")]
     public Vector3 directionLookAt;
     public Vector3 relativePos;

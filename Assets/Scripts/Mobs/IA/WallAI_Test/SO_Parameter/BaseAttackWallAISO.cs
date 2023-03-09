@@ -14,7 +14,8 @@ namespace State.WallAI
         public Vector3 playerPredicDir;
         public float timePlayerGoToPredicPos;
         public float vProjectileGotToPredicPos;
-        public float vPlayer;
+        [HideInInspector] public float vPlayer;
+        public float vMultiplier;
 
         [Header("*Attack")]
         public Rigidbody bulletPrefab;
