@@ -292,7 +292,7 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Cancel"",
+                    ""name"": ""Interact"",
                     ""type"": ""Button"",
                     ""id"": ""88d849ca-0e4d-4a9f-b740-a9f80e11afe9"",
                     ""expectedControlType"": ""Button"",
@@ -375,7 +375,7 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Cancel"",
+                    ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -386,7 +386,18 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Cancel"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f9a5675a-00fd-4dd1-bb0e-39aeb9ad2a89"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1097,7 +1108,7 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
         m_Actions_Shoot = m_Actions.FindAction("Shoot", throwIfNotFound: true);
         m_Actions_Reload = m_Actions.FindAction("Reload", throwIfNotFound: true);
         m_Actions_Skill = m_Actions.FindAction("Skill", throwIfNotFound: true);
-        m_Actions_Cancel = m_Actions.FindAction("Cancel", throwIfNotFound: true);
+        m_Actions_Interact = m_Actions.FindAction("Interact", throwIfNotFound: true);
         // Camera
         m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
         m_Camera_RotateY = m_Camera.FindAction("RotateY", throwIfNotFound: true);
@@ -1295,7 +1306,7 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
     private readonly InputAction m_Actions_Shoot;
     private readonly InputAction m_Actions_Reload;
     private readonly InputAction m_Actions_Skill;
-    private readonly InputAction m_Actions_Cancel;
+    private readonly InputAction m_Actions_Interact;
     public struct ActionsActions
     {
         private @PlayerInputMap m_Wrapper;
@@ -1303,7 +1314,7 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
         public InputAction @Shoot => m_Wrapper.m_Actions_Shoot;
         public InputAction @Reload => m_Wrapper.m_Actions_Reload;
         public InputAction @Skill => m_Wrapper.m_Actions_Skill;
-        public InputAction @Cancel => m_Wrapper.m_Actions_Cancel;
+        public InputAction @Interact => m_Wrapper.m_Actions_Interact;
         public InputActionMap Get() { return m_Wrapper.m_Actions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1322,9 +1333,9 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
             @Skill.started += instance.OnSkill;
             @Skill.performed += instance.OnSkill;
             @Skill.canceled += instance.OnSkill;
-            @Cancel.started += instance.OnCancel;
-            @Cancel.performed += instance.OnCancel;
-            @Cancel.canceled += instance.OnCancel;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
         }
 
         private void UnregisterCallbacks(IActionsActions instance)
@@ -1338,9 +1349,9 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
             @Skill.started -= instance.OnSkill;
             @Skill.performed -= instance.OnSkill;
             @Skill.canceled -= instance.OnSkill;
-            @Cancel.started -= instance.OnCancel;
-            @Cancel.performed -= instance.OnCancel;
-            @Cancel.canceled -= instance.OnCancel;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
         }
 
         public void RemoveCallbacks(IActionsActions instance)
@@ -1572,7 +1583,7 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
         void OnShoot(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
         void OnSkill(InputAction.CallbackContext context);
-        void OnCancel(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
     public interface ICameraActions
     {

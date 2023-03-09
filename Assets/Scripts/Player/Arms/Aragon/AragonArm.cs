@@ -86,8 +86,8 @@ public class AragonArm : Arm
     public override void StartPrevis()
     {
         loopInstance = FMODUnity.RuntimeManager.CreateInstance("event:/SFX_Controller/Chants/FugueAragon/DuringPreveiw");
-        SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/FugueAragon/StartPreveiw", 1f, gameObject);
         loopInstance.start();
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/FugueAragon/StartPreveiw", 1f, gameObject);
         _vfx.SetActive(true);
         PlaceHolderSoundManager.Instance.PlayDashPrevisSound();
     }
@@ -108,6 +108,8 @@ public class AragonArm : Arm
 
     public override void StopPrevis()
     {
+        loopInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        loopInstance.release();
         _vfx.SetActive(false);
     }
 
@@ -119,8 +121,7 @@ public class AragonArm : Arm
             crosshair.fillAmount = 0.0f;
 
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/FugueAragon/DashStart", 1f, gameObject);
-        loopInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-        loopInstance.release();
+
 
         _player.PlayerHealth.IsInvulnerable = true;
         _player.AllowMovement(false);

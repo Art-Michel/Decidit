@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
 
-public class Altar : MonoBehaviour
+public class Altar : MonoBehaviour, IInteractable
 {
     //? Chants
     public enum Chants
@@ -68,23 +68,23 @@ public class Altar : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter(Collider other)
+    public void Interact(Transform other)
     {
-        if (other.CompareTag("Player") && !_hasBeenUsed && !_isPlayerInside)
+        if (other.CompareTag("Player") && !_hasBeenUsed /* && !_isPlayerInside*/)
         {
             PlayerManager.Instance.StartAltarMenuing(this);
             StartMovingPlayer();
-            _isPlayerInside = true;
+            // _isPlayerInside = true;
         }
     }
 
-    void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            _isPlayerInside = false;
-        }
-    }
+    // void OnTriggerExit(Collider other)
+    // {
+    //     if (other.CompareTag("Player"))
+    //     {
+    //         _isPlayerInside = false;
+    //     }
+    // }
 
     void Update()
     {

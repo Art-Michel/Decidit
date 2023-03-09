@@ -44,7 +44,7 @@ public class Arm : MonoBehaviour
         _fsm = GetComponent<ArmFSM>();
         _inputs = new PlayerInputMap();
         _inputs.Actions.Skill.started += _ => PressSong();
-        _inputs.Actions.Cancel.started += _ => PressCancelSong();
+        _inputs.Actions.Interact.started += _ => PressCancelSong();
         _inputs.Actions.Skill.canceled += _ => ReleaseSong();
     }
 
@@ -158,7 +158,7 @@ public class Arm : MonoBehaviour
     {
         _crossHairGlow.SetActive(true);
         PlaceHolderSoundManager.Instance.PlayArmFilled();
-        if (_inputs.Actions.Skill.IsPressed())
+        if (_inputs.Actions.Skill.IsPressed() && !_inputs.Actions.Interact.IsPressed())
             PressSong();
     }
 
