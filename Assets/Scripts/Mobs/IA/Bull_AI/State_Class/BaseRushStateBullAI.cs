@@ -166,7 +166,6 @@ namespace State.AIBull
             rushBullSO.distRush = Vector3.Distance(captureBasePosDistance, globalRef.transform.position);
             if (rushBullSO.distRush >= rushBullSO.rushDistance)
             {
-                Debug.Log(rushBullSO.distRush);
                 StopRush();
             }
         }

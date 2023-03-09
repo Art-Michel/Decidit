@@ -41,13 +41,27 @@ namespace State.AIBull
             {
                 BaseMovement();
 
-                if (globalRef.launchRush)
-                    LaunchRush();
-                else if (globalRef.distPlayer < globalRef.baseMoveBullSO.distActiveRush)
+                if (globalRef.distPlayer < globalRef.baseMoveBullSO.distActiveRush)
                 {
                     globalRef.launchRush = true;
-                    LaunchRush();
                 }
+            }
+        }
+
+        private void FixedUpdate()
+        {
+            if(globalRef.launchRush)
+                CheckObstacle();
+        }
+        void CheckObstacle()
+        {
+            RaycastHit hit = RaycastAIManager.instanceRaycast.RaycastAI(globalRef.rayCheckRush.position, 
+                                                        globalRef.playerTransform.position - globalRef.rayCheckRush.position,
+                                                        globalRef.rushBullSO.maskCheckCanRush, Color.blue,
+                                                        Vector3.Distance(globalRef.transform.position, globalRef.playerTransform.position));
+            if(hit.transform == globalRef.playerTransform)
+            {
+                LaunchRush();
             }
         }
         void ManageCurrentNavMeshLink()

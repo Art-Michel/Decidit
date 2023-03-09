@@ -25,7 +25,7 @@ namespace State.AIBull
         public GlobalRefAnimator globalRefAnimator;
         public AnimEventRusher animEventRusher;
 
-        [Header("Slow Move References")]
+        [Header("Eylau Move References")]
         public bool isInEylau;
         public float slowSpeed;
         public float slowSpeedRot;
@@ -34,6 +34,9 @@ namespace State.AIBull
         [Header("Debug Destination")]
         public Transform sphereDebug;
         public LayerMask allMask;
+
+        [Header("Ref BaseMove State")]
+        public Transform rayCheckRush;
 
         [Header("Ref Attack State")]
         public Hitbox hitBox;
