@@ -9,25 +9,16 @@ public class ApplyDifficulty : MonoBehaviour
     {
         if (instance == null)
         {
-            DontDestroyOnLoad(gameObject);
             instance = this;
         }
         else
         {
-            Destroy(gameObject);
+            DontDestroyOnLoad(gameObject);
         }
-
-        Debug.Log("Difficulty Value : " + indexDifficulty);
-    }
-
-    private void Update()
-    {
-        Debug.Log("Difficulty Value : " + indexDifficulty);
     }
 
     public void SelectDifficulty(int i)
     {
         indexDifficulty = i;
-        Debug.Log("Difficulty Value : " + indexDifficulty);
     }
 }
