@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections.Generic;
+using NaughtyAttributes;
 
 namespace State.WallAI
 {
@@ -33,11 +34,36 @@ namespace State.WallAI
         public BaseMoveWallAISO baseMoveWallAISO;
         public BaseAttackWallAISO baseAttackWallAISO;
 
+        [Foldout("Easy")] public BaseMoveWallAISO baseMoveWallAISO_EZ;
+        [Foldout("Easy")] public BaseAttackWallAISO baseAttackWallAISO_EZ;
+
+        [Foldout("Medium")] public BaseMoveWallAISO baseMoveWallAISO_Med;
+        [Foldout("Medium")] public BaseAttackWallAISO baseAttackWallAISO_Med;
+
+        [Foldout("Hard")] public BaseMoveWallAISO baseMoveWallAISO_Hard;
+        [Foldout("Hard")] public BaseAttackWallAISO baseAttackWallAISO_Hard;
+
         // Start is called before the first frame update
         void Awake()
         {
-            baseMoveWallAISO = Instantiate(baseMoveWallAISO);
-            baseAttackWallAISO = Instantiate(baseAttackWallAISO);
+            switch (ApplyDifficulty.instance.indexDifficulty)
+            {
+                case 0:
+                    baseMoveWallAISO = Instantiate(baseMoveWallAISO);
+                    baseAttackWallAISO = Instantiate(baseAttackWallAISO);
+                    break;
+
+                case 1:
+                    baseMoveWallAISO = Instantiate(baseMoveWallAISO_Med);
+                    baseAttackWallAISO = Instantiate(baseAttackWallAISO_Med);
+                    break;
+
+                case 2:
+                    baseMoveWallAISO = Instantiate(baseMoveWallAISO_Hard);
+                    baseAttackWallAISO = Instantiate(baseAttackWallAISO_Hard);
+                    break;
+            }
+
             baseMoveWallAISO.lastWallCrack = Instantiate(baseMoveWallAISO.wallCrackPrefab, transform.position, Quaternion.Euler(0, orientation, 0));
 
             playerTransform = GameObject.FindWithTag("Player").transform;

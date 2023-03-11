@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -42,14 +43,48 @@ namespace State.FlyAI
         public DeathFlySO deathFlySO;
         public KnockBackFlySO KnockBackFlySO;
 
+        [Foldout("Easy")] public BaseMoveFlySO baseMoveFlySO_EZ;
+        [Foldout("Easy")] public LockPlayerFlySO lockPlayerFlySO_EZ;
+        [Foldout("Easy")] public BaseAttackFlySO baseAttackFlySO_EZ;
+
+        [Foldout("Medium")] public BaseMoveFlySO baseMoveFlySO_Medium;
+        [Foldout("Medium")] public LockPlayerFlySO lockPlayerFlySO_Medium;
+        [Foldout("Medium")] public BaseAttackFlySO baseAttackFlySO_Medium;
+
+        [Foldout("Hard")] public BaseMoveFlySO baseMoveFlySO_Hard;
+        [Foldout("Hard")] public LockPlayerFlySO lockPlayerFlySO_Hard;
+        [Foldout("Hard")] public BaseAttackFlySO baseAttackFlySO_Hard;
 
         // Start is called before the first frame update
         void Awake()
         {
-            baseMoveFlySO = Instantiate(baseMoveFlySO);
-            lockPlayerFlySO = Instantiate(lockPlayerFlySO);
-            baseAttackFlySO = Instantiate(baseAttackFlySO);
-            deathFlySO = Instantiate(deathFlySO);
+            switch (ApplyDifficulty.instance.indexDifficulty)
+            {
+                case 0:
+                    baseMoveFlySO = Instantiate(baseMoveFlySO_EZ);
+                    lockPlayerFlySO = Instantiate(lockPlayerFlySO_EZ);
+                    baseAttackFlySO = Instantiate(baseAttackFlySO_EZ);
+                    deathFlySO = Instantiate(deathFlySO);
+                    KnockBackFlySO = Instantiate(KnockBackFlySO);
+                    break;
+
+                case 1:
+                    baseMoveFlySO = Instantiate(baseMoveFlySO_Medium);
+                    lockPlayerFlySO = Instantiate(lockPlayerFlySO_Medium);
+                    baseAttackFlySO = Instantiate(baseAttackFlySO_Medium);
+                    deathFlySO = Instantiate(deathFlySO);
+                    KnockBackFlySO = Instantiate(KnockBackFlySO);
+                    break;
+
+                case 2:
+                    baseMoveFlySO = Instantiate(baseMoveFlySO_Hard);
+                    lockPlayerFlySO = Instantiate(lockPlayerFlySO_Hard);
+                    baseAttackFlySO = Instantiate(baseAttackFlySO_Hard);
+                    deathFlySO = Instantiate(deathFlySO);
+                    KnockBackFlySO = Instantiate(KnockBackFlySO);
+                    break;
+            }
+
             playerTransform = GameObject.FindWithTag("Player").transform;
         }
 

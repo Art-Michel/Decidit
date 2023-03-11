@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -60,6 +61,10 @@ namespace State.AICAC
         public SurroundParameterAICAC surroundAICACSO;
         public KnockBackParameterAICAC knockBackAICACSO;
 
+        [Foldout("Easy")] public BaseMoveParameterAICAC baseMoveAICACSO_EZ;
+        [Foldout("Medium")] public BaseMoveParameterAICAC baseMoveAICACSO_Med;
+        [Foldout("Hard")] public BaseMoveParameterAICAC baseMoveAICACSO_Hard;
+
         void Awake()
         {
             agent = GetComponent<NavMeshAgent>();
@@ -72,7 +77,21 @@ namespace State.AICAC
             agentLinkMover = GetComponent<AgentLinkMover>();
             surroundManager = GetComponentInParent<SurroundManager>();
 
-            baseMoveAICACSO = Instantiate(baseMoveAICACSO);
+
+            switch (ApplyDifficulty.instance.indexDifficulty)
+            {
+                case 0:
+                    baseMoveAICACSO = Instantiate(baseMoveAICACSO_EZ);
+                    break;
+
+                case 1:
+                    baseMoveAICACSO = Instantiate(baseMoveAICACSO_Med);
+                    break;
+
+                case 2:
+                    baseMoveAICACSO = Instantiate(baseMoveAICACSO_Hard);
+                    break;
+            }
             baseAttackAICACSO = Instantiate(baseAttackAICACSO);
             baseIdleAICACSO = Instantiate(baseIdleAICACSO);
             deathAICACSO = Instantiate(deathAICACSO);

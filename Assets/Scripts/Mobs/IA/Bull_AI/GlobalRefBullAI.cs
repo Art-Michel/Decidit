@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -49,13 +50,19 @@ namespace State.AIBull
         [Header("Ref Death State")]
         public bool isDead;
 
-        [Header("Scriptable")]
-        public BaseIdleBullSO baseIdleBullSO;
-        public BaseMoveBullParameterSO baseMoveBullSO;
-        public CoolDownRushBullParameterSO coolDownRushBullSO;
-        public RushBullParameterSO rushBullSO;
-        public BaseAttackBullSO baseAttackBullSO;
-        public DeathBullParameterSO deathBullSO;
+        [Foldout("Scriptable")] public BaseIdleBullSO baseIdleBullSO;
+        [Foldout("Scriptable")] public BaseMoveBullParameterSO baseMoveBullSO;
+        [Foldout("Scriptable")] public RushBullParameterSO rushBullSO;
+        [Foldout("Scriptable")] public DeathBullParameterSO deathBullSO;
+
+        [Foldout("Easy")] public BaseMoveBullParameterSO baseMoveBullSO_EZ;
+        [Foldout("Easy")] public RushBullParameterSO rushBullSO_EZ;
+
+        [Foldout("Medium")] public BaseMoveBullParameterSO baseMoveBullSO_Med;
+        [Foldout("Medium")] public RushBullParameterSO rushBullSO_Med;
+
+        [Foldout("Hard")] public BaseMoveBullParameterSO baseMoveBullSO_Hard;
+        [Foldout("Hard")] public RushBullParameterSO rushBullSO_Hard;
 
         void Awake()
         {
@@ -67,12 +74,30 @@ namespace State.AIBull
             agentLinkMover = GetComponent<AgentLinkMover>();
             rushManager = GetComponentInParent<RushManager>();
 
-            baseIdleBullSO = Instantiate(baseIdleBullSO);
-            baseMoveBullSO = Instantiate(baseMoveBullSO);
-            coolDownRushBullSO = Instantiate(coolDownRushBullSO);
-            rushBullSO = Instantiate(rushBullSO);
-            baseAttackBullSO = Instantiate(baseAttackBullSO);
-            deathBullSO = Instantiate(deathBullSO);
+            switch (ApplyDifficulty.instance.indexDifficulty)
+            {
+                case 0:
+                    baseIdleBullSO = Instantiate(baseIdleBullSO);
+                    baseMoveBullSO = Instantiate(baseMoveBullSO_EZ);
+                    rushBullSO = Instantiate(rushBullSO_EZ);
+                    deathBullSO = Instantiate(deathBullSO);
+                    break;
+
+                case 1:
+                    baseIdleBullSO = Instantiate(baseIdleBullSO);
+                    baseMoveBullSO = Instantiate(baseMoveBullSO_Med);
+                    rushBullSO = Instantiate(rushBullSO_Med);
+                    deathBullSO = Instantiate(deathBullSO);
+                    break;
+
+                case 2:
+                    baseIdleBullSO = Instantiate(baseIdleBullSO);
+                    baseMoveBullSO = Instantiate(baseMoveBullSO_Hard);
+                    rushBullSO = Instantiate(rushBullSO_Hard);
+                    deathBullSO = Instantiate(deathBullSO);
+                    break;
+            }
+
         }
 
         void Update()
