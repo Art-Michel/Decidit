@@ -57,7 +57,8 @@ namespace State.WallAI
             {
                 case 0:
                     baseAttackWallAISO.playerPredicDir = globalRef.playerTransform.position;
-                    baseAttackWallAISO.vPlayer = directionPlayer.magnitude;
+                    //baseAttackWallAISO.vPlayer = directionPlayer.magnitude;
+                    baseAttackWallAISO.vPlayer = new Vector3(directionPlayer.x, directionPlayer.y, directionPlayer.z).magnitude;
                     baseAttackWallAISO.vProjectileGotToPredicPos = baseAttackWallAISO.defaultForceBullet;
                     break;
                 default:

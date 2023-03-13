@@ -57,7 +57,6 @@ public class RushBullParameterSO : ScriptableObject
     public RaycastHit hitObstacle;
 
     [Header("Detect Trash Mob Parameter")]
-    public BoxCollider detectOtherAICollider;
     public List<GameObject> ennemiInCollider = new List<GameObject>();
     public RaycastHit hit;
     public LayerMask maskCheckEnnemi;
