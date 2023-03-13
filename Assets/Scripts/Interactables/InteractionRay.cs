@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class InteractionRay : MonoBehaviour
 {
@@ -43,7 +44,7 @@ public class InteractionRay : MonoBehaviour
 
     private void CheckForInteractableRange()
     {
-        if ((_interactable.position - transform.position).sqrMagnitude <= _interactRange)
+        if ((_interactable.position - transform.position).magnitude <= _interactRange)
         {
             if (!_isCloseEnough)
                 _isCloseEnough = true;
