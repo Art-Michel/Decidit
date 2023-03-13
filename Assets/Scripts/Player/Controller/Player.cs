@@ -275,7 +275,7 @@ public class Player : LocalManager<Player>
 
         var targetRotation = Quaternion.Euler(Vector3.up * _cameraTargetYRotation) * Quaternion.Euler(Vector3.right * _cameraTargetXRotation);
 
-        Head.rotation = Quaternion.Lerp(Head.rotation, targetRotation, Time.timeScale);
+        Head.rotation = Quaternion.Slerp(Head.rotation, targetRotation, Time.timeScale);
     }
 
     private void MoveCameraWithRightStick()
@@ -290,7 +290,7 @@ public class Player : LocalManager<Player>
 
         var targetRotation = Quaternion.Euler(Vector3.up * _cameraTargetYRotation) * Quaternion.Euler(Vector3.right * _cameraTargetXRotation);
 
-        Head.rotation = Quaternion.Lerp(Head.rotation, targetRotation, _cameraSmoothness * Time.deltaTime);
+        Head.rotation = Quaternion.Slerp(Head.rotation, targetRotation, _cameraSmoothness * Time.deltaTime);
     }
 
     public void ForceRotation(Transform obj)
