@@ -29,8 +29,6 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
 
     [SerializeField] List<Room> _roomsToBuild;
 
-    private LD_Analytics ld_Analytics;
-
     protected override void Awake()
     {
         base.Awake();
@@ -39,7 +37,6 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
 
     void Start()
     {
-        ld_Analytics = gameObject.GetComponent<LD_Analytics>();
         _numberOfRooms = _difficultyPerRoom.Length;
         ResetDungeon();
         SetUsableRooms();
@@ -201,8 +198,6 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
 
     public void Endgame()
     {
-        Debug.Log("tu te joue toi?");
         MenuManager.Instance.OpenWin();
-        ld_Analytics.SetWinState();
     }
 }
