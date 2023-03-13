@@ -256,7 +256,7 @@ public class Revolver : MonoBehaviour
     private void Reloaded()
     {
         _ammo = _maxAmmo;
-        //TODO lucas PlaceHolderSoundManager.Instance.PlayReloaded();
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/BaseShoot/Realoded", 1f, gameObject);
         DisplayAmmo();
     }
 

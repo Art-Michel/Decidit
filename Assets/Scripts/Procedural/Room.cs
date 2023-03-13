@@ -105,7 +105,8 @@ public class Room : MonoBehaviour
     private void FinishRoom()
     {
         //Feedbacks
-        //TODO Lucas Son quand on termine la room
+        SoundManager.Instance.PlaySound("event:/SFX_Environement/SlowMo", 1f, gameObject);
+        SoundManager.Instance.PlaySound("event:/SFX_Environement/StartFight", 1f, gameObject);
         //TODO Lucas calmer la musique ici
         PlayerManager.Instance.StartSlowMo(0.01f, 2f);
 

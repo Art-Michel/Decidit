@@ -42,6 +42,7 @@ public class EylauRevolver : Revolver
     private float _currentCharge;
     private bool _charged;
     private Vector3 _shakenDirection = Vector3.zero;
+    private FMOD.Studio.EventInstance loopInstance;
 
     public override void UpdateChargeLevel()
     {
@@ -63,7 +64,9 @@ public class EylauRevolver : Revolver
 
     private void GetCharged()
     {
-        //TODO Lucas Son quand le gun est chargé à fond, si tu veux aussi un bool pour -
+        loopInstance = FMODUnity.RuntimeManager.CreateInstance("event:/SFX_Controller/Shoots/CimetièreEyleau/MaxChargedLoop");
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/CimetièreEyleau/MaxCharged", 1f, gameObject);
+        loopInstance.start();
         //jouer en boucle un son quand il est chargé genre vwooooom
         _charged = true;
     }
@@ -73,6 +76,8 @@ public class EylauRevolver : Revolver
         PooledObject shot = null;
         if (!_charged)
         {
+            loopInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            loopInstance.release();
             SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/CimetièreEyleau/BasedShoot", 1f, gameObject);
             shot = _unchargedProjectilePooler.Get();
             shot.GetComponent<Projectile>().Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized);
@@ -87,6 +92,8 @@ public class EylauRevolver : Revolver
             //     PiercingLaser();
             // else
             //Laser();
+            loopInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            loopInstance.release();
             SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/CimetièreEyleau/ChargedShoot", 1f, gameObject);
             shot = _chargedProjectilePooler.Get();
             shot.GetComponent<Projectile>().Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized);
