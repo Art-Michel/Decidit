@@ -68,9 +68,9 @@ public class Altar : MonoBehaviour, IInteractable
         }
     }
 
-    public void Interact(Transform other)
+    public void Interact()
     {
-        if (other.CompareTag("Player") && !_hasBeenUsed /* && !_isPlayerInside*/)
+        if (!_hasBeenUsed)
         {
             PlayerManager.Instance.StartAltarMenuing(this);
             StartMovingPlayer();

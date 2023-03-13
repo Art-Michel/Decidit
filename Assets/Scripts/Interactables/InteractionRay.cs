@@ -27,7 +27,6 @@ public class InteractionRay : MonoBehaviour
     {
         if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, _interactableDetectionRange, _mask))
         {
-            Debug.Log("mario");
             if (_interactable == hit.transform)
                 return true;
             _interactable = hit.transform;
@@ -56,7 +55,9 @@ public class InteractionRay : MonoBehaviour
     private void Interact()
     {
         if (_interactable != null && _isCloseEnough)
+        {
             _interactable.GetComponent<IInteractable>().Interact();
+        }
     }
 
     #region Enable Disable Inputs

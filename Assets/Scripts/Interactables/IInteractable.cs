@@ -11,6 +11,5 @@ public interface IInteractable
 
     public void CheckInteractability()
     {
-        Debug.Log("Mario");
     }
 }

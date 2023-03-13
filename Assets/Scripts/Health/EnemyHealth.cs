@@ -108,6 +108,7 @@ public class EnemyHealth : Health
             globalRefWallAI.CheckHP();
 
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/HitMarker", .2f, gameObject);
+        PlayerHealth.Instance.ResetProbStartup();
         base.TakeDamage(amount);
     }
 

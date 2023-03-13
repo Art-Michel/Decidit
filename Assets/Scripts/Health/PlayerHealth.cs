@@ -1,3 +1,4 @@
+using System.Globalization;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
@@ -5,6 +6,8 @@ using NaughtyAttributes;
 
 public class PlayerHealth : Health
 {
+    public static PlayerHealth Instance;
+
     [Foldout("References")]
     [SerializeField] Player _player;
 
@@ -54,6 +57,12 @@ public class PlayerHealth : Health
 
     protected override void Awake()
     {
+        if (Instance != null)
+        {
+            DestroyImmediate(this);
+            return;
+        }
+        Instance = GetComponent<PlayerHealth>();
         base.Awake();
     }
 
@@ -79,6 +88,11 @@ public class PlayerHealth : Health
         HandleLowHpVignette();
         StartDamageVignette(amount);
         DisplayProbHealth();
+    }
+
+    public void ResetProbStartup()
+    {
+        _probationStartup = _probationMaxStartup;
     }
 
     private void HandleLowHpVignette()
@@ -163,4 +177,8 @@ public class PlayerHealth : Health
         PlayerManager.Instance.StartDying();
     }
 
+    protected virtual void OnDestroy()
+    {
+        Instance = null;
+    }
 }

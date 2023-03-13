@@ -22,7 +22,7 @@ public class Health : MonoBehaviour
     [Foldout("Stats")]
     [Range(1, 1000)][SerializeField] protected float _maxHp = 100;
     [Foldout("Stats")]
-    [Range(0, 3)][SerializeField] float _probationMaxStartup = 1;
+    [Range(0, 3)][SerializeField] protected float _probationMaxStartup = 1;
     [Foldout("Stats")]
     [Range(0.1f, 60)][SerializeField] float _probationSpeed = 15;
     [Foldout("Stats")]

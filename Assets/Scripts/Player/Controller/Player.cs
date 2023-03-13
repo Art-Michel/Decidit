@@ -37,6 +37,7 @@ public class Player : LocalManager<Player>
     float _shakeT;
     float _shakeInitialT;
     float _shakeIntensity;
+    bool _up = true;
     Vector3 _initialHeadPos = new Vector3(0, 0.4f, 0);
 
     //Mouse
@@ -317,7 +318,21 @@ public class Player : LocalManager<Player>
         if (_shakeT > 0)
         {
             float shakeIntensity = _shakeIntensity * Mathf.InverseLerp(0, _shakeInitialT, _shakeT);
-            Head.localPosition = _initialHeadPos + new Vector3(UnityEngine.Random.Range(-1, 1), UnityEngine.Random.Range(-1, 1), 0).normalized * shakeIntensity;
+
+            //old shake, in all directions
+            //Head.localPosition = _initialHeadPos + new Vector3(UnityEngine.Random.Range(-1, 1), UnityEngine.Random.Range(-1, 1), 0).normalized * shakeIntensity;
+
+            //new shake, only vertical
+            if (_up)
+            {
+                Head.localPosition = _initialHeadPos + Vector3.up * shakeIntensity;
+                _up = false;
+            }
+            else
+            {
+                Head.localPosition = _initialHeadPos + Vector3.down * shakeIntensity;
+                _up = true;
+            }
             _shakeT -= Time.deltaTime;
             if (_shakeT < 0)
                 StopShake();
