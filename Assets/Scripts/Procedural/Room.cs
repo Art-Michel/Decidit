@@ -68,6 +68,7 @@ public class Room : MonoBehaviour
 
         else
         {
+            PlayerManager.Instance.RechargeEverything();
             this.EnableEnemies(true);
         }
     }

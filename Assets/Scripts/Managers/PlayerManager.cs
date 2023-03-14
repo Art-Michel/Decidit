@@ -273,6 +273,20 @@ public class PlayerManager : LocalManager<PlayerManager>
             Pause();
     }
 
+    public void RechargeEverything()
+    {
+        foreach (GameObject revolver in Guns)
+        {
+            if (revolver.activeInHierarchy)
+                revolver.GetComponent<Revolver>().Reloaded();
+        }
+        foreach (GameObject arm in Arms)
+        {
+            if (arm.activeInHierarchy)
+                arm.GetComponent<Arm>().Refilled();
+        }
+    }
+
     public void Pause()
     {
         _isPaused = true;

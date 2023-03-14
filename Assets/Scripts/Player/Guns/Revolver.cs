@@ -253,7 +253,7 @@ public class Revolver : MonoBehaviour
     }
 
     //Actually refill ammo
-    private void Reloaded()
+    public void Reloaded()
     {
         _ammo = _maxAmmo;
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/BaseShoot/Realoded", 1f, gameObject);

@@ -154,7 +154,7 @@ public class Arm : MonoBehaviour
 
     }
 
-    protected void Refilled()
+    public void Refilled()
     {
         _crossHairGlow.SetActive(true);
         PlaceHolderSoundManager.Instance.PlayArmFilled();
