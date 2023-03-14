@@ -45,6 +45,10 @@ public class PlayerHealth : Health
     [Tooltip("For how long Screen will shake when player gets hit.")]
     private float _playerHurtShakeDuration = 0.3f;
 
+    float _damageVignetteR;
+    float _damageVignetteG;
+    float _damageVignetteB;
+
     //* Unused!
     // [Foldout("Stats")]
     // [SerializeField]
@@ -64,6 +68,14 @@ public class PlayerHealth : Health
         }
         Instance = GetComponent<PlayerHealth>();
         base.Awake();
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+        _damageVignetteR = _damageVignette.color.r;
+        _damageVignetteG = _damageVignette.color.g;
+        _damageVignetteB = _damageVignette.color.b;
     }
 
     protected override void Update()
@@ -149,12 +161,12 @@ public class PlayerHealth : Health
         {
             _damageVignetteT += Time.deltaTime * _damageVignetteSpeed;
             float alpha = _vignetteAlphaOnDamage.Evaluate(_damageVignetteT);
-            _damageVignette.color = new Color(1.0f, 0.45f, 0.0f, alpha * _currentDamageVignetteMaxAlpha);
+            _damageVignette.color = new Color(_damageVignetteR, _damageVignetteG, _damageVignetteB, alpha * _currentDamageVignetteMaxAlpha);
         }
         else
         {
             _damageVignetteT = 1.0f;
-            _damageVignette.color = new Color(0.7f, 0.0f, 0.0f, 0.0f);
+            _damageVignette.color = new Color(_damageVignetteR, _damageVignetteG, _damageVignetteB, 0.0f);
             _isBeingDamaged = false;
         }
     }
