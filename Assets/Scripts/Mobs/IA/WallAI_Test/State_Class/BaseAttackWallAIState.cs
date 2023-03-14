@@ -45,12 +45,10 @@ namespace State.WallAI
             if (dot > 0.65f)
             {
                 globalRef.myAnimator.speed = 1;
-                print("facing");
             }
             else
             {
                 globalRef.myAnimator.speed = baseAttackWallAISO.speedSlowAnimAttack;
-                print("back");
             }
         }
 

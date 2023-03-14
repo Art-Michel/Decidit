@@ -27,6 +27,7 @@ namespace State.AIBull
         float delayInertieRushInWall;
         [SerializeField] float maxDelayInertieRushInWall;
 
+
         public override void InitState(StateControllerBull stateController)
         {
             base.InitState(stateController);
@@ -290,6 +291,7 @@ namespace State.AIBull
                             rushBullSO.speedRot = rushBullSO.maxSpeedRot;
                             AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Rush");
                             canStartRush = true;
+                            Debug.Log("Launch Rush");
                         }
                     }
                     break;
@@ -312,7 +314,8 @@ namespace State.AIBull
 
         void StopRush()
         {
-            stateController.SetActiveState(StateControllerBull.AIState.Idle);
+            if(delayInertieRushInWall <=0)
+                stateController.SetActiveState(StateControllerBull.AIState.Idle);
         }
         private void OnDisable()
         {

@@ -26,6 +26,15 @@ namespace State.AIBull
 
         private void OnEnable()
         {
+            globalRef.knockBackBullSO.currentCountKnockBack++;
+
+            if(globalRef.knockBackBullSO.currentCountKnockBack >= globalRef.knockBackBullSO.maxCountKnockBack)
+            {
+                ActiveRushState();
+                globalRef.knockBackBullSO.currentCountKnockBack = 0;
+                return;
+            }
+
             try
             {
                 isFall = false;
@@ -109,6 +118,10 @@ namespace State.AIBull
         void ActiveIdleState()
         {
             stateController.SetActiveState(StateControllerBull.AIState.Idle);
+        } 
+        void ActiveRushState()
+        {
+            stateController.SetActiveState(StateControllerBull.AIState.Rush);
         }
 
         private void OnDisable()

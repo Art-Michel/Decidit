@@ -46,6 +46,7 @@ namespace State.AIBull
         public Transform RayRushRight;
         public Transform RayRushMiddle;
         public Transform RayRushLeft;
+        [SerializeField] GameObject refRushStateObj;
 
         [Header("Ref Death State")]
         public bool isDead;
@@ -53,16 +54,20 @@ namespace State.AIBull
         [Foldout("Scriptable")] public BaseIdleBullSO baseIdleBullSO;
         [Foldout("Scriptable")] public BaseMoveBullParameterSO baseMoveBullSO;
         [Foldout("Scriptable")] public RushBullParameterSO rushBullSO;
+        [Foldout("Scriptable")] public KnockBackBullSO knockBackBullSO;
         [Foldout("Scriptable")] public DeathBullParameterSO deathBullSO;
 
         [Foldout("Easy")] public BaseMoveBullParameterSO baseMoveBullSO_EZ;
         [Foldout("Easy")] public RushBullParameterSO rushBullSO_EZ;
+        [Foldout("Easy")] public KnockBackBullSO knockBackBullSO_EZ;
 
         [Foldout("Medium")] public BaseMoveBullParameterSO baseMoveBullSO_Med;
         [Foldout("Medium")] public RushBullParameterSO rushBullSO_Med;
+        [Foldout("Medium")] public KnockBackBullSO knockBackBullSO_Med;
 
         [Foldout("Hard")] public BaseMoveBullParameterSO baseMoveBullSO_Hard;
         [Foldout("Hard")] public RushBullParameterSO rushBullSO_Hard;
+        [Foldout("Hard")] public KnockBackBullSO knockBackBullSO_Hard;
 
         void Awake()
         {
@@ -80,6 +85,7 @@ namespace State.AIBull
                     baseIdleBullSO = Instantiate(baseIdleBullSO);
                     baseMoveBullSO = Instantiate(baseMoveBullSO_EZ);
                     rushBullSO = Instantiate(rushBullSO_EZ);
+                    knockBackBullSO = Instantiate(knockBackBullSO_EZ);
                     deathBullSO = Instantiate(deathBullSO);
                     break;
 
@@ -87,6 +93,7 @@ namespace State.AIBull
                     baseIdleBullSO = Instantiate(baseIdleBullSO);
                     baseMoveBullSO = Instantiate(baseMoveBullSO_Med);
                     rushBullSO = Instantiate(rushBullSO_Med);
+                    knockBackBullSO = Instantiate(knockBackBullSO_Med);
                     deathBullSO = Instantiate(deathBullSO);
                     break;
 
@@ -94,6 +101,7 @@ namespace State.AIBull
                     baseIdleBullSO = Instantiate(baseIdleBullSO);
                     baseMoveBullSO = Instantiate(baseMoveBullSO_Hard);
                     rushBullSO = Instantiate(rushBullSO_Hard);
+                    knockBackBullSO = Instantiate(knockBackBullSO_Hard);
                     deathBullSO = Instantiate(deathBullSO);
                     break;
             }
@@ -113,7 +121,7 @@ namespace State.AIBull
 
         public void ActiveKnockBackState()
         {
-            if(enemyHealth._hp >0)
+            if(enemyHealth._hp >0 && !refRushStateObj.activeInHierarchy)
                 ActiveState(StateControllerBull.AIState.KnockBack);
         }
 
