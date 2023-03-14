@@ -49,7 +49,7 @@ public class Projectile : Hitbox
     protected Vector3 _spaceTraveledLast2Frames;
     private bool _isDisappearing;
     private float _disappearanceT;
-    
+
     public virtual void Setup(Vector3 position, Vector3 direction)
     {
         transform.position = position;
@@ -233,8 +233,8 @@ public class Projectile : Hitbox
         //wall or ground
         if (obj.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
-            SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/BaseShoot/BaseShootImpactObject", 1f, gameObject);
             PooledObject impactVfx = _impactVfxPooler.Get();
+            //Hard limit for impacts so we don't get 10000 vfx and sfx when going through many walls
             if (impactVfx == null)
                 return;
 
@@ -245,15 +245,19 @@ public class Projectile : Hitbox
                 if (fromBehind)
                     impactVfx.transform.forward = -_direction;
                 else
+                {
+                    SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/BaseShoot/BaseShootImpactObject", 1f, gameObject);
+                    Debug.Log("impact");
                     impactVfx.transform.forward = _direction;
+                }
             }
         }
 
         //flesh
-        if (obj.gameObject.layer == LayerMask.NameToLayer("Flesh"))
+        else if (obj.gameObject.layer == LayerMask.NameToLayer("Flesh"))
         {
-            SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/BaseShoot/BaseShootImpactFlesh", 1f, gameObject);
             PooledObject splashVfx = _fleshSplashVfxPooler.Get();
+            //Hard limit for impacts so we don't get 10000 vfx and sfx when going through many walls
             if (splashVfx == null)
                 return;
 
@@ -264,7 +268,10 @@ public class Projectile : Hitbox
                 if (fromBehind) // upside down for some reason
                     splashVfx.transform.forward = _direction;
                 else
+                {
+                    SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/BaseShoot/BaseShootImpactFlesh", 1f, gameObject);
                     splashVfx.transform.forward = -_direction;
+                }
             }
         }
     }

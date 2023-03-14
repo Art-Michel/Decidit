@@ -44,11 +44,6 @@ public class Explosion : Hitbox
         _initialDamage = _damage;
     }
 
-    void Start()
-    {
-        Reset();
-    }
-
     void OnEnable()
     {
         Reset();

@@ -115,8 +115,8 @@ public class Hitbox : MonoBehaviour
                 //apply knockback
                 health.Knockback(direction.normalized * _knockbackForce);
             }
-            Blacklist.Add(targetCollider.parent, _delayBetweenHits);
         }
+        Blacklist.Add(targetCollider.parent, _delayBetweenHits);
     }
 
     Vector3 MakeDirectionRelative(Vector3 direction)
