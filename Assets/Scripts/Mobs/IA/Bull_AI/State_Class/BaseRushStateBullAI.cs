@@ -24,7 +24,7 @@ namespace State.AIBull
         Vector2 posAI;
 
         int indexRay;
-        float delayInertieRushInWall;
+        [SerializeField] float delayInertieRushInWall;
         [SerializeField] float maxDelayInertieRushInWall;
 
 
@@ -103,7 +103,7 @@ namespace State.AIBull
                     rushBullSO.rushDestination = globalRef.playerTransform.position + globalRef.transform.forward * rushBullSO.rushInertieSetDistance;
                     lockPlayer = true;
                     globalRef.launchRush = false;
-                    Invoke("CheckSpeed", 1f);
+                    //Invoke("CheckSpeed", 1f);
                 }
             }
         }
@@ -170,11 +170,11 @@ namespace State.AIBull
                 StopRush();
             }
         }
-        void CheckSpeed()
+        /*void CheckSpeed()
         {
             if(globalRef.characterController.velocity.magnitude ==0)
                 StopRush();
-        }
+        }*/
 
 
         void CheckObstacle()
