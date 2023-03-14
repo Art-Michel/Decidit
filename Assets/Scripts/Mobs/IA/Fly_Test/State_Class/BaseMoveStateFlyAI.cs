@@ -419,6 +419,7 @@ namespace State.FlyAI
                 baseMoveFlySO.currentRateAttack = Random.Range(baseMoveFlySO.maxRateAttack.x, baseMoveFlySO.maxRateAttack.y);
                 baseMoveFlySO.currentSpeedYPatrol = 0;
                 baseMoveFlySO.speedRotationAIPatrol = 0;
+                baseMoveFlySO.currentSpeed = baseMoveFlySO.startSpeed;
                 baseMoveFlySO.newPosIsSet = false;
             }
         }

@@ -4,6 +4,7 @@ using UnityEngine;
 public class BaseMoveFlySO : ScriptableObject
 {
     [Header("Speed Move")]
+    public float startSpeed;
     public float currentSpeed;
     public float baseMoveSpeed;
     public float lowSpeed;
