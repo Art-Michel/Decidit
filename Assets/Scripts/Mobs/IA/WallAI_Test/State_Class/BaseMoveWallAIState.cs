@@ -42,8 +42,6 @@ namespace State.WallAI
             {
                 stateControllerWallAI.SetActiveState(StateControllerWallAI.WallAIState.Death, true);
             }
-
-            //PlaySound();
         }
 
         private void FixedUpdate()

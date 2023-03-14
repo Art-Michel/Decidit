@@ -20,7 +20,6 @@ namespace State.AIBull
         bool disableOffsetDestination;
 
         [SerializeField] float distDetectObstacle;
-
         public override void InitState(StateControllerBull stateController)
         {
             base.InitState(stateController);
@@ -74,6 +73,7 @@ namespace State.AIBull
                 hitPlayer = false;
             }
         }
+
         void ManageCurrentNavMeshLink()
         {
             if (globalRef.agent.isOnOffMeshLink)

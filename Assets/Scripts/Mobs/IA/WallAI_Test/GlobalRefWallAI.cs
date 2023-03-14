@@ -17,9 +17,11 @@ namespace State.WallAI
         public float orientation;
         public MeshRenderer meshRenderer;
         [SerializeField] StateControllerWallAI stateControllerWallAI;
+        public LayerMask maskPlayer;
 
         [Header("Animation")]
         public Animator myAnimator;
+        public AnimationClip attackAnim;
         public GlobalRefAnimator globalRefAnimator;
 
         [Header("Slow Move References")]

@@ -33,6 +33,25 @@ namespace State.WallAI
             {
                 stateControllerWallAI.SetActiveState(StateControllerWallAI.WallAIState.Death, true);
             }
+
+            CheckIfPlayerIsBack();
+        }
+
+        void CheckIfPlayerIsBack()
+        {
+            Vector3 playerForward = globalRef.playerTransform.GetChild(0).forward;
+
+            float dot = Vector3.Dot(playerForward, (globalRef.transform.position - globalRef.playerTransform.position).normalized);
+            if (dot > 0.65f)
+            {
+                globalRef.myAnimator.speed = 1;
+                print("facing");
+            }
+            else
+            {
+                globalRef.myAnimator.speed = baseAttackWallAISO.speedSlowAnimAttack;
+                print("back");
+            }
         }
 
         void LaunchAttack()
@@ -93,6 +112,11 @@ namespace State.WallAI
                 AnimatorManager.instance.DisableAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "LaunchAttack");
                 activeAttack = false;
             }
+        }
+
+        private void OnDisable()
+        {
+            globalRef.myAnimator.speed = 1;
         }
 
         ////////////////////////  ANIMATION EVENT \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\

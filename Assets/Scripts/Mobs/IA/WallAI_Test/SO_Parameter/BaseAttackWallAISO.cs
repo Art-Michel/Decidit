@@ -10,7 +10,6 @@ namespace State.WallAI
 
         [Header("*Anticipatoin pos Player")]
         public float distAnticipGround;
-        public float distAnticipUp;
         public Vector3 playerPredicDir;
         public float timePlayerGoToPredicPos;
         public float vProjectileGotToPredicPos;
@@ -22,5 +21,6 @@ namespace State.WallAI
         public float defaultForceBullet;
         public int bulletCount;
         public int maxBulletCount;
+        public float speedSlowAnimAttack;
     }
 }
