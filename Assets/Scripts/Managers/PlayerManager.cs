@@ -100,7 +100,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         else
         {
             _isLockedAt60 = true;
-            Application.targetFrameRate = 60;
+            Application.targetFrameRate = 30;
         }
     }
 
