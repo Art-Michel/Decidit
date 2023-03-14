@@ -2,16 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Killplane : MonoBehaviour
+public class Killplane : LocalManager<Killplane>
 {
     [SerializeField] Transform _spawnPoint;
     private const float _delay = 0.2f;
     private const float _respawnUnfade = 0.1f;
     Queue<GameObject> _entitiesToRespawn;
 
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         _entitiesToRespawn = new Queue<GameObject>();
+    }
+
+    public void MoveSpawnPointTo(Vector3 position)
+    {
+        _spawnPoint.position = position;
     }
 
     void OnTriggerEnter(Collider other)

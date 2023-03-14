@@ -58,6 +58,7 @@ public class Room : MonoBehaviour
         DungeonGenerator.Instance.SetCurrentRoom(this);
         DungeonGenerator.Instance.GetRoom(-1).gameObject.SetActive(false);
         this.Entry.CloseDoor();
+        Killplane.Instance.MoveSpawnPointTo(this.Entry.transform.position + this.Entry.transform.forward * 4.0f);
 
         if (_isCorridor)
         {

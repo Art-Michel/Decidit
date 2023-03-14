@@ -8,6 +8,7 @@ public class TwoPosTrail : PooledObject
     [SerializeField] Transform _startObj;
     [SerializeField] Transform _endObj;
     [SerializeField] VisualEffect _vfx;
+    [SerializeField] float _lifeSpan = 0.75f;
     private float _cd;
 
     public void SetPos(Vector3 startPos, Vector3 endPos)
@@ -22,7 +23,7 @@ public class TwoPosTrail : PooledObject
     public void Play()
     {
         _vfx.Play();
-        _cd = .4f;
+        _cd = _lifeSpan;
     }
 
     void Update()

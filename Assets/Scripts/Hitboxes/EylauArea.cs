@@ -36,10 +36,10 @@ public class EylauArea : MonoBehaviour
     public void Reset()
     {
         _lifeT = _lifeSpan;
-        _isPlayerInHere = false;
-        _wasPlayerInHere = false;
 
-        Player.Instance.ResetEylauMovementBuff();
+        if (_isPlayerInHere)
+            Player.Instance.ResetEylauMovementBuff();
+
         _isPlayerInHere = false;
         _wasPlayerInHere = false;
 
