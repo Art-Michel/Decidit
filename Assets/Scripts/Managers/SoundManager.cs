@@ -8,6 +8,7 @@ using System;
 public class SoundManager : LocalManager<SoundManager>
 {
     [SerializeField] StudioListener AudioListener;
+    [SerializeField] StudioEventEmitter _theme;
     FMOD.Studio.Bus SFX;
 
     protected override void Awake()
@@ -33,8 +34,13 @@ public class SoundManager : LocalManager<SoundManager>
         //SFX.
     }
 
-    public void stopsound()
+    public void ClearedSound()
     {
-        //FMODUnity.RuntimeManager.
+        _theme.SetParameter("Sound", 1f);
+    }
+
+    public void FightingSound()
+    {
+        _theme.SetParameter("Sound", 0f);
     }
 }

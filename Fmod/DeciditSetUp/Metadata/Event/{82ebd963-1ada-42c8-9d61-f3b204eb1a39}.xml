@@ -116,9 +116,9 @@
 	<object class="MixerBusEffectChain" id="{632bc7da-7aa7-43e3-8b2b-4e9abae1f1fb}">
 		<relationship name="effects">
 			<destination>{a01602f1-675e-468d-899e-968ecbfbb5bd}</destination>
-			<destination>{cd224c34-c647-4295-870c-15c45b34b9dd}</destination>
 			<destination>{9e79b27e-5a34-4991-ba61-c322ef0ee5ae}</destination>
 			<destination>{fab2a96c-dcd8-4265-97ad-ea84af2edc75}</destination>
+			<destination>{990242d0-2340-423a-8710-bffccf16383a}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{326e02bf-ad30-4509-b0fa-3ecfc524b358}" />
@@ -130,7 +130,6 @@
 	</object>
 	<object class="MixerBusPanner" id="{e881adad-cf08-4397-9671-4eb6df37c630}" />
 	<object class="MixerBusFader" id="{a01602f1-675e-468d-899e-968ecbfbb5bd}" />
-	<object class="SpatialiserEffect" id="{cd224c34-c647-4295-870c-15c45b34b9dd}" />
 	<object class="PitchShifterEffect" id="{9e79b27e-5a34-4991-ba61-c322ef0ee5ae}">
 		<property name="pitch">
 			<value>1</value>
@@ -142,6 +141,17 @@
 	<object class="ThreeEQEffect" id="{fab2a96c-dcd8-4265-97ad-ea84af2edc75}">
 		<property name="midGain">
 			<value>4.5</value>
+		</property>
+	</object>
+	<object class="SpatialiserEffect" id="{990242d0-2340-423a-8710-bffccf16383a}">
+		<property name="distanceRolloffType">
+			<value>1</value>
+		</property>
+		<property name="maximumDistance">
+			<value>50</value>
+		</property>
+		<property name="overrideRange">
+			<value>true</value>
 		</property>
 	</object>
 	<object class="MixerBusFader" id="{efb04dbd-7678-4599-b615-4a2a77933159}" />

@@ -108,7 +108,7 @@ public class Room : MonoBehaviour
         //Feedbacks
         SoundManager.Instance.PlaySound("event:/SFX_Environement/SlowMo", 1f, gameObject);
         SoundManager.Instance.PlaySound("event:/SFX_Environement/StartFight", 1f, gameObject);
-        //TODO Lucas calmer la musique ici
+        //SoundManager.Instance.ClearedSound();
         PlayerManager.Instance.StartSlowMo(0.01f, 2f);
 
         //Progress in dungeon

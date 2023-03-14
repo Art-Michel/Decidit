@@ -148,8 +148,8 @@
 	<object class="MixerBusEffectChain" id="{2fa1bf1d-0c2c-4702-9e03-5a19cbf984ff}">
 		<relationship name="effects">
 			<destination>{c7362990-8d93-4185-874b-993856330395}</destination>
-			<destination>{67ab416b-8465-455a-b03c-29fe754d135b}</destination>
 			<destination>{0f6ac11a-b887-4860-9b88-b5cb85cb21d2}</destination>
+			<destination>{dd6237c4-f6b3-41e8-b4c1-26b75feea2b8}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{c7f75a0e-2c59-42b4-aa2f-f0c3b05926ec}" />
@@ -167,10 +167,20 @@
 	</object>
 	<object class="MixerBusPanner" id="{f0c5ef73-667e-4935-81c8-bc6234965119}" />
 	<object class="MixerBusFader" id="{c7362990-8d93-4185-874b-993856330395}" />
-	<object class="SpatialiserEffect" id="{67ab416b-8465-455a-b03c-29fe754d135b}" />
 	<object class="SFXReverbEffect" id="{0f6ac11a-b887-4860-9b88-b5cb85cb21d2}">
 		<property name="decayTime">
 			<value>2800</value>
+		</property>
+	</object>
+	<object class="SpatialiserEffect" id="{dd6237c4-f6b3-41e8-b4c1-26b75feea2b8}">
+		<property name="distanceRolloffType">
+			<value>1</value>
+		</property>
+		<property name="maximumDistance">
+			<value>50</value>
+		</property>
+		<property name="overrideRange">
+			<value>true</value>
 		</property>
 	</object>
 	<object class="MixerBusFader" id="{6bc117ea-f1c3-48dd-a0c8-408d21eb8d98}" />
