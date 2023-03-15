@@ -43,6 +43,10 @@ namespace State.FlyAI
         public DeathFlySO deathFlySO;
         public KnockBackFlySO KnockBackFlySO;
 
+        [Foldout("VeryEasy")] public BaseMoveFlySO baseMoveFlySO_VeryEZ;
+        [Foldout("VeryEasy")] public LockPlayerFlySO lockPlayerFlySO_VeryEZ;
+        [Foldout("VeryEasy")] public BaseAttackFlySO baseAttackFlySO_VeryEZ;
+
         [Foldout("Easy")] public BaseMoveFlySO baseMoveFlySO_EZ;
         [Foldout("Easy")] public LockPlayerFlySO lockPlayerFlySO_EZ;
         [Foldout("Easy")] public BaseAttackFlySO baseAttackFlySO_EZ;
@@ -55,33 +59,46 @@ namespace State.FlyAI
         [Foldout("Hard")] public LockPlayerFlySO lockPlayerFlySO_Hard;
         [Foldout("Hard")] public BaseAttackFlySO baseAttackFlySO_Hard;
 
+        [Foldout("VeryHard")] public BaseMoveFlySO baseMoveFlySO_VeryHard;
+        [Foldout("VeryHard")] public LockPlayerFlySO lockPlayerFlySO_VeryHard;
+        [Foldout("VeryHard")] public BaseAttackFlySO baseAttackFlySO_VeryHard;
+
         // Start is called before the first frame update
         void Awake()
         {
+            deathFlySO = Instantiate(deathFlySO);
+            KnockBackFlySO = Instantiate(KnockBackFlySO);
+
             switch (ApplyDifficulty.instance.indexDifficulty)
             {
                 case 0:
-                    baseMoveFlySO = Instantiate(baseMoveFlySO_EZ);
-                    lockPlayerFlySO = Instantiate(lockPlayerFlySO_EZ);
-                    baseAttackFlySO = Instantiate(baseAttackFlySO_EZ);
-                    deathFlySO = Instantiate(deathFlySO);
-                    KnockBackFlySO = Instantiate(KnockBackFlySO);
+                    baseMoveFlySO = Instantiate(baseMoveFlySO_VeryEZ);
+                    lockPlayerFlySO = Instantiate(lockPlayerFlySO_VeryEZ);
+                    baseAttackFlySO = Instantiate(baseAttackFlySO_VeryEZ);
                     break;
 
                 case 1:
-                    baseMoveFlySO = Instantiate(baseMoveFlySO_Medium);
-                    lockPlayerFlySO = Instantiate(lockPlayerFlySO_Medium);
-                    baseAttackFlySO = Instantiate(baseAttackFlySO_Medium);
-                    deathFlySO = Instantiate(deathFlySO);
-                    KnockBackFlySO = Instantiate(KnockBackFlySO);
+                    baseMoveFlySO = Instantiate(baseMoveFlySO_EZ);
+                    lockPlayerFlySO = Instantiate(lockPlayerFlySO_EZ);
+                    baseAttackFlySO = Instantiate(baseAttackFlySO_EZ);
                     break;
 
                 case 2:
+                    baseMoveFlySO = Instantiate(baseMoveFlySO_Medium);
+                    lockPlayerFlySO = Instantiate(lockPlayerFlySO_Medium);
+                    baseAttackFlySO = Instantiate(baseAttackFlySO_Medium);
+                    break;
+
+                case 3:
                     baseMoveFlySO = Instantiate(baseMoveFlySO_Hard);
                     lockPlayerFlySO = Instantiate(lockPlayerFlySO_Hard);
                     baseAttackFlySO = Instantiate(baseAttackFlySO_Hard);
-                    deathFlySO = Instantiate(deathFlySO);
-                    KnockBackFlySO = Instantiate(KnockBackFlySO);
+                    break;
+
+                case 4:
+                    baseMoveFlySO = Instantiate(baseMoveFlySO_VeryHard);
+                    lockPlayerFlySO = Instantiate(lockPlayerFlySO_VeryHard);
+                    baseAttackFlySO = Instantiate(baseAttackFlySO_VeryHard);
                     break;
             }
 

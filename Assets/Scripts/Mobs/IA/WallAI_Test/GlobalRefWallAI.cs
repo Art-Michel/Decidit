@@ -36,6 +36,9 @@ namespace State.WallAI
         public BaseMoveWallAISO baseMoveWallAISO;
         public BaseAttackWallAISO baseAttackWallAISO;
 
+        [Foldout("VeryEasy")] public BaseMoveWallAISO baseMoveWallAISO_VeryEZ;
+        [Foldout("VeryEasy")] public BaseAttackWallAISO baseAttackWallAISO_VeryEZ;
+
         [Foldout("Easy")] public BaseMoveWallAISO baseMoveWallAISO_EZ;
         [Foldout("Easy")] public BaseAttackWallAISO baseAttackWallAISO_EZ;
 
@@ -45,24 +48,37 @@ namespace State.WallAI
         [Foldout("Hard")] public BaseMoveWallAISO baseMoveWallAISO_Hard;
         [Foldout("Hard")] public BaseAttackWallAISO baseAttackWallAISO_Hard;
 
+        [Foldout("VeryHard")] public BaseMoveWallAISO baseMoveWallAISO_VeryHard;
+        [Foldout("VeryHard")] public BaseAttackWallAISO baseAttackWallAISO_VeryHard;
+
         // Start is called before the first frame update
         void Awake()
         {
             switch (ApplyDifficulty.instance.indexDifficulty)
             {
                 case 0:
-                    baseMoveWallAISO = Instantiate(baseMoveWallAISO);
-                    baseAttackWallAISO = Instantiate(baseAttackWallAISO);
+                    baseMoveWallAISO = Instantiate(baseMoveWallAISO_VeryEZ);
+                    baseAttackWallAISO = Instantiate(baseAttackWallAISO_VeryEZ);
                     break;
 
                 case 1:
+                    baseMoveWallAISO = Instantiate(baseMoveWallAISO_EZ);
+                    baseAttackWallAISO = Instantiate(baseAttackWallAISO_EZ);
+                    break;
+
+                case 2:
                     baseMoveWallAISO = Instantiate(baseMoveWallAISO_Med);
                     baseAttackWallAISO = Instantiate(baseAttackWallAISO_Med);
                     break;
 
-                case 2:
+                case 3:
                     baseMoveWallAISO = Instantiate(baseMoveWallAISO_Hard);
                     baseAttackWallAISO = Instantiate(baseAttackWallAISO_Hard);
+                    break;
+
+                case 4:
+                    baseMoveWallAISO = Instantiate(baseMoveWallAISO_VeryHard);
+                    baseAttackWallAISO = Instantiate(baseAttackWallAISO_VeryHard);
                     break;
             }
 

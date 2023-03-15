@@ -61,9 +61,11 @@ namespace State.AICAC
         public SurroundParameterAICAC surroundAICACSO;
         public KnockBackParameterAICAC knockBackAICACSO;
 
+        [Foldout("VeryEasy")] public BaseMoveParameterAICAC baseMoveAICACSO_VeryEZ;
         [Foldout("Easy")] public BaseMoveParameterAICAC baseMoveAICACSO_EZ;
         [Foldout("Medium")] public BaseMoveParameterAICAC baseMoveAICACSO_Med;
         [Foldout("Hard")] public BaseMoveParameterAICAC baseMoveAICACSO_Hard;
+        [Foldout("VeryHard")] public BaseMoveParameterAICAC baseMoveAICACSO_VeryHard;
 
         void Awake()
         {
@@ -77,21 +79,29 @@ namespace State.AICAC
             agentLinkMover = GetComponent<AgentLinkMover>();
             surroundManager = GetComponentInParent<SurroundManager>();
 
-
             switch (ApplyDifficulty.instance.indexDifficulty)
             {
                 case 0:
-                    baseMoveAICACSO = Instantiate(baseMoveAICACSO_EZ);
+                    baseMoveAICACSO = Instantiate(baseMoveAICACSO_VeryEZ);
                     break;
 
                 case 1:
-                    baseMoveAICACSO = Instantiate(baseMoveAICACSO_Med);
+                    baseMoveAICACSO = Instantiate(baseMoveAICACSO_EZ);
                     break;
 
                 case 2:
+                    baseMoveAICACSO = Instantiate(baseMoveAICACSO_Med);
+                    break;
+
+                case 3:
                     baseMoveAICACSO = Instantiate(baseMoveAICACSO_Hard);
                     break;
+
+                case 4:
+                    baseMoveAICACSO = Instantiate(baseMoveAICACSO_VeryHard);
+                    break;
             }
+
             baseAttackAICACSO = Instantiate(baseAttackAICACSO);
             baseIdleAICACSO = Instantiate(baseIdleAICACSO);
             deathAICACSO = Instantiate(deathAICACSO);

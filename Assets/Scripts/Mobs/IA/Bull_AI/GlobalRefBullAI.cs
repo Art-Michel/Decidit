@@ -57,6 +57,10 @@ namespace State.AIBull
         [Foldout("Scriptable")] public KnockBackBullSO knockBackBullSO;
         [Foldout("Scriptable")] public DeathBullParameterSO deathBullSO;
 
+        [Foldout("VeryEasy")] public BaseMoveBullParameterSO baseMoveBullSO_VeryEZ;
+        [Foldout("VeryEasy")] public RushBullParameterSO rushBullSO_VeryEZ;
+        [Foldout("VeryEasy")] public KnockBackBullSO knockBackBullSO_VeryEZ;
+
         [Foldout("Easy")] public BaseMoveBullParameterSO baseMoveBullSO_EZ;
         [Foldout("Easy")] public RushBullParameterSO rushBullSO_EZ;
         [Foldout("Easy")] public KnockBackBullSO knockBackBullSO_EZ;
@@ -69,6 +73,10 @@ namespace State.AIBull
         [Foldout("Hard")] public RushBullParameterSO rushBullSO_Hard;
         [Foldout("Hard")] public KnockBackBullSO knockBackBullSO_Hard;
 
+        [Foldout("VeryHard")] public BaseMoveBullParameterSO baseMoveBullSO_VeryHard;
+        [Foldout("VeryHard")] public RushBullParameterSO rushBullSO_VeryHard;
+        [Foldout("VeryHard")] public KnockBackBullSO knockBackBullSO_VeryHard;
+
         void Awake()
         {
             agent = GetComponent<NavMeshAgent>();
@@ -79,30 +87,40 @@ namespace State.AIBull
             agentLinkMover = GetComponent<AgentLinkMover>();
             rushManager = GetComponentInParent<RushManager>();
 
+
+            baseIdleBullSO = Instantiate(baseIdleBullSO);
+            deathBullSO = Instantiate(deathBullSO);
+
             switch (ApplyDifficulty.instance.indexDifficulty)
             {
                 case 0:
-                    baseIdleBullSO = Instantiate(baseIdleBullSO);
-                    baseMoveBullSO = Instantiate(baseMoveBullSO_EZ);
-                    rushBullSO = Instantiate(rushBullSO_EZ);
-                    knockBackBullSO = Instantiate(knockBackBullSO_EZ);
-                    deathBullSO = Instantiate(deathBullSO);
+                    baseMoveBullSO = Instantiate(baseMoveBullSO_VeryEZ);
+                    rushBullSO = Instantiate(rushBullSO_VeryEZ);
+                    knockBackBullSO = Instantiate(knockBackBullSO_VeryEZ);
                     break;
 
                 case 1:
-                    baseIdleBullSO = Instantiate(baseIdleBullSO);
-                    baseMoveBullSO = Instantiate(baseMoveBullSO_Med);
-                    rushBullSO = Instantiate(rushBullSO_Med);
-                    knockBackBullSO = Instantiate(knockBackBullSO_Med);
-                    deathBullSO = Instantiate(deathBullSO);
+                    baseMoveBullSO = Instantiate(baseMoveBullSO_EZ);
+                    rushBullSO = Instantiate(rushBullSO_EZ);
+                    knockBackBullSO = Instantiate(knockBackBullSO_EZ);
                     break;
 
                 case 2:
-                    baseIdleBullSO = Instantiate(baseIdleBullSO);
+                    baseMoveBullSO = Instantiate(baseMoveBullSO_Med);
+                    rushBullSO = Instantiate(rushBullSO_Med);
+                    knockBackBullSO = Instantiate(knockBackBullSO_Med);
+                    break;
+
+                case 3:
                     baseMoveBullSO = Instantiate(baseMoveBullSO_Hard);
                     rushBullSO = Instantiate(rushBullSO_Hard);
                     knockBackBullSO = Instantiate(knockBackBullSO_Hard);
-                    deathBullSO = Instantiate(deathBullSO);
+                    break;
+
+                case 4:
+                    baseMoveBullSO = Instantiate(baseMoveBullSO_VeryHard);
+                    rushBullSO = Instantiate(rushBullSO_Hard);
+                    knockBackBullSO = Instantiate(knockBackBullSO_VeryHard);
                     break;
             }
 
