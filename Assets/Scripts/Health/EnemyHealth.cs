@@ -64,7 +64,7 @@ public class EnemyHealth : Health
     {
         base.Start();
         _material = GetComponent<Material_Instances>().Material;
-        _regenValue = _hp;
+        //_regenValue = _hp;
         _appearT = 0f;
         _canvasGroup.alpha = 0f;
         _isDying = false;
@@ -89,7 +89,7 @@ public class EnemyHealth : Health
             UpdateDeath();
     }
 
-    public override void TakeDamage(int amount)
+    public override void TakeDamage(float amount)
     {
 
         if (globalRefBullAI != null)
@@ -108,11 +108,12 @@ public class EnemyHealth : Health
             globalRefWallAI.CheckHP();
 
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/HitMarker", .2f, gameObject);
-        PlayerHealth.Instance.ResetProbStartup();
+        //Stop probation from counting down when hitting an enemy
+        //PlayerHealth.Instance.ResetProbStartup();
         base.TakeDamage(amount);
     }
 
-    public override void TakeCriticalDamage(int amount)
+    public override void TakeCriticalDamage(float amount)
     {
         base.TakeDamage(amount * 2);
 
@@ -224,7 +225,7 @@ public class EnemyHealth : Health
         _appearT = 1;
 
         //regen player
-        Player.Instance.gameObject.GetComponent<Health>().ProbRegen(Mathf.RoundToInt(_regenValue));
+        Player.Instance.gameObject.GetComponent<Health>().ProbRegen(1000);
     }
 
     private void UpdateDeath()

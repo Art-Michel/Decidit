@@ -44,6 +44,9 @@ public class PlayerHealth : Health
     [SerializeField]
     [Tooltip("For how long Screen will shake when player gets hit.")]
     private float _playerHurtShakeDuration = 0.3f;
+    [Foldout("Stats")]
+    [SerializeField]
+    private bool _hasSecondChance;
 
     float _damageVignetteR;
     float _damageVignetteG;
@@ -85,12 +88,20 @@ public class PlayerHealth : Health
         if (_isBeingDamaged) HandleDamageVignette();
     }
 
-    public override void TakeDamage(int amount)
+    public override void TakeDamage(float amount)
     {
         if (amount <= 1 || IsInvulnerable)
             return;
 
+        if (_hasSecondChance && amount >= _hp && _hp > 1)
+            amount = _hp - 1;
+
+        //Lose all probation health when hit a second time
+        _probHp = _hp;
+        ResetProbStartup();
+
         base.TakeDamage(amount);
+        Debug.Log(_hp);
         SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/DamageTaken", 4f, gameObject);
 
         //cool magic numbers proportionnal screenshake when getting hurt
@@ -114,13 +125,29 @@ public class PlayerHealth : Health
         _lowHpVignette.color = new Color(1.0f, 1.0f, 1.0f, value);
     }
 
-    public override void ProbRegen(int i = 100)
+    [Button]
+    public void TrueHeal(float i = 10)
+    {
+        _hpBefore = Mathf.InverseLerp(0, _maxHp, _hp);
+        _hp = Mathf.Clamp(_hp + i, 0, _maxHp);
+        if (_hp > _probHp)
+            _probHp = _hp;
+        ResetBarFillage(false);
+        ResetProbStartup();
+        DisplayProbHealth();
+    }
+
+    public override void ProbRegen(int i)
     {
         if (_hp < _probHp)
         {
-            base.ProbRegen(100);
+            base.ProbRegen(i);
             SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/BaseHeal", 3f, gameObject);
             StartHealVignette();
+            if (PlayerManager.Instance._isDying)
+            {
+                PlayerManager.Instance.CancelDeath();
+            }
         }
     }
 

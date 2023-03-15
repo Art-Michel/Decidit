@@ -38,11 +38,11 @@ public class PlayerManager : LocalManager<PlayerManager>
     public bool _canPause = true;
     float _timescaleBeforePausing;
     bool _isPaused;
-    [Foldout("Menu")]
+    // [Foldout("Menu")]
     // [SerializeField] GameObject _menu;
 
     //Death variables
-    bool _isDying;
+    public bool _isDying { get; private set; }
     float _dieT;
     [Foldout("Death")]
     [SerializeField] float _deathDuration = 1f;
@@ -333,12 +333,22 @@ public class PlayerManager : LocalManager<PlayerManager>
         _canPause = false;
     }
 
+    public void CancelDeath()
+    {
+        _isDying = false;
+        _dieT = 0f;
+        StopRumbling();
+        StopSlowMo();
+        _canPause = true;
+        //TODO Lucas un son quand on se ressuscite
+    }
+
     private void Die()
     {
         _dieT += Time.unscaledDeltaTime;
 
         Time.timeScale = Mathf.Lerp(0, 1, Mathf.InverseLerp(_deathDuration, 0, _dieT));
-        //TODO reenable StartRumbling(1, 1, _dieT);
+        //TODO Art reenable StartRumbling(1, 1, _dieT);
 
         if (_dieT >= _deathDuration)
             Dead();

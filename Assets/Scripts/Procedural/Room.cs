@@ -43,6 +43,7 @@ public class Room : MonoBehaviour
     public void EnableEnemies(bool b)
     {
         CurrentEnemiesInRoom = _enemiesList.Count;
+        //TODO Lucas Réénerver la musique
         foreach (EnemyHealth enemyHealth in _enemiesList)
         {
             if (enemyHealth == null)
@@ -109,7 +110,9 @@ public class Room : MonoBehaviour
         //Feedbacks
         SoundManager.Instance.PlaySound("event:/SFX_Environement/SlowMo", 1f, gameObject);
         SoundManager.Instance.PlaySound("event:/SFX_Environement/StartFight", 1f, gameObject);
+        PlayerHealth.Instance.TrueHeal(20);
         //SoundManager.Instance.ClearedSound();
+        //TODO Lucas Calmer la musique
         PlayerManager.Instance.StartSlowMo(0.01f, 2f);
 
         //Progress in dungeon

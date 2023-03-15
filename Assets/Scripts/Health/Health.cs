@@ -27,7 +27,7 @@ public class Health : MonoBehaviour
     [Range(0.1f, 60)][SerializeField] float _probationSpeed = 15;
     [Foldout("Stats")]
     [SerializeField] private float _healthBarSpeed = 2.0f;
-    private float _hpBefore;
+    protected float _hpBefore;
     private float _healthBarCurrentSpeed;
 
     public float _hp { get; protected set; }
@@ -41,6 +41,7 @@ public class Health : MonoBehaviour
     {
         _hp = _maxHp;
     }
+
     protected virtual void Start()
     {
         //IsInvulnerable = false;
@@ -59,7 +60,7 @@ public class Health : MonoBehaviour
         DisplayHealth();
     }
 
-    public virtual void TakeDamage(int damage)
+    public virtual void TakeDamage(float damage)
     {
         if (IsInvulnerable)
             return;
@@ -80,18 +81,18 @@ public class Health : MonoBehaviour
 
     }
 
-    public virtual void TakeCriticalDamage(int damage)
+    public virtual void TakeCriticalDamage(float damage)
     {
         TakeDamage(damage * 2);
     }
 
-    public void TakeDamage(int amount, Vector3 position, Vector3 forward)
+    public void TakeDamage(float amount, Vector3 position, Vector3 forward)
     {
         this.TakeDamage(amount);
         SplashBlood(position, forward);
     }
 
-    public void TakeCriticalDamage(int amount, Vector3 position, Vector3 forward)
+    public void TakeCriticalDamage(float amount, Vector3 position, Vector3 forward)
     {
         this.TakeCriticalDamage(amount);
         SplashBlood(position, forward);
@@ -115,7 +116,7 @@ public class Health : MonoBehaviour
         splash.forward = forward;
     }
 
-    public virtual void ProbRegen(int amount = 10)
+    public virtual void ProbRegen(int amount)
     {
         if (_hp < _probHp)
         {
@@ -127,7 +128,7 @@ public class Health : MonoBehaviour
         }
     }
 
-    private void ResetBarFillage(bool tookDamage)
+    protected void ResetBarFillage(bool tookDamage)
     {
         _healthT = 0.0f;
         if (!tookDamage)
