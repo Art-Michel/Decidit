@@ -2856,6 +2856,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1214720278}
   - component: {fileID: 1214720279}
+  - component: {fileID: 1214720280}
   m_Layer: 0
   m_Name: SoundManager
   m_TagString: Untagged
@@ -2891,6 +2892,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AudioListener: {fileID: 0}
+  _theme: {fileID: 0}
+--- !u!114 &1214720280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1214720277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9468c5f457ace64f8d4df6d642b107f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LoadEvent: 1
+  UnloadEvent: 2
+  Banks:
+  - Master
+  CollisionTag: 
+  PreloadSamples: 1
 --- !u!1 &1264975590
 GameObject:
   m_ObjectHideFlags: 0
@@ -4424,6 +4444,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 589072323}
+    - target: {fileID: 3024209315787674345, guid: b891d3cd9601af54a9fc80b36048f7ef,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3024209315791083889, guid: b891d3cd9601af54a9fc80b36048f7ef,
         type: 3}
       propertyPath: m_Mesh
@@ -4528,6 +4553,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3024209315801437732, guid: b891d3cd9601af54a9fc80b36048f7ef,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3024209315859273915, guid: b891d3cd9601af54a9fc80b36048f7ef,
         type: 3}
@@ -4954,5 +4984,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1935307913}
+    - target: {fileID: 3024209317742635670, guid: b891d3cd9601af54a9fc80b36048f7ef,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b891d3cd9601af54a9fc80b36048f7ef, type: 3}
