@@ -18,6 +18,8 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
     public List<RoomSetup> RoomSets;
     private List<List<Room>> _usableRooms;
     public List<RoomSetup> Corridors;
+    public List<RoomSetup> CorridorsSpell;
+
     public int TotalRooms { get { return _actualRooms.Count - 1; } }
 
     List<Room> _actualRooms;
@@ -79,7 +81,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
         int stackCount = Mathf.RoundToInt(_numberOfRooms / 3f);
         for (int i = 0; i < _numberOfRooms; i++)
         {
-            _roomsToBuild.Add(Corridors[Random.Range(0, Corridors.Count)].Get());
+            SelectCorridor(i);
 
             //* passe a la difficulte suivante
             if (stackCount <= 0)
@@ -96,6 +98,24 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
         _roomsToBuild.Add(Corridors[Random.Range(0, Corridors.Count)].Get());
         _roomsToBuild.Add(_finalRoom.Get());
         Build();
+    }
+
+    void SelectCorridor(int indexRoom)
+    {
+        switch (indexRoom)
+        {
+            case 0:
+                _roomsToBuild.Add(CorridorsSpell[Random.Range(0, CorridorsSpell.Count)].Get());
+                break;
+
+            case 1:
+                _roomsToBuild.Add(CorridorsSpell[Random.Range(0, CorridorsSpell.Count)].Get());
+                break;
+
+            default:
+                _roomsToBuild.Add(Corridors[Random.Range(0, Corridors.Count)].Get());
+                break;
+        }
     }
 
     private void AddRandomRoom(int difficulty)
