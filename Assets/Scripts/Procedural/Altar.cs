@@ -39,9 +39,7 @@ public class Altar : MonoBehaviour, IInteractable
     private bool _hasBeenUsed;
     private bool _isPlayerInside;
 
-    //[SerializeField]Altar[] AltarScriptList;
     [SerializeField] static List<Altar> altarListScript = new List<Altar>();
-    [SerializeField] List<Altar> altarListScriptClone = new List<Altar>();
 
     void Awake()
     {
@@ -53,9 +51,6 @@ public class Altar : MonoBehaviour, IInteractable
                     altarListScript.Add(altar);
             }
         }
-
-        altarListScriptClone = altarListScript;
-
         SetRandomChant();
     }
 
@@ -73,22 +68,6 @@ public class Altar : MonoBehaviour, IInteractable
     void SetRandomChant()
     {
         _chant = (Chants)Random.Range(0, 3);
-        /*int i = Random.Range(0,3);
-
-        switch (i)
-        {
-            case 0:
-                _chant = Chants.Cimetiere;
-                break;
-
-            case 1:
-                _chant = Chants.Fugue;
-                break;
-
-            case 2:
-                _chant = Chants.Muse;
-                break;
-        }*/
     }
 
     public void SetChant(Chants chant)
@@ -116,8 +95,6 @@ public class Altar : MonoBehaviour, IInteractable
 
     void CheckIfSameSpell()
     {
-        Debug.Log("Searech Diff Spell");
-
         while(altarListScript[0]._chant == altarListScript[1]._chant)
         {
             altarListScript[1]._chant = (Chants)Random.Range(0, 3);
@@ -181,6 +158,5 @@ public class Altar : MonoBehaviour, IInteractable
     void OnDestroy()
     {
         altarListScript.Clear();
-        altarListScriptClone.Clear();
     }
 }
