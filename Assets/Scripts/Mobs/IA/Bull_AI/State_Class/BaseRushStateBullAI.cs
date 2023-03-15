@@ -18,6 +18,7 @@ namespace State.AIBull
 
         [Header("Rush Movement")]
         public Vector3 captureBasePosDistance;
+        public float gravityMultiplier;
 
         [Header("Position 2D")]
         Vector2 posPlayer;
@@ -63,7 +64,9 @@ namespace State.AIBull
             if (Time.timeScale > 0)
             {
                 SetDestination();
-                SmoothLookAtPlayer();
+
+                if(!canStartRush)
+                    SmoothLookAtPlayer();
 
                 if (!canStartRush)
                 {
@@ -133,7 +136,7 @@ namespace State.AIBull
         {
             if (!rushBullSO.isGround)
             {
-                globalRef.rushBullSO.AIVelocity.y = globalRef.rushBullSO.AIVelocity.y - 9.8f * 4 * Time.deltaTime;
+                globalRef.rushBullSO.AIVelocity.y = globalRef.rushBullSO.AIVelocity.y - 9.8f * gravityMultiplier * Time.deltaTime;
             }
             else
             {
@@ -161,7 +164,7 @@ namespace State.AIBull
 
             if (distDestination <= 1)
             {
-                StopRush();
+                stateController.SetActiveState(StateControllerBull.AIState.Idle);
             }
 
             rushBullSO.distRush = Vector3.Distance(captureBasePosDistance, globalRef.transform.position);
@@ -291,7 +294,6 @@ namespace State.AIBull
                             rushBullSO.speedRot = rushBullSO.maxSpeedRot;
                             AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Rush");
                             canStartRush = true;
-                            Debug.Log("Launch Rush");
                         }
                     }
                     break;
@@ -327,6 +329,7 @@ namespace State.AIBull
                 rushBullSO.speedRot = 0;
                 rushBullSO.stopLockPlayer = false;
                 rushBullSO.ennemiInCollider.Clear();
+                rushBullSO.AIVelocity = Vector3.zero;
             }
 
             globalRef.launchRush = false;

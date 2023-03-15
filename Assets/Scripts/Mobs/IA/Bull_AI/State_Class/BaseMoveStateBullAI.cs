@@ -6,6 +6,7 @@ namespace State.AIBull
     public class BaseMoveStateBullAI : _StateBull
     {
         [SerializeField] GlobalRefBullAI globalRef;
+        [SerializeField] float offsetYposPlayer;
 
         [Header("Nav Link")]
         [SerializeField] float maxDurationNavLink;
@@ -58,9 +59,10 @@ namespace State.AIBull
         void CheckObstacle()
         {
             RaycastHit hit = RaycastAIManager.instanceRaycast.RaycastAI(globalRef.rayCheckRush.position, 
-                                                        globalRef.playerTransform.position - globalRef.rayCheckRush.position,
-                                                        globalRef.rushBullSO.maskCheckCanRush, Color.blue,
-                                                        Vector3.Distance(globalRef.transform.position, globalRef.playerTransform.position));
+                                                new Vector3(globalRef.playerTransform.position.x, globalRef.playerTransform.position.y- offsetYposPlayer, globalRef.playerTransform.position.z)
+                                                - globalRef.rayCheckRush.position,
+                                                   globalRef.rushBullSO.maskCheckCanRush, Color.blue,
+                                                    Vector3.Distance(globalRef.transform.position, globalRef.playerTransform.position));
             if(hit.transform == globalRef.playerTransform)
             {
                 if(globalRef.launchRush)

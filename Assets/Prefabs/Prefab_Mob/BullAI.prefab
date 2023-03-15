@@ -424,6 +424,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   globalRef: {fileID: 5314086220186537620}
+  offsetYposPlayer: 0.7
   maxDurationNavLink: 0.5
   isOnNavLink: 0
   distDetectObstacle: 2
@@ -478,9 +479,11 @@ MonoBehaviour:
   canStartRush: 0
   distDestination: 1
   distDetectObstacle: 1.5
-  distDetectGround: 1.5
+  distDetectGround: 1.1
   distFallStopRush: 5
   captureBasePosDistance: {x: 0, y: 0, z: 0}
+  gravityMultiplier: 2
+  delayInertieRushInWall: 0
   maxDelayInertieRushInWall: 1
 --- !u!65 &9191719257376539284
 BoxCollider:
@@ -762,7 +765,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2750269678414385986}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.37142855, z: 0}
+  m_LocalPosition: {x: 0, y: -0.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
