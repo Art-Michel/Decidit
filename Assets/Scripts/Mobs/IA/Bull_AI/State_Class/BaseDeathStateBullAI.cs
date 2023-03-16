@@ -24,7 +24,8 @@ namespace State.AIBull
 
         void Death()
         {
-            AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Death");
+            //AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Death");
+            AnimatorManager.instance.StopAnimation(globalRef.myAnimator);
             globalRef.agent.speed = 0;
             globalRef.transform.parent = null;
             globalRef.rushManager.RemoveDeadAI(globalRef);

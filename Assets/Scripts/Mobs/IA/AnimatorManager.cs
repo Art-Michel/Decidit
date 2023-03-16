@@ -28,4 +28,9 @@ public class AnimatorManager : MonoBehaviour
         animator.SetBool(nameAnimation, false);
         globalRefAnimator.currentAnimName = null;
     }
+
+    public void StopAnimation(Animator animator)
+    {
+        animator.speed = 0;
+    }
 }
