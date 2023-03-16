@@ -45,19 +45,21 @@ public class EnemyHealth : Health
     bool _healthBarIsVisible;
     float _deathT;
     bool _isDying;
+    float _enableT =1f;
 
     [Header("KnockBack IA")]
     public Vector3 KnockBackDir;
-    [SerializeField] GlobalRefAICAC globalRefAICAC;
-    [SerializeField] GlobalRefBullAI globalRefBullAI;
-    [SerializeField] GlobalRefFlyAI globalRefFlyAI;
-    [SerializeField] GlobalRefWallAI globalRefWallAI;
+    public GlobalRefAICAC globalRefAICAC;
+    public GlobalRefBullAI globalRefBullAI;
+    public GlobalRefFlyAI globalRefFlyAI;
+    public GlobalRefWallAI globalRefWallAI;
 
     protected override void Awake()
     {
         base.Awake();
         _playerCamera = Camera.main.transform;
         _canvasGroup = _canvas.GetComponent<CanvasGroup>();
+        _enableT = 1f;
     }
 
     protected override void Start()
@@ -226,6 +228,29 @@ public class EnemyHealth : Health
 
         //regen player
         Player.Instance.gameObject.GetComponent<Health>().ProbRegen(1000);
+    }
+
+    public void SetDissolve()
+    {
+        _material.SetFloat("_clip", 1f);
+
+    }
+
+    public IEnumerator DissolveInverse()
+    {
+        _enableT -= Time.deltaTime;
+        _material.SetFloat("_clip", Mathf.Lerp(0, 1f, _enableT));
+
+        yield return new WaitForSeconds(0);
+        if (_enableT <= 0)
+        {
+            Debug.Log(_enableT);
+            yield break;
+        }
+        else
+        {
+            StartCoroutine("DissolveInverse");
+        }
     }
 
     private void UpdateDeath()

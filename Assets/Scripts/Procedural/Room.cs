@@ -51,6 +51,11 @@ public class Room : MonoBehaviour
                 Debug.LogError("La room [" + this.gameObject.name + "] n'a pas d'ennemi assigné");
             }
             enemyHealth.gameObject.SetActive(b);
+            if(enemyHealth.isActiveAndEnabled)
+            {
+                enemyHealth.SetDissolve();
+                enemyHealth.StartCoroutine("DissolveInverse");
+            }
         }
     }
 
