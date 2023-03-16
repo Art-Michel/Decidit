@@ -206,6 +206,9 @@ public class EnemyHealth : Health
         if (_isDying)
             return;
 
+        //regen player
+        Player.Instance.gameObject.GetComponent<Health>().ProbRegen(1000);
+
         //update number of enemies in room
         if (Room)
         {
@@ -226,8 +229,6 @@ public class EnemyHealth : Health
         //Adjust Visibility
         _appearT = 1;
 
-        //regen player
-        Player.Instance.gameObject.GetComponent<Health>().ProbRegen(1000);
     }
 
     public void SetDissolve()

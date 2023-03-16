@@ -128,13 +128,21 @@ public class PlayerHealth : Health
     [Button]
     public void TrueHeal(float i = 10)
     {
-        _hpBefore = Mathf.InverseLerp(0, _maxHp, _hp);
-        _hp = Mathf.Clamp(_hp + i, 0, _maxHp);
-        if (_hp > _probHp)
-            _probHp = _hp;
-        ResetBarFillage(false);
-        ResetProbStartup();
+        if (_hp < _maxHp)
+            _hpBefore = Mathf.InverseLerp(0, _maxHp, _hp);
+
+        _hp = Mathf.Clamp(_hp + i, 0, _probHp);
+
+        if (_hp < _maxHp)
+            ResetBarFillage(false);
+
         DisplayProbHealth();
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/BaseHeal", 3f, gameObject);
+        StartHealVignette();
+        if (PlayerManager.Instance._isDying)
+        {
+            PlayerManager.Instance.CancelDeath();
+        }
     }
 
     public override void ProbRegen(int i)
