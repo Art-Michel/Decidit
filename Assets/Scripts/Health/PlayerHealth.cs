@@ -125,7 +125,6 @@ public class PlayerHealth : Health
         _lowHpVignette.color = new Color(1.0f, 1.0f, 1.0f, value);
     }
 
-    [Button]
     public void TrueHeal(float i = 10)
     {
         if (_hp < _maxHp)
