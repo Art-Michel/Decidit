@@ -48,7 +48,8 @@ public class MuseArm : Arm
     public override void StartActive()
     {
         CheckLookedAt();
-        _crossHairGlow.SetActive(false);
+        _crossHairFull.SetActive(false);
+        StopGlowing();
         PooledObject shot = _pooler.Get();
         shot.transform.rotation = transform.rotation;
         shot.GetComponent<Projectile>().Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized, _cameraTransform.forward);

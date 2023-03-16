@@ -11,7 +11,11 @@ public class Arm : MonoBehaviour
     [Foldout("References")]
     [SerializeField] protected Image[] _crossHairs;
     [Foldout("References")]
-    [SerializeField] protected GameObject _crossHairGlow;
+    [SerializeField] protected GameObject _crossHairFull;
+    [Foldout("References")]
+    [SerializeField] protected Image[] _glowingCrossHairs;
+    [Foldout("References")]
+    [SerializeField] private AnimationCurve _glowCurve;
     [Foldout("References")]
     [SerializeField] protected GameObject _ui;
     [Foldout("References")]
@@ -31,6 +35,8 @@ public class Arm : MonoBehaviour
 
     PlayerInputMap _inputs;
     protected ArmFSM _fsm;
+    private bool _isGlowing = false;
+    private float _glowT = 0.0f;
     #endregion
 
     #region Stats Decleration
@@ -60,6 +66,9 @@ public class Arm : MonoBehaviour
         {
             _fsm.CurrentState.StateUpdate();
         }
+
+        if (_isGlowing)
+            Glow();
 
         Debugging();
     }
@@ -114,7 +123,8 @@ public class Arm : MonoBehaviour
     public virtual void StartActive()
     {
         _fsm.ChangeState(ArmStateList.RECOVERY);
-        _crossHairGlow.SetActive(false);
+        _crossHairFull.SetActive(false);
+        StopGlowing();
     }
 
     public virtual void UpdateActive()
@@ -156,10 +166,32 @@ public class Arm : MonoBehaviour
 
     public void Refilled()
     {
-        _crossHairGlow.SetActive(true);
+        _crossHairFull.SetActive(true);
         PlaceHolderSoundManager.Instance.PlayArmFilled();
+        StartGlowingBriefly();
         if (_inputs.Actions.Skill.IsPressed() && !_inputs.Actions.Interact.IsPressed())
             PressSong();
+    }
+
+    protected void StartGlowingBriefly()
+    {
+        _isGlowing = true;
+        _glowT = 0.0f;
+    }
+
+    protected void Glow()
+    {
+        _glowT += Time.deltaTime * 5.0f;
+        float alpha = _glowCurve.Evaluate(_glowT);
+        foreach (Image image in _glowingCrossHairs)
+            image.color = new Color(image.color.r, image.color.g, image.color.b, alpha);
+    }
+
+    protected void StopGlowing()
+    {
+        _isGlowing = false;
+        foreach (Image image in _glowingCrossHairs)
+            image.color = new Color(image.color.r, image.color.g, image.color.b, 0.0f);
     }
 
     #region Debugging

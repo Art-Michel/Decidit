@@ -58,7 +58,8 @@ public class EylauArm : Arm
         loopInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         loopInstance.release();
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/CimetièreEyleau/Launch", 1f, gameObject);
-        _crossHairGlow.SetActive(false);
+        _crossHairFull.SetActive(false);
+        StopGlowing();
         _area.transform.position = _previs.transform.position;
         _area.transform.parent = null;
         _area.transform.rotation = Quaternion.identity;
