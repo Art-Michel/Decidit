@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,8 +9,10 @@ public class LD_Analytics : MonoBehaviour
     [HideInInspector] public float alive_Duration = 0;
     public bool seeMore = false;
     private Player player;
-    public List<Room> levels;
+    [Header("Ref")]
+    public List<GameObject> levels = new List<GameObject>();
     [SerializeField] private TrailRenderer playerPath;
+    [Header("Data")]
     public bool displayPlayerPath = false;
     private TrailRenderer trailInstance;
 
@@ -17,11 +20,14 @@ public class LD_Analytics : MonoBehaviour
     {
         #region Ref
         player = FindObjectOfType<Player>();
-        levels = gameObject.GetComponent<DungeonGenerator>().GetRooms();
+        foreach (Transform level in this.transform)
+        {
+            levels.Add(level.gameObject);
+        }
+        trailInstance = Instantiate(playerPath, player.transform);
         alive_Duration = 0;
         #endregion
 
-        trailInstance = Instantiate(playerPath, player.transform);
         HideTrail();
     }
 
@@ -70,6 +76,8 @@ public class LD_Analytics : MonoBehaviour
         alive_Duration = PlayerPrefs.GetFloat("alive_Duration");
         
         PlayerPrefs.SetInt("dead", 1);
+
+        //UnityEditor.EditorApplication.isPaused = true;
     }
 
     public void DisplayTrail()
