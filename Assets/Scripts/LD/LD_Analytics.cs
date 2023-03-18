@@ -6,59 +6,79 @@ using UnityEngine.Events;
 public class LD_Analytics : MonoBehaviour
 {
     [HideInInspector] public float alive_Duration = 0;
+    public bool seeMore = false;
     private Player player;
-    //[SerializeField] private string[] ld_death_Names;
-    //[SerializeField] private string[] murder_Names;
-    //[SerializeField] private int playerKills;
-    //[SerializeField] private bool hasWin = false;
-    //private UnityEvent hasWinEvent;
-    //[SerializeField] private float timeToFinish;
-    //private canPlayTimer = true;
-    
-
-    ////Refs
-    //public DungeonGenerator dungeonGenerator;
-    //public PlayerManager playerManager;
+    public List<Room> levels;
+    [SerializeField] private TrailRenderer playerPath;
+    public bool displayPlayerPath = false;
+    private TrailRenderer trailInstance;
 
     void Start()
     {
-        //hasWinEvent = new UnityEvent();
-        //hasWinEvent.AddListener(SetWinState);
-        //playerManager._hasWinEvent = hasWinEvent;
-
+        #region Ref
         player = FindObjectOfType<Player>();
+        levels = gameObject.GetComponent<DungeonGenerator>().GetRooms();
         alive_Duration = 0;
+        #endregion
+
+        trailInstance = Instantiate(playerPath, player.transform);
+        HideTrail();
     }
 
     void Update()
     {
-        //if (canPlayTimer)
-        //{
-        //    timeToFinish += Time.deltaTime;
-        //}
-        //Debug.Log(hasWin);
-
+        #region Alive Timer
         if (player.enabled)
         {
-            AliveTime();
+            Alive();
         }
         else
         {
-            PlayerPrefs.SetFloat("alive_Duration" + gameObject.name, alive_Duration);
-            alive_Duration = PlayerPrefs.GetFloat("alive_Duration" + gameObject.name);
+            Dead();
         }
+        #endregion
+
+        #region Player Path
+        if (displayPlayerPath)
+        {
+            DisplayTrail();
+        }
+        else
+        {
+            HideTrail();
+        }
+        #endregion
     }
 
-    private void AliveTime()
+    /// <summary>
+    /// is PLAYER alive
+    /// </summary>
+    private void Alive()
     {
         alive_Duration += Time.deltaTime;
-        Debug.Log(alive_Duration + "s");
+        //Debug.Log(alive_Duration + "s");
+
+        PlayerPrefs.SetInt("dead", 0);
     }
 
-    //public void SetWinState()
-    //{
-    //    canPlayTimer = false;
-    //    hasWin = true;
-    //    Debug.Log(timeToFinish);
-    //}
+    /// <summary>
+    /// is PLAYER dead
+    /// </summary>
+    private void Dead()
+    {
+        PlayerPrefs.SetFloat("alive_Duration", alive_Duration);
+        alive_Duration = PlayerPrefs.GetFloat("alive_Duration");
+        
+        PlayerPrefs.SetInt("dead", 1);
+    }
+
+    public void DisplayTrail()
+    {
+        trailInstance.GetComponent<TrailRenderer>().widthMultiplier = 1;
+    }
+
+    public void HideTrail()
+    {
+        trailInstance.GetComponent<TrailRenderer>().widthMultiplier = 0;
+    }
 }

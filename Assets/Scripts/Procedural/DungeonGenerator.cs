@@ -220,4 +220,9 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
     {
         MenuManager.Instance.OpenWin();
     }
+
+    public List<Room> GetRooms()
+    {
+        return _roomsToBuild;
+    }
 }

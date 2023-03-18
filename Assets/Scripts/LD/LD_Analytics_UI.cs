@@ -13,6 +13,13 @@ public class LD_Analytics_UI : Editor
 
         LD_Analytics LD_analytics = (LD_Analytics)target;
 
-        GUILayout.Label("alive_Duration = " + PlayerPrefs.GetFloat("alive_Duration" + LD_analytics.gameObject.name), EditorStyles.boldLabel);
+        #region Alive Timer
+        if (PlayerPrefs.GetInt("dead") == 1 || LD_analytics.seeMore)
+        {
+            float minutes = (int)PlayerPrefs.GetFloat("alive_Duration") / 60f;
+            float secondes = (minutes - Mathf.FloorToInt(minutes)) * 60f;
+            GUILayout.Label("alive_Duration = " + Mathf.FloorToInt(minutes) + "min" + secondes + "s", EditorStyles.boldLabel);
+        }
+        #endregion
     }
 }
