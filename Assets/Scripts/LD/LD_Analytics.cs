@@ -34,7 +34,7 @@ public class LD_Analytics : MonoBehaviour
     void Update()
     {
         #region Alive Timer
-        if (player.enabled)
+        if (player.GetComponent<PlayerHealth>().GetHP() > 0)
         {
             Alive();
         }
@@ -77,7 +77,8 @@ public class LD_Analytics : MonoBehaviour
         
         PlayerPrefs.SetInt("dead", 1);
 
-        //UnityEditor.EditorApplication.isPaused = true;
+        Debug.Log("Your are dead, your time alive was : " + alive_Duration);
+        UnityEditor.EditorApplication.isPaused = true;
     }
 
     public void DisplayTrail()

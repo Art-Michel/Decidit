@@ -227,4 +227,13 @@ public class PlayerHealth : Health
     {
         Instance = null;
     }
+
+    /// <summary>
+    /// Return the amount of hp
+    /// </summary>
+    /// <returns></returns>
+    public float GetHP()
+    {
+        return _hp;
+    }
 }
