@@ -7,7 +7,7 @@ using System.Linq;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Events;
+using Random = UnityEngine.Random;
 using static UnityEditor.PlayerSettings;
 
 public class LD_Analytics : MonoBehaviour
@@ -25,7 +25,7 @@ public class LD_Analytics : MonoBehaviour
     [HideInInspector] public float alive_Duration = 0;
     private float pathTimer=0f;
     private float pathTimerMax=1f;
-    public string pathSeed;
+    public string dataName;
 
     void Start()
     {
@@ -85,14 +85,14 @@ public class LD_Analytics : MonoBehaviour
     /// </summary>
     private void Dead()
     {
-        //PlayerPrefs.SetFloat("alive_Duration", alive_Duration);
-        //alive_Duration = PlayerPrefs.GetFloat("alive_Duration");
-        
-        //PlayerPrefs.SetInt("dead", 1);
+        PlayerPrefs.SetFloat("alive_Duration", alive_Duration);
+        alive_Duration = PlayerPrefs.GetFloat("alive_Duration");
 
-        //float minutes = (int)alive_Duration / 60f;
-        //float secondes = (minutes - Mathf.FloorToInt(minutes)) * 60f;
-        //Debug.Log("Your are dead, your time alive was : " + Mathf.FloorToInt(minutes) + "min" + secondes + "s");
+        PlayerPrefs.SetInt("dead", 1);
+
+        float minutes = (int)alive_Duration / 60f;
+        float secondes = (minutes - Mathf.FloorToInt(minutes)) * 60f;
+        Debug.Log("Your are dead, your time alive was : " + Mathf.FloorToInt(minutes) + "min" + secondes + "s");
 
         //string path = "Assets/Scripts/LD/Data/Paths/" + gameObject.GetComponent<DungeonGenerator>().GetSeed().ToString() + ".txt";
         ////Write some text to the test.txt file
@@ -110,10 +110,11 @@ public class LD_Analytics : MonoBehaviour
     /// </summary>
     public void DebugPlayerPath()
     {
-        string path = "Assets/Scripts/LD/Data/Paths/"+ gameObject.GetComponent<DungeonGenerator>().GetSeed().ToString() + ".txt";
-        System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(path);
-        int count = dir.GetFiles().Length;
-        if (count < 1)
+        int dataID = Random.Range(0, 1000);
+
+        string path = "Assets/Scripts/LD/Data/Paths/"+ "seed_"+gameObject.GetComponent<DungeonGenerator>().GetSeed().ToString() + "_" + dataID + ".txt";
+        int count = Directory.GetFiles("Assets/Scripts/LD/Data/Paths/").Length;
+        if (count < 50)
         {
             //Write some text to the test.txt file
             StreamWriter writer = new StreamWriter(path, true);
@@ -123,6 +124,10 @@ public class LD_Analytics : MonoBehaviour
             }
             writer.Close();
             UnityEditor.EditorApplication.isPlaying = false;
+        }
+        else
+        {
+            Debug.Log("You have too much data!");
         }
     }
 
@@ -134,7 +139,7 @@ public class LD_Analytics : MonoBehaviour
     {
         trailRecorded.Clear();
 
-        string path = "Assets/Scripts/LD/Data/Paths/" + pathSeed + ".txt";
+        string path = "Assets/Scripts/LD/Data/Paths/" + dataName + ".txt";
         //Read the text from directly from the test.txt file
         StreamReader reader = new StreamReader(path);
         //Debug.Log(reader.ReadToEnd());
