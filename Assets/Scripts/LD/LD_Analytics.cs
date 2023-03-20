@@ -77,7 +77,9 @@ public class LD_Analytics : MonoBehaviour
         
         PlayerPrefs.SetInt("dead", 1);
 
-        //Debug.Log("Your are dead, your time alive was : " + alive_Duration);
+        float minutes = (int)alive_Duration / 60f;
+        float secondes = (minutes - Mathf.FloorToInt(minutes)) * 60f;
+        Debug.Log("Your are dead, your time alive was : " + Mathf.FloorToInt(minutes) + "min" + secondes + "s");
         //UnityEditor.EditorApplication.isPaused = true;
     }
 
