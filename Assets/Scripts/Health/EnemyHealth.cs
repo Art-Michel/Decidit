@@ -7,6 +7,7 @@ using State.AIBull;
 using State.AICAC;
 using State.FlyAI;
 using State.WallAI;
+using UnityEngine.UI;
 
 public class EnemyHealth : Health
 {
@@ -45,7 +46,12 @@ public class EnemyHealth : Health
     bool _healthBarIsVisible;
     float _deathT;
     bool _isDying;
-    float _enableT =1f;
+    float _enableT = 1f;
+
+    [Foldout("Synergies")]
+    public bool IsSick;
+    [Foldout("Synergies")]
+    [SerializeField] Image _sickIcon;
 
     [Header("KnockBack IA")]
     public Vector3 KnockBackDir;
@@ -147,6 +153,12 @@ public class EnemyHealth : Health
             globalRefAICAC.ActiveKnockBackState();
         else if (globalRefFlyAI != null)
             globalRefFlyAI.ActiveKnockBackState();
+    }
+
+    public void GetSick()
+    {
+        IsSick = true;
+        _sickIcon.enabled = true;
     }
 
     //used to make healthbar face the camera

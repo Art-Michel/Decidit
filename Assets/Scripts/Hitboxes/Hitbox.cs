@@ -80,7 +80,7 @@ public class Hitbox : MonoBehaviour
             return Blacklist.ContainsKey(target);
     }
 
-    protected void Hit(Transform targetCollider)
+    protected virtual void Hit(Transform targetCollider)
     {
         //Debug.Log(transform.name + " hit " + target.transform.name);
         if (targetCollider.parent.TryGetComponent<Health>(out Health health))
