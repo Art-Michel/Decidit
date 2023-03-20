@@ -225,4 +225,9 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
     {
         return _roomsToBuild;
     }
+
+    public int GetSeed()
+    {
+        return _seed;
+    }
 }
