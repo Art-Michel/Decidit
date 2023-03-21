@@ -101,7 +101,6 @@ public class PlayerHealth : Health
         ResetProbStartup();
 
         base.TakeDamage(amount);
-        Debug.Log(_hp);
         SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/DamageTaken", 4f, gameObject);
 
         //cool magic numbers proportionnal screenshake when getting hurt
