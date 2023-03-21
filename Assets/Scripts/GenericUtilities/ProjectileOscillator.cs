@@ -9,12 +9,10 @@ public class ProjectileOscillator : MonoBehaviour
     float _t = 0f;
     Vector3 _lastFrameOffset;
 
-    public void Setup(Vector3 direction, bool centered, float offset)
+    public void Setup(Vector3 direction, bool centered)
     {
-        //_t = offset;
-
-        _actualDirection = transform.right * direction.x + transform.up * direction.y + transform.forward * direction.z;
-        // transform.position += transform.forward * offset;
+        _actualDirection = direction;
+        //_actualDirection = transform.right * direction.x + transform.up * direction.y + transform.forward * direction.z;
         if (centered)
             transform.position += _actualDirection * (Amplitude / 2);
 

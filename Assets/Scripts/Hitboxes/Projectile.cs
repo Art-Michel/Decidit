@@ -124,6 +124,7 @@ public class Projectile : Hitbox
             else
                 StartDisappearing();
         }
+
         if (_trailDelayT >= 0)
         {
             _trailDelayT -= Time.deltaTime;
@@ -247,7 +248,6 @@ public class Projectile : Hitbox
                 else
                 {
                     SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/BaseShoot/BaseShootImpactObject", 1f, gameObject);
-                    Debug.Log("impact");
                     impactVfx.transform.forward = _direction;
                 }
             }

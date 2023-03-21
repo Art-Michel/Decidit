@@ -21,8 +21,7 @@ public class AragonRevolver : Revolver
         // for (int i = 0; i < _shotsDirections.Length; i++)
         //     SetShot(_shotsDirections[i], _offsets[i]);
         PooledObject shot = _pooler.Get();
-        shot.GetComponent<Projectile>().Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized, _camera.forward);
-        shot.transform.rotation = _camera.rotation;
+        shot.GetComponent<FugueProjectile>().Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized, _camera.forward);
 
         Player.Instance.StartShake(_shootShakeIntensity, _shootShakeDuration);
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/FugueAragon/BaseShoot", 1f, gameObject);
