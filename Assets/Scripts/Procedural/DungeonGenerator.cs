@@ -104,11 +104,11 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
     {
         switch (indexRoom)
         {
-            case 0:
+            case 1:
                 _roomsToBuild.Add(CorridorsSpell[Random.Range(0, CorridorsSpell.Count)].Get());
                 break;
 
-            case 1:
+            case 3:
                 _roomsToBuild.Add(CorridorsSpell[Random.Range(0, CorridorsSpell.Count)].Get());
                 break;
 
