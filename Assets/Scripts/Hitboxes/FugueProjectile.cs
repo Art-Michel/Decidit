@@ -14,7 +14,7 @@ public class FugueProjectile : SynergyProjectile
     {
         for (int i = 0; i < _objects.Length; i++)
         {
-            _objects[i].Setup(_directions[i], _centered, _offsets[i]);
+            _objects[i].Setup(_directions[i].normalized, _centered, _offsets[i]);
         }
     }
 
