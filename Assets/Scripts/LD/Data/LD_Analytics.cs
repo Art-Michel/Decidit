@@ -26,7 +26,8 @@ public class LD_Analytics : MonoBehaviour
     private float pathTimer=0f;
     private float pathTimerMax=1f;
     public string dataName;
-    private bool isDead=false;
+    private bool canSaveInBuild = true;
+    private bool canSaveInEditor = true;
 
     void Start()
     {
@@ -37,8 +38,6 @@ public class LD_Analytics : MonoBehaviour
 
         #region Reset
         trailRecorded.Clear();
-        isDead = false;
-        canSavePlayerPath = true;
         #endregion
     }
 
@@ -99,37 +98,13 @@ public class LD_Analytics : MonoBehaviour
 
         if (canSavePlayerPath)
         {
-            if (!isDead)
+            if (canSaveInBuild)
             {
-                #region Create Data .txt
-
-                #region save in editor
-                //int dataID = Random.Range(0, 1000);
-
-                //string path = "Assets/Scripts/LD/Data/Paths/" + "seed_" + gameObject.GetComponent<DungeonGenerator>().GetSeed().ToString() + "_" + dataID + ".txt";
-                //int count = Directory.GetFiles("Assets/Scripts/LD/Data/Paths/").Length;
-                //if (count < 50)
-                //{
-                //    //Write some text to the test.txt file
-                //    StreamWriter writer = new StreamWriter(path, true);
-                //    foreach (Vector3 pos in trailRecorded)
-                //    {
-                //        writer.WriteLine(pos.x + ";" + pos.y + ";" + pos.z);
-                //    }
-                //    writer.Close();
-                //    //UnityEditor.EditorApplication.isPlaying = false;
-                //}
-                //else
-                //{
-                //    Debug.Log("You have too much data!");
-                //}
-                #endregion
-
                 #region save in build
                 int dataID = Random.Range(0, 1000);
 
-                string path = "Decidit_Build/DECIDIT_Data/StreamingAssets/" + "seed_" + gameObject.GetComponent<DungeonGenerator>().GetSeed().ToString() + "_" + dataID + ".txt";
-                int count = Directory.GetFiles("Decidit_Build/DECIDIT_Data/StreamingAssets/").Length;
+                string path = Application.dataPath + "/StreamingAssets/" + "seed_" + gameObject.GetComponent<DungeonGenerator>().GetSeed().ToString() + "_" + dataID + ".txt";
+                int count = Directory.GetFiles(Application.dataPath + "/StreamingAssets").Length;
                 if (count < 50)
                 {
                     //Write some text to the test.txt file
@@ -147,8 +122,7 @@ public class LD_Analytics : MonoBehaviour
                 }
                 #endregion
 
-                #endregion
-                isDead = true;
+                canSaveInBuild = false;
             }
         }
     }
@@ -160,49 +134,32 @@ public class LD_Analytics : MonoBehaviour
     {
         if (canSavePlayerPath)
         {
-            #region save in editor
-            //int dataID = Random.Range(0, 1000);
-
-            //string path = "Assets/Scripts/LD/Data/Paths/" + "seed_" + gameObject.GetComponent<DungeonGenerator>().GetSeed().ToString() + "_" + dataID + ".txt";
-            //int count = Directory.GetFiles("Assets/Scripts/LD/Data/Paths/").Length;
-            //if (count < 50)
-            //{
-            //    //Write some text to the test.txt file
-            //    StreamWriter writer = new StreamWriter(path, true);
-            //    foreach (Vector3 pos in trailRecorded)
-            //    {
-            //        writer.WriteLine(pos.x + ";" + pos.y + ";" + pos.z);
-            //    }
-            //    writer.Close();
-            //    //UnityEditor.EditorApplication.isPlaying = false;
-            //}
-            //else
-            //{
-            //    Debug.Log("You have too much data!");
-            //}
-            #endregion
-
-            #region save in build
-            int dataID = Random.Range(0, 1000);
-
-            string path = "Decidit_Build/DECIDIT_Data/StreamingAssets/" + "seed_" + gameObject.GetComponent<DungeonGenerator>().GetSeed().ToString() + "_" + dataID + ".txt";
-            int count = Directory.GetFiles("Decidit_Build/DECIDIT_Data/StreamingAssets/").Length;
-            if (count < 50)
+            if (canSaveInEditor)
             {
-                //Write some text to the test.txt file
-                StreamWriter writer = new StreamWriter(path, true);
-                foreach (Vector3 pos in trailRecorded)
+                #region save in editor
+                int dataID = Random.Range(0, 1000);
+
+                string path = "Assets/Scripts/LD/Data/Paths/" + "seed_" + gameObject.GetComponent<DungeonGenerator>().GetSeed().ToString() + "_" + dataID + ".txt";
+                int count = Directory.GetFiles("Assets/Scripts/LD/Data/Paths/").Length;
+                if (count < 50)
                 {
-                    writer.WriteLine(pos.x + ";" + pos.y + ";" + pos.z);
+                    //Write some text to the test.txt file
+                    StreamWriter writer = new StreamWriter(path, true);
+                    foreach (Vector3 pos in trailRecorded)
+                    {
+                        writer.WriteLine(pos.x + ";" + pos.y + ";" + pos.z);
+                    }
+                    writer.Close();
+                    //UnityEditor.EditorApplication.isPlaying = false;
                 }
-                writer.Close();
-                //UnityEditor.EditorApplication.isPlaying = false;
+                else
+                {
+                    Debug.Log("You have too much data!");
+                }
+                #endregion
+
+                canSaveInEditor = false;
             }
-            else
-            {
-                Debug.Log("You have too much data!");
-            }
-            #endregion
         }
     }
 
