@@ -10,9 +10,8 @@ using State.FlyAI;
 using State.WallAI;
 using NaughtyAttributes;
 
-public class EylauArea : MonoBehaviour
+public class EylauArea : SynergyTrigger
 {
-    [Foldout("References")][SerializeField] private LayerMask _shouldEnhance;
     [Foldout("References")][SerializeField] private LayerMask _shouldBuff;
     [Foldout("Stats")][SerializeField] private float _radius;
     [Foldout("Stats")][SerializeField] private float _lifeSpan;

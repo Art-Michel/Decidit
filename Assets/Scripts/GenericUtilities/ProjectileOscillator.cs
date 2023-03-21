@@ -14,7 +14,7 @@ public class ProjectileOscillator : MonoBehaviour
         //_t = offset;
 
         _actualDirection = transform.right * direction.x + transform.up * direction.y + transform.forward * direction.z;
-        transform.position += transform.forward * offset;
+        // transform.position += transform.forward * offset;
         if (centered)
             transform.position += _actualDirection * (Amplitude / 2);
 
