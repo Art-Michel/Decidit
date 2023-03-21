@@ -40,7 +40,6 @@ public class Altar : MonoBehaviour, IInteractable
     private bool _isPlayerInside;
 
     [SerializeField] static List<Altar> altarListScript = new List<Altar>();
-    [SerializeField] List<Altar> altarListScripts = new List<Altar>();
 
     void Awake()
     {
@@ -50,8 +49,6 @@ public class Altar : MonoBehaviour, IInteractable
 
     void Start()
     {
-        altarListScripts = altarListScript;
-
         SetChant(_chant);
         _shouldMovePlayer = false;
         _hasBeenUsed = false;
