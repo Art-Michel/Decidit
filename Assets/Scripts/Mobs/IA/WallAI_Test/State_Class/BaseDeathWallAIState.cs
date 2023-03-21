@@ -35,7 +35,6 @@ namespace State.WallAI
         public void Death()
         {
             //PLAY SOUND DEATH WALL IA
-            // TODO lucas va te faire encul�
             SoundManager.Instance.PlaySound("event:/SFX_IA/DeathIA", 1f, gameObject);
             AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "IsDead");
             once = true;

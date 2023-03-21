@@ -1,10 +1,14 @@
 using UnityEngine;
 using UnityEngine.AI;
+using FMODUnity;
+using FMODUnityResonance;
+
 
 namespace State.WallAI
 {
     public class BaseMoveWallAIState : _StateWallAI
     {
+        private FMOD.Studio.EventInstance loopInstance;
         protected StateControllerWallAI stateControllerWallAI;
 
         public GlobalRefWallAI globalRef;
@@ -176,14 +180,17 @@ namespace State.WallAI
 
         void PlaySound()
         {
-            // PLAY SOUND MOVE IN WALL WALLMOB
-            // TODO lucas va te faire encul�
+            FMOD.Studio.EventInstance loopInstance;
+            loopInstance = FMODUnity.RuntimeManager.CreateInstance("event:/SFX_IA/Menas_SFX(Mur)/Moove");
+            loopInstance.start();
             SoundManager.Instance.PlaySound("event:/SFX_IA/Menas_SFX(Mur)/Moove", 1f, gameObject);
         }
 
         // Reset Value When Change State
         private void OnDisable()
         {
+            loopInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            loopInstance.release();
             globalRef.baseAttackWallAISO.bulletCount = globalRef.baseAttackWallAISO.maxBulletCount;
             baseMoveWallAISO.rateAttack = baseMoveWallAISO.maxRateAttack;
             baseMoveWallAISO.findNewPos = false;
