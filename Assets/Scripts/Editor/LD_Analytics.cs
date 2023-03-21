@@ -146,7 +146,7 @@ public class LD_Analytics : MonoBehaviour
                     writer.WriteLine(pos.x + ";" + pos.y + ";" + pos.z);
                 }
                 writer.Close();
-                UnityEditor.EditorApplication.isPlaying = false;
+                //UnityEditor.EditorApplication.isPlaying = false;
             }
             else
             {
