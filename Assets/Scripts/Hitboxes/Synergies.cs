@@ -17,6 +17,8 @@ public class Synergies : LocalManager<Synergies>
 
     public void Synergize(SynergyProjectile bullet, Transform collider)
     {
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/UniversalSound", 2f, collider.gameObject);
+
         Chants bulletChant = bullet.Chant;
         Chants colliderChant = collider.GetComponent<SynergyTrigger>().Chant;
 
@@ -36,6 +38,7 @@ public class Synergies : LocalManager<Synergies>
                         break;
                 }
                 break;
+
             case Chants.MUSE:
                 switch (colliderChant)
                 {
@@ -50,6 +53,7 @@ public class Synergies : LocalManager<Synergies>
                         break;
                 }
                 break;
+
             case Chants.EYLAU:
                 switch (colliderChant)
                 {

@@ -52,6 +52,8 @@ public class EnemyHealth : Health
     public bool IsSick;
     [Foldout("Synergies")]
     [SerializeField] Image _sickIcon;
+    [Foldout("Synergies")]
+    [SerializeField] Collider[] _sickBoxes;
 
     [Header("KnockBack IA")]
     public Vector3 KnockBackDir;
@@ -159,6 +161,8 @@ public class EnemyHealth : Health
     {
         IsSick = true;
         _sickIcon.enabled = true;
+        foreach (Collider collider in _sickBoxes)
+            collider.enabled = true;
     }
 
     //used to make healthbar face the camera
@@ -237,10 +241,11 @@ public class EnemyHealth : Health
         {
             collider.enabled = false;
         }
+        foreach (Collider collider in _sickBoxes)
+            collider.enabled = false;
 
         //Adjust Visibility
         _appearT = 1;
-
     }
 
     public void SetDissolve()

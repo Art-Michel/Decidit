@@ -564,6 +564,15 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Score"",
+                    ""type"": ""Button"",
+                    ""id"": ""4236d738-d99a-43f1-a887-47635639aaef"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -1042,12 +1051,23 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""14e549fc-9e8a-452a-90de-1f5a1a501e1b"",
+                    ""id"": ""1ec4438c-2be1-4e03-8ff2-697a66369189"",
                     ""path"": ""<Keyboard>/tab"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Pause"",
+                    ""action"": ""Score"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d0f3a8d3-cf6c-4a2b-ac4b-3f69eee271f6"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Score"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1126,6 +1146,7 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
         m_MenuNavigation_Scroll = m_MenuNavigation.FindAction("Scroll", throwIfNotFound: true);
         m_MenuNavigation_Click = m_MenuNavigation.FindAction("Click", throwIfNotFound: true);
         m_MenuNavigation_Pause = m_MenuNavigation.FindAction("Pause", throwIfNotFound: true);
+        m_MenuNavigation_Score = m_MenuNavigation.FindAction("Score", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1445,6 +1466,7 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
     private readonly InputAction m_MenuNavigation_Scroll;
     private readonly InputAction m_MenuNavigation_Click;
     private readonly InputAction m_MenuNavigation_Pause;
+    private readonly InputAction m_MenuNavigation_Score;
     public struct MenuNavigationActions
     {
         private @PlayerInputMap m_Wrapper;
@@ -1459,6 +1481,7 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
         public InputAction @Scroll => m_Wrapper.m_MenuNavigation_Scroll;
         public InputAction @Click => m_Wrapper.m_MenuNavigation_Click;
         public InputAction @Pause => m_Wrapper.m_MenuNavigation_Pause;
+        public InputAction @Score => m_Wrapper.m_MenuNavigation_Score;
         public InputActionMap Get() { return m_Wrapper.m_MenuNavigation; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1498,6 +1521,9 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
             @Pause.started += instance.OnPause;
             @Pause.performed += instance.OnPause;
             @Pause.canceled += instance.OnPause;
+            @Score.started += instance.OnScore;
+            @Score.performed += instance.OnScore;
+            @Score.canceled += instance.OnScore;
         }
 
         private void UnregisterCallbacks(IMenuNavigationActions instance)
@@ -1532,6 +1558,9 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
             @Pause.started -= instance.OnPause;
             @Pause.performed -= instance.OnPause;
             @Pause.canceled -= instance.OnPause;
+            @Score.started -= instance.OnScore;
+            @Score.performed -= instance.OnScore;
+            @Score.canceled -= instance.OnScore;
         }
 
         public void RemoveCallbacks(IMenuNavigationActions instance)
@@ -1603,5 +1632,6 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
         void OnScroll(InputAction.CallbackContext context);
         void OnClick(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnScore(InputAction.CallbackContext context);
     }
 }

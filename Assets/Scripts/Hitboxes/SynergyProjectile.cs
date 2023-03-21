@@ -11,12 +11,17 @@ public class SynergyProjectile : Projectile
     [Foldout("Synergies")]
     [SerializeField] LayerMask _synergiesLayer;
 
+    private bool _synergized;
+
     protected override void CheckForCollision()
     {
-        if (Physics.Raycast(_lasterFramePosition, _spaceTraveledLast2Frames.normalized, out RaycastHit hit, _spaceTraveledLast2Frames.magnitude, _synergiesLayer))
-        {
-            Synergies.Instance.Synergize(this, hit.transform);
-        }
+        if (!_synergized)
+            if (Physics.SphereCast(_lasterFramePosition, _radius, _spaceTraveledLast2Frames.normalized, out RaycastHit hit, _spaceTraveledLast2Frames.magnitude, _synergiesLayer))
+            {
+                Synergies.Instance.Synergize(this, hit.transform);
+                _synergized = true;
+            }
+
         base.CheckForCollision();
     }
 }
