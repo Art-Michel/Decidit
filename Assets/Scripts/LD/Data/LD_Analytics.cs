@@ -102,10 +102,34 @@ public class LD_Analytics : MonoBehaviour
             if (!isDead)
             {
                 #region Create Data .txt
+
+                #region save in editor
+                //int dataID = Random.Range(0, 1000);
+
+                //string path = "Assets/Scripts/LD/Data/Paths/" + "seed_" + gameObject.GetComponent<DungeonGenerator>().GetSeed().ToString() + "_" + dataID + ".txt";
+                //int count = Directory.GetFiles("Assets/Scripts/LD/Data/Paths/").Length;
+                //if (count < 50)
+                //{
+                //    //Write some text to the test.txt file
+                //    StreamWriter writer = new StreamWriter(path, true);
+                //    foreach (Vector3 pos in trailRecorded)
+                //    {
+                //        writer.WriteLine(pos.x + ";" + pos.y + ";" + pos.z);
+                //    }
+                //    writer.Close();
+                //    //UnityEditor.EditorApplication.isPlaying = false;
+                //}
+                //else
+                //{
+                //    Debug.Log("You have too much data!");
+                //}
+                #endregion
+
+                #region save in build
                 int dataID = Random.Range(0, 1000);
 
-                string path = "Assets/Scripts/LD/Data/Paths/" + "seed_" + gameObject.GetComponent<DungeonGenerator>().GetSeed().ToString() + "_" + dataID + ".txt";
-                int count = Directory.GetFiles("Assets/Scripts/LD/Data/Paths/").Length;
+                string path = "Decidit_Build/DECIDIT_Data/StreamingAssets/" + "seed_" + gameObject.GetComponent<DungeonGenerator>().GetSeed().ToString() + "_" + dataID + ".txt";
+                int count = Directory.GetFiles("Decidit_Build/DECIDIT_Data/StreamingAssets/").Length;
                 if (count < 50)
                 {
                     //Write some text to the test.txt file
@@ -115,11 +139,14 @@ public class LD_Analytics : MonoBehaviour
                         writer.WriteLine(pos.x + ";" + pos.y + ";" + pos.z);
                     }
                     writer.Close();
+                    //UnityEditor.EditorApplication.isPlaying = false;
                 }
                 else
                 {
                     Debug.Log("You have too much data!");
                 }
+                #endregion
+
                 #endregion
                 isDead = true;
             }
@@ -133,10 +160,33 @@ public class LD_Analytics : MonoBehaviour
     {
         if (canSavePlayerPath)
         {
+            #region save in editor
+            //int dataID = Random.Range(0, 1000);
+
+            //string path = "Assets/Scripts/LD/Data/Paths/" + "seed_" + gameObject.GetComponent<DungeonGenerator>().GetSeed().ToString() + "_" + dataID + ".txt";
+            //int count = Directory.GetFiles("Assets/Scripts/LD/Data/Paths/").Length;
+            //if (count < 50)
+            //{
+            //    //Write some text to the test.txt file
+            //    StreamWriter writer = new StreamWriter(path, true);
+            //    foreach (Vector3 pos in trailRecorded)
+            //    {
+            //        writer.WriteLine(pos.x + ";" + pos.y + ";" + pos.z);
+            //    }
+            //    writer.Close();
+            //    //UnityEditor.EditorApplication.isPlaying = false;
+            //}
+            //else
+            //{
+            //    Debug.Log("You have too much data!");
+            //}
+            #endregion
+
+            #region save in build
             int dataID = Random.Range(0, 1000);
 
-            string path = "Assets/Scripts/LD/Data/Paths/" + "seed_" + gameObject.GetComponent<DungeonGenerator>().GetSeed().ToString() + "_" + dataID + ".txt";
-            int count = Directory.GetFiles("Assets/Scripts/LD/Data/Paths/").Length;
+            string path = "Decidit_Build/DECIDIT_Data/StreamingAssets/" + "seed_" + gameObject.GetComponent<DungeonGenerator>().GetSeed().ToString() + "_" + dataID + ".txt";
+            int count = Directory.GetFiles("Decidit_Build/DECIDIT_Data/StreamingAssets/").Length;
             if (count < 50)
             {
                 //Write some text to the test.txt file
@@ -152,6 +202,7 @@ public class LD_Analytics : MonoBehaviour
             {
                 Debug.Log("You have too much data!");
             }
+            #endregion
         }
     }
 
