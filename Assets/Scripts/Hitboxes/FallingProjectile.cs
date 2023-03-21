@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FallingProjectile : Projectile
+public class FallingProjectile : SynergyProjectile
 {
     [SerializeField] float _drag = 1f;
     [SerializeField] float _speedReductionFactor = 1f;
