@@ -79,8 +79,9 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1556792302}
+  - {fileID: 1930915941593519404}
   m_Father: {fileID: 7333516157775419200}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -268,7 +269,7 @@ Transform:
   - {fileID: 1714682580}
   - {fileID: 411397618}
   m_Father: {fileID: 7333516157775419200}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1556792301
 GameObject:
@@ -516,6 +517,52 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &577824686803965498
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3896825891787085250}
+  - component: {fileID: 4173271698439972478}
+  m_Layer: 21
+  m_Name: Sickbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3896825891787085250
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 577824686803965498}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7333516157775419200}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &4173271698439972478
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 577824686803965498}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  m_Radius: 0.85
+  m_Height: 2.66
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &918669901567716321
 GameObject:
   m_ObjectHideFlags: 0
@@ -526,7 +573,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2892735930382173101}
   - component: {fileID: 851489939178235476}
-  - component: {fileID: 1522120071652233837}
   m_Layer: 15
   m_Name: WeakSpot
   m_TagString: WeakHurtbox
@@ -562,22 +608,82 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.6
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &1522120071652233837
-Rigidbody:
+--- !u!1 &3650826696794452849
+GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 918669901567716321}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 126
-  m_CollisionDetection: 1
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1930915941593519404}
+  - component: {fileID: 7287963292649312878}
+  - component: {fileID: 2239003164961178687}
+  m_Layer: 5
+  m_Name: MuseMaladeIcon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1930915941593519404
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3650826696794452849}
+  m_LocalRotation: {x: -0, y: -0, z: 1, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 484671545}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0.306}
+  m_SizeDelta: {x: 0.4, y: 0.4}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &7287963292649312878
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3650826696794452849}
+  m_CullTransparentMesh: 1
+--- !u!114 &2239003164961178687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3650826696794452849}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.34100214, g: 0.745283, b: 0.37400466, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 50a1ee0dacf45c644ac13d6b8e5feee8, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &3961159187850603902
 GameObject:
   m_ObjectHideFlags: 0
@@ -588,7 +694,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4559969379653064005}
   - component: {fileID: 5819445517737031388}
-  - component: {fileID: 7022724033792158420}
+  - component: {fileID: 8784922333213633265}
   m_Layer: 15
   m_Name: Hurtbox
   m_TagString: Untagged
@@ -625,7 +731,7 @@ CapsuleCollider:
   m_Height: 2.51
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &7022724033792158420
+--- !u!54 &8784922333213633265
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -637,10 +743,10 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 126
-  m_CollisionDetection: 1
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &7333516157666857983
 GameObject:
   m_ObjectHideFlags: 0
@@ -670,7 +776,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7333516157775419200}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7333516157775419203
 GameObject:
@@ -711,6 +817,7 @@ Transform:
   m_Children:
   - {fileID: 4559969379653064005}
   - {fileID: 2892735930382173101}
+  - {fileID: 3896825891787085250}
   - {fileID: 7333516157666857980}
   - {fileID: 484671545}
   - {fileID: 1537687919}
@@ -923,7 +1030,7 @@ MonoBehaviour:
   _hpCursor: {fileID: 0}
   _hpBarStart: {fileID: 0}
   _hpBarEnd: {fileID: 0}
-  _maxHp: 60
+  _maxHp: 90
   _probationMaxStartup: 0
   _probationSpeed: 30
   _healthBarSpeed: 7
@@ -942,6 +1049,9 @@ MonoBehaviour:
   _disappearSpeed: 4
   _disappearMaxStartup: 1
   _deathAnimationDuration: 1
+  IsSick: 0
+  _sickIcon: {fileID: 2239003164961178687}
+  _sickBoxes: []
   KnockBackDir: {x: 0, y: 0, z: 0}
   globalRefAICAC: {fileID: 0}
   globalRefBullAI: {fileID: 0}
