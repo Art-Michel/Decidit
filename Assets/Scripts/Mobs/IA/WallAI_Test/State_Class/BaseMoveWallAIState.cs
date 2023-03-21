@@ -176,12 +176,9 @@ namespace State.WallAI
 
         void PlaySound()
         {
-            if (IsMoving())
-            {
-                // PLAY SOUND MOVE IN WALL WALLMOB
-                // TODO lucas va te faire encul�
-                SoundManager.Instance.PlaySound("event:/SFX_IA/Menas_SFX(Mur)/Moove", 1f, gameObject);
-            }
+            // PLAY SOUND MOVE IN WALL WALLMOB
+            // TODO lucas va te faire encul�
+            SoundManager.Instance.PlaySound("event:/SFX_IA/Menas_SFX(Mur)/Moove", 1f, gameObject);
         }
 
         // Reset Value When Change State
