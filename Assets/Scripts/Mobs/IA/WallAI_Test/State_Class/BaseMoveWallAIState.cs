@@ -191,3 +191,11 @@ namespace State.WallAI
         }
     }
 }
+/*foreach (Altar altar in Resources.FindObjectsOfTypeAll(typeof(Altar)) as Altar[])
+{
+    if (*//*!EditorUtility.IsPersistent(altar.transform.root.gameObject) && *//*!(altar.hideFlags == HideFlags.NotEditable || altar.hideFlags == HideFlags.HideAndDontSave))
+    {
+        if (!altarListScript.Contains(altar))
+            altarListScript.Add(altar);
+    }
+}*/

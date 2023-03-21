@@ -40,22 +40,17 @@ public class Altar : MonoBehaviour, IInteractable
     private bool _isPlayerInside;
 
     [SerializeField] static List<Altar> altarListScript = new List<Altar>();
+    [SerializeField] List<Altar> altarListScripts = new List<Altar>();
 
     void Awake()
     {
-        foreach (Altar altar in Resources.FindObjectsOfTypeAll(typeof(Altar)) as Altar[])
-        {
-            if (!EditorUtility.IsPersistent(altar.transform.root.gameObject) && !(altar.hideFlags == HideFlags.NotEditable || altar.hideFlags == HideFlags.HideAndDontSave))
-            {
-                if(!altarListScript.Contains(altar))
-                    altarListScript.Add(altar);
-            }
-        }
+        altarListScript.Add(this);
         SetRandomChant();
     }
 
     void Start()
     {
+        altarListScripts = altarListScript;
 
         SetChant(_chant);
         _shouldMovePlayer = false;
