@@ -72,7 +72,7 @@ namespace State.AIBull
             {
                 ActiveIdleState();
             }
-            else if (globalRef.characterController.velocity.magnitude == 0)
+            else if (globalRef.characterController.velocity.magnitude <= 1)
             {
                 ActiveIdleState();
             }

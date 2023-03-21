@@ -60,11 +60,11 @@ namespace State.AICAC
                 knockBackDirection = Vector3.zero;
                 ActiveIdleState();
             }
-           /* else if (globalRef.characterController.velocity.magnitude == 0)
+            else if (globalRef.characterController.velocity.magnitude <= 0)
             {
                 knockBackDirection = Vector3.zero;
                 ActiveIdleState();
-            }*/
+            }
         }
 
         private void FixedUpdate()

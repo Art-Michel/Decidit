@@ -115,10 +115,11 @@ namespace State.FlyAI
             globalRef.agent.enabled = true;
             if (once)
             {
-                globalRef.agent.baseOffset = childflyAI.transform.position.y;
                 Vector3 positionChild = new Vector3(childflyAI.transform.position.x,
-                                                    globalRef.transform.position.y,
-                                                    childflyAI.transform.position.z);
+                                                   globalRef.transform.position.y,
+                                                   childflyAI.transform.position.z);
+
+                globalRef.agent.baseOffset = childflyAI.transform.position.y;
 
                 globalRef.transform.position = positionChild;
                 childflyAI.transform.position = globalRef.transform.position;
