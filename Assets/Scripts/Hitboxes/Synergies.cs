@@ -17,7 +17,7 @@ public class Synergies : LocalManager<Synergies>
 
     public void Synergize(SynergyProjectile bullet, Transform collider)
     {
-        Chants bulletChant = bullet.GetComponent<SynergyProjectile>().Chant;
+        Chants bulletChant = bullet.Chant;
         Chants colliderChant = collider.GetComponent<SynergyTrigger>().Chant;
 
         switch (bulletChant)
