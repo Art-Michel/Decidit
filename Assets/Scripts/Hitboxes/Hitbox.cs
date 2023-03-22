@@ -40,13 +40,13 @@ public class Hitbox : MonoBehaviour
     private void OnEnable()
     {
         ClearBlacklist();
+        Debug.Log("mario");
     }
 
     private void OnDrawGizmos()
     {
         if (this.enabled)
         {
-
             Gizmos.color = new Color(1, 0, 0, 0.3f);
             Gizmos.DrawSphere(transform.position, _radius);
         }
