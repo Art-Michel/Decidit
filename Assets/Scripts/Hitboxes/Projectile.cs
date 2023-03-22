@@ -276,7 +276,7 @@ public class Projectile : Hitbox
         }
     }
 
-    private void Explode(Vector3 normal)
+    public void Explode(Vector3 normal)
     {
         if (normal != Vector3.zero)
             _explosion.transform.up = normal;

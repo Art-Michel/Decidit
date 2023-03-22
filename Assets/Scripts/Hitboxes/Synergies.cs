@@ -12,8 +12,10 @@ public class Synergies : LocalManager<Synergies>
         EYLAU
     }
 
-    [Foldout("FugueOnMuse")]
-    [SerializeField] float mario;
+    [Foldout("Cimetière")]
+    [SerializeField] Transform _eylauArea;
+    [Foldout("Muse -> Cimetière")]
+    [SerializeField] Pooler _explosionVfx;
 
     public void Synergize(SynergyProjectile bullet, Transform collider)
     {
@@ -49,7 +51,8 @@ public class Synergies : LocalManager<Synergies>
                         //Nothing!
                         break;
                     case Chants.EYLAU:
-                        MuseOnCimetiere();
+                        MuseOnCimetiere(bullet.transform.position.y);
+                        bullet.Explode(bullet.transform.forward);
                         break;
                 }
                 break;
@@ -96,8 +99,21 @@ public class Synergies : LocalManager<Synergies>
         Debug.Log("Trou noir");
     }
 
-    public void MuseOnCimetiere()
+    public void MuseOnCimetiere(float y)
     {
         Debug.Log("Plein de petites explosions (== une grosse) qui stun");
+        Vector3 initialPos = new Vector3(_eylauArea.position.x, y, _eylauArea.position.z);
+        for (int i = 1; i < 20; i++)
+        {
+            SpawnAnExplosion(i, initialPos, Vector3.up);
+            SpawnAnExplosion(i, initialPos, Vector3.down);
+        }
+    }
+
+    private void SpawnAnExplosion(int i, Vector3 initialPos, Vector3 direction)
+    {
+        MuseEylauExplosions exp = _explosionVfx.Get().GetComponent<MuseEylauExplosions>();
+        Vector3 pos = initialPos + direction * i + Random.insideUnitSphere * 6;
+        exp.Setup(pos, i / 40.0f);
     }
 }
