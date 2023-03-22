@@ -203,6 +203,8 @@ public class EylauRevolver : Revolver
 
     public override void ResetChargeLevel()
     {
+        loopInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        loopInstance.release();
         _charged = false;
         _currentCharge = 0f;
         _chargeUi.fillAmount = _currentCharge;
