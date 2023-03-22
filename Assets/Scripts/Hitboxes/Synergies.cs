@@ -106,7 +106,7 @@ public class Synergies : LocalManager<Synergies>
         Vector3 initialPos = new Vector3(_eylauArea.position.x, y, _eylauArea.position.z);
         for (int i = 1; i < 10; i++)
         {
-            Vector2 circle = (Random.insideUnitCircle).normalized * 3;
+            Vector2 circle = (Random.insideUnitCircle).normalized * Random.Range(2.0f, 6.0f);
             Vector3 position = new Vector3(circle.x, 0.0f, circle.y);
 
             //twice to fill the cimetiere
