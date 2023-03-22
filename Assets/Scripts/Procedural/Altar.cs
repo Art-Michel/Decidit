@@ -45,7 +45,7 @@ public class Altar : MonoBehaviour, IInteractable
 
     void Awake()
     {
-        if(disableRandom)
+        if(!disableRandom)
         {
             altarListScript.Add(this);
             SetRandomChant();
@@ -59,7 +59,7 @@ public class Altar : MonoBehaviour, IInteractable
         _hasBeenUsed = false;
         _isPlayerInside = false;
 
-        if (disableRandom)
+        if (!disableRandom)
             CheckIfSameSpell();
     }
 
