@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3651693590413946372}
   - component: {fileID: 3651693590413946371}
+  - component: {fileID: 142862983485708965}
   m_Layer: 15
   m_Name: Hurtbox
   m_TagString: Untagged
@@ -45,6 +46,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &142862983485708965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3651693590413946373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2257062f2335e844eb66bdbcb1502d68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HealthComponent: {fileID: 3651693591780365184}
 --- !u!1 &3651693590478695771
 GameObject:
   m_ObjectHideFlags: 0
@@ -57,6 +71,7 @@ GameObject:
   - component: {fileID: 3651693590478695751}
   - component: {fileID: 3651693590478695768}
   - component: {fileID: 3651693590478695769}
+  - component: {fileID: 9211301132871074366}
   m_Layer: 15
   m_Name: WeakSpot_1
   m_TagString: WeakHurtbox
@@ -142,6 +157,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &9211301132871074366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3651693590478695771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2257062f2335e844eb66bdbcb1502d68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HealthComponent: {fileID: 3651693591780365184}
 --- !u!1 &3651693590633806064
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,6 +258,7 @@ GameObject:
   - component: {fileID: 3651693591125230930}
   - component: {fileID: 3651693591125230931}
   - component: {fileID: 3651693591125230932}
+  - component: {fileID: 5530624826845915121}
   m_Layer: 15
   m_Name: WeakSpot_2
   m_TagString: WeakHurtbox
@@ -315,6 +344,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5530624826845915121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3651693591125230934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2257062f2335e844eb66bdbcb1502d68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HealthComponent: {fileID: 3651693591780365184}
 --- !u!1 &3651693591180118777
 GameObject:
   m_ObjectHideFlags: 0
@@ -517,6 +559,7 @@ GameObject:
   - component: {fileID: 3651693591301719289}
   - component: {fileID: 3651693591301719290}
   - component: {fileID: 3651693591301719291}
+  - component: {fileID: 7635250791373393366}
   m_Layer: 15
   m_Name: WeakSpot_3
   m_TagString: WeakHurtbox
@@ -602,6 +645,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7635250791373393366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3651693591301719293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2257062f2335e844eb66bdbcb1502d68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HealthComponent: {fileID: 3651693591780365184}
 --- !u!1 &3651693591585181975
 GameObject:
   m_ObjectHideFlags: 0
@@ -751,16 +807,25 @@ MonoBehaviour:
   _healthBarSpeed: 7
   IsInvulnerable: 0
   _canvas: {fileID: 3651693591180118756}
-  _material: {fileID: 0}
+  _material:
+  - {fileID: 0}
   _deathVfx: {fileID: 8439734090078822253}
   Room: {fileID: 0}
-  _colliders: []
+  _colliders:
+  - {fileID: 3651693590413946371}
+  - {fileID: 3651693592049255060}
+  - {fileID: 3651693590478695769}
+  - {fileID: 3651693591125230932}
+  - {fileID: 3651693591301719291}
   _uiScale: 0.1
   _lookStrictness: 0.08
   _appearSpeed: 15
   _disappearSpeed: 4
   _disappearMaxStartup: 1
   _deathAnimationDuration: 1
+  IsSick: 0
+  _sickIcon: {fileID: 0}
+  _sickBoxes: []
   KnockBackDir: {x: 0, y: 0, z: 0}
   globalRefAICAC: {fileID: 0}
   globalRefBullAI: {fileID: 0}
@@ -778,12 +843,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 696edb1499390144ba6e6e6526406c5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MeshGameObject: {fileID: 3651693591585181975}
+  MeshGameObject:
+  - {fileID: 3651693591585181975}
   ColorBase: {r: 0, g: 0, b: 0, a: 0}
   ColorPreAtatck: {r: 1, g: 1, b: 1, a: 0}
-  Material: {fileID: 2100000, guid: fac4f5123abcb13498c83e0f60767f78, type: 2}
-  TextureBase: {fileID: 0}
-  TexturePreAttack: {fileID: 0}
+  Material:
+  - {fileID: 0}
+  TextureBase: {fileID: 2800000, guid: d5f23e1de19a16146a81e5b67935c0c1, type: 3}
+  TexturePreAttack: {fileID: 2800000, guid: 3a2ae6e068448a14294728a46cc890b5, type: 3}
+  TextureToApply: {fileID: 0}
   SetPixelTexture: {x: 0, y: 0}
 --- !u!114 &3757828332054071203
 MonoBehaviour:
@@ -891,6 +959,7 @@ GameObject:
   - component: {fileID: 3651693592049255058}
   - component: {fileID: 3651693592049255059}
   - component: {fileID: 3651693592049255060}
+  - component: {fileID: 4078708554982884989}
   m_Layer: 15
   m_Name: WeakSpot
   m_TagString: WeakHurtbox
@@ -976,6 +1045,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4078708554982884989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3651693592049255062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2257062f2335e844eb66bdbcb1502d68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HealthComponent: {fileID: 3651693591780365184}
 --- !u!1 &3800170639153499298
 GameObject:
   m_ObjectHideFlags: 0

@@ -86,21 +86,21 @@ public class Hitbox : MonoBehaviour
     protected virtual void Hit(Transform targetCollider)
     {
         //Debug.Log(transform.name + " hit " + target.transform.name);
-        if (targetCollider.parent.TryGetComponent<Health>(out Health health))
+        if (targetCollider.TryGetComponent<Hurtbox>(out Hurtbox hurtbox))
         {
             if (_shouldSplashBloodOnHit)
             {
                 if (targetCollider.CompareTag("WeakHurtbox") && _canCriticalHit)
-                    health.TakeCriticalDamage(_damage, transform.position, -transform.forward);
+                    hurtbox.HealthComponent.TakeCriticalDamage(_damage, transform.position, -transform.forward);
                 else
-                    health.TakeDamage(_damage, transform.position, -transform.forward);
+                    hurtbox.HealthComponent.TakeDamage(_damage, transform.position, -transform.forward);
             }
             else
             {
                 if (targetCollider.CompareTag("WeakHurtbox") && _canCriticalHit)
-                    health.TakeCriticalDamage(_damage);
+                    hurtbox.HealthComponent.TakeCriticalDamage(_damage);
                 else
-                    health.TakeDamage(_damage);
+                    hurtbox.HealthComponent.TakeDamage(_damage);
             }
 
             if (_knockbackForce > 0f)
@@ -116,10 +116,10 @@ public class Hitbox : MonoBehaviour
                 //float force = _knockbackForce * Mathf.InverseLerp(_radius, 2, direction.magnitude);
 
                 //apply knockback
-                health.Knockback(direction.normalized * _knockbackForce);
+                hurtbox.HealthComponent.Knockback(direction.normalized * _knockbackForce);
             }
         }
-        Blacklist.Add(targetCollider.parent, _delayBetweenHits);
+        Blacklist.Add(hurtbox.HealthComponent.transform, _delayBetweenHits);
     }
 
     Vector3 MakeDirectionRelative(Vector3 direction)

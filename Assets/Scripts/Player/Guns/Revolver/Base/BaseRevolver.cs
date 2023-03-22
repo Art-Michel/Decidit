@@ -38,12 +38,12 @@ public class BaseRevolver : Revolver
             }
 
             // = enemy hurtbox
-            else if (hit.transform.gameObject.layer == LayerMask.NameToLayer("EnemyHurtbox") && hit.transform.parent.TryGetComponent<Health>(out Health health))
+            else if (hit.transform.gameObject.layer == LayerMask.NameToLayer("EnemyHurtbox") && hit.transform.TryGetComponent<Hurtbox>(out Hurtbox hurtbox))
             {
                 if (hit.transform.CompareTag("WeakHurtbox"))
-                    (health as EnemyHealth).TakeCriticalDamage(_hitscanDamage, hit.point, hit.normal);
+                    (hurtbox.HealthComponent as EnemyHealth).TakeCriticalDamage(_hitscanDamage, hit.point, hit.normal);
                 else
-                    (health as EnemyHealth).TakeDamage(_hitscanDamage, hit.point, hit.normal);
+                    (hurtbox.HealthComponent as EnemyHealth).TakeDamage(_hitscanDamage, hit.point, hit.normal);
             }
         }
 

@@ -14,7 +14,7 @@ public class EnemyHealth : Health
     [Foldout("References")]
     [SerializeField] Canvas _canvas;
     [Foldout("References")]
-    [SerializeField] Material[]_material;
+    [SerializeField] Material[] _material;
     [Foldout("References")]
     [SerializeField] VisualEffect _deathVfx;
     [Foldout("References")]
@@ -85,9 +85,13 @@ public class EnemyHealth : Health
     private void FindBoxes()
     {
         _colliders.Clear();
-        foreach (CapsuleCollider col in GetComponentsInChildren<CapsuleCollider>())
+        foreach (Collider col in GetComponentsInChildren<Collider>())
         {
-            _colliders.Add(col);
+            if (col.TryGetComponent<Hurtbox>(out Hurtbox box))
+            {
+                _colliders.Add(col);
+                box.HealthComponent = this;
+            }
         }
     }
 
