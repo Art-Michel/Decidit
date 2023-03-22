@@ -113,7 +113,7 @@ public class Synergies : LocalManager<Synergies>
     private void SpawnAnExplosion(int i, Vector3 initialPos, Vector3 direction)
     {
         MuseEylauExplosions exp = _explosionVfx.Get().GetComponent<MuseEylauExplosions>();
-        Vector3 pos = initialPos + direction * i + Random.insideUnitSphere * 6;
+        Vector3 pos = initialPos + direction * i + new Vector3((Random.insideUnitCircle * 2).x, 0.0f, (Random.insideUnitCircle * 6).y);
         exp.Setup(pos, i / 40.0f);
     }
 }
