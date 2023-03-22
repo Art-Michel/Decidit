@@ -106,7 +106,7 @@ public class Synergies : LocalManager<Synergies>
         Vector3 initialPos = new Vector3(_eylauArea.position.x, y, _eylauArea.position.z);
         for (int i = 1; i < 10; i++)
         {
-            Vector2 circle = Random.insideUnitCircle * 5;
+            Vector2 circle = (Random.insideUnitCircle).normalized * 3;
             Vector3 position = new Vector3(circle.x, 0.0f, circle.y);
 
             //twice to fill the cimetiere
@@ -118,9 +118,9 @@ public class Synergies : LocalManager<Synergies>
     private void SpawnAnExplosion(Vector3 pos, int i)
     {
         MuseEylauExplosions exp = _explosionVfx.Get().GetComponent<MuseEylauExplosions>();
-        exp.Setup(pos + Vector3.up * i, i / 20.0f);
+        exp.Setup(pos + Vector3.up * i * 2, i / 30.0f);
 
         MuseEylauExplosions exp2 = _explosionVfx.Get().GetComponent<MuseEylauExplosions>();
-        exp2.Setup(pos + Vector3.down * i, i / 20.0f);
+        exp2.Setup(pos + Vector3.down * i * 2, i / 30.0f);
     }
 }

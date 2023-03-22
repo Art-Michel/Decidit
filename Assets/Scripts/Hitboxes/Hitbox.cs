@@ -44,8 +44,12 @@ public class Hitbox : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = new Color(1, 0, 0, 0.3f);
-        Gizmos.DrawSphere(transform.position, _radius);
+        if (this.enabled)
+        {
+
+            Gizmos.color = new Color(1, 0, 0, 0.3f);
+            Gizmos.DrawSphere(transform.position, _radius);
+        }
     }
 
     protected virtual void Update()

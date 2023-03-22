@@ -8,6 +8,7 @@ public class MuseEylauExplosions : PooledObject
     float _delay = 0.0f;
     float _lifeSpan = 0.0f;
     [SerializeField] VisualEffect _vfx;
+    [SerializeField] Hitbox _hitbox;
     bool _hasExploded;
 
 
@@ -16,7 +17,8 @@ public class MuseEylauExplosions : PooledObject
         transform.position = position;
         _delay = delay;
         _hasExploded = false;
-        _lifeSpan = 3.0f;
+        _lifeSpan = 2.0f;
+        _hitbox.enabled = false;
     }
 
     void Update()
@@ -28,6 +30,7 @@ public class MuseEylauExplosions : PooledObject
             {
                 _hasExploded = true;
                 _vfx.Play();
+                _hitbox.enabled = true;
             }
         }
         else
