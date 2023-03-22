@@ -70,12 +70,12 @@ namespace State.AIBull
 
                 if (!canStartRush)
                 {
-                    if (material_Instances.Material.color != material_Instances.ColorPreAtatck)
+                    if (material_Instances.Material[0].mainTexture != material_Instances.TextureBase)
                         ShowSoonAttack(true);
                 }
                 else
                 {
-                    if (material_Instances.Material.color == material_Instances.ColorPreAtatck)
+                    if (material_Instances.Material[0].mainTexture == material_Instances.TextureBase)
                     {
                         ShowSoonAttack(false);
                     }
@@ -304,12 +304,18 @@ namespace State.AIBull
         {
             if(active)
             {
-                material_Instances.Material.color = material_Instances.ColorPreAtatck;
+                for (int i = 0; i < material_Instances.Material.Length; i++)
+                {
+                    material_Instances.Material[0].color = material_Instances.ColorPreAtatck;
+                }
                 material_Instances.ChangeColorTexture(material_Instances.ColorPreAtatck);
             }
             else
             {
-                material_Instances.Material.color = material_Instances.ColorBase;
+                for (int i = 0; i < material_Instances.Material.Length; i++)
+                {
+                    material_Instances.Material[0].color = material_Instances.ColorBase;
+                }
                 material_Instances.ChangeColorTexture(material_Instances.ColorBase);
             }
         }

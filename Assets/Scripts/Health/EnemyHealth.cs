@@ -14,7 +14,7 @@ public class EnemyHealth : Health
     [Foldout("References")]
     [SerializeField] Canvas _canvas;
     [Foldout("References")]
-    [SerializeField] Material _material;
+    [SerializeField] Material[] _material;
     [Foldout("References")]
     [SerializeField] VisualEffect _deathVfx;
     [Foldout("References")]
@@ -250,14 +250,19 @@ public class EnemyHealth : Health
 
     public void SetDissolve()
     {
-        _material.SetFloat("_clip", 1f);
-
+        for (int i = 0; i < _material.Length; i++)
+        {
+            _material[i].SetFloat("_clip", 1f);
+        }
     }
 
     public IEnumerator DissolveInverse()
     {
         _enableT -= Time.deltaTime;
-        _material.SetFloat("_clip", Mathf.Lerp(0, 1f, _enableT));
+        for (int i = 0; i < _material.Length; i++)
+        {
+            _material[i].SetFloat("_clip", Mathf.Lerp(0, 1f, _enableT));
+        }
 
         yield return new WaitForSeconds(0);
         if (_enableT <= 0)
@@ -274,7 +279,10 @@ public class EnemyHealth : Health
     private void UpdateDeath()
     {
         _deathT -= Time.deltaTime;
-        _material.SetFloat("_clip", Mathf.InverseLerp(_deathAnimationDuration, 0, _deathT));
+        for (int i = 0; i < _material.Length; i++)
+        {
+            _material[i].SetFloat("_clip", Mathf.InverseLerp(_deathAnimationDuration, 0, _deathT));
+        }
         if (_deathT <= 0)
         {
             ActuallyDie();

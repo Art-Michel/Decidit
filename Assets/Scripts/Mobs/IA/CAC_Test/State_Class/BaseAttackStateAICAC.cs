@@ -64,7 +64,7 @@ namespace State.AICAC
                     stateControllerAICAC.SetActiveState(StateControllerAICAC.AIState.BaseMove);
                     return;
                 }
-                else if(material_Instances.Material.color != material_Instances.ColorPreAtatck)
+                else if (material_Instances.Material[0].mainTexture != material_Instances.TextureBase)
                 {
                     material_Instances.ChangeColorTexture(material_Instances.ColorPreAtatck);
                 }

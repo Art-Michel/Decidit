@@ -2,27 +2,34 @@ using UnityEngine;
 
 public class Material_Instances : MonoBehaviour
 {
-    public GameObject MeshGameObject;
+    public GameObject[] MeshGameObject;
     public Color ColorBase;
     public Color ColorPreAtatck;
-    public Material Material;
+    public Material[] Material;
 
     public Texture2D TextureBase;
     public Texture2D TexturePreAttack;
+    public Texture TextureToApply;
 
     public Vector2 SetPixelTexture;
 
     void Awake()
     {
         //on prend ce gameobject que si yen a pas déja un de référencé comme ça si l'ia a son mesh renderer sur un autre gameobject on le référence juste
-        if (MeshGameObject == null) MeshGameObject = this.gameObject;
+        //if (MeshGameObject == null) MeshGameObject = this.gameObject;
         try
         {
-            Material = MeshGameObject.GetComponent<MeshRenderer>().material;
+            for(int i =0; i< MeshGameObject.Length; i++)
+            {
+                Material[i] = MeshGameObject[i].GetComponent<MeshRenderer>().material;
+            }
         }
         catch
         {
-            Material = MeshGameObject.GetComponent<SkinnedMeshRenderer>().material;
+            for (int i = 0; i < MeshGameObject.Length; i++)
+            {
+                Material[i] = MeshGameObject[i].GetComponent<SkinnedMeshRenderer>().material;
+            }
         }
 
         ChangeColorTexture(ColorBase);
@@ -38,11 +45,19 @@ public class Material_Instances : MonoBehaviour
     {
         if (color == ColorBase)
         {
-            Material.SetTexture("_TextureToDissolve", TextureBase);
+            for(int i =0; i < Material.Length; i++)
+            {
+                Material[i].SetTexture("_TextureToDissolve", TextureBase);
+            }
+            TextureToApply = TextureBase;
         }
         else if (color == ColorPreAtatck)
         {
-            Material.SetTexture("_TextureToDissolve", TexturePreAttack);
+            for (int i = 0; i < Material.Length; i++)
+            {
+                Material[i].SetTexture("_TextureToDissolve", TexturePreAttack);
+            }
+            TextureToApply = TexturePreAttack;
         }
 
         /* Texture = new Texture2D(128, 128);
@@ -60,6 +75,9 @@ public class Material_Instances : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Material.color = ColorBase;
+        for (int i = 0; i < Material.Length; i++)
+        {
+            Material[i].SetTexture("_TextureToDissolve", TextureToApply);
+        }
     }
 }

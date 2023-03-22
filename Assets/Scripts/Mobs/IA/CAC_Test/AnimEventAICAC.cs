@@ -13,8 +13,12 @@ namespace State.AICAC
         }*/
         void LaunchAttack()
         {
-            globalRef.material_Instances.Material.color = globalRef.material_Instances.ColorBase;
+            for (int i = 0; i < globalRef.material_Instances.Material.Length; i++)
+            {
+                globalRef.material_Instances.Material[0].color = globalRef.material_Instances.ColorBase;
+            }
             globalRef.material_Instances.ChangeColorTexture(globalRef.material_Instances.ColorBase);
+
             globalRef.hitBox.SetActive(true);
         }
         void LaunchSoundAttack()

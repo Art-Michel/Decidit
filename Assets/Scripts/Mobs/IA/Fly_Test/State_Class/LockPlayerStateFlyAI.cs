@@ -63,7 +63,7 @@ namespace State.FlyAI
             {
                 if (ThisStateIsActive())
                 {
-                    material_Instances.Material.color = material_Instances.ColorPreAtatck;
+                    material_Instances.Material[0].color = material_Instances.ColorPreAtatck;
                     material_Instances.ChangeColorTexture(material_Instances.ColorPreAtatck);
                 }
             }
@@ -132,7 +132,10 @@ namespace State.FlyAI
             if(baseAttackFlySO != null)
                 baseAttackFlySO.speedRotationAIAttack = 0;
 
-            material_Instances.Material.color = material_Instances.ColorBase;
+            for (int i = 0; i < material_Instances.Material.Length; i++)
+            {
+                material_Instances.Material[i].color = material_Instances.ColorBase;
+            }
             material_Instances.ChangeColorTexture(material_Instances.ColorBase);
         }
     }

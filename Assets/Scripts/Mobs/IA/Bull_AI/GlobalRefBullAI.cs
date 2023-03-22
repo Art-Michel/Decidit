@@ -130,6 +130,11 @@ namespace State.AIBull
         {
             CheckHP();
             distPlayer = Vector3.Distance(transform.position, playerTransform.position);
+
+            if (isInEylau)
+                myAnimator.speed = 1/ (slowRatio/2);
+            else
+                myAnimator.speed = 1;
         }
 
         public void ActiveState(StateControllerBull.AIState newState)

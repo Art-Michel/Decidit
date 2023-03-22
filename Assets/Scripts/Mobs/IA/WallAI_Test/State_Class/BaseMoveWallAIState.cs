@@ -129,27 +129,31 @@ namespace State.WallAI
            );
         }
 
-        void CheckCanTouchPlayer()
+        bool CheckCanTouchPlayer()
         {
             hit = RaycastAIManager.instanceRaycast.RaycastAI(globalRef.transform.position, globalRef.playerTransform.position - globalRef.transform.position, baseMoveWallAISO.maskCheckTouchPlayer,
                     Color.blue, Vector3.Distance(globalRef.transform.position, globalRef.playerTransform.position));
-            if(hit.transform != null)
+
+            if (hit.transform != null)
             {
                 if (hit.transform != globalRef.playerTransform)
                 {
                     canTouchPlayer = false;
                     baseMoveWallAISO.findNewPos = false;
+                    return false;
                 }
                 else
                 {
                     canTouchPlayer = true;
                     baseMoveWallAISO.findNewPos = true;
+                    return true;
                 }
             }
             else
             {
                 canTouchPlayer = false;
                 baseMoveWallAISO.findNewPos = false;
+                return false;
             }
         }
 
