@@ -41,10 +41,15 @@ public class Altar : MonoBehaviour, IInteractable
 
     [SerializeField] static List<Altar> altarListScript = new List<Altar>();
 
+    [SerializeField] bool disableRandom;
+
     void Awake()
     {
-        altarListScript.Add(this);
-        SetRandomChant();
+        if(disableRandom)
+        {
+            altarListScript.Add(this);
+            SetRandomChant();
+        }
     }
 
     void Start()
@@ -54,7 +59,8 @@ public class Altar : MonoBehaviour, IInteractable
         _hasBeenUsed = false;
         _isPlayerInside = false;
 
-        CheckIfSameSpell();
+        if (disableRandom)
+            CheckIfSameSpell();
     }
 
     void SetRandomChant()
