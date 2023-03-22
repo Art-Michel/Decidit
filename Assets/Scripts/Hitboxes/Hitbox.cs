@@ -40,7 +40,6 @@ public class Hitbox : MonoBehaviour
     private void OnEnable()
     {
         ClearBlacklist();
-        Debug.Log("mario");
     }
 
     private void OnDrawGizmos()
