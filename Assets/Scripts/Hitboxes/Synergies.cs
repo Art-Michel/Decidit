@@ -101,19 +101,24 @@ public class Synergies : LocalManager<Synergies>
 
     public void MuseOnCimetiere(float y)
     {
-        Debug.Log("Plein de petites explosions (== une grosse) qui stun");
         Vector3 initialPos = new Vector3(_eylauArea.position.x, y, _eylauArea.position.z);
-        for (int i = 1; i < 20; i++)
+        for (int i = 1; i < 10; i++)
         {
-            SpawnAnExplosion(i, initialPos, Vector3.up);
-            SpawnAnExplosion(i, initialPos, Vector3.down);
+            Vector2 circle = Random.insideUnitCircle * 5;
+            Vector3 position = new Vector3(circle.x, 0.0f, circle.y);
+
+            //twice to fill the cimetiere
+            SpawnAnExplosion(initialPos + position, i);
+            SpawnAnExplosion(initialPos - position, i);
         }
     }
 
-    private void SpawnAnExplosion(int i, Vector3 initialPos, Vector3 direction)
+    private void SpawnAnExplosion(Vector3 pos, int i)
     {
         MuseEylauExplosions exp = _explosionVfx.Get().GetComponent<MuseEylauExplosions>();
-        Vector3 pos = initialPos + direction * i + new Vector3((Random.insideUnitCircle * 2).x, 0.0f, (Random.insideUnitCircle * 6).y);
-        exp.Setup(pos, i / 40.0f);
+        exp.Setup(pos + Vector3.up * i, i / 20.0f);
+
+        MuseEylauExplosions exp2 = _explosionVfx.Get().GetComponent<MuseEylauExplosions>();
+        exp2.Setup(pos + Vector3.down * i, i / 20.0f);
     }
 }

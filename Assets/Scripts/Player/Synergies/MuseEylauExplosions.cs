@@ -35,6 +35,7 @@ public class MuseEylauExplosions : PooledObject
             _lifeSpan -= Time.deltaTime;
             if (_lifeSpan <= 0.0f)
             {
+                _vfx.Reinit();
                 base.Pooler.Return(this);
             }
         }
