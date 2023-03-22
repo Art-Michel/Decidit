@@ -60,14 +60,30 @@ public class Hitbox : MonoBehaviour
     protected virtual void CheckForCollision()
     {
         foreach (Collider collider in Physics.OverlapSphere(transform.position, _radius, _shouldCollideWith))
-            if (!AlreadyHit(collider.transform.parent))
+        {
+            if (collider.transform.TryGetComponent<Hurtbox>(out Hurtbox hurtbox))
             {
-                //if that hitbox can hit through walls.
-                if (_canHitThroughWalls)
-                    Hit(collider.transform);
-                else if (!Physics.Raycast(transform.position, (collider.transform.position - transform.position).normalized, _radius, _shouldNotHitThrough))
-                    Hit(collider.transform);
+                if (!AlreadyHit(hurtbox.HealthComponent.transform))
+                {
+                    //if that hitbox can hit through walls.
+                    if (_canHitThroughWalls)
+                        Hit(hurtbox.HealthComponent.transform);
+                    else if (!Physics.Raycast(transform.position, (collider.transform.position - transform.position).normalized, _radius, _shouldNotHitThrough))
+                        Hit(hurtbox.HealthComponent.transform);
+                }
             }
+            else
+            {
+                if (!AlreadyHit(collider.transform))
+                {
+                    //if that hitbox can hit through walls.
+                    if (_canHitThroughWalls)
+                        Hit(collider.transform);
+                    else if (!Physics.Raycast(transform.position, (collider.transform.position - transform.position).normalized, _radius, _shouldNotHitThrough))
+                        Hit(collider.transform);
+                }
+            }
+        }
     }
 
     protected bool AlreadyHit(Transform target)
@@ -86,21 +102,21 @@ public class Hitbox : MonoBehaviour
     protected virtual void Hit(Transform targetCollider)
     {
         //Debug.Log(transform.name + " hit " + target.transform.name);
-        if (targetCollider.TryGetComponent<Hurtbox>(out Hurtbox hurtbox))
+        if (targetCollider.TryGetComponent<Health>(out Health health))
         {
             if (_shouldSplashBloodOnHit)
             {
                 if (targetCollider.CompareTag("WeakHurtbox") && _canCriticalHit)
-                    hurtbox.HealthComponent.TakeCriticalDamage(_damage, transform.position, -transform.forward);
+                    health.TakeCriticalDamage(_damage, transform.position, -transform.forward);
                 else
-                    hurtbox.HealthComponent.TakeDamage(_damage, transform.position, -transform.forward);
+                    health.TakeDamage(_damage, transform.position, -transform.forward);
             }
             else
             {
                 if (targetCollider.CompareTag("WeakHurtbox") && _canCriticalHit)
-                    hurtbox.HealthComponent.TakeCriticalDamage(_damage);
+                    health.TakeCriticalDamage(_damage);
                 else
-                    hurtbox.HealthComponent.TakeDamage(_damage);
+                    health.TakeDamage(_damage);
             }
 
             if (_knockbackForce > 0f)
@@ -116,10 +132,10 @@ public class Hitbox : MonoBehaviour
                 //float force = _knockbackForce * Mathf.InverseLerp(_radius, 2, direction.magnitude);
 
                 //apply knockback
-                hurtbox.HealthComponent.Knockback(direction.normalized * _knockbackForce);
+                health.Knockback(direction.normalized * _knockbackForce);
             }
         }
-        Blacklist.Add(hurtbox.HealthComponent.transform, _delayBetweenHits);
+        Blacklist.Add(targetCollider, _delayBetweenHits);
     }
 
     Vector3 MakeDirectionRelative(Vector3 direction)

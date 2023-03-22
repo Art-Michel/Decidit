@@ -176,8 +176,9 @@ public class EnemyHealth : Health
     {
         IsSick = true;
         _sickIcon.enabled = true;
-        foreach (Collider collider in _sickBoxes)
-            collider.enabled = true;
+        if (_sickBoxes.Length < 0)
+            foreach (Collider collider in _sickBoxes)
+                collider.enabled = true;
     }
 
     //used to make healthbar face the camera
@@ -256,8 +257,10 @@ public class EnemyHealth : Health
         {
             collider.enabled = false;
         }
-        foreach (Collider collider in _sickBoxes)
-            collider.enabled = false;
+
+        if (_sickBoxes.Length < 0)
+            foreach (Collider collider in _sickBoxes)
+                collider.enabled = false;
 
         //Adjust Visibility
         _appearT = 1;

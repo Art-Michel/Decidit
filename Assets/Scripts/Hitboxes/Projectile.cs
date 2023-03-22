@@ -151,20 +151,42 @@ public class Projectile : Hitbox
         if (_canMultiHit)
         {
             foreach (RaycastHit hit in Physics.SphereCastAll(_lasterFramePosition, _radius, _spaceTraveledLast2Frames.normalized, _spaceTraveledLast2Frames.magnitude, _shouldCollideWith))
-                if (!AlreadyHit(hit.transform.parent))
+                if (hit.transform.TryGetComponent<Hurtbox>(out Hurtbox hurtbox))
+                {
+                    if (!AlreadyHit(hurtbox.HealthComponent.transform))
+                    {
+                        Hit(hurtbox.HealthComponent.transform);
+                        if (_shouldLeaveImpact)
+                            LeaveImpact(hit.transform, hit.point, false);
+
+                        //Reset direction to camera direction in order to cancel the fact we initially sent the
+                        //projectile slightly angled to compensate the gun's offset
+                        _direction = _cameraDirection;
+                    }
+                }
+                else if (!AlreadyHit(hit.transform))
                 {
                     Hit(hit.transform);
                     if (_shouldLeaveImpact)
                         LeaveImpact(hit.transform, hit.point, false);
 
-                    //Reset direction to camera direction in order to cancel the fact we initially sent the
-                    //projectile slightly angled to compensate the gun's offset
                     _direction = _cameraDirection;
                 }
+
             foreach (Collider collider in Physics.OverlapSphere(transform.position, _radius, _shouldCollideWith))
             {
+                if (collider.transform.TryGetComponent<Hurtbox>(out Hurtbox hurtbox))
+                {
+                    if (!AlreadyHit(hurtbox.HealthComponent.transform))
+                    {
+                        Hit(hurtbox.HealthComponent.transform);
+                        if (_shouldLeaveImpact)
+                            LeaveImpact(collider.transform, transform.position, false);
 
-                if (!AlreadyHit(collider.transform.parent))
+                        _direction = _cameraDirection;
+                    }
+                }
+                else if (!AlreadyHit(collider.transform))
                 {
                     Hit(collider.transform);
                     if (_shouldLeaveImpact)

@@ -1,8 +1,7 @@
-using System.Globalization;
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 using NaughtyAttributes;
+using System.Collections.Generic;
 
 public class PlayerHealth : Health
 {
@@ -10,6 +9,9 @@ public class PlayerHealth : Health
 
     [Foldout("References")]
     [SerializeField] Player _player;
+
+    [Foldout("References")]
+    [SerializeField] List<Collider> _colliders;
 
     [Foldout("References")]
     [SerializeField] Image _lowHpVignette;
@@ -71,6 +73,20 @@ public class PlayerHealth : Health
         }
         Instance = GetComponent<PlayerHealth>();
         base.Awake();
+    }
+
+    [Button]
+    private void FindBoxes()
+    {
+        _colliders.Clear();
+        foreach (Collider col in GetComponentsInChildren<Collider>())
+        {
+            if (col.TryGetComponent<Hurtbox>(out Hurtbox box))
+            {
+                _colliders.Add(col);
+                box.HealthComponent = this;
+            }
+        }
     }
 
     protected override void Start()

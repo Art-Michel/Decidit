@@ -20969,9 +20969,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2200446483702820357}
   - component: {fileID: 2862296136533635875}
+  - component: {fileID: 1508328537}
   m_Layer: 14
   m_Name: PlayerBody
-  m_TagString: Ennemi
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20999,12 +21000,25 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2200446483702820354}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.25
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1508328537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2200446483702820354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2257062f2335e844eb66bdbcb1502d68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HealthComponent: {fileID: 2200446484234949843}
 --- !u!1 &2200446483753945750
 GameObject:
   m_ObjectHideFlags: 0
@@ -21606,6 +21620,8 @@ MonoBehaviour:
   _healthBarSpeed: 2
   IsInvulnerable: 0
   _player: {fileID: 2200446484234949679}
+  _colliders:
+  - {fileID: 2862296136533635875}
   _lowHpVignette: {fileID: 1467875607183172788}
   _probVignette: {fileID: 4768762453472736944}
   _vignetteAlphaOnProb:
