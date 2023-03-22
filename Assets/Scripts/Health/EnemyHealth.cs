@@ -81,6 +81,16 @@ public class EnemyHealth : Health
         _isDying = false;
     }
 
+    [Button]
+    private void FindBoxes()
+    {
+        _colliders.Clear();
+        foreach (CapsuleCollider col in GetComponentsInChildren<CapsuleCollider>())
+        {
+            _colliders.Add(col);
+        }
+    }
+
     void OnEnable()
     {
         if (this.Room == null && DungeonGenerator.Instance != null)
