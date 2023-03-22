@@ -14,7 +14,7 @@ public class EnemyHealth : Health
     [Foldout("References")]
     [SerializeField] Canvas _canvas;
     [Foldout("References")]
-    [SerializeField] Material[] _material;
+    [SerializeField] Material[]_material;
     [Foldout("References")]
     [SerializeField] VisualEffect _deathVfx;
     [Foldout("References")]
@@ -65,6 +65,9 @@ public class EnemyHealth : Health
     protected override void Awake()
     {
         base.Awake();
+        _material = GetComponent<Material_Instances>().Material;
+        Debug.Log(_material.Length);
+
         _playerCamera = Camera.main.transform;
         _canvasGroup = _canvas.GetComponent<CanvasGroup>();
         _enableT = 1f;
@@ -73,7 +76,6 @@ public class EnemyHealth : Health
     protected override void Start()
     {
         base.Start();
-        _material = GetComponent<Material_Instances>().Material;
         //_regenValue = _hp;
         _appearT = 0f;
         _canvasGroup.alpha = 0f;
