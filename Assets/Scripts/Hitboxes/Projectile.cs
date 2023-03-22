@@ -211,7 +211,10 @@ public class Projectile : Hitbox
                 //will not bounce if hit a direct enemy
                 if (hit.transform.gameObject.layer == LayerMask.NameToLayer("EnemyHurtbox"))
                 {
-                    Hit(hit.transform);
+                    if (hit.transform.TryGetComponent<Hurtbox>(out Hurtbox hurtbox))
+                        Hit(hurtbox.HealthComponent.transform);
+                    else
+                        Hit(hit.transform);
                     //+ explostion if projectile should spawn an explosion.
                     if (_explodesOnHit)
                         Explode(hit.normal);
@@ -229,10 +232,13 @@ public class Projectile : Hitbox
             //if does not bounce nor multihit, just hit and disappear
             else
             {
-                Hit(hit.transform);
+                if (hit.transform.TryGetComponent<Hurtbox>(out Hurtbox hurtbox))
+                    Hit(hurtbox.HealthComponent.transform);
+                else
+                    Hit(hit.transform);
+
                 if (_shouldLeaveImpact)
                     LeaveImpact(hit.transform, hit.point, false);
-
                 //+ explostion if projectile should spawn an explosion.
                 if (_explodesOnHit)
                     Explode(hit.normal);

@@ -8,7 +8,7 @@ public class RocketExplosion : Explosion
     protected override void Hit(Transform targetCollider)
     {
         base.Hit(targetCollider);
-        if (targetCollider.parent.TryGetComponent<EnemyHealth>(out EnemyHealth health))
+        if (targetCollider.TryGetComponent<EnemyHealth>(out EnemyHealth health))
         {
             health.GetSick();
         }
