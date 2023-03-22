@@ -20,6 +20,7 @@ public class Synergies : LocalManager<Synergies>
     public void Synergize(SynergyProjectile bullet, Transform collider)
     {
         SoundManager.Instance.PlaySound("event:/SFX_Controller/UniversalSound", 2f, collider.gameObject);
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/MuseMalade/Impact", 1f, gameObject);
 
         Chants bulletChant = bullet.Chant;
         Chants colliderChant = collider.GetComponent<SynergyTrigger>().Chant;
@@ -101,6 +102,7 @@ public class Synergies : LocalManager<Synergies>
 
     public void MuseOnCimetiere(float y)
     {
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/Synergies/MuseOnEyleau/Sound", 1f, gameObject);
         Vector3 initialPos = new Vector3(_eylauArea.position.x, y, _eylauArea.position.z);
         for (int i = 1; i < 10; i++)
         {
