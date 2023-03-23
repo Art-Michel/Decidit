@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine;
 using System.Collections.Generic;
 
-public class Integration : MonoBehaviour
+public class IntegrationTool : MonoBehaviour
 {
     public List<Transform> badAsset = new List<Transform>();
     public List<Transform> goodAsset = new List<Transform>();
