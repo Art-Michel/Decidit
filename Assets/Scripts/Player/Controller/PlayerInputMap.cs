@@ -1055,7 +1055,7 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/tab"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard Mouse"",
                     ""action"": ""Score"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
