@@ -79,12 +79,14 @@ public class AragonArm : Arm
 
     public override void StartIdle()
     {
+        base.StartIdle();
         _vfx.SetActive(false);
         Refilled();
     }
 
     public override void StartPrevis()
     {
+        base.StartPrevis();
         loopInstance = FMODUnity.RuntimeManager.CreateInstance("event:/SFX_Controller/Chants/FugueAragon/DuringPreveiw");
         loopInstance.start();
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/FugueAragon/StartPreveiw", 1f, gameObject);
@@ -116,6 +118,7 @@ public class AragonArm : Arm
     public override void StartActive()
     {
         //Prepare
+        base.StartActive();
         StopGlowing();
         _crossHairFull.SetActive(false);
         foreach (Image crosshair in _crossHairs)

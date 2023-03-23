@@ -20,6 +20,8 @@ public class Arm : MonoBehaviour
     [SerializeField] protected GameObject _ui;
     [Foldout("References")]
     [SerializeField] protected Transform _cameraTransform;
+    [Foldout("References")]
+    public Animator Animator;
 
     [Foldout("Other")]
     [SerializeField] private float _smoothness = 10;
@@ -107,7 +109,7 @@ public class Arm : MonoBehaviour
 
     public virtual void StartPrevis()
     {
-
+        this.Animator.CrossFade("preview", 0, 0);
     }
 
     public virtual void UpdatePrevis()
@@ -122,6 +124,7 @@ public class Arm : MonoBehaviour
 
     public virtual void StartActive()
     {
+        this.Animator.CrossFade("cast", 0, 0);
         _fsm.ChangeState(ArmStateList.RECOVERY);
         _crossHairFull.SetActive(false);
         StopGlowing();
@@ -156,6 +159,7 @@ public class Arm : MonoBehaviour
 
     public virtual void StartIdle()
     {
+        this.Animator.CrossFade("idle", 0, 0);
         Refilled();
     }
 

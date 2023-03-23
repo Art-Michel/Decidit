@@ -25,12 +25,14 @@ public class EylauArm : Arm
 
     public override void StartIdle()
     {
+        base.StartIdle();
         _previs.SetActive(false);
         Refilled();
     }
 
     public override void StartPrevis()
     {
+        base.StartPrevis();
         //TODOLucas un ptit son one shot au début de la preview pour pas que le son sorte de nulle part comme ça
         loopInstance = FMODUnity.RuntimeManager.CreateInstance("event:/SFX_Controller/Chants/CimetièreEyleau/DuiringPreview");
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/CimetièreEyleau/Preview", 1f, gameObject);
@@ -55,6 +57,7 @@ public class EylauArm : Arm
 
     public override void StartActive()
     {
+        base.StartActive();
         loopInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         loopInstance.release();
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/CimetièreEyleau/Launch", 1f, gameObject);

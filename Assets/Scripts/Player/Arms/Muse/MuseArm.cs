@@ -34,7 +34,13 @@ public class MuseArm : Arm
 
     public override void StartIdle()
     {
+        base.StartIdle();
         Refilled();
+    }
+
+    public override void StartPrevis()
+    {
+        base.StartPrevis();
     }
 
     public override void CheckLookedAt()
@@ -47,6 +53,7 @@ public class MuseArm : Arm
 
     public override void StartActive()
     {
+        base.StartActive();
         CheckLookedAt();
         _crossHairFull.SetActive(false);
         StopGlowing();
