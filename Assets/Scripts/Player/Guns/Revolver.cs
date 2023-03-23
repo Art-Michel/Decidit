@@ -26,6 +26,8 @@ public class Revolver : MonoBehaviour
     [SerializeField] protected Pooler _impactVfxPooler;
     [Foldout("References")]
     [SerializeField] protected Pooler _fleshSplashVfxPooler;
+    [Foldout("References")]
+    [SerializeField] public Animator Animator;
 
     private PlayerInputMap _inputs;
     private RevolverFSM _fsm;
@@ -169,14 +171,22 @@ public class Revolver : MonoBehaviour
         }
     }
 
-    public void CheckBuffer()
+    public bool CheckBuffer()
     {
         if (_inputs.Actions.Shoot.IsPressed())
+        {
             PressShoot();
+            return true;
+        }
         if (_reloadBuffered)
+        {
             PressReload();
+            _reloadBuffered = false;
+            return true;
+        }
 
         _reloadBuffered = false;
+        return false;
     }
 
     public virtual void Shoot()

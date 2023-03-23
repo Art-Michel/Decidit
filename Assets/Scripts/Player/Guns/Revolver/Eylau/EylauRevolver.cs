@@ -43,6 +43,7 @@ public class EylauRevolver : Revolver
     private bool _charged;
     private Vector3 _shakenDirection = Vector3.zero;
     private FMOD.Studio.EventInstance loopInstance;
+    private bool sh1;
 
     public override void UpdateChargeLevel()
     {
@@ -76,6 +77,17 @@ public class EylauRevolver : Revolver
         PooledObject shot = null;
         if (!_charged)
         {
+            if (!sh1)
+            {
+                sh1 = true;
+                Animator.CrossFade("unShot", 0, 0);
+            }
+            else
+            {
+                sh1 = false;
+                Animator.CrossFade("unShot2", 0, 0);
+            }
+
             loopInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
             loopInstance.release();
             SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/CimetièreEyleau/BasedShoot", 1f, gameObject);
@@ -88,6 +100,7 @@ public class EylauRevolver : Revolver
 
         else
         {
+            Animator.CrossFade("chShot", 0, 0);
             // if (_laserShouldPierce)
             //     PiercingLaser();
             // else

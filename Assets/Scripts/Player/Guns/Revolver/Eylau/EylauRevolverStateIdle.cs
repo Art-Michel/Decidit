@@ -12,8 +12,10 @@ public class EylauRevolverStateIdle : RevolverState
     public override void Begin()
     {
         _revolver.EmptyReloadUI();
+        // if (!_revolver.CheckBuffer())
+        _revolver.Animator.CrossFade("idle", 0.0f, 0);
         _revolver.CheckBuffer();
-        EylauRevolver _eyRev = _revolver as EylauRevolver;
+        // EylauRevolver _eyRev = _revolver as EylauRevolver;
     }
 
     public override void StateUpdate()
