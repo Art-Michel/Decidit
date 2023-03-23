@@ -216,10 +216,12 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
         return _actualRooms.IndexOf(room);
     }
 
-    public void Endgame()
+/*    public void Endgame()
     {
+        Debug.Log("EndGame");
+        TimerManager.instance.SaveTimer();
         MenuManager.Instance.OpenWin();
-    }
+    }*/
 
     public List<Room> GetRooms()
     {

@@ -14,8 +14,9 @@ public class ApplyDifficulty : MonoBehaviour
         }
         else
         {
-            DontDestroyOnLoad(gameObject);
+            Destroy(gameObject);
         }
+        DontDestroyOnLoad(gameObject);
     }
 
     public void SelectDifficulty(int i)

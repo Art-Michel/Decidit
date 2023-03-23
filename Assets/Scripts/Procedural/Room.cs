@@ -70,12 +70,14 @@ public class Room : MonoBehaviour
         {
             DungeonGenerator.Instance.GetRoom(1).gameObject.SetActive(true);
             DungeonGenerator.Instance.GetRoom(2).gameObject.SetActive(true);
+            TimerManager.instance.isInCorridor = true;
         }
 
         else
         {
             PlayerManager.Instance.RechargeEverything();
             this.EnableEnemies(true);
+            TimerManager.instance.isInCorridor = false;
         }
     }
 

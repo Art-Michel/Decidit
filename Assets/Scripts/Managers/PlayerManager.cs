@@ -370,6 +370,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         MenuManager.Instance.StartMenuing();
         MenuManager.Instance.OpenWin();
         StopGame();
+        TimerManager.instance.SaveTimer();
     }
     #endregion
 
