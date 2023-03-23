@@ -40,6 +40,7 @@ public class BaseRevolver : Revolver
             // = enemy hurtbox
             else if (hit.transform.gameObject.layer == LayerMask.NameToLayer("EnemyHurtbox") && hit.transform.TryGetComponent<Hurtbox>(out Hurtbox hurtbox))
             {
+                Debug.Log("hit enemy");
                 if (hit.transform.CompareTag("WeakHurtbox"))
                     (hurtbox.HealthComponent as EnemyHealth).TakeCriticalDamage(_hitscanDamage, hit.point, hit.normal);
                 else
