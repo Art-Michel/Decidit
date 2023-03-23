@@ -33,10 +33,10 @@ namespace State.FlyAI
             {
                 isFall = false;
                 isGround = false;
-                globalRef.agent.enabled = false;
-                globalRef.characterController.enabled = true;
+               // globalRef.agent.enabled = false;
+                //globalRef.characterController.enabled = true;
                 knockBackDirection = globalRef.enemyHealth.KnockBackDir;
-                globalRef.characterController.Move(Vector3.zero);
+                //globalRef.characterController.Move(Vector3.zero);
             }
             catch
             {
@@ -60,7 +60,7 @@ namespace State.FlyAI
                 knockBackDirection = Vector3.zero;
                 ActiveIdleState();
             }
-            else if (globalRef.characterController.velocity.magnitude == 0)
+            else if (/*globalRef.characterController.velocity.magnitude == 0*/ globalRef.agent.velocity.magnitude <= 1)
             {
                 ActiveIdleState();
             }
@@ -90,7 +90,8 @@ namespace State.FlyAI
 
             //move = new Vector3(knockBackDirection.x, knockBackDirection.y + (globalRef.KnockBackFlySO.AIVelocity.y), knockBackDirection.z);
             move = new Vector3(knockBackDirection.x, 0, knockBackDirection.z);
-            globalRef.characterController.Move(move * knockBackMultiplier * deltaTime);
+            globalRef.agent.velocity = move * knockBackMultiplier * deltaTime;
+            //globalRef.characterController.Move(move * knockBackMultiplier * deltaTime);
         }
 
         void SetGravity()
@@ -112,7 +113,7 @@ namespace State.FlyAI
 
         private void OnDisable()
         {
-            globalRef.agent.enabled = true;
+           /* globalRef.agent.enabled = true;
             if (once)
             {
                 Vector3 positionChild = new Vector3(childflyAI.transform.position.x,
@@ -124,7 +125,7 @@ namespace State.FlyAI
                 globalRef.transform.position = positionChild;
                 childflyAI.transform.position = globalRef.transform.position;
             }
-            once = true;
+            once = true;*/
         }
     }
 }
