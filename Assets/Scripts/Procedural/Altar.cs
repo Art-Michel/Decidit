@@ -65,7 +65,8 @@ public class Altar : MonoBehaviour, IInteractable
 
     void SetRandomChant()
     {
-        _chant = (Chants)Random.Range(0, 3);
+        //_chant = (Chants)Random.Range(0, 3);
+        _chant = Chants.Muse;
     }
 
     public void SetChant(Chants chant)
@@ -93,10 +94,11 @@ public class Altar : MonoBehaviour, IInteractable
 
     void CheckIfSameSpell()
     {
-        while(altarListScript[0]._chant == altarListScript[1]._chant)
-        {
-            altarListScript[1]._chant = (Chants)Random.Range(0, 3);
-        }
+        // while(altarListScript[0]._chant == altarListScript[1]._chant)
+        // {
+        //     altarListScript[1]._chant = (Chants)Random.Range(0, 3);
+        // }
+        altarListScript[1]._chant = Chants.Cimetiere;
     }
 
     public void Interact()
