@@ -57,6 +57,6 @@ public class TimerData
 
     public TimerData(TimerManager timerManager)
     {
-        bestTime = TimerManager.instance.bestTime;
+        bestTime = TimerManager.Instance.bestTime;
     }
 }

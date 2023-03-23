@@ -51,7 +51,7 @@ public class Room : MonoBehaviour
                 Debug.LogError("La room [" + this.gameObject.name + "] n'a pas d'ennemi assigné");
             }
             enemyHealth.gameObject.SetActive(b);
-            if(enemyHealth.isActiveAndEnabled)
+            if (enemyHealth.isActiveAndEnabled)
             {
                 enemyHealth.SetDissolve();
                 enemyHealth.StartCoroutine("DissolveInverse");
@@ -70,14 +70,14 @@ public class Room : MonoBehaviour
         {
             DungeonGenerator.Instance.GetRoom(1).gameObject.SetActive(true);
             DungeonGenerator.Instance.GetRoom(2).gameObject.SetActive(true);
-            TimerManager.instance.isInCorridor = true;
+            TimerManager.Instance.isInCorridor = true;
         }
 
         else
         {
             PlayerManager.Instance.RechargeEverything();
             this.EnableEnemies(true);
-            TimerManager.instance.isInCorridor = false;
+            TimerManager.Instance.isInCorridor = false;
         }
     }
 

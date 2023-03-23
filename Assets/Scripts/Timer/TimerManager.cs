@@ -1,23 +1,13 @@
 using NaughtyAttributes;
 using UnityEngine;
 
-public class TimerManager : MonoBehaviour
+public class TimerManager : ProjectManager<TimerManager>
 {
-    public static TimerManager instance;
     [SerializeField] public float time;
     public bool isInCorridor;
     public bool endGame;
 
     [SerializeField] public float[] bestTime = new float[5];
-
-
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-    }
 
     void OnLevelWasLoaded()
     {

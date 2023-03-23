@@ -10,6 +10,6 @@ public class PrintTimerMenu : MonoBehaviour
     void Awake()
     {
         txt = GetComponent<TextMeshProUGUI>();
-        txt.text = "Time : " + TimeSpan.FromSeconds((int)TimerManager.instance.bestTime[index]).ToString();
+        txt.text = "Time : " + TimeSpan.FromSeconds((int)TimerManager.Instance.bestTime[index]).ToString();
     }
 }

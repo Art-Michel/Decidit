@@ -14,6 +14,6 @@ public class DisplayTimer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        txt.text = System.TimeSpan.FromSeconds((int)TimerManager.instance.time).ToString();
+        txt.text = System.TimeSpan.FromSeconds((int)TimerManager.Instance.time).ToString();
     }
 }
