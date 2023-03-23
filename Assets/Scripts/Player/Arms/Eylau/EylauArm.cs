@@ -27,7 +27,6 @@ public class EylauArm : Arm
     {
         base.StartIdle();
         _previs.SetActive(false);
-        Refilled();
     }
 
     public override void StartPrevis()

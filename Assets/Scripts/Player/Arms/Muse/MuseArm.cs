@@ -35,7 +35,6 @@ public class MuseArm : Arm
     public override void StartIdle()
     {
         base.StartIdle();
-        Refilled();
     }
 
     public override void StartPrevis()
@@ -53,7 +52,6 @@ public class MuseArm : Arm
 
     public override void StartActive()
     {
-        base.StartActive();
         CheckLookedAt();
         _crossHairFull.SetActive(false);
         StopGlowing();
@@ -61,10 +59,11 @@ public class MuseArm : Arm
         shot.transform.rotation = transform.rotation;
         shot.GetComponent<Projectile>().Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized, _cameraTransform.forward);
 
-
         Player.Instance.StartShake(_launchShakeIntensity, _launchShakeDuration);
         ////PlaceHolderSoundManager.Instance.PlayMuseRocketLaunch();
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/MuseMalade/Launch", 5f, gameObject);
         //_muzzleFlash.PlayAll();
+        base.StartActive();
+        _fsm.ChangeState(ArmStateList.RECOVERY);
     }
 }

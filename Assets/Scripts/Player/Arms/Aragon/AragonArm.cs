@@ -118,9 +118,6 @@ public class AragonArm : Arm
     public override void StartActive()
     {
         //Prepare
-        base.StartActive();
-        StopGlowing();
-        _crossHairFull.SetActive(false);
         foreach (Image crosshair in _crossHairs)
             crosshair.fillAmount = 0.0f;
 
@@ -144,6 +141,7 @@ public class AragonArm : Arm
 
         //Feedbacks
         StartDashFeedbacks();
+        base.StartActive();
     }
 
     private void AdjustDestination()

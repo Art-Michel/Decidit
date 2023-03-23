@@ -8,7 +8,7 @@ public class TimerManager : MonoBehaviour
     public bool isInCorridor;
     public bool endGame;
 
-    [SerializeField]public float[] bestTime = new float[5];
+    [SerializeField] public float[] bestTime = new float[5];
 
 
     private void Awake()
@@ -52,10 +52,10 @@ public class TimerManager : MonoBehaviour
     public void SaveTimer()
     {
         endGame = true;
-        if (time < bestTime[ApplyDifficulty.instance.indexDifficulty])
+        if (time < bestTime[ApplyDifficulty.Instance.indexDifficulty])
         {
-            bestTime[ApplyDifficulty.instance.indexDifficulty] = time;
+            bestTime[ApplyDifficulty.Instance.indexDifficulty] = time;
             SaveLoadManager.SaveTimer(this);
-        } 
+        }
     }
 }

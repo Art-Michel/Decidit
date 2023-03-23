@@ -125,7 +125,6 @@ public class Arm : MonoBehaviour
     public virtual void StartActive()
     {
         this.Animator.CrossFade("cast", 0, 0);
-        _fsm.ChangeState(ArmStateList.RECOVERY);
         _crossHairFull.SetActive(false);
         StopGlowing();
     }
@@ -142,6 +141,7 @@ public class Arm : MonoBehaviour
 
     public virtual void StartRecovery()
     {
+        this.Animator.CrossFade("idle", 0, 0);
         _cooldownT = _cooldown;
     }
 
@@ -159,7 +159,6 @@ public class Arm : MonoBehaviour
 
     public virtual void StartIdle()
     {
-        this.Animator.CrossFade("idle", 0, 0);
         Refilled();
     }
 
