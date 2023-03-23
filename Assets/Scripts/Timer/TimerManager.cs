@@ -52,7 +52,7 @@ public class TimerManager : MonoBehaviour
     public void SaveTimer()
     {
         endGame = true;
-        if (time > bestTime[ApplyDifficulty.instance.indexDifficulty])
+        if (time < bestTime[ApplyDifficulty.instance.indexDifficulty])
         {
             bestTime[ApplyDifficulty.instance.indexDifficulty] = time;
             SaveLoadManager.SaveTimer(this);
