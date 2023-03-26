@@ -28,6 +28,8 @@ namespace State.AIBull
         [SerializeField] float delayInertieRushInWall;
         [SerializeField] float maxDelayInertieRushInWall;
 
+        bool stopLockPlayerRush;
+
 
         public override void InitState(StateControllerBull stateController)
         {
@@ -67,6 +69,8 @@ namespace State.AIBull
 
                 if(!canStartRush)
                     SmoothLookAtPlayer();
+                else if(!stopLockPlayerRush)
+                    SmoothLookAtPlayerRush();
 
                 if (!canStartRush)
                 {
@@ -85,6 +89,14 @@ namespace State.AIBull
                 {
                     RushMovement();
                     RushDuration();
+                }
+
+                if (!stopLockPlayerRush)
+                {
+                    if (CheckObstaclePlayer())
+                    {
+                        stopLockPlayerRush = true;
+                    }
                 }
             }
         }
@@ -105,7 +117,6 @@ namespace State.AIBull
                 {
                     rushBullSO.rushDestination = globalRef.playerTransform.position + globalRef.transform.forward * rushBullSO.rushInertieSetDistance;
                     lockPlayer = true;
-                    globalRef.launchRush = false;
                     //Invoke("CheckSpeed", 1f);
                 }
             }
@@ -120,12 +131,14 @@ namespace State.AIBull
             rushBullSO.targetPos = new Vector2(rushBullSO.rushDestination.x, rushBullSO.rushDestination.z);
             posAI = new Vector2(globalRef.transform.position.x, globalRef.transform.position.z);
 
-            rushBullSO.direction = rushBullSO.targetPos - posAI;
-            rushBullSO.direction = rushBullSO.direction.normalized * rushBullSO.speedMove;
+            /*rushBullSO.direction = rushBullSO.targetPos - posAI;
+            rushBullSO.direction = rushBullSO.direction.normalized * rushBullSO.speedMove;*/
+            Vector3 dir = globalRef.transform.forward * rushBullSO.speedMove;
 
             SetGravity();
             SlowSpeed(globalRef.isInEylau);
-            rushBullSO.move = new Vector3(rushBullSO.direction.x, rushBullSO.directionYSlope.y + rushBullSO.AIVelocity.y, rushBullSO.direction.y);
+            //rushBullSO.move = new Vector3(rushBullSO.direction.x, rushBullSO.directionYSlope.y + rushBullSO.AIVelocity.y, rushBullSO.direction.y);
+            rushBullSO.move = new Vector3(dir.x, rushBullSO.directionYSlope.y + rushBullSO.AIVelocity.y, dir.z);
             globalRef.characterController.Move(rushBullSO.move * Time.deltaTime);
 
             globalRef.detectOtherAICollider.enabled = true;
@@ -246,6 +259,21 @@ namespace State.AIBull
                 indexRay = 0;
         }
 
+        bool CheckObstaclePlayer()
+        {
+            Vector3 playerForward = globalRef.playerTransform.GetChild(0).forward;
+
+            float dot = Vector3.Dot(playerForward, (globalRef.transform.position - globalRef.playerTransform.position).normalized);
+            if (dot > 0.7f)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
         void SmoothLookAtPlayer()
         {
             rushBullSO.directionLookAt = rushBullSO.rushDestination;
@@ -254,25 +282,37 @@ namespace State.AIBull
             rushBullSO.relativePos.y = 0;
             rushBullSO.relativePos.z = rushBullSO.directionLookAt.z - globalRef.transform.position.z;
 
-            SlowRotation(globalRef.isInEylau);
-            Quaternion rotation = Quaternion.Slerp(globalRef.transform.rotation, Quaternion.LookRotation(rushBullSO.relativePos, Vector3.up), rushBullSO.speedRot);
+            SlowRotationLock(globalRef.isInEylau);
+            Quaternion rotation = Quaternion.Slerp(globalRef.transform.rotation, Quaternion.LookRotation(rushBullSO.relativePos, Vector3.up), rushBullSO.speedRotLock);
             globalRef.transform.rotation = rotation;
         }
-        void SlowRotation(bool active)
+        void SmoothLookAtPlayerRush()
+        {
+            rushBullSO.directionLookAt = globalRef.playerTransform.position;
+
+            rushBullSO.relativePos.x = rushBullSO.directionLookAt.x - globalRef.transform.position.x;
+            rushBullSO.relativePos.y = 0;
+            rushBullSO.relativePos.z = rushBullSO.directionLookAt.z - globalRef.transform.position.z;
+
+            SlowRotationRush();
+            Quaternion rotation = Quaternion.Slerp(globalRef.transform.rotation, Quaternion.LookRotation(rushBullSO.relativePos, Vector3.up), rushBullSO.speedRotRush);
+            globalRef.transform.rotation = rotation;
+        }
+        void SlowRotationLock(bool active)
         {
             switch (active)
             {
                 case true:
-                    if (rushBullSO.speedRot < rushBullSO.maxSpeedRot)
+                    if (rushBullSO.speedRotLock < rushBullSO.maxSpeedRotLock)
                     {
-                        rushBullSO.speedRot += Time.deltaTime / globalRef.slowSpeedRot;
+                        rushBullSO.speedRotLock += Time.deltaTime / globalRef.slowSpeedRot;
                     }
                     else
                     {
                         if (!canStartRush)
                         {
                             ShowSoonAttack(false);
-                            rushBullSO.speedRot = rushBullSO.maxSpeedRot;
+                            rushBullSO.speedRotLock = rushBullSO.maxSpeedRotLock;
                             AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Rush");
                             canStartRush = true;
                         }
@@ -281,9 +321,9 @@ namespace State.AIBull
 
 
                 case false:
-                    if (rushBullSO.speedRot < rushBullSO.maxSpeedRot)
+                    if (rushBullSO.speedRotLock < rushBullSO.maxSpeedRotLock)
                     {
-                        rushBullSO.speedRot += Time.deltaTime / rushBullSO.smoothRot;
+                        rushBullSO.speedRotLock += Time.deltaTime / rushBullSO.maxSpeedRotLock;
                     }
                     else
                     {
@@ -291,7 +331,7 @@ namespace State.AIBull
                         {
                             SoundManager.Instance.PlaySound("event:/SFX_IA/ShredNoss_SFX(Dash)/Attack", 10f, gameObject);
                             ShowSoonAttack(false);
-                            rushBullSO.speedRot = rushBullSO.maxSpeedRot;
+                            rushBullSO.speedRotLock = rushBullSO.maxSpeedRotLock;
                             AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Rush");
                             canStartRush = true;
                         }
@@ -299,6 +339,14 @@ namespace State.AIBull
                     break;
             }
         }
+        void SlowRotationRush()
+        {
+            if (rushBullSO.speedRotRush < rushBullSO.maxSpeedRotRush)
+            {
+                rushBullSO.speedRotRush += Time.deltaTime / rushBullSO.smoothRotRush;
+            }
+        }
+
 
         void ShowSoonAttack(bool active)
         {
@@ -332,7 +380,8 @@ namespace State.AIBull
             {
                 rushBullSO.isFall = false;
                 rushBullSO.isGround = true;
-                rushBullSO.speedRot = 0;
+                rushBullSO.speedRotLock = 0;
+                rushBullSO.speedRotRush = 0;
                 rushBullSO.stopLockPlayer = false;
                 rushBullSO.ennemiInCollider.Clear();
                 rushBullSO.AIVelocity = Vector3.zero;
@@ -344,7 +393,7 @@ namespace State.AIBull
             globalRef.detectOtherAICollider.enabled = false;
             globalRef.hitBox.gameObject.SetActive(false);
             globalRef.agent.enabled = true;
-
+            stopLockPlayerRush = false;
         }
 
         private void OnTriggerEnter(Collider other)

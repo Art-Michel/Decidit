@@ -13,9 +13,14 @@ namespace State.AIBull
         [Header("CoolDown Rush")]
         public float currentRangeTimeRush;
 
+        [SerializeField] float maxTimeNextCharge;
+        [SerializeField] float currentTimeNextCharge;
+
         // Start is called before the first frame update
         void Start()
         {
+            currentTimeNextCharge = maxTimeNextCharge;
+
             for (int i = 0; i < transform.childCount; i++)
             {
                 listRefBullAI.Add(transform.GetChild(i).GetComponent<GlobalRefBullAI>());
@@ -41,14 +46,27 @@ namespace State.AIBull
         {
             if(currentRangeTimeRush >0)
             {
-                currentRangeTimeRush -= Time.deltaTime;
+                if(!CheckIsRushing())
+                    currentRangeTimeRush -= Time.deltaTime;
             }
             else
             {
                 if(!CheckIsRushing())
                 {
                     if(cloneListRefBullAI.Count >0)
-                        SelectAI();
+                    {
+                        if(cloneListRefBullAI.Count == transform.childCount) // aucun rusher selectionner : 
+                        {
+                            SelectAI();
+                        }
+                        else // rusher deja selectioné : 
+                        {
+                            if (currentTimeNextCharge > 0) // delay avant de selectioné le prochain : 
+                                currentTimeNextCharge -= Time.deltaTime;
+                            else
+                                SelectAI();
+                        }
+                    }
                     else
                     {
                         ResetCoolDown();
@@ -72,6 +90,8 @@ namespace State.AIBull
 
         void SelectAI()
         {
+            currentTimeNextCharge = maxTimeNextCharge;
+
             int i = Random.Range(0, cloneListRefBullAI.Count - 1);
             if(cloneListRefBullAI[i].enemyHealth._hp >0)
             {

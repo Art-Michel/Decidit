@@ -11,10 +11,15 @@ public class RushBullParameterSO : ScriptableObject
     public Vector3 directionLookAt;
     public Vector3 relativePos;
 
-    [Header("Speed Rotation Parameter")]
-    public float speedRot;
-    public float maxSpeedRot;
-    public float smoothRot;
+    [Header("Speed Rotation Rush Parameter")]
+    public float speedRotRush;
+    public float maxSpeedRotRush;
+    public float smoothRotRush;
+
+    [Header("Speed Rotation Lock Parameter")]
+    public float speedRotLock;
+    public float maxSpeedRotLock;
+    public float smoothRotLock;
 
     [Header("Gravity collision")]
     public LayerMask maskCollision;
@@ -61,6 +66,7 @@ public class RushBullParameterSO : ScriptableObject
     public RaycastHit hit;
     public LayerMask maskCheckEnnemi;
     public LayerMask maskCheckObstacle;
+    public LayerMask maskCheckPlayer;
     public LayerMask noMask;
     public LayerMask maskCheckCanRush;
 }

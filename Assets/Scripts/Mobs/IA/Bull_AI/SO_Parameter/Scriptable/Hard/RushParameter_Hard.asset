@@ -15,9 +15,12 @@ MonoBehaviour:
   rangeTimerRush: {x: 4, y: 6}
   directionLookAt: {x: 0, y: 0, z: 0}
   relativePos: {x: 0, y: 0, z: 0}
-  speedRot: 0
-  maxSpeedRot: 1
-  smoothRot: 0.75
+  speedRotRush: 0
+  maxSpeedRotRush: 0.05
+  smoothRotRush: 1
+  speedRotLock: 0
+  maxSpeedRotLock: 1
+  smoothRotLock: 1
   maskCollision:
     serializedVersion: 2
     m_Bits: 2147483647
@@ -46,6 +49,9 @@ MonoBehaviour:
   maskCheckObstacle:
     serializedVersion: 2
     m_Bits: 11776
+  maskCheckPlayer:
+    serializedVersion: 2
+    m_Bits: 0
   noMask:
     serializedVersion: 2
     m_Bits: 65481

@@ -119,7 +119,7 @@ namespace State.AIBull
 
                 case 4:
                     baseMoveBullSO = Instantiate(baseMoveBullSO_VeryHard);
-                    rushBullSO = Instantiate(rushBullSO_Hard);
+                    rushBullSO = Instantiate(rushBullSO_VeryHard);
                     knockBackBullSO = Instantiate(knockBackBullSO_VeryHard);
                     break;
             }
