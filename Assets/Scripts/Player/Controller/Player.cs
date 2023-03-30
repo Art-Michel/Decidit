@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using TMPro;
 using NaughtyAttributes;
+using CameraShake;
 
 public class Player : LocalManager<Player>
 {
@@ -155,7 +156,7 @@ public class Player : LocalManager<Player>
         _movementAcceleration = 0;
         _canMove = true;
         SetCameraInvert();
-        StopShake();
+        //StopShake();
     }
 
     private void Update()
@@ -170,7 +171,7 @@ public class Player : LocalManager<Player>
         //Camera
         MoveCameraWithRightStick();
         MoveCameraWithMouse();
-        Shake();
+        //Shake();
 
         //Ground Spherecast and Storage of its values
         Physics.SphereCast(transform.position, _groundSpherecastRadius, -transform.up, out _groundHit, _groundSpherecastLength, _collisionMask);
@@ -299,52 +300,54 @@ public class Player : LocalManager<Player>
         _cameraTargetYRotation = obj.eulerAngles.y;
     }
 
-    public void StartShake(float intensity, float duration)
+    public void StartKickShake(KickShake.Params shParams, Vector3 pos)
     {
-        //pour l'instant je synchro juste les deux
-        //TODO reenable PlayerManager.Instance.StartRumbling(intensity, intensity, duration);
-
-        if (duration > _shakeT)
-        {
-            _shakeInitialT = duration;
-            _shakeT = duration;
-        }
-        if (intensity > _shakeIntensity)
-            _shakeIntensity = intensity;
+        CameraShaker.Shake(new KickShake(shParams, pos, false));
     }
 
-    private void Shake()
+    public void StartPerlinShake(PerlinShake.Params shParams, Vector3 pos)
     {
-        if (_shakeT > 0)
-        {
-            float shakeIntensity = _shakeIntensity * Mathf.InverseLerp(0, _shakeInitialT, _shakeT);
-
-            //old shake, in all directions
-            //Head.localPosition = _initialHeadPos + new Vector3(UnityEngine.Random.Range(-1, 1), UnityEngine.Random.Range(-1, 1), 0).normalized * shakeIntensity;
-
-            //new shake, only vertical
-            if (_up)
-            {
-                Head.localPosition = _initialHeadPos + Vector3.up * shakeIntensity;
-                _up = false;
-            }
-            else
-            {
-                Head.localPosition = _initialHeadPos + Vector3.down * shakeIntensity;
-                _up = true;
-            }
-            _shakeT -= Time.deltaTime;
-            if (_shakeT < 0)
-                StopShake();
-        }
+        CameraShaker.Shake(new PerlinShake(shParams, 1, pos, false));
     }
 
-    public void StopShake()
+    public void StartBounceShake(BounceShake.Params shParams, Vector3 pos)
     {
-        _shakeIntensity = 0;
-        _shakeT = 0;
-        Head.localPosition = _initialHeadPos;
+        CameraShaker.Shake(new BounceShake(shParams, pos));
     }
+
+    //Deprecated
+    // private void Shake()
+    // {
+    //     if (_shakeT > 0)
+    //     {
+    //         float shakeIntensity = _shakeIntensity * Mathf.InverseLerp(0, _shakeInitialT, _shakeT);
+
+    //         //old shake, in all directions
+    //         //Head.localPosition = _initialHeadPos + new Vector3(UnityEngine.Random.Range(-1, 1), UnityEngine.Random.Range(-1, 1), 0).normalized * shakeIntensity;
+
+    //         //new shake, only vertical
+    //         if (_up)
+    //         {
+    //             Head.localPosition = _initialHeadPos + Vector3.up * shakeIntensity;
+    //             _up = false;
+    //         }
+    //         else
+    //         {
+    //             Head.localPosition = _initialHeadPos + Vector3.down * shakeIntensity;
+    //             _up = true;
+    //         }
+    //         _shakeT -= Time.deltaTime;
+    //         if (_shakeT < 0)
+    //             StopShake();
+    //     }
+    // }
+
+    // public void StopShake()
+    // {
+    //     _shakeIntensity = 0;
+    //     _shakeT = 0;
+    //     Head.localPosition = _initialHeadPos;
+    // }
     #endregion
 
     #region Ground Detection Functions

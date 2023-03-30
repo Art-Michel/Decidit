@@ -14,7 +14,7 @@ public class MuseRevolver : Revolver
         PooledObject shot = _pooler.Get();
         shot.GetComponent<Projectile>().Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized, _camera.forward);
 
-        Player.Instance.StartShake(_shootShakeIntensity, _shootShakeDuration);
+        Player.Instance.StartKickShake(_shootShake, transform.position);
         ////PlaceHolderSoundManager.Instance.PlayMuseShot();
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/MuseMalade/Shoot", 5f, gameObject);
         _muzzleFlash.PlayAll();

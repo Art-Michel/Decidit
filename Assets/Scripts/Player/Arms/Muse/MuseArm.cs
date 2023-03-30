@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using CameraShake;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -13,11 +14,14 @@ public class MuseArm : Arm
     [Foldout("Stats")]
     [SerializeField] protected float _launchShakeDuration;
 
+    [SerializeField] private BounceShake.Params _castShake;
+
     [Foldout("References")]
     [SerializeField]
     Transform _canonPosition;
     [Foldout("References")]
     [SerializeField]
+
     LayerMask _mask;
 
     Vector3 _currentlyAimedAt;
@@ -59,7 +63,7 @@ public class MuseArm : Arm
         shot.transform.rotation = transform.rotation;
         shot.GetComponent<Projectile>().Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized, _cameraTransform.forward);
 
-        Player.Instance.StartShake(_launchShakeIntensity, _launchShakeDuration);
+        Player.Instance.StartBounceShake(_castShake, transform.position);
         ////PlaceHolderSoundManager.Instance.PlayMuseRocketLaunch();
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/MuseMalade/Launch", 5f, gameObject);
         //_muzzleFlash.PlayAll();

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using CameraShake;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.VFX;
@@ -11,12 +12,13 @@ public class Explosion : Hitbox
     [SerializeField] private float _lifeSpan = 1f;
     [Foldout("Explosion properties")]
     [SerializeField] private float _hitboxSpan = .2f;
-    [Foldout("Explosion properties")]
-    [SerializeField] private float _shakeIntensity = 1;
-    [Foldout("Explosion properties")]
-    [SerializeField] private float _shakeRange = 50f;
-    [Foldout("Explosion properties")]
-    [SerializeField] private float _shakeDuration = .5f;
+    // [Foldout("Explosion properties")]
+    // [SerializeField] private float _shakeIntensity = 1;
+    // [Foldout("Explosion properties")]
+    // [SerializeField] private float _shakeRange = 50f;
+    // [Foldout("Explosion properties")]
+    // [SerializeField] private float _shakeDuration = .5f;
+    [SerializeField] private PerlinShake.Params _shake;
 
     [Foldout("Explosion References")]
     [SerializeField] private GameObject _windBox;
@@ -72,9 +74,9 @@ public class Explosion : Hitbox
 
     private void StartExplosionShake()
     {
-        float intensity = _shakeIntensity * Mathf.InverseLerp(_shakeRange, 0, Vector3.Distance(Player.Instance.transform.position, transform.position));
-        float duration = _shakeDuration * Mathf.InverseLerp(_shakeRange, 0, Vector3.Distance(Player.Instance.transform.position, transform.position));
-        Player.Instance.StartShake(intensity, duration);
+        // float intensity = _shakeIntensity * Mathf.InverseLerp(_shakeRange, 0, Vector3.Distance(Player.Instance.transform.position, transform.position));
+        // float duration = _shakeDuration * Mathf.InverseLerp(_shakeRange, 0, Vector3.Distance(Player.Instance.transform.position, transform.position));
+        Player.Instance.StartPerlinShake(_shake, transform.position);
 
     }
 

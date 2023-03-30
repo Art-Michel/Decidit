@@ -160,9 +160,23 @@ MonoBehaviour:
   _delayBetweenHits: 0
   _lifeSpan: 1.5
   _hitboxSpan: 0.2
-  _shakeIntensity: 0.8
-  _shakeRange: 60
-  _shakeDuration: 0.5
+  _shake:
+    strength:
+      position: {x: 0, y: 0, z: 0}
+      eulerAngles: {x: 2, y: 2, z: 0.8}
+    noiseModes:
+    - freq: 30
+      amplitude: 1
+    envelope:
+      attack: 60
+      sustain: 0
+      decay: 1
+      degree: 2
+    attenuation:
+      clippingDistance: 10
+      falloffScale: 50
+      falloffDegree: 1
+      axesMultiplier: {x: 1, y: 1, z: 1}
   _windBox: {fileID: 3233619823266418932}
   _explosionVfx: {fileID: 7273302670933292421}
   _explosionAudioSource: {fileID: 0}

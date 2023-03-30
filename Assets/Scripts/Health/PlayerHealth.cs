@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using NaughtyAttributes;
 using System.Collections.Generic;
+using CameraShake;
 
 public class PlayerHealth : Health
 {
@@ -40,16 +41,9 @@ public class PlayerHealth : Health
 
     [Foldout("Stats")]
     [SerializeField]
-    [Tooltip("How much Screen will shake when player gets hit.")]
-    private float _playerHurtShakeMaxStrength = 0.3f;
-    [Foldout("Stats")]
-    [SerializeField]
-    [Tooltip("For how long Screen will shake when player gets hit.")]
-    private float _playerHurtShakeDuration = 0.3f;
-    [Foldout("Stats")]
-    [SerializeField]
     private bool _hasSecondChance;
-
+    [SerializeField]
+    private BounceShake.Params _hurtShake;
     float _damageVignetteR;
     float _damageVignetteG;
     float _damageVignetteB;
@@ -120,8 +114,8 @@ public class PlayerHealth : Health
         SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/DamageTaken", 4f, gameObject);
 
         //cool magic numbers proportionnal screenshake when getting hurt
-        float shakeIntensity = _playerHurtShakeMaxStrength * Mathf.InverseLerp(0.0f, 40.0f, amount + 10.0f);
-        Player.Instance.StartShake(shakeIntensity, _playerHurtShakeDuration);
+        // float shakeIntensity = _playerHurtShakeMaxStrength * Mathf.InverseLerp(0.0f, 40.0f, amount + 10.0f);
+        Player.Instance.StartBounceShake(_hurtShake, transform.position);
 
         HandleLowHpVignette();
         StartDamageVignette(amount);

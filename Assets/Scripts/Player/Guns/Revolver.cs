@@ -4,6 +4,7 @@ using TMPro;
 using NaughtyAttributes;
 using UnityEngine.VFX;
 using System;
+using CameraShake;
 
 public class Revolver : MonoBehaviour
 {
@@ -44,16 +45,13 @@ public class Revolver : MonoBehaviour
     [SerializeField] protected float _aimAssistRadius;
     [Foldout("Stats")]
     [SerializeField] protected float _recoilTime = .3f;
+    [SerializeField] protected KickShake.Params _shootShake;
     [Foldout("Stats")]
     [SerializeField][Tooltip("total reload animation duration")] private float _reloadMaxTime = 1f;
     [Foldout("Stats")]
     [SerializeField][Tooltip("time before which you can cancel reloading")] private float _reloadMinTime = 0.9f;
     [Foldout("Stats")]
     [SerializeField] private int _maxAmmo = 6;
-    [Foldout("Stats")]
-    [SerializeField] protected float _shootShakeIntensity;
-    [Foldout("Stats")]
-    [SerializeField] protected float _shootShakeDuration;
 
     [Foldout("Other")]
     [SerializeField] Color _fullAmmoColor;
@@ -215,6 +213,7 @@ public class Revolver : MonoBehaviour
     {
         Debug.Log("mario");
     }
+
     public virtual void ResetChargeLevel()
     {
 

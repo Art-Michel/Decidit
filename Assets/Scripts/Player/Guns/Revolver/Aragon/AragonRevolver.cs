@@ -23,7 +23,7 @@ public class AragonRevolver : Revolver
         PooledObject shot = _pooler.Get();
         shot.GetComponent<FugueProjectile>().Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized, _camera.forward);
 
-        Player.Instance.StartShake(_shootShakeIntensity, _shootShakeDuration);
+        Player.Instance.StartKickShake(_shootShake, transform.position);
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/FugueAragon/BaseShoot", 1f, gameObject);
         _muzzleFlash.PlayAll();
     }

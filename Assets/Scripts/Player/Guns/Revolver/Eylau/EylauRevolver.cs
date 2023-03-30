@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.VFX;
 using UnityEngine.UI;
 using NaughtyAttributes;
+using CameraShake;
 
 public class EylauRevolver : Revolver
 {
@@ -16,16 +17,7 @@ public class EylauRevolver : Revolver
     [Foldout("References")]
     [SerializeField] private Image _chargeUi;
 
-    [Foldout("Screenshake values")]
-    [SerializeField] private float _bulletShakeIntensity = .9f;
-    [Foldout("Screenshake values")]
-    [SerializeField] private float _bulletShakeDuration = .9f;
-
-    [Foldout("Screenshake values")]
-    [SerializeField] private float _laserShakeIntensity = 2f;
-    [Foldout("Screenshake values")]
-    [SerializeField] private float _laserShakeDuration = 2f;
-
+    [SerializeField] private BounceShake.Params _laserShake;
     [Foldout("Stats")]
     [SerializeField] private float _chargeSpeed = 1f;
     [Foldout("Stats")]
@@ -94,7 +86,7 @@ public class EylauRevolver : Revolver
             shot = _unchargedProjectilePooler.Get();
             shot.GetComponent<Projectile>().Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized);
 
-            Player.Instance.StartShake(_bulletShakeIntensity, _bulletShakeDuration);
+            Player.Instance.StartKickShake(_shootShake, transform.position);
             _muzzleFlash.PlayAll();
         }
 
@@ -112,7 +104,7 @@ public class EylauRevolver : Revolver
             shot.GetComponent<Projectile>().Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized);
 
 
-            Player.Instance.StartShake(_laserShakeIntensity, _laserShakeDuration);
+            Player.Instance.StartBounceShake(_laserShake, transform.position);
             _muzzleFlash.PlayAll();
             //Additionnal ammo cost
         }
