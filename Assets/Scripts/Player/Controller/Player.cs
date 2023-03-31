@@ -61,6 +61,13 @@ public class Player : LocalManager<Player>
     [Foldout("Camera Stick Settings")]
     [SerializeField] private bool _controllerCameraYInverted = false;
 
+    private bool _isRightSticking;
+    private float _rStickAcceleration;
+    [Foldout("Camera Stick Settings")]
+    [SerializeField] private float _rStickDecelerationSpeed = 0.08f;
+    [Foldout("Camera Stick Settings")]
+    [SerializeField] private float _rStickAccelerationSpeed = 0.3f;
+
     int _mouseXInvertedValue;
     int _mouseYInvertedValue;
     int _controllerCameraXInvertedValue;
@@ -133,6 +140,7 @@ public class Player : LocalManager<Player>
     private float _movementAcceleration;
     private bool _isPressingADirection;
 
+
     public Vector3 FinalMovement { get; private set; }
     #endregion
 
@@ -170,6 +178,7 @@ public class Player : LocalManager<Player>
 
         //Camera
         MoveCameraWithRightStick();
+        // HandleRStickAcceleration();
         MoveCameraWithMouse();
         //Shake();
 
@@ -283,15 +292,29 @@ public class Player : LocalManager<Player>
     {
         float RStickMovementX = _inputs.Camera.RotateX.ReadValue<float>() * Time.deltaTime;
         float RStickMovementY = _inputs.Camera.RotateY.ReadValue<float>() * Time.deltaTime;
+        _isRightSticking = (RStickMovementX != 0.0f || RStickMovementY != 0.0f);
+
+        HandleRStickAcceleration();
+
         _cameraTargetYRotation = Mathf.Repeat(_cameraTargetYRotation, 360);
-        _cameraTargetYRotation += RStickMovementX * _stickSensitivityX * 10 * _controllerCameraXInvertedValue;
-        _cameraTargetXRotation -= RStickMovementY * _stickSensitivityY * 10 * _controllerCameraYInvertedValue;
+        _cameraTargetYRotation += RStickMovementX * _stickSensitivityX * 10 * _controllerCameraXInvertedValue * _rStickAcceleration;
+        _cameraTargetXRotation -= RStickMovementY * _stickSensitivityY * 10 * _controllerCameraYInvertedValue * _rStickAcceleration;
 
         _cameraTargetXRotation = Mathf.Clamp(_cameraTargetXRotation, -89.5f, 89.5f);
+
 
         var targetRotation = Quaternion.Euler(Vector3.up * _cameraTargetYRotation) * Quaternion.Euler(Vector3.right * _cameraTargetXRotation);
 
         Head.rotation = Quaternion.Slerp(Head.rotation, targetRotation, _cameraSmoothness * Time.deltaTime);
+    }
+
+    private void HandleRStickAcceleration()
+    {
+        if (!_isRightSticking)
+            _rStickAcceleration = Mathf.Clamp01(_rStickAcceleration -= Time.deltaTime / _rStickDecelerationSpeed);
+
+        else
+            _rStickAcceleration = Mathf.Clamp01(_rStickAcceleration += Time.deltaTime / _rStickAccelerationSpeed);
     }
 
     public void ForceRotation(Transform obj)
