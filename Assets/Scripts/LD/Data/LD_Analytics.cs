@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 using Random = UnityEngine.Random;
 
 public class LD_Analytics : MonoBehaviour
@@ -17,17 +18,19 @@ public class LD_Analytics : MonoBehaviour
     [Header("Debug")]
     public bool debugPlayerPath = false;
     public bool canSavePlayerPath = false;
+    public bool canSaveDeadInRoom = false;
     public int pathMaxSize = 100;
     public int dataMaxSize = 20;
 
     // other things
     [HideInInspector] public List<Vector3> trailRecorded;
     [HideInInspector] public float alive_Duration = 0;
+    [HideInInspector] public GameObject deadInRoom;
     private float pathTimer=0f;
     private float pathTimerMax=1f;
     public string dataName;
-    private bool canSaveInBuild = true;
-    private bool canSaveInEditor = true;
+    private bool canSaveInBuild;
+    private bool canSaveInEditor;
 
     void Start()
     {
@@ -38,6 +41,10 @@ public class LD_Analytics : MonoBehaviour
 
         #region Reset
         trailRecorded.Clear();
+
+        // true for saving the path in build or editor
+        canSaveInBuild = false;
+        canSaveInEditor = false;
         #endregion
     }
 
@@ -94,7 +101,34 @@ public class LD_Analytics : MonoBehaviour
 
         float minutes = (int)alive_Duration / 60f;
         float secondes = (minutes - Mathf.FloorToInt(minutes)) * 60f;
-        Debug.Log("Your are dead, your time alive was : " + Mathf.FloorToInt(minutes) + "min" + secondes + "s");
+        //Debug.Log("Your are dead, your time alive was : " + Mathf.FloorToInt(minutes) + "min" + secondes + "s");
+
+        #region check for room where the player is dead
+        if (canSaveDeadInRoom)
+        {
+            GameObject currentRoom = null;
+            RaycastHit checkRoom;
+            if (Physics.Raycast(player.transform.position, -transform.up, out checkRoom, Mathf.Infinity))
+            {
+                currentRoom = checkRoom.transform.parent.parent.gameObject;
+                //Debug.Log("You are dead in " + currentRoom.name + " room");
+                deadInRoom = currentRoom;
+            }
+
+            string _path = "Assets/Scripts/LD/Data/DeadInRooms/" + deadInRoom + ".txt";
+            int _count = Directory.GetFiles("Assets/Scripts/LD/Data/DeadInRooms/").Length;
+            if (_count < 50)
+            {
+                StreamWriter writer = new StreamWriter(_path, true);
+                writer.WriteLine("");
+                writer.Close();
+            }
+            else
+            {
+                Debug.Log("You have too much data!");
+            }
+        }
+        #endregion
 
         if (canSavePlayerPath)
         {
@@ -128,7 +162,7 @@ public class LD_Analytics : MonoBehaviour
     }
 
     /// <summary>
-    /// only for debuging player path
+    /// only for debuging player path manually
     /// </summary>
     public void DebugPlayerPath()
     {

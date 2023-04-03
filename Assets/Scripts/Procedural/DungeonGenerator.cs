@@ -222,7 +222,11 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
         TimerManager.instance.SaveTimer();
         MenuManager.Instance.OpenWin();
     }*/
-
+    
+    /// <summary>
+    /// get seed all rooms
+    /// </summary>
+    /// <returns></returns>
     public List<Room> GetRooms()
     {
         return _roomsToBuild;
