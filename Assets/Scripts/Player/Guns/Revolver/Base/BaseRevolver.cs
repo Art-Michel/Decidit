@@ -67,7 +67,7 @@ public class BaseRevolver : Revolver
         {
             sh1 = false;
             Debug.Log("luigi");
-            Animator.CrossFade("shoot2", 0, 0);
+            Animator.CrossFade("shooot", 0, 0);
         }
     }
 
