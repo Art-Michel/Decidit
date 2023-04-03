@@ -12,6 +12,7 @@ public class RevolverStateIdle : RevolverState
     public override void Begin()
     {
         _revolver.CheckBuffer();
+        _revolver.Animator.CrossFade("idle", 0.0f, 0);
         _revolver.EmptyReloadUI();
     }
 

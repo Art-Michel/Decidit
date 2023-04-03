@@ -71,6 +71,7 @@ public class Revolver : MonoBehaviour
     [SerializeField] private float _controllerSwayAmountY = -3f;
 
 
+    protected bool sh1;
     protected Vector3 _currentlyAimedAt;
     protected float _recoilT;
     private float _reloadT;
@@ -89,6 +90,7 @@ public class Revolver : MonoBehaviour
 
     void Start()
     {
+        sh1 = false;
         Reloaded();
     }
 
@@ -239,6 +241,7 @@ public class Revolver : MonoBehaviour
     // Initiate reloading
     public void StartReload()
     {
+        Animator.CrossFade("reload", 0.0f, 0);
         _reloadT = _reloadMaxTime;
         _reloadingWarning.fillAmount = 0f;
         _reloadingWarning.enabled = true;

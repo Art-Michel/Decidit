@@ -55,9 +55,20 @@ public class BaseRevolver : Revolver
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/BaseShoot/BaseShoot", 1f, gameObject);
         Player.Instance.StartKickShake(_shootShake, transform.position);
 
-        //va te faire enculer unity
         _muzzleFlash.PlayAll();
 
+        if (!sh1)
+        {
+            sh1 = true;
+            Debug.Log("mario");
+            Animator.CrossFade("shoot", 0, 0);
+        }
+        else
+        {
+            sh1 = false;
+            Debug.Log("luigi");
+            Animator.CrossFade("shoot2", 0, 0);
+        }
     }
 
     public void SpawnTrail()

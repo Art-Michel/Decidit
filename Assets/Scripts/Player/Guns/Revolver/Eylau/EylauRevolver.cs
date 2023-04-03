@@ -35,7 +35,6 @@ public class EylauRevolver : Revolver
     private bool _charged;
     private Vector3 _shakenDirection = Vector3.zero;
     private FMOD.Studio.EventInstance loopInstance;
-    private bool sh1;
 
     public override void UpdateChargeLevel()
     {

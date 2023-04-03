@@ -12,6 +12,7 @@ public class AragonRevolverStateIdle : RevolverState
     public override void Begin()
     {
         _revolver.EmptyReloadUI();
+        _revolver.Animator.CrossFade("idle", 0.0f, 0);
         _revolver.CheckBuffer();
     }
 
