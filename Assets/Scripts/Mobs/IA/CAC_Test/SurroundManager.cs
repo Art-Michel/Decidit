@@ -8,6 +8,8 @@ namespace State.AICAC
     {
         NavMeshHit closestHit;
 
+        NavMeshQueryFilter filter;
+
         [Header("List AI Surround")]
         [SerializeField] List<GlobalRefAICAC> aiCACScriptsList = new List<GlobalRefAICAC>();
        
@@ -29,6 +31,9 @@ namespace State.AICAC
 
         void Start()
         {
+            filter.agentTypeID = Get("GroundAI");
+            filter.areaMask = 1 << 0;
+
             SetListActiveAI();
 
             for (int i = 0; i < maxAngle; i++)
@@ -182,9 +187,32 @@ namespace State.AICAC
                 circleRenderer.SetPosition(currentStep, currentPosition);
             }
         }
+
+        int Get(string name)
+        {
+            for (int i = 0; i < NavMesh.GetSettingsCount(); ++i)
+            {
+                var settings = NavMesh.GetSettingsByIndex(i);
+
+                int agentTypeID = settings.agentTypeID;
+
+                var settingsName = NavMesh.GetSettingsNameFromID(agentTypeID);
+
+                if (settingsName == name)
+                {
+                    Debug.Log(settings.agentTypeID);
+                    return settings.agentTypeID;
+                }
+
+            }//end for
+
+            Debug.Log("Null");
+            return 0;
+        }
+
         Vector3 CheckNavMeshPoint(Vector3 _destination)
         {
-            if (NavMesh.SamplePosition(_destination, out closestHit, radius*2, 1))
+            if (NavMesh.SamplePosition(_destination, out closestHit, radius * 2, filter))
             {
                 _destination = closestHit.position;
             }
