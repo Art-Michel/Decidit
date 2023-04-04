@@ -163,6 +163,9 @@ public class MenuManager : LocalManager<MenuManager>
         //blur
         _postProcessVolume.enabled = false;
 
+        _eventSys.SetSelectedGameObject(null);
+        CurrentMenu = null;
+
         //re enable everything
         if (Player.Instance != null)
         {
@@ -201,8 +204,11 @@ public class MenuManager : LocalManager<MenuManager>
     public void EnableMenuInputs()
     {
         _inputs.Enable();
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        if (CurrentDevice != Devices.Controller)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
     }
 
     #region Submenu navigation
@@ -462,8 +468,10 @@ public class MenuManager : LocalManager<MenuManager>
             }
         }
         else
+        {
             Debug.Log("Set to button under mouse: " + buttonUnderMouse.gameObject.name);
-        _eventSys.SetSelectedGameObject(buttonUnderMouse);
+            _eventSys.SetSelectedGameObject(buttonUnderMouse);
+        }
     }
 
     private GameObject CheckUnderMouse()
@@ -490,10 +498,15 @@ public class MenuManager : LocalManager<MenuManager>
 
     private void SwitchToMouse()
     {
+        if (!Cursor.visible)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+
         if (CurrentDevice == Devices.Mouse)
             return;
 
-        Cursor.visible = true;
         CurrentDevice = Devices.Mouse;
         _lastSelectedObject = _eventSys.currentSelectedGameObject;
         _eventSys.SetSelectedGameObject(null);

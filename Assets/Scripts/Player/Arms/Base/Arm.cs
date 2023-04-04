@@ -109,7 +109,7 @@ public class Arm : MonoBehaviour
 
     public virtual void StartPrevis()
     {
-        this.Animator.CrossFade("preview", 0.3f, 0);
+        this.Animator.CrossFade("preview", 0.1f, 0);
     }
 
     public virtual void UpdatePrevis()
