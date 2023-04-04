@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using System;
 using NaughtyAttributes;
 using UnityEngine.Rendering;
+using TMPro;
 
 public class MenuManager : LocalManager<MenuManager>
 {
@@ -344,6 +345,9 @@ public class MenuManager : LocalManager<MenuManager>
 
     void StartLoadingScene(int scene)
     {
+        if (_isFading)
+            return;
+
         StartFading(_sceneFadingDuration);
         if (_loading != null)
             _loading.gameObject.SetActive(true);
@@ -355,6 +359,9 @@ public class MenuManager : LocalManager<MenuManager>
 
     void StartExiting()
     {
+        if (_isFading)
+            return;
+
         StartFading(_sceneFadingDuration);
         if (_loading != null)
             _loading.gameObject.SetActive(true);
@@ -408,34 +415,32 @@ public class MenuManager : LocalManager<MenuManager>
     #region Controller / Keyboard / Mouse Switching
     private void SwitchToController()
     {
-        _eventSys.sendNavigationEvents = true;
+        // _eventSys.sendNavigationEvents = true;
 
         if (CurrentDevice == Devices.Controller)
             return;
         bool wasUsingMouse = CurrentDevice == Devices.Mouse;
         CurrentDevice = Devices.Controller;
 
-
         if (wasUsingMouse)
             TransitionFromMouse();
 
-        _eventSys.sendNavigationEvents = false;
+        // _eventSys.sendNavigationEvents = false;
     }
 
     private void SwitchToKeyboard()
     {
-        _eventSys.sendNavigationEvents = true;
+        // _eventSys.sendNavigationEvents = true;
 
         if (CurrentDevice == Devices.Keyboard)
             return;
         bool wasUsingMouse = CurrentDevice == Devices.Mouse;
         CurrentDevice = Devices.Keyboard;
 
-
         if (wasUsingMouse)
             TransitionFromMouse();
 
-        _eventSys.sendNavigationEvents = false;
+        // _eventSys.sendNavigationEvents = false;
     }
 
     private void TransitionFromMouse()
@@ -446,12 +451,19 @@ public class MenuManager : LocalManager<MenuManager>
         if (buttonUnderMouse == null)
         {
             if (_lastSelectedObject != null)
+            {
+                Debug.Log("Set to Last selected button: " + _lastSelectedObject.gameObject.name);
                 _eventSys.SetSelectedGameObject(_lastSelectedObject);
+            }
             else
+            {
+                Debug.Log("Set to first button: " + CurrentMenu.FirstButton.gameObject.name);
                 _eventSys.SetSelectedGameObject(CurrentMenu.FirstButton);
+            }
         }
         else
-            _eventSys.SetSelectedGameObject(buttonUnderMouse);
+            Debug.Log("Set to button under mouse: " + buttonUnderMouse.gameObject.name);
+        _eventSys.SetSelectedGameObject(buttonUnderMouse);
     }
 
     private GameObject CheckUnderMouse()
@@ -466,9 +478,9 @@ public class MenuManager : LocalManager<MenuManager>
         {
             foreach (RaycastResult res in raycastResults)
             {
-                if ((res.gameObject.TryGetComponent<Button>(out Button mario)))
+                if ((res.gameObject.TryGetComponent<Button>(out Button button)))
                 {
-                    return mario.gameObject;
+                    return button.gameObject;
                 }
             }
             return null;
