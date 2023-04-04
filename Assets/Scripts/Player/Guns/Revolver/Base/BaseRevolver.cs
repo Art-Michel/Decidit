@@ -60,13 +60,11 @@ public class BaseRevolver : Revolver
         if (!sh1)
         {
             sh1 = true;
-            Debug.Log("mario");
             Animator.CrossFade("shoot", 0, 0);
         }
         else
         {
             sh1 = false;
-            Debug.Log("luigi");
             Animator.CrossFade("shooot", 0, 0);
         }
     }

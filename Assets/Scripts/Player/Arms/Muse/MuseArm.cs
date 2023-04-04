@@ -29,11 +29,12 @@ public class MuseArm : Arm
     protected override void PressSong()
     {
         base.PressSong();
-        base.ReleaseSong();
+        this.ReleaseSong();
     }
+
     protected override void ReleaseSong()
     {
-
+        base.ReleaseSong();
     }
 
     public override void StartIdle()
@@ -68,6 +69,8 @@ public class MuseArm : Arm
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/MuseMalade/Launch", 5f, gameObject);
         //_muzzleFlash.PlayAll();
         base.StartActive();
+        this.Animator.CrossFade("cast", 0f, 0);
+        Debug.Log("Crossfaded to cast.");
         _fsm.ChangeState(ArmStateList.RECOVERY);
     }
 }

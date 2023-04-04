@@ -55,6 +55,7 @@ public class ArmFSM : MonoBehaviour
 
         PreviousState = CurrentState;
         CurrentState = nextState;
+
         CurrentState.Begin();
     }
 }

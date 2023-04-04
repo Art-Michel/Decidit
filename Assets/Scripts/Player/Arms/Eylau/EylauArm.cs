@@ -25,8 +25,8 @@ public class EylauArm : Arm
 
     public override void StartIdle()
     {
-        base.StartIdle();
         _previs.SetActive(false);
+        base.StartIdle();
     }
 
     public override void StartPrevis()
@@ -54,11 +54,15 @@ public class EylauArm : Arm
         _previs.transform.rotation = Quaternion.identity;
     }
 
+    public override void StopPrevis()
+    {
+        loopInstance.release();
+        loopInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        _previs.SetActive(false);
+    }
+
     public override void StartActive()
     {
-        base.StartActive();
-        loopInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-        loopInstance.release();
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/CimetièreEyleau/Launch", 1f, gameObject);
         _crossHairFull.SetActive(false);
         StopGlowing();
@@ -67,7 +71,9 @@ public class EylauArm : Arm
         _area.transform.rotation = Quaternion.identity;
         _area.SetActive(true);
         _area.GetComponent<EylauArea>().Reset();
-        _previs.SetActive(false);
+        base.StartActive();
+        this.Animator.CrossFade("cast", 0.1f, 0);
+        Debug.Log("Crossfaded to cast.");
         _fsm.ChangeState(ArmStateList.RECOVERY);
     }
 

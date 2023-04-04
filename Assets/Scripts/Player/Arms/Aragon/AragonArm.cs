@@ -141,6 +141,8 @@ public class AragonArm : Arm
 
         //Feedbacks
         StartDashFeedbacks();
+        this.Animator.CrossFade("cast", 0f, 0);
+        Debug.Log("Crossfaded to cast.");
         base.StartActive();
     }
 

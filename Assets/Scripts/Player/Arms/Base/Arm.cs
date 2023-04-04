@@ -109,7 +109,8 @@ public class Arm : MonoBehaviour
 
     public virtual void StartPrevis()
     {
-        this.Animator.CrossFade("preview", 0, 0);
+        Debug.Log("Crossfaded to preview.");
+        this.Animator.CrossFade("preview", 0.3f, 0);
     }
 
     public virtual void UpdatePrevis()
@@ -124,7 +125,6 @@ public class Arm : MonoBehaviour
 
     public virtual void StartActive()
     {
-        this.Animator.CrossFade("cast", 0, 0);
         _crossHairFull.SetActive(false);
         StopGlowing();
     }
@@ -141,7 +141,6 @@ public class Arm : MonoBehaviour
 
     public virtual void StartRecovery()
     {
-        this.Animator.CrossFade("idle", 0, 0);
         _cooldownT = _cooldown;
     }
 
@@ -159,6 +158,8 @@ public class Arm : MonoBehaviour
 
     public virtual void StartIdle()
     {
+        this.Animator.CrossFade("idle", 0, 0);
+        Debug.Log("Crossfaded to idle.");
         Refilled();
     }
 

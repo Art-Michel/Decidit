@@ -213,7 +213,6 @@ public class Revolver : MonoBehaviour
 
     public virtual void UpdateChargeLevel()
     {
-        Debug.Log("mario");
     }
 
     public virtual void ResetChargeLevel()
