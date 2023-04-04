@@ -70,7 +70,6 @@ public class MuseArm : Arm
         //_muzzleFlash.PlayAll();
         base.StartActive();
         this.Animator.CrossFade("cast", 0f, 0);
-        Debug.Log("Crossfaded to cast.");
         _fsm.ChangeState(ArmStateList.RECOVERY);
     }
 }

@@ -109,7 +109,6 @@ public class Arm : MonoBehaviour
 
     public virtual void StartPrevis()
     {
-        Debug.Log("Crossfaded to preview.");
         this.Animator.CrossFade("preview", 0.3f, 0);
     }
 
@@ -158,7 +157,6 @@ public class Arm : MonoBehaviour
 
     public virtual void StartIdle()
     {
-        this.Animator.CrossFade("idle", 0, 0);
         Debug.Log("Crossfaded to idle.");
         Refilled();
     }
