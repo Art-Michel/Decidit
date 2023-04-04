@@ -157,7 +157,6 @@ public class Arm : MonoBehaviour
 
     public virtual void StartIdle()
     {
-        Debug.Log("Crossfaded to idle.");
         Refilled();
     }
 

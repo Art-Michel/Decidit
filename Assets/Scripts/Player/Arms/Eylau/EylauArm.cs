@@ -73,7 +73,6 @@ public class EylauArm : Arm
         _area.GetComponent<EylauArea>().Reset();
         base.StartActive();
         this.Animator.CrossFade("cast", 0.1f, 0);
-        Debug.Log("Crossfaded to cast.");
         _fsm.ChangeState(ArmStateList.RECOVERY);
     }
 
