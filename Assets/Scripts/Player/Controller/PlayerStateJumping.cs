@@ -20,7 +20,7 @@ public class PlayerStateJumping : PlayerState
 
     public override void Exit()
     {
-
+        
     }
 
 }

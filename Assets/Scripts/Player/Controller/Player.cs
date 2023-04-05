@@ -422,13 +422,13 @@ public class Player : LocalManager<Player>
 
     public void Land()
     {
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/Landing", 1f, gameObject);
         //Reset many values when landing
         _currentFriction = _groundedFriction;
         _currentlyAppliedGravity = 0;
         _globalMomentum.y = 0;
         _coyoteTime = _coyoteMaxTime;
 
-        SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/Landing", 1f, gameObject);
 
         //Jump immediately if player is pressing jump
         if (_inputs.Movement.Jump.IsPressed()) PressJump();

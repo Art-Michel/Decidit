@@ -21,7 +21,7 @@ public class PlayerStateAirborne : PlayerState
 
     public override void Exit()
     {
-
+        //SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/Landing", 1f, _player.gameObject);
     }
 
 }
