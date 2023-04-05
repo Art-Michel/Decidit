@@ -35,10 +35,19 @@ namespace State.AIBull
 
             if (globalRef != null && globalRef.myAnimator != null)
                 AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Walk");
+
+            ResetCoolDown();
+        }
+
+        void ResetCoolDown()
+        {
+            globalRef.rushBullSO.currentRangeTimeRush = (int)Random.Range(globalRef.rushBullSO.rangeTimerRush.x, globalRef.rushBullSO.rangeTimerRush.y);
         }
 
         private void Update()
         {
+            DecrementCoolDownRush();
+
             ManageCurrentNavMeshLink();
             SmoothLookAtPlayer();
 
@@ -57,6 +66,18 @@ namespace State.AIBull
                         stateController.SetActiveState(StateControllerBull.AIState.BaseAttack);
                     }
                 }
+            }
+        }
+
+        void DecrementCoolDownRush()
+        {
+            if (globalRef.rushBullSO.currentRangeTimeRush > 0)
+            {
+                globalRef.rushBullSO.currentRangeTimeRush -= Time.deltaTime;
+            }
+            else
+            {
+                LaunchRush();
             }
         }
 
@@ -258,6 +279,7 @@ namespace State.AIBull
         {
             globalRef.baseMoveBullSO.speedRot = 0;
             globalRef.agent.speed = globalRef.baseMoveBullSO.stopSpeed;
+            ResetCoolDown();
         }
     }
 }

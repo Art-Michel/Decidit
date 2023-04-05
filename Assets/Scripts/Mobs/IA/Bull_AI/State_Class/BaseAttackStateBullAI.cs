@@ -62,7 +62,7 @@ namespace State.AIBull
                 SmoothLookAtPlayer();
 
             if (!canAttak)
-                CheckObstaclePlayer();
+                CheckPlayerIsBack();
         }
 
         void LaunchAttack()
@@ -72,7 +72,7 @@ namespace State.AIBull
             DelayBeforeAttack();
         }
 
-        bool CheckObstaclePlayer()
+        bool CheckPlayerIsBack()
         {
             Vector3 thisPosition = globalRef.transform.position - globalRef.transform.forward;
             Vector3 thisForward = globalRef.transform.forward;

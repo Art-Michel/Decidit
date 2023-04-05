@@ -19,6 +19,7 @@ namespace State.AIBull
         [Header("Rush Movement")]
         public Vector3 captureBasePosDistance;
         public float gravityMultiplier;
+        [SerializeField] float distParcourue;
 
         [Header("Position 2D")]
         Vector2 posPlayer;
@@ -28,8 +29,7 @@ namespace State.AIBull
         [SerializeField] float delayInertieRushInWall;
         [SerializeField] float maxDelayInertieRushInWall;
 
-        bool stopLockPlayerRush;
-
+        [SerializeField] bool stopLockPlayerRush;
 
         public override void InitState(StateControllerBull stateController)
         {
@@ -41,6 +41,7 @@ namespace State.AIBull
         private void OnEnable()
         {
             captureBasePosDistance = globalRef.transform.position;
+            stopLockPlayerRush = false;
             try
             {
                 globalRef.agent.enabled = false;
@@ -69,8 +70,6 @@ namespace State.AIBull
 
                 if(!canStartRush)
                     SmoothLookAtPlayer();
-                else if(!stopLockPlayerRush)
-                    SmoothLookAtPlayerRush();
 
                 if (!canStartRush)
                 {
@@ -89,20 +88,27 @@ namespace State.AIBull
                 {
                     RushMovement();
                     RushDuration();
-                }
 
-                if (!stopLockPlayerRush)
-                {
-                    if (CheckObstaclePlayer())
+                    if(!stopLockPlayerRush)
+                        stopLockPlayerRush = CheckPlayerIsBack();
+                    else
                     {
-                        stopLockPlayerRush = true;
+                        if(CheckDistDone() > rushBullSO.rushInertieSetDistance)
+                            stateController.SetActiveState(StateControllerBull.AIState.Idle);
                     }
+                    if (!stopLockPlayerRush)
+                        SmoothLookAtPlayerRush();
                 }
             }
         }
         private void FixedUpdate()
         {
             CheckObstacle();
+        }
+
+        float CheckDistDone()
+        {
+            return distParcourue = Vector3.Magnitude(captureBasePosDistance - globalRef.transform.position);
         }
 
         void SetDestination()
@@ -259,13 +265,13 @@ namespace State.AIBull
                 indexRay = 0;
         }
 
-        bool CheckObstaclePlayer()
+        bool CheckPlayerIsBack()
         {
             Vector3 playerForward = globalRef.playerTransform.GetChild(0).forward;
             Vector3 thisForward = globalRef.transform.forward;
 
             float dot = Vector3.Dot(thisForward, (globalRef.playerTransform.position - globalRef.transform.position).normalized);
-            if (dot < 0)
+            if (dot < 0.5f)
             {
                 return true;
             }

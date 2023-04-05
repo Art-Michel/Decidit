@@ -6,6 +6,7 @@ public class RushBullParameterSO : ScriptableObject
 {
     [Header("Rate Rush")]
     public Vector2 rangeTimerRush;
+    public float currentRangeTimeRush;
 
     [Header("Look At")]
     public Vector3 directionLookAt;
