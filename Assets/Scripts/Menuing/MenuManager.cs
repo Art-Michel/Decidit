@@ -165,7 +165,7 @@ public class MenuManager : LocalManager<MenuManager>
         _postProcessVolume.enabled = false;
 
         _eventSys.SetSelectedGameObject(null);
-        CurrentMenu = null;
+        // CurrentMenu = null;
 
         //re enable everything
         if (Player.Instance != null)
@@ -198,7 +198,6 @@ public class MenuManager : LocalManager<MenuManager>
     public void DisableMenuInputs()
     {
         _inputs.Disable();
-        Debug.Log("disabled");
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -206,7 +205,6 @@ public class MenuManager : LocalManager<MenuManager>
     public void EnableMenuInputs()
     {
         _inputs.Enable();
-        Debug.Log("enabled");
         if (CurrentDevice != Devices.Controller)
         {
             Cursor.lockState = CursorLockMode.None;
@@ -428,7 +426,6 @@ public class MenuManager : LocalManager<MenuManager>
     {
         _eventSys.sendNavigationEvents = true;
 
-        Debug.Log("mario");
         if (CurrentDevice == Devices.Controller)
             return;
         bool wasUsingMouse = CurrentDevice == Devices.Mouse;
@@ -459,7 +456,6 @@ public class MenuManager : LocalManager<MenuManager>
     {
         //get button under mouse if there is any
         GameObject buttonUnderMouse = CheckUnderMouse();
-        Debug.Log("shit");
 
         if (buttonUnderMouse == null)
         {
