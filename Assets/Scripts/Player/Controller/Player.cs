@@ -353,7 +353,7 @@ public class Player : LocalManager<Player>
         (
             shParams.positionStrength + shParams.rotationStrength,
             shParams.positionStrength + shParams.rotationStrength,
-            shParams.numBounces * 0.1f
+            shParams.numBounces * 0.01f
         );
 
         CameraShaker.Shake(new BounceShake(shParams, pos));

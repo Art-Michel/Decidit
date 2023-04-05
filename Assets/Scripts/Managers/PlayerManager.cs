@@ -348,7 +348,6 @@ public class PlayerManager : LocalManager<PlayerManager>
         _dieT += Time.unscaledDeltaTime;
 
         Time.timeScale = Mathf.Lerp(0, 1, Mathf.InverseLerp(_deathDuration, 0, _dieT));
-        //TODO Art reenable StartRumbling(1, 1, _dieT);
 
         if (_dieT >= _deathDuration)
             Dead();
@@ -357,6 +356,7 @@ public class PlayerManager : LocalManager<PlayerManager>
     private void Dead()
     {
         _isDying = false;
+        Time.timeScale = 0.0f;
         // _menu.SetActive(true);
         MenuManager.Instance.StartMenuing();
         MenuManager.Instance.OpenDeath();

@@ -205,11 +205,9 @@ public class MenuManager : LocalManager<MenuManager>
     public void EnableMenuInputs()
     {
         _inputs.Enable();
-        if (CurrentDevice != Devices.Controller)
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        CurrentDevice = Devices.Mouse;
     }
 
     #region Submenu navigation
@@ -229,7 +227,7 @@ public class MenuManager : LocalManager<MenuManager>
         }
         CurrentMenu.gameObject.SetActive(true);
 
-        if (CurrentDevice == Devices.Controller)
+        if (CurrentDevice == Devices.Controller || CurrentDevice == Devices.Keyboard)
             _eventSys.SetSelectedGameObject(CurrentMenu.FirstButton);
     }
 
@@ -456,6 +454,9 @@ public class MenuManager : LocalManager<MenuManager>
     {
         //get button under mouse if there is any
         GameObject buttonUnderMouse = CheckUnderMouse();
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
 
         if (buttonUnderMouse == null)
         {
