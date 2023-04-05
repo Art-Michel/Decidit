@@ -43,6 +43,7 @@ public class Revolver : MonoBehaviour
     [SerializeField] protected LayerMask _secondaryMask;
     [Foldout("Stats")]
     [SerializeField] protected float _aimAssistRadius;
+    protected float _currentAimAssistRadius;
     [Foldout("Stats")]
     [SerializeField] protected float _recoilTime = .3f;
     [SerializeField] protected KickShake.Params _shootShake;
@@ -152,7 +153,7 @@ public class Revolver : MonoBehaviour
     {
         if (Physics.Raycast(_camera.position, _camera.forward, out RaycastHit hit, 999f, _mask))
             _currentlyAimedAt = hit.point;
-        else if (Physics.SphereCast(_camera.position, _aimAssistRadius, _camera.forward, out RaycastHit hit2, 999f, _mask))
+        else if (Physics.SphereCast(_camera.position, _currentAimAssistRadius, _camera.forward, out RaycastHit hit2, 999f, _mask))
             _currentlyAimedAt = hit2.point;
         else if (Physics.Raycast(_camera.position, _camera.forward, out RaycastHit hit3, 999f, _secondaryMask))
             _currentlyAimedAt = hit3.point;
@@ -303,6 +304,12 @@ public class Revolver : MonoBehaviour
         if (PlaceHolderSoundManager.Instance != null)
             Reloaded();
         _inputs.Enable();
+
+        if (MenuManager.Instance.CurrentDevice == MenuManager.Devices.Controller)
+            _currentAimAssistRadius = _aimAssistRadius * 3.0f;
+        else
+            _currentAimAssistRadius = _aimAssistRadius;
+
         _ui.SetActive(true);
     }
 
