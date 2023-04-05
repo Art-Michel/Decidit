@@ -64,7 +64,7 @@ public class Player : LocalManager<Player>
     private bool _isRightSticking;
     private float _rStickAcceleration;
     [Foldout("Camera Stick Settings")]
-    [SerializeField] private float _rStickDecelerationSpeed = 0.08f;
+    [SerializeField] private float _rStickDecelerationSpeed = 0.04f;
     [Foldout("Camera Stick Settings")]
     [SerializeField] private float _rStickAccelerationSpeed = 0.3f;
 

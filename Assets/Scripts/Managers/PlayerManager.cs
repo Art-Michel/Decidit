@@ -43,6 +43,7 @@ public class PlayerManager : LocalManager<PlayerManager>
 
     //Death variables
     public bool _isDying { get; private set; }
+    private bool _isDead;
     float _dieT;
     [Foldout("Death")]
     [SerializeField] float _deathDuration = 1f;
@@ -80,6 +81,7 @@ public class PlayerManager : LocalManager<PlayerManager>
     {
         SlowMo();
         Rumble();
+        DisplayTimeScale();
 
         if (_isDying)
             Die();
@@ -181,7 +183,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         Player.Instance.KillMomentum();
         Player.Instance.CharaCon.enabled = false;
         MenuManager.Instance.StartMenuing();
-        MenuManager.Instance.OpenSubmenu(altar.MenuToOpen);
+        MenuManager.Instance.OpenSubmenu(altar.MenuToOpen, false);
         _currentAltar = altar;
         _canPause = false;
 
@@ -356,7 +358,7 @@ public class PlayerManager : LocalManager<PlayerManager>
     private void Dead()
     {
         _isDying = false;
-        Time.timeScale = 0.0f;
+        _isDead = true;
         // _menu.SetActive(true);
         MenuManager.Instance.StartMenuing();
         MenuManager.Instance.OpenDeath();
@@ -410,10 +412,9 @@ public class PlayerManager : LocalManager<PlayerManager>
         {
             ////SoundManager.Instance.PlaySound("event:/SFX_Environement/SlowMo", 5f);
             Time.timeScale = Mathf.Lerp(_timeSpeed, 1, Mathf.InverseLerp(_slowMoInitialT, 0, _slowMoT));
-            DisplayTimeScale();
 
             _slowMoT -= Time.unscaledDeltaTime;
-            if (_slowMoT < 0)
+            if (_slowMoT < 0 && !_isDead)
                 StopSlowMo();
         }
     }
@@ -422,7 +423,6 @@ public class PlayerManager : LocalManager<PlayerManager>
     {
         Time.timeScale = 1;
         _slowMoT = 0;
-        DisplayTimeScale();
     }
     #endregion
 

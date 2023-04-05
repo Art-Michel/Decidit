@@ -165,7 +165,8 @@ public class MenuManager : LocalManager<MenuManager>
         _postProcessVolume.enabled = false;
 
         _eventSys.SetSelectedGameObject(null);
-        // CurrentMenu = null;
+        CurrentMenu.gameObject.SetActive(false);
+        CurrentMenu = null;
 
         //re enable everything
         if (Player.Instance != null)
@@ -211,7 +212,7 @@ public class MenuManager : LocalManager<MenuManager>
     }
 
     #region Submenu navigation
-    public void OpenSubmenu(Menus menu)
+    public void OpenSubmenu(Menus menu, bool backwards)
     {
         if (_submenus[menu] == CurrentMenu)
             return;
@@ -222,8 +223,11 @@ public class MenuManager : LocalManager<MenuManager>
         _lastSelectedObject = null;
         if (previousMenu != null)
         {
-            previousMenu.FirstButton = _eventSys.currentSelectedGameObject;
             previousMenu.gameObject.SetActive(false);
+
+            //Remember button only if we are going forward in th hierarchy
+            if (!backwards)
+                previousMenu.FirstButton = _eventSys.currentSelectedGameObject;
         }
         CurrentMenu.gameObject.SetActive(true);
 
@@ -234,79 +238,81 @@ public class MenuManager : LocalManager<MenuManager>
     public void OpenPreviousMenu()
     {
         if (CurrentMenu.PreviousMenu != null)
-            OpenSubmenu(CurrentMenu.PreviousMenu.Id);
+        {
+            OpenSubmenu(CurrentMenu.PreviousMenu.Id, true);
+        }
         else if (PlayerManager.Instance != null && CurrentMenu.Id == Menus.Main)
             PlayerManager.Instance.Unpause();
     }
 
     public void OpenMain()
     {
-        OpenSubmenu(Menus.Main);
+        OpenSubmenu(Menus.Main, false);
     }
 
     public void OpenPlaySelect()
     {
-        OpenSubmenu(Menus.Playselect);
+        OpenSubmenu(Menus.Playselect, false);
     }
 
     public void OpenVideoSettings()
     {
-        OpenSubmenu(Menus.Videosettings);
+        OpenSubmenu(Menus.Videosettings, false);
     }
 
     public void OpenAudioSettings()
     {
-        OpenSubmenu(Menus.AudioSettings);
+        OpenSubmenu(Menus.AudioSettings, false);
     }
 
     public void OpenInputSettings()
     {
-        OpenSubmenu(Menus.Inputsettings);
+        OpenSubmenu(Menus.Inputsettings, false);
     }
 
     public void OpenCredits()
     {
-        OpenSubmenu(Menus.Credits);
+        OpenSubmenu(Menus.Credits, false);
     }
 
     public void OpenQuit()
     {
-        OpenSubmenu(Menus.Quit);
+        OpenSubmenu(Menus.Quit, false);
     }
 
     public void OpenCheats()
     {
-        OpenSubmenu(Menus.Cheats);
+        OpenSubmenu(Menus.Cheats, false);
     }
 
     public void OpenRestart()
     {
-        OpenSubmenu(Menus.Restart);
+        OpenSubmenu(Menus.Restart, false);
     }
 
     public void OpenDeath()
     {
-        OpenSubmenu(Menus.Death);
+        OpenSubmenu(Menus.Death, false);
     }
 
     public void OpenWin()
     {
-        OpenSubmenu(Menus.Win);
+        OpenSubmenu(Menus.Win, false);
     }
 
     public void OpenFugue()
     {
-        OpenSubmenu(Menus.FugueSelect);
+        OpenSubmenu(Menus.FugueSelect, false);
     }
 
     public void OpenMuse()
     {
-        OpenSubmenu(Menus.MuseSelect);
+        OpenSubmenu(Menus.MuseSelect, false);
     }
 
     public void OpenCimetiere()
     {
-        OpenSubmenu(Menus.CimetiereSelect);
+        OpenSubmenu(Menus.CimetiereSelect, false);
     }
 
     #endregion
@@ -359,7 +365,7 @@ public class MenuManager : LocalManager<MenuManager>
 
         DisableMenuInputs();
         SceneManager.LoadSceneAsync(scene);
-        Time.timeScale = 1;
+        Time.timeScale = 0;
     }
 
     void StartExiting()
