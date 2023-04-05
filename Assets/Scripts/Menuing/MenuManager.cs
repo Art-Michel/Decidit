@@ -61,6 +61,7 @@ public class MenuManager : LocalManager<MenuManager>
     private Dictionary<Menus, Submenu> _submenus;
     [SerializeField] private Submenu _firstMenu;
     public Submenu CurrentMenu;
+    public GameObject _currObj;
 
     //Fade to black when loading a scene
     [Foldout("Loading")]
@@ -197,6 +198,7 @@ public class MenuManager : LocalManager<MenuManager>
     public void DisableMenuInputs()
     {
         _inputs.Disable();
+        Debug.Log("disabled");
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -204,6 +206,7 @@ public class MenuManager : LocalManager<MenuManager>
     public void EnableMenuInputs()
     {
         _inputs.Enable();
+        Debug.Log("enabled");
         if (CurrentDevice != Devices.Controller)
         {
             Cursor.lockState = CursorLockMode.None;
@@ -228,7 +231,7 @@ public class MenuManager : LocalManager<MenuManager>
         }
         CurrentMenu.gameObject.SetActive(true);
 
-        if (CurrentDevice == Devices.Controller || CurrentDevice == Devices.Keyboard)
+        if (CurrentDevice == Devices.Controller)
             _eventSys.SetSelectedGameObject(CurrentMenu.FirstButton);
     }
 
@@ -407,6 +410,8 @@ public class MenuManager : LocalManager<MenuManager>
                 _fade.gameObject.SetActive(false);
             }
         }
+
+        _currObj = _eventSys.currentSelectedGameObject;
     }
 
     public void StartUnfading(float length)
@@ -419,10 +424,11 @@ public class MenuManager : LocalManager<MenuManager>
     #endregion
 
     #region Controller / Keyboard / Mouse Switching
-    private void SwitchToController()
+    public void SwitchToController()
     {
-        // _eventSys.sendNavigationEvents = true;
+        _eventSys.sendNavigationEvents = true;
 
+        Debug.Log("mario");
         if (CurrentDevice == Devices.Controller)
             return;
         bool wasUsingMouse = CurrentDevice == Devices.Mouse;
@@ -431,12 +437,12 @@ public class MenuManager : LocalManager<MenuManager>
         if (wasUsingMouse)
             TransitionFromMouse();
 
-        // _eventSys.sendNavigationEvents = false;
+        _eventSys.sendNavigationEvents = false;
     }
 
-    private void SwitchToKeyboard()
+    public void SwitchToKeyboard()
     {
-        // _eventSys.sendNavigationEvents = true;
+        _eventSys.sendNavigationEvents = true;
 
         if (CurrentDevice == Devices.Keyboard)
             return;
@@ -446,13 +452,14 @@ public class MenuManager : LocalManager<MenuManager>
         if (wasUsingMouse)
             TransitionFromMouse();
 
-        // _eventSys.sendNavigationEvents = false;
+        _eventSys.sendNavigationEvents = false;
     }
 
     private void TransitionFromMouse()
     {
         //get button under mouse if there is any
         GameObject buttonUnderMouse = CheckUnderMouse();
+        Debug.Log("shit");
 
         if (buttonUnderMouse == null)
         {
@@ -460,17 +467,20 @@ public class MenuManager : LocalManager<MenuManager>
             {
                 Debug.Log("Set to Last selected button: " + _lastSelectedObject.gameObject.name);
                 _eventSys.SetSelectedGameObject(_lastSelectedObject);
+                return;
             }
             else
             {
                 Debug.Log("Set to first button: " + CurrentMenu.FirstButton.gameObject.name);
                 _eventSys.SetSelectedGameObject(CurrentMenu.FirstButton);
+                return;
             }
         }
         else
         {
             Debug.Log("Set to button under mouse: " + buttonUnderMouse.gameObject.name);
             _eventSys.SetSelectedGameObject(buttonUnderMouse);
+            return;
         }
     }
 
@@ -496,7 +506,7 @@ public class MenuManager : LocalManager<MenuManager>
         else return null;
     }
 
-    private void SwitchToMouse()
+    public void SwitchToMouse()
     {
         if (!Cursor.visible)
         {
