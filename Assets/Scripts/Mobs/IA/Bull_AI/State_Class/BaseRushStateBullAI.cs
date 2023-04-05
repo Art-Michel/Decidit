@@ -142,7 +142,7 @@ namespace State.AIBull
             globalRef.characterController.Move(rushBullSO.move * Time.deltaTime);
 
             globalRef.detectOtherAICollider.enabled = true;
-            globalRef.hitBox.gameObject.SetActive(true);
+            globalRef.hitBoxRush.gameObject.SetActive(true);
         }
 
         void SetGravity()
@@ -262,15 +262,16 @@ namespace State.AIBull
         bool CheckObstaclePlayer()
         {
             Vector3 playerForward = globalRef.playerTransform.GetChild(0).forward;
+            Vector3 thisForward = globalRef.transform.forward;
 
-            float dot = Vector3.Dot(playerForward, (globalRef.transform.position - globalRef.playerTransform.position).normalized);
-            if (dot > 0.7f)
+            float dot = Vector3.Dot(thisForward, (globalRef.playerTransform.position - globalRef.transform.position).normalized);
+            if (dot < 0)
             {
-                return false;
+                return true;
             }
             else
             {
-                return true;
+                return false;
             }
         }
 
@@ -391,7 +392,7 @@ namespace State.AIBull
             canStartRush = false;
             lockPlayer = false;
             globalRef.detectOtherAICollider.enabled = false;
-            globalRef.hitBox.gameObject.SetActive(false);
+            globalRef.hitBoxRush.gameObject.SetActive(false);
             globalRef.agent.enabled = true;
             stopLockPlayerRush = false;
         }

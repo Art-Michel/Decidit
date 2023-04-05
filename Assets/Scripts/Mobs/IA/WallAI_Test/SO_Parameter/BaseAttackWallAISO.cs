@@ -21,6 +21,12 @@ namespace State.WallAI
         public float defaultForceBullet;
         public int bulletCount;
         public int maxBulletCount;
+        public int currentRafaleCount;
+        public int maxRafaleCount;
         public float speedSlowAnimAttack;
+
+        [Header("*Rate Attack")]
+        public float maxRateAttack;
+        public float currentRateAttack;
     }
 }

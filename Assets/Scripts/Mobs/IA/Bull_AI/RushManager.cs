@@ -95,7 +95,9 @@ namespace State.AIBull
             int i = Random.Range(0, cloneListRefBullAI.Count - 1);
             if(cloneListRefBullAI[i].enemyHealth._hp >0)
             {
-                if (!cloneListRefBullAI[i].agent.isOnOffMeshLink)
+                if (!cloneListRefBullAI[i].agent.isOnOffMeshLink && 
+                    cloneListRefBullAI[i].distPlayer < cloneListRefBullAI[i].rushBullSO.distRush && cloneListRefBullAI[i].distPlayer > cloneListRefBullAI[i].baseMoveBullSO.distActiveAttack
+                    && listRefBullAI[i].refBaseMoveStateObj.activeInHierarchy)
                 {
                     cloneListRefBullAI[i].launchRush = true;
                     cloneListRefBullAI.RemoveAt(i);

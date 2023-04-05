@@ -21,6 +21,7 @@ namespace State.AIBull
         bool disableOffsetDestination;
 
         [SerializeField] float distDetectObstacle;
+
         public override void InitState(StateControllerBull stateController)
         {
             base.InitState(stateController);
@@ -45,9 +46,16 @@ namespace State.AIBull
             {
                 BaseMovement();
 
-                if (globalRef.distPlayer < globalRef.baseMoveBullSO.distActiveRush)
+                if (globalRef.distPlayer < globalRef.baseMoveBullSO.distActiveRush && globalRef.distPlayer > globalRef.baseMoveBullSO.distActiveAttack)
                 {
                     globalRef.launchRush = true;
+                }
+                else
+                {
+                    if(globalRef.distPlayer < globalRef.baseMoveBullSO.distActiveAttack)
+                    {
+                        stateController.SetActiveState(StateControllerBull.AIState.BaseAttack);
+                    }
                 }
             }
         }

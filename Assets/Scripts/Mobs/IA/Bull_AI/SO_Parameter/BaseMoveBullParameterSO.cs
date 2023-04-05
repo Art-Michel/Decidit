@@ -16,6 +16,7 @@ public class BaseMoveBullParameterSO : ScriptableObject
     public float delayBeforeJump;
     public float maxDelayBeforeJump;
 
-    [Header("Distance Player Active Rush")]
+    [Header("Distance Player Change State")]
     public float distActiveRush;
+    public float distActiveAttack;
 }

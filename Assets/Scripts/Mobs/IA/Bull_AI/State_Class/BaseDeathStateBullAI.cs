@@ -32,7 +32,7 @@ namespace State.AIBull
             // PLAY SOUND DEATH RUSHER
             // TODO lucas va te faire encul�
 
-            globalRef.hitBox.gameObject.SetActive(false);
+            globalRef.hitBoxRush.gameObject.SetActive(false);
             SoundManager.Instance.PlaySound("event:/SFX_IA/DeathIA", 1f, gameObject);
             once = true;
         }

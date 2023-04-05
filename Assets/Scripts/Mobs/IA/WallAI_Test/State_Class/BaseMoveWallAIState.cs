@@ -29,7 +29,7 @@ namespace State.WallAI
         {
             try
             {
-                //globalRef.meshRenderer.enabled = false;
+                globalRef.meshRenderer.enabled = false;
                 baseMoveWallAISO = globalRef.baseMoveWallAISO;
             }
             catch
@@ -195,6 +195,7 @@ namespace State.WallAI
         {
             loopInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
             loopInstance.release();
+            globalRef.meshRenderer.enabled = false;
             globalRef.baseAttackWallAISO.bulletCount = globalRef.baseAttackWallAISO.maxBulletCount;
             baseMoveWallAISO.rateAttack = baseMoveWallAISO.maxRateAttack;
             baseMoveWallAISO.findNewPos = false;

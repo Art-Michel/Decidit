@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace State.WallAI
@@ -9,6 +10,8 @@ namespace State.WallAI
 
         BaseAttackWallAISO baseAttackWallAISO;
         [SerializeField] GlobalRefWallAI globalRef;
+
+        [SerializeField] bool isFiring;
 
         public override void InitState(StateControllerWallAI stateController)
         {
@@ -24,9 +27,13 @@ namespace State.WallAI
 
         private void Update()
         {
-            if (!activeAttack && baseAttackWallAISO.bulletCount >0)
+            if (!activeAttack && baseAttackWallAISO.currentRafaleCount > 0)
             {
                 LaunchAttack();
+            }
+            else
+            {
+                ReturnInWall();
             }
 
             if (globalRef.enemyHealth._hp <= 0)
@@ -34,7 +41,12 @@ namespace State.WallAI
                 stateControllerWallAI.SetActiveState(StateControllerWallAI.WallAIState.Death, true);
             }
 
-            CheckIfPlayerIsBack();
+            if(!isFiring)
+                CheckIfPlayerIsBack();
+            else
+            {
+                globalRef.myAnimator.speed = 0;
+            }
         }
 
         void CheckIfPlayerIsBack()
@@ -88,9 +100,30 @@ namespace State.WallAI
             return baseAttackWallAISO.vProjectileGotToPredicPos;
         }
 
-        public void ThrowProjectile()
+        public void CheckCanFire()
         {
-            if (baseAttackWallAISO.bulletCount >0)
+            if (baseAttackWallAISO.currentRafaleCount > 0)
+            {
+                if (baseAttackWallAISO.bulletCount > 0)
+                {
+                    StartCoroutine("LaunchProjectile");
+                }
+                else
+                {
+                    if(baseAttackWallAISO.bulletCount <=0 && baseAttackWallAISO.currentRafaleCount >0)
+                    {
+                        ResetBulletCount();
+                    }
+                }
+            }
+        }
+
+        IEnumerator LaunchProjectile()
+        {
+            isFiring = true;
+            yield return new WaitForSeconds(0.2f);
+
+            if (baseAttackWallAISO.bulletCount > 0)
             {
                 globalRef.spawnBullet.LookAt(baseAttackWallAISO.playerPredicDir);
                 Rigidbody cloneBullet = Instantiate(baseAttackWallAISO.bulletPrefab, globalRef.spawnBullet.position, globalRef.spawnBullet.rotation);
@@ -100,20 +133,48 @@ namespace State.WallAI
                 //PLAY SOUND SHOOT WALL AI
                 // TO DO lucas va te faire encul�
                 SoundManager.Instance.PlaySound("event:/SFX_IA/Menas_SFX(Mur)/Shoot", 1f, gameObject);
+                StartCoroutine("LaunchProjectile");
+                yield break;
+            }
+            else
+            {
+                isFiring = false;
+
+                if (baseAttackWallAISO.bulletCount <= 0 && baseAttackWallAISO.currentRafaleCount > 0)
+                {
+                    ResetBulletCount();
+                }
+
+                if (baseAttackWallAISO.currentRafaleCount>0)
+                    baseAttackWallAISO.currentRafaleCount--;
+
+                StopCoroutine("LaunchProjectile");
+                yield break;
             }
         }
 
         void ReturnInWall()
         {
-            if(baseAttackWallAISO.bulletCount <=0)
+            if(baseAttackWallAISO.currentRafaleCount <=0)
             {
                 AnimatorManager.instance.DisableAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "LaunchAttack");
                 activeAttack = false;
             }
         }
 
+        void ResetBulletCount()
+        {
+            baseAttackWallAISO.bulletCount = baseAttackWallAISO.maxBulletCount;
+        }
+        void ResetRafalCount()
+        {
+            baseAttackWallAISO.currentRafaleCount = baseAttackWallAISO.maxRafaleCount;
+        }
+
         private void OnDisable()
         {
+            ResetBulletCount();
+            ResetRafalCount();
             globalRef.myAnimator.speed = 1;
         }
 
@@ -121,7 +182,7 @@ namespace State.WallAI
         public void StartAttack()
         {
             CalculateSpeedProjectile();
-            ThrowProjectile();
+            CheckCanFire();
         }
         public void EndAttack()
         {

@@ -38,9 +38,11 @@ namespace State.AIBull
 
         [Header("Ref BaseMove State")]
         public Transform rayCheckRush;
+        public GameObject refBaseMoveStateObj;
 
         [Header("Ref Attack State")]
-        public Hitbox hitBox;
+        public Hitbox hitBoxRush;
+        public Hitbox hitBoxAttack;
         public BoxCollider detectOtherAICollider;
         public bool launchRush;
         public Transform RayRushRight;
@@ -53,6 +55,7 @@ namespace State.AIBull
 
         [Foldout("Scriptable")] public BaseIdleBullSO baseIdleBullSO;
         [Foldout("Scriptable")] public BaseMoveBullParameterSO baseMoveBullSO;
+        [Foldout("Scriptable")] public BaseAttackBullParameterSO baseAttackBullSO;
         [Foldout("Scriptable")] public RushBullParameterSO rushBullSO;
         [Foldout("Scriptable")] public KnockBackBullSO knockBackBullSO;
         [Foldout("Scriptable")] public DeathBullParameterSO deathBullSO;
@@ -89,6 +92,7 @@ namespace State.AIBull
 
 
             baseIdleBullSO = Instantiate(baseIdleBullSO);
+            baseAttackBullSO = Instantiate(baseAttackBullSO);
             deathBullSO = Instantiate(deathBullSO);
 
             switch (ApplyDifficulty.Instance.indexDifficulty)
