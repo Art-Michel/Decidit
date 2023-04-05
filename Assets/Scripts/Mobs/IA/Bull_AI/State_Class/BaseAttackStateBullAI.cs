@@ -11,6 +11,7 @@ namespace State.AIBull
         Vector3 posPlayer;
 
         [SerializeField] bool canAttak;
+        [SerializeField] bool launchAttack;
 
         public override void InitState(StateControllerBull stateController)
         {
@@ -25,42 +26,59 @@ namespace State.AIBull
             {
                 canAttak = false;
 
-                if (globalRef.myAnimator != null)
-                    AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Idle");
-
                 posPlayer = globalRef.playerTransform.position;
-                globalRef.agent.SetDestination(posPlayer);
+                globalRef.agent.speed = 0;
             }
         }
 
         void Update()
         {
+            if (!launchAttack)
+            CheckCanAttack();
+
+            if(launchAttack)
+            {
+                LaunchAttack();
+            }
+        }
+
+        void CheckCanAttack()
+        {
             if (canAttak)
             {
-                if (Vector3.Distance(globalRef.transform.position, posPlayer) < globalRef.baseAttackBullSO.distLaunchAttack)
+                if (/*Vector3.Distance(globalRef.transform.position, posPlayer) < globalRef.baseAttackBullSO.distLaunchAttack || */
+                    Vector3.Distance(globalRef.transform.position, globalRef.playerTransform.position) < globalRef.baseAttackBullSO.distLaunchAttack)
                 {
-                    AttackDuration();
-                    DelayBeforeAttack();
+                    launchAttack = true;
                 }
                 else
                 {
-                    globalRef.agent.speed = globalRef.baseAttackBullSO.speed;
+                    SmoothLookAtPlayer();
+                    globalRef.agent.speed = 19;
+                    globalRef.agent.SetDestination(globalRef.playerTransform.position);
                 }
             }
             else
                 SmoothLookAtPlayer();
 
-            if(!canAttak)
+            if (!canAttak)
                 CheckObstaclePlayer();
+        }
+
+        void LaunchAttack()
+        {
+            AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Idle");
+            globalRef.agent.velocity = Vector3.zero;
+            DelayBeforeAttack();
         }
 
         bool CheckObstaclePlayer()
         {
-            Vector3 playerForward = globalRef.playerTransform.GetChild(0).forward;
+            Vector3 thisPosition = globalRef.transform.position - globalRef.transform.forward;
             Vector3 thisForward = globalRef.transform.forward;
 
-            float dot = Vector3.Dot(thisForward, (globalRef.playerTransform.position - globalRef.transform.position).normalized);
-            if (dot > 0.9f)
+            float dot = Vector3.Dot(thisForward, (globalRef.playerTransform.position - thisPosition).normalized);
+            if (dot > 0.95f)
             {
                 canAttak = true;
                 return true;
@@ -74,27 +92,35 @@ namespace State.AIBull
 
         void AttackDuration()
         {
-            if(attackDuration >0)
+            stateController.SetActiveState(StateControllerBull.AIState.Rush);
+
+            /*if (attackDuration >0)
             {
                 attackDuration -= Time.deltaTime;
             }
             else
             {
                 stateController.SetActiveState(StateControllerBull.AIState.Rush);
-            }
+            }*/
         }
 
         void DelayBeforeAttack()
         {
-            globalRef.agent.speed = 0;
+            Debug.Log("Attack");
 
-            if (globalRef.baseAttackBullSO.curentDelayBeforeAttack > 0)
+            if (globalRef.baseAttackBullSO.curentDelayBeforeAttack >= 0)
             {
                 globalRef.baseAttackBullSO.curentDelayBeforeAttack -= Time.deltaTime;
+                if (globalRef.material_Instances.Material[0].mainTexture != globalRef.material_Instances.TextureBase)
+                    ShowSoonAttack(true);
             }
             else
             {
                 globalRef.hitBoxAttack.gameObject.SetActive(true);
+                if (globalRef.material_Instances.Material[0].mainTexture == globalRef.material_Instances.TextureBase)
+                    ShowSoonAttack(false);
+
+                Invoke("AttackDuration", 0.5f);
             }
         }
 
@@ -139,8 +165,29 @@ namespace State.AIBull
             }
         }
 
+        void ShowSoonAttack(bool active)
+        {
+            if (active)
+            {
+                for (int i = 0; i < globalRef.material_Instances.Material.Length; i++)
+                {
+                    globalRef.material_Instances.Material[0].color = globalRef.material_Instances.ColorPreAtatck;
+                }
+                globalRef.material_Instances.ChangeColorTexture(globalRef.material_Instances.ColorPreAtatck);
+            }
+            else
+            {
+                for (int i = 0; i < globalRef.material_Instances.Material.Length; i++)
+                {
+                    globalRef.material_Instances.Material[0].color = globalRef.material_Instances.ColorBase;
+                }
+                globalRef.material_Instances.ChangeColorTexture(globalRef.material_Instances.ColorBase);
+            }
+        }
+
         private void OnDisable()
         {
+            launchAttack = false;
             globalRef.agent.speed = globalRef.baseAttackBullSO.speed;
             globalRef.hitBoxAttack.gameObject.SetActive(false);
             attackDuration = 1;

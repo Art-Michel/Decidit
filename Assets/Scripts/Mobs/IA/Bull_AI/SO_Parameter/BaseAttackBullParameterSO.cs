@@ -17,4 +17,5 @@ public class BaseAttackBullParameterSO : ScriptableObject
 
     [Header("DistLaunchAttack")]
     public float distLaunchAttack;
+    public float distLaunchAttackState;
 }

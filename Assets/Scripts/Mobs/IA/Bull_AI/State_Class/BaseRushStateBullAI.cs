@@ -177,7 +177,7 @@ namespace State.AIBull
 
             if (distDestination <= 1)
             {
-                stateController.SetActiveState(StateControllerBull.AIState.Idle);
+                StopRush();
             }
 
             rushBullSO.distRush = Vector3.Distance(captureBasePosDistance, globalRef.transform.position);

@@ -52,7 +52,7 @@ namespace State.AIBull
                 }
                 else
                 {
-                    if(globalRef.distPlayer < globalRef.baseMoveBullSO.distActiveAttack)
+                    if(globalRef.distPlayer < globalRef.baseMoveBullSO.distActiveAttack && hitPlayer)
                     {
                         stateController.SetActiveState(StateControllerBull.AIState.BaseAttack);
                     }
@@ -73,8 +73,8 @@ namespace State.AIBull
                                                     Vector3.Distance(globalRef.transform.position, globalRef.playerTransform.position));
             if(hit.transform == globalRef.playerTransform)
             {
-                if(globalRef.launchRush)
-                    LaunchRush();
+                /*if(globalRef.launchRush)
+                    LaunchRush();*/
 
                 hitPlayer = true;
             }
@@ -194,7 +194,8 @@ namespace State.AIBull
 
         void LaunchRush()
         {
-            stateController.SetActiveState(StateControllerBull.AIState.Rush);
+            if(globalRef.distPlayer < globalRef.rushBullSO.distRush && globalRef.distPlayer > globalRef.baseAttackBullSO.distLaunchAttackState && hitPlayer)
+                stateController.SetActiveState(StateControllerBull.AIState.Rush);
         }
 
         void SmoothLookAtPlayer()
