@@ -41,15 +41,18 @@ public class Altar : MonoBehaviour, IInteractable
 
     [SerializeField] static List<Altar> altarListScript = new List<Altar>();
 
-    [SerializeField] bool disableRandom;
+    //[SerializeField] bool disableRandom;
 
     void Awake()
     {
-        if(!disableRandom)
+       /* if(!disableRandom)
         {
             altarListScript.Add(this);
             SetRandomChant();
-        }
+        }*/
+        altarListScript.Add(this);
+        SetRandomChant();
+        Debug.Log(altarListScript.Count);
     }
 
     void Start()
@@ -58,15 +61,16 @@ public class Altar : MonoBehaviour, IInteractable
         _shouldMovePlayer = false;
         _hasBeenUsed = false;
         _isPlayerInside = false;
-
-        if (!disableRandom)
-            CheckIfSameSpell();
+        CheckIfSameSpell();
+        /*if (!disableRandom)
+            CheckIfSameSpell();*/
     }
 
     void SetRandomChant()
     {
-        //_chant = (Chants)Random.Range(0, 3);
-        _chant = Chants.Muse;
+        _chant = (Chants)Random.Range(0, 3);
+        //Debug.Log(_chant);
+        //_chant = Chants.Muse;
     }
 
     public void SetChant(Chants chant)
@@ -94,11 +98,11 @@ public class Altar : MonoBehaviour, IInteractable
 
     void CheckIfSameSpell()
     {
-        // while(altarListScript[0]._chant == altarListScript[1]._chant)
-        // {
-        //     altarListScript[1]._chant = (Chants)Random.Range(0, 3);
-        // }
-        altarListScript[1]._chant = Chants.Cimetiere;
+         while(altarListScript[0]._chant == altarListScript[1]._chant)
+         {
+             altarListScript[1]._chant = (Chants)Random.Range(0, 3);
+         }
+        //altarListScript[1]._chant = Chants.Cimetiere;
     }
 
     public void Interact()
