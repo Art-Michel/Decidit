@@ -301,8 +301,8 @@ public class Revolver : MonoBehaviour
     #region Enable Disable
     protected virtual void OnEnable()
     {
-        if (PlaceHolderSoundManager.Instance != null)
-            Reloaded();
+        // if (PlaceHolderSoundManager.Instance != null)
+        //     Reloaded();
         _inputs.Enable();
 
         if (MenuManager.Instance.CurrentDevice == MenuManager.Devices.Controller)

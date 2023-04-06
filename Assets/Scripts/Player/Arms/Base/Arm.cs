@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using NaughtyAttributes;
+using CameraShake;
 
 public class Arm : MonoBehaviour
 {
@@ -42,6 +43,7 @@ public class Arm : MonoBehaviour
     #endregion
 
     #region Stats Decleration
+    [SerializeField] protected KickShake.Params _castShake;
     [Foldout("Stats")]
     [SerializeField] protected float _cooldown;
     protected float _cooldownT;
@@ -193,9 +195,9 @@ public class Arm : MonoBehaviour
     protected void StopGlowing()
     {
         _isGlowing = false;
-        if(_glowingCrossHairs.Length >0)
-        foreach (Image image in _glowingCrossHairs)
-            image.color = new Color(image.color.r, image.color.g, image.color.b, 0.0f);
+        if (_glowingCrossHairs.Length > 0)
+            foreach (Image image in _glowingCrossHairs)
+                image.color = new Color(image.color.r, image.color.g, image.color.b, 0.0f);
     }
 
     #region Debugging

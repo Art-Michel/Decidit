@@ -14,7 +14,6 @@ public class MuseArm : Arm
     [Foldout("Stats")]
     [SerializeField] protected float _launchShakeDuration;
 
-    [SerializeField] private BounceShake.Params _castShake;
 
     [Foldout("References")]
     [SerializeField]
@@ -63,7 +62,7 @@ public class MuseArm : Arm
         shot.transform.rotation = transform.rotation;
         shot.GetComponent<Projectile>().Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized, _cameraTransform.forward);
 
-        Player.Instance.StartBounceShake(_castShake, transform.position);
+        Player.Instance.StartKickShake(_castShake, transform.position);
         ////PlaceHolderSoundManager.Instance.PlayMuseRocketLaunch();
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/MuseMalade/Launch", 5f, gameObject);
         //_muzzleFlash.PlayAll();

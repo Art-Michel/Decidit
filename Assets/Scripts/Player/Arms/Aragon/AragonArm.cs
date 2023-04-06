@@ -141,6 +141,7 @@ public class AragonArm : Arm
 
         //Feedbacks
         StartDashFeedbacks();
+        Player.Instance.StartKickShake(_castShake, transform.position);
         this.Animator.CrossFade("cast", 0f, 0);
         base.StartActive();
     }

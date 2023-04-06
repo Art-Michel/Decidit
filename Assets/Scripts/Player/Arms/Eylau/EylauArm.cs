@@ -72,6 +72,7 @@ public class EylauArm : Arm
         _area.SetActive(true);
         _area.GetComponent<EylauArea>().Reset();
         base.StartActive();
+        Player.Instance.StartKickShake(_castShake, transform.position);
         this.Animator.CrossFade("cast", 0.1f, 0);
         _fsm.ChangeState(ArmStateList.RECOVERY);
     }
