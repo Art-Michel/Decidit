@@ -129,8 +129,8 @@ public class PlayerHealth : Health
 
     private void HandleLowHpVignette()
     {
-        //* vignette starts being visible at [25%]HP and is at full opacity at [10%]hp
-        float value = Mathf.Lerp(1.0f, 0.0f, Mathf.InverseLerp(_maxHp * 0.1f, _maxHp * 0.25f, _hp));
+        //* vignette starts being visible at [70%]HP and is at full opacity at [40%]hp
+        float value = Mathf.Lerp(1.0f, 0.0f, Mathf.InverseLerp(_maxHp * 0.4f, _maxHp * 0.70f, _hp));
         _lowHpVignette.color = new Color(1.0f, 1.0f, 1.0f, value);
     }
 
@@ -194,8 +194,8 @@ public class PlayerHealth : Health
         _isBeingDamaged = true;
         _damageVignetteT = 0.0f;
 
-        //*Minimum vignette intensity from 5hp lost (30% opacity) to 20 hp lost (100% opacity)
-        _currentDamageVignetteMaxAlpha = Mathf.Lerp(0.3f, 1.0f, Mathf.InverseLerp(5.0f, 20.0f, damage));
+        //*Minimum vignette intensity from 1hp lost (30% opacity) to 2 hp lost (100% opacity)
+        _currentDamageVignetteMaxAlpha = Mathf.Lerp(0.3f, 1.0f, Mathf.InverseLerp(1.0f, 2.0f, damage));
     }
 
     private void HandleDamageVignette()

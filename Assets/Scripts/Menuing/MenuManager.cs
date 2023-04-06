@@ -165,7 +165,8 @@ public class MenuManager : LocalManager<MenuManager>
         _postProcessVolume.enabled = false;
 
         _eventSys.SetSelectedGameObject(null);
-        CurrentMenu.gameObject.SetActive(false);
+        if (CurrentMenu != null)
+            CurrentMenu.gameObject.SetActive(false);
         CurrentMenu = null;
 
         //re enable everything

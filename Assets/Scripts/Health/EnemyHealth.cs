@@ -239,7 +239,10 @@ public class EnemyHealth : Health
             return;
 
         //regen player
-        Player.Instance.gameObject.GetComponent<Health>().ProbRegen(1000);
+        Player.Instance.gameObject.GetComponent<PlayerHealth>().TrueHeal(1);
+
+        //old
+        //Player.Instance.gameObject.GetComponent<Health>().ProbRegen(1000);
 
         //update number of enemies in room
         if (Room)
