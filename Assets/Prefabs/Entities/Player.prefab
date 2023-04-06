@@ -1393,6 +1393,65 @@ MonoBehaviour:
   _mouseSwayAmountY: -0.1
   _controllerSwayAmountX: -5
   _controllerSwayAmountY: -3
+  _castShake:
+    strength:
+      position: {x: 0, y: 0, z: -0.1}
+      eulerAngles: {x: -1.5, y: 0, z: 0}
+    attackTime: 0.03
+    attackCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    releaseTime: 0.3
+    releaseCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attenuation:
+      clippingDistance: 10
+      falloffScale: 50
+      falloffDegree: 1
+      axesMultiplier: {x: 1, y: 1, z: 1}
   _cooldown: 4
   _vfx: {fileID: 603117771566878093}
   _vfxGroundProjection: {fileID: 9040691190137722522}
@@ -1718,9 +1777,9 @@ MonoBehaviour:
   _recoilTime: 0.3
   _shootShake:
     strength:
-      position: {x: 0, y: 0, z: 0}
+      position: {x: 0, y: 0, z: 0.1}
       eulerAngles: {x: 1, y: 0, z: 0}
-    attackTime: 0.05
+    attackTime: 0.03
     attackCurve:
       serializedVersion: 2
       m_Curve:
@@ -1745,7 +1804,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    releaseTime: 0.19
+    releaseTime: 0.07
     releaseCurve:
       serializedVersion: 2
       m_Curve:
@@ -4660,9 +4719,9 @@ MonoBehaviour:
   _recoilTime: 0.3
   _shootShake:
     strength:
-      position: {x: 0, y: 0, z: 0}
+      position: {x: 0, y: 0, z: 0.1}
       eulerAngles: {x: 1, y: 0, z: 0}
-    attackTime: 0.05
+    attackTime: 0.03
     attackCurve:
       serializedVersion: 2
       m_Curve:
@@ -4687,7 +4746,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    releaseTime: 0.05
+    releaseTime: 0.03
     releaseCurve:
       serializedVersion: 2
       m_Curve:
@@ -10703,9 +10762,9 @@ MonoBehaviour:
   _recoilTime: 0.4
   _shootShake:
     strength:
-      position: {x: 0, y: 0, z: 0}
+      position: {x: 0, y: 0, z: 0.1}
       eulerAngles: {x: 1, y: 0, z: 0}
-    attackTime: 0.05
+    attackTime: 0.03
     attackCurve:
       serializedVersion: 2
       m_Curve:
@@ -10730,7 +10789,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    releaseTime: 0.3
+    releaseTime: 0.15
     releaseCurve:
       serializedVersion: 2
       m_Curve:
@@ -12247,6 +12306,65 @@ MonoBehaviour:
   _mouseSwayAmountY: -0.1
   _controllerSwayAmountX: -5
   _controllerSwayAmountY: -3
+  _castShake:
+    strength:
+      position: {x: 0, y: 0, z: -0.1}
+      eulerAngles: {x: -1.5, y: 0, z: 0}
+    attackTime: 0.03
+    attackCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    releaseTime: 0.3
+    releaseCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attenuation:
+      clippingDistance: 10
+      falloffScale: 50
+      falloffDegree: 1
+      axesMultiplier: {x: 1, y: 1, z: 1}
   _cooldown: 6
   _previs: {fileID: 416486157462802216}
   _area: {fileID: 859588760}
@@ -12443,7 +12561,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1470377084}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 238ccfd2fa28a94498fccb840c4f32e3, type: 3}
   m_Name: 
@@ -12460,12 +12578,71 @@ MonoBehaviour:
     m_RotationOrder: 4
   _ui: {fileID: 199591846}
   _cameraTransform: {fileID: 2200446484381738818}
-  Animator: {fileID: 0}
+  Animator: {fileID: 5756475272641310012}
   _smoothness: 10
   _mouseSwayAmountX: -0.2
   _mouseSwayAmountY: -0.1
   _controllerSwayAmountX: -5
   _controllerSwayAmountY: -3
+  _castShake:
+    strength:
+      position: {x: 0, y: 0, z: 0}
+      eulerAngles: {x: 1, y: 1, z: 1}
+    attackTime: 0.05
+    attackCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    releaseTime: 0.2
+    releaseCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attenuation:
+      clippingDistance: 10
+      falloffScale: 50
+      falloffDegree: 1
+      axesMultiplier: {x: 1, y: 1, z: 1}
   _cooldown: 2.5
 --- !u!114 &4718325429581890698
 MonoBehaviour:
@@ -12474,7 +12651,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1470377084}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eeede1672277ef743aa1dc4dffa03035, type: 3}
   m_Name: 
@@ -15484,24 +15661,69 @@ MonoBehaviour:
   _mouseSwayAmountY: -0.1
   _controllerSwayAmountX: -5
   _controllerSwayAmountY: -3
-  _cooldown: 4
-  _pooler: {fileID: 3477183007159128307}
-  _launchShakeIntensity: 0.6
-  _launchShakeDuration: 0.4
   _castShake:
-    positionStrength: 0.05
-    rotationStrength: 0.1
-    axesMultiplier:
-      position: {x: 1, y: 1, z: 0}
-      eulerAngles: {x: 0, y: 0, z: 1}
-    freq: 25
-    numBounces: 5
-    randomness: 0.5
+    strength:
+      position: {x: 0, y: 0, z: -0.1}
+      eulerAngles: {x: -1.5, y: 0, z: 0}
+    attackTime: 0.03
+    attackCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    releaseTime: 0.3
+    releaseCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
     attenuation:
       clippingDistance: 10
       falloffScale: 50
       falloffDegree: 1
       axesMultiplier: {x: 1, y: 1, z: 1}
+  _cooldown: 4
+  _pooler: {fileID: 3477183007159128307}
+  _launchShakeIntensity: 0.6
+  _launchShakeDuration: 0.4
   _canonPosition: {fileID: 6658219796269521037}
   _mask:
     serializedVersion: 2
@@ -17360,9 +17582,9 @@ MonoBehaviour:
   _recoilTime: 0.1
   _shootShake:
     strength:
-      position: {x: 0, y: 0, z: 0}
-      eulerAngles: {x: 1, y: 0, z: 0}
-    attackTime: 0.05
+      position: {x: 0, y: 0, z: 0.05}
+      eulerAngles: {x: 0.7, y: 0, z: 0}
+    attackTime: 0.03
     attackCurve:
       serializedVersion: 2
       m_Curve:
@@ -17387,7 +17609,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    releaseTime: 0.08
+    releaseTime: 0.03
     releaseCurve:
       serializedVersion: 2
       m_Curve:
@@ -17435,10 +17657,10 @@ MonoBehaviour:
     positionStrength: 0.2
     rotationStrength: 1
     axesMultiplier:
-      position: {x: 1, y: 1, z: 0}
-      eulerAngles: {x: 0, y: 0, z: 1}
+      position: {x: 1, y: 0, z: 0.5}
+      eulerAngles: {x: 1, y: 1, z: 0}
     freq: 30
-    numBounces: 25
+    numBounces: 22
     randomness: 0.5
     attenuation:
       clippingDistance: 10
@@ -21872,8 +22094,8 @@ MonoBehaviour:
   _hpBarStart: {fileID: 2200446483787204076}
   _hpBarEnd: {fileID: 2200446483621540319}
   _maxHp: 3
-  _probationMaxStartup: 0
-  _probationSpeed: 60
+  _probationMaxStartup: 0.1
+  _probationSpeed: 3
   _healthBarSpeed: 2
   IsInvulnerable: 0
   _player: {fileID: 2200446484234949679}
@@ -33753,6 +33975,12 @@ PrefabInstance:
 --- !u!4 &1802344845342619462 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 05e7db08e971e014aae4f924d199fcc3,
+    type: 3}
+  m_PrefabInstance: {fileID: 2200446483492917421}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &5756475272641310012 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 05e7db08e971e014aae4f924d199fcc3,
     type: 3}
   m_PrefabInstance: {fileID: 2200446483492917421}
   m_PrefabAsset: {fileID: 0}

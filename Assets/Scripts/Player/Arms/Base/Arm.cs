@@ -126,7 +126,7 @@ public class Arm : MonoBehaviour
 
     public virtual void StartActive()
     {
-        _crossHairFull.SetActive(false);
+        if (_crossHairFull) _crossHairFull.SetActive(false);
         StopGlowing();
     }
 
@@ -148,8 +148,9 @@ public class Arm : MonoBehaviour
     public void UpdateCooldown()
     {
         _cooldownT -= Time.deltaTime;
-        foreach (Image crosshair in _crossHairs)
-            crosshair.fillAmount = Mathf.Lerp(0, 1, Mathf.InverseLerp(_cooldown, 0, _cooldownT));
+        if (_crossHairs.Length > 0)
+            foreach (Image crosshair in _crossHairs)
+                crosshair.fillAmount = Mathf.Lerp(0, 1, Mathf.InverseLerp(_cooldown, 0, _cooldownT));
 
         if (_cooldownT <= 0f)
         {

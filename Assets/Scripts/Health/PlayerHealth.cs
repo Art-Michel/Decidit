@@ -146,6 +146,7 @@ public class PlayerHealth : Health
             DisplayProbHealth();
             SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/BaseHeal", 3f, gameObject);
             StartHealVignette();
+            HandleLowHpVignette();
             if (PlayerManager.Instance._isDying)
             {
                 PlayerManager.Instance.CancelDeath();
@@ -159,6 +160,7 @@ public class PlayerHealth : Health
         {
             base.ProbRegen(i);
             SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/BaseHeal", 3f, gameObject);
+            HandleLowHpVignette();
             StartHealVignette();
             if (PlayerManager.Instance._isDying)
             {
