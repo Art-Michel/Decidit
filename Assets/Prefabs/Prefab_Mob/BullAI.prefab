@@ -299,7 +299,7 @@ MonoBehaviour:
   _shouldSplashBloodOnHit: 0
   _canCriticalHit: 1
   _radius: 0.91
-  _damage: 20
+  _damage: 2
   _knockbackForce: 20
   _knockbackAngle: {x: 0, y: 1, z: 1}
   _delayBetweenHits: 0
@@ -483,8 +483,10 @@ MonoBehaviour:
   distFallStopRush: 5
   captureBasePosDistance: {x: 0, y: 0, z: 0}
   gravityMultiplier: 2
+  distParcourue: 0
   delayInertieRushInWall: 0
   maxDelayInertieRushInWall: 0.3
+  stopLockPlayerRush: 0
 --- !u!65 &9191719257376539284
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -889,6 +891,7 @@ MonoBehaviour:
   globalRef: {fileID: 5314086220186537620}
   attackDuration: 1
   canAttak: 0
+  launchAttack: 0
 --- !u!1 &5314086220701509004
 GameObject:
   m_ObjectHideFlags: 0
@@ -1540,7 +1543,7 @@ MonoBehaviour:
   _shouldSplashBloodOnHit: 0
   _canCriticalHit: 1
   _radius: 1.5
-  _damage: 20
+  _damage: 1
   _knockbackForce: 20
   _knockbackAngle: {x: 0, y: 1, z: 1}
   _delayBetweenHits: 0

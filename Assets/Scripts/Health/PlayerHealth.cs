@@ -100,7 +100,7 @@ public class PlayerHealth : Health
 
     public override void TakeDamage(float amount)
     {
-        if (amount <= 1 || IsInvulnerable)
+        if (IsInvulnerable)
             return;
 
         if (_hasSecondChance && amount >= _hp && _hp > 1)
