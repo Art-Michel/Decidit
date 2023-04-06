@@ -16,7 +16,7 @@ public class Room : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private bool _isCorridor = false;
 
-    public int CurrentEnemiesInRoom;
+    [NonSerialized]public int CurrentEnemiesInRoom;
 
     [Button]
     private void CountEnemies()
