@@ -168,7 +168,8 @@ public class Arm : MonoBehaviour
 
     public void Refilled()
     {
-        _crossHairFull.SetActive(true);
+        if (_crossHairFull)
+            _crossHairFull.SetActive(true);
         PlaceHolderSoundManager.Instance.PlayArmFilled();
         StartGlowingBriefly();
         if (_inputs.Actions.Skill.IsPressed() && !_inputs.Actions.Interact.IsPressed())
@@ -192,6 +193,7 @@ public class Arm : MonoBehaviour
     protected void StopGlowing()
     {
         _isGlowing = false;
+        if(_glowingCrossHairs.Length >0)
         foreach (Image image in _glowingCrossHairs)
             image.color = new Color(image.color.r, image.color.g, image.color.b, 0.0f);
     }
