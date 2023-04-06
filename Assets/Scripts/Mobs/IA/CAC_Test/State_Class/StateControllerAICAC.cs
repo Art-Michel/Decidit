@@ -8,6 +8,8 @@ namespace State.AICAC
         public _StateAICAC[] allStates;
         EnemyHealth enemyHealth;
 
+        [SerializeField] float timeToEnable;
+        bool once;
         public enum AIState
         {
             BaseIdle, BaseMove, Dodge, BaseAttack, KnockBack, BaseDeath, SurroundPlayer
@@ -68,12 +70,18 @@ namespace State.AICAC
         private void OnEnable()
         {
             //Activate the default state
-            Invoke("LaunchFirstState", 1f);
+            if(once)
+            {
+                Invoke("LaunchFirstState", timeToEnable);
+                Debug.Log("LaunchFirstState");
+            }
+            once = true;
         }
 
         void LaunchFirstState()
         {
             //Activate the default state
+            Debug.Log("ActiveEnnemy");
             SetActiveState(AIState.BaseIdle);
             enemyHealth.IsInvulnerable = false;
         }

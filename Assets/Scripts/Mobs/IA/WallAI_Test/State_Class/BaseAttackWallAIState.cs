@@ -164,11 +164,13 @@ namespace State.WallAI
 
         void ResetBulletCount()
         {
-            baseAttackWallAISO.bulletCount = baseAttackWallAISO.maxBulletCount;
+            if(baseAttackWallAISO != null)
+                baseAttackWallAISO.bulletCount = baseAttackWallAISO.maxBulletCount;
         }
         void ResetRafalCount()
         {
-            baseAttackWallAISO.currentRafaleCount = baseAttackWallAISO.maxRafaleCount;
+            if (baseAttackWallAISO != null)
+                baseAttackWallAISO.currentRafaleCount = baseAttackWallAISO.maxRafaleCount;
         }
 
         private void OnDisable()

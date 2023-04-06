@@ -9,6 +9,8 @@ namespace State.AIBull
 
         EnemyHealth enemyHealth;
 
+        [SerializeField] float timeToEnable;
+        bool once;
         public enum AIState
         {
             Idle, BaseMove, BaseAttack, Rush, KnockBack, Death
@@ -61,12 +63,16 @@ namespace State.AIBull
         private void OnEnable()
         {
             //Activate the default state
-            Invoke("LaunchFirstState", 1f);
+            if(once)
+                Invoke("LaunchFirstState", timeToEnable);
+            once = true;
+            Debug.Log("LaunchFirstState");
         }
 
         void LaunchFirstState()
         {
             //Activate the default state
+            Debug.Log("ActiveEnnemy");
             SetActiveState(AIState.Idle);
             enemyHealth.IsInvulnerable = false;
         }

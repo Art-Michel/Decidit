@@ -8,6 +8,10 @@ namespace State.FlyAI
         public _StateFlyAI[] allStates;
         EnemyHealth enemyHealth;
 
+        [SerializeField] float timeToEnable;
+
+        bool once;
+
         public enum AIState
         {
             BaseMove, LockPlayer, BaseAttack, KnockBack, Death
@@ -62,12 +66,19 @@ namespace State.FlyAI
         private void OnEnable()
         {
             //Activate the default state
-            Invoke("LaunchFirstState", 1f);
+            if(once)
+            {
+                Invoke("LaunchFirstState", timeToEnable);
+                Debug.Log("LaunchFirstState");
+            }
+
+            once = true;
         }
 
         void LaunchFirstState()
         {
             //Activate the default state
+            Debug.Log("ActiveEnnemy");
             SetActiveState(AIState.BaseMove);
             enemyHealth.IsInvulnerable = false;
         }

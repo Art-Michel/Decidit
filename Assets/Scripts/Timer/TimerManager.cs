@@ -1,5 +1,6 @@
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TimerManager : ProjectManager<TimerManager>
 {
@@ -11,14 +12,25 @@ public class TimerManager : ProjectManager<TimerManager>
 
     void OnLevelWasLoaded()
     {
-        time = 0;
-        endGame = true;
-        isInCorridor = true;
-    }
+        Scene scene = SceneManager.GetActiveScene();
 
+        if (scene.name == "GamePath")
+        {
+            time = 0;
+            isInCorridor = true;
+        }
+        else
+        {
+            endGame = true;
+            time = 0;
+            isInCorridor = true;
+        }
+    }
     private void Start()
     {
         PrintTimer();
+
+        Scene scene = SceneManager.GetActiveScene();
     }
 
     [Button]

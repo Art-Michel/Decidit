@@ -11,6 +11,8 @@ namespace State.WallAI
 
         EnemyHealth enemyHealth;
 
+        [SerializeField] float timeToEnable;
+        bool once;
         public enum WallAIState
         {
             BaseMove, BaseAttack, Death
@@ -63,7 +65,11 @@ namespace State.WallAI
         private void OnEnable()
         {
             //Activate the default state
-            Invoke("LaunchFirstState", 1f);
+            if(once)
+            {
+                Invoke("LaunchFirstState", timeToEnable);
+            }
+            once = true;
         }
 
         void LaunchFirstState()
