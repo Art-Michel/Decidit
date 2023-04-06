@@ -44,7 +44,6 @@ public class MuseArm : Arm
 
     public override void StartPrevis()
     {
-        base.StartPrevis();
     }
 
     public override void CheckLookedAt()

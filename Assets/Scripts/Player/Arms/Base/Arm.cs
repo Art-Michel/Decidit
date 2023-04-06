@@ -157,6 +157,7 @@ public class Arm : MonoBehaviour
 
     public virtual void StartIdle()
     {
+        Animator.CrossFade("idle", 0, 0);
         Refilled();
     }
 
