@@ -68,6 +68,7 @@ namespace State.WallAI
             if(once)
             {
                 Invoke("LaunchFirstState", timeToEnable);
+                Invoke("CanBeHit", 1f);
             }
             once = true;
         }
@@ -75,6 +76,10 @@ namespace State.WallAI
         void LaunchFirstState()
         {
             SetActiveState(WallAIState.BaseMove);
+            enemyHealth.IsInvulnerable = false;
+        }
+        void CanBeHit()
+        {
             enemyHealth.IsInvulnerable = false;
         }
 

@@ -17,8 +17,10 @@ public class DisplayTimer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        txt.enabled = false;
         txt = GetComponent<TextMeshProUGUI>();
+
+        if (txt.gameObject.name !="DisplayTimerEndGame")
+            txt.enabled = false;
     }
 
     // Update is called once per frame
@@ -29,7 +31,10 @@ public class DisplayTimer : MonoBehaviour
 
     private void EnableScore()
     {
-        txt.enabled = !txt.enabled;
+        if (!TimerManager.Instance.endGame)
+            txt.enabled = !txt.enabled;
+        else
+            txt.enabled = true;
     }
 
     void OnEnable()

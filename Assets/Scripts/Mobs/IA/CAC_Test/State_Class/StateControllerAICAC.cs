@@ -73,6 +73,7 @@ namespace State.AICAC
             if(once)
             {
                 Invoke("LaunchFirstState", timeToEnable);
+                Invoke("CanBeHit", 1f);
                 Debug.Log("LaunchFirstState");
             }
             once = true;
@@ -83,6 +84,10 @@ namespace State.AICAC
             //Activate the default state
             Debug.Log("ActiveEnnemy");
             SetActiveState(AIState.BaseIdle);
+            enemyHealth.IsInvulnerable = false;
+        }
+        void CanBeHit()
+        {
             enemyHealth.IsInvulnerable = false;
         }
 
