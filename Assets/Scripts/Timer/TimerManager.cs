@@ -26,6 +26,7 @@ public class TimerManager : ProjectManager<TimerManager>
             isInCorridor = true;
         }
     }
+
     private void Start()
     {
         PrintTimer();
