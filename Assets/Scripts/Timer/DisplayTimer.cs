@@ -4,7 +4,7 @@ using TMPro;
 
 public class DisplayTimer : MonoBehaviour
 {
-    TextMeshProUGUI txt;
+    [SerializeField] TextMeshProUGUI txt;
     PlayerInputMap _inputs;
 
     void Awake()
@@ -14,19 +14,19 @@ public class DisplayTimer : MonoBehaviour
         _inputs.MenuNavigation.Score.started += _ => EnableScore();
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        txt = GetComponent<TextMeshProUGUI>();
+    // void Start()
+    // {
+    //     txt = GetComponent<TextMeshProUGUI>();
 
-        if (txt.gameObject.name !="DisplayTimerEndGame")
-            txt.enabled = false;
-    }
+    //     if (txt.gameObject.name != "DisplayTimerEndGame")
+    //         txt.enabled = false;
+    // }
 
     // Update is called once per frame
     void Update()
     {
-        txt.text = System.TimeSpan.FromSeconds((int)TimerManager.Instance.time).ToString();
+        if (txt)
+            txt.text = System.TimeSpan.FromSeconds((int)TimerManager.Instance.time).ToString();
     }
 
     private void EnableScore()
