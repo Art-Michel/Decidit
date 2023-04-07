@@ -53,6 +53,7 @@ namespace State.AIBull
                 }
                 else
                 {
+                    Debug.Log("Follow Player");
                     SmoothLookAtPlayer();
                     globalRef.agent.speed = 19;
                     globalRef.agent.SetDestination(globalRef.playerTransform.position);
@@ -74,10 +75,12 @@ namespace State.AIBull
 
         bool CheckPlayerIsBack()
         {
-            Vector3 thisPosition = globalRef.transform.position - globalRef.transform.forward;
-            Vector3 thisForward = globalRef.transform.forward;
+            Vector2 thisPosition = new Vector2(globalRef.transform.position.x, globalRef.transform.position.z) - new Vector2(globalRef.transform.forward.x, globalRef.transform.forward.z);
+            Vector2 posPlayer = new Vector2(globalRef.playerTransform.position.x, globalRef.playerTransform.position.z);
+            Vector2 thisForward = new Vector2(globalRef.transform.forward.x, globalRef.transform.forward.z);
 
-            float dot = Vector3.Dot(thisForward, (globalRef.playerTransform.position - thisPosition).normalized);
+            float dot = Vector2.Dot(thisForward, (posPlayer - thisPosition).normalized);
+            Debug.Log(dot);
             if (dot > 0.95f)
             {
                 canAttak = true;
@@ -192,6 +195,7 @@ namespace State.AIBull
             globalRef.hitBoxAttack.gameObject.SetActive(false);
             attackDuration = 1;
             globalRef.baseAttackBullSO.curentDelayBeforeAttack = globalRef.baseAttackBullSO.maxDelayBeforeAttack;
+            globalRef.baseAttackBullSO.speedRot = 0;
         }
     }
 }
