@@ -116,7 +116,8 @@ public class Health : MonoBehaviour
         splash.forward = forward;
     }
 
-    public virtual void ProbRegen(int amount)
+    [Button]
+    public virtual void ProbRegen(int amount = 1)
     {
         if (_hp < _probHp)
         {

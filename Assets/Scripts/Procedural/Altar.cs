@@ -156,6 +156,7 @@ public class Altar : MonoBehaviour, IInteractable
     public void TurnOff()
     {
         _hasBeenUsed = true;
+        PlayerHealth.Instance.TrueHeal(1);
         AestheticsParent.SetActive(false);
     }
 
