@@ -429,6 +429,9 @@ public class PlayerManager : LocalManager<PlayerManager>
     #region Rumble
     public void StartRumbling(float lowFreqStrength, float highFreqStrength, float duration)
     {
+        if (MenuManager.Instance.CurrentDevice != MenuManager.Devices.Controller)
+            return;
+
         if (duration > _rumbleT)
         {
             _rumbleInitialT = duration;
