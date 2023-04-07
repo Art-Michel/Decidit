@@ -239,7 +239,7 @@ public class EnemyHealth : Health
             return;
 
         //regen player
-        Player.Instance.gameObject.GetComponent<PlayerHealth>().TrueHeal(1);
+        Player.Instance.gameObject.GetComponent<PlayerHealth>().ProbRegen(1);
 
         //old
         //Player.Instance.gameObject.GetComponent<Health>().ProbRegen(1000);

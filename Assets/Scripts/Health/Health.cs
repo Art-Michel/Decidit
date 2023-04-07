@@ -24,7 +24,7 @@ public class Health : MonoBehaviour
     [Foldout("Stats")]
     [Range(0, 3)][SerializeField] protected float _probationMaxStartup = 1;
     [Foldout("Stats")]
-    [Range(0.1f, 60)][SerializeField] float _probationSpeed = 15;
+    [Range(0.0f, 60)][SerializeField] float _probationSpeed = 15;
     [Foldout("Stats")]
     [SerializeField] private float _healthBarSpeed = 2.0f;
     protected float _hpBefore;
