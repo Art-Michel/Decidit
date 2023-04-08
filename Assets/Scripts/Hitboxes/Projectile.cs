@@ -17,6 +17,8 @@ public class Projectile : Hitbox
     [Foldout("References")]
     [SerializeField] private MonoBehaviour _trailMaterial;
     [Foldout("References")]
+    [SerializeField] private GameObject _trailsVfx;
+    [Foldout("References")]
     [SerializeField] private Pooler _impactVfxPooler;
     [Foldout("References")]
     [SerializeField] private Pooler _fleshSplashVfxPooler;
@@ -66,6 +68,8 @@ public class Projectile : Hitbox
                 trail.Clear();
             }
         if (_trailMaterial) _trailMaterial.enabled = false;
+        if (_trailsVfx)
+            _trailsVfx.SetActive(false);
         _mesh.SetActive(false);
         _lasterFramePosition = position - _direction * _radius;
         _lastFramePosition = position - _direction * _radius;
@@ -141,6 +145,8 @@ public class Projectile : Hitbox
                 if (_trailMaterial)
                     _trailMaterial.enabled = true;
                 _mesh.SetActive(true);
+                if (_trailsVfx)
+                    _trailsVfx.SetActive(true);
             }
         }
     }
@@ -330,6 +336,9 @@ public class Projectile : Hitbox
         {
             _trailMaterial.enabled = false;
         }
+
+        if (_trailsVfx != null)
+            _trailsVfx.SetActive(false);
     }
 
     private void UpdateDisappearance()
