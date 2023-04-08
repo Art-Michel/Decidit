@@ -220,7 +220,7 @@ public class PlayerHealth : Health
     {
         base.DisplayProbHealth();
         float alpha = _vignetteAlphaOnProb.Evaluate(_probHp - _hp);
-        _probVignette.color = new Color(1.0f, 1.0f, 1.0f, alpha);
+        _probVignette.color = new Color(0.8f, 0.7f, 0.0f, alpha);
     }
 
     public override void Knockback(Vector3 direction)
