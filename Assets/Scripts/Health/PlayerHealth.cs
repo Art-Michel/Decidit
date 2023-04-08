@@ -47,6 +47,7 @@ public class PlayerHealth : Health
     float _damageVignetteR;
     float _damageVignetteG;
     float _damageVignetteB;
+    float[] _vignetteOpacityPerHpLeft = { 0.8f, 0.8f, 0.3f, 0.0f, 0.0f, 0.0f };
 
     //* Unused!
     // [Foldout("Stats")]
@@ -100,7 +101,7 @@ public class PlayerHealth : Health
 
     public override void TakeDamage(float amount)
     {
-        if (IsInvulnerable)
+        if (IsInvulnerable || amount <= 0)
             return;
 
         if (_hasSecondChance && amount >= _hp && _hp > 1)
@@ -129,9 +130,7 @@ public class PlayerHealth : Health
 
     private void HandleLowHpVignette()
     {
-        //* vignette starts being visible at [70%]HP and is at full opacity at [40%]hp
-        float value = Mathf.Lerp(1.0f, 0.0f, Mathf.InverseLerp(_maxHp * 0.4f, _maxHp * 0.70f, _hp));
-        _lowHpVignette.color = new Color(1.0f, 1.0f, 1.0f, value);
+        _lowHpVignette.color = new Color(1.0f, 1.0f, 1.0f, _vignetteOpacityPerHpLeft[Mathf.RoundToInt(_hp)]);
     }
 
     [Button]

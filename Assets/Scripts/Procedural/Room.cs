@@ -117,7 +117,7 @@ public class Room : MonoBehaviour
     {
         //Feedbacks
         SoundManager.Instance.PlaySound("event:/SFX_Environement/SlowMo", 1f, gameObject);
-        // PlayerHealth.Instance.TrueHeal(20);
+        // PlayerHealth.Instance.TrueHeal(1);
         SoundManager.Instance.ClearedSound();
         PlayerManager.Instance.StartSlowMo(0.01f, 2f);
 
