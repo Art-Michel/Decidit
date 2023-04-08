@@ -67,7 +67,7 @@ public class MuseArm : Arm
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/MuseMalade/Launch", 5f, gameObject);
         //_muzzleFlash.PlayAll();
         base.StartActive();
-        this.Animator.CrossFade("cast", 0f, 0);
+        this.Animator.CrossFade("cast", 0, 0);
         _fsm.ChangeState(ArmStateList.RECOVERY);
     }
 }
