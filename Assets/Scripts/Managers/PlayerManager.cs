@@ -10,6 +10,9 @@ using NaughtyAttributes;
 
 public class PlayerManager : LocalManager<PlayerManager>
 {
+    [Foldout("References")]
+    [SerializeField] Volume _playerVolume;
+    ColorAdjustments _colorPP;
     //Slow down time
     float _slowMoT;
     float _slowMoInitialT;
@@ -73,6 +76,9 @@ public class PlayerManager : LocalManager<PlayerManager>
     private void Start()
     {
         _isPaused = false;
+        _playerVolume.profile.TryGet<ColorAdjustments>(out ColorAdjustments colorPP);
+        _colorPP = colorPP;
+        _colorPP.saturation.overrideState = true;
         MenuManager.Instance.StopMenuing();
         _isLockedAt60 = false;
     }
@@ -341,6 +347,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         _dieT = 0f;
         StopRumbling();
         StopSlowMo();
+        _colorPP.saturation.value = 0;
         _canPause = true;
         //TODO Lucas un son quand on se ressuscite
     }
@@ -349,6 +356,7 @@ public class PlayerManager : LocalManager<PlayerManager>
     {
         _dieT += Time.unscaledDeltaTime;
 
+        _colorPP.saturation.value = Mathf.Lerp(-100, 0, Mathf.InverseLerp(_deathDuration, 0, _dieT));
         Time.timeScale = Mathf.Lerp(0, 1, Mathf.InverseLerp(_deathDuration, 0, _dieT));
 
         if (_dieT >= _deathDuration)

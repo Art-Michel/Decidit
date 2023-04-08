@@ -8,6 +8,7 @@ public class PlayerHealth : Health
 {
     public static PlayerHealth Instance;
 
+
     [Foldout("References")]
     [SerializeField] Player _player;
 
