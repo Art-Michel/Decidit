@@ -78,6 +78,7 @@ public class Revolver : MonoBehaviour
     private float _reloadT;
     private int _ammo;
     private bool _reloadBuffered;
+    private bool _shotBuffered;
     #endregion
 
     void Awake()
@@ -169,30 +170,42 @@ public class Revolver : MonoBehaviour
         {
             if ((_fsm.CurrentState.Name == RevolverStateList.IDLE || _fsm.CurrentState.Name == RevolverStateList.RELOADING) && _ammo > 0)
                 _fsm.ChangeState(RevolverStateList.SHOOTING);
+            else if (_fsm.CurrentState.Name == RevolverStateList.SHOOTING && _recoilT <= 0.12f)
+            {
+                ClearBuffer();
+                _shotBuffered = true;
+            }
         }
     }
 
     public bool CheckBuffer()
     {
-        if (_inputs.Actions.Shoot.IsPressed())
+        if (_inputs.Actions.Shoot.IsPressed() || _shotBuffered)
         {
             PressShoot();
+            ClearBuffer();
             return true;
         }
         if (_reloadBuffered)
         {
             PressReload();
-            _reloadBuffered = false;
+            ClearBuffer();
             return true;
         }
 
-        _reloadBuffered = false;
+        ClearBuffer();
         return false;
+    }
+
+    private void ClearBuffer()
+    {
+        _shotBuffered = false;
+        _reloadBuffered = false;
     }
 
     public virtual void Shoot()
     {
-
+        ClearBuffer();
     }
 
     public virtual void StartRecoil()
@@ -235,12 +248,16 @@ public class Revolver : MonoBehaviour
         if (_fsm.CurrentState.Name == RevolverStateList.IDLE && _ammo < _maxAmmo)
             _fsm.ChangeState(RevolverStateList.RELOADING);
         else if (_fsm.CurrentState.Name == RevolverStateList.SHOOTING && _ammo < _maxAmmo)
+        {
+            ClearBuffer();
             _reloadBuffered = true;
+        }
     }
 
     // Initiate reloading
     public void StartReload()
     {
+        ClearBuffer();
         Animator.CrossFade("reload", 0.0f, 0);
         _reloadT = _reloadMaxTime;
         _reloadingWarning.fillAmount = 0f;

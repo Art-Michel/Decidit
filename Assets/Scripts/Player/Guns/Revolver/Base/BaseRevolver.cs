@@ -14,6 +14,7 @@ public class BaseRevolver : Revolver
 
     public override void Shoot()
     {
+        base.Shoot();
         var vfx = _trailVfxPooler.Get().GetComponent<TwoPosTrail>();
         if (Physics.Raycast(_camera.position, (_currentlyAimedAt - _camera.position), out RaycastHit hit, _hitscanMaxRange, _mask + _secondaryMask))
         {

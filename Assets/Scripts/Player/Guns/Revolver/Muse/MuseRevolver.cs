@@ -11,6 +11,7 @@ public class MuseRevolver : Revolver
 
     public override void Shoot()
     {
+        base.Shoot();
         PooledObject shot = _pooler.Get();
         shot.GetComponent<Projectile>().Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized, _camera.forward);
 

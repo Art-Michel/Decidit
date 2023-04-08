@@ -21,6 +21,7 @@ public class AragonRevolver : Revolver
     {
         // for (int i = 0; i < _shotsDirections.Length; i++)
         //     SetShot(_shotsDirections[i], _offsets[i]);
+        base.Shoot();
         PooledObject shot = _pooler.Get();
         shot.GetComponent<FugueProjectile>().Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized, _camera.forward);
 

@@ -65,6 +65,7 @@ public class EylauRevolver : Revolver
 
     public override void Shoot()
     {
+        base.Shoot();
         PooledObject shot = null;
         if (!_charged)
         {
