@@ -22,6 +22,7 @@ public class PlayerHealth : Health
     [SerializeField] Image _probVignette;
     [Foldout("Properties")]
     [SerializeField] AnimationCurve _vignetteAlphaOnProb;
+    Vector3 _probVignetteColor;
 
     [Foldout("References")]
     [SerializeField] Image _healVignette;
@@ -45,9 +46,7 @@ public class PlayerHealth : Health
     private bool _hasSecondChance;
     [SerializeField]
     private BounceShake.Params _hurtShake;
-    float _damageVignetteR;
-    float _damageVignetteG;
-    float _damageVignetteB;
+    Vector3 _damageVignetteColor;
     float[] _vignetteOpacityPerHpLeft = { 0.8f, 0.8f, 0.3f, 0.0f, 0.0f, 0.0f };
 
     //* Unused!
@@ -87,10 +86,9 @@ public class PlayerHealth : Health
 
     protected override void Start()
     {
+        _damageVignetteColor = new Vector3(_damageVignette.color.r, _damageVignette.color.g, _damageVignette.color.b);
+        _probVignetteColor = new Vector3(_probVignette.color.r, _probVignette.color.g, _probVignette.color.b);
         base.Start();
-        _damageVignetteR = _damageVignette.color.r;
-        _damageVignetteG = _damageVignette.color.g;
-        _damageVignetteB = _damageVignette.color.b;
     }
 
     protected override void Update()
@@ -197,8 +195,8 @@ public class PlayerHealth : Health
         _isBeingDamaged = true;
         _damageVignetteT = 0.0f;
 
-        //*Minimum vignette intensity from 1hp lost (30% opacity) to 2 hp lost (100% opacity)
-        _currentDamageVignetteMaxAlpha = Mathf.Lerp(0.3f, 1.0f, Mathf.InverseLerp(1.0f, 2.0f, damage));
+        //*Minimum vignette intensity from 1hp lost (80% opacity) to 2 hp lost (100% opacity)
+        _currentDamageVignetteMaxAlpha = Mathf.Lerp(0.8f, 1.0f, Mathf.InverseLerp(1.0f, 2.0f, damage));
     }
 
     private void HandleDamageVignette()
@@ -207,12 +205,12 @@ public class PlayerHealth : Health
         {
             _damageVignetteT += Time.deltaTime * _damageVignetteSpeed;
             float alpha = _vignetteAlphaOnDamage.Evaluate(_damageVignetteT);
-            _damageVignette.color = new Color(_damageVignetteR, _damageVignetteG, _damageVignetteB, alpha * _currentDamageVignetteMaxAlpha);
+            _damageVignette.color = new Color(_damageVignetteColor.x, _damageVignetteColor.y, _damageVignetteColor.z, alpha * _currentDamageVignetteMaxAlpha);
         }
         else
         {
             _damageVignetteT = 1.0f;
-            _damageVignette.color = new Color(_damageVignetteR, _damageVignetteG, _damageVignetteB, 0.0f);
+            _damageVignette.color = new Color(_damageVignetteColor.x, _damageVignetteColor.y, _damageVignetteColor.z, 0.0f);
             _isBeingDamaged = false;
         }
     }
@@ -221,12 +219,11 @@ public class PlayerHealth : Health
     {
         base.DisplayProbHealth();
         float alpha = _vignetteAlphaOnProb.Evaluate(_probHp - _hp);
-        _probVignette.color = new Color(0.8f, 0.7f, 0.0f, alpha);
+        _probVignette.color = new Color(_probVignetteColor.x, _probVignetteColor.y, _probVignetteColor.z, alpha);
     }
 
     public override void Knockback(Vector3 direction)
     {
-
         _player.AddMomentum(direction);
     }
 
