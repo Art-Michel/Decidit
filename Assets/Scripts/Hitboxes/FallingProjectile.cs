@@ -9,6 +9,7 @@ public class FallingProjectile : SynergyProjectile
     [SerializeField] float _speedReductionFactor = 1f;
     const float _gravity = 9.81f;
     float _currentlyAppliedGravity = 0f;
+    bool _shouldStop;
 
     //pour un peu de peps
     private const float _initialGravity = 4.0f;
@@ -17,6 +18,7 @@ public class FallingProjectile : SynergyProjectile
     {
         base.Setup(position, direction);
         _currentlyAppliedGravity = _initialGravity;
+        _shouldStop = false;
     }
 
     public override void Setup(Vector3 position, Vector3 direction, Vector3 cameraDirection)
@@ -27,7 +29,8 @@ public class FallingProjectile : SynergyProjectile
 
     protected override void Move()
     {
-        _currentlyAppliedGravity -= _gravity * _drag * Time.deltaTime;
+        if (!_shouldStop)
+            _currentlyAppliedGravity -= _gravity * _drag * Time.deltaTime;
         _currentSpeed -= _speedReductionFactor * Time.deltaTime;
         _currentSpeed = Mathf.Clamp(_currentSpeed, 0f, _speed);
 
@@ -37,7 +40,16 @@ public class FallingProjectile : SynergyProjectile
 
     protected override void Bounce(RaycastHit hit)
     {
-        transform.position = hit.point + hit.normal * (_radius);
+        if (_currentSpeed <= 0.1f)
+        {
+            _direction = Vector3.zero;
+            _currentSpeed = 0.0f;
+            _currentlyAppliedGravity = 0.0f;
+            _shouldStop = true;
+            transform.position = hit.point + hit.normal * _radius;
+            return;
+        }
+        transform.position = hit.point + hit.normal * _radius;
 
         _direction = ((_direction * _currentSpeed) + Vector3.up * (_currentlyAppliedGravity)).normalized;
         _direction = Vector3.Reflect(_direction, hit.normal).normalized;

@@ -229,7 +229,7 @@ public class Projectile : Hitbox
                 }
                 else
                 {
-                    if (_shouldLeaveImpact) LeaveImpact(hit.transform, hit.point, false);
+                    if (_shouldLeaveImpact) LeaveImpact(hit.transform, hit.point, false, hit.normal);
                     if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
                         Bounce(hit);
                 }
@@ -283,6 +283,53 @@ public class Projectile : Hitbox
                 {
                     SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/BaseShoot/BaseShootImpactObject", 1f, gameObject);
                     impactVfx.transform.forward = _direction;
+                }
+            }
+        }
+
+        //flesh
+        else if (obj.gameObject.layer == LayerMask.NameToLayer("Flesh"))
+        {
+            PooledObject splashVfx = _fleshSplashVfxPooler.Get();
+            //Hard limit for impacts so we don't get 10000 vfx and sfx when going through many walls
+            if (splashVfx == null)
+                return;
+
+            splashVfx.transform.position = point - _direction * 0.05f;
+
+            if (_direction != Vector3.zero)
+            {
+                if (fromBehind) // upside down for some reason
+                    splashVfx.transform.forward = _direction;
+                else
+                {
+                    SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/BaseShoot/BaseShootImpactFlesh", 1f, gameObject);
+                    splashVfx.transform.forward = -_direction;
+                }
+            }
+        }
+    }
+
+    private void LeaveImpact(Transform obj, Vector3 point, bool fromBehind, Vector3 normal)
+    {
+        //wall or ground
+        if (obj.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        {
+            PooledObject impactVfx = _impactVfxPooler.Get();
+            //Hard limit for impacts so we don't get 10000 vfx and sfx when going through many walls
+            if (impactVfx == null)
+                return;
+
+            impactVfx.transform.position = point + normal * 0.05f;
+
+            if (_direction != Vector3.zero)
+            {
+                if (fromBehind)
+                    impactVfx.transform.forward = normal;
+                else
+                {
+                    SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/BaseShoot/BaseShootImpactObject", 1f, gameObject);
+                    impactVfx.transform.forward = normal;
                 }
             }
         }
