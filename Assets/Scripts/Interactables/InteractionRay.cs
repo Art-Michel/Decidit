@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public class InteractionRay : MonoBehaviour
+public class InteractionRay : LocalManager<InteractionRay>
 {
     [SerializeField] float _interactableDetectionRange = 10.0f;
     [SerializeField] float _interactRange = 5.0f;
@@ -13,8 +13,10 @@ public class InteractionRay : MonoBehaviour
     [SerializeField] private bool _isCloseEnough;
     [SerializeField] LayerMask _mask;
     private PlayerInputMap _inputs;
-    void Awake()
+
+    protected override void Awake()
     {
+        base.Awake();
         _inputs = new PlayerInputMap();
         _inputs.Actions.Interact.started += _ => Interact();
     }
@@ -72,6 +74,7 @@ public class InteractionRay : MonoBehaviour
     {
         if (_interactable != null && _isCloseEnough)
         {
+            _interactionUI.SetActive(false);
             _interactable.GetComponent<IInteractable>().Interact();
         }
     }

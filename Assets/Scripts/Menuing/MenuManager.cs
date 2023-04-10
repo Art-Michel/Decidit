@@ -149,6 +149,8 @@ public class MenuManager : LocalManager<MenuManager>
                 arm.GetComponent<Arm>().enabled = false;
             if (_healthBar != null)
                 _healthBar.SetActive(false);
+            InteractionRay.Instance.enabled = false;
+
 
             //Stop rumble
             PlayerManager.Instance.StopRumbling();
@@ -179,6 +181,7 @@ public class MenuManager : LocalManager<MenuManager>
                 arm.GetComponent<Arm>().enabled = true;
             if (_healthBar != null)
                 _healthBar.SetActive(true);
+            InteractionRay.Instance.enabled = true;
         }
     }
 
