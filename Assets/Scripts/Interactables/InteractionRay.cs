@@ -9,6 +9,7 @@ public class InteractionRay : MonoBehaviour
     [SerializeField] float _interactableDetectionRange = 10.0f;
     [SerializeField] float _interactRange = 5.0f;
     [SerializeField] private Transform _interactable;
+    [SerializeField] private GameObject _interactionUI;
     [SerializeField] private bool _isCloseEnough;
     [SerializeField] LayerMask _mask;
     private PlayerInputMap _inputs;
@@ -21,7 +22,13 @@ public class InteractionRay : MonoBehaviour
     void Update()
     {
         if (CheckForInteractable())
+        {
             CheckForInteractableRange();
+            if (_isCloseEnough && !_interactionUI.activeInHierarchy)
+                _interactionUI.SetActive(true);
+        }
+        else if (_interactionUI.activeInHierarchy)
+            _interactionUI.SetActive(false);
     }
 
     private bool CheckForInteractable()
@@ -47,10 +54,18 @@ public class InteractionRay : MonoBehaviour
         if ((_interactable.position - transform.position).magnitude <= _interactRange)
         {
             if (!_isCloseEnough)
+            {
                 _isCloseEnough = true;
+                _interactionUI.SetActive(true);
+            }
         }
         else if (_isCloseEnough)
-            _isCloseEnough = false;
+        {
+            {
+                _isCloseEnough = false;
+                _interactionUI.SetActive(false);
+            }
+        }
     }
 
     private void Interact()

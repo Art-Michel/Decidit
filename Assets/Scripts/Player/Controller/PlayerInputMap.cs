@@ -370,17 +370,6 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""62740a39-e6cc-4090-b265-c9ecb1726e56"",
-                    ""path"": ""<Keyboard>/f"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Interact"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""d35c4ba9-e3bd-4e31-8b85-94ec7d78977c"",
                     ""path"": ""<Gamepad>/buttonNorth"",
                     ""interactions"": """",
