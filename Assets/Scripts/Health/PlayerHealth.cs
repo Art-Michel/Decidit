@@ -143,7 +143,7 @@ public class PlayerHealth : Health
             ResetBarFillage(false);
 
             DisplayProbHealth();
-            SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/BaseHeal", 3f, gameObject);
+            SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/FullHeal", 3f, gameObject);
             StartHealVignette();
             HandleLowHpVignette();
             if (PlayerManager.Instance._isDying)
