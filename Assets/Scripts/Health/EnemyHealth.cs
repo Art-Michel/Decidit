@@ -157,7 +157,7 @@ public class EnemyHealth : Health
         else if (globalRefWallAI != null)
             globalRefWallAI.CheckHP();
 
-        SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/HitMarkerHead", .2f, gameObject);
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/HitMarkerHead", .8f, gameObject);
     }
 
     public override void Knockback(Vector3 direction)
@@ -239,6 +239,7 @@ public class EnemyHealth : Health
             return;
 
         //regen player
+        SoundManager.Instance.PlaySound("event:/SFX_IA/DeathIA", 3f, gameObject);
         Player.Instance.gameObject.GetComponent<PlayerHealth>().ProbRegen(1);
 
         //old
@@ -312,7 +313,6 @@ public class EnemyHealth : Health
 
     private void ActuallyDie()
     {
-        SoundManager.Instance.PlaySound("event:/SFX_IA/DeathIA", 1f, gameObject);
         Destroy(gameObject);
     }
 }
