@@ -600,12 +600,12 @@ public class Player : LocalManager<Player>
         else
             _movementInputs = _lastFrameMovementInputs;
 
-        // if (_fsm.CurrentState.Name != PlayerStatesList.GROUNDED)
-        // {
-        //     float dot = Vector3.Dot(_lastFrameMovementInputs, _movementInputs);
-        //     _movementAccelerationT -= (1 - Mathf.InverseLerp(-1, 1, (dot)) * Time.deltaTime);
-        //     _movementInputs = Vector3.Lerp(_lastFrameMovementInputs, _movementInputs, (1 - Mathf.InverseLerp(-1, 1, (dot)) * Time.deltaTime));
-        // }
+        if (_fsm.CurrentState.Name != PlayerStatesList.GROUNDED)
+        {
+            float dot = Vector3.Dot(_lastFrameMovementInputs, _movementInputs);
+            _movementAccelerationT -= (1 - Mathf.InverseLerp(-1, 1, (dot)));
+            //     _movementInputs = Vector3.Lerp(_lastFrameMovementInputs, _movementInputs, (1 - Mathf.InverseLerp(-1, 1, (dot)) * Time.deltaTime));
+        }
 
         //Store this frame's input
         _lastFrameMovementInputs = _movementInputs;
