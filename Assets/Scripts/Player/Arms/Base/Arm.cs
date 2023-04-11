@@ -187,7 +187,7 @@ public class Arm : MonoBehaviour
 
     protected void Glow()
     {
-        _glowT += Time.deltaTime * 5.0f;
+        _glowT += Time.deltaTime * 10.0f;
         float alpha = _glowCurve.Evaluate(_glowT);
         foreach (Image image in _glowingCrossHairs)
             image.color = new Color(image.color.r, image.color.g, image.color.b, alpha);
