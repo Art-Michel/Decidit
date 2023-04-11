@@ -16,6 +16,7 @@ public class TimerManager : ProjectManager<TimerManager>
 
         if (scene.name == "GamePath")
         {
+            endGame = false;
             time = 0;
             isInCorridor = true;
         }
