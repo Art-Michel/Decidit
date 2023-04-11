@@ -2413,6 +2413,66 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &253444345
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 253444346}
+  - component: {fileID: 253444347}
+  - component: {fileID: 253444348}
+  m_Layer: 21
+  m_Name: InsideWall
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &253444346
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 253444345}
+  m_LocalRotation: {x: 0.000000021676405, y: -0.9639461, z: -0.00000007852338, w: 0.26609766}
+  m_LocalPosition: {x: 0, y: 13.999998, z: 0.0000022873282}
+  m_LocalScale: {x: 98.54, y: 150, z: 98.54}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 859588761}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: -149.136, z: 0}
+--- !u!64 &253444347
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 253444345}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4317864141471887295, guid: 93d016474ea1cfa43b185e146cee35da, type: 3}
+--- !u!114 &253444348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 253444345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88bbdc227d07ecb469e7e352a4c0f866, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Chant: 2
 --- !u!1 &258339028
 GameObject:
   m_ObjectHideFlags: 0
@@ -8139,6 +8199,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 58149960231853385}
+  - {fileID: 253444346}
   m_Father: {fileID: 1447211705}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
