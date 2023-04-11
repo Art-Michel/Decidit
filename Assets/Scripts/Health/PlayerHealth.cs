@@ -44,8 +44,18 @@ public class PlayerHealth : Health
     [Foldout("Stats")]
     [SerializeField]
     private bool _hasSecondChance;
+
+    [Foldout("Stats")]
+    [Range(0, 1)]
+    [SerializeField]
+    private float _hurtInvulnerability;
+
+    private float _hurtInvulnerabilityT;
+    private bool _isHurtInvulnerable;
+
     [SerializeField]
     private BounceShake.Params _hurtShake;
+
     Vector3 _damageVignetteColor;
     float[] _vignetteOpacityPerHpLeft = { 0.8f, 0.8f, 0.3f, 0.0f, 0.0f, 0.0f };
 
@@ -96,11 +106,12 @@ public class PlayerHealth : Health
         base.Update();
         if (_isHealing) HandleHealVignette();
         if (_isBeingDamaged) HandleDamageVignette();
+        if (_isHurtInvulnerable) HandleHurtInvul();
     }
 
     public override void TakeDamage(float amount)
     {
-        if (IsInvulnerable || amount <= 0)
+        if (IsInvulnerable || amount <= 0 || _isHurtInvulnerable)
             return;
 
         if (_hasSecondChance && amount >= _hp && _hp > 1)
@@ -119,6 +130,7 @@ public class PlayerHealth : Health
 
         HandleLowHpVignette();
         StartDamageVignette(amount);
+        StartHurtInvul();
         DisplayProbHealth();
     }
 
@@ -212,6 +224,21 @@ public class PlayerHealth : Health
             _damageVignetteT = 1.0f;
             _damageVignette.color = new Color(_damageVignetteColor.x, _damageVignetteColor.y, _damageVignetteColor.z, 0.0f);
             _isBeingDamaged = false;
+        }
+    }
+
+    private void StartHurtInvul()
+    {
+        _hurtInvulnerabilityT = _hurtInvulnerability;
+        _isHurtInvulnerable = true;
+    }
+
+    private void HandleHurtInvul()
+    {
+        _hurtInvulnerabilityT -= Time.deltaTime;
+        if (_hurtInvulnerabilityT <= 0.0f)
+        {
+            _isHurtInvulnerable = false;
         }
     }
 

@@ -353,6 +353,7 @@ public class PlayerManager : LocalManager<PlayerManager>
 
         _isDying = true;
         _dieT = 0f;
+        PlayerHealth.Instance.IsInvulnerable = true;
         StopRumbling();
         StopSlowMo();
         _canPause = false;
@@ -360,6 +361,7 @@ public class PlayerManager : LocalManager<PlayerManager>
 
     public void CancelDeath()
     {
+        PlayerHealth.Instance.IsInvulnerable = false;
         _isDying = false;
         _dieT = 0f;
         StopRumbling();
