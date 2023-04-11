@@ -87,6 +87,8 @@ public class Player : LocalManager<Player>
     [Range(0, 50)][SerializeField] private float _jumpingDrag = 3f;
     [Foldout("Jumping Settings")]
     [Range(0, 90)][SerializeField] private float _maxCeilingAngle = 30f;
+    [Foldout("Jumping Settings")]
+    [SerializeField] private bool _canCancelJump;
 
     private const float _gravity = 9.81f;
     private float _currentlyAppliedGravity;
@@ -162,6 +164,7 @@ public class Player : LocalManager<Player>
         _playerHealth = GetComponent<PlayerHealth>();
         _inputs = new PlayerInputMap();
         _inputs.Movement.Jump.started += _ => PressJump();
+        _inputs.Movement.Jump.canceled += _ => StopJumping();
     }
 
     private void Start()
@@ -529,6 +532,15 @@ public class Player : LocalManager<Player>
         _currentlyAppliedGravity -= _gravity * _jumpingDrag * Time.deltaTime;
         if (_currentlyAppliedGravity <= 0)
             _fsm.ChangeState(PlayerStatesList.AIRBORNE);
+    }
+
+    private void StopJumping()
+    {
+        if (_canCancelJump && (_fsm.CurrentState.Name == PlayerStatesList.JUMPING || _fsm.CurrentState.Name == PlayerStatesList.JUMPINGUPSLOPE))
+        {
+            if (_currentlyAppliedGravity > 4.0f)
+                _currentlyAppliedGravity = 4.0f;
+        }
     }
 
     public void ApplyAirborneGravity()
