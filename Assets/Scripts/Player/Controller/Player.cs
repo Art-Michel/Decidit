@@ -113,13 +113,24 @@ public class Player : LocalManager<Player>
     [SerializeField]
     private float _baseSpeed = 9f;
     [Foldout("Movement Settings")]
-    [Range(0, 1)]
+    [Range(0, 20)]
     [SerializeField]
-    private float _movementAccelerationSpeed = 0.0666f; //Approx 4 frames
+    private float _movementAccelerationSpeed;
     [Foldout("Movement Settings")]
-    [Range(0, 1)]
+    [Range(0, 20)]
     [SerializeField]
-    private float _movementDecelerationSpeed = 0.0666f; //Approx 4 frames
+    private float _movementDecelerationSpeed;
+    [Foldout("Movement Settings")]
+    [Range(0, 20)]
+    [SerializeField]
+    private float _airMovementAccelerationSpeed;
+    [Foldout("Movement Settings")]
+    [Range(0, 20)]
+    [SerializeField]
+    private float _airMovementDecelerationSpeed;
+    [Foldout("Movement Settings")]
+    [SerializeField]
+    private AnimationCurve _accelerationSpeed;
     [Foldout("Movement Settings")]
     [Range(0, 100)]
     [Tooltip("if lower than movement speed, you will accelerate when airborne")]
@@ -139,7 +150,7 @@ public class Player : LocalManager<Player>
     private Vector3 _globalMomentum;
     private float _movementAcceleration;
     private bool _isPressingADirection;
-
+    private float _movementAccelerationT;
 
     public Vector3 FinalMovement { get; private set; }
     #endregion
@@ -163,6 +174,7 @@ public class Player : LocalManager<Player>
         _currentlyAppliedGravity = 0;
         _movementAcceleration = 0;
         _canMove = true;
+        _movementAccelerationT = 0.0f;
         SetCameraInvert();
         //StopShake();
     }
@@ -218,9 +230,10 @@ public class Player : LocalManager<Player>
 
         if (_debugInputVelocityText)
             _debugInputVelocityText.text =
-            ("Input Velocity:\nx= " + (_movementInputs.x / Time.deltaTime).ToString("F1") +
-            "\nz= " + (_movementInputs.z / Time.deltaTime).ToString("F1") +
-            "\n\n Acceleration:\n  " + _movementAcceleration.ToString("F1"));
+            ("Input Velocity:\nx= " + (_movementInputs.x / Time.deltaTime).ToString("F6") +
+            "\nz= " + (_movementInputs.z / Time.deltaTime).ToString("F6") +
+            "\n\n Acceleration:\n  " + _movementAcceleration.ToString("F1") +
+            "\nAccelerationT:\n  " + _movementAccelerationT.ToString("F1"));
 
         if (_debugGlobalVelocityText)
             _debugGlobalVelocityText.text =
@@ -587,6 +600,13 @@ public class Player : LocalManager<Player>
         else
             _movementInputs = _lastFrameMovementInputs;
 
+        // if (_fsm.CurrentState.Name != PlayerStatesList.GROUNDED)
+        // {
+        //     float dot = Vector3.Dot(_lastFrameMovementInputs, _movementInputs);
+        //     _movementAccelerationT -= (1 - Mathf.InverseLerp(-1, 1, (dot)) * Time.deltaTime);
+        //     _movementInputs = Vector3.Lerp(_lastFrameMovementInputs, _movementInputs, (1 - Mathf.InverseLerp(-1, 1, (dot)) * Time.deltaTime));
+        // }
+
         //Store this frame's input
         _lastFrameMovementInputs = _movementInputs;
 
@@ -595,11 +615,22 @@ public class Player : LocalManager<Player>
 
     private void HandleMovementAcceleration()
     {
-        if (!_isPressingADirection)
-            _movementAcceleration = Mathf.Clamp01(_movementAcceleration -= Time.deltaTime / _movementDecelerationSpeed);
-
+        if (_fsm.CurrentState.Name == PlayerStatesList.GROUNDED)
+        {
+            if (!_isPressingADirection)
+                _movementAcceleration = _accelerationSpeed.Evaluate(_movementAccelerationT -= (Time.deltaTime * _movementDecelerationSpeed));
+            else
+                _movementAcceleration = _accelerationSpeed.Evaluate(_movementAccelerationT += (Time.deltaTime * _movementAccelerationSpeed));
+        }
         else
-            _movementAcceleration = Mathf.Clamp01(_movementAcceleration += Time.deltaTime / _movementAccelerationSpeed);
+        {
+            if (!_isPressingADirection)
+                _movementAcceleration = _accelerationSpeed.Evaluate(_movementAccelerationT -= (Time.deltaTime * _airMovementDecelerationSpeed));
+            else
+                _movementAcceleration = _accelerationSpeed.Evaluate(_movementAccelerationT += (Time.deltaTime * _airMovementAccelerationSpeed));
+        }
+
+        _movementAccelerationT = Mathf.Clamp01(_movementAccelerationT);
 
         _movementInputs *= _movementAcceleration;
     }

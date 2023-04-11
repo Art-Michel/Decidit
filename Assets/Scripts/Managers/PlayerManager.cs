@@ -61,6 +61,7 @@ public class PlayerManager : LocalManager<PlayerManager>
     Altar _currentAltar = null;
 
     PlayerInputMap _inputs;
+    private bool _forceSlowMo;
 
     protected override void Awake()
     {
@@ -69,6 +70,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         _inputs.Debugging.DisplayFramerate.started += _ => DisplayFramerate();
         _inputs.MenuNavigation.Pause.started += _ => PressPause();
         _inputs.Debugging.Lock.started += _ => LockFramerate();
+        _inputs.Debugging.Slow.started += _ => SlowDownTime();
         // _inputs.MenuNavigation.anyButton.started += _ => SwitchToController();
         // _inputs.MenuNavigation.moveMouse.started += _ => SwitchToMouse();
     }
@@ -94,6 +96,21 @@ public class PlayerManager : LocalManager<PlayerManager>
 
         if (_fps.enabled)
             UpdateFramerate();
+    }
+
+    private void SlowDownTime()
+    {
+        Debug.Log("mario");
+        if (Time.timeScale == 1.0f)
+        {
+            _forceSlowMo = true;
+            Time.timeScale = 0.1f;
+        }
+        else
+        {
+            _forceSlowMo = false;
+            Time.timeScale = 1.0f;
+        }
     }
 
     private void LockFramerate()
@@ -416,7 +433,7 @@ public class PlayerManager : LocalManager<PlayerManager>
 
     private void SlowMo()
     {
-        if (_slowMoT > 0 || !_isPaused)
+        if (_slowMoT > 0 || !_isPaused && !_forceSlowMo)
         {
             ////SoundManager.Instance.PlaySound("event:/SFX_Environement/SlowMo", 5f);
             Time.timeScale = Mathf.Lerp(_timeSpeed, 1, Mathf.InverseLerp(_slowMoInitialT, 0, _slowMoT));

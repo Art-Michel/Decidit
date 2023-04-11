@@ -233,6 +233,15 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Slow"",
+                    ""type"": ""Button"",
+                    ""id"": ""acdc6f5b-b4b3-4304-b504-5b131ba808f7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -255,6 +264,17 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard Mouse"",
                     ""action"": ""DisplayFramerate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f3ba44df-3ab1-41f2-99f6-de8159ee6544"",
+                    ""path"": ""<Keyboard>/f4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Slow"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1112,6 +1132,7 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
         m_Debugging = asset.FindActionMap("Debugging", throwIfNotFound: true);
         m_Debugging_Lock = m_Debugging.FindAction("Lock", throwIfNotFound: true);
         m_Debugging_DisplayFramerate = m_Debugging.FindAction("DisplayFramerate", throwIfNotFound: true);
+        m_Debugging_Slow = m_Debugging.FindAction("Slow", throwIfNotFound: true);
         // Actions
         m_Actions = asset.FindActionMap("Actions", throwIfNotFound: true);
         m_Actions_Shoot = m_Actions.FindAction("Shoot", throwIfNotFound: true);
@@ -1261,12 +1282,14 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
     private List<IDebuggingActions> m_DebuggingActionsCallbackInterfaces = new List<IDebuggingActions>();
     private readonly InputAction m_Debugging_Lock;
     private readonly InputAction m_Debugging_DisplayFramerate;
+    private readonly InputAction m_Debugging_Slow;
     public struct DebuggingActions
     {
         private @PlayerInputMap m_Wrapper;
         public DebuggingActions(@PlayerInputMap wrapper) { m_Wrapper = wrapper; }
         public InputAction @Lock => m_Wrapper.m_Debugging_Lock;
         public InputAction @DisplayFramerate => m_Wrapper.m_Debugging_DisplayFramerate;
+        public InputAction @Slow => m_Wrapper.m_Debugging_Slow;
         public InputActionMap Get() { return m_Wrapper.m_Debugging; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1282,6 +1305,9 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
             @DisplayFramerate.started += instance.OnDisplayFramerate;
             @DisplayFramerate.performed += instance.OnDisplayFramerate;
             @DisplayFramerate.canceled += instance.OnDisplayFramerate;
+            @Slow.started += instance.OnSlow;
+            @Slow.performed += instance.OnSlow;
+            @Slow.canceled += instance.OnSlow;
         }
 
         private void UnregisterCallbacks(IDebuggingActions instance)
@@ -1292,6 +1318,9 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
             @DisplayFramerate.started -= instance.OnDisplayFramerate;
             @DisplayFramerate.performed -= instance.OnDisplayFramerate;
             @DisplayFramerate.canceled -= instance.OnDisplayFramerate;
+            @Slow.started -= instance.OnSlow;
+            @Slow.performed -= instance.OnSlow;
+            @Slow.canceled -= instance.OnSlow;
         }
 
         public void RemoveCallbacks(IDebuggingActions instance)
@@ -1595,6 +1624,7 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
     {
         void OnLock(InputAction.CallbackContext context);
         void OnDisplayFramerate(InputAction.CallbackContext context);
+        void OnSlow(InputAction.CallbackContext context);
     }
     public interface IActionsActions
     {
