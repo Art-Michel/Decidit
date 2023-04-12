@@ -94,7 +94,10 @@ namespace State.AIBull
                     else
                     {
                         if(CheckDistDone() > rushBullSO.rushInertieSetDistance)
+                        {
+                            Debug.Log("Stop Rush");
                             stateController.SetActiveState(StateControllerBull.AIState.Idle);
+                        }
                     }
                     if (!stopLockPlayerRush)
                         SmoothLookAtPlayerRush();

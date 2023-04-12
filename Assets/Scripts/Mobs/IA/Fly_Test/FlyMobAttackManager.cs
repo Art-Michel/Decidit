@@ -1,24 +1,12 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace State.FlyAI
 {
     public class FlyMobAttackManager : MonoBehaviour
     {
-        [SerializeField] List<GlobalRefFlyAI> flyAIList = new List<GlobalRefFlyAI>();
-        [SerializeField] List<GlobalRefFlyAI> flyAIListClone = new List<GlobalRefFlyAI>();
-
         [SerializeField] int countAiAttackRange;
 
         bool SpreadShotActive;
-
-        void Start()
-        {
-            for(int i =0; i < transform.childCount; i++)
-            {
-                flyAIList.Add(transform.GetChild(i).GetComponent<GlobalRefFlyAI>());
-            }
-        }
 
         void SetAIVariantAttackRange(GlobalRefFlyAI globalRef)
         {

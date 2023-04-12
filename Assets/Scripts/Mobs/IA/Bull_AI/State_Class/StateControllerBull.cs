@@ -63,7 +63,7 @@ namespace State.AIBull
         private void OnEnable()
         {
             //Activate the default state
-            if(once)
+            if(once || !once)
             {
                 Invoke("LaunchFirstState", timeToEnable);
                 Invoke("CanBeHit", 1f);

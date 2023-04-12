@@ -12,6 +12,8 @@ namespace State.AIBull
 
         [SerializeField] bool canAttak;
         [SerializeField] bool launchAttack;
+        public bool isAttacking;
+        public bool attackDone;
 
         public override void InitState(StateControllerBull stateController)
         {
@@ -33,12 +35,23 @@ namespace State.AIBull
 
         void Update()
         {
-            if (!launchAttack)
-            CheckCanAttack();
-
-            if(launchAttack)
+            if(!isAttacking)
             {
-                LaunchAttack();
+                if (!launchAttack)
+                    CheckCanAttack();
+
+                if (launchAttack)
+                {
+                    LaunchAttack();
+                }
+            }
+            else if(attackDone)
+            {
+                int i = Random.Range(0, 2);
+                if (i == 0)
+                    stateController.SetActiveState(StateControllerBull.AIState.Rush);
+                else
+                    stateController.SetActiveState(StateControllerBull.AIState.BaseAttack);
             }
         }
 
@@ -68,9 +81,9 @@ namespace State.AIBull
 
         void LaunchAttack()
         {
-            AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Idle");
             globalRef.agent.velocity = Vector3.zero;
-            DelayBeforeAttack();
+            AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "PreAttackCAC");
+            //DelayBeforeAttack();
         }
 
         bool CheckPlayerIsBack()
@@ -95,16 +108,11 @@ namespace State.AIBull
 
         void AttackDuration()
         {
-            stateController.SetActiveState(StateControllerBull.AIState.Rush);
-
-            /*if (attackDuration >0)
-            {
-                attackDuration -= Time.deltaTime;
-            }
-            else
-            {
+            int i = Random.Range(0, 2);
+            if(i==0)
                 stateController.SetActiveState(StateControllerBull.AIState.Rush);
-            }*/
+            else
+                stateController.SetActiveState(StateControllerBull.AIState.BaseAttack);
         }
 
         void DelayBeforeAttack()
@@ -113,12 +121,14 @@ namespace State.AIBull
 
             if (globalRef.baseAttackBullSO.curentDelayBeforeAttack >= 0)
             {
+                AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "PreAttackCAC");
                 globalRef.baseAttackBullSO.curentDelayBeforeAttack -= Time.deltaTime;
                 if (globalRef.material_Instances.Material[0].mainTexture != globalRef.material_Instances.TextureBase)
                     ShowSoonAttack(true);
             }
             else
             {
+                //AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Attack");
                 globalRef.hitBoxAttack.gameObject.SetActive(true);
                 if (globalRef.material_Instances.Material[0].mainTexture == globalRef.material_Instances.TextureBase)
                     ShowSoonAttack(false);
@@ -191,6 +201,8 @@ namespace State.AIBull
         private void OnDisable()
         {
             launchAttack = false;
+            attackDone = false;
+            isAttacking = false;
             globalRef.agent.speed = globalRef.baseAttackBullSO.speed;
             globalRef.hitBoxAttack.gameObject.SetActive(false);
             attackDuration = 1;

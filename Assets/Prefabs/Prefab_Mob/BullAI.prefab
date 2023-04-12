@@ -996,7 +996,6 @@ GameObject:
   - component: {fileID: 4926933427431696317}
   - component: {fileID: 1527049004980208940}
   - component: {fileID: 5681485267475738323}
-  - component: {fileID: 8228380068183347864}
   m_Layer: 7
   m_Name: BullAI
   m_TagString: Ennemi
@@ -1256,7 +1255,7 @@ MonoBehaviour:
   rushManager: {fileID: 0}
   myAnimator: {fileID: 3473622417478233780}
   globalRefAnimator: {fileID: 1527049004980208940}
-  animEventRusher: {fileID: 8228380068183347864}
+  animEventRusher: {fileID: 8364755165923742079}
   isInEylau: 0
   slowSpeed: 4
   slowSpeedRot: 4
@@ -1275,6 +1274,7 @@ MonoBehaviour:
   RayRushMiddle: {fileID: 1002813238668667938}
   RayRushLeft: {fileID: 7112576708399453213}
   refRushStateObj: {fileID: 1728274095}
+  forceRush: 0
   isDead: 0
   baseIdleBullSO: {fileID: 11400000, guid: 87061001b673e2241ad66755c7e50389, type: 2}
   baseMoveBullSO: {fileID: 11400000, guid: f1f55874d69354f4191d9aee35e3e75c, type: 2}
@@ -1412,20 +1412,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &8228380068183347864
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5314086221994346189}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 907aff41e75faf244b03a62fc868a1fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  globalRef: {fileID: 5314086220186537620}
-  baseMoveState: {fileID: 1524253533}
 --- !u!1 &6321796551071506050
 GameObject:
   m_ObjectHideFlags: 0
@@ -2586,6 +2572,27 @@ CapsuleCollider:
     type: 3}
   m_PrefabInstance: {fileID: 3473622417255447742}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4252226752713024147 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 807895429911371309, guid: 9f2070cae84313140a9f38b9f2506097,
+    type: 3}
+  m_PrefabInstance: {fileID: 3473622417255447742}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8364755165923742079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4252226752713024147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 907aff41e75faf244b03a62fc868a1fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  globalRef: {fileID: 5314086220186537620}
+  baseMoveState: {fileID: 1524253533}
+  baseAttackState: {fileID: 5451742164594196205}
 --- !u!1 &4358201299493284506 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 887131965418460708, guid: 9f2070cae84313140a9f38b9f2506097,

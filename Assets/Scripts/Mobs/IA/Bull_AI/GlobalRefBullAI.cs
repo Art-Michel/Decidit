@@ -49,6 +49,7 @@ namespace State.AIBull
         public Transform RayRushMiddle;
         public Transform RayRushLeft;
         [SerializeField] GameObject refRushStateObj;
+        public bool forceRush;
 
         [Header("Ref Death State")]
         public bool isDead;
