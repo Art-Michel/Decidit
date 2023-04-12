@@ -13,9 +13,12 @@ public class PlayerStateJumpingUpSlope : PlayerState
 
     public override void StateUpdate()
     {
-        _player.CheckWall();
-        _player.CheckForJumpingWallride();
-        _player.WallCoyoteTimeCooldown();
+        if (_fsm.PreviousState.Name != PlayerStatesList.WALLJUMPING)
+        {
+            _player.CheckWall();
+            _player.CheckForJumpingWallride();
+            _player.WallCoyoteTimeCooldown();
+        }
         _player.JumpSlideUpSlope();
         _player.CheckForCeiling();
         _player.CheckForNoCeiling();

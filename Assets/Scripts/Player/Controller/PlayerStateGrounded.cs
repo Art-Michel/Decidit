@@ -9,6 +9,7 @@ public class PlayerStateGrounded : PlayerState
     public override void Begin()
     {
         _player.Land();
+        _player.CheckForJumpBuffer();
     }
 
     public override void StateUpdate()
