@@ -186,6 +186,8 @@ public class Player : LocalManager<Player>
     private RaycastHit _currentWall;
     private RaycastHit _previousWall;
     private const float _wallCoyoteMaxTime = 0.2f;
+    private const float _wallDetectionRange = .7f;
+    private const float _maxWallDotProduct = -0.3f;
     private float _wallCoyoteTime;
 
     public Vector3 FinalMovement { get; private set; }
@@ -512,7 +514,7 @@ public class Player : LocalManager<Player>
         _isJumpingNextToWall = _isJumpingNextToWall || _fsm.CurrentState.Name == PlayerStatesList.JUMPINGUPSLOPE;
         _isJumpingNextToWall = _isJumpingNextToWall && _currentWall.transform != null;
         if (_isJumpingNextToWall)
-            _isJumpingNextToWall = _isJumpingNextToWall && Vector3.Dot(_currentWall.normal, _movementInputs) < 0.5f;
+            _isJumpingNextToWall = _isJumpingNextToWall && Vector3.Dot(_currentWall.normal, _movementInputs) < _maxWallDotProduct;
 
         if ((isWallriding || _isJumpingNextToWall || _wallCoyoteTime > 0.0f) && _currentNumberOfWalljumps > 0)
             _fsm.ChangeState(PlayerStatesList.WALLJUMPING);
@@ -773,7 +775,7 @@ public class Player : LocalManager<Player>
     public void CheckWall()
     {
         //Wallride raycast and Storage of its values
-        Physics.Raycast(transform.position, _rawInputs, out RaycastHit hit, .4f, _collisionMask);
+        Physics.Raycast(transform.position, _rawInputs, out RaycastHit hit, _wallDetectionRange, _collisionMask);
 
         if (hit.transform == null)
         {
@@ -796,13 +798,13 @@ public class Player : LocalManager<Player>
 
     public void CheckForWallride()
     {
-        if (_currentWall.transform != null && Vector3.Dot(_currentWall.normal, _movementInputs.normalized) < -0.5f)
+        if (_currentWall.transform != null && Vector3.Dot(_currentWall.normal, _movementInputs.normalized) < _maxWallDotProduct)
             _fsm.ChangeState(PlayerStatesList.WALLRIDING);
     }
 
     public void CheckForJumpingWallride()
     {
-        if (_currentWall.transform != null && Vector3.Dot(_currentWall.normal, _movementInputs.normalized) < -0.5f)
+        if (_currentWall.transform != null && Vector3.Dot(_currentWall.normal, _movementInputs.normalized) < _maxWallDotProduct)
             ResetWallCoyoteTime();
     }
 
@@ -810,7 +812,7 @@ public class Player : LocalManager<Player>
     {
         if (_currentWall.transform != null)
         {
-            if (Vector3.Dot(_currentWall.normal, _movementInputs.normalized) > -0.5f)
+            if (Vector3.Dot(_currentWall.normal, _movementInputs.normalized) > -0.3f)
                 _fsm.ChangeState(PlayerStatesList.AIRBORNE);
         }
         else
