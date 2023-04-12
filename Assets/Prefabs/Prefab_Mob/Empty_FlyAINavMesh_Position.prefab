@@ -338,7 +338,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1824420021}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1098985820
 MonoBehaviour:
@@ -520,6 +520,7 @@ Transform:
   - {fileID: 506913319}
   - {fileID: 910883178}
   - {fileID: 7226811890516005274}
+  - {fileID: 3398395417489635396}
   - {fileID: 1098985819}
   m_Father: {fileID: 5407937165128473248}
   m_RootOrder: 4
@@ -873,6 +874,37 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &4087793983040891428
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8188548554838225849}
+  m_Layer: 7
+  m_Name: spawnBullet
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8188548554838225849
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4087793983040891428}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.0000009536743, y: 1.4000005, z: 0.00000011920929}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5407937165128473248}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4159217019097026705
 GameObject:
   m_ObjectHideFlags: 0
@@ -1015,6 +1047,7 @@ GameObject:
   - component: {fileID: 5407937164410842287}
   - component: {fileID: 5407937164311034899}
   - component: {fileID: 5160256997650002795}
+  - component: {fileID: 5887259138013280786}
   - component: {fileID: 1154098350}
   - component: {fileID: 5275448971077831047}
   m_Layer: 7
@@ -1088,10 +1121,12 @@ MonoBehaviour:
   myCollider: {fileID: 0}
   colliderBaseAttack: {fileID: 1805906808}
   hitbox: {fileID: 1805906810}
+  spawnBullet: {fileID: 8188548554838225849}
   isDead: 0
   baseMoveFlySO: {fileID: 11400000, guid: 2b20b36d8cc22b148bf51934b26ddc07, type: 2}
   lockPlayerFlySO: {fileID: 11400000, guid: 25c0fb318df974e4a91a2444ebdd24dc, type: 2}
   baseAttackFlySO: {fileID: 11400000, guid: 183c942ec85d835449e68c69d5cbeabc, type: 2}
+  baseAttackWallAISO: {fileID: 11400000, guid: 76196c520fc01eb4e968528241807d21, type: 2}
   deathFlySO: {fileID: 11400000, guid: 6416866076bd0a14e944d961efe394d0, type: 2}
   KnockBackFlySO: {fileID: 11400000, guid: c79e1a733201f1646b8416199a1a8a22, type: 2}
   baseMoveFlySO_VeryEZ: {fileID: 11400000, guid: 710c6cb60b54cb5448acdad6e18808ee,
@@ -1100,25 +1135,35 @@ MonoBehaviour:
     type: 2}
   baseAttackFlySO_VeryEZ: {fileID: 11400000, guid: a2ab4fefac70f254b876f57050d0ce12,
     type: 2}
+  baseAttackWallAISO_VeryEZ: {fileID: 11400000, guid: 257a5507e2356a548b0e7b3ac1261a27,
+    type: 2}
   baseMoveFlySO_EZ: {fileID: 11400000, guid: 2b20b36d8cc22b148bf51934b26ddc07, type: 2}
   lockPlayerFlySO_EZ: {fileID: 11400000, guid: 25c0fb318df974e4a91a2444ebdd24dc, type: 2}
   baseAttackFlySO_EZ: {fileID: 11400000, guid: 183c942ec85d835449e68c69d5cbeabc, type: 2}
+  baseAttackWallAISO_EZ: {fileID: 11400000, guid: 76196c520fc01eb4e968528241807d21,
+    type: 2}
   baseMoveFlySO_Medium: {fileID: 11400000, guid: daae9ca374428124fa26e82ae85a3065,
     type: 2}
   lockPlayerFlySO_Medium: {fileID: 11400000, guid: a453b8c64ea51cc4da49593974ce1588,
     type: 2}
   baseAttackFlySO_Medium: {fileID: 11400000, guid: 7862e800ecab260418be0df464202d47,
     type: 2}
+  baseAttackWallAISO_Med: {fileID: 11400000, guid: 916fcdd7e22a9d34e95a0cdd1e204392,
+    type: 2}
   baseMoveFlySO_Hard: {fileID: 11400000, guid: 643ad8e2f74b1374390f57dab95b44bc, type: 2}
   lockPlayerFlySO_Hard: {fileID: 11400000, guid: 3eeeef2b6f2ab444e81cd019fc77abb5,
     type: 2}
   baseAttackFlySO_Hard: {fileID: 11400000, guid: eaecc8178a160f948ae8ce8b6b4f577a,
+    type: 2}
+  baseAttackWallAISO_Hard: {fileID: 11400000, guid: 29e7e68413626aa44a47186ffce3cc66,
     type: 2}
   baseMoveFlySO_VeryHard: {fileID: 11400000, guid: 6f91630526985b447b4e908ed513d599,
     type: 2}
   lockPlayerFlySO_VeryHard: {fileID: 11400000, guid: 776f6e89093400e40bad7af17528b83a,
     type: 2}
   baseAttackFlySO_VeryHard: {fileID: 11400000, guid: a24447cbfc78a324d963c44ec540f174,
+    type: 2}
+  baseAttackWallAISO_VeryHard: {fileID: 11400000, guid: c2df419989ab6e944aece5667d2e3b7a,
     type: 2}
 --- !u!114 &5160256997650002795
 MonoBehaviour:
@@ -1133,6 +1178,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentAnimName: 
+--- !u!114 &5887259138013280786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5407937164410842285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec8fd75dde36aa54bb47abb4b72866c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseAttackWallAIState: {fileID: 1658454499507323760}
 --- !u!95 &1154098350
 Animator:
   serializedVersion: 4
@@ -1534,6 +1592,7 @@ Transform:
   - {fileID: 6379136175511238675}
   - {fileID: 1180391677082906220}
   - {fileID: 1046018495781549001}
+  - {fileID: 8188548554838225849}
   m_Father: {fileID: 9027603613902104941}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
@@ -1700,6 +1759,7 @@ MonoBehaviour:
   - {fileID: 612212354}
   - {fileID: 506913318}
   - {fileID: 910883179}
+  - {fileID: 1658454499507323760}
   - {fileID: 8470461023389455444}
   - {fileID: 1098985820}
   timeToEnable: 3
@@ -1890,6 +1950,55 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &9030683959389638170
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3398395417489635396}
+  - component: {fileID: 1658454499507323760}
+  m_Layer: 7
+  m_Name: BaseRangeAttack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &3398395417489635396
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9030683959389638170}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1824420021}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1658454499507323760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9030683959389638170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 691c4441c610bdb41be05d61d6880068, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeAttack: 0
+  globalRef: {fileID: 5407937164311034899}
+  lockPlayerState: {fileID: 506913318}
+  childflyAI: {fileID: 9027603613902104941}
+  isFiring: 0
 --- !u!1001 &1723522429267462535
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -14,7 +14,7 @@ namespace State.FlyAI
 
         public enum AIState
         {
-            BaseMove, LockPlayer, BaseAttack, KnockBack, Death
+            BaseMove, LockPlayer, BaseAttack, BaseRangeAttack, KnockBack, Death
         }
 
         private Dictionary<AIState, _StateFlyAI> stateDictionary = new Dictionary<AIState, _StateFlyAI>();
@@ -23,7 +23,7 @@ namespace State.FlyAI
 
         private Stack<AIState> stateHistory = new Stack<AIState>();
 
-        public static AIState currentState;
+        public AIState currentState;
 
         private void Awake()
         {
@@ -66,7 +66,7 @@ namespace State.FlyAI
         private void OnEnable()
         {
             //Activate the default state
-            if(once)
+            if(once || !once)
             {
                 Invoke("LaunchFirstState", timeToEnable);
                 Invoke("CanBeHit", 1f);

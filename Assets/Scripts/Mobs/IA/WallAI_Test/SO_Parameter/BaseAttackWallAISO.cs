@@ -16,7 +16,7 @@ namespace State.WallAI
         [HideInInspector] public float vPlayer;
         public float vMultiplier;
 
-        [Header("*Attack")]
+        [Header("*Attack Anticipe")]
         public Rigidbody bulletPrefab;
         public float defaultForceBullet;
         public int bulletCount;
@@ -24,6 +24,15 @@ namespace State.WallAI
         public int currentRafaleCount;
         public int maxRafaleCount;
         public float speedSlowAnimAttack;
+
+        [Header("*Attack Spread")]
+        public float forceBulletSpread;
+        public float spreadangle;
+        public int bulletCountSpread;
+        public int maxBulletCountSpread;
+        public int currentShootCount;
+        public int maxShootCount;
+        public int coolDownSpread;
 
         [Header("*Rate Attack")]
         public float maxRateAttack;

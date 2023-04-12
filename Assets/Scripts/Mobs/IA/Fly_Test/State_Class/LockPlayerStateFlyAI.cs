@@ -8,7 +8,6 @@ namespace State.FlyAI
         [SerializeField] Material_Instances material_Instances;
         LockPlayerFlySO lockPlayerFlySO;
         BaseAttackFlySO baseAttackFlySO;
-        Quaternion rotation;
 
         [SerializeField] Transform childflyAI;
 
@@ -44,9 +43,6 @@ namespace State.FlyAI
 
         private void Update()
         {
-            /*if(CheckPlayerCover.isCover)
-                stateControllerFlyAI.SetActiveState(StateControllerFlyAI.AIState.BaseMove);*/
-
             LockPlayer();
             SmoothLookAtYAxisAttack();
         }
@@ -57,7 +53,8 @@ namespace State.FlyAI
 
             if (baseAttackFlySO.speedRotationAIAttack >= 1f)
             {
-                stateControllerFlyAI.SetActiveState(StateControllerFlyAI.AIState.BaseAttack);
+                Debug.Log("LaunchAttack");
+                globalRef.flyMobAttackManager.ChooseAttackType(globalRef);
             }
             else
             {
