@@ -19,6 +19,10 @@ public class Player : LocalManager<Player>
     [SerializeField] TextMeshProUGUI _debugStateText;
     [Foldout("Debug References")]
     [SerializeField] TextMeshProUGUI _debugSpeedText;
+    [Foldout("Debug References")]
+    [SerializeField] TextMeshProUGUI _debugCoyoteText;
+    [Foldout("Debug References")]
+    [SerializeField] TextMeshProUGUI _debugWallText;
     [Foldout("References")]
     public Transform Head;
     [Foldout("References")]
@@ -86,12 +90,14 @@ public class Player : LocalManager<Player>
     [Foldout("Jumping Settings")]
     [Range(0, 50)][SerializeField] private float _jumpingDrag = 3f;
     [Foldout("Jumping Settings")]
+    [Range(0, 50)][SerializeField] private float _wallrideDrag = 3f;
+    [Foldout("Jumping Settings")]
     [Range(0, 90)][SerializeField] private float _maxCeilingAngle = 30f;
     [Foldout("Jumping Settings")]
     [SerializeField] private bool _canCancelJump;
 
     private const float _gravity = 9.81f;
-    private float _currentlyAppliedGravity;
+    public float CurrentlyAppliedGravity;
     private Vector3 _steepSlopesMovement;
 
     private RaycastHit _groundHit;
@@ -142,17 +148,45 @@ public class Player : LocalManager<Player>
     [Range(0, 100)]
     [SerializeField]
     private float _groundedFriction = 50f;
+    [Foldout("Movement Settings")]
+    [Range(0, 1)]
+    [Tooltip("how much you can influence momentum with inputs")]
+    [SerializeField]
+    private float _directionnalInfluence = 0.4f;
+    [Foldout("Movement Settings")]
+    [Range(1, 80)]
+    [Tooltip("Maximum Momentum: You can't DI after that threshold")]
+    [SerializeField] private int _maximumDiMomentum = 50;
+
     // ADD LATER [Range(0, 100)][SerializeField] private float _slidingFriction = 5f;
     private float _currentFriction;
 
     private float _currentSpeed;
     private bool _canMove;
+    Vector3 _rawInputs;
     private Vector3 _movementInputs; // X is Left-Right and Z is Backward-Forward
     private Vector3 _lastFrameMovementInputs;
     private Vector3 _globalMomentum;
     private float _movementAcceleration;
     private bool _isPressingADirection;
     private float _movementAccelerationT;
+    #endregion
+
+    #region Wallriding and walljumping
+    [Foldout("Walling")]
+    [Range(0.0f, -30.0f)]
+    [SerializeField] public float WallRidingGravity;
+    [Foldout("Walling")]
+    [Range(0.0f, 50.0f)]
+    [SerializeField] private float _wallJumpForce;
+    [Foldout("Walling")]
+    [Range(0, 3)]
+    [SerializeField] private int _maxNumberOfWalljumps;
+    private int _currentNumberOfWalljumps;
+    private RaycastHit _currentWall;
+    private RaycastHit _previousWall;
+    private const float _wallCoyoteMaxTime = 0.2f;
+    private float _wallCoyoteTime;
 
     public Vector3 FinalMovement { get; private set; }
     #endregion
@@ -174,7 +208,7 @@ public class Player : LocalManager<Player>
         _globalMomentum = Vector3.zero;
         _currentSpeed = _baseSpeed;
         _currentJumpStrength = _baseJumpStrength;
-        _currentlyAppliedGravity = 0;
+        CurrentlyAppliedGravity = 0;
         _movementAcceleration = 0;
         _canMove = true;
         _movementAccelerationT = 0.0f;
@@ -212,7 +246,10 @@ public class Player : LocalManager<Player>
             _fsm.CurrentState.StateUpdate();
 
         //Final Movement Formula //I got lost with the deltatime stuff but i swear it works perfectly
-        FinalMovement = (_globalMomentum * Time.deltaTime) + (_movementInputs) + (Vector3.up * _currentlyAppliedGravity * Time.deltaTime) + (_steepSlopesMovement * Time.deltaTime);
+        FinalMovement = (_globalMomentum * Time.deltaTime)
+        + (_movementInputs * Mathf.InverseLerp(_maximumDiMomentum, 0.0f, _globalMomentum.magnitude))
+        + (Vector3.up * CurrentlyAppliedGravity * Time.deltaTime)
+        + (_steepSlopesMovement * Time.deltaTime);
 
         //Debug Values on screen
         UpdateDebugTexts();
@@ -240,18 +277,24 @@ public class Player : LocalManager<Player>
 
         if (_debugGlobalVelocityText)
             _debugGlobalVelocityText.text =
-            ("Momentum Velocity:\nx= " + (_globalMomentum.x).ToString("F1") +
+            ("Momentum Velocity: " + _globalMomentum.magnitude + "\nx= " + (_globalMomentum.x).ToString("F1") +
             "\ny= " + (_globalMomentum.y).ToString("F1") +
             "\nz= " + (_globalMomentum.z).ToString("F1"));
 
         if (_debugGravityText)
-            _debugGravityText.text = ("Gravity:\n   " + _currentlyAppliedGravity.ToString("F1"));
+            _debugGravityText.text = ("Gravity:\n   " + CurrentlyAppliedGravity.ToString("F1"));
 
         if (_debugSlopeText)
             _debugSlopeText.text = ("Slope Velocity:\n   " + _steepSlopesMovement.ToString("F1"));
 
         if (_debugSpeedText)
             _debugSpeedText.text = ("Total Speed:\n   " + (FinalMovement.magnitude / Time.deltaTime).ToString("F3"));
+
+        if (_debugCoyoteText)
+            _debugCoyoteText.text = ("Coyote Time: " + _coyoteTime + "\n" + "Wall Coyote Time: " + _wallCoyoteTime);
+        if (_debugWallText)
+            _debugWallText.text = ("Found a wall to ride: " + (_currentWall.transform != null)
+            + "\n" + "Remembers a wall to ride: " + (_previousWall.transform != null));
 #endif
     }
 
@@ -441,10 +484,11 @@ public class Player : LocalManager<Player>
         SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/Landing", 1f, gameObject);
         //Reset many values when landing
         _currentFriction = _groundedFriction;
-        _currentlyAppliedGravity = 0;
+        CurrentlyAppliedGravity = 0;
         _globalMomentum.y = 0;
         _coyoteTime = _coyoteMaxTime;
-
+        _currentNumberOfWalljumps = _maxNumberOfWalljumps;
+        ResetWalls();
 
         //Jump immediately if player is pressing jump
         if (_inputs.Movement.Jump.IsPressed()) PressJump();
@@ -454,7 +498,7 @@ public class Player : LocalManager<Player>
     {
         _currentFriction = _airborneFriction;
         if (_fsm.PreviousState.Name != PlayerStatesList.FALLINGDOWNSLOPE)
-            _currentlyAppliedGravity *= 0.8f;
+            CurrentlyAppliedGravity *= 0.8f;
     }
 
     #endregion
@@ -462,10 +506,22 @@ public class Player : LocalManager<Player>
     #region Jumping and Falling Functions
     private void PressJump()
     {
-        bool jumpCondition;
-        jumpCondition = _fsm.CurrentState.Name == PlayerStatesList.GROUNDED;
+        bool isWallriding = _fsm.CurrentState.Name == PlayerStatesList.WALLRIDING;
+
+        bool _isJumpingNextToWall = _fsm.CurrentState.Name == PlayerStatesList.JUMPING;
+        _isJumpingNextToWall = _isJumpingNextToWall || _fsm.CurrentState.Name == PlayerStatesList.JUMPINGUPSLOPE;
+        _isJumpingNextToWall = _isJumpingNextToWall && _currentWall.transform != null;
+        if (_isJumpingNextToWall)
+            _isJumpingNextToWall = _isJumpingNextToWall && Vector3.Dot(_currentWall.normal, _movementInputs) < 0.5f;
+
+        if ((isWallriding || _isJumpingNextToWall || _wallCoyoteTime > 0.0f) && _currentNumberOfWalljumps > 0)
+            _fsm.ChangeState(PlayerStatesList.WALLJUMPING);
+
+
+        bool jumpCondition = _fsm.CurrentState.Name == PlayerStatesList.GROUNDED;
         jumpCondition = jumpCondition || (_fsm.CurrentState.Name == PlayerStatesList.AIRBORNE && _coyoteTime > 0f);
         jumpCondition = jumpCondition || (_fsm.CurrentState.Name == PlayerStatesList.FALLINGDOWNSLOPE && _coyoteTime > 0f);
+
         if (jumpCondition)
             _fsm.ChangeState(PlayerStatesList.JUMPING);
     }
@@ -473,11 +529,12 @@ public class Player : LocalManager<Player>
     public void StartJumping()
     {
         SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/Jump", 1f, gameObject);
-        _currentlyAppliedGravity = _currentJumpStrength;
+        CurrentlyAppliedGravity = _currentJumpStrength;
         _justJumped = true;
         _coyoteTime = -1f;
         _currentFriction = _airborneFriction;
         _jumpCooldown = 0.1f; //min time allowed between two jumps, to avoid mashing jump up slopes and so we
+                              //dont check for a ground before the character actually jumps.
                               //dont check for a ground before the character actually jumps.
     }
 
@@ -498,7 +555,7 @@ public class Player : LocalManager<Player>
         {
             //ceiling is pretty horizontal -> bonk
             if (Vector3.Angle(Vector3.down, _ceilingHit.normal) < _maxCeilingAngle)
-                _currentlyAppliedGravity = 0f;
+                CurrentlyAppliedGravity = 0f;
 
             // ceiling is slopey -> slide along
             else if (_fsm.CurrentState.Name != PlayerStatesList.JUMPINGUPSLOPE)
@@ -518,7 +575,7 @@ public class Player : LocalManager<Player>
         Vector3 temp = Vector3.Cross(_ceilingHit.normal, Vector3.up);
         Vector3 slopeDir = Vector3.Cross(temp, _ceilingHit.normal);
 
-        _steepSlopesMovement = (slopeDir + Vector3.up) * _currentlyAppliedGravity;
+        _steepSlopesMovement = (slopeDir + Vector3.up) * CurrentlyAppliedGravity;
 
         // Nullify movement input towards wall
         Vector3 ceilingHorizontalDir = new Vector3(slopeDir.x, 0, slopeDir.z).normalized;
@@ -529,8 +586,8 @@ public class Player : LocalManager<Player>
 
     public void ApplyJumpingGravity()
     {
-        _currentlyAppliedGravity -= _gravity * _jumpingDrag * Time.deltaTime;
-        if (_currentlyAppliedGravity <= 0)
+        CurrentlyAppliedGravity -= _gravity * _jumpingDrag * Time.deltaTime;
+        if (CurrentlyAppliedGravity <= 0)
             _fsm.ChangeState(PlayerStatesList.AIRBORNE);
     }
 
@@ -538,14 +595,19 @@ public class Player : LocalManager<Player>
     {
         if (_canCancelJump && (_fsm.CurrentState.Name == PlayerStatesList.JUMPING || _fsm.CurrentState.Name == PlayerStatesList.JUMPINGUPSLOPE))
         {
-            if (_currentlyAppliedGravity > 4.0f)
-                _currentlyAppliedGravity = 4.0f;
+            if (CurrentlyAppliedGravity > 4.0f)
+                CurrentlyAppliedGravity = 4.0f;
         }
     }
 
     public void ApplyAirborneGravity()
     {
-        _currentlyAppliedGravity -= _gravity * _airborneDrag * Time.deltaTime;
+        CurrentlyAppliedGravity -= _gravity * _airborneDrag * Time.deltaTime;
+    }
+
+    public void ApplyWallridingGravity()
+    {
+        CurrentlyAppliedGravity -= _gravity * _wallrideDrag * Time.deltaTime;
     }
 
     public void FallDownSlope()
@@ -555,8 +617,8 @@ public class Player : LocalManager<Player>
         Vector3 slopeDir = Vector3.Cross(temp, _groundHit.normal);
 
         //Add gravity in the right direction
-        _currentlyAppliedGravity -= _gravity * _airborneDrag * Time.deltaTime;
-        _steepSlopesMovement = (slopeDir + Vector3.down) * -_currentlyAppliedGravity;
+        CurrentlyAppliedGravity -= _gravity * _airborneDrag * Time.deltaTime;
+        _steepSlopesMovement = (slopeDir + Vector3.down) * -CurrentlyAppliedGravity;
 
         // Nullify movement input towards wall
         Vector3 slopeHorizontalDir = new Vector3(slopeDir.x, 0, slopeDir.z).normalized;
@@ -567,7 +629,7 @@ public class Player : LocalManager<Player>
 
     #endregion
 
-    #region Shmovement Functions
+    #region Movement Functions
 
     public void EylauMovementBuff()
     {
@@ -602,12 +664,12 @@ public class Player : LocalManager<Player>
     private void UpdateMovement()
     {
         //Register new movement input
-        Vector3 _newMovementInputs = MakeDirectionCameraRelative(_inputs.Movement.Move.ReadValue<Vector2>());
+        _rawInputs = MakeDirectionCameraRelative(_inputs.Movement.Move.ReadValue<Vector2>());
 
         //only use new movement input if it is not null
-        _isPressingADirection = _newMovementInputs.x != 0 || _newMovementInputs.z != 0;
+        _isPressingADirection = _rawInputs.x != 0 || _rawInputs.z != 0;
         if (_isPressingADirection)
-            _movementInputs = _newMovementInputs;
+            _movementInputs = _rawInputs;
         //else, we use last frame's movement input again
         else
             _movementInputs = _lastFrameMovementInputs;
@@ -665,7 +727,7 @@ public class Player : LocalManager<Player>
     private void UpdateGlobalMomentum()
     {
         //Add Input Vector to Momentum
-        _globalMomentum += _movementInputs;
+        _globalMomentum += _movementInputs * _directionnalInfluence;
 
         //Store last frame's direction inside a variable
         var lastFrameXVelocitySign = Mathf.Sign(_globalMomentum.x);
@@ -692,11 +754,10 @@ public class Player : LocalManager<Player>
             CharaCon.Move(direction);
     }
 
-
     public void KillMomentum()
     {
         _globalMomentum = Vector3.zero;
-        _currentlyAppliedGravity = 0f;
+        CurrentlyAppliedGravity = 0f;
         _steepSlopesMovement = Vector3.zero;
         _movementAcceleration = 0.0f;
     }
@@ -704,6 +765,83 @@ public class Player : LocalManager<Player>
     public void AllowMovement(bool boolean)
     {
         _canMove = boolean;
+    }
+    #endregion
+
+    #region Wallriding and Walljumping
+
+    public void CheckWall()
+    {
+        //Wallride raycast and Storage of its values
+        Physics.Raycast(transform.position, _rawInputs, out RaycastHit hit, .4f, _collisionMask);
+
+        if (hit.transform == null)
+        {
+            if (_wallCoyoteTime > 0.0f && _previousWall.transform == null)
+            {
+                _previousWall = _currentWall;
+                _currentWall = hit;
+            }
+        }
+        else
+            _currentWall = hit;
+    }
+
+    public void ResetWalls()
+    {
+        _currentWall = new RaycastHit();
+        _previousWall = new RaycastHit();
+        _wallCoyoteTime = -1.0f;
+    }
+
+    public void CheckForWallride()
+    {
+        if (_currentWall.transform != null && Vector3.Dot(_currentWall.normal, _movementInputs.normalized) < -0.5f)
+            _fsm.ChangeState(PlayerStatesList.WALLRIDING);
+    }
+
+    public void CheckForJumpingWallride()
+    {
+        if (_currentWall.transform != null && Vector3.Dot(_currentWall.normal, _movementInputs.normalized) < -0.5f)
+            ResetWallCoyoteTime();
+    }
+
+    public void CheckForNoWallRide()
+    {
+        if (_currentWall.transform != null)
+        {
+            if (Vector3.Dot(_currentWall.normal, _movementInputs.normalized) > -0.5f)
+                _fsm.ChangeState(PlayerStatesList.AIRBORNE);
+        }
+        else
+            _fsm.ChangeState(PlayerStatesList.AIRBORNE);
+    }
+
+    public void StartWalljumping()
+    {
+        if (_currentWall.transform != null)
+            AddMomentum(_currentWall.normal * _wallJumpForce);
+        else if (_previousWall.transform != null)
+            AddMomentum(_previousWall.normal * _wallJumpForce);
+        else
+            Debug.LogWarning("ERROR: Walljumped without a wall???");
+
+        _currentNumberOfWalljumps--;
+        ResetWalls();
+        _fsm.ChangeState(PlayerStatesList.JUMPING);
+    }
+
+    public void ResetWallCoyoteTime()
+    {
+        _wallCoyoteTime = _wallCoyoteMaxTime;
+    }
+
+    public void WallCoyoteTimeCooldown()
+    {
+        if (_wallCoyoteTime > 0f)
+            _wallCoyoteTime -= Time.deltaTime;
+        else if (_wallCoyoteTime > -1.0f)
+            ResetWalls();
     }
     #endregion
 

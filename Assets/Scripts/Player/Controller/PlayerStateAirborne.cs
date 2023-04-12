@@ -13,8 +13,13 @@ public class PlayerStateAirborne : PlayerState
 
     public override void StateUpdate()
     {
+        _player.CheckWall();
+        _player.CheckForWallride();
+
         _player.ApplyAirborneGravity();
         _player.CoyoteTimeCooldown();
+        _player.WallCoyoteTimeCooldown();
+
         _player.CheckForSteepSlope();
         _player.CheckForGround();
     }

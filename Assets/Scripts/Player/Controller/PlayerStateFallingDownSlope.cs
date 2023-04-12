@@ -14,7 +14,13 @@ public class PlayerStateFallingDownSlope : PlayerState
     public override void StateUpdate()
     {
         _player.FallDownSlope();
+
+        _player.CheckWall();
+        _player.CheckForWallride();
+
         _player.CoyoteTimeCooldown();
+        _player.WallCoyoteTimeCooldown();
+
         _player.CheckForGround();
         _player.CheckForNoGround();
     }

@@ -100,7 +100,6 @@ public class PlayerManager : LocalManager<PlayerManager>
 
     private void SlowDownTime()
     {
-        Debug.Log("mario");
         if (Time.timeScale == 1.0f)
         {
             _forceSlowMo = true;
