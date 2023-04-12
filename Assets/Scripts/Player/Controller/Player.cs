@@ -154,13 +154,21 @@ public class Player : LocalManager<Player>
     // [SerializeField]
     // private float _directionnalInfluence = 0.4f;
     [Foldout("Movement Settings")]
-    [Range(0.01f, 150)]
-    [Tooltip("Maximum Momentum: You can't DI after that threshold and progressively less towards it")]
-    [SerializeField] private int _maxDiVelocity = 50;
+    [Range(0.1f, 150)]
+    [Tooltip("Minimum DI Momentum: You can fully brake or conserve your momentum by moving in its direction")]
+    [SerializeField] private int _minDiVelocity = 5;
     [Foldout("Movement Settings")]
-    [Range(0.01f, 150)]
-    [Tooltip("Maximum Momentum: You can't Move after that velocity threshold and progressively less towards it")]
-    [SerializeField] private int _maxMovementVelocity = 50;
+    [Range(0.1f, 150)]
+    [Tooltip("Maximum DI Momentum: Your inputs have no influence on your momentum past this threshold")]
+    [SerializeField] private int _maxDiVelocity = 30;
+    [Foldout("Movement Settings")]
+    [Range(0.1f, 150)]
+    [Tooltip("Minimum Momentum: You can fully move while having momentum below this threshold")]
+    [SerializeField] private int _minMovementVelocity = 5;
+    [Foldout("Movement Settings")]
+    [Range(0.1f, 150)]
+    [Tooltip("Maximum Momentum: You can't Move after that velocity threshold")]
+    [SerializeField] private int _maxMovementVelocity = 30;
 
     // ADD LATER [Range(0, 100)][SerializeField] private float _slidingFriction = 5f;
     private float _currentFriction;
@@ -189,6 +197,8 @@ public class Player : LocalManager<Player>
     [Foldout("Walling")]
     [Range(0, 10)]
     [SerializeField] private int _maxNumberOfWalljumps;
+    [Foldout("Walling")]
+    [SerializeField] private bool _canWallrideWith0Wj;
     private int _currentNumberOfWalljumps;
     private RaycastHit _currentWall;
     private RaycastHit _previousWall;
@@ -747,7 +757,7 @@ public class Player : LocalManager<Player>
     private void UpdateGlobalMomentum()
     {
         //Add Input Vector to Momentum
-        _globalMomentum += _movementInputs * Mathf.InverseLerp(_maxDiVelocity, 0.0f, _globalMomentum.magnitude);
+        _globalMomentum += _movementInputs * Mathf.InverseLerp(_maxDiVelocity, _minDiVelocity, _globalMomentum.magnitude);
         // _globalMomentum += _movementInputs * _directionnalInfluence;
 
         //Store last frame's direction inside a variable
@@ -817,9 +827,14 @@ public class Player : LocalManager<Player>
 
     public void CheckForWallride()
     {
-        if (_currentWall.transform != null
-        && Vector3.Dot(_currentWall.normal, _movementInputs.normalized) < _maxWallDotProduct
-        && _globalMomentum.y + CurrentlyAppliedGravity <= 0f)
+        bool cond = _currentWall.transform != null;
+        cond = cond && Vector3.Dot(_currentWall.normal, _movementInputs.normalized) < _maxWallDotProduct;
+        cond = cond && _globalMomentum.y + CurrentlyAppliedGravity <= 0f;
+
+        if (!_canWallrideWith0Wj)
+            cond = cond && _currentNumberOfWalljumps > 0;
+
+        if (cond)
             _fsm.ChangeState(PlayerStatesList.WALLRIDING);
     }
 
