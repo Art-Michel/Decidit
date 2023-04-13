@@ -69,13 +69,11 @@ namespace State.AIBull
                 Invoke("CanBeHit", 1f);
             }
             once = true;
-            Debug.Log("LaunchFirstState");
         }
 
         void LaunchFirstState()
         {
             //Activate the default state
-            Debug.Log("ActiveEnnemy");
             SetActiveState(AIState.Idle);
             enemyHealth.IsInvulnerable = false;
         }

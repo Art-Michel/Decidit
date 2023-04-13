@@ -1111,6 +1111,7 @@ MonoBehaviour:
   playerTransform: {fileID: 0}
   stateControllerFlyAI: {fileID: 1850210981321352449}
   enemyHealth: {fileID: 2067911473255968063}
+  flyMobAttackManager: {fileID: 0}
   myAnimator: {fileID: 1154098350}
   globalRefAnimator: {fileID: 5160256997650002795}
   characterController: {fileID: 484338305460112917}
@@ -1122,6 +1123,8 @@ MonoBehaviour:
   colliderBaseAttack: {fileID: 1805906808}
   hitbox: {fileID: 1805906810}
   spawnBullet: {fileID: 8188548554838225849}
+  attackRange: 0
+  SpreadShot: 0
   isDead: 0
   baseMoveFlySO: {fileID: 11400000, guid: 2b20b36d8cc22b148bf51934b26ddc07, type: 2}
   lockPlayerFlySO: {fileID: 11400000, guid: 25c0fb318df974e4a91a2444ebdd24dc, type: 2}
@@ -1762,7 +1765,8 @@ MonoBehaviour:
   - {fileID: 1658454499507323760}
   - {fileID: 8470461023389455444}
   - {fileID: 1098985820}
-  timeToEnable: 3
+  timeToEnable: 0
+  currentState: 0
 --- !u!1 &6300504266062117377
 GameObject:
   m_ObjectHideFlags: 0
