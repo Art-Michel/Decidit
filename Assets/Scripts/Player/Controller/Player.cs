@@ -67,6 +67,9 @@ public class Player : LocalManager<Player>
 
     private bool _isRightSticking;
     private float _rStickAcceleration;
+    private float _rStickAccelerationT = 0.0f;
+    [Foldout("Camera Stick Settings")]
+    [SerializeField] private AnimationCurve _rStickAccelerationCurve;
     [Foldout("Camera Stick Settings")]
     [SerializeField] private float _rStickDecelerationSpeed = 0.04f;
     [Foldout("Camera Stick Settings")]
@@ -394,10 +397,11 @@ public class Player : LocalManager<Player>
     private void HandleRStickAcceleration()
     {
         if (!_isRightSticking)
-            _rStickAcceleration = Mathf.Clamp01(_rStickAcceleration -= Time.deltaTime / _rStickDecelerationSpeed);
-
+            _rStickAccelerationT = Mathf.Clamp01(_rStickAccelerationT -= Time.deltaTime / _rStickDecelerationSpeed);
         else
-            _rStickAcceleration = Mathf.Clamp01(_rStickAcceleration += Time.deltaTime / _rStickAccelerationSpeed);
+            _rStickAccelerationT = Mathf.Clamp01(_rStickAccelerationT += Time.deltaTime / _rStickAccelerationSpeed);
+
+        _rStickAcceleration = _rStickAccelerationCurve.Evaluate(_rStickAccelerationT);
     }
 
     public void ForceRotation(Transform obj)
