@@ -58,7 +58,7 @@ namespace State.AIBull
 
             if (animTime > 1.0f && currentAnimName == "PreAttackIdleCAC" && !isAttacking)
                 Attack();
-            else if (animTime > 1.0f && currentAnimName == "Attack" && !attackDone)
+            else if (animTime > 1.0f && currentAnimName == "Attack" && !attackDone && isAttacking)
                 EndAttack();
 
             if (!isAttacking && !attackDone)
@@ -89,10 +89,12 @@ namespace State.AIBull
                 }
                 else
                 {
-                    Debug.Log("Follow Player");
                     SmoothLookAtPlayer();
                     globalRef.agent.speed = 19;
                     globalRef.agent.SetDestination(globalRef.playerTransform.position);
+
+                    if(AnimatorManager.instance.GetCurrentAnimatonName(globalRef.globalRefAnimator) != "Walk")
+                        AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Walk");
                 }
             }
             else
@@ -133,8 +135,6 @@ namespace State.AIBull
         }
         void Attack()
         {
-            Debug.Log("Attack");
-
             isAttacking = true;
             AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Attack");
             globalRef.hitBoxAttack.gameObject.SetActive(true);
@@ -143,8 +143,6 @@ namespace State.AIBull
         }
         void EndAttack()
         {
-            Debug.Log("End Attack");
-
             globalRef.hitBoxAttack.gameObject.SetActive(false);
             isAttacking = false;
             attackLaunched = false;
@@ -156,7 +154,7 @@ namespace State.AIBull
             if (i == 0)
                 stateController.SetActiveState(StateControllerBull.AIState.Rush);
             else
-                stateController.SetActiveState(StateControllerBull.AIState.BaseAttack);
+                RestartAttack();
         }
 
         void SmoothLookAtPlayer()
@@ -218,6 +216,16 @@ namespace State.AIBull
                 }
                 globalRef.material_Instances.ChangeColorTexture(globalRef.material_Instances.ColorBase);
             }
+        }
+
+        void RestartAttack()
+        {
+            canAttak = false;
+            launchAttack = false;
+            attackDone = false;
+            isAttacking = false;
+            globalRef.baseAttackBullSO.curentDelayBeforeAttack = globalRef.baseAttackBullSO.maxDelayBeforeAttack;
+            globalRef.baseAttackBullSO.speedRot = 0;
         }
 
         private void OnDisable()

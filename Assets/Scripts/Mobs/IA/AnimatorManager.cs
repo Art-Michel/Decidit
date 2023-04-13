@@ -9,6 +9,11 @@ public class AnimatorManager : MonoBehaviour
         instance = this;
     }
 
+    public string GetCurrentAnimatonName(GlobalRefAnimator globalRefAnimator)
+    {
+        return globalRefAnimator.currentAnimName;
+    }
+
     public void SetAnimation(Animator animator, GlobalRefAnimator globalRefAnimator, string nextAnimation)
     {
         //Disable Current Animation
