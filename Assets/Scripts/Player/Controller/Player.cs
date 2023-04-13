@@ -209,7 +209,7 @@ public class Player : LocalManager<Player>
     private int _currentNumberOfWalljumps;
     private RaycastHit _currentWall;
     private RaycastHit _previousWall;
-    private const float _wallCoyoteMaxTime = 0.2f;
+    private const float _wallCoyoteMaxTime = 0.3f;
     private const float _wallDetectionRange = 1.0f;
     private const float _maxWallDotProduct = -0.3f;
     private float _wallCoyoteTime;
