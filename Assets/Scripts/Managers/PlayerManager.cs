@@ -71,8 +71,16 @@ public class PlayerManager : LocalManager<PlayerManager>
         _inputs.MenuNavigation.Pause.started += _ => PressPause();
         _inputs.Debugging.Lock.started += _ => LockFramerate();
         _inputs.Debugging.Slow.started += _ => SlowDownTime();
+        _inputs.Debugging.DisplayDebug.started += _ => ShowDebug();
         // _inputs.MenuNavigation.anyButton.started += _ => SwitchToController();
         // _inputs.MenuNavigation.moveMouse.started += _ => SwitchToMouse();
+    }
+
+    private void ShowDebug()
+    {
+#if UNITY_EDITOR
+        _DebuggingCanvas.SetActive(!_DebuggingCanvas.activeInHierarchy);
+#endif
     }
 
     private void Start()
