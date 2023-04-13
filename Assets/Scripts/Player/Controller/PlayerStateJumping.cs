@@ -13,8 +13,6 @@ public class PlayerStateJumping : PlayerState
     {
         if (_fsm.PreviousState.Name != PlayerStatesList.JUMPINGUPSLOPE)
             _player.StartJumping();
-
-        Debug.Log(_fsm.PreviousState.Name);
     }
 
     public override void StateUpdate()
