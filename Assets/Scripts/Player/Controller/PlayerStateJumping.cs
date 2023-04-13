@@ -1,5 +1,7 @@
 
 using System.Numerics;
+using UnityEngine;
+
 public class PlayerStateJumping : PlayerState
 {
     public PlayerStateJumping() : base(PlayerStatesList.JUMPING)
@@ -11,11 +13,13 @@ public class PlayerStateJumping : PlayerState
     {
         if (_fsm.PreviousState.Name != PlayerStatesList.JUMPINGUPSLOPE)
             _player.StartJumping();
+
+        Debug.Log(_fsm.PreviousState.Name);
     }
 
     public override void StateUpdate()
     {
-        if (_fsm.PreviousState.Name != PlayerStatesList.WALLJUMPING)
+        if (!_player.JustWalljumped)
         {
             _player.CheckWall();
             _player.CheckForJumpingWallride();
@@ -28,6 +32,7 @@ public class PlayerStateJumping : PlayerState
 
     public override void Exit()
     {
+        _player.JustWalljumped = false;
 
     }
 

@@ -8,6 +8,7 @@ public class PlayerStateWalljumping : PlayerState
 
     public override void Begin()
     {
+        _player.JustWalljumped = true;
         _player.StartWalljumping();
     }
 

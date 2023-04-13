@@ -95,11 +95,13 @@ public class Player : LocalManager<Player>
     [Range(0, 90)][SerializeField] private float _maxCeilingAngle = 30f;
     [Foldout("Jumping Settings")]
     [SerializeField] private bool _canCancelJump;
+    [Foldout("Jumping Settings")]
+    [Range(0, 1)][SerializeField] private float _jumpMaxBuffer = 0.3f;
 
     private const float _gravity = 9.81f;
     public float CurrentlyAppliedGravity;
     private Vector3 _steepSlopesMovement;
-
+    private float _jumpBuffer = 0.0f;
     private RaycastHit _groundHit;
     private RaycastHit _ceilingHit;
     private const float _groundSpherecastLength = .75f; // _charaCon.height/2 - _charaCon.radius
@@ -199,6 +201,8 @@ public class Player : LocalManager<Player>
     [SerializeField] private int _maxNumberOfWalljumps;
     [Foldout("Walling")]
     [SerializeField] private bool _canWallrideWith0Wj;
+
+    [System.NonSerialized] public bool JustWalljumped = false;
     private int _currentNumberOfWalljumps;
     private RaycastHit _currentWall;
     private RaycastHit _previousWall;
@@ -243,6 +247,7 @@ public class Player : LocalManager<Player>
             _jumpCooldown -= Time.deltaTime;
             if (_jumpCooldown <= 0) _justJumped = false;
         }
+        HandleBuffers();
 
         //Camera
         MoveCameraWithRightStick();
@@ -511,12 +516,6 @@ public class Player : LocalManager<Player>
 
     }
 
-    public void CheckForJumpBuffer()
-    {
-        //Jump immediately if player is pressing jump
-        if (_inputs.Movement.Jump.IsPressed()) PressJump();
-    }
-
     public void StartFalling()
     {
         _currentFriction = _airborneFriction;
@@ -527,8 +526,33 @@ public class Player : LocalManager<Player>
     #endregion
 
     #region Jumping and Falling Functions
+    private void HandleBuffers()
+    {
+        if (_jumpBuffer > 0.0f)
+            _jumpBuffer -= Time.deltaTime;
+    }
+
+    public void CheckForJumpBuffer()
+    {
+        if (_jumpBuffer > 0.0f)
+            PressJump();
+    }
+
+    //? Unused!
+    public void CheckForJumpHoldBuffer()
+    {
+        //Jump immediately if player is pressing jump
+        if (_inputs.Movement.Jump.IsPressed()) PressJump();
+    }
+
+    public void ResetJumpBuffer()
+    {
+        _jumpBuffer = -1.0f;
+    }
+
     private void PressJump()
     {
+        //Walljumping
         bool isWallriding = _fsm.CurrentState.Name == PlayerStatesList.WALLRIDING;
 
         bool _isJumpingNextToWall = _fsm.CurrentState.Name == PlayerStatesList.JUMPING;
@@ -538,15 +562,25 @@ public class Player : LocalManager<Player>
             _isJumpingNextToWall = _isJumpingNextToWall && Vector3.Dot(_currentWall.normal, _movementInputs) < _maxWallDotProduct;
 
         if ((isWallriding || _isJumpingNextToWall || _wallCoyoteTime > 0.0f) && _currentNumberOfWalljumps > 0)
+        {
             _fsm.ChangeState(PlayerStatesList.WALLJUMPING);
+            return;
+        }
 
-
+        //Regular Jumping
         bool jumpCondition = _fsm.CurrentState.Name == PlayerStatesList.GROUNDED;
         jumpCondition = jumpCondition || (_fsm.CurrentState.Name == PlayerStatesList.AIRBORNE && _coyoteTime > 0f);
         jumpCondition = jumpCondition || (_fsm.CurrentState.Name == PlayerStatesList.FALLINGDOWNSLOPE && _coyoteTime > 0f);
 
         if (jumpCondition)
+        {
             _fsm.ChangeState(PlayerStatesList.JUMPING);
+            return;
+        }
+
+
+        //If can't jump or walljump, we store that jump input
+        _jumpBuffer = _jumpMaxBuffer;
     }
 
     public void StartJumping()
@@ -558,6 +592,7 @@ public class Player : LocalManager<Player>
         _currentFriction = _airborneFriction;
         _jumpCooldown = 0.1f; //min time allowed between two jumps, to avoid mashing jump up slopes and so we
                               //dont check for a ground before the character actually jumps.
+        ResetJumpBuffer();
     }
 
     public void CoyoteTimeCooldown()
@@ -858,9 +893,9 @@ public class Player : LocalManager<Player>
     public void StartWalljumping()
     {
         if (_currentWall.transform != null)
-            AddMomentum(_currentWall.normal * _wallJumpForce + _rawInputs.normalized * _wallInputJumpForce);
+            AddMomentum(new Vector3(_currentWall.normal.x, 0.0f, _currentWall.normal.z).normalized * _wallJumpForce + _rawInputs.normalized * _wallInputJumpForce);
         else if (_previousWall.transform != null)
-            AddMomentum(_previousWall.normal * _wallJumpForce + _rawInputs.normalized * _wallInputJumpForce);
+            AddMomentum(new Vector3(_previousWall.normal.x, 0.0f, _currentWall.normal.z).normalized * _wallJumpForce + _rawInputs.normalized * _wallInputJumpForce);
         else
             Debug.LogWarning("ERROR: Walljumped without a wall???");
 

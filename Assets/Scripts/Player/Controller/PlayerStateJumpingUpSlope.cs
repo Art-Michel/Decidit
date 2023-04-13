@@ -13,7 +13,7 @@ public class PlayerStateJumpingUpSlope : PlayerState
 
     public override void StateUpdate()
     {
-        if (_fsm.PreviousState.Name != PlayerStatesList.WALLJUMPING)
+        if (!_player.JustWalljumped)
         {
             _player.CheckWall();
             _player.CheckForJumpingWallride();
@@ -27,6 +27,7 @@ public class PlayerStateJumpingUpSlope : PlayerState
 
     public override void Exit()
     {
+        _player.JustWalljumped = false;
         _player.ResetSlopeMovement();
     }
 
