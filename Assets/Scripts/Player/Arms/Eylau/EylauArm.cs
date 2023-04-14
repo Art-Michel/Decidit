@@ -13,6 +13,9 @@ public class EylauArm : Arm
     [Foldout("References")]
     [SerializeField]
     private GameObject _area;
+    [Foldout("References")]
+    [SerializeField]
+    private GameObject _cancelPrompt;
 
     [Foldout("Stats")]
     [SerializeField]
@@ -37,6 +40,7 @@ public class EylauArm : Arm
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/CimetièreEyleau/Preview", 1f, gameObject);
         _previs.SetActive(true);
         loopInstance.start();
+        _cancelPrompt.SetActive(true);
     }
 
     public override void UpdatePrevis()
@@ -59,6 +63,7 @@ public class EylauArm : Arm
         loopInstance.release();
         loopInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         _previs.SetActive(false);
+        _cancelPrompt.SetActive(false);
     }
 
     public override void StartActive()

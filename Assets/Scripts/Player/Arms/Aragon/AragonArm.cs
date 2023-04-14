@@ -25,6 +25,9 @@ public class AragonArm : Arm
     [Foldout("References")]
     [SerializeField]
     private Image _vignette;
+    [Foldout("References")]
+    [SerializeField]
+    private GameObject _cancelPrompt;
 
     private Camera _camera;
 
@@ -92,6 +95,7 @@ public class AragonArm : Arm
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/FugueAragon/StartPreveiw", 1f, gameObject);
         _vfx.SetActive(true);
         PlaceHolderSoundManager.Instance.PlayDashPrevisSound();
+        _cancelPrompt.SetActive(true);
     }
 
     public override void UpdatePrevis()
@@ -113,6 +117,7 @@ public class AragonArm : Arm
         loopInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         loopInstance.release();
         _vfx.SetActive(false);
+        _cancelPrompt.SetActive(false);
     }
 
     public override void StartActive()
