@@ -27,7 +27,6 @@ public class PlayerStateJumpingUpSlope : PlayerState
 
     public override void Exit()
     {
-        _player.JustWalljumped = false;
         _player.ResetSlopeMovement();
     }
 

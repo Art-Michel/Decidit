@@ -30,7 +30,6 @@ public class PlayerStateJumping : PlayerState
 
     public override void Exit()
     {
-        _player.JustWalljumped = false;
 
     }
 

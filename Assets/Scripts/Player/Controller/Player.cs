@@ -113,6 +113,7 @@ public class Player : LocalManager<Player>
     private const float _ceilingSpherecastRadius = .25f; // _charaCon.radius
     private bool _justJumped;
     private float _jumpCooldown;
+    private const float _jumpMaxCooldown = 0.1f;
     private float _coyoteTime;
     private const float _coyoteMaxTime = 0.3f;
     [Foldout("Eylau Settings")]
@@ -205,7 +206,6 @@ public class Player : LocalManager<Player>
     [Foldout("Walling")]
     [SerializeField] private bool _canWallrideWith0Wj;
 
-    [System.NonSerialized] public bool JustWalljumped = false;
     private int _currentNumberOfWalljumps;
     private RaycastHit _currentWall;
     private RaycastHit _previousWall;
@@ -213,6 +213,9 @@ public class Player : LocalManager<Player>
     private const float _wallDetectionRange = 1.0f;
     private const float _maxWallDotProduct = -0.3f;
     private float _wallCoyoteTime;
+    [System.NonSerialized] public bool JustWalljumped = false;
+    private float _wallJumpCooldown;
+    private const float _wallJumpMaxCooldown = 0.25f;
 
     public Vector3 FinalMovement { get; private set; }
     #endregion
@@ -244,11 +247,17 @@ public class Player : LocalManager<Player>
 
     private void Update()
     {
-        //jump cooldown
+        //cooldowns
         if (_justJumped)
         {
             _jumpCooldown -= Time.deltaTime;
             if (_jumpCooldown <= 0) _justJumped = false;
+        }
+
+        if (JustWalljumped)
+        {
+            _wallJumpCooldown -= Time.deltaTime;
+            if (_wallJumpCooldown <= 0) JustWalljumped = false;
         }
         HandleBuffers();
 
@@ -563,7 +572,9 @@ public class Player : LocalManager<Player>
         _isJumpingNextToWall = _isJumpingNextToWall || _fsm.CurrentState.Name == PlayerStatesList.JUMPINGUPSLOPE;
         _isJumpingNextToWall = _isJumpingNextToWall && _currentWall.transform != null;
         if (_isJumpingNextToWall)
-            _isJumpingNextToWall = _isJumpingNextToWall && Vector3.Dot(_currentWall.normal, _movementInputs) < _maxWallDotProduct;
+        {
+            _isJumpingNextToWall = _isJumpingNextToWall && Vector3.Dot(_currentWall.normal, _rawInputs.normalized) < _maxWallDotProduct;
+        }
 
         if ((isWallriding || _isJumpingNextToWall || _wallCoyoteTime > 0.0f) && _currentNumberOfWalljumps > 0)
         {
@@ -594,8 +605,8 @@ public class Player : LocalManager<Player>
         _justJumped = true;
         _coyoteTime = -1f;
         _currentFriction = _airborneFriction;
-        _jumpCooldown = 0.1f; //min time allowed between two jumps, to avoid mashing jump up slopes and so we
-                              //dont check for a ground before the character actually jumps.
+        _jumpCooldown = _jumpMaxCooldown; //min time allowed between two jumps, to avoid mashing jump up slopes and so we
+                                          //dont check for a ground before the character actually jumps.
         ResetJumpBuffer();
     }
 
@@ -843,7 +854,7 @@ public class Player : LocalManager<Player>
     public void CheckWall()
     {
         //Wallride raycast and Storage of its values
-        Physics.Raycast(transform.position, _rawInputs, out RaycastHit hit, _wallDetectionRange, _collisionMask);
+        Physics.Raycast(transform.position, _rawInputs.normalized, out RaycastHit hit, _wallDetectionRange, _collisionMask);
 
         if (hit.transform == null)
         {
@@ -854,7 +865,11 @@ public class Player : LocalManager<Player>
             }
         }
         else
+        {
+            bool b = _currentWall.transform == null;
             _currentWall = hit;
+            if (b) CheckForJumpBuffer();
+        }
     }
 
     public void ResetWalls()
@@ -899,11 +914,13 @@ public class Player : LocalManager<Player>
         if (_currentWall.transform != null)
             AddMomentum(new Vector3(_currentWall.normal.x, 0.0f, _currentWall.normal.z).normalized * _wallJumpForce + _rawInputs.normalized * _wallInputJumpForce);
         else if (_previousWall.transform != null)
-            AddMomentum(new Vector3(_previousWall.normal.x, 0.0f, _currentWall.normal.z).normalized * _wallJumpForce + _rawInputs.normalized * _wallInputJumpForce);
+            AddMomentum(new Vector3(_previousWall.normal.x, 0.0f, _previousWall.normal.z).normalized * _wallJumpForce + _rawInputs.normalized * _wallInputJumpForce);
         else
             Debug.LogWarning("ERROR: Walljumped without a wall???");
 
         _currentNumberOfWalljumps--;
+        JustWalljumped = true;
+        _wallJumpCooldown = _wallJumpMaxCooldown;
         ResetWalls();
         _fsm.ChangeState(PlayerStatesList.JUMPING);
     }
