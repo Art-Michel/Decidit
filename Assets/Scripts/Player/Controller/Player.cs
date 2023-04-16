@@ -115,7 +115,7 @@ public class Player : LocalManager<Player>
     private float _jumpCooldown;
     private const float _jumpMaxCooldown = 0.1f;
     private float _coyoteTime;
-    private const float _coyoteMaxTime = 0.3f;
+    private const float _coyoteMaxTime = 0.2f;
     [Foldout("Eylau Settings")]
     private float _eylauBuffFactor = 1.5f;
 
@@ -209,7 +209,7 @@ public class Player : LocalManager<Player>
     private int _currentNumberOfWalljumps;
     private RaycastHit _currentWall;
     private RaycastHit _previousWall;
-    private const float _wallCoyoteMaxTime = 0.3f;
+    private const float _wallCoyoteMaxTime = 0.25f;
     private const float _wallDetectionRange = 1.0f;
     private const float _maxWallDotProduct = -0.3f;
     private float _wallCoyoteTime;
