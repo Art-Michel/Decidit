@@ -19,8 +19,8 @@ public class Synergies : LocalManager<Synergies>
 
     public void Synergize(SynergyProjectile bullet, Transform collider)
     {
-        SoundManager.Instance.PlaySound("event:/SFX_Controller/UniversalSound", 2f, collider.gameObject);
-        SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/MuseMalade/Impact", 1f, gameObject);
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/UniversalSound", 1f, collider.gameObject);
+        // SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/MuseMalade/Impact", 1f, gameObject);
 
         Chants bulletChant = bullet.Chant;
         Chants colliderChant = collider.GetComponent<SynergyTrigger>().Chant;
@@ -97,7 +97,7 @@ public class Synergies : LocalManager<Synergies>
 
     public void FugueOnCimetiere()
     {
-        Debug.Log("Trou noir");
+        Debug.Log("Trou noir, voir avec jt pour attirer les ennemis au centre du cimetière");
     }
 
     public void MuseOnCimetiere(float y)

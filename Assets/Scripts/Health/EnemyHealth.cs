@@ -176,7 +176,7 @@ public class EnemyHealth : Health
     {
         IsSick = true;
         _sickIcon.enabled = true;
-        if (_sickBoxes.Length < 0)
+        if (_sickBoxes.Length > 0)
             foreach (Collider collider in _sickBoxes)
                 collider.enabled = true;
     }
