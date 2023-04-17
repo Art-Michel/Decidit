@@ -22,7 +22,7 @@ public class Hitbox : MonoBehaviour
     [Foldout("Stats")]
     [SerializeField] protected float _radius = .2f;
     [Foldout("Stats")]
-    [SerializeField] protected int _damage = 10;
+    [SerializeField] protected float _damage = 10;
     [Foldout("Stats")]
     [SerializeField] protected float _knockbackForce = 10f;
     [Foldout("Stats")]

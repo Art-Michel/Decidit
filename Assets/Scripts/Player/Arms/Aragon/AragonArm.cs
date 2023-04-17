@@ -162,7 +162,7 @@ public class AragonArm : Arm
         {
             AragonCloud cloud = _cloudPooler.Get().GetComponent<AragonCloud>();
             Vector3 cloudPosition = Vector3.Lerp(start, end, Mathf.InverseLerp(0, numberOfClouds, i));
-            float cloudDelay = Mathf.Lerp(0, _dashDuration + 0.5f, Mathf.InverseLerp(0, numberOfClouds, i));
+            float cloudDelay = Mathf.Lerp(0, _dashDuration + 0.2f, Mathf.InverseLerp(0, numberOfClouds, i));
             cloud.Setup(cloudPosition, _camera.transform.rotation, cloudDelay);
         }
     }
