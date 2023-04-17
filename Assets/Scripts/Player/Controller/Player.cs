@@ -802,7 +802,8 @@ public class Player : LocalManager<Player>
         else
         {
             // KillMomentum();
-            KillGravity();
+            if (CurrentlyAppliedGravity < 0.0f)
+                KillGravity();
             _movementAccelerationT = 0.0f;
             _fsm.ChangeState(PlayerStatesList.AIRBORNE);
         }
