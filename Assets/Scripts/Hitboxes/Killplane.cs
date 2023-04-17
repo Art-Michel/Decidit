@@ -39,6 +39,7 @@ public class Killplane : LocalManager<Killplane>
         if (entity.CompareTag("Player"))
         {
             MenuManager.Instance.StartUnfading(_respawnUnfade);
+            Player.Instance.KillGravity();
             Player.Instance.KillMomentum();
 
             Player.Instance.CharaCon.detectCollisions = false;

@@ -570,10 +570,14 @@ public class Player : LocalManager<Player>
 
         bool _isJumpingNextToWall = _fsm.CurrentState.Name == PlayerStatesList.JUMPING;
         _isJumpingNextToWall = _isJumpingNextToWall || _fsm.CurrentState.Name == PlayerStatesList.JUMPINGUPSLOPE;
+        _isJumpingNextToWall = _isJumpingNextToWall || (_fsm.CurrentState.Name == PlayerStatesList.AIRBORNE && _globalMomentum.y > 0.0f);
         _isJumpingNextToWall = _isJumpingNextToWall && _currentWall.transform != null;
         if (_isJumpingNextToWall)
         {
-            _isJumpingNextToWall = _isJumpingNextToWall && Vector3.Dot(_currentWall.normal, _rawInputs.normalized) < _maxWallDotProduct;
+            if (_rawInputs.magnitude > 0.0f)
+                _isJumpingNextToWall = _isJumpingNextToWall && Vector3.Dot(_currentWall.normal, _rawInputs.normalized) < _maxWallDotProduct;
+            else
+                _isJumpingNextToWall = _isJumpingNextToWall && Vector3.Dot(_currentWall.normal, FinalMovement.normalized) < _maxWallDotProduct;
         }
 
         if ((isWallriding || _isJumpingNextToWall || _wallCoyoteTime > 0.0f) && _currentNumberOfWalljumps > 0)
@@ -797,7 +801,9 @@ public class Player : LocalManager<Player>
         }
         else
         {
-            KillMomentum();
+            // KillMomentum();
+            KillGravity();
+            _movementAccelerationT = 0.0f;
             _fsm.ChangeState(PlayerStatesList.AIRBORNE);
         }
         FinalMovement += blow.normalized;
@@ -838,9 +844,13 @@ public class Player : LocalManager<Player>
     public void KillMomentum()
     {
         _globalMomentum = Vector3.zero;
-        CurrentlyAppliedGravity = 0f;
         _steepSlopesMovement = Vector3.zero;
         _movementAcceleration = 0.0f;
+    }
+
+    public void KillGravity()
+    {
+        CurrentlyAppliedGravity = 0f;
     }
 
     public void AllowMovement(bool boolean)
@@ -854,7 +864,11 @@ public class Player : LocalManager<Player>
     public void CheckWall()
     {
         //Wallride raycast and Storage of its values
-        Physics.Raycast(transform.position, _rawInputs.normalized, out RaycastHit hit, _wallDetectionRange, _collisionMask);
+        RaycastHit hit;
+        if (_rawInputs.magnitude > 0.0f)
+            Physics.Raycast(transform.position, _rawInputs.normalized, out hit, _wallDetectionRange, _collisionMask);
+        else
+            Physics.Raycast(transform.position, FinalMovement.normalized, out hit, _wallDetectionRange, _collisionMask);
 
         if (hit.transform == null)
         {
@@ -889,7 +903,9 @@ public class Player : LocalManager<Player>
             cond = cond && _currentNumberOfWalljumps > 0;
 
         if (cond)
+        {
             _fsm.ChangeState(PlayerStatesList.WALLRIDING);
+        }
     }
 
     public void CheckForJumpingWallride()

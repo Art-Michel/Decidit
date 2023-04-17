@@ -132,6 +132,7 @@ public class AragonArm : Arm
 
         _player.PlayerHealth.IsInvulnerable = true;
         _player.AllowMovement(false);
+        _player.KillGravity();
         _player.KillMomentum();
         _player.CharaCon.detectCollisions = false;
         _dashStartPosition = _player.transform.position;
@@ -283,6 +284,7 @@ public class AragonArm : Arm
     {
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/FugueAragon/DashEnd", 1f, gameObject);
         _player.AllowMovement(true);
+        _player.KillGravity();
         _player.KillMomentum();
         _player.PlayerHealth.IsInvulnerable = false;
         _player.CharaCon.detectCollisions = true;

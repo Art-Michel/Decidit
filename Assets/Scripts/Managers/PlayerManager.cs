@@ -210,6 +210,7 @@ public class PlayerManager : LocalManager<PlayerManager>
     {
         Player.Instance.PlayerHealth.IsInvulnerable = true;
         Player.Instance.AllowMovement(false);
+        Player.Instance.KillGravity();
         Player.Instance.KillMomentum();
         Player.Instance.CharaCon.enabled = false;
         MenuManager.Instance.StartMenuing();
