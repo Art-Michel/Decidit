@@ -13,13 +13,15 @@ public class BulletAI : Health
 
     Health health;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         rb = GetComponent<Rigidbody>();
     }
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         StartCoroutine("DestroyBullet");
     }
 
@@ -30,12 +32,12 @@ public class BulletAI : Health
         yield break;
     }
 
-    private void OnTriggerEnter (Collider collider)
+    private void OnTriggerEnter(Collider collider)
     {
-        if(collider.gameObject.layer == 9)
+        if (collider.gameObject.layer == 9)
             gameObject.SetActive(false);
 
-        if(collider.gameObject.name == "Spell_Eylau_Area")
+        if (collider.gameObject.name == "Spell_Eylau_Area")
         {
             isInEylau = true;
             velocityEylau = rb.velocity / ratioEylau;

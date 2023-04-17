@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4457546727834266994}
   - component: {fileID: 5001398922406777925}
   - component: {fileID: -5297157090106014675}
+  - component: {fileID: 1959203829594839803}
   m_Layer: 15
   m_Name: BulletWallAI
   m_TagString: Bullet
@@ -134,9 +135,9 @@ MonoBehaviour:
   _hpCursor: {fileID: 0}
   _hpBarStart: {fileID: 0}
   _hpBarEnd: {fileID: 0}
-  _maxHp: 100
-  _probationMaxStartup: 1
-  _probationSpeed: 15
+  _maxHp: 1
+  _probationMaxStartup: 0
+  _probationSpeed: 0
   _healthBarSpeed: 2
   IsInvulnerable: 0
   lifeTimeBullet: 2
@@ -170,3 +171,16 @@ MonoBehaviour:
   _knockbackForce: 10
   _knockbackAngle: {x: 0, y: 0, z: 0}
   _delayBetweenHits: 0
+--- !u!114 &1959203829594839803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1404559074165780241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2257062f2335e844eb66bdbcb1502d68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HealthComponent: {fileID: 5001398922406777925}

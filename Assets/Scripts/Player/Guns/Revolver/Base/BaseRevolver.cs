@@ -43,6 +43,8 @@ public class BaseRevolver : Revolver
             {
                 if (hit.transform.CompareTag("WeakHurtbox"))
                     (hurtbox.HealthComponent as EnemyHealth).TakeCriticalDamage(_hitscanDamage, hit.point, hit.normal);
+                else if (hit.transform.CompareTag("Bullet"))
+                    (hurtbox.HealthComponent as BulletAI).TakeDamage(_hitscanDamage);
                 else
                     (hurtbox.HealthComponent as EnemyHealth).TakeDamage(_hitscanDamage, hit.point, hit.normal);
             }
