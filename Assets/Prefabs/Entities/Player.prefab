@@ -1456,6 +1456,7 @@ GameObject:
   - component: {fileID: 183938225}
   - component: {fileID: 7666983725993333357}
   - component: {fileID: 950598985533358227}
+  - component: {fileID: 591319452737898672}
   m_Layer: 6
   m_Name: AragonArm
   m_TagString: Untagged
@@ -1611,6 +1612,7 @@ MonoBehaviour:
   _player: {fileID: 2200446484234949679}
   _vignette: {fileID: 2006583777}
   _cancelPrompt: {fileID: 8606303240887955566}
+  _cloudPooler: {fileID: 591319452737898672}
   _detectionMask:
     serializedVersion: 2
     m_Bits: 512
@@ -1727,6 +1729,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94f4a0eb98e2f9d499061bd1b7133050, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &591319452737898672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 183938224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 8856604142223758869, guid: 10abd642f4f86ce468a147c43549b41d, type: 3}
+  _initialCount: 6
+  _shouldBeParent: 0
+  _canCreateNewPrefabs: 1
 --- !u!1 &192978690
 GameObject:
   m_ObjectHideFlags: 0
@@ -23708,7 +23726,7 @@ MonoBehaviour:
   _minMovementVelocity: 5
   _maxMovementVelocity: 20
   WallRidingGravity: -1
-  _wallJumpForce: 14
+  _wallJumpForce: 17
   _wallInputJumpForce: 0
   _maxNumberOfWalljumps: 2
   _canWallrideWith0Wj: 0

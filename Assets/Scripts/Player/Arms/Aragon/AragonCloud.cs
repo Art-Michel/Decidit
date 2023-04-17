@@ -13,12 +13,17 @@ public class AragonCloud : PooledObject
     const float _maxLifeSpan = 4.0f;
     float _lifeSpan = 0.0f;
 
+    void Awake()
+    {
+        Disable();
+    }
+
     public void Setup(Vector3 position, Quaternion rotation, float delay)
     {
         transform.position = position;
         transform.rotation = rotation;
         _delay = delay;
-        _lifeSpan = _maxLifeSpan + delay;
+        _lifeSpan = _maxLifeSpan;
         _isActive = false;
     }
 
@@ -28,15 +33,30 @@ public class AragonCloud : PooledObject
         {
             _delay -= Time.deltaTime;
             if (_delay <= 0.0f)
-            {
-                _boxCollider.enabled = true;
-                _vfx.enabled = true;
-                _isActive = true;
-            }
+                Enable();
         }
         else
         {
-
+            _lifeSpan -= Time.deltaTime;
+            if (_delay <= 0.0f)
+            {
+                Disable();
+                this.Pooler.Return(this);
+            }
         }
+    }
+
+    private void Enable()
+    {
+        _boxCollider.enabled = true;
+        _vfx.enabled = true;
+        _isActive = true;
+    }
+
+    private void Disable()
+    {
+        _boxCollider.enabled = false;
+        _vfx.enabled = false;
+        _isActive = false;
     }
 }

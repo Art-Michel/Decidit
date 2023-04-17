@@ -129,7 +129,7 @@ public class AragonArm : Arm
             crosshair.fillAmount = 0.0f;
 
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/FugueAragon/DashStart", 1f, gameObject);
-
+        PlaceClouds(_dashStartPosition, _dashDestination);
 
         _player.PlayerHealth.IsInvulnerable = true;
         _player.AllowMovement(false);
@@ -151,6 +151,16 @@ public class AragonArm : Arm
         Player.Instance.StartKickShake(_castShake, transform.position);
         this.Animator.CrossFade("cast", 0f, 0);
         base.StartActive();
+    }
+
+    private void PlaceClouds(Vector3 start, Vector3 end)
+    {
+        float dashLength = (end - start).magnitude;
+        int numberOfClouds = Mathf.RoundToInt(dashLength / 3);
+        for (int i = 0; i < numberOfClouds; i++)
+        {
+            AragonCloud cloud = _cloudPooler.Get().GetComponent<AragonCloud>();
+        }
     }
 
     private void AdjustDestination()
