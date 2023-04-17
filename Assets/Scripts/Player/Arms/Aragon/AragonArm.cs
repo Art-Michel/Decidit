@@ -28,6 +28,8 @@ public class AragonArm : Arm
     [Foldout("References")]
     [SerializeField]
     private GameObject _cancelPrompt;
+    [Foldout("References")]
+    [SerializeField] Pooler _cloudPooler;
 
     private Camera _camera;
 
