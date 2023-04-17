@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class BulletAI : MonoBehaviour
+public class BulletAI : Health
 {
     [SerializeField] float lifeTimeBullet;
     public int damageBullet;
@@ -10,6 +10,8 @@ public class BulletAI : MonoBehaviour
     Vector3 velocityEylau;
 
     [SerializeField] float ratioEylau;
+
+    Health health;
 
     private void Awake()
     {
@@ -39,6 +41,12 @@ public class BulletAI : MonoBehaviour
             velocityEylau = rb.velocity / ratioEylau;
             rb.velocity = velocityEylau;
         }
+    }
+
+    public override void TakeDamage(float damage)
+    {
+        Debug.Log("Explosion");
+        Destroy(gameObject);
     }
 
     private void OnTriggerExit(Collider other)
