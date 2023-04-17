@@ -42,7 +42,7 @@ public class AragonArm : Arm
     private LayerMask _triggerMask;
     [Foldout("Stats")]
     [SerializeField]
-    private float _dashDuration = 3f;
+    private float _dashDuration = 0.6f;
     [Foldout("Stats")]
     [SerializeField]
     AnimationCurve _dashFeedbacksCurve;
@@ -129,7 +129,6 @@ public class AragonArm : Arm
             crosshair.fillAmount = 0.0f;
 
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/FugueAragon/DashStart", 1f, gameObject);
-        PlaceClouds(_dashStartPosition, _dashDestination);
 
         _player.PlayerHealth.IsInvulnerable = true;
         _player.AllowMovement(false);
@@ -141,6 +140,8 @@ public class AragonArm : Arm
         //Adjust Destination in order to stay away from walls!
         _adjustedTimesNb = 0;
         AdjustDestination();
+
+        PlaceClouds(_dashStartPosition, _dashDestination);
 
         //Actually move
         currentDashSpeed = _dashDuration / Vector3.Distance(_dashStartPosition, _dashDestination);
@@ -156,10 +157,13 @@ public class AragonArm : Arm
     private void PlaceClouds(Vector3 start, Vector3 end)
     {
         float dashLength = (end - start).magnitude;
-        int numberOfClouds = Mathf.RoundToInt(dashLength / 3);
+        int numberOfClouds = Mathf.RoundToInt(dashLength);
         for (int i = 0; i < numberOfClouds; i++)
         {
             AragonCloud cloud = _cloudPooler.Get().GetComponent<AragonCloud>();
+            Vector3 cloudPosition = Vector3.Lerp(start, end, Mathf.InverseLerp(0, numberOfClouds, i));
+            float cloudDelay = Mathf.Lerp(0, _dashDuration + 0.5f, Mathf.InverseLerp(0, numberOfClouds, i));
+            cloud.Setup(cloudPosition, _camera.transform.rotation, cloudDelay);
         }
     }
 
