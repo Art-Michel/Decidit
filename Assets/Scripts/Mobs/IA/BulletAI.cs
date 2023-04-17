@@ -8,15 +8,20 @@ public class BulletAI : Health
     [SerializeField] bool isInEylau;
     Rigidbody rb;
     Vector3 velocityEylau;
-
     [SerializeField] float ratioEylau;
+    MeshRenderer meshRenderer;
 
-    Health health;
+    [Header("Explosion")]
+    GameObject vfxExplosion;
+    [SerializeField] float delayBeforeExplosion;
+
 
     protected override void Awake()
     {
         base.Awake();
         rb = GetComponent<Rigidbody>();
+        vfxExplosion = transform.GetChild(0).gameObject;
+        meshRenderer = GetComponent<MeshRenderer>();
     }
 
     protected override void Start()
@@ -47,8 +52,20 @@ public class BulletAI : Health
 
     public override void TakeDamage(float damage)
     {
-        Debug.Log("Explosion");
-        Destroy(gameObject);
+        Invoke("DelayBeforeExplosion", delayBeforeExplosion);
+    }
+
+    void DelayBeforeExplosion()
+    {
+        rb.velocity = Vector3.zero;
+        meshRenderer.enabled = false;
+        vfxExplosion.SetActive(true);
+        Invoke("DestroyObject", 1f);
+    }
+
+    void DestroyObject()
+    {
+        gameObject.SetActive(false);
     }
 
     private void OnTriggerExit(Collider other)
