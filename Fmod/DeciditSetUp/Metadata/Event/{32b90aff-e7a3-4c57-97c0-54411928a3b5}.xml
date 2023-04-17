@@ -31,6 +31,9 @@
 		<relationship name="timeline">
 			<destination>{eecb3724-d78f-49a4-a369-007c1691ae2a}</destination>
 		</relationship>
+		<relationship name="parameters">
+			<destination>{011e5c45-bcc7-412e-9034-8974563cc801}</destination>
+		</relationship>
 		<relationship name="banks">
 			<destination>{b3ae00e2-58af-4860-be35-3529c1b7587e}</destination>
 		</relationship>
@@ -61,7 +64,7 @@
 	</object>
 	<object class="EventAutomatableProperties" id="{3906359f-c8c3-4d67-9dba-3cf66bbefaf3}">
 		<property name="maximumDistance">
-			<value>80</value>
+			<value>5</value>
 		</property>
 	</object>
 	<object class="MarkerTrack" id="{9eec5292-5030-475e-9593-58dfb8bb00b0}" />
@@ -76,6 +79,11 @@
 	<object class="Timeline" id="{eecb3724-d78f-49a4-a369-007c1691ae2a}">
 		<relationship name="modules">
 			<destination>{5cc71c96-5186-4675-8c2e-430e72a34025}</destination>
+		</relationship>
+	</object>
+	<object class="ParameterProxy" id="{011e5c45-bcc7-412e-9034-8974563cc801}">
+		<relationship name="preset">
+			<destination>{5b8dfaa9-41b5-4d48-bc7e-17c56600314c}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{af124a60-aa20-40d6-8b49-2f70cfde0f9b}">
@@ -146,7 +154,7 @@
 	</object>
 	<object class="SpatialiserEffect" id="{24a063b2-a52a-4e95-ac17-555bb85c1f5e}">
 		<property name="maximumDistance">
-			<value>80</value>
+			<value>5</value>
 		</property>
 	</object>
 	<object class="MixerBusFader" id="{f236012c-c3eb-4382-9666-f9b3177d9c2d}" />
