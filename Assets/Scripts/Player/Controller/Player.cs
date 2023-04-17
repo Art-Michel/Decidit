@@ -900,7 +900,7 @@ public class Player : LocalManager<Player>
 
     public void CheckForNoWallRide()
     {
-        if (_currentWall.transform != null)
+        if (Physics.Raycast(transform.position, _rawInputs.normalized, out RaycastHit hit, _wallDetectionRange, _collisionMask))
         {
             if (Vector3.Dot(_currentWall.normal, _movementInputs.normalized) > -0.3f)
                 _fsm.ChangeState(PlayerStatesList.AIRBORNE);
