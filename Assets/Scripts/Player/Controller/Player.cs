@@ -87,7 +87,7 @@ public class Player : LocalManager<Player>
     #region Jumping, Falling and Ground Detection variables
     [Foldout("Jumping Settings")]
     [Range(0, 100)][SerializeField] private float _baseJumpStrength = 14f;
-    private float _currentJumpStrength;
+    public float CurrentJumpStrength;
     [Foldout("Falling Settings")]
     [Range(0, 50)][SerializeField] private float _airborneDrag = 3f;
     [Foldout("Falling Settings")]
@@ -196,7 +196,10 @@ public class Player : LocalManager<Player>
     [SerializeField] public float WallRidingGravity;
     [Foldout("Walling")]
     [Range(0.0f, 50.0f)]
-    [SerializeField] private float _wallJumpForce;
+    [SerializeField] private float _wallJumpHorizontalStrength;
+    [Foldout("Walling")]
+    [Range(0.0f, 50.0f)]
+    public float WallJumpVerticalStrength;
     [Foldout("Walling")]
     [Range(0.0f, 50.0f)]
     [SerializeField] private float _wallInputJumpForce;
@@ -236,7 +239,7 @@ public class Player : LocalManager<Player>
         _movementInputs = Vector2.zero;
         _globalMomentum = Vector3.zero;
         _currentSpeed = _baseSpeed;
-        _currentJumpStrength = _baseJumpStrength;
+        CurrentJumpStrength = _baseJumpStrength;
         CurrentlyAppliedGravity = 0;
         _movementAcceleration = 0;
         _canMove = true;
@@ -602,10 +605,10 @@ public class Player : LocalManager<Player>
         _jumpBuffer = _jumpMaxBuffer;
     }
 
-    public void StartJumping()
+    public void StartJumping(float strength)
     {
         SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/Jump", 1f, gameObject);
-        CurrentlyAppliedGravity = _currentJumpStrength;
+        CurrentlyAppliedGravity = strength;
         _justJumped = true;
         _coyoteTime = -1f;
         _currentFriction = _airborneFriction;
@@ -714,7 +717,7 @@ public class Player : LocalManager<Player>
     {
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/CimetièreEyleau/BuffStart", 1f, gameObject);
         _currentSpeed = _baseSpeed * _eylauBuffFactor;
-        _currentJumpStrength = _baseJumpStrength * _eylauBuffFactor;
+        CurrentJumpStrength = _baseJumpStrength * _eylauBuffFactor;
     }
 
     public void ResetEylauMovementBuff()
@@ -722,7 +725,7 @@ public class Player : LocalManager<Player>
         //TODO ART le son se produit quand on lance le sort
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/CimetièreEyleau/BuffEnd", 1f, gameObject);
         _currentSpeed = _baseSpeed;
-        _currentJumpStrength = _baseJumpStrength;
+        CurrentJumpStrength = _baseJumpStrength;
     }
 
     private Vector3 MakeDirectionCameraRelative(Vector2 inputDirection)
@@ -929,9 +932,9 @@ public class Player : LocalManager<Player>
     public void StartWalljumping()
     {
         if (_currentWall.transform != null)
-            AddMomentum(new Vector3(_currentWall.normal.x, 0.0f, _currentWall.normal.z).normalized * _wallJumpForce + _rawInputs.normalized * _wallInputJumpForce);
+            AddMomentum(new Vector3(_currentWall.normal.x, 0.0f, _currentWall.normal.z).normalized * _wallJumpHorizontalStrength + _rawInputs.normalized * _wallInputJumpForce);
         else if (_previousWall.transform != null)
-            AddMomentum(new Vector3(_previousWall.normal.x, 0.0f, _previousWall.normal.z).normalized * _wallJumpForce + _rawInputs.normalized * _wallInputJumpForce);
+            AddMomentum(new Vector3(_previousWall.normal.x, 0.0f, _previousWall.normal.z).normalized * _wallJumpHorizontalStrength + _rawInputs.normalized * _wallInputJumpForce);
         else
             Debug.LogWarning("ERROR: Walljumped without a wall???");
 
@@ -940,6 +943,7 @@ public class Player : LocalManager<Player>
         _wallJumpCooldown = _wallJumpMaxCooldown;
         ResetWalls();
         _fsm.ChangeState(PlayerStatesList.JUMPING);
+        StartJumping(CurrentJumpStrength + WallJumpVerticalStrength);
     }
 
     public void ResetWallCoyoteTime()
