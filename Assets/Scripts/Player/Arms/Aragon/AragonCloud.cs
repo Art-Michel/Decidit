@@ -63,6 +63,7 @@ public class AragonCloud : PooledObject
 
     private void Disable()
     {
+        _vfx.Stop();
         _boxCollider.enabled = false;
         _isActive = false;
         _isDisappearing = false;
