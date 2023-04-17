@@ -20,7 +20,7 @@ public class EnemyHealth : Health
     [Foldout("References")]
     public Room Room;
     [Foldout("References")]
-    [SerializeField] List<Collider> _colliders;
+    [SerializeField] List<CapsuleCollider> _hurtboxes;
 
     float _regenValue;
     CanvasGroup _canvasGroup;
@@ -53,7 +53,7 @@ public class EnemyHealth : Health
     [Foldout("Synergies")]
     [SerializeField] Image _sickIcon;
     [Foldout("Synergies")]
-    [SerializeField] Collider[] _sickBoxes;
+    [SerializeField] List<BoxCollider> _sickboxes;
 
     [Header("KnockBack IA")]
     public Vector3 KnockBackDir;
@@ -79,18 +79,35 @@ public class EnemyHealth : Health
         _appearT = 0f;
         _canvasGroup.alpha = 0f;
         _isDying = false;
+
+        if (_sickboxes.Count > 0)
+            foreach (Collider collider in _sickboxes)
+                collider.enabled = false;
     }
 
     [Button]
-    private void FindBoxes()
+    private void FindHurtboxes()
     {
-        _colliders.Clear();
-        foreach (Collider col in GetComponentsInChildren<Collider>())
+        _hurtboxes.Clear();
+        foreach (CapsuleCollider col in GetComponentsInChildren<CapsuleCollider>())
         {
             if (col.TryGetComponent<Hurtbox>(out Hurtbox box))
             {
-                _colliders.Add(col);
+                _hurtboxes.Add(col);
                 box.HealthComponent = this;
+            }
+        }
+    }
+
+    [Button]
+    private void FindSickboxes()
+    {
+        _sickboxes.Clear();
+        foreach (BoxCollider col in GetComponentsInChildren<BoxCollider>())
+        {
+            if (col.TryGetComponent<Hurtbox>(out Hurtbox box))
+            {
+                _sickboxes.Add(col);
             }
         }
     }
@@ -176,8 +193,8 @@ public class EnemyHealth : Health
     {
         IsSick = true;
         _sickIcon.enabled = true;
-        if (_sickBoxes.Length > 0)
-            foreach (Collider collider in _sickBoxes)
+        if (_sickboxes.Count > 0)
+            foreach (Collider collider in _sickboxes)
                 collider.enabled = true;
     }
 
@@ -257,13 +274,13 @@ public class EnemyHealth : Health
         _deathT = _deathAnimationDuration;
         _isDying = true;
         _deathVfx.Play();
-        foreach (Collider collider in _colliders)
+        foreach (Collider collider in _hurtboxes)
         {
             collider.enabled = false;
         }
 
-        if (_sickBoxes.Length < 0)
-            foreach (Collider collider in _sickBoxes)
+        if (_sickboxes.Count < 0)
+            foreach (Collider collider in _sickboxes)
                 collider.enabled = false;
 
         //Adjust Visibility
