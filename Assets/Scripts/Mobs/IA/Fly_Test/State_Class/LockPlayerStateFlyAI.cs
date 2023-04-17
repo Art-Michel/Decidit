@@ -53,7 +53,6 @@ namespace State.FlyAI
 
             if (baseAttackFlySO.speedRotationAIAttack >= 1f)
             {
-                Debug.Log("LaunchAttack");
                 globalRef.flyMobAttackManager.ChooseAttackType(globalRef);
             }
             else

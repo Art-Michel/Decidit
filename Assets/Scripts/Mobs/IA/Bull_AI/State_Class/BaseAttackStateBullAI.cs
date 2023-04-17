@@ -6,10 +6,6 @@ namespace State.AIBull
     {
         [SerializeField] GlobalRefBullAI globalRef;
 
-        [SerializeField] float attackDuration;
-
-        Vector3 posPlayer;
-
         [SerializeField] bool canAttak;
         [SerializeField] bool launchAttack;
         public bool attackLaunched;
@@ -33,8 +29,6 @@ namespace State.AIBull
             if (globalRef != null)
             {
                 canAttak = false;
-
-                posPlayer = globalRef.playerTransform.position;
                 globalRef.agent.speed = 0;
             }
         }
@@ -81,8 +75,7 @@ namespace State.AIBull
         {
             if (canAttak)
             {
-                if (/*Vector3.Distance(globalRef.transform.position, posPlayer) < globalRef.baseAttackBullSO.distLaunchAttack || */
-                    Vector3.Distance(globalRef.transform.position, globalRef.playerTransform.position) < globalRef.baseAttackBullSO.distLaunchAttack)
+                if (globalRef.distPlayer < globalRef.baseAttackBullSO.distLaunchAttack)
                 {
                     launchAttack = true;
                     globalRef.agent.speed = 0;
@@ -235,7 +228,6 @@ namespace State.AIBull
             isAttacking = false;
             globalRef.agent.speed = globalRef.baseAttackBullSO.speed;
             globalRef.hitBoxAttack.gameObject.SetActive(false);
-            attackDuration = 1;
             globalRef.baseAttackBullSO.curentDelayBeforeAttack = globalRef.baseAttackBullSO.maxDelayBeforeAttack;
             globalRef.baseAttackBullSO.speedRot = 0;
         }
