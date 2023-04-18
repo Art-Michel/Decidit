@@ -395,7 +395,6 @@ namespace State.AIBull
                   if (animTime > 1.0f && currentAnimName == "RushAttack")
                       stateController.SetActiveState(StateControllerBull.AIState.Idle);
               }*/
-            Debug.Log("Stop Rush");
             if (!endRush)
             {
                 AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "RushAttack");
@@ -403,7 +402,10 @@ namespace State.AIBull
             }
 
             if (animTime > 1.0f && currentAnimName == "Dash Attack")
+            {
                 stateController.SetActiveState(StateControllerBull.AIState.Idle);
+                Debug.Log("Stop Rush");
+            }
         }
         private void OnDisable()
         {
