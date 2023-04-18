@@ -51,6 +51,9 @@ namespace State.AIBull
         [SerializeField] GameObject refRushStateObj;
         public bool forceRush;
 
+        [Header("Ref BaseMove State")]
+        public bool ActiveAttraction;
+
         [Header("Ref Death State")]
         public bool isDead;
 
@@ -60,6 +63,8 @@ namespace State.AIBull
         [Foldout("Scriptable")] public RushBullParameterSO rushBullSO;
         [Foldout("Scriptable")] public KnockBackBullSO knockBackBullSO;
         [Foldout("Scriptable")] public DeathBullParameterSO deathBullSO;
+        [Foldout("Scriptable")] public AttractionSO AttractionSO;
+
 
         [Foldout("VeryEasy")] public BaseMoveBullParameterSO baseMoveBullSO_VeryEZ;
         [Foldout("VeryEasy")] public RushBullParameterSO rushBullSO_VeryEZ;
@@ -91,10 +96,10 @@ namespace State.AIBull
             agentLinkMover = GetComponent<AgentLinkMover>();
             rushManager = GetComponentInParent<RushManager>();
 
-
             baseIdleBullSO = Instantiate(baseIdleBullSO);
             baseAttackBullSO = Instantiate(baseAttackBullSO);
             deathBullSO = Instantiate(deathBullSO);
+            AttractionSO = Instantiate(AttractionSO);
 
             switch (ApplyDifficulty.Instance.indexDifficulty)
             {
@@ -140,6 +145,9 @@ namespace State.AIBull
                 myAnimator.speed = 1/ (slowRatio/2);
             else
                 myAnimator.speed = 1;
+
+            if (isInEylau)
+                ActiveAttractionState();
         }
 
         public void ActiveState(StateControllerBull.AIState newState)
@@ -151,6 +159,13 @@ namespace State.AIBull
         {
             if(enemyHealth._hp >0 && !refRushStateObj.activeInHierarchy)
                 ActiveState(StateControllerBull.AIState.KnockBack);
+        }
+
+        public void ActiveAttractionState()
+        {
+            ActiveState(StateControllerBull.AIState.Attraction);
+           /* if (stateControllerBull.currentState != StateControllerBull.AIState.Attraction)
+                ActiveState(StateControllerBull.AIState.Attraction);*/
         }
 
         public void CheckHP()

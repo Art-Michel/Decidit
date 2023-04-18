@@ -13,12 +13,13 @@ namespace State.AIBull
         bool once;
         public enum AIState
         {
-            Idle, BaseMove, BaseAttack, Rush, KnockBack, Death
+            Idle, BaseMove, BaseAttack, Rush, KnockBack, Attraction, Death
         }
 
         private Dictionary<AIState, _StateBull> stateDictionary = new Dictionary<AIState, _StateBull>();
 
         private _StateBull activeState;
+        public AIState currentState;
 
         private Stack<AIState> stateHistory = new Stack<AIState>();
 
@@ -93,21 +94,25 @@ namespace State.AIBull
                 return;
             }
 
-            //Deactivate the old state
-            if (activeState != null)
+            if(currentState != newState)
             {
-                activeState.gameObject.SetActive(false);
-            }
+                //Deactivate the old state
+                if (activeState != null)
+                {
+                    activeState.gameObject.SetActive(false);
+                }
 
-            //Activate the new state
-            activeState = stateDictionary[newState];
+                //Activate the new state
+                activeState = stateDictionary[newState];
 
-            activeState.gameObject.SetActive(true);
+                activeState.gameObject.SetActive(true);
+                currentState = newState;
 
-            //If we are jumping back we shouldn't add to history because then we will get doubles
-            if (!isJumpingBack)
-            {
-                stateHistory.Push(newState);
+                //If we are jumping back we shouldn't add to history because then we will get doubles
+                if (!isJumpingBack)
+                {
+                    stateHistory.Push(newState);
+                }
             }
         }
 
