@@ -179,7 +179,7 @@ public class Player : LocalManager<Player>
     // ADD LATER [Range(0, 100)][SerializeField] private float _slidingFriction = 5f;
     private float _currentFriction;
 
-    private float _currentSpeed;
+    // private float _currentSpeed;
     private bool _canMove;
     Vector3 _rawInputs;
     private Vector3 _movementInputs; // X is Left-Right and Z is Backward-Forward
@@ -239,7 +239,7 @@ public class Player : LocalManager<Player>
         ForceRotation(transform);
         _movementInputs = Vector2.zero;
         GlobalMomentum = Vector3.zero;
-        _currentSpeed = _baseSpeed;
+        // _currentSpeed = _baseSpeed;
         CurrentJumpStrength = _baseJumpStrength;
         CurrentlyAppliedGravity = 0;
         _movementAcceleration = 0;
@@ -666,7 +666,7 @@ public class Player : LocalManager<Player>
         Vector3 ceilingHorizontalDir = new Vector3(slopeDir.x, 0, slopeDir.z).normalized;
         float movementDot = Vector3.Dot(ceilingHorizontalDir, _movementInputs.normalized);
         if (movementDot < 0)
-            _movementInputs += (ceilingHorizontalDir * _currentSpeed * -movementDot * Time.deltaTime);
+            _movementInputs += (ceilingHorizontalDir * (_baseSpeed * _eylauBuffFactor * _wallrideMvtSpeedFactor) * -movementDot * Time.deltaTime);
     }
 
     public void ApplyJumpingGravity()
@@ -709,7 +709,7 @@ public class Player : LocalManager<Player>
         Vector3 slopeHorizontalDir = new Vector3(slopeDir.x, 0, slopeDir.z).normalized;
         float movementDot = Vector3.Dot(slopeHorizontalDir, _movementInputs.normalized);
         if (movementDot < 0)
-            _movementInputs += (slopeHorizontalDir * _currentSpeed * -movementDot * Time.deltaTime);
+            _movementInputs += (slopeHorizontalDir * (_baseSpeed * _eylauBuffFactor * _wallrideMvtSpeedFactor) * -movementDot * Time.deltaTime);
     }
 
     #endregion
