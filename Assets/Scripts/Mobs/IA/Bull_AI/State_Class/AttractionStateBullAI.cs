@@ -42,7 +42,7 @@ namespace State.AIBull
 
             ApplyAttraction();
 
-            if (distDestination <1)
+            if (!globalRef.isInEylau)
             {
                 applyGravity = true;
             }
@@ -74,9 +74,9 @@ namespace State.AIBull
             }
 
             globalRef.characterController.Move(move * globalRef.AttractionSO.speed * deltaTime);
-
+/*
             if(globalRef.characterController.velocity == Vector3.zero)
-                applyGravity = true;
+                applyGravity = true;*/
         }
         void SetGravity()
         {
