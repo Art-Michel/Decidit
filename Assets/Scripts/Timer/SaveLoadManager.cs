@@ -53,7 +53,7 @@ public static class SaveLoadManager
 [Serializable]
 public class TimerData
 {
-    public float[] bestTime = new float[5];
+    public float[] bestTime = new float[3];
 
     public TimerData(TimerManager timerManager)
     {

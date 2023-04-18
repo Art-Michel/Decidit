@@ -8,7 +8,7 @@ public class TimerManager : ProjectManager<TimerManager>
     public bool isInCorridor;
     public bool endGame;
 
-    [SerializeField] public float[] bestTime = new float[5];
+    [SerializeField] public float[] bestTime = new float[3];
 
     void OnLevelWasLoaded()
     {

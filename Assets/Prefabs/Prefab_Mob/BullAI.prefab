@@ -254,7 +254,6 @@ GameObject:
   m_Component:
   - component: {fileID: 336271811}
   - component: {fileID: 336271812}
-  - component: {fileID: 9171176309151861374}
   m_Layer: 0
   m_Name: HitboxRush
   m_TagString: Untagged
@@ -300,38 +299,10 @@ MonoBehaviour:
   _shouldSplashBloodOnHit: 0
   _canCriticalHit: 1
   _radius: 0.91
-  _damage: 0
+  _damage: 1
   _knockbackForce: 30
   _knockbackAngle: {x: 0, y: 1, z: 1}
   _delayBetweenHits: 0
---- !u!114 &9171176309151861374
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 336271810}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 911d472b620303c41b17dda0513b7889, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _shouldCollideWith:
-    serializedVersion: 2
-    m_Bits: 0
-  _canHitThroughWalls: 0
-  _shouldNotHitThrough:
-    serializedVersion: 2
-    m_Bits: 0
-  _canMultiHit: 0
-  _shouldSplashBloodOnHit: 0
-  _canCriticalHit: 1
-  _radius: 0.2
-  _damage: 10
-  _knockbackForce: 10
-  _knockbackAngle: {x: 0, y: 0, z: 0}
-  _delayBetweenHits: 0
-  rushState: {fileID: 8100736487116432644}
 --- !u!1 &1430261728
 GameObject:
   m_ObjectHideFlags: 0
@@ -1356,17 +1327,9 @@ MonoBehaviour:
   rushBullSO_VeryEZ: {fileID: 11400000, guid: d1f2c572ce195fd44bd15be5b22880aa, type: 2}
   knockBackBullSO_VeryEZ: {fileID: 11400000, guid: a2c3fadaf957ddd448957600cb094ed8,
     type: 2}
-  baseMoveBullSO_EZ: {fileID: 11400000, guid: f1f55874d69354f4191d9aee35e3e75c, type: 2}
-  rushBullSO_EZ: {fileID: 11400000, guid: ac628e5ea4cebe343aae18034362a953, type: 2}
-  knockBackBullSO_EZ: {fileID: 11400000, guid: 410882257857e644e8174a34cca55d07, type: 2}
   baseMoveBullSO_Med: {fileID: 11400000, guid: 518047779196eed40b0e6d4ac5c966a3, type: 2}
   rushBullSO_Med: {fileID: 11400000, guid: c7f4e39b1714035428d62841521b9313, type: 2}
   knockBackBullSO_Med: {fileID: 11400000, guid: 073e42a0987ba9543b0f6ca14895c866,
-    type: 2}
-  baseMoveBullSO_Hard: {fileID: 11400000, guid: ccc08a4b81238ae47b6b5097d86f6a2f,
-    type: 2}
-  rushBullSO_Hard: {fileID: 11400000, guid: 9dd1364f33936e14e86280711f86b237, type: 2}
-  knockBackBullSO_Hard: {fileID: 11400000, guid: 88d6b2919abb74045a1e1d84550f48b8,
     type: 2}
   baseMoveBullSO_VeryHard: {fileID: 11400000, guid: f4dde34cbbd257e4bb75c16b2c2739ec,
     type: 2}
@@ -1807,7 +1770,7 @@ MonoBehaviour:
   _shouldSplashBloodOnHit: 0
   _canCriticalHit: 1
   _radius: 1.5
-  _damage: 0
+  _damage: 1
   _knockbackForce: 14
   _knockbackAngle: {x: 0, y: 1, z: 1}
   _delayBetweenHits: 0

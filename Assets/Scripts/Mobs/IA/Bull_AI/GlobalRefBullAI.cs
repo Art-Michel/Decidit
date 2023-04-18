@@ -73,17 +73,9 @@ namespace State.AIBull
         [Foldout("VeryEasy")] public RushBullParameterSO rushBullSO_VeryEZ;
         [Foldout("VeryEasy")] public KnockBackBullSO knockBackBullSO_VeryEZ;
 
-        [Foldout("Easy")] public BaseMoveBullParameterSO baseMoveBullSO_EZ;
-        [Foldout("Easy")] public RushBullParameterSO rushBullSO_EZ;
-        [Foldout("Easy")] public KnockBackBullSO knockBackBullSO_EZ;
-
         [Foldout("Medium")] public BaseMoveBullParameterSO baseMoveBullSO_Med;
         [Foldout("Medium")] public RushBullParameterSO rushBullSO_Med;
         [Foldout("Medium")] public KnockBackBullSO knockBackBullSO_Med;
-
-        [Foldout("Hard")] public BaseMoveBullParameterSO baseMoveBullSO_Hard;
-        [Foldout("Hard")] public RushBullParameterSO rushBullSO_Hard;
-        [Foldout("Hard")] public KnockBackBullSO knockBackBullSO_Hard;
 
         [Foldout("VeryHard")] public BaseMoveBullParameterSO baseMoveBullSO_VeryHard;
         [Foldout("VeryHard")] public RushBullParameterSO rushBullSO_VeryHard;
@@ -113,24 +105,12 @@ namespace State.AIBull
                     break;
 
                 case 1:
-                    baseMoveBullSO = Instantiate(baseMoveBullSO_EZ);
-                    rushBullSO = Instantiate(rushBullSO_EZ);
-                    knockBackBullSO = Instantiate(knockBackBullSO_EZ);
-                    break;
-
-                case 2:
                     baseMoveBullSO = Instantiate(baseMoveBullSO_Med);
                     rushBullSO = Instantiate(rushBullSO_Med);
                     knockBackBullSO = Instantiate(knockBackBullSO_Med);
                     break;
 
-                case 3:
-                    baseMoveBullSO = Instantiate(baseMoveBullSO_Hard);
-                    rushBullSO = Instantiate(rushBullSO_Hard);
-                    knockBackBullSO = Instantiate(knockBackBullSO_Hard);
-                    break;
-
-                case 4:
+                case 2:
                     baseMoveBullSO = Instantiate(baseMoveBullSO_VeryHard);
                     rushBullSO = Instantiate(rushBullSO_VeryHard);
                     knockBackBullSO = Instantiate(knockBackBullSO_VeryHard);

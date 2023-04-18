@@ -62,9 +62,7 @@ namespace State.AICAC
         public KnockBackParameterAICAC knockBackAICACSO;
 
         [Foldout("VeryEasy")] public BaseMoveParameterAICAC baseMoveAICACSO_VeryEZ;
-        [Foldout("Easy")] public BaseMoveParameterAICAC baseMoveAICACSO_EZ;
         [Foldout("Medium")] public BaseMoveParameterAICAC baseMoveAICACSO_Med;
-        [Foldout("Hard")] public BaseMoveParameterAICAC baseMoveAICACSO_Hard;
         [Foldout("VeryHard")] public BaseMoveParameterAICAC baseMoveAICACSO_VeryHard;
 
         void Awake()
@@ -86,18 +84,10 @@ namespace State.AICAC
                     break;
 
                 case 1:
-                    baseMoveAICACSO = Instantiate(baseMoveAICACSO_EZ);
-                    break;
-
-                case 2:
                     baseMoveAICACSO = Instantiate(baseMoveAICACSO_Med);
                     break;
 
-                case 3:
-                    baseMoveAICACSO = Instantiate(baseMoveAICACSO_Hard);
-                    break;
-
-                case 4:
+                case 2:
                     baseMoveAICACSO = Instantiate(baseMoveAICACSO_VeryHard);
                     break;
             }
