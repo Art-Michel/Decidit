@@ -31,6 +31,14 @@ namespace State.AIBull
 
         [SerializeField] bool stopLockPlayerRush;
 
+        [Header("Animation")]
+        AnimatorStateInfo animStateInfo;
+        AnimatorClipInfo[] currentClipInfo;
+        public string currentAnimName;
+        public float animTime;
+
+        bool endRush;
+
         public override void InitState(StateControllerBull stateController)
         {
             base.InitState(stateController);
@@ -64,6 +72,12 @@ namespace State.AIBull
 
         private void Update()
         {
+            currentClipInfo = globalRef.myAnimator.GetCurrentAnimatorClipInfo(0);
+            currentAnimName = currentClipInfo[0].clip.name;
+
+            animStateInfo = globalRef.myAnimator.GetCurrentAnimatorStateInfo(0);
+            animTime = animStateInfo.normalizedTime;
+
             if (Time.timeScale > 0)
             {
                 SetDestination();
@@ -95,8 +109,8 @@ namespace State.AIBull
                     {
                         if(CheckDistDone() > rushBullSO.rushInertieSetDistance)
                         {
-                            Debug.Log("Stop Rush");
-                            stateController.SetActiveState(StateControllerBull.AIState.Idle);
+                            StopRush();
+                            //stateController.SetActiveState(StateControllerBull.AIState.Idle);
                         }
                     }
                     if (!stopLockPlayerRush)
@@ -195,12 +209,6 @@ namespace State.AIBull
                 StopRush();
             }
         }
-        /*void CheckSpeed()
-        {
-            if(globalRef.characterController.velocity.magnitude ==0)
-                StopRush();
-        }*/
-
 
         void CheckObstacle()
         {
@@ -378,9 +386,23 @@ namespace State.AIBull
             }
         }
 
-        void StopRush()
+        public void StopRush()
         {
-            if(delayInertieRushInWall <=0)
+            /*  if (delayInertieRushInWall <=0)
+              {
+                  AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "RushAttack");
+
+                  if (animTime > 1.0f && currentAnimName == "RushAttack")
+                      stateController.SetActiveState(StateControllerBull.AIState.Idle);
+              }*/
+            Debug.Log("Stop Rush");
+            if (!endRush)
+            {
+                AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "RushAttack");
+                endRush = true;
+            }
+
+            if (animTime > 1.0f && currentAnimName == "Dash Attack")
                 stateController.SetActiveState(StateControllerBull.AIState.Idle);
         }
         private void OnDisable()
@@ -396,7 +418,8 @@ namespace State.AIBull
                 rushBullSO.ennemiInCollider.Clear();
                 rushBullSO.AIVelocity = Vector3.zero;
             }
-
+            endRush = false;
+            animTime = 0;
             globalRef.launchRush = false;
             canStartRush = false;
             lockPlayer = false;

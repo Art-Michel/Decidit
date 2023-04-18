@@ -63,7 +63,8 @@ namespace State.AIBull
                 {
                     if(globalRef.distPlayer < globalRef.baseMoveBullSO.distActiveAttack && hitPlayer)
                     {
-                        stateController.SetActiveState(StateControllerBull.AIState.BaseAttack);
+                        //stateController.SetActiveState(StateControllerBull.AIState.BaseAttack);
+                        stateController.SetActiveState(StateControllerBull.AIState.Rush);
                     }
                 }
             }
@@ -129,7 +130,8 @@ namespace State.AIBull
 
                 if (globalRef.agentLinkMover._StopJump)
                 {
-                    AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "StartJump");
+                    if (globalRef.globalRefAnimator.currentAnimName != "StartJump")
+                        AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "StartJump");
 
                     if (globalRef.baseMoveBullSO.delayBeforeJump <= 0)
                     {
@@ -215,7 +217,7 @@ namespace State.AIBull
 
         void LaunchRush()
         {
-            if(globalRef.distPlayer < globalRef.rushBullSO.distRush && globalRef.distPlayer > globalRef.baseAttackBullSO.distLaunchAttackState && hitPlayer)
+            if(globalRef.distPlayer < globalRef.rushBullSO.distRush && globalRef.distPlayer > globalRef.baseAttackBullSO.distLaunchAttackState && hitPlayer && !isOnNavLink)
                 stateController.SetActiveState(StateControllerBull.AIState.Rush);
         }
 

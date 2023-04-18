@@ -254,6 +254,7 @@ GameObject:
   m_Component:
   - component: {fileID: 336271811}
   - component: {fileID: 336271812}
+  - component: {fileID: 9171176309151861374}
   m_Layer: 0
   m_Name: HitboxRush
   m_TagString: Untagged
@@ -303,6 +304,34 @@ MonoBehaviour:
   _knockbackForce: 30
   _knockbackAngle: {x: 0, y: 1, z: 1}
   _delayBetweenHits: 0
+--- !u!114 &9171176309151861374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 336271810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 911d472b620303c41b17dda0513b7889, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shouldCollideWith:
+    serializedVersion: 2
+    m_Bits: 0
+  _canHitThroughWalls: 0
+  _shouldNotHitThrough:
+    serializedVersion: 2
+    m_Bits: 0
+  _canMultiHit: 0
+  _shouldSplashBloodOnHit: 0
+  _canCriticalHit: 1
+  _radius: 0.2
+  _damage: 10
+  _knockbackForce: 10
+  _knockbackAngle: {x: 0, y: 0, z: 0}
+  _delayBetweenHits: 0
+  rushState: {fileID: 8100736487116432644}
 --- !u!1 &1430261728
 GameObject:
   m_ObjectHideFlags: 0
@@ -487,6 +516,8 @@ MonoBehaviour:
   delayInertieRushInWall: 0
   maxDelayInertieRushInWall: 0.3
   stopLockPlayerRush: 0
+  currentAnimName: 
+  animTime: 0
 --- !u!65 &9191719257376539284
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1028,6 +1059,7 @@ Transform:
   - {fileID: 2987060288021140617}
   - {fileID: 1967679470}
   - {fileID: 3479348605514364969}
+  - {fileID: 1919202612426781099}
   - {fileID: 1687364288869411808}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -1287,13 +1319,14 @@ MonoBehaviour:
   agentLinkMover: {fileID: 0}
   characterController: {fileID: 4926933427431696317}
   rushManager: {fileID: 0}
-  myAnimator: {fileID: 3473622417478233780}
+  myAnimator: {fileID: 6731853409956185787}
   globalRefAnimator: {fileID: 1527049004980208940}
   animEventRusher: {fileID: 8364755165923742079}
   isInEylau: 0
   slowSpeed: 4
   slowSpeedRot: 4
   slowRatio: 4
+  isInSynergyAttraction: 0
   sphereDebug: {fileID: 0}
   allMask:
     serializedVersion: 2
@@ -1512,7 +1545,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5314086221994346230}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!2083052967 &1254291752276015163
 VisualEffect:
@@ -1884,6 +1917,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SK_Shredoss_Run_Blockout Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 807895429911371309, guid: 9f2070cae84313140a9f38b9f2506097,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 939395361282267698, guid: 9f2070cae84313140a9f38b9f2506097,
         type: 3}
@@ -2865,12 +2903,6 @@ CapsuleCollider:
     type: 3}
   m_PrefabInstance: {fileID: 3473622417255447742}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &3473622417478233780 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 2110231050, guid: 9f2070cae84313140a9f38b9f2506097,
-    type: 3}
-  m_PrefabInstance: {fileID: 3473622417255447742}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3479348605514364969 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 35439666710119575, guid: 9f2070cae84313140a9f38b9f2506097,
@@ -3691,4 +3723,85 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5596663437359879442, guid: 52825329bb0a73f48ad1e8f4436573a1,
     type: 3}
   m_PrefabInstance: {fileID: 6404695434071592602}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6731853409754074247
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 5314086221994346230}
+    m_Modifications:
+    - target: {fileID: 5174136355178413356, guid: 271cfe67483d3074f8836833216a727d,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174136355178413356, guid: 271cfe67483d3074f8836833216a727d,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 13.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174136355178413356, guid: 271cfe67483d3074f8836833216a727d,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.0199997
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174136355178413356, guid: 271cfe67483d3074f8836833216a727d,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 5.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174136355178413356, guid: 271cfe67483d3074f8836833216a727d,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174136355178413356, guid: 271cfe67483d3074f8836833216a727d,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174136355178413356, guid: 271cfe67483d3074f8836833216a727d,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174136355178413356, guid: 271cfe67483d3074f8836833216a727d,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174136355178413356, guid: 271cfe67483d3074f8836833216a727d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174136355178413356, guid: 271cfe67483d3074f8836833216a727d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174136355178413356, guid: 271cfe67483d3074f8836833216a727d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5514069734630860694, guid: 271cfe67483d3074f8836833216a727d,
+        type: 3}
+      propertyPath: m_Name
+      value: Shrednoss_Mesh_Anim Variant
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 271cfe67483d3074f8836833216a727d, type: 3}
+--- !u!4 &1919202612426781099 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5174136355178413356, guid: 271cfe67483d3074f8836833216a727d,
+    type: 3}
+  m_PrefabInstance: {fileID: 6731853409754074247}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &6731853409956185787 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 202639932, guid: 271cfe67483d3074f8836833216a727d,
+    type: 3}
+  m_PrefabInstance: {fileID: 6731853409754074247}
   m_PrefabAsset: {fileID: 0}
