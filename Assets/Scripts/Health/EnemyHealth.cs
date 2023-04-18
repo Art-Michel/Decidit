@@ -112,6 +112,31 @@ public class EnemyHealth : Health
         }
     }
 
+    // [Button]
+    private void DecalerSickBoxes()
+    {
+        foreach (BoxCollider box in _sickboxes)
+        {
+            GameObject son = new GameObject();
+            son.transform.parent = box.transform;
+            son.transform.localPosition = Vector3.zero;
+            son.transform.localRotation = Quaternion.identity;
+            son.transform.localScale = Vector3.zero;
+            son.transform.name = ("Sickbox");
+            son.layer = 21;
+
+            SynergyTrigger trigger = son.AddComponent<SynergyTrigger>();
+            trigger.Chant = Synergies.Chants.MUSE;
+
+            BoxCollider newBox = son.AddComponent<BoxCollider>();
+            newBox.size = box.size;
+            newBox.center = box.center;
+            newBox.isTrigger = true;
+
+            Destroy(box);
+        }
+    }
+
     void OnEnable()
     {
         if (this.Room == null && DungeonGenerator.Instance != null)
