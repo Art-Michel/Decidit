@@ -117,7 +117,7 @@ public class Player : LocalManager<Player>
     private float _coyoteTime;
     private const float _coyoteMaxTime = 0.2f;
     [Foldout("Eylau Settings")]
-    private float _eylauBuffFactor = 1.5f;
+    private float _eylauBuffFactor = 1.0f;
 
     #endregion
 
@@ -219,6 +219,7 @@ public class Player : LocalManager<Player>
     [System.NonSerialized] public bool JustWalljumped = false;
     private float _wallJumpCooldown;
     private const float _wallJumpMaxCooldown = 0.25f;
+    private float _wallrideMvtSpeedFactor = 1.0f;
 
     public Vector3 FinalMovement { get; private set; }
     #endregion
@@ -245,6 +246,8 @@ public class Player : LocalManager<Player>
         _canMove = true;
         ResetAcceleration();
         SetCameraInvert();
+        ResetEylauMovementBuff();
+        ResetWallridingMovementSpeed();
         //StopShake();
     }
 
@@ -716,16 +719,13 @@ public class Player : LocalManager<Player>
     public void EylauMovementBuff()
     {
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/CimetièreEyleau/BuffStart", 1f, gameObject);
-        _currentSpeed = _baseSpeed * _eylauBuffFactor;
-        CurrentJumpStrength = _baseJumpStrength * _eylauBuffFactor;
+        _eylauBuffFactor = 1.5f;
     }
 
     public void ResetEylauMovementBuff()
     {
-        //TODO ART le son se produit quand on lance le sort
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/CimetièreEyleau/BuffEnd", 1f, gameObject);
-        _currentSpeed = _baseSpeed;
-        CurrentJumpStrength = _baseJumpStrength;
+        _eylauBuffFactor = 1.0f;
     }
 
     private Vector3 MakeDirectionCameraRelative(Vector2 inputDirection)
@@ -766,7 +766,7 @@ public class Player : LocalManager<Player>
         //Store this frame's input
         _lastFrameMovementInputs = _movementInputs;
 
-        _movementInputs *= Time.deltaTime * _currentSpeed;
+        _movementInputs *= Time.deltaTime * _baseSpeed * _eylauBuffFactor * _wallrideMvtSpeedFactor;
     }
 
     private void HandleMovementAcceleration()
@@ -903,6 +903,16 @@ public class Player : LocalManager<Player>
         _currentWall = new RaycastHit();
         _previousWall = new RaycastHit();
         _wallCoyoteTime = -1.0f;
+    }
+
+    public void SetWallridingMovementSpeed()
+    {
+        _wallrideMvtSpeedFactor = 0.5f;
+    }
+
+    public void ResetWallridingMovementSpeed()
+    {
+        _wallrideMvtSpeedFactor = 1.0f;
     }
 
     public void CheckForWallride()

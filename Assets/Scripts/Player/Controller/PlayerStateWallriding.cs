@@ -10,6 +10,7 @@ public class PlayerStateWallriding : PlayerState
     {
         _player.GlobalMomentum.y = 0.0f;
         _player.CurrentlyAppliedGravity = _player.WallRidingGravity;
+        _player.SetWallridingMovementSpeed();
 
         // _player.KillGravity();
         // _player.KillMomentum();
@@ -29,6 +30,7 @@ public class PlayerStateWallriding : PlayerState
     public override void Exit()
     {
         _player.ResetAcceleration();
+        _player.ResetWallridingMovementSpeed();
     }
 
 }
