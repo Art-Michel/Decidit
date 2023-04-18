@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1967679470}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &40948153
 MonoBehaviour:
@@ -648,6 +648,7 @@ Transform:
   - {fileID: 1159348063466718869}
   - {fileID: 1728274096}
   - {fileID: 1072503307160243421}
+  - {fileID: 6723707744043891227}
   - {fileID: 40948152}
   m_Father: {fileID: 5314086221994346230}
   m_RootOrder: 6
@@ -1256,8 +1257,10 @@ MonoBehaviour:
   - {fileID: 5451742164594196205}
   - {fileID: 8100736487116432644}
   - {fileID: 8856063630455866289}
+  - {fileID: 6068158165706634788}
   - {fileID: 40948153}
   timeToEnable: 0
+  currentState: 0
 --- !u!114 &5314086220186537620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1306,6 +1309,7 @@ MonoBehaviour:
   RayRushLeft: {fileID: 7112576708399453213}
   refRushStateObj: {fileID: 1728274095}
   forceRush: 0
+  ActiveAttraction: 0
   isDead: 0
   baseIdleBullSO: {fileID: 11400000, guid: 87061001b673e2241ad66755c7e50389, type: 2}
   baseMoveBullSO: {fileID: 11400000, guid: f1f55874d69354f4191d9aee35e3e75c, type: 2}
@@ -1313,6 +1317,7 @@ MonoBehaviour:
   rushBullSO: {fileID: 11400000, guid: ac628e5ea4cebe343aae18034362a953, type: 2}
   knockBackBullSO: {fileID: 11400000, guid: 410882257857e644e8174a34cca55d07, type: 2}
   deathBullSO: {fileID: 11400000, guid: dbf870102e3694f41a0d1971f0353ccd, type: 2}
+  AttractionSO: {fileID: 11400000, guid: 16899e43ab0cae04fb6a5e24dec4aecd, type: 2}
   baseMoveBullSO_VeryEZ: {fileID: 11400000, guid: 75ccc7d408550cd44a12a843f6f3b40b,
     type: 2}
   rushBullSO_VeryEZ: {fileID: 11400000, guid: d1f2c572ce195fd44bd15be5b22880aa, type: 2}
@@ -1632,6 +1637,56 @@ MonoBehaviour:
   m_Property:
     m_Name: Transform
   Target: {fileID: 0}
+--- !u!1 &7097658042414828597
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6723707744043891227}
+  - component: {fileID: 6068158165706634788}
+  m_Layer: 7
+  m_Name: BaseAttraction
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &6723707744043891227
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7097658042414828597}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1967679470}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6068158165706634788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7097658042414828597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42e1f9a764ff4f549a27700bd5f9a427, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  globalRef: {fileID: 5314086220186537620}
+  posAttraction: {fileID: 0}
+  applyGravity: 0
+  isGround: 0
+  distDetectGround: 1.5
+  distDestination: 0
 --- !u!1 &7166730755377289540
 GameObject:
   m_ObjectHideFlags: 0
@@ -1830,6 +1885,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: SK_Shredoss_Run_Blockout Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 939395361282267698, guid: 9f2070cae84313140a9f38b9f2506097,
+        type: 3}
+      propertyPath: _HoveredMaterial
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 939395361282267698, guid: 9f2070cae84313140a9f38b9f2506097,
+        type: 3}
+      propertyPath: _OverlapMaterial
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 939395361282267698, guid: 9f2070cae84313140a9f38b9f2506097,
+        type: 3}
+      propertyPath: _SelectedMaterial
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 939395361282267698, guid: 9f2070cae84313140a9f38b9f2506097,
+        type: 3}
+      propertyPath: _DisplayAllMaterial
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 954916288032395852, guid: 9f2070cae84313140a9f38b9f2506097,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1904,6 +1979,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 25.128393
+      objectReference: {fileID: 0}
+    - target: {fileID: 2609143562934906499, guid: 9f2070cae84313140a9f38b9f2506097,
+        type: 3}
+      propertyPath: _HoveredMaterial
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2609143562934906499, guid: 9f2070cae84313140a9f38b9f2506097,
+        type: 3}
+      propertyPath: _OverlapMaterial
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2609143562934906499, guid: 9f2070cae84313140a9f38b9f2506097,
+        type: 3}
+      propertyPath: _SelectedMaterial
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2609143562934906499, guid: 9f2070cae84313140a9f38b9f2506097,
+        type: 3}
+      propertyPath: _DisplayAllMaterial
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2647925872811790820, guid: 9f2070cae84313140a9f38b9f2506097,
         type: 3}
@@ -2004,6 +2099,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: -9.176461
+      objectReference: {fileID: 0}
+    - target: {fileID: 4038576905516981501, guid: 9f2070cae84313140a9f38b9f2506097,
+        type: 3}
+      propertyPath: _HoveredMaterial
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4038576905516981501, guid: 9f2070cae84313140a9f38b9f2506097,
+        type: 3}
+      propertyPath: _OverlapMaterial
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4038576905516981501, guid: 9f2070cae84313140a9f38b9f2506097,
+        type: 3}
+      propertyPath: _SelectedMaterial
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4038576905516981501, guid: 9f2070cae84313140a9f38b9f2506097,
+        type: 3}
+      propertyPath: _DisplayAllMaterial
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4105749722280254681, guid: 9f2070cae84313140a9f38b9f2506097,
         type: 3}

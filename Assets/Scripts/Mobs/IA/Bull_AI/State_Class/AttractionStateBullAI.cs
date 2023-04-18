@@ -74,6 +74,9 @@ namespace State.AIBull
             }
 
             globalRef.characterController.Move(move * globalRef.AttractionSO.speed * deltaTime);
+
+            if(globalRef.characterController.velocity == Vector3.zero)
+                applyGravity = true;
         }
         void SetGravity()
         {
