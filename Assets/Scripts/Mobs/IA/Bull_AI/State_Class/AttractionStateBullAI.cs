@@ -21,20 +21,12 @@ namespace State.AIBull
             state = StateControllerBull.AIState.Attraction;
         }
 
-
-        // Start is called before the first frame update
-        void Start()
-        {
-
-        }
-
         private void OnEnable()
         {
             globalRef.agent.enabled = false;
             globalRef.characterController.enabled = true;
         }
 
-        // Update is called once per frame
         void Update()
         {
             deltaTime = Time.deltaTime;
@@ -42,7 +34,7 @@ namespace State.AIBull
 
             ApplyAttraction();
 
-            if (!globalRef.isInEylau)
+            if (!globalRef.isInSynergyAttraction)
             {
                 applyGravity = true;
             }
@@ -74,9 +66,6 @@ namespace State.AIBull
             }
 
             globalRef.characterController.Move(move * globalRef.AttractionSO.speed * deltaTime);
-/*
-            if(globalRef.characterController.velocity == Vector3.zero)
-                applyGravity = true;*/
         }
         void SetGravity()
         {

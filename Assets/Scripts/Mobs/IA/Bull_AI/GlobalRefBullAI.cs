@@ -32,6 +32,9 @@ namespace State.AIBull
         public float slowSpeedRot;
         public float slowRatio;
 
+        [Header("SynergyAttraction References")]
+        public bool isInSynergyAttraction;
+
         [Header("Debug Destination")]
         public Transform sphereDebug;
         public LayerMask allMask;
@@ -146,7 +149,7 @@ namespace State.AIBull
             else
                 myAnimator.speed = 1;
 
-            if (isInEylau)
+            if (isInSynergyAttraction)
                 ActiveAttractionState();
         }
 
