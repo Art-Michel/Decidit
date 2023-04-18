@@ -40,7 +40,7 @@ public class BulletAI : Health
     private void OnTriggerEnter(Collider collider)
     {
         if (collider.gameObject.layer == 9)
-            gameObject.SetActive(false);
+            TakeDamage(0f);
 
         if (collider.gameObject.name == "Spell_Eylau_Area")
         {
