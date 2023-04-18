@@ -83,6 +83,8 @@ public class PlayerSettings : MonoBehaviour
     public void SavePrefs()
     {
         //TMTC ça save
+        PlayerPrefs.SetFloat("XSensivity", xSensivity);
+        PlayerPrefs.SetFloat("YSensivity", ySensivity);
         PlayerPrefs.SetFloat("MasterBaseVolume", masterVolumeNumber);
         PlayerPrefs.SetFloat("SFXBaseVolume", SFXVolumeNumber);
         PlayerPrefs.SetFloat("MusicBaseVolume", musicVolumeNumber);
@@ -145,6 +147,7 @@ public class PlayerSettings : MonoBehaviour
         xSensivity = x;
         ySensivity = y;
         //ta fonction avec xSensivity pour x et ySensivity pour y
+        SavePrefs();//Sauvegarde
     }
 
     public void ChangeControllerSensivity(float x, float y)
@@ -152,6 +155,7 @@ public class PlayerSettings : MonoBehaviour
         xSensivity = x;
         ySensivity = y;
         //ta fonction avec xSensivity pour x et ySensivity pour y
+        SavePrefs();//Sauvegarde
     }
     #endregion
 
