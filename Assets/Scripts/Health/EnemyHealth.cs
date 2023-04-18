@@ -112,7 +112,7 @@ public class EnemyHealth : Health
         }
     }
 
-    // [Button]
+    [Button]
     private void DecalerSickBoxes()
     {
         foreach (BoxCollider box in _sickboxes)
