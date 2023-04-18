@@ -23683,6 +23683,7 @@ MonoBehaviour:
   _rStickAccelerationSpeed: 0.2
   _cameraSmoothness: 1
   _baseJumpStrength: 13
+  CurrentJumpStrength: 0
   _airborneDrag: 4.5
   _jumpingDrag: 3
   _wallrideDrag: 0.4
@@ -23725,8 +23726,10 @@ MonoBehaviour:
   _maxDiVelocity: 64
   _minMovementVelocity: 5
   _maxMovementVelocity: 20
+  GlobalMomentum: {x: 0, y: 0, z: 0}
   WallRidingGravity: -1
-  _wallJumpForce: 15
+  _wallJumpHorizontalStrength: 15
+  WallJumpVerticalStrength: 2
   _wallInputJumpForce: 0
   _maxNumberOfWalljumps: 2
   _canWallrideWith0Wj: 0
@@ -39336,32 +39339,32 @@ PrefabInstance:
     - target: {fileID: 5693946722745220949, guid: 9ccb92e1eea229b49b3d80b43adcf676,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 3
+      value: 1.25
       objectReference: {fileID: 0}
     - target: {fileID: 5693946722745220949, guid: 9ccb92e1eea229b49b3d80b43adcf676,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 3
+      value: 1.25
       objectReference: {fileID: 0}
     - target: {fileID: 5693946722745220949, guid: 9ccb92e1eea229b49b3d80b43adcf676,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 3.4
+      value: 1.25
       objectReference: {fileID: 0}
     - target: {fileID: 5693946722745220949, guid: 9ccb92e1eea229b49b3d80b43adcf676,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0
+      value: -6.81
       objectReference: {fileID: 0}
     - target: {fileID: 5693946722745220949, guid: 9ccb92e1eea229b49b3d80b43adcf676,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.21
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5693946722745220949, guid: 9ccb92e1eea229b49b3d80b43adcf676,
         type: 3}
       propertyPath: m_ConstrainProportionsScale
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6867948461227344954, guid: 9ccb92e1eea229b49b3d80b43adcf676,
         type: 3}
@@ -39388,6 +39391,12 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8695094036483371248, guid: 9ccb92e1eea229b49b3d80b43adcf676,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 7050138996528165218, guid: 102581b8d0b3c754b8628850543dc193,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ccb92e1eea229b49b3d80b43adcf676, type: 3}
 --- !u!4 &58149960231853385 stripped

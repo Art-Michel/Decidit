@@ -184,7 +184,7 @@ public class Player : LocalManager<Player>
     Vector3 _rawInputs;
     private Vector3 _movementInputs; // X is Left-Right and Z is Backward-Forward
     private Vector3 _lastFrameMovementInputs;
-    private Vector3 _globalMomentum;
+    public Vector3 GlobalMomentum;
     private float _movementAcceleration;
     private bool _isPressingADirection;
     private float _movementAccelerationT;
@@ -237,7 +237,7 @@ public class Player : LocalManager<Player>
     {
         ForceRotation(transform);
         _movementInputs = Vector2.zero;
-        _globalMomentum = Vector3.zero;
+        GlobalMomentum = Vector3.zero;
         _currentSpeed = _baseSpeed;
         CurrentJumpStrength = _baseJumpStrength;
         CurrentlyAppliedGravity = 0;
@@ -285,8 +285,8 @@ public class Player : LocalManager<Player>
             _fsm.CurrentState.StateUpdate();
 
         //Final Movement Formula //I got lost with the deltatime stuff but i swear it works perfectly
-        FinalMovement = (_globalMomentum * Time.deltaTime)
-        + (_movementInputs * Mathf.InverseLerp(_maxMovementVelocity, 0.0f, _globalMomentum.magnitude))
+        FinalMovement = (GlobalMomentum * Time.deltaTime)
+        + (_movementInputs * Mathf.InverseLerp(_maxMovementVelocity, 0.0f, GlobalMomentum.magnitude))
         + (Vector3.up * CurrentlyAppliedGravity * Time.deltaTime)
         + (_steepSlopesMovement * Time.deltaTime);
 
@@ -316,9 +316,9 @@ public class Player : LocalManager<Player>
 
         if (_debugGlobalVelocityText)
             _debugGlobalVelocityText.text =
-            ("Momentum Velocity: " + _globalMomentum.magnitude + "\nx= " + (_globalMomentum.x).ToString("F1") +
-            "\ny= " + (_globalMomentum.y).ToString("F1") +
-            "\nz= " + (_globalMomentum.z).ToString("F1"));
+            ("Momentum Velocity: " + GlobalMomentum.magnitude + "\nx= " + (GlobalMomentum.x).ToString("F1") +
+            "\ny= " + (GlobalMomentum.y).ToString("F1") +
+            "\nz= " + (GlobalMomentum.z).ToString("F1"));
 
         if (_debugGravityText)
             _debugGravityText.text = ("Gravity:\n   " + CurrentlyAppliedGravity.ToString("F1"));
@@ -525,7 +525,7 @@ public class Player : LocalManager<Player>
         //Reset many values when landing
         _currentFriction = _groundedFriction;
         CurrentlyAppliedGravity = 0;
-        _globalMomentum.y = 0;
+        GlobalMomentum.y = 0;
         _coyoteTime = _coyoteMaxTime;
         _currentNumberOfWalljumps = _maxNumberOfWalljumps;
         ResetWalls();
@@ -573,7 +573,7 @@ public class Player : LocalManager<Player>
 
         bool _isJumpingNextToWall = _fsm.CurrentState.Name == PlayerStatesList.JUMPING;
         _isJumpingNextToWall = _isJumpingNextToWall || _fsm.CurrentState.Name == PlayerStatesList.JUMPINGUPSLOPE;
-        _isJumpingNextToWall = _isJumpingNextToWall || (_fsm.CurrentState.Name == PlayerStatesList.AIRBORNE && _globalMomentum.y > 0.0f);
+        _isJumpingNextToWall = _isJumpingNextToWall || (_fsm.CurrentState.Name == PlayerStatesList.AIRBORNE && GlobalMomentum.y > 0.0f);
         _isJumpingNextToWall = _isJumpingNextToWall && _currentWall.transform != null;
         if (_isJumpingNextToWall)
         {
@@ -811,24 +811,24 @@ public class Player : LocalManager<Player>
             _fsm.ChangeState(PlayerStatesList.AIRBORNE);
         }
         FinalMovement += blow.normalized;
-        _globalMomentum += blow;
+        GlobalMomentum += blow;
     }
 
     private void UpdateGlobalMomentum()
     {
         //Add Input Vector to Momentum
-        _globalMomentum += _movementInputs * Mathf.InverseLerp(_maxDiVelocity, _minDiVelocity, _globalMomentum.magnitude);
+        GlobalMomentum += _movementInputs * Mathf.InverseLerp(_maxDiVelocity, _minDiVelocity, GlobalMomentum.magnitude);
         // _globalMomentum += _movementInputs * _directionnalInfluence;
 
         //Store last frame's direction inside a variable
-        var lastFrameXVelocitySign = Mathf.Sign(_globalMomentum.x);
-        var lastFrameZVelocitySign = Mathf.Sign(_globalMomentum.z);
+        var lastFrameXVelocitySign = Mathf.Sign(GlobalMomentum.x);
+        var lastFrameZVelocitySign = Mathf.Sign(GlobalMomentum.z);
 
-        _globalMomentum = _globalMomentum.normalized * (_globalMomentum.magnitude - _currentFriction * Time.deltaTime);
+        GlobalMomentum = GlobalMomentum.normalized * (GlobalMomentum.magnitude - _currentFriction * Time.deltaTime);
 
         //If last frame's direction was opposite, snap to 0
-        if (Mathf.Sign(_globalMomentum.x) != lastFrameXVelocitySign) _globalMomentum.x = 0;
-        if (Mathf.Sign(_globalMomentum.z) != lastFrameZVelocitySign) _globalMomentum.z = 0;
+        if (Mathf.Sign(GlobalMomentum.x) != lastFrameXVelocitySign) GlobalMomentum.x = 0;
+        if (Mathf.Sign(GlobalMomentum.z) != lastFrameZVelocitySign) GlobalMomentum.z = 0;
     }
 
     private void ApplyMovementsToCharacter(Vector3 direction)
@@ -847,7 +847,15 @@ public class Player : LocalManager<Player>
 
     public void KillMomentum()
     {
-        _globalMomentum = Vector3.zero;
+        GlobalMomentum = Vector3.zero;
+        _steepSlopesMovement = Vector3.zero;
+        _movementAcceleration = 0.0f;
+    }
+
+    public void KillMomentumHorizontal()
+    {
+        GlobalMomentum.x = 0;
+        GlobalMomentum.z = 0;
         _steepSlopesMovement = Vector3.zero;
         _movementAcceleration = 0.0f;
     }
@@ -901,7 +909,7 @@ public class Player : LocalManager<Player>
     {
         bool cond = _currentWall.transform != null;
         cond = cond && Vector3.Dot(_currentWall.normal, _movementInputs.normalized) < _maxWallDotProduct;
-        cond = cond && _globalMomentum.y + CurrentlyAppliedGravity <= 0f;
+        cond = cond && GlobalMomentum.y + CurrentlyAppliedGravity <= 0f;
 
         if (!_canWallrideWith0Wj)
             cond = cond && _currentNumberOfWalljumps > 0;
@@ -931,8 +939,12 @@ public class Player : LocalManager<Player>
 
     public void StartWalljumping()
     {
+        KillMomentumHorizontal();
         if (_currentWall.transform != null)
+        {
             AddMomentum(new Vector3(_currentWall.normal.x, 0.0f, _currentWall.normal.z).normalized * _wallJumpHorizontalStrength + _rawInputs.normalized * _wallInputJumpForce);
+            Debug.Log("wj of of " + _currentWall.transform.name);
+        }
         else if (_previousWall.transform != null)
             AddMomentum(new Vector3(_previousWall.normal.x, 0.0f, _previousWall.normal.z).normalized * _wallJumpHorizontalStrength + _rawInputs.normalized * _wallInputJumpForce);
         else

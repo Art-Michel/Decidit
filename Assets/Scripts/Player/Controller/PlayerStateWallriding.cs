@@ -8,11 +8,12 @@ public class PlayerStateWallriding : PlayerState
 
     public override void Begin()
     {
-        _player.KillGravity();
+        if (_player.GlobalMomentum.y <= 0)
+            _player.CurrentlyAppliedGravity = _player.WallRidingGravity;
+        // _player.KillGravity();
         // _player.KillMomentum();
         // _player.ResetAcceleration();
         _player.ResetWallCoyoteTime();
-        _player.CurrentlyAppliedGravity = _player.WallRidingGravity;
         _player.CheckForJumpBuffer();
     }
 
