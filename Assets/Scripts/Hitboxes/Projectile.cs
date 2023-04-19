@@ -44,7 +44,7 @@ public class Projectile : Hitbox
     [SerializeField] private float _trailDelay = 0.025f;
     private float _lifeT;
     private float _trailDelayT;
-    protected Vector3 _direction;
+    public Vector3 Direction { get; protected set; }
     protected Vector3 _cameraDirection;
     protected Vector3 _lasterFramePosition;
     protected Vector3 _lastFramePosition;
@@ -57,7 +57,7 @@ public class Projectile : Hitbox
         transform.position = position;
         transform.rotation = Camera.main.transform.rotation;
 
-        _direction = direction;
+        Direction = direction;
         _lifeT = _lifeSpan;
         _trailDelayT = _trailDelay; //Delay before spawning the trail
         if (_trailRenderers.Length > 0)
@@ -71,8 +71,8 @@ public class Projectile : Hitbox
         if (_trailsVfx)
             _trailsVfx.SetActive(false);
         _mesh.SetActive(false);
-        _lasterFramePosition = position - _direction * _radius;
-        _lastFramePosition = position - _direction * _radius;
+        _lasterFramePosition = position - Direction * _radius;
+        _lastFramePosition = position - Direction * _radius;
         _spaceTraveledLast2Frames = Vector3.zero;
         _currentSpeed = _speed;
         this.enabled = true;
@@ -115,7 +115,7 @@ public class Projectile : Hitbox
 
     protected virtual void Move()
     {
-        transform.position += _direction * _currentSpeed * Time.deltaTime;
+        transform.position += Direction * _currentSpeed * Time.deltaTime;
     }
 
     private void UpdateLifeSpan()
@@ -167,7 +167,7 @@ public class Projectile : Hitbox
 
                         //Reset direction to camera direction in order to cancel the fact we initially sent the
                         //projectile slightly angled to compensate the gun's offset
-                        _direction = _cameraDirection;
+                        Direction = _cameraDirection;
                     }
                 }
                 else if (!AlreadyHit(hit.transform))
@@ -176,7 +176,7 @@ public class Projectile : Hitbox
                     if (_shouldLeaveImpact)
                         LeaveImpact(hit.transform, hit.point, false);
 
-                    _direction = _cameraDirection;
+                    Direction = _cameraDirection;
                 }
 
             foreach (Collider collider in Physics.OverlapSphere(transform.position, _radius, _shouldCollideWith))
@@ -189,7 +189,7 @@ public class Projectile : Hitbox
                         if (_shouldLeaveImpact)
                             LeaveImpact(collider.transform, transform.position, false);
 
-                        _direction = _cameraDirection;
+                        Direction = _cameraDirection;
                     }
                 }
                 else if (!AlreadyHit(collider.transform))
@@ -198,7 +198,7 @@ public class Projectile : Hitbox
                     if (_shouldLeaveImpact)
                         LeaveImpact(collider.transform, transform.position, false);
 
-                    _direction = _cameraDirection;
+                    Direction = _cameraDirection;
                 }
             }
 
@@ -258,7 +258,7 @@ public class Projectile : Hitbox
     {
         transform.position = hit.point + hit.normal * (_radius + 0.1f);
         _currentSpeed *= _bounciness;
-        _direction = Vector3.Reflect(_direction, hit.normal).normalized;
+        Direction = Vector3.Reflect(Direction, hit.normal).normalized;
         _lasterFramePosition = hit.point + hit.normal * (_radius + 0.1f);
         _lastFramePosition = hit.point + hit.normal * (_radius + 0.1f);
     }
@@ -273,16 +273,16 @@ public class Projectile : Hitbox
             if (impactVfx == null)
                 return;
 
-            impactVfx.transform.position = point - _direction * 0.05f;
+            impactVfx.transform.position = point - Direction * 0.05f;
 
-            if (_direction != Vector3.zero)
+            if (Direction != Vector3.zero)
             {
                 if (fromBehind)
-                    impactVfx.transform.forward = -_direction;
+                    impactVfx.transform.forward = -Direction;
                 else
                 {
                     SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/BaseShoot/BaseShootImpactObject", 1f, gameObject);
-                    impactVfx.transform.forward = _direction;
+                    impactVfx.transform.forward = Direction;
                 }
             }
         }
@@ -295,16 +295,16 @@ public class Projectile : Hitbox
             if (splashVfx == null)
                 return;
 
-            splashVfx.transform.position = point - _direction * 0.05f;
+            splashVfx.transform.position = point - Direction * 0.05f;
 
-            if (_direction != Vector3.zero)
+            if (Direction != Vector3.zero)
             {
                 if (fromBehind) // upside down for some reason
-                    splashVfx.transform.forward = _direction;
+                    splashVfx.transform.forward = Direction;
                 else
                 {
                     SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/BaseShoot/BaseShootImpactFlesh", 1f, gameObject);
-                    splashVfx.transform.forward = -_direction;
+                    splashVfx.transform.forward = -Direction;
                 }
             }
         }
@@ -322,7 +322,7 @@ public class Projectile : Hitbox
 
             impactVfx.transform.position = point + normal * 0.05f;
 
-            if (_direction != Vector3.zero)
+            if (Direction != Vector3.zero)
             {
                 if (fromBehind)
                     impactVfx.transform.forward = normal;
@@ -342,16 +342,16 @@ public class Projectile : Hitbox
             if (splashVfx == null)
                 return;
 
-            splashVfx.transform.position = point - _direction * 0.05f;
+            splashVfx.transform.position = point - Direction * 0.05f;
 
-            if (_direction != Vector3.zero)
+            if (Direction != Vector3.zero)
             {
                 if (fromBehind) // upside down for some reason
-                    splashVfx.transform.forward = _direction;
+                    splashVfx.transform.forward = Direction;
                 else
                 {
                     SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/BaseShoot/BaseShootImpactFlesh", 1f, gameObject);
-                    splashVfx.transform.forward = -_direction;
+                    splashVfx.transform.forward = -Direction;
                 }
             }
         }

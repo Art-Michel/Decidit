@@ -34,7 +34,7 @@ public class FallingProjectile : SynergyProjectile
         _currentSpeed -= _speedReductionFactor * Time.deltaTime;
         _currentSpeed = Mathf.Clamp(_currentSpeed, 0f, _speed);
 
-        Vector3 direction = _direction * _currentSpeed + Vector3.up * _currentlyAppliedGravity;
+        Vector3 direction = Direction * _currentSpeed + Vector3.up * _currentlyAppliedGravity;
         transform.position += direction * Time.deltaTime;
     }
 
@@ -42,7 +42,7 @@ public class FallingProjectile : SynergyProjectile
     {
         if (_currentSpeed <= 0.1f)
         {
-            _direction = Vector3.zero;
+            Direction = Vector3.zero;
             _currentSpeed = 0.0f;
             _currentlyAppliedGravity = 0.0f;
             _shouldStop = true;
@@ -51,8 +51,8 @@ public class FallingProjectile : SynergyProjectile
         }
         transform.position = hit.point + hit.normal * _radius;
 
-        _direction = ((_direction * _currentSpeed) + Vector3.up * (_currentlyAppliedGravity)).normalized;
-        _direction = Vector3.Reflect(_direction, hit.normal).normalized;
+        Direction = ((Direction * _currentSpeed) + Vector3.up * (_currentlyAppliedGravity)).normalized;
+        Direction = Vector3.Reflect(Direction, hit.normal).normalized;
 
         _currentSpeed += Mathf.Abs(_currentlyAppliedGravity) * _bounciness;
         _currentSpeed *= _bounciness;

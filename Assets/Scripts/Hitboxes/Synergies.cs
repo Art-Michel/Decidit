@@ -16,6 +16,8 @@ public class Synergies : LocalManager<Synergies>
     [SerializeField] Transform _eylauArea;
     [Foldout("Muse -> Cimetière")]
     [SerializeField] Pooler _explosionVfx;
+    [Foldout("Fugue -> Cimetière")]
+    [SerializeField] Pooler _blackHole;
 
     public void Synergize(SynergyProjectile bullet, Transform collider)
     {
@@ -37,7 +39,9 @@ public class Synergies : LocalManager<Synergies>
                         FugueOnMalade();
                         break;
                     case Chants.EYLAU:
-                        FugueOnCimetiere();
+                        Vector3 position = bullet.transform.position;
+                        position.y += bullet.Direction.normalized.y * 8;
+                        FugueOnCimetiere(position);
                         break;
                 }
                 break;
@@ -75,34 +79,56 @@ public class Synergies : LocalManager<Synergies>
         }
     }
 
+    #region Muse -> Nuage
     public void MuseOnAragon()
     {
         Debug.Log("projectile transformé en projo acide");
     }
+    #endregion
 
+    #region Eylau -> Nuage
     public void EylauOnAragon()
     {
         Debug.Log("Projectile pas chargé devient chargé");
     }
+    #endregion
 
+    #region Fugue -> Malade
     public void FugueOnMalade()
     {
         Debug.Log("Balle rebondit entre ennemis marqués");
     }
+    #endregion
 
+    #region Eylau -> Malade
     public void EylauOnMalade()
     {
         Debug.Log("Zzt d'intensité proportionnel entre tous les ennemis marqués");
     }
+    #endregion
 
-    public void FugueOnCimetiere()
+    #region Fugue -> Cimetière
+    public void FugueOnCimetiere(Vector3 position)
     {
         Debug.Log("Trou noir, voir avec jt pour attirer les ennemis au centre du cimetière");
+        Vector3 initialPos = new Vector3(_eylauArea.position.x, position.y, _eylauArea.position.z);
+        SpawnBlackHole(initialPos);
     }
 
+    private void SpawnBlackHole(Vector3 position)
+    {
+        BlackHole blackHole = _blackHole.Get() as BlackHole;
+        if (blackHole)
+        {
+            blackHole.transform.position = position;
+            blackHole.Setup();
+        }
+    }
+    #endregion
+
+    #region Muse -> Cimetière
     public void MuseOnCimetiere(float y)
     {
-        SoundManager.Instance.PlaySound("event:/SFX_Controller/Synergies/MuseOnEyleau/Sound", 1f, gameObject);
         Vector3 initialPos = new Vector3(_eylauArea.position.x, y, _eylauArea.position.z);
         for (int i = 1; i < 10; i++)
         {
@@ -117,10 +143,15 @@ public class Synergies : LocalManager<Synergies>
 
     private void SpawnAnExplosion(Vector3 pos, int i)
     {
+
         MuseEylauExplosions exp = _explosionVfx.Get().GetComponent<MuseEylauExplosions>();
         exp.Setup(pos + Vector3.up * i * 2, i / 30.0f);
+
+        if (i == 1)
+            SoundManager.Instance.PlaySound("event:/SFX_Controller/Synergies/MuseOnEyleau/Sound", 1f, exp.gameObject);
 
         MuseEylauExplosions exp2 = _explosionVfx.Get().GetComponent<MuseEylauExplosions>();
         exp2.Setup(pos + Vector3.down * i * 2, i / 30.0f);
     }
+    #endregion
 }
