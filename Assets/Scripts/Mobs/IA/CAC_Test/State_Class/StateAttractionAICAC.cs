@@ -6,7 +6,6 @@ namespace State.AICAC
     {
         [SerializeField] GlobalRefAICAC globalRef;
         [Header("Attraction Direction")]
-        [SerializeField] Transform posAttraction1;
         [SerializeField] Vector3 attractionDirection;
         [SerializeField] float distDestination;
 
@@ -33,7 +32,7 @@ namespace State.AICAC
             if (Time.timeScale > 0)
                 deltaTime = Time.deltaTime;
 
-            distDestination = Vector3.Distance(globalRef.transform.position, posAttraction1.position);
+            distDestination = Vector3.Distance(globalRef.transform.position, globalRef.AttractionSO.pointBlackHole);
 
             ApplyAttraction();
 
@@ -72,7 +71,7 @@ namespace State.AICAC
 
             if (!applyGravity)
             {
-                attractionDirection = posAttraction1.position - globalRef.transform.position;
+                attractionDirection = globalRef.AttractionSO.pointBlackHole - globalRef.transform.position;
                 attractionDirection = (attractionDirection.normalized * (attractionDirection.magnitude - globalRef.AttractionSO.friction * deltaTime));
                 move = new Vector3(attractionDirection.x, attractionDirection.y + (globalRef.knockBackAICACSO.AIVelocity.y), attractionDirection.z);
             }

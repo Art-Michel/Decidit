@@ -51,7 +51,7 @@ namespace State.FlyAI
         [Foldout("Scriptable")] public BaseAttackWallAISO baseAttackWallAISO;
         [Foldout("Scriptable")] public DeathFlySO deathFlySO;
         [Foldout("Scriptable")] public KnockBackFlySO KnockBackFlySO;
-        [Foldout("Scriptable")] public AttractionSO attractionSO;
+        [Foldout("Scriptable")] public AttractionSO AttractionSO;
 
         [Foldout("VeryEasy")] public BaseMoveFlySO baseMoveFlySO_VeryEZ;
         [Foldout("VeryEasy")] public LockPlayerFlySO lockPlayerFlySO_VeryEZ;
@@ -73,7 +73,7 @@ namespace State.FlyAI
         {
             deathFlySO = Instantiate(deathFlySO);
             KnockBackFlySO = Instantiate(KnockBackFlySO);
-            attractionSO = Instantiate(attractionSO);
+            AttractionSO = Instantiate(AttractionSO);
             flyMobAttackManager = transform.GetComponentInParent<FlyMobAttackManager>();
 
             switch (ApplyDifficulty.Instance.indexDifficulty)

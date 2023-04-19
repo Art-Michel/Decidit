@@ -5,7 +5,6 @@ namespace State.AIBull
     public class AttractionStateBullAI : _StateBull
     {
         [SerializeField] GlobalRefBullAI globalRef;
-        [SerializeField] Transform posAttraction;
         [SerializeField] Vector3 dirAttraction;
         float deltaTime;
         [SerializeField] bool applyGravity;
@@ -30,7 +29,7 @@ namespace State.AIBull
         void Update()
         {
             deltaTime = Time.deltaTime;
-            distDestination = Vector3.Distance(globalRef.transform.position, posAttraction.position);
+            distDestination = Vector3.Distance(globalRef.transform.position, globalRef.AttractionSO.pointBlackHole);
             ApplyAttraction();
 
             if (!globalRef.isInSynergyAttraction)
@@ -54,7 +53,7 @@ namespace State.AIBull
             Vector3 move;
             if (!applyGravity)
             {
-                dirAttraction = posAttraction.position - globalRef.transform.position;
+                dirAttraction = globalRef.AttractionSO.pointBlackHole - globalRef.transform.position;
                 dirAttraction = (dirAttraction.normalized * (dirAttraction.magnitude - globalRef.AttractionSO.friction * deltaTime));
                 move = new Vector3(dirAttraction.x, dirAttraction.y, dirAttraction.z);
             }
