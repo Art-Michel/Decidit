@@ -95,11 +95,11 @@ public class EylauArea : SynergyTrigger
                 flyAi.isInEylau = true;
                 _aiFlyInArea.Add(flyAi);
             }
-            else if (other.TryGetComponent<GlobalRefWallAI>(out GlobalRefWallAI wallAi))
-            {
-                wallAi.isInEylau = true;
-                _aiWallInArea.Add(wallAi);
-            }
+            // else if (other.TryGetComponent<GlobalRefWallAI>(out GlobalRefWallAI wallAi))
+            // {
+            //     wallAi.isInEylau = true;
+            //     _aiWallInArea.Add(wallAi);
+            // }
 
             else
                 Debug.Log("exited enemy but couldnt find ai script");
