@@ -69,7 +69,6 @@ namespace State.FlyAI
             {
                 Invoke("LaunchFirstState", timeToEnable);
                 Invoke("CanBeHit", 1f);
-                Debug.Log("LaunchFirstState");
             }
 
             once = true;
@@ -77,7 +76,6 @@ namespace State.FlyAI
         void LaunchFirstState()
         {
             //Activate the default state
-            Debug.Log("ActiveEnnemy");
             SetActiveState(AIState.BaseMove);
             enemyHealth.IsInvulnerable = false;
         }

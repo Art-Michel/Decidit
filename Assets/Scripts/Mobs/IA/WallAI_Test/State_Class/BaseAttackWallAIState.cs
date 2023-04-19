@@ -41,8 +41,6 @@ namespace State.WallAI
 
         private void Update()
         {
-            Debug.Log("RAnge Attack");
-
             SmoothLookAtYAxisAttack();
 
             if (!activeAttack && baseAttackWallAISO.currentRafaleCount > 0 && baseAttackWallAISO.currentShootCount > 0)
@@ -137,7 +135,6 @@ namespace State.WallAI
                 if (baseAttackWallAISO.currentShootCount > 0)
                 {
                     StartCoroutine("LaunchProjectileSpread");
-                    Debug.Log("spread");
                 }
             }
         }

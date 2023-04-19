@@ -35,8 +35,6 @@ namespace State.FlyAI
 
         public void ChooseAttackType(GlobalRefFlyAI globalRef)
         {
-            Debug.Log(globalRef.gameObject.name);
-
             if(countAiAttackRange ==0)
             {
                 int i = Random.Range(0, 2);
