@@ -287,6 +287,8 @@ namespace State.WallAI
             globalRef.baseAttackFlySO.speedRotationAIAttack = 0;
             globalRef.baseAttackFlySO.currentSpeedYAttack = 0;
             globalRef.flyMobAttackManager.DownCount();
+            activeAttack = false;
+            isFiring = false;
         }
 
         ////////////////////////  ANIMATION EVENT \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
