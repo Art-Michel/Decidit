@@ -78,7 +78,7 @@ public class EylauArea : SynergyTrigger
     {
         if (other.CompareTag("Ennemi"))
         {
-            Debug.Log(other.transform.name + " entered");
+            // Debug.Log(other.transform.name + " entered");
             SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/CimetièreEyleau/IAInOut", 1f, gameObject);
             if (other.TryGetComponent<GlobalRefAICAC>(out GlobalRefAICAC cacAi))
             {
@@ -111,7 +111,7 @@ public class EylauArea : SynergyTrigger
     {
         if (other.CompareTag("Ennemi"))
         {
-            Debug.Log(other.transform.name + " exited");
+            // Debug.Log(other.transform.name + " exited");
             SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/CimetièreEyleau/IAInOut", 1f, gameObject);
             if (other.TryGetComponent<GlobalRefAICAC>(out GlobalRefAICAC cacAi))
             {

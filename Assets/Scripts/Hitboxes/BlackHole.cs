@@ -11,7 +11,7 @@ public class BlackHole : PooledObject
     [SerializeField] private float _activeTime = 2.0f;
     // [SerializeField] private float _lifeSpan = 1.0f;
     [SerializeField] private float _radius = 12.0f;
-    [SerializeField] private float _force = 10.0f;
+    // [SerializeField] private float _force = 10.0f;
     [SerializeField] private ParticleSystem[] _vfxs;
     [SerializeField] private LayerMask _layerMask;
 
@@ -68,37 +68,40 @@ public class BlackHole : PooledObject
     private void CheckCollisions()
     {
         Collider[] Enemies = Physics.OverlapSphere(transform.position, _radius, _layerMask);
-        foreach (Collider other in Enemies)
+        foreach (Collider col in Enemies)
         {
-
-            if (other.CompareTag("Ennemi"))
+            Health health = col.GetComponent<Hurtbox>().HealthComponent;
+            SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/CimetièreEyleau/IAInOut", 1f, gameObject);
+            if (health.TryGetComponent<GlobalRefAICAC>(out GlobalRefAICAC voras))
             {
-                Debug.Log(other.transform.name + " entered");
-                SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/CimetièreEyleau/IAInOut", 1f, gameObject);
-                if (other.TryGetComponent<GlobalRefAICAC>(out GlobalRefAICAC voras))
+                Debug.Log("found a voras");
+                if (!_vorasesInBH.Contains(voras))
                 {
-                    if (!_vorasesInBH.Contains(voras))
-                    {
-                        voras.isInSynergyAttraction = true;
-                        _vorasesInBH.Add(voras);
-                    }
+                    voras.isInSynergyAttraction = true;
+                    voras.AttractionSO.pointBlackHole = transform.position;
+                    _vorasesInBH.Add(voras);
                 }
-                else if (other.TryGetComponent<GlobalRefBullAI>(out GlobalRefBullAI shrednoss))
+            }
+            else if (health.TryGetComponent<GlobalRefBullAI>(out GlobalRefBullAI shrednoss))
+            {
+                Debug.Log("found a shrednoss");
+                if (!_shrednossesInBH.Contains(shrednoss))
                 {
-                    if (!_shrednossesInBH.Contains(shrednoss))
-                    {
-                        shrednoss.isInSynergyAttraction = true;
-                        _shrednossesInBH.Add(shrednoss);
-                    }
+                    shrednoss.isInSynergyAttraction = true;
+                    shrednoss.AttractionSO.pointBlackHole = transform.position;
+                    _shrednossesInBH.Add(shrednoss);
                 }
-                else if (other.TryGetComponent<GlobalRefFlyAI>(out GlobalRefFlyAI voris))
+            }
+            else if (health.TryGetComponent<GlobalRefFlyAI>(out GlobalRefFlyAI voris))
+            {
+                Debug.Log("found a voris");
+                if (!_vorisesInBH.Contains(voris))
                 {
-                    if (!_vorisesInBH.Contains(voris))
-                    {
-                        voris.isInSynergyAttraction = true;
-                        _vorisesInBH.Add(voris);
-                    }
+                    voris.isInSynergyAttraction = true;
+                    voris.AttractionSO.pointBlackHole = transform.position;
+                    _vorisesInBH.Add(voris);
                 }
+                // }
                 // else if (other.TryGetComponent<GlobalRefWallAI>(out GlobalRefWallAI wallAi))
                 // {
                 // if (!_aiWallInArea.Contains(cacAi))
@@ -107,10 +110,11 @@ public class BlackHole : PooledObject
                 //     _aiWallInArea.Add(wallAi);
                 // }
                 // }
-
-                else
-                    Debug.Log("exited enemy but couldnt find ai script");
             }
+
+            else
+                Debug.Log("found an enemy but couldnt find ai script");
+
         }
     }
 
