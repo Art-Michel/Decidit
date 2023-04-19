@@ -125,5 +125,8 @@ public class Room : MonoBehaviour
         this.Exit.OpenDoor();
         if (DungeonGenerator.Instance != null)
             DungeonGenerator.Instance.GetRoom(1).Entry.OpenDoor();
+
+        // Break Timer
+        TimerManager.Instance.isInCorridor = true;
     }
 }
