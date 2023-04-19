@@ -92,7 +92,7 @@ public class BlackHole : PooledObject
                     _shrednossesInBH.Add(shrednoss);
                 }
             }
-            else if (health.TryGetComponent<GlobalRefFlyAI>(out GlobalRefFlyAI voris))
+            else if (health.transform.parent.transform.parent.TryGetComponent<GlobalRefFlyAI>(out GlobalRefFlyAI voris))
             {
                 Debug.Log("found a voris");
                 if (!_vorisesInBH.Contains(voris))
