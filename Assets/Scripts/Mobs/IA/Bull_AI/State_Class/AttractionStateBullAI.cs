@@ -24,6 +24,7 @@ namespace State.AIBull
         {
             globalRef.agent.enabled = false;
             globalRef.characterController.enabled = true;
+            AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Idle");
         }
 
         void Update()
