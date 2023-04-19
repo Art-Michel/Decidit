@@ -7,4 +7,6 @@ public class AttractionSO : ScriptableObject
     public float speed;
     public float distanceStopAttraction;
     public float friction;
+
+    public Vector3 pointBlackHole;
 }
