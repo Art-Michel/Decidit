@@ -105,14 +105,14 @@ public class EnemyHealth : Health
         _sickboxes.Clear();
         foreach (BoxCollider col in GetComponentsInChildren<BoxCollider>())
         {
-            if (col.TryGetComponent<Hurtbox>(out Hurtbox box))
+            if (col.TryGetComponent<SynergyTrigger>(out SynergyTrigger box))
             {
                 _sickboxes.Add(col);
             }
         }
     }
 
-    [Button]
+    //[Button]
     private void DecalerSickBoxes()
     {
         foreach (BoxCollider box in _sickboxes)
