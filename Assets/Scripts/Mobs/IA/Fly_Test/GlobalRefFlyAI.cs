@@ -29,6 +29,9 @@ namespace State.FlyAI
         public float slowSpeedRot;
         public float slowRatio;
 
+        [Header("SynergyAttraction References")]
+        public bool isInSynergyAttraction;
+
         [Header("Ref Base Move")]
         public BoxCollider myCollider;
 
@@ -42,13 +45,13 @@ namespace State.FlyAI
         [Header("Ref Base Death")]
         [SerializeField] bool isDead;
 
-        [Header("Ref Scriptable")]
-        public BaseMoveFlySO baseMoveFlySO;
-        public LockPlayerFlySO lockPlayerFlySO;
-        public BaseAttackFlySO baseAttackFlySO;
-        public BaseAttackWallAISO baseAttackWallAISO;
-        public DeathFlySO deathFlySO;
-        public KnockBackFlySO KnockBackFlySO;
+        [Foldout("Scriptable")] public BaseMoveFlySO baseMoveFlySO;
+        [Foldout("Scriptable")] public LockPlayerFlySO lockPlayerFlySO;
+        [Foldout("Scriptable")] public BaseAttackFlySO baseAttackFlySO;
+        [Foldout("Scriptable")] public BaseAttackWallAISO baseAttackWallAISO;
+        [Foldout("Scriptable")] public DeathFlySO deathFlySO;
+        [Foldout("Scriptable")] public KnockBackFlySO KnockBackFlySO;
+        [Foldout("Scriptable")] public AttractionSO attractionSO;
 
         [Foldout("VeryEasy")] public BaseMoveFlySO baseMoveFlySO_VeryEZ;
         [Foldout("VeryEasy")] public LockPlayerFlySO lockPlayerFlySO_VeryEZ;
@@ -70,6 +73,7 @@ namespace State.FlyAI
         {
             deathFlySO = Instantiate(deathFlySO);
             KnockBackFlySO = Instantiate(KnockBackFlySO);
+            attractionSO = Instantiate(attractionSO);
             flyMobAttackManager = transform.GetComponentInParent<FlyMobAttackManager>();
 
             switch (ApplyDifficulty.Instance.indexDifficulty)
@@ -107,6 +111,9 @@ namespace State.FlyAI
         private void Update()
         {
             CheckHP();
+
+            if (isInSynergyAttraction)
+                ActiveAttractionState();
         }
 
         public void ActiveState(StateControllerFlyAI.AIState newState)
@@ -132,6 +139,11 @@ namespace State.FlyAI
                     isDead = true;
                 }
             }
+        }
+
+        public void ActiveAttractionState()
+        {
+            ActiveState(StateControllerFlyAI.AIState.Attraction);
         }
 
         public void CheckHP()

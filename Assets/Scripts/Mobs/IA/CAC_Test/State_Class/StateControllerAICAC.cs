@@ -12,8 +12,9 @@ namespace State.AICAC
         bool once;
         public enum AIState
         {
-            BaseIdle, BaseMove, Dodge, BaseAttack, KnockBack, BaseDeath, SurroundPlayer
+            BaseIdle, BaseMove, Dodge, BaseAttack, KnockBack, Attraction, BaseDeath, SurroundPlayer
         }
+        public AIState currentState;
 
         private Dictionary<AIState, _StateAICAC> stateDictionary = new Dictionary<AIState, _StateAICAC>();
 
@@ -101,9 +102,12 @@ namespace State.AICAC
 
                 return;
             }
-
+            EnableState(newState, isJumpingBack);
+        }
+        void EnableState(AIState newState, bool isJumpingBack = false)
+        {
             //Deactivate the old state
-            if (activeState != null)
+            if (activeState != null && currentState != newState)
             {
                 activeState.gameObject.SetActive(false);
             }
@@ -112,6 +116,7 @@ namespace State.AICAC
             activeState = stateDictionary[newState];
 
             activeState.gameObject.SetActive(true);
+            currentState = newState;
 
             //If we are jumping back we shouldn't add to history because then we will get doubles
             if (!isJumpingBack)

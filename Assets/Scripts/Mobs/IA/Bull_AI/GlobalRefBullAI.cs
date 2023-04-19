@@ -147,8 +147,6 @@ namespace State.AIBull
         public void ActiveAttractionState()
         {
             ActiveState(StateControllerBull.AIState.Attraction);
-           /* if (stateControllerBull.currentState != StateControllerBull.AIState.Attraction)
-                ActiveState(StateControllerBull.AIState.Attraction);*/
         }
 
         public void CheckHP()

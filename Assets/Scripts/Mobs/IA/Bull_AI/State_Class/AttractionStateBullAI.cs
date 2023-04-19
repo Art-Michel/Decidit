@@ -6,7 +6,7 @@ namespace State.AIBull
     {
         [SerializeField] GlobalRefBullAI globalRef;
         [SerializeField] Transform posAttraction;
-        Vector3 dirAttraction;
+        [SerializeField] Vector3 dirAttraction;
         float deltaTime;
         [SerializeField] bool applyGravity;
         [SerializeField] bool isGround;
@@ -31,7 +31,6 @@ namespace State.AIBull
         {
             deltaTime = Time.deltaTime;
             distDestination = Vector3.Distance(globalRef.transform.position, posAttraction.position);
-
             ApplyAttraction();
 
             if (!globalRef.isInSynergyAttraction)

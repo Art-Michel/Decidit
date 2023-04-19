@@ -29,6 +29,9 @@ namespace State.AICAC
         public float slowSpeedRot;
         public float slowRatio;
 
+        [Header("SynergyAttraction References")]
+        public bool isInSynergyAttraction;
+
         [Header("Ref Move State")]
         public float offsetDestination;
         public Vector3 debugDestination;
@@ -52,14 +55,14 @@ namespace State.AICAC
         public List<GameObject> listOtherCACAI = new List<GameObject>();
         public List<Transform> listOtherAIContact = new List<Transform>();
 
-        [Header("Scriptable")]
-        public BaseMoveParameterAICAC baseMoveAICACSO;
-        public BaseAttackParameterAICAC baseAttackAICACSO;
-        public BaseIdleParameterAICAC baseIdleAICACSO;
-        public DeathParameterAICAC deathAICACSO;
-        public DodgeParameterAICAC dodgeAICACSO;
-        public SurroundParameterAICAC surroundAICACSO;
-        public KnockBackParameterAICAC knockBackAICACSO;
+        [Foldout("Scriptable")] public BaseMoveParameterAICAC baseMoveAICACSO;
+        [Foldout("Scriptable")] public BaseAttackParameterAICAC baseAttackAICACSO;
+        [Foldout("Scriptable")] public BaseIdleParameterAICAC baseIdleAICACSO;
+        [Foldout("Scriptable")] public DeathParameterAICAC deathAICACSO;
+        [Foldout("Scriptable")] public DodgeParameterAICAC dodgeAICACSO;
+        [Foldout("Scriptable")] public SurroundParameterAICAC surroundAICACSO;
+        [Foldout("Scriptable")] public KnockBackParameterAICAC knockBackAICACSO;
+        [Foldout("Scriptable")] public AttractionSO AttractionSO;
 
         [Foldout("VeryEasy")] public BaseMoveParameterAICAC baseMoveAICACSO_VeryEZ;
         [Foldout("Medium")] public BaseMoveParameterAICAC baseMoveAICACSO_Med;
@@ -98,12 +101,16 @@ namespace State.AICAC
             dodgeAICACSO = Instantiate(dodgeAICACSO);
             surroundAICACSO = Instantiate(surroundAICACSO);
             knockBackAICACSO = Instantiate(knockBackAICACSO);
+            AttractionSO = Instantiate(AttractionSO);
         }
 
         private void Update()
         {
             distPlayer = Vector3.Distance(playerTransform.position, transform.position);
             CheckHP();
+
+            if (isInSynergyAttraction)
+                ActiveAttractionState();
         }
 
         public void ActiveState(StateControllerAICAC.AIState newState)
@@ -121,6 +128,11 @@ namespace State.AICAC
         {
             if(enemyHealth._hp > 0)
                 ActiveState(StateControllerAICAC.AIState.KnockBack);
+        }
+
+        public void ActiveAttractionState()
+        {
+            ActiveState(StateControllerAICAC.AIState.Attraction);
         }
 
         public void CheckHP()

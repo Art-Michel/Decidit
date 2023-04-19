@@ -14,16 +14,15 @@ namespace State.FlyAI
 
         public enum AIState
         {
-            BaseMove, LockPlayer, BaseAttack, BaseRangeAttack, KnockBack, Death
+            BaseMove, LockPlayer, BaseAttack, BaseRangeAttack, KnockBack, Attraction, Death
         }
+        public AIState currentState;
 
         private Dictionary<AIState, _StateFlyAI> stateDictionary = new Dictionary<AIState, _StateFlyAI>();
 
         private _StateFlyAI activeState;
 
         private Stack<AIState> stateHistory = new Stack<AIState>();
-
-        public AIState currentState;
 
         private void Awake()
         {
@@ -97,9 +96,12 @@ namespace State.FlyAI
 
                 return;
             }
-
+            EnableState(newState, isJumpingBack);
+        }
+        void EnableState(AIState newState, bool isJumpingBack = false)
+        {
             //Deactivate the old state
-            if (activeState != null)
+            if (activeState != null && currentState != newState)
             {
                 activeState.gameObject.SetActive(false);
             }
