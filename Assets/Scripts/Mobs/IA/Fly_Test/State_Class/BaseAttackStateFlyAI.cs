@@ -13,6 +13,8 @@ namespace State.FlyAI
 
         [SerializeField] bool stopLock;
 
+        [SerializeField] float minBaseOffset;
+
         public override void InitState(StateControllerFlyAI stateController)
         {
             base.InitState(stateController);
@@ -124,8 +126,8 @@ namespace State.FlyAI
                     globalRef.agent.baseOffset -= baseAttackFlySO.currentSpeedYAttack * Time.deltaTime;
             }
 
-            if (globalRef.agent.baseOffset < 1)
-                globalRef.agent.baseOffset = 1;
+            if (globalRef.agent.baseOffset < minBaseOffset)
+                globalRef.agent.baseOffset = minBaseOffset;
         }
         void SlowSpeed(bool active)
         {

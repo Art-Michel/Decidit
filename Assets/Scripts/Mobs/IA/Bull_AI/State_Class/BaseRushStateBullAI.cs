@@ -37,7 +37,7 @@ namespace State.AIBull
         public string currentAnimName;
         public float animTime;
 
-        bool endRush;
+        [SerializeField] bool endRush;
 
         public override void InitState(StateControllerBull stateController)
         {
@@ -404,7 +404,6 @@ namespace State.AIBull
             if (animTime > 1.0f && currentAnimName == "Dash Attack")
             {
                 stateController.SetActiveState(StateControllerBull.AIState.Idle);
-                Debug.Log("Stop Rush");
             }
         }
         private void OnDisable()

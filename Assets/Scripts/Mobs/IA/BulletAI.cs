@@ -44,6 +44,8 @@ public class BulletAI : Health
 
         if (collider.gameObject.name == "Spell_Eylau_Area")
         {
+            Debug.Log("bullet is in" + collider.gameObject.name);
+
             isInEylau = true;
             velocityEylau = rb.velocity / ratioEylau;
             rb.velocity = velocityEylau;
