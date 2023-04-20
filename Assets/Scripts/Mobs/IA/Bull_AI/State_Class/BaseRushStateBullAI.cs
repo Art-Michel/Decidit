@@ -397,6 +397,7 @@ namespace State.AIBull
               }*/
             if (!endRush)
             {
+                Debug.Log("Launch Rush Attack Anim");
                 AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "RushAttack");
                 endRush = true;
             }
