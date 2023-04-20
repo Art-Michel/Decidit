@@ -63,8 +63,8 @@ namespace State.AIBull
                 {
                     if(globalRef.distPlayer < globalRef.baseMoveBullSO.distActiveAttack && hitPlayer)
                     {
-                        //stateController.SetActiveState(StateControllerBull.AIState.BaseAttack);
-                        stateController.SetActiveState(StateControllerBull.AIState.Rush);
+                        stateController.SetActiveState(StateControllerBull.AIState.BaseAttack);
+                        //stateController.SetActiveState(StateControllerBull.AIState.Rush);
                     }
                 }
             }

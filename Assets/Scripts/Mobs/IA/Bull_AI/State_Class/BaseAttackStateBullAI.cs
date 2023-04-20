@@ -17,6 +17,8 @@ namespace State.AIBull
         public string currentAnimName;
         public float animTime;
 
+        Vector3 catchPlayerPos;
+
         public override void InitState(StateControllerBull stateController)
         {
             base.InitState(stateController);
@@ -50,10 +52,7 @@ namespace State.AIBull
                 }
             }
 
-            if (animTime > 1.0f && currentAnimName == "PreAttackIdleCAC" && !isAttacking)
-                Attack();
-            else if (animTime > 1.0f && currentAnimName == "Attack" && !attackDone && isAttacking)
-                EndAttack();
+            ManageAnimation();
 
             if (!isAttacking && !attackDone)
             {
@@ -68,6 +67,41 @@ namespace State.AIBull
             else if(attackDone)
             {
                 NextAttack();
+            }
+        }
+
+        void ManageAnimation()
+        {
+            if (animTime > 1.0f && currentAnimName == "PreAttack" && !isAttacking)
+                Attack();
+            else if (animTime > 1.0f && currentAnimName == "Attack" && !attackDone && isAttacking)
+                EndAttack();
+
+            if(currentAnimName == "Attack" && animTime <1)
+            {
+                if(animTime <= 0.2f)
+                {
+                    catchPlayerPos = globalRef.playerTransform.position;
+                    Debug.Log(catchPlayerPos);
+                }
+                else if(animTime <= 0.5f)
+                {
+                    globalRef.hitBoxAttack.gameObject.SetActive(true);
+                    if (Vector3.Distance(catchPlayerPos, globalRef.transform.position) > 1f)
+                    {
+                        globalRef.agent.speed = 15;
+                        globalRef.agent.SetDestination(catchPlayerPos);
+                    }
+                    else
+                    {
+                        globalRef.agent.speed = 0;
+                    }
+                }
+                else
+                {
+                    globalRef.hitBoxAttack.gameObject.SetActive(false);
+                    globalRef.agent.speed = 0;
+                }
             }
         }
 
@@ -94,7 +128,16 @@ namespace State.AIBull
                 SmoothLookAtPlayer();
 
             if (!canAttak)
-                CheckPlayerIsBack();
+            {
+                if(CheckPlayerIsBack())
+                {
+                    canAttak = true;
+                }
+                else
+                {
+                    canAttak = false;
+                }
+            }
         }
         bool CheckPlayerIsBack()
         {
@@ -106,12 +149,10 @@ namespace State.AIBull
 
             if (dot > 0.95f)
             {
-                canAttak = true;
                 return true;
             }
             else
             {
-                canAttak = false;
                 return false;
             }
         }
@@ -130,7 +171,6 @@ namespace State.AIBull
         {
             isAttacking = true;
             AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Attack");
-            globalRef.hitBoxAttack.gameObject.SetActive(true);
             if (globalRef.material_Instances.Material[0].mainTexture == globalRef.material_Instances.TextureBase)
                 ShowSoonAttack(false);
         }
@@ -140,6 +180,7 @@ namespace State.AIBull
             isAttacking = false;
             attackLaunched = false;
             attackDone = true;
+            globalRef.agent.speed = 0;
         }
         void NextAttack()
         {
