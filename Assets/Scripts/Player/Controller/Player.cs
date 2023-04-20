@@ -953,7 +953,6 @@ public class Player : LocalManager<Player>
         if (_currentWall.transform != null)
         {
             AddMomentum(new Vector3(_currentWall.normal.x, 0.0f, _currentWall.normal.z).normalized * _wallJumpHorizontalStrength + _rawInputs.normalized * _wallInputJumpForce);
-            Debug.Log("wj of of " + _currentWall.transform.name);
         }
         else if (_previousWall.transform != null)
             AddMomentum(new Vector3(_previousWall.normal.x, 0.0f, _previousWall.normal.z).normalized * _wallJumpHorizontalStrength + _rawInputs.normalized * _wallInputJumpForce);

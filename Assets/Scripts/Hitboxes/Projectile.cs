@@ -18,10 +18,7 @@ public class Projectile : Hitbox
     [SerializeField] private MonoBehaviour _trailMaterial;
     [Foldout("References")]
     [SerializeField] private GameObject _trailsVfx;
-    [Foldout("References")]
-    [SerializeField] private Pooler _impactVfxPooler;
-    [Foldout("References")]
-    [SerializeField] private Pooler _fleshSplashVfxPooler;
+
 
     [Foldout("Properties")]
     [SerializeField] protected bool _shouldLeaveImpact;

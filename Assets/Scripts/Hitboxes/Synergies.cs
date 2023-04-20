@@ -12,12 +12,18 @@ public class Synergies : LocalManager<Synergies>
         EYLAU
     }
 
+    [Foldout("Malades")]
+    public List<EnemyHealth> Hospital;
+    [Foldout("Fugue -> Malades")]
+    [SerializeField]
+    Pooler _fugueMaladeShotsPooler;
+
     [Foldout("Cimetière")]
     [SerializeField] Transform _eylauArea;
     [Foldout("Muse -> Cimetière")]
-    [SerializeField] Pooler _explosionVfx;
+    [SerializeField] Pooler _explosionVfxPooler;
     [Foldout("Fugue -> Cimetière")]
-    [SerializeField] Pooler _blackHole;
+    [SerializeField] Pooler _blackHolePooler;
 
     public void Synergize(SynergyProjectile bullet, Transform collider)
     {
@@ -36,7 +42,7 @@ public class Synergies : LocalManager<Synergies>
                         //Nothing!
                         break;
                     case Chants.MUSE:
-                        FugueOnMalade();
+                        FugueOnMalade(bullet.transform.position);
                         break;
                     case Chants.EYLAU:
                         Vector3 position = bullet.transform.position;
@@ -94,16 +100,21 @@ public class Synergies : LocalManager<Synergies>
     #endregion
 
     #region Fugue -> Malade
-    public void FugueOnMalade()
+    public void FugueOnMalade(Vector3 position)
     {
-        Debug.Log("Balle rebondit entre ennemis marqués");
+        FugueMaladeShot shot = _fugueMaladeShotsPooler.Get() as FugueMaladeShot;
+        shot.Setup(Hospital, position);
     }
     #endregion
 
     #region Eylau -> Malade
     public void EylauOnMalade()
     {
-        Debug.Log("Zzt d'intensité proportionnel entre tous les ennemis marqués");
+        foreach (EnemyHealth enemy in Hospital)
+        {
+            enemy.TakeDamage(0.5f);
+            //TODO JT enemy.Slow();
+        }
     }
     #endregion
 
@@ -117,7 +128,7 @@ public class Synergies : LocalManager<Synergies>
 
     private void SpawnBlackHole(Vector3 position)
     {
-        BlackHole blackHole = _blackHole.Get() as BlackHole;
+        BlackHole blackHole = _blackHolePooler.Get() as BlackHole;
         if (blackHole)
         {
             blackHole.transform.position = position;
@@ -144,13 +155,13 @@ public class Synergies : LocalManager<Synergies>
     private void SpawnAnExplosion(Vector3 pos, int i)
     {
 
-        MuseEylauExplosions exp = _explosionVfx.Get().GetComponent<MuseEylauExplosions>();
+        MuseEylauExplosions exp = _explosionVfxPooler.Get().GetComponent<MuseEylauExplosions>();
         exp.Setup(pos + Vector3.up * i * 2, i / 30.0f);
 
         if (i == 1)
             SoundManager.Instance.PlaySound("event:/SFX_Controller/Synergies/MuseOnEyleau/Sound", 1f, exp.gameObject);
 
-        MuseEylauExplosions exp2 = _explosionVfx.Get().GetComponent<MuseEylauExplosions>();
+        MuseEylauExplosions exp2 = _explosionVfxPooler.Get().GetComponent<MuseEylauExplosions>();
         exp2.Setup(pos + Vector3.down * i * 2, i / 30.0f);
     }
     #endregion

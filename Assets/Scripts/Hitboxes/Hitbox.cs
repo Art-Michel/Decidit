@@ -6,6 +6,12 @@ using System.Linq;
 
 public class Hitbox : MonoBehaviour
 {
+
+    [Foldout("References")]
+    [SerializeField] protected Pooler _impactVfxPooler;
+    [Foldout("References")]
+    [SerializeField] protected Pooler _fleshSplashVfxPooler;
+
     [Foldout("Properties")]
     [SerializeField] protected LayerMask _shouldCollideWith;
     [Foldout("Properties")]

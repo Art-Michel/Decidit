@@ -596,12 +596,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8252760470148114166}
-  - component: {fileID: -1762411037367617702}
-  - component: {fileID: 5462648368622322988}
   - component: {fileID: 8450020954517348088}
-  - component: {fileID: 4391288288848755607}
+  - component: {fileID: 5010378810308644989}
+  - component: {fileID: 2339227931190500262}
   m_Layer: 8
-  m_Name: FugueShotPrefab
+  m_Name: FugueMaladeShotPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -626,77 +625,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-1762411037367617702
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8252760470148114170}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88ae98f78f66b0a41b7fdb171237df2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &5462648368622322988
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8252760470148114170}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee1888f1a7c47f74c8f81ba4ab4f55b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _impactVfxPooler: {fileID: 4391288288848755607}
-  _fleshSplashVfxPooler: {fileID: 8450020954517348088}
-  _shouldCollideWith:
-    serializedVersion: 2
-    m_Bits: 2392576
-  _canHitThroughWalls: 0
-  _shouldNotHitThrough:
-    serializedVersion: 2
-    m_Bits: 0
-  _canMultiHit: 0
-  _shouldSplashBloodOnHit: 1
-  _canCriticalHit: 1
-  _radius: 0.2
-  _damage: 1
-  _knockbackForce: 0
-  _knockbackAngle: {x: 0, y: 0, z: 0}
-  _delayBetweenHits: 0
-  _pooledObject: {fileID: -1762411037367617702}
-  _mesh: {fileID: 7988620854853741856}
-  _trailRenderers:
-  - {fileID: 2125813706985504193}
-  - {fileID: 6933227755367276729}
-  - {fileID: 6329732634856931641}
-  _trailMaterial: {fileID: 0}
-  _trailsVfx: {fileID: 0}
-  _shouldLeaveImpact: 0
-  _bounces: 1
-  _bounciness: 1
-  _explodesOnHit: 0
-  _explosion: {fileID: 0}
-  _speed: 50
-  _currentSpeed: 0
-  _lifeSpan: 2
-  _trailDelay: 0
-  Chant: 0
-  _synergiesLayer:
-    serializedVersion: 2
-    m_Bits: 2097152
-  _centered: 0
-  _objects:
-  - {fileID: 219430632806917933}
-  - {fileID: 3382538931362058803}
-  - {fileID: 1247798486796425350}
-  _directions:
-  - {x: 0, y: 1, z: 0}
-  - {x: -2, y: -1, z: 0}
-  - {x: 2, y: -1, z: 0}
 --- !u!114 &8450020954517348088
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -710,10 +638,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _prefab: {fileID: 1790868541386878813, guid: ca054b847da950d4f95a94506c598d65, type: 3}
-  _initialCount: 1
+  _initialCount: 4
   _shouldBeParent: 0
   _canCreateNewPrefabs: 1
---- !u!114 &4391288288848755607
+--- !u!114 &5010378810308644989
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -722,10 +650,40 @@ MonoBehaviour:
   m_GameObject: {fileID: 8252760470148114170}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
+  m_Script: {fileID: 11500000, guid: 0210dfaab9332e642aa36cf82470974a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 6100483388153145145, guid: be9b7ac1b27e02642aa8b3146bc467ad, type: 3}
-  _initialCount: 4
-  _shouldBeParent: 0
-  _canCreateNewPrefabs: 1
+  _impactVfxPooler: {fileID: 0}
+  _fleshSplashVfxPooler: {fileID: 8450020954517348088}
+  _shouldCollideWith:
+    serializedVersion: 2
+    m_Bits: 32768
+  _canHitThroughWalls: 0
+  _shouldNotHitThrough:
+    serializedVersion: 2
+    m_Bits: 0
+  _canMultiHit: 0
+  _shouldSplashBloodOnHit: 1
+  _canCriticalHit: 0
+  _radius: 0.2
+  _damage: 1
+  _knockbackForce: 0
+  _knockbackAngle: {x: 0, y: 0, z: 0}
+  _delayBetweenHits: 0
+--- !u!114 &2339227931190500262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8252760470148114170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e431a0c056453ac458b50d49cb114d15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _trails:
+  - {fileID: 2125813706985504193}
+  - {fileID: 6933227755367276729}
+  - {fileID: 6329732634856931641}
+  _speed: 100

@@ -111,10 +111,8 @@ public class BlackHole : PooledObject
                 // }
                 // }
             }
-
             else
                 Debug.Log("found an enemy but couldnt find ai script");
-
         }
     }
 

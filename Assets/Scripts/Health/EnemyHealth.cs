@@ -20,7 +20,7 @@ public class EnemyHealth : Health
     [Foldout("References")]
     public Room Room;
     [Foldout("References")]
-    [SerializeField] List<CapsuleCollider> _hurtboxes;
+    [SerializeField] List<Collider> _hurtboxes;
 
     float _regenValue;
     CanvasGroup _canvasGroup;
@@ -51,9 +51,11 @@ public class EnemyHealth : Health
     [Foldout("Synergies")]
     public bool IsSick;
     [Foldout("Synergies")]
+    [SerializeField] VisualEffect _sickParticles;
+    [Foldout("Synergies")]
     [SerializeField] Image _sickIcon;
     [Foldout("Synergies")]
-    [SerializeField] List<BoxCollider> _sickboxes;
+    [SerializeField] List<Collider> _sickboxes;
 
     [Header("KnockBack IA")]
     public Vector3 KnockBackDir;
@@ -89,7 +91,7 @@ public class EnemyHealth : Health
     private void FindHurtboxes()
     {
         _hurtboxes.Clear();
-        foreach (CapsuleCollider col in GetComponentsInChildren<CapsuleCollider>())
+        foreach (Collider col in GetComponentsInChildren<Collider>())
         {
             if (col.TryGetComponent<Hurtbox>(out Hurtbox box))
             {
@@ -103,7 +105,7 @@ public class EnemyHealth : Health
     private void FindSickboxes()
     {
         _sickboxes.Clear();
-        foreach (BoxCollider col in GetComponentsInChildren<BoxCollider>())
+        foreach (Collider col in GetComponentsInChildren<Collider>())
         {
             if (col.TryGetComponent<SynergyTrigger>(out SynergyTrigger box))
             {
@@ -217,10 +219,22 @@ public class EnemyHealth : Health
     public void GetSick()
     {
         IsSick = true;
+        Synergies.Instance.Hospital.Add(this);
         _sickIcon.enabled = true;
+        _sickParticles.Play();
         if (_sickboxes.Count > 0)
             foreach (Collider collider in _sickboxes)
                 collider.enabled = true;
+    }
+
+    public void RecoverFromSickness()
+    {
+        IsSick = false;
+        _sickIcon.enabled = false;
+        _sickParticles.Stop();
+        if (_sickboxes.Count > 0)
+            foreach (Collider collider in _sickboxes)
+                collider.enabled = false;
     }
 
     //used to make healthbar face the camera
@@ -304,9 +318,7 @@ public class EnemyHealth : Health
             collider.enabled = false;
         }
 
-        if (_sickboxes.Count < 0)
-            foreach (Collider collider in _sickboxes)
-                collider.enabled = false;
+        RecoverFromSickness();
 
         //Adjust Visibility
         _appearT = 1;
@@ -355,6 +367,7 @@ public class EnemyHealth : Health
 
     private void ActuallyDie()
     {
+        Synergies.Instance.Hospital.Remove(this);
         Destroy(gameObject);
     }
 }
