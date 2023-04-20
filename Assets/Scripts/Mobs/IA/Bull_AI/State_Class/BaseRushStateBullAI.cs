@@ -159,7 +159,7 @@ namespace State.AIBull
             Vector3 dir = globalRef.transform.forward * rushBullSO.speedMove;
 
             SetGravity();
-            SlowSpeed(globalRef.isInEylau);
+            SlowSpeed(globalRef.isInEylau || globalRef.IsZap);
             //rushBullSO.move = new Vector3(rushBullSO.direction.x, rushBullSO.directionYSlope.y + rushBullSO.AIVelocity.y, rushBullSO.direction.y);
             rushBullSO.move = new Vector3(dir.x, rushBullSO.directionYSlope.y + rushBullSO.AIVelocity.y, dir.z);
             globalRef.characterController.Move(rushBullSO.move * Time.deltaTime);
@@ -300,7 +300,7 @@ namespace State.AIBull
             rushBullSO.relativePos.y = 0;
             rushBullSO.relativePos.z = rushBullSO.directionLookAt.z - globalRef.transform.position.z;
 
-            SlowRotationLock(globalRef.isInEylau);
+            SlowRotationLock(globalRef.isInEylau || globalRef.IsZap);
             Quaternion rotation = Quaternion.Slerp(globalRef.transform.rotation, Quaternion.LookRotation(rushBullSO.relativePos, Vector3.up), rushBullSO.speedRotLock);
             globalRef.transform.rotation = rotation;
         }
@@ -364,7 +364,6 @@ namespace State.AIBull
                 rushBullSO.speedRotRush += Time.deltaTime / rushBullSO.smoothRotRush;
             }
         }
-
 
         void ShowSoonAttack(bool active)
         {

@@ -82,7 +82,7 @@ namespace State.AICAC
             relativePos.y = 0;
             relativePos.z = direction.z - globalRef.transform.position.z;
 
-            SlowRotation(globalRef.isInEylau);
+            SlowRotation(globalRef.isInEylau || globalRef.IsZap);
 
             rotation = Quaternion.Slerp(globalRef.transform.rotation, Quaternion.LookRotation(relativePos, Vector3.up), baseAttackAICACSO.speedRot);
             globalRef.transform.rotation = rotation;

@@ -220,7 +220,7 @@ namespace State.AICAC
                     if(!isOnNavLink)
                     {
                         SpeedAdjusting();
-                        SlowSpeed(globalRef.isInEylau);
+                        SlowSpeed(globalRef.isInEylau || globalRef.IsZap);
                         globalRef.agent.SetDestination(destination);
                     }
                     currentRateRepath = maxRateRepath;
@@ -302,7 +302,7 @@ namespace State.AICAC
                 relativePos.y = 0;
                 relativePos.z = linkDestination.z;
 
-                SlowRotation(globalRef.isInEylau);
+                SlowRotation(globalRef.isInEylau || globalRef.IsZap);
                 Quaternion rotation = Quaternion.Slerp(globalRef.transform.rotation, Quaternion.LookRotation(relativePos, Vector3.up), baseMoveAICACSO.speedRot);
                 globalRef.transform.rotation = rotation;
             }
@@ -315,7 +315,7 @@ namespace State.AICAC
                 relativePos.y = 0;
                 relativePos.z = direction.z;
 
-                SlowRotation(globalRef.isInEylau);
+                SlowRotation(globalRef.isInEylau || globalRef.IsZap);
                 Quaternion rotation = Quaternion.Slerp(globalRef.transform.rotation, Quaternion.LookRotation(relativePos, Vector3.up), baseMoveAICACSO.speedRot);
                 globalRef.transform.rotation = rotation;
             }

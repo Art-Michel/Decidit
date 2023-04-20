@@ -35,6 +35,9 @@ namespace State.AIBull
         [Header("SynergyAttraction References")]
         public bool isInSynergyAttraction;
 
+        [Header("Slow Zap References")]
+        public bool IsZap;
+
         [Header("Debug Destination")]
         public Transform sphereDebug;
         public LayerMask allMask;
@@ -125,7 +128,12 @@ namespace State.AIBull
             distPlayer = Vector3.Distance(transform.position, playerTransform.position);
 
             if (isInEylau)
-                myAnimator.speed = 1/ (slowRatio/2);
+                myAnimator.speed = 1 / (slowRatio / 2);
+            else
+                myAnimator.speed = 1;
+
+            if (IsZap)
+                myAnimator.speed = 1 / (slowRatio / 2);
             else
                 myAnimator.speed = 1;
 

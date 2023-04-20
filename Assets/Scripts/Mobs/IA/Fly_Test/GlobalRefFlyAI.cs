@@ -32,6 +32,9 @@ namespace State.FlyAI
         [Header("SynergyAttraction References")]
         public bool isInSynergyAttraction;
 
+        [Header("Slow Zap References")]
+        public bool IsZap;
+
         [Header("Ref Base Move")]
         public BoxCollider myCollider;
 

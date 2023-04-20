@@ -19,6 +19,7 @@ namespace State.AIBull
 
         Vector3 catchPlayerPos;
 
+        [SerializeField] float currentSpeed;
         public override void InitState(StateControllerBull stateController)
         {
             base.InitState(stateController);
@@ -31,7 +32,8 @@ namespace State.AIBull
             if (globalRef != null)
             {
                 canAttak = false;
-                globalRef.agent.speed = 0;
+                currentSpeed = 0;
+                globalRef.agent.speed = currentSpeed;
             }
         }
 
@@ -68,6 +70,21 @@ namespace State.AIBull
             {
                 NextAttack();
             }
+
+            SlowSpeed(globalRef.isInEylau || globalRef.IsZap);
+        }
+
+        void SlowSpeed(bool active)
+        {
+            if (active)
+            {
+                globalRef.slowSpeed = currentSpeed / globalRef.slowRatio;
+                globalRef.agent.speed = globalRef.slowSpeed;
+            }
+            else
+            {
+                globalRef.agent.speed = currentSpeed;
+            }
         }
 
         void ManageAnimation()
@@ -89,18 +106,18 @@ namespace State.AIBull
                     globalRef.hitBoxAttack.gameObject.SetActive(true);
                     if (Vector3.Distance(catchPlayerPos, globalRef.transform.position) > 1f)
                     {
-                        globalRef.agent.speed = 15;
+                        currentSpeed = 15;
                         globalRef.agent.SetDestination(catchPlayerPos);
                     }
                     else
                     {
-                        globalRef.agent.speed = 0;
+                        currentSpeed = 0;
                     }
                 }
                 else
                 {
                     globalRef.hitBoxAttack.gameObject.SetActive(false);
-                    globalRef.agent.speed = 0;
+                    currentSpeed = 0;
                 }
             }
         }
@@ -112,12 +129,12 @@ namespace State.AIBull
                 if (globalRef.distPlayer < globalRef.baseAttackBullSO.distLaunchAttack)
                 {
                     launchAttack = true;
-                    globalRef.agent.speed = 0;
+                    currentSpeed = 0;
                 }
                 else
                 {
                     SmoothLookAtPlayer();
-                    globalRef.agent.speed = 19;
+                    currentSpeed = 19;
                     globalRef.agent.SetDestination(globalRef.playerTransform.position);
 
                     if(AnimatorManager.instance.GetCurrentAnimatonName(globalRef.globalRefAnimator) != "Walk")
@@ -180,7 +197,7 @@ namespace State.AIBull
             isAttacking = false;
             attackLaunched = false;
             attackDone = true;
-            globalRef.agent.speed = 0;
+            currentSpeed = 0;
         }
         void NextAttack()
         {
@@ -202,7 +219,7 @@ namespace State.AIBull
             relativePos.y = 0;
             relativePos.z = direction.z - globalRef.transform.position.z;
 
-            SlowRotation(globalRef.isInEylau);
+            SlowRotation(globalRef.isInEylau || globalRef.IsZap);
             Quaternion rotation = Quaternion.Slerp(globalRef.transform.rotation, Quaternion.LookRotation(relativePos, Vector3.up), globalRef.baseAttackBullSO.speedRot);
             globalRef.transform.rotation = rotation;
         }

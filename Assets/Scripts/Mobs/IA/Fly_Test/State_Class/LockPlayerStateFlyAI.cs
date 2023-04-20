@@ -72,7 +72,7 @@ namespace State.FlyAI
             relativePos.y = lockPlayerFlySO.destinationFinal.y - globalRef.transform.position.y;
             relativePos.z = lockPlayerFlySO.destinationFinal.z - globalRef.transform.position.z;
 
-            SlowRotation(globalRef.isInEylau, relativePos);
+            SlowRotation(globalRef.isInEylau || globalRef.IsZap, relativePos);
 
             Quaternion rotation = Quaternion.Slerp(childflyAI.localRotation, Quaternion.LookRotation(relativePos, Vector3.up), baseAttackFlySO.speedRotationAIAttack);
             childflyAI.localRotation = rotation;

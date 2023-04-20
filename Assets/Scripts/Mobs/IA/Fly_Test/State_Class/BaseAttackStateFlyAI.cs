@@ -75,7 +75,7 @@ namespace State.FlyAI
                 }
             }
 
-            SlowSpeed(globalRef.isInEylau);
+            SlowSpeed(globalRef.isInEylau || globalRef.IsZap);
         }
 
         void AdjustingYspeed()

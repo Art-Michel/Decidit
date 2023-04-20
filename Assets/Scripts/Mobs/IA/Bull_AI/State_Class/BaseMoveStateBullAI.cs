@@ -189,7 +189,7 @@ namespace State.AIBull
                 disableOffsetDestination = true;
             }
 
-            SlowSpeed(globalRef.isInEylau);
+            SlowSpeed(globalRef.isInEylau || globalRef.IsZap);
             globalRef.agent.SetDestination(CheckNavMeshPoint(newDestination));
         }
         Vector3 CheckNavMeshPoint(Vector3 newDestination)
@@ -246,7 +246,7 @@ namespace State.AIBull
                 relativePos.y = 0;
                 relativePos.z = direction.z;
 
-                SlowRotation(globalRef.isInEylau);
+                SlowRotation(globalRef.isInEylau || globalRef.IsZap);
                 Quaternion rotation = Quaternion.Slerp(globalRef.transform.rotation, Quaternion.LookRotation(relativePos, Vector3.up), globalRef.baseMoveBullSO.speedRot);
                 globalRef.transform.rotation = rotation;
             }

@@ -32,6 +32,9 @@ namespace State.AICAC
         [Header("SynergyAttraction References")]
         public bool isInSynergyAttraction;
 
+        [Header("Slow Zap References")]
+        public bool IsZap;
+
         [Header("Ref Move State")]
         public float offsetDestination;
         public Vector3 debugDestination;
@@ -111,6 +114,16 @@ namespace State.AICAC
 
             if (isInSynergyAttraction)
                 ActiveAttractionState();
+
+            if (isInEylau)
+                myAnimator.speed = 1 / (slowRatio / 2);
+            else
+                myAnimator.speed = 1;
+
+            if (IsZap)
+                myAnimator.speed = 1 / (slowRatio / 2);
+            else
+                myAnimator.speed = 1;
         }
 
         public void ActiveState(StateControllerAICAC.AIState newState)

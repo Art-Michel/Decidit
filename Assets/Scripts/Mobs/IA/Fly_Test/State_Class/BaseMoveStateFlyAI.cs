@@ -248,7 +248,7 @@ namespace State.FlyAI
             relativePos.y = baseMoveFlySO.destinationFinal.y - flyAI.transform.position.y;
             relativePos.z = baseMoveFlySO.destinationFinal.z - flyAI.transform.position.z;
 
-            SlowRotation(globalRef.isInEylau, relativePos);
+            SlowRotation(globalRef.isInEylau || globalRef.IsZap, relativePos);
             childflyAI.localRotation = rotation;
 
             if (speedVelocity >0)
@@ -328,7 +328,7 @@ namespace State.FlyAI
             {
                 if (baseMoveFlySO.distDestinationFinal > 7)
                 {
-                    SlowSpeed(globalRef.isInEylau);
+                    SlowSpeed(globalRef.isInEylau || globalRef.IsZap);
 
                     if (flyAI.transform.position.y < baseMoveFlySO.destinationFinal.y)
                     {
@@ -356,7 +356,7 @@ namespace State.FlyAI
         }
         void ApplyFlyingMoveDodgeObstacle()
         {
-            SlowSpeed(globalRef.isInEylau);
+            SlowSpeed(globalRef.isInEylau || globalRef.IsZap);
 
             if (flyAI.transform.position.y < baseMoveFlySO.destinationFinal.y)
             {
