@@ -32,7 +32,7 @@ public class FlyAI : MonoBehaviour
     [SerializeField] float maxSpeedRotationContourneWall;
     [SerializeField] float speedRotationContourneWall;
     [SerializeField] float smoothRotationContourneWall;
-    
+
     [Header("Speed Rotation Charge")]
     [SerializeField] float maxSpeedRotationCharge;
     [SerializeField] float smoothRotationCharge;
@@ -64,7 +64,7 @@ public class FlyAI : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(checkObstacleIsOnPass || obstacleTrigger)
+        if (checkObstacleIsOnPass || obstacleTrigger)
             Detection();
     }
 
@@ -76,7 +76,7 @@ public class FlyAI : MonoBehaviour
         ApplyFlyingMove();
         RateAttack();
 
-        // si la position aléatoir de patroll est défini l'IA si dirige, sinon on en cherche une
+        // si la position alï¿½atoir de patroll est dï¿½fini l'IA si dirige, sinon on en cherche une
         if (newPosIsSet)
         {
             if (!obstacleOnPathDetected)
@@ -89,7 +89,7 @@ public class FlyAI : MonoBehaviour
             SearchNewPos();
         }
 
-        // si un obstacle est détecté est que l'IA n'est pas assez loin on cherche la direction de la destination (droite ou gauche) pour savoir de quel coté contourné l'obstacle
+        // si un obstacle est dï¿½tectï¿½ est que l'IA n'est pas assez loin on cherche la direction de la destination (droite ou gauche) pour savoir de quel cotï¿½ contournï¿½ l'obstacle
         if (obstacleOnPathDetected)
         {
             speedRotationAIPatrol = 0;
@@ -119,7 +119,7 @@ public class FlyAI : MonoBehaviour
         relativePos.y = destinationFinal.y - transform.position.y;
         relativePos.z = destinationFinal.z - transform.position.z;
 
-        if(!searchPlayer)
+        if (!searchPlayer)
         {
             Quaternion rotation = Quaternion.SlerpUnclamped(transform.rotation, Quaternion.LookRotation(relativePos, Vector3.up), speedRotationAIPatrol);
             transform.rotation = rotation;
@@ -144,13 +144,13 @@ public class FlyAI : MonoBehaviour
             }
             else
             {
-               // speedRotationCharge = 0;
+                // speedRotationCharge = 0;
             }
         }
     }
 
     ////////////// Set Destination \\\\\\\\\\\\\\\\\\\\\
-    Vector3 SearchNewPos() // défini la position aléatoire choisi dans la fonction "RandomPointInBounds()" si la distance entre le point et l'IA est suffisament grande
+    Vector3 SearchNewPos() // dï¿½fini la position alï¿½atoire choisi dans la fonction "RandomPointInBounds()" si la distance entre le point et l'IA est suffisament grande
     {
         destinationFinal = RandomPointInBounds(myCollider.bounds);
 
@@ -165,7 +165,7 @@ public class FlyAI : MonoBehaviour
             return destinationFinal;
         }
     }
-    Vector3 RandomPointInBounds(Bounds bounds) // renvoie une position aléatoire dans un trigger collider
+    Vector3 RandomPointInBounds(Bounds bounds) // renvoie une position alï¿½atoire dans un trigger collider
     {
         return new Vector3(
             Random.Range(bounds.min.x, bounds.max.x),
@@ -175,13 +175,13 @@ public class FlyAI : MonoBehaviour
     }
 
     ////////////// Contourne Obstacle \\\\\\\\\\\\\\\\\\\\\
-    void CheckDestinationDir() // si la destination est a droite ou à gauche, lance la fonction "ContourneDirection()"
+    void CheckDestinationDir() // si la destination est a droite ou ï¿½ gauche, lance la fonction "ContourneDirection()"
     {
         if (dirContourne > 0)
         {
             ContourneDirection(Vector3.right);
         }
-        else if(dirContourne <0)
+        else if (dirContourne < 0)
         {
             ContourneDirection(Vector3.left);
         }
@@ -279,7 +279,7 @@ public class FlyAI : MonoBehaviour
     // Speed Movement 
     void SpeedManager()
     {
-        if(!searchPlayer)
+        if (!searchPlayer)
         {
             if (obstacleOnPathDetected)
             {
@@ -311,7 +311,7 @@ public class FlyAI : MonoBehaviour
 
             if (distDestination <= 1f)
             {
-                if(currentSpeed > stopSpeed)
+                if (currentSpeed > stopSpeed)
                     currentSpeed -= Time.deltaTime * 500;
 
                 if (currentSpeed < stopSpeed)
@@ -327,7 +327,7 @@ public class FlyAI : MonoBehaviour
     {
         if (newPosIsSet)
         {
-            if(!searchPlayer)
+            if (!searchPlayer)
             {
                 if (distDestination > 7)
                 {
@@ -471,7 +471,7 @@ public class FlyAI : MonoBehaviour
             obstacleTrigger = true;
             checkObstacleIsOnPass = true;
 
-            if (obstacleTransform != other.transform || obstacleTransform==null)
+            if (obstacleTransform != other.transform || obstacleTransform == null)
             {
                 obstacleTransform = other.transform;
             }
