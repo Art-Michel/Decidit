@@ -101,6 +101,11 @@ public class Player : LocalManager<Player>
     [Foldout("Jumping Settings")]
     [Range(0, 1)][SerializeField] private float _jumpMaxBuffer = 0.3f;
 
+    [Foldout("Shakes")]
+    [SerializeField] protected KickShake.Params _jumpShake;
+    [Foldout("Shakes")]
+    [SerializeField] protected KickShake.Params _landShake;
+
     private const float _gravity = 9.81f;
     public float CurrentlyAppliedGravity;
     private Vector3 _steepSlopesMovement;
@@ -511,7 +516,7 @@ public class Player : LocalManager<Player>
     {
         if (_groundHit.transform != null)
         {
-            if (Vector3.Angle(transform.up, _groundHit.normal) > CharaCon.slopeLimit)
+            if (Vector3.Angle(transform.up, _groundHit.normal) > CharaCon.slopeLimit && _fsm.CurrentState.Name != PlayerStatesList.GROUNDED)
                 _fsm.ChangeState(PlayerStatesList.FALLINGDOWNSLOPE);
         }
     }
@@ -525,6 +530,7 @@ public class Player : LocalManager<Player>
     public void Land()
     {
         SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/Landing", 1f, gameObject);
+        Player.Instance.StartKickShake(_landShake, transform.position);
         //Reset many values when landing
         _currentFriction = _groundedFriction;
         CurrentlyAppliedGravity = 0;
@@ -539,7 +545,10 @@ public class Player : LocalManager<Player>
     {
         _currentFriction = _airborneFriction;
         if (_fsm.PreviousState.Name != PlayerStatesList.FALLINGDOWNSLOPE)
+        {
             CurrentlyAppliedGravity *= 0.8f;
+
+        }
     }
 
     #endregion
@@ -611,6 +620,7 @@ public class Player : LocalManager<Player>
     public void StartJumping(float strength)
     {
         SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/Jump", 1f, gameObject);
+        Player.Instance.StartKickShake(_jumpShake, transform.position);
         CurrentlyAppliedGravity = strength;
         _justJumped = true;
         _coyoteTime = -1f;
@@ -920,6 +930,7 @@ public class Player : LocalManager<Player>
         bool cond = _currentWall.transform != null;
         cond = cond && Vector3.Dot(_currentWall.normal, _movementInputs.normalized) < _maxWallDotProduct;
         cond = cond && GlobalMomentum.y + CurrentlyAppliedGravity <= 0f;
+        cond = cond && _fsm.CurrentState.Name != PlayerStatesList.GROUNDED;
 
         if (!_canWallrideWith0Wj)
             cond = cond && _currentNumberOfWalljumps > 0;
