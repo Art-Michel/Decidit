@@ -16,6 +16,9 @@ public class Altar : MonoBehaviour, IInteractable
         Cimetiere
     }
 
+    [Foldout("References")]
+    [SerializeField] private Collider _interactHitbox;
+
     [SerializeField] public Chants _chant;
     [Foldout("References for each Chant")]
     [SerializeField] private GameObject[] AestheticsParentsPerSong;
@@ -158,6 +161,7 @@ public class Altar : MonoBehaviour, IInteractable
         _hasBeenUsed = true;
         PlayerHealth.Instance.TrueHeal(1);
         AestheticsParent.SetActive(false);
+        _interactHitbox.enabled = false;
     }
 
     void OnDestroy()
