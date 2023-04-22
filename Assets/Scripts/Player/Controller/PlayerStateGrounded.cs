@@ -15,7 +15,7 @@ public class PlayerStateGrounded : PlayerState
     public override void StateUpdate()
     {
         _player.CheckForNoGround();
-        _player.CheckForSteepSlope();
+        // _player.CheckForSteepSlope();
     }
 
     public override void Exit()

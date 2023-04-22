@@ -301,14 +301,6 @@ public class EnemyHealth : Health
         //old
         //Player.Instance.gameObject.GetComponent<Health>().ProbRegen(1000);
 
-        //update number of enemies in room
-        if (Room)
-        {
-            Room.CurrentEnemiesInRoom--;
-            Room.CheckForEnemies();
-        }
-        else
-            Debug.LogWarning("This enemy was not assigned a room");
 
         _deathT = _deathAnimationDuration;
         _isDying = true;
@@ -322,6 +314,15 @@ public class EnemyHealth : Health
 
         //Adjust Visibility
         _appearT = 1;
+
+        //update number of enemies in room
+        if (Room && DungeonGenerator.Instance != null)
+        {
+            Room.CurrentEnemiesInRoom--;
+            Room.CheckForEnemies();
+        }
+        else
+            Debug.LogWarning("This enemy was not assigned a room or dungeongenerator is not in this scene");
     }
 
     public void SetDissolve()

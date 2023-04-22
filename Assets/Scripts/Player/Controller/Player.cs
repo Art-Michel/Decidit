@@ -516,7 +516,7 @@ public class Player : LocalManager<Player>
     {
         if (_groundHit.transform != null)
         {
-            if (Vector3.Angle(transform.up, _groundHit.normal) > CharaCon.slopeLimit && _fsm.CurrentState.Name != PlayerStatesList.GROUNDED)
+            if (Vector3.Angle(transform.up, _groundHit.normal) > CharaCon.slopeLimit)
                 _fsm.ChangeState(PlayerStatesList.FALLINGDOWNSLOPE);
         }
     }
@@ -930,7 +930,6 @@ public class Player : LocalManager<Player>
         bool cond = _currentWall.transform != null;
         cond = cond && Vector3.Dot(_currentWall.normal, _movementInputs.normalized) < _maxWallDotProduct;
         cond = cond && GlobalMomentum.y + CurrentlyAppliedGravity <= 0f;
-        cond = cond && _fsm.CurrentState.Name != PlayerStatesList.GROUNDED;
 
         if (!_canWallrideWith0Wj)
             cond = cond && _currentNumberOfWalljumps > 0;
