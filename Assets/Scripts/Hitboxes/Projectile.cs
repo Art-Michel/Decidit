@@ -270,7 +270,7 @@ public class Projectile : Hitbox
             if (impactVfx == null)
                 return;
 
-            impactVfx.transform.position = point - Direction * 0.05f;
+            impactVfx.transform.position = point - Direction * 0.01f;
 
             if (Direction != Vector3.zero)
             {
