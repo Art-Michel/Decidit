@@ -18,6 +18,8 @@ public class Arm : MonoBehaviour
     [Foldout("References")]
     [SerializeField] private AnimationCurve _glowCurve;
     [Foldout("References")]
+    [SerializeField] private float _glowSpeed = 8.0f;
+    [Foldout("References")]
     [SerializeField] protected GameObject _ui;
     [Foldout("References")]
     [SerializeField] protected Transform _cameraTransform;
@@ -187,7 +189,7 @@ public class Arm : MonoBehaviour
 
     protected void Glow()
     {
-        _glowT += Time.deltaTime * 10.0f;
+        _glowT += Time.deltaTime * _glowSpeed;
         float alpha = _glowCurve.Evaluate(_glowT);
         foreach (Image image in _glowingCrossHairs)
             image.color = new Color(image.color.r, image.color.g, image.color.b, alpha);
