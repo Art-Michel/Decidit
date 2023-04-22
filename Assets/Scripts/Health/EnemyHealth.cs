@@ -253,19 +253,21 @@ public class EnemyHealth : Health
     ///<summary> Display Healthbar when looking at an enemy or when they take damage </summary>
     void AdjustVisibility()
     {
-        if (!_isDying)
-        {
-            //formula to make distance-relative the angle at which you must look at an enemy
-            float minimumDot = 1 - _lookStrictness / _distance;
+        //formula to make distance-relative the angle at which you must look at an enemy
+        float minimumDot = 1 - _lookStrictness / _distance;
 
-            //Display Healthbar if enemy is looked at or if enemy is taking damage
-            _healthBarIsVisible = Vector3.Dot(_camForward, (transform.position - _camPos).normalized) > minimumDot || _hasProbation;
-        }
-        else
+        //Display Healthbar if enemy is looked at or if enemy is taking damage
+        _healthBarIsVisible = Vector3.Dot(_camForward, (transform.position - _camPos).normalized) > minimumDot || _hasProbation;
+
+        //If dying, we override the value to be false
+        if (_isDying)
         {
             _healthBarIsVisible = false;
             _disappearStartup = 0f;
         }
+        //If sick, we override the value to be true
+        if (IsSick)
+            _healthBarIsVisible = true;
 
         //progressively display healthbar
         if (_healthBarIsVisible && _appearT < 1)
