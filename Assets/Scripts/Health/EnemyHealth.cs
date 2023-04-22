@@ -123,7 +123,7 @@ public class EnemyHealth : Health
             son.transform.parent = box.transform;
             son.transform.localPosition = Vector3.zero;
             son.transform.localRotation = Quaternion.identity;
-            son.transform.localScale = Vector3.zero;
+            son.transform.localScale = Vector3.one;
             son.transform.name = ("Sickbox");
             son.layer = 21;
 
