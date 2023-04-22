@@ -7,12 +7,18 @@ using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.HighDefinition;
 using NaughtyAttributes;
+using CameraShake;
 
 public class PlayerManager : LocalManager<PlayerManager>
 {
     [Foldout("References")]
     [SerializeField] Volume _playerVolume;
     ColorAdjustments _colorPP;
+
+    //Stop time
+    bool _timeStopped = true;
+    float _timeStopT;
+
     //Slow down time
     float _slowMoT;
     float _slowMoInitialT;
@@ -60,6 +66,9 @@ public class PlayerManager : LocalManager<PlayerManager>
     //Altar usage
     Altar _currentAltar = null;
 
+    [SerializeField]
+    private BounceShake.Params _hitShake;
+
     PlayerInputMap _inputs;
     private bool _forceSlowMo;
 
@@ -98,6 +107,16 @@ public class PlayerManager : LocalManager<PlayerManager>
         SlowMo();
         Rumble();
         DisplayTimeScale();
+
+        if (_timeStopped)
+        {
+            _timeStopT -= Time.unscaledDeltaTime;
+            if (_timeStopT <= 0.0f)
+            {
+                _timeStopped = false;
+                Time.timeScale = 1.0f;
+            }
+        }
 
         if (_isDying)
             Die();
@@ -140,6 +159,21 @@ public class PlayerManager : LocalManager<PlayerManager>
     {
         if (_timescaleDebugUi)
             _timescaleDebugUi.text = ("TimeScale: " + Time.timeScale.ToString("F3"));
+    }
+
+    public void HitShake(int length)
+    {
+        _hitShake.numBounces += length;
+        Player.Instance.StartBounceShake(_hitShake, transform.position);
+        _hitShake.numBounces -= length;
+    }
+
+    public void HitStop(float duration)
+    {
+        return;
+        Time.timeScale = 0.0f;
+        _timeStopT = duration;
+        _timeStopped = true;
     }
 
     #region Equipping
@@ -432,6 +466,9 @@ public class PlayerManager : LocalManager<PlayerManager>
     #region Slow mo
     public void StartSlowMo(float speed, float duration)
     {
+        if (_timeStopped)
+            return;
+
         if (duration > _slowMoT)
         {
             _slowMoInitialT = duration;
@@ -443,15 +480,15 @@ public class PlayerManager : LocalManager<PlayerManager>
 
     private void SlowMo()
     {
-        if (_slowMoT > 0 || !_isPaused && !_forceSlowMo)
-        {
-            ////SoundManager.Instance.PlaySound("event:/SFX_Environement/SlowMo", 5f);
-            Time.timeScale = Mathf.Lerp(_timeSpeed, 1, Mathf.InverseLerp(_slowMoInitialT, 0, _slowMoT));
+        if (_timeStopped || _slowMoT <= 0 || _isPaused && _forceSlowMo)
+            return;
 
-            _slowMoT -= Time.unscaledDeltaTime;
-            if (_slowMoT < 0 && !_isDead)
-                StopSlowMo();
-        }
+        ////SoundManager.Instance.PlaySound("event:/SFX_Environement/SlowMo", 5f);
+        Time.timeScale = Mathf.Lerp(_timeSpeed, 1, Mathf.InverseLerp(_slowMoInitialT, 0, _slowMoT));
+
+        _slowMoT -= Time.unscaledDeltaTime;
+        if (_slowMoT < 0 && !_isDead)
+            StopSlowMo();
     }
 
     private void StopSlowMo()
