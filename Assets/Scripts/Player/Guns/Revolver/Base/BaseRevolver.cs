@@ -12,6 +12,10 @@ public class BaseRevolver : Revolver
     [Foldout("Stats")]
     [SerializeField] float _hitscanMaxRange = 100f;
 
+    [Foldout("Shake")]
+    [SerializeField] int _hitShakeMultiplier;
+
+
     public override void Shoot()
     {
         base.Shoot();
@@ -41,6 +45,7 @@ public class BaseRevolver : Revolver
             // = enemy hurtbox
             else if (hit.transform.gameObject.layer == LayerMask.NameToLayer("EnemyHurtbox") && hit.transform.TryGetComponent<Hurtbox>(out Hurtbox hurtbox))
             {
+                PlayerManager.Instance.HitShake(Mathf.RoundToInt(_hitShakeMultiplier));
                 if (hit.transform.CompareTag("WeakHurtbox"))
                     (hurtbox.HealthComponent as EnemyHealth).TakeCriticalDamage(_hitscanDamage, hit.point, hit.normal);
                 else if (hit.transform.CompareTag("Bullet"))

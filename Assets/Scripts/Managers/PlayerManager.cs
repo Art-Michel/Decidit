@@ -163,9 +163,9 @@ public class PlayerManager : LocalManager<PlayerManager>
 
     public void HitShake(int length)
     {
-        _hitShake.numBounces += length;
+        //prendre en argument un shake, les faire au cas par cas
+        _hitShake.numBounces = length;
         Player.Instance.StartBounceShake(_hitShake, transform.position);
-        _hitShake.numBounces -= length;
     }
 
     public void HitStop(float duration)

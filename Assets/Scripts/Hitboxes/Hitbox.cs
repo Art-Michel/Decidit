@@ -25,6 +25,9 @@ public class Hitbox : MonoBehaviour
     [Foldout("Properties")]
     [SerializeField] private bool _canCriticalHit = true;
 
+    [Foldout("Shake")]
+    [SerializeField] int _hitShakeMultiplier;
+
     [Foldout("Stats")]
     [SerializeField] protected float _radius = .2f;
     [Foldout("Stats")]
@@ -140,6 +143,8 @@ public class Hitbox : MonoBehaviour
                 //apply knockback
                 health.Knockback(direction.normalized * _knockbackForce);
             }
+            if (_hitShakeMultiplier > 0)
+                PlayerManager.Instance.HitShake(Mathf.RoundToInt(_hitShakeMultiplier));
         }
         Blacklist.Add(targetCollider, _delayBetweenHits);
     }

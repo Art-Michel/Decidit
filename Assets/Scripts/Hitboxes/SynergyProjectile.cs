@@ -11,6 +11,7 @@ public class SynergyProjectile : Projectile
     [Foldout("Synergies")]
     [SerializeField] LayerMask _synergiesLayer;
 
+
     private bool _synergized;
 
     public override void Setup(Vector3 position, Vector3 direction, Vector3 cameraDirection)
