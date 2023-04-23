@@ -92,7 +92,20 @@ MonoBehaviour:
   _canMultiHit: 0
   _shouldSplashBloodOnHit: 1
   _canCriticalHit: 1
-  _hitShakeMultiplier: 10
+  _hitShake:
+    positionStrength: 0.04
+    rotationStrength: 0.02
+    axesMultiplier:
+      position: {x: 1, y: 1, z: 0}
+      eulerAngles: {x: 0, y: 0, z: 1}
+    freq: 40
+    numBounces: 3
+    randomness: 0.5
+    attenuation:
+      clippingDistance: 10
+      falloffScale: 50
+      falloffDegree: 1
+      axesMultiplier: {x: 1, y: 1, z: 1}
   _radius: 0.15
   _damage: 0.5
   _knockbackForce: 0

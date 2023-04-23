@@ -66,9 +66,6 @@ public class PlayerManager : LocalManager<PlayerManager>
     //Altar usage
     Altar _currentAltar = null;
 
-    [SerializeField]
-    private BounceShake.Params _hitShake;
-
     PlayerInputMap _inputs;
     private bool _forceSlowMo;
 
@@ -161,19 +158,17 @@ public class PlayerManager : LocalManager<PlayerManager>
             _timescaleDebugUi.text = ("TimeScale: " + Time.timeScale.ToString("F3"));
     }
 
-    public void HitShake(int length)
+    public void HitShake(BounceShake.Params shake)
     {
         //prendre en argument un shake, les faire au cas par cas
-        _hitShake.numBounces = length;
-        Player.Instance.StartBounceShake(_hitShake, transform.position);
+        Player.Instance.StartBounceShake(shake, transform.position);
     }
 
     public void HitStop(float duration)
     {
-        return;
-        Time.timeScale = 0.0f;
-        _timeStopT = duration;
-        _timeStopped = true;
+        // Time.timeScale = 0.0f;
+        // _timeStopT = duration;
+        // _timeStopped = true;
     }
 
     #region Equipping

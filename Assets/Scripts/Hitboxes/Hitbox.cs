@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 using System.Linq;
+using CameraShake;
 
 public class Hitbox : MonoBehaviour
 {
@@ -25,8 +26,8 @@ public class Hitbox : MonoBehaviour
     [Foldout("Properties")]
     [SerializeField] private bool _canCriticalHit = true;
 
-    [Foldout("Shake")]
-    [SerializeField] int _hitShakeMultiplier;
+    [SerializeField]
+    private BounceShake.Params _hitShake;
 
     [Foldout("Stats")]
     [SerializeField] protected float _radius = .2f;
@@ -143,8 +144,8 @@ public class Hitbox : MonoBehaviour
                 //apply knockback
                 health.Knockback(direction.normalized * _knockbackForce);
             }
-            if (_hitShakeMultiplier > 0)
-                PlayerManager.Instance.HitShake(Mathf.RoundToInt(_hitShakeMultiplier));
+            if (_hitShake.numBounces > 0)
+                PlayerManager.Instance.HitShake(_hitShake);
         }
         Blacklist.Add(targetCollider, _delayBetweenHits);
     }

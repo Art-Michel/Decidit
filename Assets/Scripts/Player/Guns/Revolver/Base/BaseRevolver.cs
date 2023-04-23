@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using CameraShake;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.VFX;
@@ -12,8 +13,8 @@ public class BaseRevolver : Revolver
     [Foldout("Stats")]
     [SerializeField] float _hitscanMaxRange = 100f;
 
-    [Foldout("Shake")]
-    [SerializeField] int _hitShakeMultiplier;
+    [SerializeField]
+    private BounceShake.Params _hitShake;
 
 
     public override void Shoot()
@@ -45,7 +46,7 @@ public class BaseRevolver : Revolver
             // = enemy hurtbox
             else if (hit.transform.gameObject.layer == LayerMask.NameToLayer("EnemyHurtbox") && hit.transform.TryGetComponent<Hurtbox>(out Hurtbox hurtbox))
             {
-                PlayerManager.Instance.HitShake(Mathf.RoundToInt(_hitShakeMultiplier));
+                PlayerManager.Instance.HitShake(_hitShake);
                 if (hit.transform.CompareTag("WeakHurtbox"))
                     (hurtbox.HealthComponent as EnemyHealth).TakeCriticalDamage(_hitscanDamage, hit.point, hit.normal);
                 else if (hit.transform.CompareTag("Bullet"))
