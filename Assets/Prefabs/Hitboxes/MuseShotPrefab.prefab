@@ -376,7 +376,20 @@ MonoBehaviour:
   _canMultiHit: 0
   _shouldSplashBloodOnHit: 0
   _canCriticalHit: 0
-  _hitShakeMultiplier: 0
+  _hitShake:
+    positionStrength: 0.05
+    rotationStrength: 0.1
+    axesMultiplier:
+      position: {x: 1, y: 1, z: 0}
+      eulerAngles: {x: 0, y: 0, z: 1}
+    freq: 25
+    numBounces: 5
+    randomness: 0.5
+    attenuation:
+      clippingDistance: 10
+      falloffScale: 50
+      falloffDegree: 1
+      axesMultiplier: {x: 1, y: 1, z: 1}
   _radius: 5
   _damage: 1
   _knockbackForce: 5
@@ -562,7 +575,20 @@ MonoBehaviour:
   _canMultiHit: 0
   _shouldSplashBloodOnHit: 0
   _canCriticalHit: 1
-  _hitShakeMultiplier: 30
+  _hitShake:
+    positionStrength: 0
+    rotationStrength: 0.4
+    axesMultiplier:
+      position: {x: 1, y: 1, z: 0}
+      eulerAngles: {x: 0, y: 0, z: 1}
+    freq: 40
+    numBounces: 5
+    randomness: 0.5
+    attenuation:
+      clippingDistance: 10
+      falloffScale: 50
+      falloffDegree: 1
+      axesMultiplier: {x: 1, y: 1, z: 1}
   _radius: 0.3
   _damage: 0.5
   _knockbackForce: 0
@@ -689,7 +715,20 @@ MonoBehaviour:
   _canMultiHit: 0
   _shouldSplashBloodOnHit: 0
   _canCriticalHit: 0
-  _hitShakeMultiplier: 0
+  _hitShake:
+    positionStrength: 0.05
+    rotationStrength: 0.1
+    axesMultiplier:
+      position: {x: 1, y: 1, z: 0}
+      eulerAngles: {x: 0, y: 0, z: 1}
+    freq: 25
+    numBounces: 5
+    randomness: 0.5
+    attenuation:
+      clippingDistance: 10
+      falloffScale: 50
+      falloffDegree: 1
+      axesMultiplier: {x: 1, y: 1, z: 1}
   _radius: 7
   _damage: 0
   _knockbackForce: 5
