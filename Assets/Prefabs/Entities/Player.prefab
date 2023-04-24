@@ -17222,6 +17222,7 @@ GameObject:
   - component: {fileID: 941008334}
   - component: {fileID: 1112549826}
   - component: {fileID: 5894753615715131022}
+  - component: {fileID: 4265017164254631392}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -17426,6 +17427,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Hospital: []
   _fugueMaladeShotsPooler: {fileID: 5894753615715131022}
+  _eylauMaladeVfxPooler: {fileID: 4265017164254631392}
   _eylauArea: {fileID: 859588761}
   _explosionVfxPooler: {fileID: 941008334}
   _blackHolePooler: {fileID: 1112549826}
@@ -17475,6 +17477,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _prefab: {fileID: 8252760470148114170, guid: b5b3e70ebc506bd41883a3f9aa513280, type: 3}
   _initialCount: 4
+  _shouldBeParent: 0
+  _canCreateNewPrefabs: 1
+--- !u!114 &4265017164254631392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2007368072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 4375951055614460336, guid: d0c2ee32bea0aa543bd09b05be3126c2, type: 3}
+  _initialCount: 5
   _shouldBeParent: 0
   _canCreateNewPrefabs: 1
 --- !u!1 &2015250739
@@ -24479,6 +24497,7 @@ RectTransform:
   - {fileID: 350904333}
   - {fileID: 3225080591060015465}
   - {fileID: 3746719346472866228}
+  - {fileID: 8488576010453256759}
   m_Father: {fileID: 2200446484234949676}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -35232,6 +35251,42 @@ MonoBehaviour:
   PreviousMenu: {fileID: 1699825492}
   FirstButton: {fileID: 2029288660914089440}
   GreyOuts: []
+--- !u!1 &7918316697064992052
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8488576010453256759}
+  m_Layer: 5
+  m_Name: Flash
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &8488576010453256759
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7918316697064992052}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2200446484577634941}
+  m_RootOrder: 18
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7961380115751598195
 GameObject:
   m_ObjectHideFlags: 0

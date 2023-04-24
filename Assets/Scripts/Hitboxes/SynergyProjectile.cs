@@ -11,12 +11,17 @@ public class SynergyProjectile : Projectile
     [Foldout("Synergies")]
     [SerializeField] LayerMask _synergiesLayer;
 
-
-    private bool _synergized;
+    protected bool _synergized;
 
     public override void Setup(Vector3 position, Vector3 direction, Vector3 cameraDirection)
     {
         base.Setup(position, direction, cameraDirection);
+        _synergized = false;
+    }
+
+    public override void Setup(Vector3 position, Vector3 direction)
+    {
+        base.Setup(position, direction);
         _synergized = false;
     }
 
