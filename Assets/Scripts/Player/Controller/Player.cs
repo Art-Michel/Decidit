@@ -39,11 +39,11 @@ public class Player : LocalManager<Player>
     #region Camera rotation variables
     private float _cameraTargetYRotation;
     private float _cameraTargetXRotation;
-    float _shakeT;
-    float _shakeInitialT;
-    float _shakeIntensity;
-    bool _up = true;
-    Vector3 _initialHeadPos = new Vector3(0, 0.4f, 0);
+    // float _shakeT;
+    // float _shakeInitialT;
+    // float _shakeIntensity;
+    // bool _up = true;
+    // Vector3 _initialHeadPos = new Vector3(0, 0.4f, 0);
 
     //Mouse
     [Foldout("Camera Mouse Settings")]
