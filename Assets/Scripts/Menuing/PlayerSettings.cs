@@ -23,10 +23,15 @@ public class PlayerSettings : MonoBehaviour
     #endregion
 
     #region SensivityVariables
-    float xSensivity = Mathf.Clamp(25f,0f,100f);
-    float ySensivity = Mathf.Clamp(25f,0f,100f);
+    float xSensivity = Mathf.Clamp(25f,0.1f,100f);
+    float ySensivity = Mathf.Clamp(25f,0.1f,100f);
+
+    float xControllerSensivity = Mathf.Clamp(25f,0.1f,100f);
+    float yControllerSensivity = Mathf.Clamp(25f,0.1f,100f);
 
     #endregion
+
+    Resolution resolution;
 
     private void Awake()
     {
@@ -71,11 +76,13 @@ public class PlayerSettings : MonoBehaviour
     {
         SFX.setVolume(SFXVolumeNumber);//1 = 0Db donc la valeur normale donc 0 = plus de son
         SFX.getVolume(out SFXVolumeNumber);//Debug qui affiche la current value du son
+        SavePrefs();
     }
     public void MusicVolumeUpdate()//ToDoArt un slider qui appele la fonction connecté a la valeur MusicVolumeNumber
     {
         music.setVolume(musicVolumeNumber);//1 = 0Db donc la valeur normale donc 0 = plus de son
         music.getVolume(out musicVolumeNumber);//Debug qui affiche la current value du son
+        SavePrefs();
     }
     #endregion
 
@@ -83,12 +90,17 @@ public class PlayerSettings : MonoBehaviour
     public void SavePrefs()
     {
         //TMTC ça save
+        PlayerPrefs.GetFloat("ResolutionWidith", resolution.width);
+        PlayerPrefs.GetFloat("ResolutionHeight", resolution.height);
         PlayerPrefs.SetFloat("XSensivity", xSensivity);
         PlayerPrefs.SetFloat("YSensivity", ySensivity);
+        PlayerPrefs.SetFloat("XControllerSensivity", xControllerSensivity);
+        PlayerPrefs.SetFloat("YControllerSensivity", yControllerSensivity);
         PlayerPrefs.SetFloat("MasterBaseVolume", masterVolumeNumber);
         PlayerPrefs.SetFloat("SFXBaseVolume", SFXVolumeNumber);
         PlayerPrefs.SetFloat("MusicBaseVolume", musicVolumeNumber);
         PlayerPrefs.Save();
+        UnityEngine.Debug.Log("Save");
     }
     public void LoadPrefs()
     {
@@ -107,8 +119,9 @@ public class PlayerSettings : MonoBehaviour
     #region ResolutionFonctions
     public void ScreenResolution(int ResolutionIndex) //Foction à appeller pour set la resolution
     {
-        Resolution resolution = DisponibleResolutions[ResolutionIndex];
+        resolution = DisponibleResolutions[ResolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+        SavePrefs();
     }
 
     public void ResolutionsSetUp()
@@ -152,8 +165,8 @@ public class PlayerSettings : MonoBehaviour
 
     public void ChangeControllerSensivity(float x, float y)
     {
-        xSensivity = x;
-        ySensivity = y;
+        xControllerSensivity = x;
+        yControllerSensivity = y;
         //ta fonction avec xSensivity pour x et ySensivity pour y
         SavePrefs();//Sauvegarde
     }
