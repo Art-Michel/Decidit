@@ -45,11 +45,15 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
         _actualRooms = new List<Room>();
     }
 
+    void Update()
+    {
+    }
+
     void Start()
     {
         _numberOfRooms = _difficultyPerRoom.Length;
         ResetDungeon();
-        StartCoroutine("SetUsableRooms");
+        StartCoroutine(SetUsableRooms());
 
         ChoseAGun = false;
         ChoseASkill = false;
@@ -57,17 +61,20 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
 
     IEnumerator SetUsableRooms()
     {
+        if (transform.childCount > 0)
+        {
+            ResetDungeon();
+            ClearDungeon();
+        }
+
         //* basically a new instance of the rooms setup so we can delete a room once it has been instanced in order to avoid repeats.
         _usableRooms = new List<List<Room>>();
         _usableRooms.Add(new List<Room>());
         for (int i = 0; i < _scenesEasy.Count; i++)
         {
             SceneManager.LoadScene(_scenesEasy[i], LoadSceneMode.Additive);
-            // Debug.Break();
-            Debug.Log("wait");
-            yield return new WaitForSeconds(0.1f);
-            Debug.Log("wait");
-            yield return new WaitForSeconds(0.1f);
+            Debug.Log("1");
+            yield return null;
             GameObject thatScenesRoot = GameObject.Find((_scenesEasy[i].ToString()));
             Room thatScenesRoom = thatScenesRoot.GetComponent<Room>();
             _usableRooms[0].Add(thatScenesRoom);
@@ -105,11 +112,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
 
     public void Generate()
     {
-        if (transform.childCount > 0)
-        {
-            ResetDungeon();
-            ClearDungeon();
-        }
+
 
         //* randomizing seed
         if (_randomizeSeed)
