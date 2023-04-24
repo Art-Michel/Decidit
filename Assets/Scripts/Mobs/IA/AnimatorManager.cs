@@ -17,7 +17,7 @@ public class AnimatorManager : MonoBehaviour
     public void SetAnimation(Animator animator, GlobalRefAnimator globalRefAnimator, string nextAnimation)
     {
         //Disable Current Animation
-        if(globalRefAnimator.currentAnimName != "")
+        if(globalRefAnimator.currentAnimName != "" && globalRefAnimator.currentAnimName != nextAnimation)
             animator.SetBool(globalRefAnimator.currentAnimName, false);
 
         //Enable Next Animation

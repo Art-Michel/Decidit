@@ -113,7 +113,7 @@ namespace State.AIBull
                             //stateController.SetActiveState(StateControllerBull.AIState.Idle);
                         }
                     }
-                    if (!stopLockPlayerRush)
+                    if (!stopLockPlayerRush && Vector3.Distance(globalRef.transform.position, globalRef.playerTransform.position) > rushBullSO.stopLockDist)
                         SmoothLookAtPlayerRush();
                 }
             }
@@ -387,13 +387,6 @@ namespace State.AIBull
 
         public void StopRush()
         {
-            /*  if (delayInertieRushInWall <=0)
-              {
-                  AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "RushAttack");
-
-                  if (animTime > 1.0f && currentAnimName == "RushAttack")
-                      stateController.SetActiveState(StateControllerBull.AIState.Idle);
-              }*/
             if (!endRush)
             {
                 Debug.Log("Launch Rush Attack Anim");
@@ -401,7 +394,7 @@ namespace State.AIBull
                 endRush = true;
             }
 
-            if (animTime > 1.0f && currentAnimName == "Dash Attack")
+            if (animTime > 1.0f && currentAnimName == "Dash Recovery")
             {
                 stateController.SetActiveState(StateControllerBull.AIState.Idle);
             }

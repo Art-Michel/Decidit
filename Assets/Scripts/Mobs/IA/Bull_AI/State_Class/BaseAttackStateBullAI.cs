@@ -99,7 +99,6 @@ namespace State.AIBull
                 if(animTime <= 0.2f)
                 {
                     catchPlayerPos = globalRef.playerTransform.position;
-                    Debug.Log(catchPlayerPos);
                 }
                 else if(animTime <= 0.5f)
                 {
@@ -131,14 +130,17 @@ namespace State.AIBull
                     launchAttack = true;
                     currentSpeed = 0;
                 }
-                else
+                else if(!attackDone)
                 {
                     SmoothLookAtPlayer();
                     currentSpeed = 19;
                     globalRef.agent.SetDestination(globalRef.playerTransform.position);
-
-                    if(AnimatorManager.instance.GetCurrentAnimatonName(globalRef.globalRefAnimator) != "Walk")
+                    AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Walk");
+                    
+                    if (AnimatorManager.instance.GetCurrentAnimatonName(globalRef.globalRefAnimator) != "Walk" && animTime > 1)
+                    {
                         AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Walk");
+                    }
                 }
             }
             else
