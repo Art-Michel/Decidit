@@ -273,10 +273,11 @@ namespace State.AIBull
         void RestartAttack()
         {
             Debug.Log("StartAttack");
-            canAttak = false;
             launchAttack = false;
             attackDone = false;
+            canAttak = false;
             isAttacking = false;
+            attackDone = false;
             globalRef.baseAttackBullSO.curentDelayBeforeAttack = globalRef.baseAttackBullSO.maxDelayBeforeAttack;
             globalRef.baseAttackBullSO.speedRot = 0;
         }
