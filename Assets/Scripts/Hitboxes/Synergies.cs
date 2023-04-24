@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class Synergies : LocalManager<Synergies>
 {
@@ -14,12 +15,18 @@ public class Synergies : LocalManager<Synergies>
 
     [Foldout("Malades")]
     public List<EnemyHealth> Hospital;
+
     [Foldout("Fugue -> Malades")]
     [SerializeField]
     Pooler _fugueMaladeShotsPooler;
 
+    [Foldout("Eylau -> Malades")]
+    [SerializeField]
+    Pooler _eylauMaladeVfxPooler;
+
     [Foldout("Cimetière")]
     [SerializeField] Transform _eylauArea;
+
     [Foldout("Muse -> Cimetière")]
     [SerializeField] Pooler _explosionVfxPooler;
     [Foldout("Fugue -> Cimetière")]
@@ -76,7 +83,7 @@ public class Synergies : LocalManager<Synergies>
                         EylauOnAragon();
                         break;
                     case Chants.MUSE:
-                        EylauOnMalade();
+                        EylauOnMalade(bullet.transform.position);
                         break;
                     case Chants.EYLAU:
                         //Nothing!
@@ -109,11 +116,15 @@ public class Synergies : LocalManager<Synergies>
     #endregion
 
     #region Eylau -> Malade
-    public void EylauOnMalade()
+    public void EylauOnMalade(Vector3 position)
     {
         foreach (EnemyHealth enemy in Hospital)
         {
             enemy.TakeDamage(0.5f);
+            VisualEffect arc = _eylauMaladeVfxPooler.Get().GetComponent<VisualEffect>();
+            arc.transform.position = Vector3.zero;
+            arc.SetVector3("Start_Pos", position);
+            arc.SetVector3("End_Pos", enemy.transform.position);
             //TODO JT enemy.Slow();
         }
     }
