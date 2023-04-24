@@ -125,6 +125,7 @@ public class Synergies : LocalManager<Synergies>
             arc.transform.position = Vector3.zero;
             arc.SetVector3("Start_Pos", position);
             arc.SetVector3("End_Pos", enemy.transform.position);
+            SoundManager.Instance.PlaySound("event:/SFX_Controller/Synergies/EyleauOnMuse/Sound", 1f, gameObject);
             //TODO JT enemy.Slow();
         }
     }
@@ -145,6 +146,7 @@ public class Synergies : LocalManager<Synergies>
         {
             blackHole.transform.position = position;
             blackHole.Setup();
+            SoundManager.Instance.PlaySound("event:/SFX_Controller/Synergies/AragonOnEyleau/Sound", 1f, gameObject);
         }
     }
     #endregion
