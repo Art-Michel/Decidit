@@ -34,7 +34,6 @@ public class EylauRevolver : Revolver
     private float _currentCharge;
     private bool _charged;
     private Vector3 _shakenDirection = Vector3.zero;
-    private FMOD.Studio.EventInstance loopInstance;
 
     public override void UpdateChargeLevel()
     {
@@ -56,9 +55,7 @@ public class EylauRevolver : Revolver
 
     private void GetCharged()
     {
-        loopInstance = FMODUnity.RuntimeManager.CreateInstance("event:/SFX_Controller/Shoots/CimetièreEyleau/MaxChargedLoop");
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/CimetièreEyleau/MaxCharged", 1f, gameObject);
-        loopInstance.start();
         //jouer en boucle un son quand il est chargé genre vwooooom
         _charged = true;
     }
@@ -79,9 +76,6 @@ public class EylauRevolver : Revolver
                 sh1 = false;
                 Animator.CrossFade("unShot2", 0, 0);
             }
-
-            loopInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-            loopInstance.release();
             SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/CimetièreEyleau/BasedShoot", 1f, gameObject);
             shot = _unchargedProjectilePooler.Get();
             shot.GetComponent<Projectile>().Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized);
@@ -97,8 +91,6 @@ public class EylauRevolver : Revolver
             //     PiercingLaser();
             // else
             //Laser();
-            loopInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-            loopInstance.release();
             SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/CimetièreEyleau/ChargedShoot", 1f, gameObject);
             shot = _chargedProjectilePooler.Get();
             shot.GetComponent<Projectile>().Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized);
@@ -208,8 +200,6 @@ public class EylauRevolver : Revolver
 
     public override void ResetChargeLevel()
     {
-        loopInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-        loopInstance.release();
         _charged = false;
         _currentCharge = 0f;
         _chargeUi.fillAmount = _currentCharge;
