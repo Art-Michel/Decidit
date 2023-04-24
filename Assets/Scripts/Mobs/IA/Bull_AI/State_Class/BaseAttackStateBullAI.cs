@@ -20,6 +20,7 @@ namespace State.AIBull
         Vector3 catchPlayerPos;
 
         [SerializeField] float currentSpeed;
+
         public override void InitState(StateControllerBull stateController)
         {
             base.InitState(stateController);
@@ -134,9 +135,7 @@ namespace State.AIBull
                 {
                     SmoothLookAtPlayer();
                     currentSpeed = 19;
-                    globalRef.agent.SetDestination(globalRef.playerTransform.position);
-                    AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Walk");
-                    
+                    globalRef.agent.SetDestination(globalRef.playerTransform.position);                    
                     if (AnimatorManager.instance.GetCurrentAnimatonName(globalRef.globalRefAnimator) != "Walk" && animTime > 1)
                     {
                         AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Walk");
@@ -273,6 +272,7 @@ namespace State.AIBull
 
         void RestartAttack()
         {
+            Debug.Log("StartAttack");
             canAttak = false;
             launchAttack = false;
             attackDone = false;
@@ -285,7 +285,9 @@ namespace State.AIBull
         {
             launchAttack = false;
             attackDone = false;
+            canAttak = false;
             isAttacking = false;
+            attackDone = false;
             globalRef.agent.speed = globalRef.baseAttackBullSO.speed;
             globalRef.hitBoxAttack.gameObject.SetActive(false);
             globalRef.baseAttackBullSO.curentDelayBeforeAttack = globalRef.baseAttackBullSO.maxDelayBeforeAttack;
