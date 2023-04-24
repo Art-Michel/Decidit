@@ -2,6 +2,8 @@ using System.Collections.Specialized;
 using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class DungeonGenerator : LocalManager<DungeonGenerator>
 {
@@ -15,7 +17,13 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
 
     [SerializeField] RoomSetup _starterRoom;
     [SerializeField] RoomSetup _finalRoom;
-    public List<RoomSetup> RoomSets;
+    // public List<RoomSetup> RoomSets;
+
+    [SerializeField] List<int> _scenesEasy;
+    [SerializeField] List<int> _scenesMedium;
+    [SerializeField] List<int> _scenesHard;
+    // SceneManager.LoadScene(ScenesHard[Random.Range(0, ScenesHard.Count)], LoadSceneMode.Additive);
+
     private List<List<Room>> _usableRooms;
     public List<RoomSetup> Corridors;
     public List<RoomSetup> CorridorsSpell;
@@ -41,25 +49,58 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
     {
         _numberOfRooms = _difficultyPerRoom.Length;
         ResetDungeon();
-        SetUsableRooms();
-        Generate();
+        StartCoroutine("SetUsableRooms");
 
         ChoseAGun = false;
         ChoseASkill = false;
     }
 
-    public void SetUsableRooms()
+    IEnumerator SetUsableRooms()
     {
         //* basically a new instance of the rooms setup so we can delete a room once it has been instanced in order to avoid repeats.
         _usableRooms = new List<List<Room>>();
-        for (int i = 0; i < RoomSets.Count; i++)
+        _usableRooms.Add(new List<Room>());
+        for (int i = 0; i < _scenesEasy.Count; i++)
         {
-            _usableRooms.Add(new List<Room>());
-            foreach (Room room in RoomSets[i].rooms)
-            {
-                _usableRooms[i].Add(room);
-            }
+            SceneManager.LoadScene(_scenesEasy[i], LoadSceneMode.Additive);
+            // Debug.Break();
+            Debug.Log("wait");
+            yield return new WaitForSeconds(0.1f);
+            Debug.Log("wait");
+            yield return new WaitForSeconds(0.1f);
+            GameObject thatScenesRoot = GameObject.Find((_scenesEasy[i].ToString()));
+            Room thatScenesRoom = thatScenesRoot.GetComponent<Room>();
+            _usableRooms[0].Add(thatScenesRoom);
         }
+
+        // _usableRooms.Add(new List<Room>());
+        // for (int i = 0; i < _scenesMedium.Count; i++)
+        // {
+        //     SceneManager.LoadScene(_scenesMedium[i], LoadSceneMode.Additive);
+        //     Room thatScenesRoom = GameObject.Find(_scenesMedium[i].ToString()).GetComponent<Room>();
+        //     _usableRooms[1].Add(thatScenesRoom);
+        // }
+
+        // _usableRooms.Add(new List<Room>());
+        // for (int i = 0; i < _scenesHard.Count; i++)
+        // {
+        //     SceneManager.LoadScene(_scenesHard[i], LoadSceneMode.Additive);
+        //     Room thatScenesRoom = GameObject.Find(_scenesHard[i].ToString()).GetComponent<Room>();
+        //     _usableRooms[2].Add(thatScenesRoom);
+        // }
+
+        //Prefab
+        // for (int i = 0; i < RoomSets.Count; i++)
+        // {
+        //     _usableRooms.Add(new List<Room>());
+        //     foreach (Room room in RoomSets[i].rooms)
+        //     {
+        //         _usableRooms[i].Add(room);
+        //     }
+        // }
+
+        Generate();
+        yield return null;
     }
 
     public void Generate()
@@ -216,13 +257,13 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
         return _actualRooms.IndexOf(room);
     }
 
-/*    public void Endgame()
-    {
-        Debug.Log("EndGame");
-        TimerManager.instance.SaveTimer();
-        MenuManager.Instance.OpenWin();
-    }*/
-    
+    /*    public void Endgame()
+        {
+            Debug.Log("EndGame");
+            TimerManager.instance.SaveTimer();
+            MenuManager.Instance.OpenWin();
+        }*/
+
     /// <summary>
     /// get seed all rooms
     /// </summary>

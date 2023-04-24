@@ -18,6 +18,12 @@ public class Room : MonoBehaviour
 
     [NonSerialized] public int CurrentEnemiesInRoom;
 
+
+    void Awake()
+    {
+        this.transform.parent = DungeonGenerator.Instance.transform;
+    }
+
     [Button]
     private void CountEnemies()
     {

@@ -8,6 +8,7 @@ public class Pooler : MonoBehaviour
     [SerializeField] int _initialCount = 4;
     [SerializeField] bool _shouldBeParent;
     [SerializeField] bool _canCreateNewPrefabs = true;
+    [SerializeField] Transform _defaultParent;
     Queue<PooledObject> _prefabs;
 
     void Awake()
@@ -19,7 +20,10 @@ public class Pooler : MonoBehaviour
     {
         for (int i = 0; i < _initialCount; i++)
         {
-            _prefabs.Enqueue(Create());
+            PooledObject obj = Create();
+            _prefabs.Enqueue(obj);
+            if (_defaultParent.transform != null)
+                obj.transform.parent = _defaultParent;
         }
     }
 
@@ -44,6 +48,8 @@ public class Pooler : MonoBehaviour
     public void Return(PooledObject obj)
     {
         _prefabs.Enqueue(obj);
+        if (_defaultParent.transform != null)
+            obj.transform.parent = _defaultParent;
         obj.gameObject.SetActive(false);
     }
 

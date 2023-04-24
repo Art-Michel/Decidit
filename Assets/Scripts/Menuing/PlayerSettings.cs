@@ -23,11 +23,11 @@ public class PlayerSettings : MonoBehaviour
     #endregion
 
     #region SensivityVariables
-    float xSensivity = Mathf.Clamp(25f,0.1f,100f);
-    float ySensivity = Mathf.Clamp(25f,0.1f,100f);
+    float xSensivity = Mathf.Clamp(25f, 0.1f, 100f);
+    float ySensivity = Mathf.Clamp(25f, 0.1f, 100f);
 
-    float xControllerSensivity = Mathf.Clamp(25f,0.1f,100f);
-    float yControllerSensivity = Mathf.Clamp(25f,0.1f,100f);
+    float xControllerSensivity = Mathf.Clamp(25f, 0.1f, 100f);
+    float yControllerSensivity = Mathf.Clamp(25f, 0.1f, 100f);
 
     #endregion
 
@@ -48,7 +48,8 @@ public class PlayerSettings : MonoBehaviour
 
         //Ca fait en sorte que le résolution soit automatiquement celle de l'écran
         DisponibleResolutions = Screen.resolutions;
-        resolutionDropdown.ClearOptions();
+        if (resolutionDropdown != null)
+            resolutionDropdown.ClearOptions();
 
         //Set up des résolutions dispo
         ResolutionsSetUp();
@@ -174,7 +175,7 @@ public class PlayerSettings : MonoBehaviour
 
     public void AimAssistChange()
     {
-        
+
     }
     public void LoadBus()
     {
