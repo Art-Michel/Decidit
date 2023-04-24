@@ -8,11 +8,14 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.HighDefinition;
 using NaughtyAttributes;
 using CameraShake;
+using UnityEngine.UI;
 
 public class PlayerManager : LocalManager<PlayerManager>
 {
     [Foldout("References")]
     [SerializeField] Volume _playerVolume;
+    [Foldout("References")]
+    [SerializeField] Image _flash;
     ColorAdjustments _colorPP;
 
     //Stop time
@@ -68,6 +71,7 @@ public class PlayerManager : LocalManager<PlayerManager>
 
     PlayerInputMap _inputs;
     private bool _forceSlowMo;
+    [SerializeField] private AnimationCurve _flashCurve;
 
     protected override void Awake()
     {
@@ -480,6 +484,8 @@ public class PlayerManager : LocalManager<PlayerManager>
 
         ////SoundManager.Instance.PlaySound("event:/SFX_Environement/SlowMo", 5f);
         Time.timeScale = Mathf.Lerp(_timeSpeed, 1, Mathf.InverseLerp(_slowMoInitialT, 0, _slowMoT));
+        float alpha = _flashCurve.Evaluate(Mathf.InverseLerp(_slowMoInitialT, 0, _slowMoT));
+        _flash.color = new Color(1.0f, 1.0f, 1.0f, alpha);
 
         _slowMoT -= Time.unscaledDeltaTime;
         if (_slowMoT < 0 && !_isDead)
@@ -488,6 +494,7 @@ public class PlayerManager : LocalManager<PlayerManager>
 
     private void StopSlowMo()
     {
+        _flash.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
         Time.timeScale = 1;
         _slowMoT = 0;
     }

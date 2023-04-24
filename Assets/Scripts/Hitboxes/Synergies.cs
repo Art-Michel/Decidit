@@ -35,7 +35,7 @@ public class Synergies : LocalManager<Synergies>
     public void Synergize(SynergyProjectile bullet, Transform collider)
     {
         SoundManager.Instance.PlaySound("event:/SFX_Controller/UniversalSound", 1f, collider.gameObject);
-        PlayerManager.Instance.HitStop(0.6f);
+        PlayerManager.Instance.StartSlowMo(0.0f, 0.1f);
         // SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/MuseMalade/Impact", 1f, gameObject);
 
         Chants bulletChant = bullet.Chant;
