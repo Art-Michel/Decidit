@@ -46,7 +46,7 @@ public class BaseRevolver : Revolver
             // = enemy hurtbox
             else if (hit.transform.gameObject.layer == LayerMask.NameToLayer("EnemyHurtbox") && hit.transform.TryGetComponent<Hurtbox>(out Hurtbox hurtbox))
             {
-                PlayerManager.Instance.HitShake(_hitShake);
+                Player.Instance.StartBounceShake(_hitShake, transform.position);
                 if (hit.transform.CompareTag("WeakHurtbox"))
                     (hurtbox.HealthComponent as EnemyHealth).TakeCriticalDamage(_hitscanDamage, hit.point, hit.normal);
                 else if (hit.transform.CompareTag("Bullet"))
