@@ -23718,6 +23718,8 @@ GameObject:
   - component: {fileID: 2200446484234949843}
   - component: {fileID: 5826269185953439215}
   - component: {fileID: 6418709687528292057}
+  - component: {fileID: 2575016996379945176}
+  - component: {fileID: 6434885580098273246}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -23773,7 +23775,6 @@ MonoBehaviour:
   _enemyHurtbox:
     serializedVersion: 2
     m_Bits: 32768
-  _impactVfxPooler: {fileID: 6418709687528292057}
   _mouseSensitivityX: 10
   _mouseSensitivityY: 10
   _mouseXInverted: 0
@@ -23987,6 +23988,11 @@ MonoBehaviour:
   _wallInputJumpForce: 0
   _maxNumberOfWalljumps: 2
   _canWallrideWith0Wj: 0
+  _wallRideSmokeInterval: 0.02
+  WallRideSmokeIntervalT: 0
+  _impactVfxPooler: {fileID: 6418709687528292057}
+  _smokeVfxPooler: {fileID: 2575016996379945176}
+  _smokeWrVfxPooler: {fileID: 6434885580098273246}
 --- !u!143 &2200446484234949841
 CharacterController:
   m_ObjectHideFlags: 0
@@ -24192,6 +24198,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _prefab: {fileID: 6192375588695045024, guid: 6454c71bd7ccd8249b98347196bde709, type: 3}
   _initialCount: 4
+  _shouldBeParent: 0
+  _canCreateNewPrefabs: 1
+  _defaultParent: {fileID: 0}
+--- !u!114 &2575016996379945176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2200446484234949677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 2516040751772887910, guid: 0de04c7e124d69047ae02cc817a30ba0, type: 3}
+  _initialCount: 4
+  _shouldBeParent: 0
+  _canCreateNewPrefabs: 1
+  _defaultParent: {fileID: 0}
+--- !u!114 &6434885580098273246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2200446484234949677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 2516040751772887910, guid: 5488b46f69ea1c243b679fb8c849bcc7, type: 3}
+  _initialCount: 20
   _shouldBeParent: 0
   _canCreateNewPrefabs: 1
   _defaultParent: {fileID: 0}

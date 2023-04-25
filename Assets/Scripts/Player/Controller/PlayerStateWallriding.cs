@@ -11,6 +11,7 @@ public class PlayerStateWallriding : PlayerState
         _player.GlobalMomentum.y = 0.0f;
         _player.CurrentlyAppliedGravity = _player.WallRidingGravity;
         _player.SetWallridingMovementSpeed();
+        _player.WallRideSmokeIntervalT = 0.0f;
 
         // _player.KillGravity();
         // _player.KillMomentum();
@@ -21,6 +22,7 @@ public class PlayerStateWallriding : PlayerState
 
     public override void StateUpdate()
     {
+        _player.WallRideSmoke();
         _player.CheckWall();
         _player.ApplyWallridingGravity();
         _player.CheckForNoWallRide();

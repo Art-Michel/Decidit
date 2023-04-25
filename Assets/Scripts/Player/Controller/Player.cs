@@ -33,8 +33,6 @@ public class Player : LocalManager<Player>
     public PlayerHealth PlayerHealth;
     [Foldout("References")]
     [SerializeField] private LayerMask _enemyHurtbox;
-    [Foldout("References")]
-    [SerializeField] private Pooler _impactVfxPooler;
     PlayerInputMap _inputs;
     PlayerFSM _fsm;
     PlayerHealth _playerHealth;
@@ -217,6 +215,8 @@ public class Player : LocalManager<Player>
     [SerializeField] private int _maxNumberOfWalljumps;
     [Foldout("Walling")]
     [SerializeField] private bool _canWallrideWith0Wj;
+    [Foldout("Walling")]
+    [SerializeField] private float _wallRideSmokeInterval = .2f;
 
     private int _currentNumberOfWalljumps;
     private RaycastHit _currentWall;
@@ -229,8 +229,19 @@ public class Player : LocalManager<Player>
     private float _wallJumpCooldown;
     private const float _wallJumpMaxCooldown = 0.25f;
     private float _wallrideMvtSpeedFactor = 1.0f;
+    public float WallRideSmokeIntervalT;
 
     public Vector3 FinalMovement { get; private set; }
+    #endregion
+
+    #region Poolers
+    [Foldout("Poolers")]
+    [SerializeField] private Pooler _impactVfxPooler;
+    [Foldout("Poolers")]
+    [SerializeField] private Pooler _smokeVfxPooler;
+    [Foldout("Poolers")]
+    [SerializeField] private Pooler _smokeWrVfxPooler;
+
     #endregion
 
     protected override void Awake()
@@ -542,7 +553,9 @@ public class Player : LocalManager<Player>
         _coyoteTime = _coyoteMaxTime;
         _currentNumberOfWalljumps = _maxNumberOfWalljumps;
         ResetWalls();
-
+        PooledObject smokeVfx = _smokeVfxPooler.Get();
+        smokeVfx.transform.position = transform.position + Vector3.down * .9f;
+        smokeVfx.transform.up = Vector3.up;
     }
 
     public void StartFalling()
@@ -986,6 +999,11 @@ public class Player : LocalManager<Player>
         impactVfx.transform.position = wallJumpPosition;
         impactVfx.transform.forward = -walljumpDirection;
 
+        PooledObject smokeVfx = _smokeVfxPooler.Get();
+        smokeVfx.transform.position = wallJumpPosition;
+        smokeVfx.transform.up = walljumpDirection;
+
+
         //Wallkick!
         if (Physics.SphereCast(transform.position + walljumpDirection, 0.6f, -walljumpDirection, out RaycastHit hit, 2.0f, _enemyHurtbox))
         {
@@ -1013,6 +1031,18 @@ public class Player : LocalManager<Player>
             _wallCoyoteTime -= Time.deltaTime;
         else if (_wallCoyoteTime > -1.0f)
             ResetWalls();
+    }
+
+    public void WallRideSmoke()
+    {
+        WallRideSmokeIntervalT -= Time.deltaTime;
+        if (WallRideSmokeIntervalT <= 0.0f)
+        {
+            WallRideSmokeIntervalT = _wallRideSmokeInterval;
+            PooledObject smoke = _smokeWrVfxPooler.Get();
+            smoke.transform.position = _currentWall.point + _currentWall.normal * 0.05f + Vector3.down * 0.2f;
+            smoke.transform.forward = _currentWall.normal;
+        }
     }
     #endregion
 
