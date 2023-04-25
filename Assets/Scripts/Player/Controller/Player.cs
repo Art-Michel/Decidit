@@ -31,6 +31,8 @@ public class Player : LocalManager<Player>
     [SerializeField] LayerMask _collisionMask;
     [Foldout("References")]
     public PlayerHealth PlayerHealth;
+    [Foldout("References")]
+    [SerializeField] private LayerMask _enemyHurtbox;
     PlayerInputMap _inputs;
     PlayerFSM _fsm;
     PlayerHealth _playerHealth;
@@ -960,14 +962,20 @@ public class Player : LocalManager<Player>
     public void StartWalljumping()
     {
         KillMomentumHorizontal();
+
+        Vector3 walljumpDir = Vector3.zero;
         if (_currentWall.transform != null)
-        {
-            AddMomentum(new Vector3(_currentWall.normal.x, 0.0f, _currentWall.normal.z).normalized * _wallJumpHorizontalStrength + _rawInputs.normalized * _wallInputJumpForce);
-        }
+            walljumpDir = new Vector3(_currentWall.normal.x, 0.0f, _currentWall.normal.z).normalized;
         else if (_previousWall.transform != null)
-            AddMomentum(new Vector3(_previousWall.normal.x, 0.0f, _previousWall.normal.z).normalized * _wallJumpHorizontalStrength + _rawInputs.normalized * _wallInputJumpForce);
+            walljumpDir = new Vector3(_previousWall.normal.x, 0.0f, _previousWall.normal.z).normalized;
         else
             Debug.LogWarning("ERROR: Walljumped without a wall???");
+
+        AddMomentum(walljumpDir * _wallJumpHorizontalStrength + _rawInputs.normalized * _wallInputJumpForce);
+
+        //Wallkick!
+        if (Physics.SphereCast(transform.position, 0.3f, -walljumpDir, out RaycastHit hit, 1.5f, _enemyHurtbox))
+            hit.transform.GetComponent<Hurtbox>().HealthComponent.TakeDamage(1.0f);
 
         _currentNumberOfWalljumps--;
         JustWalljumped = true;
