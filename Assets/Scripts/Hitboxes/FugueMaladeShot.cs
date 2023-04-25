@@ -55,7 +55,10 @@ public class FugueMaladeShot : PooledObject
         transform.position = Vector3.Lerp(_startingPoint, _currentTarget.position, _currentLerpT);
         transform.forward = (_startingPoint - _currentTarget.position).normalized;
         if (_currentLerpT >= 1)
+        {
+            //TODO Lucas ici pour le rebond des balles de la synergie
             Next();
+        }
     }
 
     private void Next()
