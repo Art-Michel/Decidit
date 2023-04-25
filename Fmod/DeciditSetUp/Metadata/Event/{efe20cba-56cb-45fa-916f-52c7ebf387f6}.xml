@@ -60,7 +60,14 @@
 			<destination>{348f94ae-bbbe-4977-a7e6-e0b781bb9837}</destination>
 		</relationship>
 	</object>
-	<object class="EventAutomatableProperties" id="{e3c7fccd-612f-41e5-8458-e4c38e1ce5b1}" />
+	<object class="EventAutomatableProperties" id="{e3c7fccd-612f-41e5-8458-e4c38e1ce5b1}">
+		<property name="maxVoices">
+			<value>5</value>
+		</property>
+		<property name="voiceStealing">
+			<value>3</value>
+		</property>
+	</object>
 	<object class="MarkerTrack" id="{2e7a89e8-34f1-4115-8038-145fa42cfd49}" />
 	<object class="GroupTrack" id="{a3934b53-1cd2-438e-8dd7-c584679c0606}">
 		<relationship name="modules">
@@ -170,6 +177,7 @@
 	<object class="MixerBusEffectChain" id="{5ea66e55-374a-4c36-a9ed-55a7d02b8b1e}">
 		<relationship name="effects">
 			<destination>{bc987104-aa9f-400b-a305-6f3baf845a1f}</destination>
+			<destination>{1a79d99a-8fae-4753-9dbe-5b48f28813cd}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{99271718-2507-4244-adc6-c08a95cc4902}" />
@@ -192,9 +200,17 @@
 	</object>
 	<object class="SFXReverbEffect" id="{a9cb610a-ebcd-4a22-9f14-b53410cde454}">
 		<property name="decayTime">
-			<value>2300</value>
+			<value>600</value>
 		</property>
 	</object>
 	<object class="MixerBusFader" id="{bc987104-aa9f-400b-a305-6f3baf845a1f}" />
+	<object class="ThreeEQEffect" id="{1a79d99a-8fae-4753-9dbe-5b48f28813cd}">
+		<property name="midGain">
+			<value>-46</value>
+		</property>
+		<property name="highGain">
+			<value>10</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{62a9b8b6-f768-4dcd-a6dc-1ab5c7ef4de9}" />
 </objects>
