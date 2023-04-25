@@ -102,8 +102,8 @@
 	</object>
 	<object class="MixerBusPanner" id="{c9059076-6b93-4e85-962e-37397258c21e}" />
 	<object class="SingleSound" id="{da5cb003-61c7-41c7-8df4-6b2b02479e1e}">
-		<property name="length">
-			<value>5.5</value>
+		<property name="timelockedOffset">
+			<value>0.5</value>
 		</property>
 		<relationship name="audioFile">
 			<destination>{46c768f3-6637-43bc-8aa4-6922723c4e9a}</destination>
@@ -126,6 +126,7 @@
 	<object class="MixerBusEffectChain" id="{0899767c-1566-492c-87d2-068344d46dd0}">
 		<relationship name="effects">
 			<destination>{c0d8ddc3-ea2d-4fb4-8d2c-6d150906f879}</destination>
+			<destination>{951f7b1c-8197-4170-857a-9ab7165e0b89}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{4d9af0ad-2bd4-4440-b3b9-931aed2cec8a}" />
@@ -137,5 +138,10 @@
 	</object>
 	<object class="MixerBusPanner" id="{aa4cba15-f3e0-41b3-bc86-dfab1746c755}" />
 	<object class="MixerBusFader" id="{c0d8ddc3-ea2d-4fb4-8d2c-6d150906f879}" />
+	<object class="SFXReverbEffect" id="{951f7b1c-8197-4170-857a-9ab7165e0b89}">
+		<property name="decayTime">
+			<value>2600</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{8ca6cd6b-2225-452e-baff-cb5f96b04d19}" />
 </objects>
