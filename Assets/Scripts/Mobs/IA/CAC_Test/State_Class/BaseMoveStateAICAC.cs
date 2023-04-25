@@ -78,7 +78,7 @@ namespace State.AICAC
             {
                 baseMoveAICACSO.currentCoolDownAttack -= Time.deltaTime;
                 destination = CheckNavMeshPoint(globalRef.destinationSurround);
-
+                
                 if (Vector3.Distance(destination, globalRef.transform.position) < baseMoveAICACSO.distStopSurround || globalRef.agent.velocity.magnitude <1f)
                 {
                     baseMoveAICACSO.currentCoolDownAttack = 0;
@@ -193,7 +193,10 @@ namespace State.AICAC
                     if (activeSurround)
                     {
                         if (Vector3.Distance(globalRef.destinationSurround, globalRef.transform.position) > baseMoveAICACSO.distStopSurround)
+                        {
                             destination = CheckNavMeshPoint(globalRef.destinationSurround);
+                            Debug.Log(globalRef.gameObject.name);
+                        }
                         else
                             activeSurround = false;
                     }
