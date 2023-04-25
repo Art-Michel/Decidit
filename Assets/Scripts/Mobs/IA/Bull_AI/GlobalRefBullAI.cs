@@ -54,6 +54,7 @@ namespace State.AIBull
         public Transform RayRushRight;
         public Transform RayRushMiddle;
         public Transform RayRushLeft;
+        public Transform RayAttackMiddle;
         [SerializeField] GameObject refRushStateObj;
         public bool forceRush;
 

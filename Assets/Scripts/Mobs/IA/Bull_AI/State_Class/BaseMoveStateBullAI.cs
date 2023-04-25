@@ -158,13 +158,13 @@ namespace State.AIBull
                     else // jump End duration
                     {
                         AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "EndJump");
-                        globalRef.agent.ActivateCurrentOffMeshLink(true);
                         globalRef.agentLinkMover._StopJump = true;
                     }
                 }   
             }
             else
             {
+                globalRef.agent.ActivateCurrentOffMeshLink(true);
                 globalRef.agentLinkMover._StopJump = true;
                 globalRef.baseMoveBullSO.delayBeforeJump = globalRef.baseMoveBullSO.maxDelayBeforeJump;
                 lookForwardJump = false;

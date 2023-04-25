@@ -74,6 +74,31 @@ namespace State.AIBull
 
             SlowSpeed(globalRef.isInEylau || globalRef.IsZap);
         }
+        void CheckCanGoToPlayer()
+        {
+            Vector3 dir = globalRef.playerTransform.position - globalRef.RayAttackMiddle.position;
+
+            RaycastHit hit = RaycastAIManager.instanceRaycast.RaycastAI(globalRef.RayAttackMiddle.position,
+                                                                        dir,
+                                                                        globalRef.rushBullSO.maskCheckCanRush, Color.red, 100f);
+            if(hit.transform != null)
+            {
+                Debug.Log(hit.distance);
+            }
+
+            if(hit.transform.position == null)
+            {
+                stateController.SetActiveState(StateControllerBull.AIState.BaseMove);
+            }
+            else if(hit.transform.gameObject.layer == 9)
+            {
+                stateController.SetActiveState(StateControllerBull.AIState.BaseMove);
+            }
+            else if(hit.distance > globalRef.baseMoveBullSO.distActiveAttack && hit.transform.CompareTag("Player"))
+            {
+                stateController.SetActiveState(StateControllerBull.AIState.BaseMove);
+            }
+        }
 
         void SlowSpeed(bool active)
         {
@@ -134,6 +159,7 @@ namespace State.AIBull
                 else if(!attackDone)
                 {
                     SmoothLookAtPlayer();
+                    CheckCanGoToPlayer();
                     currentSpeed = 19;
                     globalRef.agent.SetDestination(globalRef.playerTransform.position);
                     if (AnimatorManager.instance.GetCurrentAnimatonName(globalRef.globalRefAnimator) != "Walk" && animTime > 1)
