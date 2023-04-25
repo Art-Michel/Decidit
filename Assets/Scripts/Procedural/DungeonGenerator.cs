@@ -24,7 +24,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
     [SerializeField] List<int> _scenesHard;
     // SceneManager.LoadScene(ScenesHard[Random.Range(0, ScenesHard.Count)], LoadSceneMode.Additive);
 
-    private List<List<Room>> _usableRooms;
+    [SerializeField] private List<List<Room>> _usableRooms;
     public List<RoomSetup> Corridors;
     public List<RoomSetup> CorridorsSpell;
 
@@ -72,31 +72,42 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
         _usableRooms.Add(new List<Room>());
         for (int i = 0; i < _scenesEasy.Count; i++)
         {
+            //Load a scene
             SceneManager.LoadScene(_scenesEasy[i], LoadSceneMode.Additive);
-            Debug.Log("1");
+            Debug.Log("Loaded scene " + _scenesEasy[i]);
             yield return null;
+
+            //Add scenes level to _usableRooms
             GameObject thatScenesRoot = GameObject.Find((_scenesEasy[i].ToString()));
             Room thatScenesRoom = thatScenesRoot.GetComponent<Room>();
             _usableRooms[0].Add(thatScenesRoom);
         }
 
-        // _usableRooms.Add(new List<Room>());
-        // for (int i = 0; i < _scenesMedium.Count; i++)
-        // {
-        //     SceneManager.LoadScene(_scenesMedium[i], LoadSceneMode.Additive);
-        //     Room thatScenesRoom = GameObject.Find(_scenesMedium[i].ToString()).GetComponent<Room>();
-        //     _usableRooms[1].Add(thatScenesRoom);
-        // }
+        _usableRooms.Add(new List<Room>());
+        for (int i = 0; i < _scenesMedium.Count; i++)
+        {
+            SceneManager.LoadScene(_scenesMedium[i], LoadSceneMode.Additive);
+            Debug.Log("Loaded scene " + _scenesMedium[i]);
+            yield return null;
 
-        // _usableRooms.Add(new List<Room>());
-        // for (int i = 0; i < _scenesHard.Count; i++)
-        // {
-        //     SceneManager.LoadScene(_scenesHard[i], LoadSceneMode.Additive);
-        //     Room thatScenesRoom = GameObject.Find(_scenesHard[i].ToString()).GetComponent<Room>();
-        //     _usableRooms[2].Add(thatScenesRoom);
-        // }
+            GameObject thatScenesRoot = GameObject.Find((_scenesMedium[i].ToString()));
+            Room thatScenesRoom = thatScenesRoot.GetComponent<Room>();
+            _usableRooms[1].Add(thatScenesRoom);
+        }
 
-        //Prefab
+        _usableRooms.Add(new List<Room>());
+        for (int i = 0; i < _scenesHard.Count; i++)
+        {
+            SceneManager.LoadScene(_scenesHard[i], LoadSceneMode.Additive);
+            Debug.Log("Loaded scene " + _scenesHard[i]);
+            yield return null;
+
+            GameObject thatScenesRoot = GameObject.Find((_scenesHard[i].ToString()));
+            Room thatScenesRoom = thatScenesRoot.GetComponent<Room>();
+            _usableRooms[2].Add(thatScenesRoom);
+        }
+
+        //old prefabs version
         // for (int i = 0; i < RoomSets.Count; i++)
         // {
         //     _usableRooms.Add(new List<Room>());
@@ -112,7 +123,6 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
 
     public void Generate()
     {
-
 
         //* randomizing seed
         if (_randomizeSeed)
@@ -207,7 +217,15 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
         foreach (Room room in _roomsToBuild)
         {
             //* Spawn room
-            Room roomInstance = Instantiate(room, Vector3.zero, Quaternion.identity, transform);
+            Room roomInstance;
+            if (room.gameObject.activeInHierarchy)
+            {
+                roomInstance = room;
+                roomInstance.transform.parent = transform;
+            }
+            else
+                roomInstance = Instantiate(room, Vector3.zero, Quaternion.identity, transform);
+
             roomInstance.gameObject.SetActive(true);
 
             //* set rotation
@@ -233,6 +251,10 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
 
             _actualRooms.Add(roomInstance);
         }
+
+        foreach (List<Room> rooms in _usableRooms)
+            foreach (Room room in rooms)
+                Destroy(room.gameObject);
 
         EnableFirstRooms();
     }

@@ -76,7 +76,7 @@ public class MenuManager : LocalManager<MenuManager>
     private float _fadingT;
     [Foldout("Fading")]
     [SerializeField]
-    const float _sceneUnfadingDuration = .5f;
+    const float _sceneUnfadingDuration = 2f;
     private bool _isUnfading = false;
     private float _currentUnfadeDuration;
     private float _unfadingT;
