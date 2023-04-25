@@ -11,7 +11,7 @@ public class AragonCloud : PooledObject
 
     [SerializeField] private bool _isActive;
     [SerializeField] private bool _isDisappearing;
-    const float _maxLifeSpan = 4.0f;
+    [SerializeField] float _maxLifeSpan = 4.0f;
     [SerializeField] float _lifeSpan = 0.0f;
 
     void Awake()

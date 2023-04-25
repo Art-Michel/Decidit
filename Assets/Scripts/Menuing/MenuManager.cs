@@ -76,7 +76,7 @@ public class MenuManager : LocalManager<MenuManager>
     private float _fadingT;
     [Foldout("Fading")]
     [SerializeField]
-    const float _sceneUnfadingDuration = 2f;
+    const float _sceneUnfadingDuration = 1f;
     private bool _isUnfading = false;
     private float _currentUnfadeDuration;
     private float _unfadingT;
@@ -125,7 +125,6 @@ public class MenuManager : LocalManager<MenuManager>
     void Start()
     {
         DebugManager.instance.enableRuntimeUI = false;
-        StartUnfading(_sceneUnfadingDuration);
         //SoundManager.Instance.PlayMenu();
         //Start the main menu Theme
     }

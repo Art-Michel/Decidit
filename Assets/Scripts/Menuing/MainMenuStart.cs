@@ -9,5 +9,6 @@ public class MainMenuStart : MonoBehaviour
     {
         Time.timeScale = 1.0f;
         MenuManager.Instance.StartMenuing();
+        MenuManager.Instance.StartUnfading(1);
     }
 }

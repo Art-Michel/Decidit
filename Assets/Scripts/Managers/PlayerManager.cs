@@ -465,7 +465,7 @@ public class PlayerManager : LocalManager<PlayerManager>
     #region Slow mo
     public void StartSlowMo(float speed, float duration)
     {
-        if (_timeStopped)
+        if (_timeStopped || _isPaused && _forceSlowMo)
             return;
 
         if (duration > _slowMoT)
@@ -479,7 +479,7 @@ public class PlayerManager : LocalManager<PlayerManager>
 
     private void SlowMo()
     {
-        if (_timeStopped || _slowMoT <= 0 || _isPaused && _forceSlowMo)
+        if (_timeStopped || _slowMoT < 0 || _isPaused && _forceSlowMo)
             return;
 
         ////SoundManager.Instance.PlaySound("event:/SFX_Environement/SlowMo", 5f);
@@ -496,7 +496,7 @@ public class PlayerManager : LocalManager<PlayerManager>
     {
         _flash.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
         Time.timeScale = 1;
-        _slowMoT = 0;
+        _slowMoT = -1;
     }
     #endregion
 

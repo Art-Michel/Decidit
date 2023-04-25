@@ -9,20 +9,19 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
 {
     [SerializeField] int _seed;
     [SerializeField] bool _randomizeSeed;
-    //[SerializeField] float _dungeonRotation;
+    ////[SerializeField] float _dungeonRotation;
     [SerializeField] int[] _difficultyPerRoom;
     private int _numberOfRooms;
-    [SerializeField] int _firstPowerupAfterRoom;
-    [SerializeField] int _secondPowerupAfterRoom;
+    const int _firstPowerupAfterRoom = 1;
+    const int _secondPowerupAfterRoom = 3;
 
     [SerializeField] RoomSetup _starterRoom;
     [SerializeField] RoomSetup _finalRoom;
-    // public List<RoomSetup> RoomSets;
+    //// public List<RoomSetup> RoomSets;
 
     [SerializeField] List<int> _scenesEasy;
     [SerializeField] List<int> _scenesMedium;
     [SerializeField] List<int> _scenesHard;
-    // SceneManager.LoadScene(ScenesHard[Random.Range(0, ScenesHard.Count)], LoadSceneMode.Additive);
 
     [SerializeField] private List<List<Room>> _usableRooms;
     public List<RoomSetup> Corridors;
@@ -30,7 +29,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
 
     public int TotalRooms { get { return _actualRooms.Count - 1; } }
 
-    List<Room> _actualRooms;
+    [SerializeField] List<Room> _actualRooms;
     public int CurrentRoom;
 
     //Progression
@@ -158,11 +157,11 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
     {
         switch (indexRoom)
         {
-            case 1:
+            case _firstPowerupAfterRoom:
                 _roomsToBuild.Add(CorridorsSpell[Random.Range(0, CorridorsSpell.Count)].Get());
                 break;
 
-            case 3:
+            case _secondPowerupAfterRoom:
                 _roomsToBuild.Add(CorridorsSpell[Random.Range(0, CorridorsSpell.Count)].Get());
                 break;
 
@@ -224,9 +223,10 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
                 roomInstance.transform.parent = transform;
             }
             else
+            {
                 roomInstance = Instantiate(room, Vector3.zero, Quaternion.identity, transform);
+            }
 
-            roomInstance.gameObject.SetActive(true);
 
             //* set rotation
             if (lastDoor != null)
@@ -254,9 +254,10 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
 
         foreach (List<Room> rooms in _usableRooms)
             foreach (Room room in rooms)
-                Destroy(room.gameObject);
+                room.gameObject.SetActive(false);
 
         EnableFirstRooms();
+        MenuManager.Instance.StartUnfading(1.0f);
     }
 
     private void EnableFirstRooms()

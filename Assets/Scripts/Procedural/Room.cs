@@ -16,19 +16,19 @@ public class Room : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private bool _isCorridor = false;
 
-    [NonSerialized] public int CurrentEnemiesInRoom;
+    public int CurrentEnemiesInRoom;
 
 
     void Awake()
     {
-        this.transform.parent = DungeonGenerator.Instance.transform;
+        // this.transform.parent = DungeonGenerator.Instance.transform;
     }
 
     [Button]
     private void CountEnemies()
     {
         _enemiesList.Clear();
-        foreach (EnemyHealth enemy in GetComponentsInChildren<EnemyHealth>())
+        foreach (EnemyHealth enemy in GetComponentsInChildren<EnemyHealth>(includeInactive: true))
         {
             _enemiesList.Add(enemy);
             enemy.Room = this;
@@ -48,6 +48,7 @@ public class Room : MonoBehaviour
 
     public void EnableEnemies(bool b)
     {
+        CountEnemies();
         CurrentEnemiesInRoom = _enemiesList.Count;
         SoundManager.Instance.FightingSound();
         foreach (EnemyHealth enemyHealth in _enemiesList)
