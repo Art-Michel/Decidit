@@ -963,18 +963,18 @@ public class Player : LocalManager<Player>
     {
         KillMomentumHorizontal();
 
-        Vector3 walljumpDir = Vector3.zero;
+        Vector3 walljumpDirection = Vector3.zero;
         if (_currentWall.transform != null)
-            walljumpDir = new Vector3(_currentWall.normal.x, 0.0f, _currentWall.normal.z).normalized;
+            walljumpDirection = new Vector3(_currentWall.normal.x, 0.0f, _currentWall.normal.z).normalized;
         else if (_previousWall.transform != null)
-            walljumpDir = new Vector3(_previousWall.normal.x, 0.0f, _previousWall.normal.z).normalized;
+            walljumpDirection = new Vector3(_previousWall.normal.x, 0.0f, _previousWall.normal.z).normalized;
         else
             Debug.LogWarning("ERROR: Walljumped without a wall???");
 
-        AddMomentum(walljumpDir * _wallJumpHorizontalStrength + _rawInputs.normalized * _wallInputJumpForce);
+        AddMomentum(walljumpDirection * _wallJumpHorizontalStrength + _rawInputs.normalized * _wallInputJumpForce);
 
         //Wallkick!
-        if (Physics.SphereCast(transform.position, 0.3f, -walljumpDir, out RaycastHit hit, 1.5f, _enemyHurtbox))
+        if (Physics.SphereCast(transform.position + walljumpDirection, 0.6f, -walljumpDirection, out RaycastHit hit, 2.0f, _enemyHurtbox))
             hit.transform.GetComponent<Hurtbox>().HealthComponent.TakeDamage(1.0f);
 
         _currentNumberOfWalljumps--;
