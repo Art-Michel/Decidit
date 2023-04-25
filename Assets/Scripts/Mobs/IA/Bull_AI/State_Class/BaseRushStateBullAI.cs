@@ -323,11 +323,12 @@ namespace State.AIBull
                 case true:
                     if (rushBullSO.speedRotLock < rushBullSO.maxSpeedRotLock)
                     {
+                        AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "PreAttack");
                         rushBullSO.speedRotLock += Time.deltaTime / globalRef.slowSpeedRot;
                     }
                     else
                     {
-                        if (!canStartRush)
+                        if (!canStartRush && currentAnimName == "PreDash")
                         {
                             ShowSoonAttack(false);
                             rushBullSO.speedRotLock = rushBullSO.maxSpeedRotLock;
@@ -341,11 +342,12 @@ namespace State.AIBull
                 case false:
                     if (rushBullSO.speedRotLock < rushBullSO.maxSpeedRotLock)
                     {
+                        AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "PreAttack");
                         rushBullSO.speedRotLock += Time.deltaTime / rushBullSO.maxSpeedRotLock;
                     }
                     else
                     {
-                        if (!canStartRush)
+                        if (!canStartRush && currentAnimName == "PreDash")
                         {
                             SoundManager.Instance.PlaySound("event:/SFX_IA/ShredNoss_SFX(Dash)/Attack", 10f, gameObject);
                             ShowSoonAttack(false);
@@ -389,7 +391,6 @@ namespace State.AIBull
         {
             if (!endRush)
             {
-                Debug.Log("Launch Rush Attack Anim");
                 AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "RushAttack");
                 endRush = true;
             }

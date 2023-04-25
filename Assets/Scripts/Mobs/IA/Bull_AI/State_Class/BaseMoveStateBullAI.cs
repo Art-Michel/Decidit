@@ -22,6 +22,11 @@ namespace State.AIBull
 
         [SerializeField] float distDetectObstacle;
 
+        AnimatorStateInfo animStateInfo;
+        AnimatorClipInfo[] currentClipInfo;
+        [SerializeField] string currentAnimName;
+        [SerializeField] float animTime;
+
         public override void InitState(StateControllerBull stateController)
         {
             base.InitState(stateController);
@@ -50,6 +55,7 @@ namespace State.AIBull
 
             ManageCurrentNavMeshLink();
             SmoothLookAtPlayer();
+            ManageJumpAnimation();
 
             if (!isOnNavLink)
             {
@@ -106,6 +112,7 @@ namespace State.AIBull
             }
         }
 
+        #region Jump
         void ManageCurrentNavMeshLink()
         {
             if (globalRef.agent.isOnOffMeshLink)
@@ -150,9 +157,9 @@ namespace State.AIBull
                     }
                     else // jump End duration
                     {
-                        Debug.Log("End Jump");
-                        globalRef.agent.ActivateCurrentOffMeshLink(true);
                         AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "EndJump");
+                        globalRef.agent.ActivateCurrentOffMeshLink(true);
+                        globalRef.agentLinkMover._StopJump = true;
                     }
                 }   
             }
@@ -165,13 +172,53 @@ namespace State.AIBull
                 if (navLink != null)
                 {
                     AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "EndJump");
-                    globalRef.animEventRusher.EndJump();
+                    DisableJump();
                     navLink.UpdateLink();
                     navLink = null;
                     maxDurationNavLink = globalRef.agentLinkMover._duration;
                 }
+                else if (CheckEndAnimation("Jump Recovery"))
+                {
+                    Invoke("ActiveJump", 1f);
+                    ReturnWalkState();
+                }
             }
         }
+        void ManageJumpAnimation()
+        {
+            currentClipInfo = globalRef.myAnimator.GetCurrentAnimatorClipInfo(0);
+            currentAnimName = currentClipInfo[0].clip.name;
+
+            animStateInfo = globalRef.myAnimator.GetCurrentAnimatorStateInfo(0);
+            animTime = animStateInfo.normalizedTime;
+        }
+        bool CheckEndAnimation(string animName)
+        {
+            if (animTime > 1.0f && currentAnimName == animName)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        void ReturnWalkState()
+        {
+            isOnNavLink = false;
+           // globalRef.agent.autoTraverseOffMeshLink = true;
+            AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Walk");
+        }
+        void ActiveJump()
+        {
+            globalRef.agent.areaMask |= (1 << NavMesh.GetAreaFromName("Jump"));
+        }
+        void DisableJump()
+        {
+            globalRef.agent.areaMask &= ~(1 << NavMesh.GetAreaFromName("Jump"));
+        }
+        #endregion
+
 
         void BaseMovement()
         {

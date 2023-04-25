@@ -135,7 +135,7 @@ namespace State.AIBull
                 {
                     SmoothLookAtPlayer();
                     currentSpeed = 19;
-                    globalRef.agent.SetDestination(globalRef.playerTransform.position);                    
+                    globalRef.agent.SetDestination(globalRef.playerTransform.position);
                     if (AnimatorManager.instance.GetCurrentAnimatonName(globalRef.globalRefAnimator) != "Walk" && animTime > 1)
                     {
                         AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Walk");
@@ -206,7 +206,7 @@ namespace State.AIBull
             if (i == 0)
                 stateController.SetActiveState(StateControllerBull.AIState.Rush);
             else
-                RestartAttack();
+                stateController.SetActiveState(StateControllerBull.AIState.BaseMove);
         }
 
         void SmoothLookAtPlayer()
@@ -279,7 +279,6 @@ namespace State.AIBull
             isAttacking = false;
             attackDone = false;
             globalRef.baseAttackBullSO.curentDelayBeforeAttack = globalRef.baseAttackBullSO.maxDelayBeforeAttack;
-            globalRef.baseAttackBullSO.speedRot = 0;
         }
 
         private void OnDisable()
