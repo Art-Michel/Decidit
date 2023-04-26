@@ -9,7 +9,8 @@ public class PlayerStateWallriding : PlayerState
     public override void Begin()
     {
         _player.GlobalMomentum.y = 0.0f;
-        _player.CurrentlyAppliedGravity = _player.WallRidingGravity;
+        if (_player.WallrideDragFactor > 0.2f)
+            _player.CurrentlyAppliedGravity = _player.WallRidingBaseGravity;
         _player.SetWallridingMovementSpeed();
         _player.WallRideSmokeIntervalT = 0.0f;
 

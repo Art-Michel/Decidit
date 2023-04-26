@@ -95,8 +95,6 @@ public class Player : LocalManager<Player>
     [Range(0, 50)][SerializeField] private float _airborneDrag = 3f;
     [Foldout("Falling Settings")]
     [Range(0, 50)][SerializeField] private float _jumpingDrag = 3f;
-    [Foldout("Falling Settings")]
-    [Range(0, 50)][SerializeField] private float _wallrideDrag = 3f;
     [Foldout("Jumping Settings")]
     [Range(0, 90)][SerializeField] private float _maxCeilingAngle = 30f;
     [Foldout("Jumping Settings")]
@@ -222,7 +220,7 @@ public class Player : LocalManager<Player>
     #region Wallriding and walljumping
     [Foldout("Walling")]
     [Range(0.0f, -30.0f)]
-    [SerializeField] public float WallRidingGravity;
+    [SerializeField] public float WallRidingBaseGravity;
     [Foldout("Walling")]
     [Range(0.0f, 50.0f)]
     [SerializeField] private float _wallJumpHorizontalStrength;
@@ -239,7 +237,12 @@ public class Player : LocalManager<Player>
     [SerializeField] private bool _canWallrideWith0Wj;
     [Foldout("Walling")]
     [SerializeField] private float _wallRideSmokeInterval = .2f;
+    [Foldout("Walling")]
     [SerializeField] private BounceShake.Params _wjHitShake;
+    [Foldout("Walling")]
+    [SerializeField] private float _wallRideDragSpeed;
+    // [Foldout("Walling")]
+    [NonSerialized] public float WallrideDragFactor = 0.0f;
 
     private int _currentNumberOfWalljumps;
     private RaycastHit _currentWall;
@@ -582,6 +585,7 @@ public class Player : LocalManager<Player>
         GlobalMomentum.y = 0;
         _coyoteTime = _coyoteMaxTime;
         _currentNumberOfWalljumps = _maxNumberOfWalljumps;
+        WallrideDragFactor = 0.0f;
         ResetWalls();
         PooledObject smokeVfx = _smokeVfxPooler.Get();
         smokeVfx.transform.position = transform.position + Vector3.down * .9f;
@@ -749,7 +753,8 @@ public class Player : LocalManager<Player>
 
     public void ApplyWallridingGravity()
     {
-        CurrentlyAppliedGravity -= _gravity * _wallrideDrag * Time.deltaTime;
+        WallrideDragFactor = Mathf.Clamp01(WallrideDragFactor + Time.deltaTime * _wallRideDragSpeed);
+        CurrentlyAppliedGravity -= _gravity * _airborneDrag * WallrideDragFactor * Time.deltaTime;
     }
 
     public void FallDownSlope()
