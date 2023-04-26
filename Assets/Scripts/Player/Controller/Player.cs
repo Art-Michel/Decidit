@@ -217,6 +217,7 @@ public class Player : LocalManager<Player>
     [SerializeField] private bool _canWallrideWith0Wj;
     [Foldout("Walling")]
     [SerializeField] private float _wallRideSmokeInterval = .2f;
+    [SerializeField] private BounceShake.Params _wjHitShake;
 
     private int _currentNumberOfWalljumps;
     private RaycastHit _currentWall;
@@ -1009,6 +1010,7 @@ public class Player : LocalManager<Player>
         {
             Health health = hit.transform.GetComponent<Hurtbox>().HealthComponent;
             health.TakeDamage(1.0f);
+            PlayerManager.Instance.HitShake(_wjHitShake);
             // health.Knockback(-walljumpDirection * 3);
         }
 
