@@ -37,7 +37,7 @@ public class EylauArea : SynergyTrigger
         _lifeT = _lifeSpan;
 
         if (_isPlayerInHere)
-            Player.Instance.ResetEylauMovementBuff();
+            Player.Instance.StopEylauBuff();
 
         _isPlayerInHere = false;
         _wasPlayerInHere = false;
@@ -145,7 +145,7 @@ public class EylauArea : SynergyTrigger
         _isPlayerInHere = Physics.OverlapCapsule(transform.position + Vector3.down * 100, transform.position + Vector3.up * 100, _radius, _shouldBuff).Length > 0;
         if (!_isPlayerInHere && _wasPlayerInHere)
         {
-            Player.Instance.ResetEylauMovementBuff();
+            Player.Instance.StopEylauBuff();
         }
         if (_isPlayerInHere && !_wasPlayerInHere)
         {

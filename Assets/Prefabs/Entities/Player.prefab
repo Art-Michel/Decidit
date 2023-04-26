@@ -23937,6 +23937,62 @@ MonoBehaviour:
       falloffDegree: 1
       axesMultiplier: {x: 1, y: 1, z: 1}
   CurrentlyAppliedGravity: 0
+  _eylauBuffMultiplier: 1.5
+  _eylauAdditionalFov: 12
+  _eylauFeedbacksCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _eylauUnfeedbacksCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _eylauFeedbacksSpeed: 4
+  _eylauUnfeedbacksSpeed: 3
+  _defaultFov: 0
+  _eylauFeedbacksT: 0
+  _isInEylau: 0
+  _eylauBuffFactor: 1
   _baseSpeed: 14
   _movementAccelerationSpeed: 10
   _movementDecelerationSpeed: 10
@@ -23995,15 +24051,15 @@ MonoBehaviour:
     axesMultiplier:
       position: {x: 1, y: 1, z: 0}
       eulerAngles: {x: 0, y: 0, z: 1}
-    freq: 25
-    numBounces: 5
+    freq: 40
+    numBounces: 10
     randomness: 0.5
     attenuation:
       clippingDistance: 10
       falloffScale: 50
       falloffDegree: 1
       axesMultiplier: {x: 1, y: 1, z: 1}
-  WallRideSmokeIntervalT: 0
+  WallRideSmokeIntervalT: 0.01
   _impactVfxPooler: {fileID: 6418709687528292057}
   _smokeVfxPooler: {fileID: 2575016996379945176}
   _smokeWrVfxPooler: {fileID: 6434885580098273246}

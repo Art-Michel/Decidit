@@ -123,9 +123,28 @@ public class Player : LocalManager<Player>
     private const float _jumpMaxCooldown = 0.1f;
     private float _coyoteTime;
     private const float _coyoteMaxTime = 0.2f;
-    [Foldout("Eylau Settings")]
-    private float _eylauBuffFactor = 1.0f;
 
+
+    #endregion
+
+    #region Eylau
+    [Foldout("Eylau Settings")]
+    [SerializeField] private float _eylauBuffMultiplier = 1.5f;
+    [Foldout("Eylau Settings")]
+    [SerializeField] private float _eylauAdditionalFov;
+    [Foldout("Eylau Settings")]
+    [SerializeField] private AnimationCurve _eylauFeedbacksCurve;
+    [Foldout("Eylau Settings")]
+    [SerializeField] private AnimationCurve _eylauUnfeedbacksCurve;
+    [Foldout("Eylau Settings")]
+    [SerializeField] private float _eylauFeedbacksSpeed = 6.0f;
+    [Foldout("Eylau Settings")]
+    [SerializeField] private float _eylauUnfeedbacksSpeed = 3.0f;
+
+    [SerializeField] private float _defaultFov;
+    [SerializeField] private float _eylauFeedbacksT;
+    [SerializeField] private bool _isInEylau;
+    [SerializeField] private float _eylauBuffFactor = 1.0f;
     #endregion
 
     #region Movement Variables
@@ -161,11 +180,11 @@ public class Player : LocalManager<Player>
     [Range(0, 100)]
     [SerializeField]
     private float _groundedFriction = 50f;
-    // [Foldout("Movement Settings")]
-    // [Range(0, 1)]
-    // [Tooltip("how much you can influence momentum with inputs")]
-    // [SerializeField]
-    // private float _directionnalInfluence = 0.4f;
+    //// [Foldout("Movement Settings")]
+    //// [Range(0, 1)]
+    //// [Tooltip("how much you can influence momentum with inputs")]
+    //// [SerializeField]
+    //// private float _directionnalInfluence = 0.4f;
     [Foldout("Movement Settings")]
     [Range(0.1f, 150)]
     [Tooltip("Minimum DI Momentum: You can fully brake or conserve your momentum by moving in its direction")]
@@ -265,9 +284,11 @@ public class Player : LocalManager<Player>
         CurrentlyAppliedGravity = 0;
         _movementAcceleration = 0;
         _canMove = true;
+        _isInEylau = false;
+        _eylauFeedbacksT = 0.0f;
         ResetAcceleration();
         SetCameraInvert();
-        ResetEylauMovementBuff();
+        StopEylauBuff();
         ResetWallridingMovementSpeed();
         //StopShake();
     }
@@ -287,6 +308,11 @@ public class Player : LocalManager<Player>
             if (_wallJumpCooldown <= 0) JustWalljumped = false;
         }
         HandleBuffers();
+
+        if (_isInEylau)
+            EylauFeedbacks();
+        else
+            EylauUnfeedbacks();
 
         //Camera
         MoveCameraWithRightStick();
@@ -639,7 +665,7 @@ public class Player : LocalManager<Player>
     {
         SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/Jump", 1f, gameObject);
         Player.Instance.StartKickShake(_jumpShake, transform.position);
-        CurrentlyAppliedGravity = strength;
+        CurrentlyAppliedGravity = strength * _eylauBuffFactor;
         _justJumped = true;
         _coyoteTime = -1f;
         _currentFriction = _airborneFriction;
@@ -742,20 +768,48 @@ public class Player : LocalManager<Player>
 
     #endregion
 
-    #region Movement Functions
-
+    #region Eylau Functions
     public void EylauMovementBuff()
     {
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/CimetièreEyleau/BuffStart", 1f, gameObject);
-        _eylauBuffFactor = 1.5f;
+        _isInEylau = true;
+        _eylauBuffFactor = _eylauBuffMultiplier;
+        _defaultFov = Camera.main.fieldOfView;
     }
 
-    public void ResetEylauMovementBuff()
+    public void EylauFeedbacks()
+    {
+        if (_eylauFeedbacksT >= 1.0f)
+            return;
+
+        _eylauFeedbacksT += Time.deltaTime * _eylauFeedbacksSpeed;
+        Camera.main.fieldOfView = Mathf.LerpUnclamped(_defaultFov, _defaultFov + _eylauAdditionalFov, _eylauFeedbacksCurve.Evaluate(_eylauFeedbacksT));
+    }
+
+    public void EylauUnfeedbacks()
+    {
+        if (_eylauFeedbacksT <= 0.0f)
+            return;
+
+        _eylauFeedbacksT -= Time.deltaTime * _eylauUnfeedbacksSpeed;
+        Camera.main.fieldOfView = Mathf.LerpUnclamped(_defaultFov, _defaultFov + _eylauAdditionalFov, _eylauUnfeedbacksCurve.Evaluate(_eylauFeedbacksT));
+        if (_eylauFeedbacksT <= 0.0f)
+            ResetEylauBuff();
+    }
+
+    public void StopEylauBuff()
     {
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/CimetièreEyleau/BuffEnd", 1f, gameObject);
-        _eylauBuffFactor = 1.0f;
+        _isInEylau = false;
     }
 
+    private void ResetEylauBuff()
+    {
+        _eylauBuffFactor = 1.0f;
+    }
+    #endregion
+
+    #region Movement Functions
     private Vector3 MakeDirectionCameraRelative(Vector2 inputDirection)
     {
         Vector3 forward = Head.forward;
