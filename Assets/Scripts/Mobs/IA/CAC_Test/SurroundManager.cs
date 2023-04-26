@@ -53,13 +53,13 @@ namespace State.AICAC
 
         void Update()
         {
-           /* CheckYPos();
+            /*CheckYPos();
             CheckNextPosCircle();
             if (PositionAreSame(posCircle))
                 SetupPositionEnemy();
             else
             {
-                if(adjustRadius >0)
+                if (adjustRadius > 0)
                     adjustRadius--;
             }*/
 
