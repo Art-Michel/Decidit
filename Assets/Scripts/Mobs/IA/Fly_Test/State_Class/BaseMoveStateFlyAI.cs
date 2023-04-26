@@ -44,6 +44,12 @@ namespace State.FlyAI
         {
             if (globalRef != null && globalRef.myAnimator != null)
                 AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "FlyIdle");
+
+            if(baseMoveFlySO!= null)
+            {
+                baseMoveFlySO.newPos = transform.TransformDirection(new Vector3(0, 3, 7));
+                baseMoveFlySO.newPosIsSet = true;
+            }
         }
 
         private void Start()
@@ -169,10 +175,20 @@ namespace State.FlyAI
 
             if (hit.transform != null)
             {
-                currentMaxSpeedRotationAIDodgeObstacle = baseMoveFlySO.maxSpeedRotationAIDodgeObstacle;
-                currentSmoothRotationDodgeObstacle = baseMoveFlySO.smoothRotationDodgeObstacle;
-                dodgeObstacleForward = true;
-                return true;
+                if(hit.transform.CompareTag("Player"))
+                {
+                    currentMaxSpeedRotationAIDodgeObstacle = baseMoveFlySO.maxSpeedRotationAIPatrol;
+                    currentSmoothRotationDodgeObstacle = baseMoveFlySO.smoothRotationPatrol;
+                    dodgeObstacleForward = false;
+                    return false;
+                }
+                else
+                {
+                    currentMaxSpeedRotationAIDodgeObstacle = baseMoveFlySO.maxSpeedRotationAIDodgeObstacle;
+                    currentSmoothRotationDodgeObstacle = baseMoveFlySO.smoothRotationDodgeObstacle;
+                    dodgeObstacleForward = true;
+                    return true;
+                }
             }
             else
             {
@@ -244,9 +260,9 @@ namespace State.FlyAI
                 baseMoveFlySO.destinationFinal.y = childflyAI.transform.position.y;
             }
 
-            relativePos.x = baseMoveFlySO.destinationFinal.x - flyAI.transform.position.x;
-            relativePos.y = baseMoveFlySO.destinationFinal.y - flyAI.transform.position.y;
-            relativePos.z = baseMoveFlySO.destinationFinal.z - flyAI.transform.position.z;
+            relativePos.x = baseMoveFlySO.destinationFinal.x - childflyAI.position.x;
+            relativePos.y = baseMoveFlySO.destinationFinal.y - childflyAI.position.y;
+            relativePos.z = baseMoveFlySO.destinationFinal.z - childflyAI.position.z;
 
             SlowRotation(globalRef.isInEylau || globalRef.IsZap, relativePos);
             childflyAI.localRotation = rotation;
@@ -330,7 +346,7 @@ namespace State.FlyAI
                 {
                     SlowSpeed(globalRef.isInEylau || globalRef.IsZap);
 
-                    if (flyAI.transform.position.y < baseMoveFlySO.destinationFinal.y)
+                    if (childflyAI.position.y < baseMoveFlySO.destinationFinal.y)
                     {
                         if (globalRef.isInEylau)
                             globalRef.agent.baseOffset += (baseMoveFlySO.currentSpeedYPatrol * Time.deltaTime) / globalRef.slowRatio;
@@ -358,7 +374,7 @@ namespace State.FlyAI
         {
             SlowSpeed(globalRef.isInEylau || globalRef.IsZap);
 
-            if (flyAI.transform.position.y < baseMoveFlySO.destinationFinal.y)
+            if (childflyAI.position.y < baseMoveFlySO.destinationFinal.y)
             {
                 if (globalRef.isInEylau)
                     globalRef.agent.baseOffset += (baseMoveFlySO.currentSpeedYPatrol * Time.deltaTime) / globalRef.slowRatio;

@@ -14,7 +14,7 @@ namespace State.FlyAI
         [SerializeField] bool stopLock;
 
         [SerializeField] float minBaseOffset;
-
+ 
         public override void InitState(StateControllerFlyAI stateController)
         {
             base.InitState(stateController);
@@ -78,6 +78,22 @@ namespace State.FlyAI
             SlowSpeed(globalRef.isInEylau || globalRef.IsZap);
         }
 
+        bool CheckPlayerIsBack()
+        {
+            Vector3 playerForward = globalRef.playerTransform.GetChild(0).forward;
+            Vector3 thisForward = childflyAI.forward;
+
+            float dot = Vector3.Dot(thisForward, (globalRef.playerTransform.position - childflyAI.position).normalized);
+            if (dot < 0.5f)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         void AdjustingYspeed()
         {
             float distHorizontal = Vector2.Distance(new Vector2(childflyAI.position.x, childflyAI.position.z),
@@ -107,7 +123,6 @@ namespace State.FlyAI
                 stopLock = true;
             }
         }
-
         void ApplyFlyingMove()
         {
             if (globalRef.transform.position.y < lockPlayerFlySO.destinationFinal.y)
