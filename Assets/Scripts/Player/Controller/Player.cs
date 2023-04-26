@@ -3,6 +3,7 @@ using UnityEngine;
 using TMPro;
 using NaughtyAttributes;
 using CameraShake;
+using UnityEngine.UI;
 
 public class Player : LocalManager<Player>
 {
@@ -140,6 +141,8 @@ public class Player : LocalManager<Player>
     [SerializeField] private float _eylauFeedbacksSpeed = 6.0f;
     [Foldout("Eylau Settings")]
     [SerializeField] private float _eylauUnfeedbacksSpeed = 3.0f;
+    [Foldout("Eylau Settings")]
+    [SerializeField] private Image _eylauVignette;
 
     [SerializeField] private float _defaultFov;
     [SerializeField] private float _eylauFeedbacksT;
@@ -783,6 +786,7 @@ public class Player : LocalManager<Player>
             return;
 
         _eylauFeedbacksT += Time.deltaTime * _eylauFeedbacksSpeed;
+        _eylauVignette.color = new Color(1, 1, 1, Mathf.Lerp(0, 0.5f, _eylauFeedbacksCurve.Evaluate(_eylauFeedbacksT)));
         Camera.main.fieldOfView = Mathf.LerpUnclamped(_defaultFov, _defaultFov + _eylauAdditionalFov, _eylauFeedbacksCurve.Evaluate(_eylauFeedbacksT));
     }
 
@@ -792,6 +796,7 @@ public class Player : LocalManager<Player>
             return;
 
         _eylauFeedbacksT -= Time.deltaTime * _eylauUnfeedbacksSpeed;
+        _eylauVignette.color = new Color(1, 1, 1, Mathf.Lerp(0, 0.5f, _eylauUnfeedbacksCurve.Evaluate(_eylauFeedbacksT)));
         Camera.main.fieldOfView = Mathf.LerpUnclamped(_defaultFov, _defaultFov + _eylauAdditionalFov, _eylauUnfeedbacksCurve.Evaluate(_eylauFeedbacksT));
         if (_eylauFeedbacksT <= 0.0f)
             ResetEylauBuff();
