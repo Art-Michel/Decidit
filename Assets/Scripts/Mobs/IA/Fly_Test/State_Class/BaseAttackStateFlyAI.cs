@@ -168,6 +168,12 @@ namespace State.FlyAI
                     stateControllerFlyAI.SetActiveState(StateControllerFlyAI.AIState.BaseMove);
                 }
             }
+
+            if(CheckPlayerIsBack())
+            {
+                globalRef.colliderBaseAttack.gameObject.SetActive(false);
+                stateControllerFlyAI.SetActiveState(StateControllerFlyAI.AIState.BaseMove);
+            }
         }
 
         private void OnDisable()
