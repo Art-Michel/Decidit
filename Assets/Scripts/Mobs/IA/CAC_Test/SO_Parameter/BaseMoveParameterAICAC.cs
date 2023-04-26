@@ -35,5 +35,6 @@ public class BaseMoveParameterAICAC : ScriptableObject
     public float offsetTransitionSmooth;
 
     [Header("Trigger Surround")]
-    public float distStopSurround; // IA proche du joueur
+    public float distStopSurroundNearSurround; // IA proche du joueur
+    public float distStopSurroundNearPlayer; // IA proche du joueur
 }

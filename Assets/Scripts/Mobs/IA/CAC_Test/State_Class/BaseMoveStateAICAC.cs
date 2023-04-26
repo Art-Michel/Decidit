@@ -69,6 +69,7 @@ namespace State.AICAC
 
             SmoothLookAt();
             ManageCurrentNavMeshLink();
+
             BaseMovement();
         }
 
@@ -79,7 +80,7 @@ namespace State.AICAC
                 baseMoveAICACSO.currentCoolDownAttack -= Time.deltaTime;
                 destination = CheckNavMeshPoint(globalRef.destinationSurround);
                 
-                if (Vector3.Distance(destination, globalRef.transform.position) < baseMoveAICACSO.distStopSurround || globalRef.agent.velocity.magnitude <1f)
+                if (Vector3.Distance(destination, globalRef.transform.position) < baseMoveAICACSO.distStopSurroundNearPlayer || globalRef.agent.velocity.magnitude <1f)
                 {
                     baseMoveAICACSO.currentCoolDownAttack = 0;
                 }
@@ -192,10 +193,10 @@ namespace State.AICAC
                 {
                     if (activeSurround)
                     {
-                        if (Vector3.Distance(globalRef.destinationSurround, globalRef.transform.position) > baseMoveAICACSO.distStopSurround)
+                        if (Vector3.Distance(globalRef.destinationSurround, globalRef.transform.position) > baseMoveAICACSO.distStopSurroundNearPlayer &&
+                            Vector3.Distance(globalRef.transform.position, CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer) > baseMoveAICACSO.distStopSurroundNearPlayer)
                         {
                             destination = CheckNavMeshPoint(globalRef.destinationSurround);
-                            Debug.Log(globalRef.gameObject.name);
                         }
                         else
                             activeSurround = false;
@@ -214,7 +215,7 @@ namespace State.AICAC
                             destination = CheckNavMeshPoint(playerPosAnticip);
                         }
 
-                        if (Vector3.Distance(globalRef.playerTransform.position, globalRef.transform.position) > (globalRef.surroundManager.radius + baseMoveAICACSO.distStopSurround))
+                        if (Vector3.Distance(globalRef.playerTransform.position, globalRef.transform.position) > (globalRef.surroundManager.radius + baseMoveAICACSO.distStopSurroundNearPlayer))
                         {
                             activeSurround = true;
                         }
@@ -237,6 +238,10 @@ namespace State.AICAC
                     stateControllerAICAC.SetActiveState(StateControllerAICAC.AIState.BaseAttack);
                 }
             }
+        }
+        void MoveToPlayer()
+        {
+
         }
         Vector3 CheckNavMeshPoint(Vector3 _destination)
         {
