@@ -83,7 +83,7 @@ public class Health : MonoBehaviour
 
     public virtual void TakeCriticalDamage(float damage)
     {
-        TakeDamage(damage * 2);
+        TakeDamage(damage * 3);
     }
 
     public void TakeDamage(float amount, Vector3 position, Vector3 forward)

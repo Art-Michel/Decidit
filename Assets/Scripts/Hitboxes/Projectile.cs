@@ -39,6 +39,8 @@ public class Projectile : Hitbox
     [SerializeField] private float _lifeSpan = 5f;
     [Foldout("Stats")]
     [SerializeField] private float _trailDelay = 0.025f;
+    [Foldout("Stats")]
+    [SerializeField] private float _impactScale = 1.0f;
     private float _lifeT;
     private float _trailDelayT;
     public Vector3 Direction { get; protected set; }
@@ -271,6 +273,7 @@ public class Projectile : Hitbox
                 return;
 
             impactVfx.transform.position = point - Direction * 0.01f;
+            impactVfx.transform.localScale = Vector3.one * _impactScale;
 
             if (Direction != Vector3.zero)
             {
@@ -293,6 +296,7 @@ public class Projectile : Hitbox
                 return;
 
             splashVfx.transform.position = point - Direction * 0.05f;
+            splashVfx.transform.localScale = Vector3.one * _impactScale;
 
             if (Direction != Vector3.zero)
             {
@@ -318,6 +322,7 @@ public class Projectile : Hitbox
                 return;
 
             impactVfx.transform.position = point + normal * 0.05f;
+            impactVfx.transform.localScale = Vector3.one * _impactScale;
 
             if (Direction != Vector3.zero)
             {
@@ -326,7 +331,7 @@ public class Projectile : Hitbox
                 else
                 {
                     SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/BaseShoot/BaseShootImpactObject", 1f, gameObject);
-                    impactVfx.transform.forward = normal;
+                    impactVfx.transform.forward = -normal;
                 }
             }
         }
@@ -340,6 +345,7 @@ public class Projectile : Hitbox
                 return;
 
             splashVfx.transform.position = point - Direction * 0.05f;
+            splashVfx.transform.localScale = Vector3.one * _impactScale;
 
             if (Direction != Vector3.zero)
             {
