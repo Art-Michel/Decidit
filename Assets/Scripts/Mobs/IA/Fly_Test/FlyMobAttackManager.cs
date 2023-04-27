@@ -39,7 +39,7 @@ namespace State.FlyAI
             {
                 int i = Random.Range(0, 2);
                 if (i == 0)
-                    globalRef.stateControllerFlyAI.SetActiveState(StateControllerFlyAI.AIState.BaseAttack);
+                    globalRef.stateControllerFlyAI.SetActiveState(StateControllerFlyAI.AIState.BaseRangeAttack);
                 else
                     globalRef.stateControllerFlyAI.SetActiveState(StateControllerFlyAI.AIState.BaseAttack);
             }
