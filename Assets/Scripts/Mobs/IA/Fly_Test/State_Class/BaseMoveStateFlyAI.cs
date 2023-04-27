@@ -45,17 +45,25 @@ namespace State.FlyAI
             if (globalRef != null && globalRef.myAnimator != null)
                 AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "FlyIdle");
 
-            if(baseMoveFlySO!= null)
-            {
-                baseMoveFlySO.newPos = transform.TransformDirection(new Vector3(0, 3, 7));
-                baseMoveFlySO.newPosIsSet = true;
-            }
+            SetStartPos();
         }
 
         private void Start()
         {
             baseMoveFlySO = globalRef.baseMoveFlySO;
             baseMoveFlySO.currentRateAttack = (int)Random.Range(baseMoveFlySO.maxRateAttack.x, baseMoveFlySO.maxRateAttack.y);
+            SetStartPos();
+        }
+
+        void SetStartPos()
+        {
+            if (baseMoveFlySO != null)
+            {
+                baseMoveFlySO.newPos = childflyAI.TransformDirection(childflyAI.position + new Vector3(0, 9, 20));
+                Debug.Log(baseMoveFlySO.newPos);
+                baseMoveFlySO.newPosIsSet = true;
+                baseMoveFlySO.destinationFinal = baseMoveFlySO.newPos;
+            }
         }
 
         private void Update()
