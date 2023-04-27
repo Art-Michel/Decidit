@@ -151,7 +151,7 @@ namespace State.AIBull
                 }
                 else
                 {
-                    if (maxDurationNavLink > 0) // jump Current duration
+                    if (maxDurationNavLink >= 0) // jump Current duration
                     {
                         maxDurationNavLink -= Time.deltaTime;
                     }
@@ -237,7 +237,8 @@ namespace State.AIBull
             }
 
             SlowSpeed(globalRef.isInEylau || globalRef.IsZap);
-            globalRef.agent.SetDestination(CheckNavMeshPoint(newDestination));
+            Vector3 destination = CheckNavMeshPoint(newDestination);
+            globalRef.agent.SetDestination(destination);
         }
         Vector3 CheckNavMeshPoint(Vector3 newDestination)
         {

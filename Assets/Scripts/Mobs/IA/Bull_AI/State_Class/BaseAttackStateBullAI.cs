@@ -132,7 +132,7 @@ namespace State.AIBull
                     if (Vector3.Distance(catchPlayerPos, globalRef.transform.position) > 1f)
                     {
                         currentSpeed = 15;
-                        globalRef.agent.SetDestination(catchPlayerPos);
+                        globalRef.agent.SetDestination(globalRef.transform.position + transform.forward*10);
                     }
                     else
                     {
