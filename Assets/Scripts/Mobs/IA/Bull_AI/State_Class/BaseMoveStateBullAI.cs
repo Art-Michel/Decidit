@@ -265,7 +265,7 @@ namespace State.AIBull
 
         void LaunchRush()
         {
-            if(globalRef.distPlayer < globalRef.rushBullSO.distRush && globalRef.distPlayer > globalRef.baseAttackBullSO.distLaunchAttackState && hitPlayer && !isOnNavLink)
+            if(globalRef.distPlayer < globalRef.rushBullSO.rushDistance && globalRef.distPlayer > globalRef.baseAttackBullSO.distLaunchAttackState && hitPlayer && !isOnNavLink)
                 stateController.SetActiveState(StateControllerBull.AIState.Rush);
         }
 
