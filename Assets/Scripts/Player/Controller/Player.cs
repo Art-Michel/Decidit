@@ -249,7 +249,7 @@ public class Player : LocalManager<Player>
     private RaycastHit _previousWall;
     private const float _wallCoyoteMaxTime = 0.25f;
     private const float _wallDetectionRange = 1.0f;
-    private const float _maxWallDotProduct = -0.3f;
+    private const float _maxWallDotProduct = -0.5f;
     private float _wallCoyoteTime;
     [System.NonSerialized] public bool JustWalljumped = false;
     private float _wallJumpCooldown;
