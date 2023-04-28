@@ -585,4 +585,11 @@ public class PlayerManager : LocalManager<PlayerManager>
         _inputs.Disable();
     }
     #endregion
+
+    #region Push player towards spawn
+    public void PushPlayerTowardsSpawn()
+    {
+        Debug.Log("player is stuck");
+    }
+    #endregion
 }

@@ -209,6 +209,7 @@ public class Player : LocalManager<Player>
     // ADD LATER [Range(0, 100)][SerializeField] private float _slidingFriction = 5f;
     private float _currentFriction;
 
+    private Vector3 _previousPos;
     // private float _currentSpeed;
     private bool _canMove;
     Vector3 _rawInputs;
@@ -343,6 +344,7 @@ public class Player : LocalManager<Player>
         if (_fsm.CurrentState != null)
             _fsm.CurrentState.StateUpdate();
 
+
         //Final Movement Formula //I got lost with the deltatime stuff but i swear it works perfectly
         FinalMovement = (GlobalMomentum * Time.deltaTime)
         + (_movementInputs * Mathf.InverseLerp(_maxMovementVelocity, 0.0f, GlobalMomentum.magnitude))
@@ -356,6 +358,7 @@ public class Player : LocalManager<Player>
     private void LateUpdate()
     {
         //Apply Movement
+        _previousPos = transform.position;
         ApplyMovementsToCharacter(FinalMovement);
     }
 
@@ -964,6 +967,13 @@ public class Player : LocalManager<Player>
     public void KillGravity()
     {
         CurrentlyAppliedGravity = 0f;
+    }
+
+    //To keep the player from getting stuck inside walls
+    public void FailSafe()
+    {
+        if (CurrentlyAppliedGravity < -30 && (transform.position - _previousPos).magnitude == 0.0f)
+            PlayerManager.Instance.PushPlayerTowardsSpawn();
     }
 
     public void AllowMovement(bool boolean)

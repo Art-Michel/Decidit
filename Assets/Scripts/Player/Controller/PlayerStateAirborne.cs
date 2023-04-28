@@ -22,6 +22,7 @@ public class PlayerStateAirborne : PlayerState
 
         _player.CheckForSteepSlope();
         _player.CheckForGround();
+        _player.FailSafe();
     }
 
     public override void Exit()
