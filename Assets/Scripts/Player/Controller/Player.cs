@@ -4,6 +4,7 @@ using TMPro;
 using NaughtyAttributes;
 using CameraShake;
 using UnityEngine.UI;
+using UnityEngine.VFX;
 
 public class Player : LocalManager<Player>
 {
@@ -34,6 +35,8 @@ public class Player : LocalManager<Player>
     public PlayerHealth PlayerHealth;
     [Foldout("References")]
     [SerializeField] private LayerMask _enemyHurtbox;
+    [Foldout("References")]
+    [SerializeField] VisualEffect _speedlines;
     PlayerInputMap _inputs;
     PlayerFSM _fsm;
     PlayerHealth _playerHealth;
@@ -935,6 +938,12 @@ public class Player : LocalManager<Player>
         //Actually move
         if (CharaCon.enabled)
             CharaCon.Move(direction);
+
+        Vector3 right = direction.x * Head.right;
+        Vector3 up = direction.y * Head.up;
+        Vector3 fwd = direction.z * Head.forward;
+        _speedlines.SetVector3("Direction", -direction.normalized);
+        _speedlines.SetFloat("Velocity", GlobalMomentum.magnitude);
     }
 
     public void KillMomentum()
