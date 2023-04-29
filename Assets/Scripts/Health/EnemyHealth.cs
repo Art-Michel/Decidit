@@ -257,6 +257,21 @@ public class EnemyHealth : Health
                 collider.enabled = false;
     }
 
+    public void ZapSlow()
+    {
+        if (globalRefBullAI != null)
+            globalRefBullAI.IsZap = true;
+
+        else if (globalRefAICAC != null)
+            globalRefAICAC.IsZap = true;
+
+        else if (globalRefFlyAI != null)
+            globalRefFlyAI.IsZap = true;
+
+        //// else if (globalRefWallAI != null)
+        ////     globalRefWallAI.IsZap = true;
+    }
+
     //used to make healthbar face the camera
     void LookAtCamera()
     {
