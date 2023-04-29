@@ -119,6 +119,8 @@ public class Synergies : LocalManager<Synergies>
     {
         FugueMaladeShot shot = _fugueMaladeShotsPooler.Get() as FugueMaladeShot;
         shot.Setup(Hospital, position);
+        foreach (EnemyHealth enemy in Hospital)
+            enemy.RecoverFromSickness();
     }
     #endregion
 
@@ -133,9 +135,8 @@ public class Synergies : LocalManager<Synergies>
             arc.SetVector3("Start_Pos", position);
             arc.SetVector3("End_Pos", enemy.transform.position);
             SoundManager.Instance.PlaySound("event:/SFX_Controller/Synergies/EyleauOnMuse/Sound", 1f, gameObject);
-
             enemy.ZapSlow();
-            //TODO JT enemy.Slow();
+            enemy.RecoverFromSickness();
         }
     }
     #endregion
