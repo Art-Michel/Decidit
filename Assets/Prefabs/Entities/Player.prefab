@@ -1606,7 +1606,7 @@ MonoBehaviour:
       falloffScale: 50
       falloffDegree: 1
       axesMultiplier: {x: 1, y: 1, z: 1}
-  _cooldown: 4
+  _cooldown: 5
   _vfx: {fileID: 603117771566878093}
   _vfxGroundProjection: {fileID: 9040691190137722522}
   _dashRange: 14
@@ -1620,7 +1620,7 @@ MonoBehaviour:
   _triggerMask:
     serializedVersion: 2
     m_Bits: 131072
-  _dashDuration: 0.6
+  _dashDuration: 0.4
   _dashFeedbacksCurve:
     serializedVersion: 2
     m_Curve:
@@ -17344,6 +17344,8 @@ GameObject:
   - component: {fileID: 1112549826}
   - component: {fileID: 5894753615715131022}
   - component: {fileID: 4265017164254631392}
+  - component: {fileID: 1402384549}
+  - component: {fileID: 1402384550}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -17580,6 +17582,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae55d14105566084bb00bed99fa22e4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _chargedEylauPooler: {fileID: 1402384549}
+  _acidicProjectilePooler: {fileID: 1402384550}
   Hospital: []
   _fugueMaladeShotsPooler: {fileID: 5894753615715131022}
   _eylauMaladeVfxPooler: {fileID: 4265017164254631392}
@@ -17651,6 +17655,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _prefab: {fileID: 4375951055614460336, guid: d0c2ee32bea0aa543bd09b05be3126c2, type: 3}
   _initialCount: 5
+  _shouldBeParent: 0
+  _canCreateNewPrefabs: 1
+  _defaultParent: {fileID: 0}
+--- !u!114 &1402384549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2007368072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 4934306892844130343, guid: d4d784b04030ad846a631e1c395f6045, type: 3}
+  _initialCount: 12
+  _shouldBeParent: 0
+  _canCreateNewPrefabs: 1
+  _defaultParent: {fileID: 0}
+--- !u!114 &1402384550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2007368072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 0}
+  _initialCount: 4
   _shouldBeParent: 0
   _canCreateNewPrefabs: 1
   _defaultParent: {fileID: 0}

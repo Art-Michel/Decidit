@@ -13,24 +13,28 @@ public class Synergies : LocalManager<Synergies>
         EYLAU
     }
 
+    #region Declarations
+    [Foldout("Eylau -> Nuage d'Aragon")]
+    [SerializeField] Pooler _chargedEylauPooler;
+    [Foldout("Muse -> Nuage d'Aragon")]
+    [SerializeField] Pooler _acidicProjectilePooler;
+
     [Foldout("Malades")]
     public List<EnemyHealth> Hospital;
-
     [Foldout("Fugue -> Malades")]
     [SerializeField]
     Pooler _fugueMaladeShotsPooler;
-
     [Foldout("Eylau -> Malades")]
     [SerializeField]
     Pooler _eylauMaladeVfxPooler;
 
     [Foldout("Cimetière")]
     [SerializeField] Transform _eylauArea;
-
     [Foldout("Muse -> Cimetière")]
     [SerializeField] Pooler _explosionVfxPooler;
     [Foldout("Fugue -> Cimetière")]
     [SerializeField] Pooler _blackHolePooler;
+    #endregion
 
     public void Synergize(SynergyProjectile bullet, Transform collider)
     {
@@ -64,7 +68,7 @@ public class Synergies : LocalManager<Synergies>
                 switch (colliderChant)
                 {
                     case Chants.ARAGON:
-                        MuseOnAragon();
+                        MuseOnAragon(bullet);
                         break;
                     case Chants.MUSE:
                         //Nothing!
@@ -80,7 +84,7 @@ public class Synergies : LocalManager<Synergies>
                 switch (colliderChant)
                 {
                     case Chants.ARAGON:
-                        EylauOnAragon();
+                        EylauOnAragon(bullet);
                         break;
                     case Chants.MUSE:
                         EylauOnMalade(bullet.transform.position);
@@ -94,16 +98,19 @@ public class Synergies : LocalManager<Synergies>
     }
 
     #region Muse -> Nuage
-    public void MuseOnAragon()
+    public void MuseOnAragon(SynergyProjectile bullet)
     {
         Debug.Log("projectile transformé en projo acide");
     }
     #endregion
 
     #region Eylau -> Nuage
-    public void EylauOnAragon()
+    public void EylauOnAragon(SynergyProjectile bullet)
     {
-        Debug.Log("Projectile pas chargé devient chargé");
+        SynergyProjectile shot = _chargedEylauPooler.Get().GetComponent<SynergyProjectile>();
+        shot.Setup(bullet.transform.position, bullet.Direction);
+        shot.ForceSynergized();
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/CimetièreEyleau/MaxCharged", 1f, gameObject);
     }
     #endregion
 

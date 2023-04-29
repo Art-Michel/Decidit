@@ -38,4 +38,9 @@ public class SynergyProjectile : Projectile
 
         base.CheckForCollision();
     }
+
+    public void ForceSynergized()
+    {
+        _synergized = true;
+    }
 }

@@ -50,7 +50,7 @@ public class PlayerFSM : MonoBehaviour
 
         if (nextState == CurrentState)
         {
-            Debug.LogWarning("Tried entering " + nextStateName + " state which you were already in");
+            Debug.LogWarning("Tried entering " + nextStateName + " state in which you were already");
             return;
         }
 
