@@ -57,12 +57,22 @@ public class EnemyHealth : Health
     [Foldout("Synergies")]
     [SerializeField] List<Collider> _sickboxes;
 
+    //JT
     [Header("KnockBack IA")]
     public Vector3 KnockBackDir;
     public GlobalRefAICAC globalRefAICAC;
     public GlobalRefBullAI globalRefBullAI;
     public GlobalRefFlyAI globalRefFlyAI;
     public GlobalRefWallAI globalRefWallAI;
+
+    //Poison
+    private bool _isPoisoned = false;
+    private float _currentPoisonStrength;
+    private float _poisonTickT = 0.0f;
+    private const float _poisonTickRate = 0.05f;
+    private float _poisonDuration;
+    private Color _normalHpColor;
+    private Color _poisonedHpColor = new Color(0.6f, 0.8f, 0.1f, 1.0f);
 
     protected override void Awake()
     {
@@ -85,6 +95,8 @@ public class EnemyHealth : Health
         if (_sickboxes.Count > 0)
             foreach (Collider collider in _sickboxes)
                 collider.enabled = false;
+
+        _normalHpColor = _hpUi.color;
     }
 
     [Button]
@@ -155,7 +167,13 @@ public class EnemyHealth : Health
         AdjustVisibility();
 
         if (_isDying)
+        {
             UpdateDeath();
+            return;
+        }
+
+        if (_isPoisoned)
+            SufferPoison();
     }
 
     public override void TakeDamage(float amount)
@@ -259,15 +277,18 @@ public class EnemyHealth : Health
         //Display Healthbar if enemy is looked at or if enemy is taking damage
         _healthBarIsVisible = Vector3.Dot(_camForward, (transform.position - _camPos).normalized) > minimumDot || _hasProbation;
 
+        //If sick, we override the value to be true
+        if (IsSick)
+            _healthBarIsVisible = true;
+        //If poisoned, we override the value to be true
+        if (_isPoisoned)
+            _healthBarIsVisible = true;
         //If dying, we override the value to be false
         if (_isDying)
         {
             _healthBarIsVisible = false;
             _disappearStartup = 0f;
         }
-        //If sick, we override the value to be true
-        if (IsSick)
-            _healthBarIsVisible = true;
 
         //progressively display healthbar
         if (_healthBarIsVisible && _appearT < 1)
@@ -313,6 +334,7 @@ public class EnemyHealth : Health
         }
 
         RecoverFromSickness();
+        RecoverFromPoison();
 
         //Adjust Visibility
         _appearT = 1;
@@ -373,4 +395,39 @@ public class EnemyHealth : Health
         Synergies.Instance.Hospital.Remove(this);
         Destroy(gameObject);
     }
+
+    #region Poison
+    [Button]
+    public void Poison(float poisonDuration = 4, float damagePerTick = 0.5f)
+    {
+        _isPoisoned = true;
+        _currentPoisonStrength = damagePerTick;
+        _poisonDuration = poisonDuration;
+        _poisonTickT = _poisonTickRate;
+        _hpUi.color = _poisonedHpColor;
+    }
+
+    private void SufferPoison()
+    {
+        _poisonTickT -= Time.deltaTime;
+        if (_poisonTickT <= 0.0f)
+            PoisonTick();
+
+        _poisonDuration -= Time.deltaTime;
+        if (_poisonDuration <= 0.0f)
+            RecoverFromPoison();
+    }
+
+    private void PoisonTick()
+    {
+        TakeDamage(_currentPoisonStrength);
+        _poisonTickT = _poisonTickRate;
+    }
+
+    private void RecoverFromPoison()
+    {
+        _isPoisoned = false;
+        _hpUi.color = _normalHpColor;
+    }
+    #endregion
 }
