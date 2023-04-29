@@ -108,6 +108,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         SlowMo();
         Rumble();
         DisplayTimeScale();
+        UpdateHitmarker();
 
         if (_timeStopped)
         {
@@ -590,6 +591,29 @@ public class PlayerManager : LocalManager<PlayerManager>
     public void PushPlayerTowardsSpawn()
     {
         Debug.Log("player is stuck");
+    }
+    #endregion
+
+    #region Hitmarker
+    [Foldout("Hitmarker")]
+    [SerializeField] private AnimationCurve _hitmarkerCurve;
+    [Foldout("Hitmarker")]
+    [SerializeField] private CanvasGroup _hitmarkerCanvasGroup;
+    [Foldout("Hitmarker")]
+    [SerializeField] private float _hitmarkerSpeed;
+    private float _hitmarkerT = 1.0f;
+
+    public void Hitmarker()
+    {
+        _hitmarkerT = 0.0f;
+    }
+
+    private void UpdateHitmarker()
+    {
+        if (_hitmarkerT >= 1.0f)
+            return;
+        _hitmarkerT += Time.deltaTime * _hitmarkerSpeed;
+        _hitmarkerCanvasGroup.alpha = _hitmarkerCurve.Evaluate(_hitmarkerT);
     }
     #endregion
 }
