@@ -14,6 +14,9 @@ public class Synergies : LocalManager<Synergies>
     }
 
     #region Declarations
+    [Foldout("Nuage d'Aragon")]
+    public List<AragonCloud> ActiveClouds;
+
     [Foldout("Eylau -> Nuage d'Aragon")]
     [SerializeField] Pooler _chargedEylauPooler;
     [Foldout("Muse -> Nuage d'Aragon")]
@@ -27,6 +30,8 @@ public class Synergies : LocalManager<Synergies>
     [Foldout("Eylau -> Malades")]
     [SerializeField]
     Pooler _eylauMaladeVfxPooler;
+    [Foldout("Eylau -> Malades")]
+    [SerializeField] float _zapDamage = 2;
 
     [Foldout("Cimetière")]
     [SerializeField] Transform _eylauArea;
@@ -101,6 +106,9 @@ public class Synergies : LocalManager<Synergies>
     public void MuseOnAragon(SynergyProjectile bullet)
     {
         Debug.Log("projectile transformé en projo acide");
+        foreach (AragonCloud cloud in ActiveClouds)
+            cloud.StartDisappearing();
+        ActiveClouds.Clear();
     }
     #endregion
 
@@ -111,6 +119,9 @@ public class Synergies : LocalManager<Synergies>
         shot.Setup(bullet.transform.position, bullet.Direction);
         shot.ForceSynergized();
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/CimetièreEyleau/MaxCharged", 1f, gameObject);
+        foreach (AragonCloud cloud in ActiveClouds)
+            cloud.StartDisappearing();
+        ActiveClouds.Clear();
     }
     #endregion
 
@@ -129,7 +140,7 @@ public class Synergies : LocalManager<Synergies>
     {
         foreach (EnemyHealth enemy in Hospital)
         {
-            enemy.TakeDamage(0.5f);
+            enemy.TakeDamage(_zapDamage);
             VisualEffect arc = _eylauMaladeVfxPooler.Get().GetComponent<VisualEffect>();
             arc.transform.position = Vector3.zero;
             arc.SetVector3("Start_Pos", position);

@@ -322,7 +322,7 @@ public class Revolver : MonoBehaviour
         //     Reloaded();
         _inputs.Enable();
 
-        if (MenuManager.Instance.CurrentDevice == MenuManager.Devices.Controller)
+        if (MenuManager.Instance && MenuManager.Instance.CurrentDevice == MenuManager.Devices.Controller)
             _currentAimAssistRadius = _aimAssistRadius * 3.0f;
         else
             _currentAimAssistRadius = _aimAssistRadius;

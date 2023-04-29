@@ -23,6 +23,7 @@ public class AragonCloud : PooledObject
     {
         transform.position = position;
         transform.rotation = rotation;
+        Synergies.Instance.ActiveClouds.Add(this);
         _delay = delay;
         _isActive = false;
     }
@@ -38,10 +39,9 @@ public class AragonCloud : PooledObject
         else
         {
             _lifeSpan -= Time.deltaTime;
-            if (_lifeSpan <= 0.0f)
+            if (_lifeSpan <= 0.0f && !_isDisappearing)
             {
-                _vfx.Stop();
-                _isDisappearing = true;
+                StartDisappearing();
             }
             if (_isDisappearing && _vfx.aliveParticleCount <= 0)
             {
@@ -61,10 +61,17 @@ public class AragonCloud : PooledObject
         _isActive = true;
     }
 
+    public void StartDisappearing()
+    {
+        _vfx.Stop();
+        _isDisappearing = true;
+        _boxCollider.enabled = false;
+        _lifeSpan = -1.0f;
+    }
+
     private void Disable()
     {
         _vfx.Stop();
-        _boxCollider.enabled = false;
         _isActive = false;
         _isDisappearing = false;
     }

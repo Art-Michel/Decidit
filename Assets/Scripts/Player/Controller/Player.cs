@@ -486,36 +486,39 @@ public class Player : LocalManager<Player>
 
     public void StartKickShake(KickShake.Params shParams, Vector3 pos)
     {
-        PlayerManager.Instance.StartRumbling
-        (
-            shParams.strength.eulerAngles.magnitude + shParams.strength.position.magnitude,
-            shParams.strength.eulerAngles.magnitude + shParams.strength.position.magnitude,
-            shParams.releaseTime
-        );
+        if (MenuManager.Instance && MenuManager.Instance.CurrentDevice == MenuManager.Devices.Controller)
+            PlayerManager.Instance.StartRumbling
+            (
+                shParams.strength.eulerAngles.magnitude + shParams.strength.position.magnitude,
+                shParams.strength.eulerAngles.magnitude + shParams.strength.position.magnitude,
+                shParams.releaseTime
+            );
 
         CameraShaker.Shake(new KickShake(shParams, pos, false));
     }
 
     public void StartPerlinShake(PerlinShake.Params shParams, Vector3 pos)
     {
-        PlayerManager.Instance.StartRumbling
-        (
-            shParams.strength.eulerAngles.magnitude + shParams.strength.position.magnitude,
-            shParams.strength.eulerAngles.magnitude + shParams.strength.position.magnitude,
-            shParams.envelope.decay
-        );
+        if (MenuManager.Instance && MenuManager.Instance.CurrentDevice == MenuManager.Devices.Controller)
+            PlayerManager.Instance.StartRumbling
+            (
+                shParams.strength.eulerAngles.magnitude + shParams.strength.position.magnitude,
+                shParams.strength.eulerAngles.magnitude + shParams.strength.position.magnitude,
+                shParams.envelope.decay
+            );
 
         CameraShaker.Shake(new PerlinShake(shParams, 1, pos, false));
     }
 
     public void StartBounceShake(BounceShake.Params shParams, Vector3 pos)
     {
-        PlayerManager.Instance.StartRumbling
-        (
-            shParams.positionStrength + shParams.rotationStrength,
-            shParams.positionStrength + shParams.rotationStrength,
-            shParams.numBounces * 0.01f
-        );
+        if (MenuManager.Instance && MenuManager.Instance.CurrentDevice == MenuManager.Devices.Controller)
+            PlayerManager.Instance.StartRumbling
+            (
+                shParams.positionStrength + shParams.rotationStrength,
+                shParams.positionStrength + shParams.rotationStrength,
+                shParams.numBounces * 0.01f
+            );
 
         CameraShaker.Shake(new BounceShake(shParams, pos));
     }
