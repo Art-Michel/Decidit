@@ -55,8 +55,9 @@ public class Projectile : Hitbox
     {
         transform.position = position;
         transform.rotation = Camera.main.transform.rotation;
-
         Direction = direction;
+
+        //trails
         _lifeT = _lifeSpan;
         _trailDelayT = _trailDelay; //Delay before spawning the trail
         if (_trailRenderers.Length > 0)
@@ -70,9 +71,10 @@ public class Projectile : Hitbox
         if (_trailsVfx)
             _trailsVfx.SetActive(false);
         _mesh.SetActive(false);
-        _lasterFramePosition = position - Direction * _radius;
-        _lastFramePosition = position - Direction * _radius;
-        _spaceTraveledLast2Frames = Vector3.zero;
+
+        _lasterFramePosition = position - direction * _radius * 2;
+        _lastFramePosition = position - direction * _radius;
+        _spaceTraveledLast2Frames = position - _lasterFramePosition;
         _currentSpeed = _speed;
         this.enabled = true;
     }
@@ -97,13 +99,13 @@ public class Projectile : Hitbox
 
         else
         {
+            CheckForCollision();
             _lasterFramePosition = _lastFramePosition;
             _lastFramePosition = transform.position;
 
             Move();
             _spaceTraveledLast2Frames = transform.position - _lasterFramePosition;
 
-            CheckForCollision();
 
             UpdateLifeSpan();
 
@@ -233,7 +235,6 @@ public class Projectile : Hitbox
                         Bounce(hit);
                 }
             }
-
             //if does not bounce nor multihit, just hit and disappear
             else
             {
