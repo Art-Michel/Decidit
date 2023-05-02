@@ -175,7 +175,6 @@ public class Arm : MonoBehaviour
     {
         if (_crossHairFull)
             _crossHairFull.SetActive(true);
-        PlaceHolderSoundManager.Instance.PlayArmFilled();
         StartGlowingBriefly();
         if (_inputs.Actions.Skill.IsPressed() && !_inputs.Actions.Interact.IsPressed())
             PressSong();

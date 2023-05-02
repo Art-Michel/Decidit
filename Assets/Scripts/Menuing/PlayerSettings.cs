@@ -145,9 +145,9 @@ public class PlayerSettings : MonoBehaviour
             }
         }
         //Aplique la resolution en temps réel 
-        resolutionDropdown.AddOptions(options);
-        resolutionDropdown.value = currentResolutionIndex;
-        resolutionDropdown.RefreshShownValue();
+        //Uncomment// resolutionDropdown.AddOptions(options);
+        //Uncomment// resolutionDropdown.value = currentResolutionIndex;
+        //Uncomment// resolutionDropdown.RefreshShownValue();
     }
     public void fullScreenFonction(bool isFullScreen) //fonction pour faire en sorte que le FS soit activable ou non
     {

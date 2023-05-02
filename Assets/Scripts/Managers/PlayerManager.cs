@@ -303,28 +303,24 @@ public class PlayerManager : LocalManager<PlayerManager>
         foreach (GameObject gun in Guns)
             gun.SetActive(false);
         Guns[3].SetActive(true);
-        PlaceHolderSoundManager.Instance.PlayWeaponEquip();
     }
     public void ForceEquipGun3()
     {
         foreach (GameObject gun in Guns)
             gun.SetActive(false);
         Guns[2].SetActive(true);
-        PlaceHolderSoundManager.Instance.PlayWeaponEquip();
     }
     public void ForceEquipGun2()
     {
         foreach (GameObject gun in Guns)
             gun.SetActive(false);
         Guns[1].SetActive(true);
-        PlaceHolderSoundManager.Instance.PlayWeaponEquip();
     }
     public void ForceEquipGun1()
     {
         foreach (GameObject gun in Guns)
             gun.SetActive(false);
         Guns[0].SetActive(true);
-        PlaceHolderSoundManager.Instance.PlayWeaponEquip();
     }
     #endregion
 

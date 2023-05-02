@@ -96,7 +96,6 @@ public class AragonArm : Arm
         loopInstance.start();
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/FugueAragon/StartPreveiw", 1f, gameObject);
         _vfx.SetActive(true);
-        PlaceHolderSoundManager.Instance.PlayDashPrevisSound();
         _cancelPrompt.SetActive(true);
     }
 
