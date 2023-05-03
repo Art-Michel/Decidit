@@ -13,7 +13,7 @@ using NaughtyAttributes;
 public class EylauArea : SynergyTrigger
 {
     [Foldout("References")][SerializeField] private LayerMask _shouldBuff;
-    [Foldout("Stats")][SerializeField] private float _radius;
+    public float Radius = 8;
     [Foldout("Stats")][SerializeField] private float _lifeSpan;
     private float _lifeT;
     private bool _isPlayerInHere = false;
@@ -142,7 +142,7 @@ public class EylauArea : SynergyTrigger
 
     private void CheckForPlayer()
     {
-        _isPlayerInHere = Physics.OverlapSphere(transform.position, _radius, _shouldBuff).Length > 0;
+        _isPlayerInHere = Physics.OverlapSphere(transform.position, Radius, _shouldBuff).Length > 0;
         if (!_isPlayerInHere && _wasPlayerInHere)
         {
             Player.Instance.StopEylauBuff();

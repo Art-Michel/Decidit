@@ -79,7 +79,7 @@ public class Synergies : LocalManager<Synergies>
                         //Nothing!
                         break;
                     case Chants.EYLAU:
-                        MuseOnCimetiere(bullet.transform.position.y);
+                        MuseOnCimetiere(bullet.transform.position);
                         bullet.Explode(bullet.transform.forward);
                         break;
                 }
@@ -156,7 +156,7 @@ public class Synergies : LocalManager<Synergies>
     public void FugueOnCimetiere(Vector3 position)
     {
         Debug.Log("Trou noir, voir avec jt pour attirer les ennemis au centre du cimetière");
-        Vector3 initialPos = new Vector3(_eylauArea.position.x, position.y, _eylauArea.position.z);
+        Vector3 initialPos = new Vector3(_eylauArea.position.x, _eylauArea.position.y, _eylauArea.position.z);
         SpawnBlackHole(initialPos);
     }
 
@@ -173,17 +173,21 @@ public class Synergies : LocalManager<Synergies>
     #endregion
 
     #region Muse -> Cimetière
-    public void MuseOnCimetiere(float y)
+    public void MuseOnCimetiere(Vector3 initialPos)
     {
-        Vector3 initialPos = new Vector3(_eylauArea.position.x, y, _eylauArea.position.z);
-        for (int i = 1; i < 10; i++)
+        Vector3 explosionDirection = _eylauArea.position - initialPos * 2;
+        int loops = 10;
+        for (int i = 1; i < loops; i++)
         {
-            Vector2 circle = (Random.insideUnitCircle).normalized * Random.Range(2.0f, 6.0f);
-            Vector3 position = new Vector3(circle.x, 0.0f, circle.y);
+            // Vector2 circle = (Random.insideUnitCircle).normalized * Random.Range(2.0f, 6.0f);
+            // Vector3 position = new Vector3(circle.x, 0.0f, circle.y);
 
-            //twice to fill the cimetiere
-            SpawnAnExplosion(initialPos + position, i);
-            SpawnAnExplosion(initialPos - position, i);
+            // //twice to fill the cimetiere
+            // SpawnAnExplosion(initialPos + position, i);
+            // SpawnAnExplosion(initialPos - position, i);
+
+            Vector3 pos = initialPos + explosionDirection / i;
+            SpawnAnExplosion(pos, i);
         }
     }
 
