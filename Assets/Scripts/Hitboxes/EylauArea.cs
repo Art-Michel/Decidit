@@ -142,7 +142,7 @@ public class EylauArea : SynergyTrigger
 
     private void CheckForPlayer()
     {
-        _isPlayerInHere = Physics.OverlapCapsule(transform.position + Vector3.down * 100, transform.position + Vector3.up * 100, _radius, _shouldBuff).Length > 0;
+        _isPlayerInHere = Physics.OverlapSphere(transform.position, _radius, _shouldBuff).Length > 0;
         if (!_isPlayerInHere && _wasPlayerInHere)
         {
             Player.Instance.StopEylauBuff();

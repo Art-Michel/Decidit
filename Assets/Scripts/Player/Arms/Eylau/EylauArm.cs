@@ -35,7 +35,6 @@ public class EylauArm : Arm
     public override void StartPrevis()
     {
         base.StartPrevis();
-        //TODOLucas un ptit son one shot au début de la preview pour pas que le son sorte de nulle part comme ça
         loopInstance = FMODUnity.RuntimeManager.CreateInstance("event:/SFX_Controller/Chants/CimetièreEyleau/DuiringPreview");
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/CimetièreEyleau/Preview", 1f, gameObject);
         _previs.SetActive(true);
@@ -45,17 +44,44 @@ public class EylauArm : Arm
 
     public override void UpdatePrevis()
     {
+        // Vector3 pos;
+        // Physics.Raycast(_cameraTransform.position, _cameraTransform.forward, out RaycastHit hit, _range, _detectionMask);
+        // if (hit.transform != null)
+        //     pos = hit.point + hit.normal;
+        // else
+        //     pos = _cameraTransform.transform.position + _cameraTransform.forward * _range;
+
+        // Physics.Raycast(pos, Vector3.down, out RaycastHit groundHit, 100f, _detectionMask);
+
+        // _previs.transform.position = groundHit.point + groundHit.normal * 0.1f;
+        // _previs.transform.rotation = Quaternion.identity;
+
         Vector3 pos;
+        Vector3 up;
+
         Physics.Raycast(_cameraTransform.position, _cameraTransform.forward, out RaycastHit hit, _range, _detectionMask);
         if (hit.transform != null)
-            pos = hit.point + hit.normal;
+        {
+            pos = hit.point + hit.normal * 0.1f;
+            up = hit.normal;
+        }
         else
-            pos = _cameraTransform.transform.position + _cameraTransform.forward * _range;
+        {
+            Physics.Raycast(_cameraTransform.position + _cameraTransform.forward * _range, Vector3.down, out RaycastHit groundHit, 300f, _detectionMask);
+            if (groundHit.transform != null)
+            {
+                pos = groundHit.point + Vector3.up * 0.1f;
+                up = groundHit.normal;
+            }
+            else
+            {
+                pos = _cameraTransform.position + _cameraTransform.forward * _range;
+                up = Vector3.up;
+            }
+        }
 
-        Physics.Raycast(pos, Vector3.down, out RaycastHit groundHit, 100f, _detectionMask);
-
-        _previs.transform.position = groundHit.point + groundHit.normal * 0.1f;
-        _previs.transform.rotation = Quaternion.identity;
+        _previs.transform.position = pos;
+        _previs.transform.up = up;
     }
 
     public override void StopPrevis()
