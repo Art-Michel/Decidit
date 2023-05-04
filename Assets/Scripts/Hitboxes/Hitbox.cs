@@ -147,8 +147,11 @@ public class Hitbox : MonoBehaviour
             }
             if (_hitShake.numBounces > 0)
                 PlayerManager.Instance.HitShake(_hitShake);
+
+            Blacklist.Add(health.transform, _delayBetweenHits);
         }
-        Blacklist.Add(targetCollider, _delayBetweenHits);
+        else
+            Blacklist.Add(targetCollider, _delayBetweenHits);
     }
 
     Vector3 MakeDirectionRelative(Vector3 direction)
