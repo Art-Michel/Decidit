@@ -598,10 +598,21 @@ public class PlayerManager : LocalManager<PlayerManager>
     [Foldout("Hitmarker")]
     [SerializeField] private float _hitmarkerSpeed;
     private float _hitmarkerT = 1.0f;
+    [Foldout("Hitmarker")]
+    [SerializeField] private Image[] _hitmarkers;
 
     public void Hitmarker()
     {
         _hitmarkerT = 0.0f;
+        foreach (Image hitmarker in _hitmarkers)
+            hitmarker.color = Color.white;
+    }
+
+    public void Crithitmarker()
+    {
+        _hitmarkerT = 0.0f;
+        foreach (Image hitmarker in _hitmarkers)
+            hitmarker.color = Color.red;
     }
 
     private void UpdateHitmarker()

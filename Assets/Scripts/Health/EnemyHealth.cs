@@ -220,7 +220,7 @@ public class EnemyHealth : Health
         else if (globalRefWallAI != null)
             globalRefWallAI.CheckHP();
 
-        PlayerManager.Instance.Hitmarker();
+        PlayerManager.Instance.Crithitmarker();
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/HitMarkerHead", .8f, gameObject);
     }
 
