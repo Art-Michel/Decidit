@@ -162,7 +162,7 @@ public class Projectile : Hitbox
                 {
                     if (!AlreadyHit(hurtbox.HealthComponent.transform))
                     {
-                        Hit(hurtbox.HealthComponent.transform);
+                        Hit(hurtbox.transform);
                         if (_shouldLeaveImpact)
                             LeaveImpact(hit.transform, hit.point, false);
 
@@ -186,7 +186,7 @@ public class Projectile : Hitbox
                 {
                     if (!AlreadyHit(hurtbox.HealthComponent.transform))
                     {
-                        Hit(hurtbox.HealthComponent.transform);
+                        Hit(hurtbox.transform);
                         if (_shouldLeaveImpact)
                             LeaveImpact(collider.transform, transform.position, false);
 
@@ -219,7 +219,7 @@ public class Projectile : Hitbox
                 if (hit.transform.gameObject.layer == LayerMask.NameToLayer("EnemyHurtbox"))
                 {
                     if (hit.transform.TryGetComponent<Hurtbox>(out Hurtbox hurtbox))
-                        Hit(hurtbox.HealthComponent.transform);
+                        Hit(hurtbox.transform);
                     else
                         Hit(hit.transform);
                     //+ explostion if projectile should spawn an explosion.
@@ -239,7 +239,7 @@ public class Projectile : Hitbox
             else
             {
                 if (hit.transform.TryGetComponent<Hurtbox>(out Hurtbox hurtbox))
-                    Hit(hurtbox.HealthComponent.transform);
+                    Hit(hurtbox.transform);
                 else
                     Hit(hit.transform);
 

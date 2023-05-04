@@ -597,13 +597,20 @@ public class PlayerManager : LocalManager<PlayerManager>
     [SerializeField] private CanvasGroup _hitmarkerCanvasGroup;
     [Foldout("Hitmarker")]
     [SerializeField] private float _hitmarkerSpeed;
-    private float _hitmarkerT = 1.0f;
     [Foldout("Hitmarker")]
     [SerializeField] private Image[] _hitmarkers;
+    [Foldout("Hitmarker")]
+    [SerializeField] private float _hitmarkerMaxAlpha;
+    [Foldout("Hitmarker")]
+    [SerializeField] private float _critHitmarkerMaxAlpha;
+    private float _currentHitmarkerMaxAlpha;
+
+    private float _hitmarkerT = 1.0f;
 
     public void Hitmarker()
     {
         _hitmarkerT = 0.0f;
+        _currentHitmarkerMaxAlpha = _hitmarkerMaxAlpha;
         foreach (Image hitmarker in _hitmarkers)
             hitmarker.color = Color.white;
     }
@@ -611,6 +618,7 @@ public class PlayerManager : LocalManager<PlayerManager>
     public void Crithitmarker()
     {
         _hitmarkerT = 0.0f;
+        _currentHitmarkerMaxAlpha = _critHitmarkerMaxAlpha;
         foreach (Image hitmarker in _hitmarkers)
             hitmarker.color = Color.red;
     }
@@ -620,7 +628,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         if (_hitmarkerT >= 1.0f)
             return;
         _hitmarkerT += Time.deltaTime * _hitmarkerSpeed;
-        _hitmarkerCanvasGroup.alpha = _hitmarkerCurve.Evaluate(_hitmarkerT);
+        _hitmarkerCanvasGroup.alpha = _hitmarkerCurve.Evaluate(_hitmarkerT) * _currentHitmarkerMaxAlpha;
     }
     #endregion
 }

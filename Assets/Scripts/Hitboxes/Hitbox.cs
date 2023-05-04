@@ -77,9 +77,9 @@ public class Hitbox : MonoBehaviour
                 {
                     //if that hitbox can hit through walls.
                     if (_canHitThroughWalls)
-                        Hit(hurtbox.HealthComponent.transform);
+                        Hit(hurtbox.transform);
                     else if (!Physics.Raycast(transform.position, (collider.transform.position - transform.position).normalized, _radius, _shouldNotHitThrough))
-                        Hit(hurtbox.HealthComponent.transform);
+                        Hit(hurtbox.transform);
                 }
             }
             else
@@ -111,9 +111,10 @@ public class Hitbox : MonoBehaviour
 
     protected virtual void Hit(Transform targetCollider)
     {
-        //Debug.Log(transform.name + " hit " + target.transform.name);
-        if (targetCollider.TryGetComponent<Health>(out Health health))
+        Debug.Log(transform.name + " hit " + targetCollider.transform.name);
+        if (targetCollider.TryGetComponent<Hurtbox>(out Hurtbox hurtbox))
         {
+            Health health = hurtbox.HealthComponent;
             if (_shouldSplashBloodOnHit)
             {
                 if (targetCollider.CompareTag("WeakHurtbox") && _canCriticalHit)
