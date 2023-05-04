@@ -37,6 +37,7 @@ public class Synergies : LocalManager<Synergies>
     [SerializeField] Transform _eylauArea;
     [Foldout("Muse -> Cimetière")]
     [SerializeField] Pooler _explosionVfxPooler;
+    private const float _explosionOffset = .05f;
     [Foldout("Fugue -> Cimetière")]
     [SerializeField] Pooler _blackHolePooler;
     #endregion
@@ -175,33 +176,31 @@ public class Synergies : LocalManager<Synergies>
     #region Muse -> Cimetière
     public void MuseOnCimetiere(Vector3 initialPos)
     {
-        Vector3 explosionDirection = _eylauArea.position - initialPos * 2;
-        int loops = 10;
-        for (int i = 1; i < loops; i++)
+        Vector3 endPos = initialPos + (_eylauArea.position - initialPos) * 2;
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/Synergies/MuseOnEyleau/Sound", 1, _eylauArea.gameObject);
+        Vector3 rand = Random.insideUnitSphere;
+        Vector3 offset = Vector3.Cross((endPos - initialPos), rand).normalized * 4;
+        Vector3 offset2 = Vector3.Cross((endPos - initialPos), offset).normalized * 4;
+
+        int loops = 20;
+        for (int i = 0; i < loops; i++)
         {
-            // Vector2 circle = (Random.insideUnitCircle).normalized * Random.Range(2.0f, 6.0f);
-            // Vector3 position = new Vector3(circle.x, 0.0f, circle.y);
+            float x = (float)i / (loops - 1);
 
-            // //twice to fill the cimetiere
-            // SpawnAnExplosion(initialPos + position, i);
-            // SpawnAnExplosion(initialPos - position, i);
+            Vector3 pos = Vector3.Lerp(initialPos, endPos, x);
+            Vector3 mario = offset * Mathf.Sin(Mathf.PI * 2 * x);
+            Vector3 luigi = offset2 * Mathf.Sin(Mathf.PI * 2 * x);
 
-            Vector3 pos = initialPos + explosionDirection / i;
-            SpawnAnExplosion(pos, i);
+            // offset += Vector3.Cross((endPos - initialPos).normalized, offset.normalized) * 4 * Mathf.Sin(Mathf.PI * x);
+
+            SpawnAnExplosion(pos + mario + luigi, i);
         }
     }
 
     private void SpawnAnExplosion(Vector3 pos, int i)
     {
-
         MuseEylauExplosions exp = _explosionVfxPooler.Get().GetComponent<MuseEylauExplosions>();
-        exp.Setup(pos + Vector3.up * i * 2, i / 30.0f);
-
-        if (i == 1)
-            SoundManager.Instance.PlaySound("event:/SFX_Controller/Synergies/MuseOnEyleau/Sound", 1f, exp.gameObject);
-
-        MuseEylauExplosions exp2 = _explosionVfxPooler.Get().GetComponent<MuseEylauExplosions>();
-        exp2.Setup(pos + Vector3.down * i * 2, i / 30.0f);
+        exp.Setup(pos, i * _explosionOffset);
     }
     #endregion
 }

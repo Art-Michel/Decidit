@@ -23,7 +23,7 @@ public class Pooler : MonoBehaviour
             PooledObject obj = Create();
             _prefabs.Enqueue(obj);
             if (_defaultParent != null)
-                obj.transform.parent = _defaultParent;
+                obj.transform.SetParent(_defaultParent);
         }
     }
 
@@ -49,7 +49,7 @@ public class Pooler : MonoBehaviour
     {
         _prefabs.Enqueue(obj);
         if (_defaultParent != null)
-            obj.transform.parent = _defaultParent;
+            obj.transform.SetParent(_defaultParent);
         obj.gameObject.SetActive(false);
     }
 

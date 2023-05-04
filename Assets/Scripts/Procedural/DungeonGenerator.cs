@@ -220,7 +220,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
             if (room.gameObject.activeInHierarchy)
             {
                 roomInstance = room;
-                roomInstance.transform.parent = transform;
+                roomInstance.transform.SetParent(transform);
             }
             else
             {
