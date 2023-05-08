@@ -101,6 +101,7 @@ namespace State.AICAC
             {
                 lookForwardJump = true;
                 globalRef.agent.autoTraverseOffMeshLink = false;
+                globalRef.agentLinkMover.enabled = true;
 
                 if (!isOnNavLink)
                 {

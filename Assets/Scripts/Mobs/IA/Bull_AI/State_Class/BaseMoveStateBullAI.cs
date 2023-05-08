@@ -119,6 +119,7 @@ namespace State.AIBull
             {
                 lookForwardJump = true;
                 globalRef.agent.autoTraverseOffMeshLink = false;
+                globalRef.agentLinkMover.enabled = true;
 
                 if (!isOnNavLink)
                 {
