@@ -23,7 +23,11 @@ public class EylauArm : Arm
     [Foldout("Stats")]
     [SerializeField]
     private LayerMask _detectionMask;
+    [Foldout("Stats")]
+    [SerializeField]
+    private LayerMask _enemyDetectionMask;
     private FMOD.Studio.EventInstance loopInstance;
+    private Transform _currentEnemy;
 
 
     public override void StartIdle()
@@ -59,12 +63,21 @@ public class EylauArm : Arm
         Vector3 pos;
         Vector3 up;
 
-        Physics.Raycast(_cameraTransform.position, _cameraTransform.forward, out RaycastHit hit, _range, _detectionMask);
-        if (hit.transform != null)
+        //Raycast forward looking for an enemy
+        if (Physics.Raycast(_cameraTransform.position, _cameraTransform.forward, out RaycastHit hurtbox, _range, _enemyDetectionMask))
+        {
+            pos = hurtbox.transform.position;
+            up = Vector3.up;
+            _currentEnemy = hurtbox.transform;
+        }
+        //Raycast forward looking for a wall
+        else if (Physics.Raycast(_cameraTransform.position, _cameraTransform.forward, out RaycastHit hit, _range, _detectionMask))
         {
             pos = hit.point + hit.normal * 0.1f;
             up = hit.normal;
+            _currentEnemy = null;
         }
+        // if nothing was hit, Raycast downwards from camera's forward at max range
         else
         {
             Physics.Raycast(_cameraTransform.position + _cameraTransform.forward * _range, Vector3.down, out RaycastHit groundHit, 300f, _detectionMask);
@@ -78,6 +91,8 @@ public class EylauArm : Arm
                 pos = _cameraTransform.position + _cameraTransform.forward * _range;
                 up = Vector3.up;
             }
+            Debug.Log("non");
+            _currentEnemy = null;
         }
 
         _previs.transform.position = pos;
@@ -97,8 +112,20 @@ public class EylauArm : Arm
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/CimetièreEyleau/Launch", 1f, gameObject);
         _crossHairFull.SetActive(false);
         StopGlowing();
-        _area.transform.position = _previs.transform.position;
-        _area.transform.parent = null;
+
+        if (_currentEnemy != null)
+        {
+            EnemyHealth health = _currentEnemy.transform.GetComponent<Hurtbox>().HealthComponent as EnemyHealth;
+            _area.transform.SetParent(health.transform);
+            _area.transform.localPosition = Vector3.zero;
+            health.AttachEylau(this.transform);
+        }
+        else
+        {
+            _area.transform.position = _previs.transform.position;
+            _area.transform.parent = null;
+        }
+
         _area.transform.rotation = Quaternion.identity;
         _area.SetActive(true);
         _area.GetComponent<EylauArea>().Reset();

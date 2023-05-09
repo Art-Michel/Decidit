@@ -22,6 +22,7 @@ public class EnemyHealth : Health
     [Foldout("References")]
     [SerializeField] List<Collider> _hurtboxes;
 
+    Transform _eylau;
     float _regenValue;
     CanvasGroup _canvasGroup;
     Transform _playerCamera;
@@ -275,6 +276,10 @@ public class EnemyHealth : Health
         ////     globalRefWallAI.IsZap = true;
     }
 
+    public void AttachEylau(Transform eylau)
+    {
+        _eylau = eylau;
+    }
     //used to make healthbar face the camera
     void LookAtCamera()
     {
@@ -355,6 +360,7 @@ public class EnemyHealth : Health
 
         RecoverFromSickness();
         RecoverFromPoison();
+        _eylau.SetParent(null);
 
         //Adjust Visibility
         _appearT = 1;
