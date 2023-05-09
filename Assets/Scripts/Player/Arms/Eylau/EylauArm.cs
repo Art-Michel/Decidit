@@ -91,7 +91,6 @@ public class EylauArm : Arm
                 pos = _cameraTransform.position + _cameraTransform.forward * _range;
                 up = Vector3.up;
             }
-            Debug.Log("non");
             _currentEnemy = null;
         }
 
