@@ -183,7 +183,7 @@ namespace State.AICAC
                     Invoke("ActiveJump", baseMoveAICACSO.jumpRate);
                 }
             }
-
+            
             if (globalRef.agent.enabled && globalRef != null)
             {
                 if(currentRateRepath >0)
@@ -240,10 +240,7 @@ namespace State.AICAC
                 }
             }
         }
-        void MoveToPlayer()
-        {
 
-        }
         Vector3 CheckNavMeshPoint(Vector3 _destination)
         {
             if (NavMesh.SamplePosition(_destination, out closestHit, 1, 1))
