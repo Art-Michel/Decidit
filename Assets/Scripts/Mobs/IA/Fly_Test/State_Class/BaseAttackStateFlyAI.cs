@@ -96,8 +96,8 @@ namespace State.FlyAI
 
         void AdjustingYspeed()
         {
-            float distHorizontal = Vector2.Distance(new Vector2(childflyAI.position.x, childflyAI.position.z),
-                    new Vector2(globalRef.playerTransform.position.x, globalRef.playerTransform.position.z));
+            float distHorizontal = Vector3.Distance(new Vector3(childflyAI.position.x, childflyAI.position.y, childflyAI.position.z),
+                    new Vector3(globalRef.playerTransform.position.x, globalRef.playerTransform.position.y, globalRef.playerTransform.position.z));
             float t = distHorizontal / baseAttackFlySO.baseAttackSpeed;
 
             float distVertical = Mathf.Abs(childflyAI.position.y - (globalRef.playerTransform.position.y + 0.5f));
