@@ -37,7 +37,8 @@ public class Synergies : LocalManager<Synergies>
     [SerializeField] Transform _eylauArea;
     [Foldout("Muse -> Cimetière")]
     [SerializeField] Pooler _explosionVfxPooler;
-    private const float _explosionOffset = .05f;
+    [Foldout("Muse -> Cimetière")]
+    [SerializeField] private float _explosionOffset = .02f;
     [Foldout("Fugue -> Cimetière")]
     [SerializeField] Pooler _blackHolePooler;
     #endregion
@@ -45,7 +46,7 @@ public class Synergies : LocalManager<Synergies>
     public void Synergize(SynergyProjectile bullet, Transform collider)
     {
         SoundManager.Instance.PlaySound("event:/SFX_Controller/UniversalSound", 1f, collider.gameObject);
-        PlayerManager.Instance.StartSlowMo(0.0f, 0.1f);
+        // PlayerManager.Instance.StartSlowMo(0.0f, 0.1f);
         // SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/MuseMalade/Impact", 1f, gameObject);
 
         Chants bulletChant = bullet.Chant;
@@ -176,25 +177,38 @@ public class Synergies : LocalManager<Synergies>
     #region Muse -> Cimetière
     public void MuseOnCimetiere(Vector3 initialPos)
     {
-        Vector3 endPos = initialPos + (_eylauArea.position - initialPos) * 2;
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Synergies/MuseOnEyleau/Sound", 1, _eylauArea.gameObject);
-        Vector3 rand = Random.insideUnitSphere;
-        Vector3 offset = Vector3.Cross((endPos - initialPos), rand).normalized * 4;
-        Vector3 offset2 = Vector3.Cross((endPos - initialPos), offset).normalized * 4;
 
+        Vector3 pos = _eylauArea.position;
         int loops = 20;
         for (int i = 0; i < loops; i++)
         {
             float x = (float)i / (loops - 1);
+            Vector3 dir = Random.insideUnitSphere;
 
-            Vector3 pos = Vector3.Lerp(initialPos, endPos, x);
-            Vector3 mario = offset * Mathf.Sin(Mathf.PI * 2 * x);
-            Vector3 luigi = offset2 * Mathf.Sin(Mathf.PI * 2 * x);
-
-            // offset += Vector3.Cross((endPos - initialPos).normalized, offset.normalized) * 4 * Mathf.Sin(Mathf.PI * x);
-
-            SpawnAnExplosion(pos + mario + luigi, i);
+            SpawnAnExplosion(pos + Vector3.down + Random.insideUnitSphere * Random.Range(2f, 5.5f), i);
+            SpawnAnExplosion(pos + Vector3.down + Random.insideUnitSphere * Random.Range(5f, 6f), i);
         }
+
+        //goofy!
+        // Vector3 endPos = initialPos + (_eylauArea.position - initialPos) * 2;
+        // Vector3 rand = Random.insideUnitSphere;
+        // Vector3 offset = Vector3.Cross((endPos - initialPos), rand).normalized * 4;
+        // Vector3 offset2 = Vector3.Cross((endPos - initialPos), offset).normalized * 4;
+
+        // int loops = 20;
+        // for (int i = 0; i < loops; i++)
+        // {
+        //     float x = (float)i / (loops - 1);
+
+        //     Vector3 pos = Vector3.Lerp(initialPos, endPos, x);
+        //     Vector3 mario = offset * Mathf.Sin(Mathf.PI * 2 * x);
+        //     Vector3 luigi = offset2 * Mathf.Cos(Mathf.PI * 2 * x);
+
+        //     // offset += Vector3.Cross((endPos - initialPos).normalized, offset.normalized) * 4 * Mathf.Sin(Mathf.PI * x);
+
+        //     SpawnAnExplosion(pos + mario + luigi, i);
+        // }
     }
 
     private void SpawnAnExplosion(Vector3 pos, int i)
