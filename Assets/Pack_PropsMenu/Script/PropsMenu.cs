@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Cinemachine;
 
 public class PropsMenu : MonoBehaviour
 {
@@ -18,6 +19,11 @@ public class PropsMenu : MonoBehaviour
     EventSystem m_EventSystem;
     static Transform parentButton;
 
+    CinemachineVirtualCamera cineCam;
+    CinemachinePOV cineCamPOV;
+    Camera cam;
+    Quaternion baseRotCam;
+
     [Header("Move Objet")]
     [SerializeField] float rotationY, rotSpeedY;
 
@@ -25,6 +31,12 @@ public class PropsMenu : MonoBehaviour
 
     void Start()
     {
+        cineCam = GameObject.Find("CM vcam1").GetComponent< CinemachineVirtualCamera>();
+        cineCamPOV = cineCam.GetCinemachineComponent<CinemachinePOV>();
+
+        cam = Camera.main;
+        baseRotCam = Quaternion.Euler(cineCam.transform.rotation.eulerAngles.x, cineCam.transform.rotation.eulerAngles.y, cineCam.transform.rotation.eulerAngles.z);
+
         m_EventSystem = EventSystem.current;
         StartCoroutine("SelectFirstButton");
 
@@ -32,8 +44,7 @@ public class PropsMenu : MonoBehaviour
         parentButton = transform.parent;
         fond = transform.Find("Fond").GetComponent<Image>();
 
-        //canvasList[1].SetActive(false);
-        //canvasList[2].SetActive(false);
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
     IEnumerator SelectFirstButton()
@@ -49,16 +60,53 @@ public class PropsMenu : MonoBehaviour
 
     void Update()
     {
+        RotationObj();
+        PrintUI();
+        Zoom();
+    }
+
+    void RotationObj()
+    {
         if (spawnProps.childCount > 0)
         {
             if (spawnProps.GetChild(0).gameObject == cloneProps)
             {
-                rotationY -= rotSpeedY * Time.deltaTime * Input.GetAxis("Mouse X") /*Input.GetAxis("RightJoystickX")*/;
-                cloneProps.transform.localRotation = Quaternion.Euler(0, rotationY, 0);
+                if (Input.GetButton("Fire1"))
+                {
+                    rotationY -= rotSpeedY * Time.deltaTime * Input.GetAxis("Mouse X") /*Input.GetAxis("RightJoystickX")*/;
+                    cloneProps.transform.localRotation = Quaternion.Euler(0, rotationY, 0);
+                }
             }
         }
+    }
 
-        PrintUI();
+    void Zoom()
+    {
+        //cineCam.transform.LookAt(cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y)));
+
+        if (Input.GetButton("Fire2"))
+        {
+            cineCamPOV.m_VerticalAxis.m_MaxSpeed = 100;
+            cineCamPOV.m_HorizontalAxis.m_MaxSpeed = 100;
+        }
+        else
+        {
+            cineCamPOV.m_VerticalAxis.m_MaxSpeed = 0;
+            cineCamPOV.m_HorizontalAxis.m_MaxSpeed = 0;
+        }
+
+        if (Input.GetAxis("Mouse ScrollWheel") > 0)
+        {
+            cineCam.transform.position += cam.transform.TransformDirection(Vector3.forward);
+        }
+        else if(Input.GetAxis("Mouse ScrollWheel") < 0)
+        {
+            cineCam.transform.position += cam.transform.TransformDirection(Vector3.back);
+        }
+        else
+        {
+            //cineCam.transform.rotation = baseRotCam;
+        }
     }
 
     void PrintUI()
