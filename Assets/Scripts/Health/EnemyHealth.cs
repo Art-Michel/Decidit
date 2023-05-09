@@ -238,6 +238,7 @@ public class EnemyHealth : Health
 
     public void GetSick()
     {
+        Debug.Log(transform.name + ("got sick"));
         IsSick = true;
         Synergies.Instance.Hospital.Add(this);
         _sickIcon.enabled = true;
@@ -249,6 +250,8 @@ public class EnemyHealth : Health
 
     public void RecoverFromSickness()
     {
+        Debug.Log(transform.name + ("recovered"));
+
         IsSick = false;
         _sickIcon.enabled = false;
         _sickParticles.Stop();
