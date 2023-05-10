@@ -117,7 +117,7 @@ public class EylauArm : Arm
             EnemyHealth health = _currentEnemy.transform.GetComponent<Hurtbox>().HealthComponent as EnemyHealth;
             _area.transform.SetParent(health.transform);
             _area.transform.localPosition = Vector3.zero;
-            health.AttachEylau(this.transform);
+            health.AttachEylau(_area.transform);
         }
         else
         {

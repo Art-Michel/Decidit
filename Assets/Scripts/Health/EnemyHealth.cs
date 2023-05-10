@@ -22,7 +22,7 @@ public class EnemyHealth : Health
     [Foldout("References")]
     [SerializeField] List<Collider> _hurtboxes;
 
-    Transform _eylau;
+    Transform _eylau = null;
     float _regenValue;
     CanvasGroup _canvasGroup;
     Transform _playerCamera;
@@ -251,8 +251,6 @@ public class EnemyHealth : Health
 
     public void RecoverFromSickness()
     {
-        Debug.Log(transform.name + ("recovered"));
-
         IsSick = false;
         _sickIcon.enabled = false;
         _sickParticles.Stop();
@@ -360,8 +358,12 @@ public class EnemyHealth : Health
 
         RecoverFromSickness();
         RecoverFromPoison();
+        Debug.Log(_eylau != null);
         if (_eylau != null)
+        {
             _eylau.SetParent(null);
+            _eylau = null;
+        }
 
         //Adjust Visibility
         _appearT = 1;

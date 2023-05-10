@@ -92,24 +92,27 @@ public class BlackHole : PooledObject
                     _shrednossesInBH.Add(shrednoss);
                 }
             }
-            else if (health.transform.parent.transform.parent.TryGetComponent<GlobalRefFlyAI>(out GlobalRefFlyAI voris))
+            else if (health.transform.parent != null && health.transform.parent.transform.parent != null)
             {
-                Debug.Log("found a voris");
-                if (!_vorisesInBH.Contains(voris))
+                if (health.transform.parent.transform.parent.TryGetComponent<GlobalRefFlyAI>(out GlobalRefFlyAI voris))
                 {
-                    voris.isInSynergyAttraction = true;
-                    voris.AttractionSO.pointBlackHole = transform.position;
-                    _vorisesInBH.Add(voris);
+                    Debug.Log("found a voris");
+                    if (!_vorisesInBH.Contains(voris))
+                    {
+                        voris.isInSynergyAttraction = true;
+                        voris.AttractionSO.pointBlackHole = transform.position;
+                        _vorisesInBH.Add(voris);
+                    }
+                    // }
+                    // else if (other.TryGetComponent<GlobalRefWallAI>(out GlobalRefWallAI wallAi))
+                    // {
+                    // if (!_aiWallInArea.Contains(cacAi))
+                    // {
+                    //     wallAi.isInSynergyAttraction = true;
+                    //     _aiWallInArea.Add(wallAi);
+                    // }
+                    // }
                 }
-                // }
-                // else if (other.TryGetComponent<GlobalRefWallAI>(out GlobalRefWallAI wallAi))
-                // {
-                // if (!_aiWallInArea.Contains(cacAi))
-                // {
-                //     wallAi.isInSynergyAttraction = true;
-                //     _aiWallInArea.Add(wallAi);
-                // }
-                // }
             }
             else
                 Debug.Log("found an enemy but couldnt find ai script");
