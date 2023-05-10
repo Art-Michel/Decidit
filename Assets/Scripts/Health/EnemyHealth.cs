@@ -360,7 +360,8 @@ public class EnemyHealth : Health
 
         RecoverFromSickness();
         RecoverFromPoison();
-        _eylau.SetParent(null);
+        if (_eylau != null)
+            _eylau.SetParent(null);
 
         //Adjust Visibility
         _appearT = 1;
