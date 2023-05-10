@@ -50,6 +50,7 @@ public class Room : MonoBehaviour
     {
         CountEnemies();
         CurrentEnemiesInRoom = _enemiesList.Count;
+        SoundManager.Instance.PlaySound("event:/SFX_Environement/StartFight", 1f, gameObject);
         SoundManager.Instance.FightingSound();
         foreach (EnemyHealth enemyHealth in _enemiesList)
         {

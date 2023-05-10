@@ -57,11 +57,10 @@ public class Door : MonoBehaviour
             return;
         }
 
-        _doorMesh.transform.localPosition = Vector3.up * 2;
+        _doorMesh.transform.localPosition = Vector3.zero;
         //mettre animation ici à la place
-        
+
         SoundManager.Instance.PlaySound("event:/SFX_Environement/DoorClosing", 1f, gameObject);
-        SoundManager.Instance.PlaySound("event:/SFX_Environement/StartFight", 1f, gameObject);
     }
 
     public void OpenDoor()
@@ -72,8 +71,9 @@ public class Door : MonoBehaviour
             return;
         }
 
-        _doorMesh.transform.localPosition = Vector3.up * 8;
-        SoundManager.Instance.PlaySound("event:/SFX_Environement/DoorOpening", 1f, gameObject);
+        _doorMesh.transform.localPosition = Vector3.up * 6;
         //là aussi
+
+        SoundManager.Instance.PlaySound("event:/SFX_Environement/DoorOpening", 1f, gameObject);
     }
 }
