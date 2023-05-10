@@ -18,8 +18,11 @@ public class PropsMenu : MonoBehaviour
     EventSystem m_EventSystem;
     static Transform parentButton;
 
-    [Header("Move Objet")]
-    [SerializeField] float rotationY, rotSpeedY;
+    [Header("Rotation Objet")]
+    [SerializeField] float rotationY;
+    [SerializeField] float rotSpeedY;
+    [SerializeField] float rotationX;
+    [SerializeField] float rotSpeedX;
 
     [SerializeField] List<GameObject> buttonList = new List<GameObject>();
 
@@ -62,6 +65,11 @@ public class PropsMenu : MonoBehaviour
                 {
                     rotationY -= rotSpeedY * Time.deltaTime * Input.GetAxis("Mouse X") /*Input.GetAxis("RightJoystickX")*/;
                     cloneProps.transform.localRotation = Quaternion.Euler(0, rotationY, 0);
+
+                    rotationX += rotSpeedX * Time.deltaTime * Input.GetAxis("Mouse Y");
+                    Debug.Log(cloneProps.transform);
+                    float yRot = cloneProps.transform.GetChild(0).transform.localRotation.eulerAngles.y;
+                    cloneProps.transform.GetChild(0).transform.localRotation = Quaternion.Euler(0, yRot, rotationX);
                 }
             }
         }
@@ -105,15 +113,21 @@ public class PropsMenu : MonoBehaviour
                 {
                     Destroy(spawnProps.GetChild(i).gameObject);
                 }
-                rotationY = 0;
             }
             cloneProps = Instantiate(prefabProps);
             loreText.enabled = true;
             fond.enabled = true;
             cloneProps.transform.parent = spawnProps;
+            ResetRotation();
             cloneProps.transform.localPosition = Vector3.zero;
-            cloneProps.transform.localRotation = Quaternion.Euler(0, 0, 0);
             cloneProps.transform.localScale = new Vector3(1, 1, 1);
         }
+    }
+
+    void ResetRotation()
+    {
+        rotationY = 0;
+        rotationX = 0;
+        cloneProps.transform.localRotation = Quaternion.Euler(Vector3.zero);
     }
 }
