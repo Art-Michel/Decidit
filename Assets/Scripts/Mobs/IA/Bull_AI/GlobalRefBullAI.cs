@@ -100,7 +100,7 @@ namespace State.AIBull
             deathBullSO = Instantiate(deathBullSO);
             AttractionSO = Instantiate(AttractionSO);
 
-            switch (ApplyDifficulty.Instance.indexDifficulty)
+            switch (ApplyDifficulty.indexDifficulty)
             {
                 case 0:
                     baseMoveBullSO = Instantiate(baseMoveBullSO_VeryEZ);

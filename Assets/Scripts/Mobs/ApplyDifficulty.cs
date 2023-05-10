@@ -1,12 +1,13 @@
 using UnityEngine;
 
-public class ApplyDifficulty : ProjectManager<ApplyDifficulty>
+public class ApplyDifficulty : LocalManager<ApplyDifficulty>
 {
     [Range((int)0, (int)2)]
-    public int indexDifficulty; // 0 ez / 1 Med / 2 Hard
+    public static int indexDifficulty; // 0 ez / 1 Med / 2 Hard
 
     public void SelectDifficulty(int i)
     {
+        Debug.Log(i);
         indexDifficulty = i;
     }
 }

@@ -2,7 +2,7 @@ using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class TimerManager : ProjectManager<TimerManager>
+public class TimerManager : LocalManager<TimerManager>
 {
     [SerializeField] public float time;
     public bool isInCorridor;
@@ -56,9 +56,9 @@ public class TimerManager : ProjectManager<TimerManager>
     public void SaveTimer()
     {
         endGame = true;
-        if (time < bestTime[ApplyDifficulty.Instance.indexDifficulty])
+        if (time < bestTime[ApplyDifficulty.indexDifficulty])
         {
-            bestTime[ApplyDifficulty.Instance.indexDifficulty] = time;
+            bestTime[ApplyDifficulty.indexDifficulty] = time;
             SaveLoadManager.SaveTimer(this);
         }
     }

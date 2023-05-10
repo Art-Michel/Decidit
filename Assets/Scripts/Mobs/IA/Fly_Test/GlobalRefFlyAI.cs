@@ -79,7 +79,7 @@ namespace State.FlyAI
             AttractionSO = Instantiate(AttractionSO);
             flyMobAttackManager = transform.GetComponentInParent<FlyMobAttackManager>();
 
-            switch (ApplyDifficulty.Instance.indexDifficulty)
+            switch (ApplyDifficulty.indexDifficulty)
             {
                 case 0:
                     baseMoveFlySO = Instantiate(baseMoveFlySO_VeryEZ);

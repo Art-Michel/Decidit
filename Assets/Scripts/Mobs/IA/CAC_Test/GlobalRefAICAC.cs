@@ -83,7 +83,7 @@ namespace State.AICAC
             agentLinkMover = GetComponent<AgentLinkMover>();
             surroundManager = GetComponentInParent<SurroundManager>();
 
-            switch (ApplyDifficulty.Instance.indexDifficulty)
+            switch (ApplyDifficulty.indexDifficulty)
             {
                 case 0:
                     baseMoveAICACSO = Instantiate(baseMoveAICACSO_VeryEZ);

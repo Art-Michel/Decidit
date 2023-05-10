@@ -54,7 +54,7 @@ namespace State.WallAI
         // Start is called before the first frame update
         void Awake()
         {
-            switch (ApplyDifficulty.Instance.indexDifficulty)
+            switch (ApplyDifficulty.indexDifficulty)
             {
                 case 0:
                     baseMoveWallAISO = Instantiate(baseMoveWallAISO_VeryEZ);
