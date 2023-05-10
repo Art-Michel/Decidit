@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using Cinemachine;
 
 public class PropsMenu : MonoBehaviour
 {
@@ -19,11 +18,6 @@ public class PropsMenu : MonoBehaviour
     EventSystem m_EventSystem;
     static Transform parentButton;
 
-    CinemachineVirtualCamera cineCam;
-    CinemachinePOV cineCamPOV;
-    Camera cam;
-    Quaternion baseRotCam;
-
     [Header("Move Objet")]
     [SerializeField] float rotationY, rotSpeedY;
 
@@ -31,12 +25,6 @@ public class PropsMenu : MonoBehaviour
 
     void Start()
     {
-        cineCam = GameObject.Find("CM vcam1").GetComponent< CinemachineVirtualCamera>();
-        cineCamPOV = cineCam.GetCinemachineComponent<CinemachinePOV>();
-
-        cam = Camera.main;
-        baseRotCam = Quaternion.Euler(cineCam.transform.rotation.eulerAngles.x, cineCam.transform.rotation.eulerAngles.y, cineCam.transform.rotation.eulerAngles.z);
-
         m_EventSystem = EventSystem.current;
         StartCoroutine("SelectFirstButton");
 
@@ -62,7 +50,6 @@ public class PropsMenu : MonoBehaviour
     {
         RotationObj();
         PrintUI();
-        Zoom();
     }
 
     void RotationObj()
@@ -80,39 +67,8 @@ public class PropsMenu : MonoBehaviour
         }
     }
 
-    void Zoom()
-    {
-        //cineCam.transform.LookAt(cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y)));
-
-        if (Input.GetButton("Fire2"))
-        {
-            cineCamPOV.m_VerticalAxis.m_MaxSpeed = 100;
-            cineCamPOV.m_HorizontalAxis.m_MaxSpeed = 100;
-        }
-        else
-        {
-            cineCamPOV.m_VerticalAxis.m_MaxSpeed = 0;
-            cineCamPOV.m_HorizontalAxis.m_MaxSpeed = 0;
-        }
-
-        if (Input.GetAxis("Mouse ScrollWheel") > 0)
-        {
-            cineCam.transform.position += cam.transform.TransformDirection(Vector3.forward);
-        }
-        else if(Input.GetAxis("Mouse ScrollWheel") < 0)
-        {
-            cineCam.transform.position += cam.transform.TransformDirection(Vector3.back);
-        }
-        else
-        {
-            //cineCam.transform.rotation = baseRotCam;
-        }
-    }
-
     void PrintUI()
     {
-        //Debug.Log(m_EventSystem.currentSelectedGameObject);
-
         if (m_EventSystem.currentSelectedGameObject == this.gameObject)
         {
             if(!isActive)
@@ -141,6 +97,8 @@ public class PropsMenu : MonoBehaviour
     {
         if (cloneProps == null)
         {
+            CameraPropsMenu.instance.ResetCam();
+
             if (spawnProps.childCount > 0)
             {
                 for (int i = 0; i < spawnProps.childCount; i++)
@@ -157,7 +115,5 @@ public class PropsMenu : MonoBehaviour
             cloneProps.transform.localRotation = Quaternion.Euler(0, 0, 0);
             cloneProps.transform.localScale = new Vector3(1, 1, 1);
         }
-
-       // Debug.Log(gameObject);
     }
 }
