@@ -16,8 +16,8 @@ public class Door : MonoBehaviour
 
     void Awake()
     {
-        if (this.ThisDoorsRoom == null)
-            Debug.LogError("No assigned Room! Click the 'Find Rooms' button in " + transform.parent.name);
+        // if (this.ThisDoorsRoom == null)
+        // Debug.LogError("No assigned Rowwwwom! Click the 'Find Rooms' button in " + transform.parent.name);
     }
 
     void Start()
