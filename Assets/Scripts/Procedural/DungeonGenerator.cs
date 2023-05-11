@@ -80,6 +80,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
             GameObject thatScenesRoot = GameObject.Find((_scenesEasy[i].ToString()));
             Room thatScenesRoom = thatScenesRoot.GetComponent<Room>();
             _usableRooms[0].Add(thatScenesRoom);
+            thatScenesRoom.FindDoors();
         }
 
         _usableRooms.Add(new List<Room>());
@@ -92,6 +93,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
             GameObject thatScenesRoot = GameObject.Find((_scenesMedium[i].ToString()));
             Room thatScenesRoom = thatScenesRoot.GetComponent<Room>();
             _usableRooms[1].Add(thatScenesRoom);
+            thatScenesRoom.FindDoors();
         }
 
         _usableRooms.Add(new List<Room>());
@@ -104,6 +106,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
             GameObject thatScenesRoot = GameObject.Find((_scenesHard[i].ToString()));
             Room thatScenesRoom = thatScenesRoot.GetComponent<Room>();
             _usableRooms[2].Add(thatScenesRoom);
+            thatScenesRoom.FindDoors();
         }
 
         //old prefabs version

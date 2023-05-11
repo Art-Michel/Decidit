@@ -24,8 +24,8 @@ public class Room : MonoBehaviour
         // this.transform.parent = DungeonGenerator.Instance.transform;
     }
 
-    [Button]
-    private void CountEnemies()
+    // [Button]
+    public void CountEnemies()
     {
         _enemiesList.Clear();
         foreach (EnemyHealth enemy in GetComponentsInChildren<EnemyHealth>(includeInactive: true))
@@ -35,8 +35,8 @@ public class Room : MonoBehaviour
         }
     }
 
-    [Button]
-    private void FindDoors()
+    // [Button]
+    public void FindDoors()
     {
         _doors.Clear();
         foreach (Door door in GetComponentsInChildren<Door>())
