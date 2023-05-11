@@ -19,7 +19,7 @@ namespace State.FlyAI
             else
             {
                 SpreadShotActive = false;
-                globalRef.stateControllerFlyAI.SetActiveState(StateControllerFlyAI.AIState.BaseAttack);
+                globalRef.stateControllerFlyAI.SetActiveState(StateControllerFlyAI.AIState.BaseRangeAttack);
             }
         }
 
@@ -37,11 +37,11 @@ namespace State.FlyAI
         {
             if(countAiAttackRange ==0)
             {
-                int i = Random.Range(0, 2);
-                if (i == 0)
-                    globalRef.stateControllerFlyAI.SetActiveState(StateControllerFlyAI.AIState.BaseRangeAttack);
-                else
+                int i = Random.Range(0, 4);
+                if (i == 0) 
                     globalRef.stateControllerFlyAI.SetActiveState(StateControllerFlyAI.AIState.BaseAttack);
+                else
+                    globalRef.stateControllerFlyAI.SetActiveState(StateControllerFlyAI.AIState.BaseRangeAttack);
             }
             else
             {
