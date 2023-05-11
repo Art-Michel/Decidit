@@ -108,9 +108,9 @@ public class Synergies : LocalManager<Synergies>
     public void MuseOnAragon(SynergyProjectile bullet)
     {
         Debug.Log("projectile transformé en projo acide");
-        foreach (AragonCloud cloud in ActiveClouds)
-            cloud.StartDisappearing();
-        ActiveClouds.Clear();
+        // foreach (AragonCloud cloud in ActiveClouds)
+        //     cloud.StartDisappearing();
+        // ActiveClouds.Clear();
     }
     #endregion
 
@@ -121,9 +121,9 @@ public class Synergies : LocalManager<Synergies>
         shot.Setup(bullet.transform.position, bullet.Direction);
         shot.ForceSynergized();
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/CimetièreEyleau/MaxCharged", 1f, gameObject);
-        foreach (AragonCloud cloud in ActiveClouds)
-            cloud.StartDisappearing();
-        ActiveClouds.Clear();
+        // foreach (AragonCloud cloud in ActiveClouds)
+        // cloud.StartDisappearing();
+        // ActiveClouds.Clear();
     }
     #endregion
 

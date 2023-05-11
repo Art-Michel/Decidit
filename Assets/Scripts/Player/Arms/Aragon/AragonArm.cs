@@ -141,7 +141,7 @@ public class AragonArm : Arm
         _adjustedTimesNb = 0;
         AdjustDestination();
 
-        PlaceClouds(_dashStartPosition, _dashDestination);
+        PlaceClouds(_dashStartPosition, _dashStartPosition + (_dashDestination - _dashStartPosition).normalized * (_dashRange + 8));
 
         //Actually move
         currentDashSpeed = _dashDuration / Vector3.Distance(_dashStartPosition, _dashDestination);
