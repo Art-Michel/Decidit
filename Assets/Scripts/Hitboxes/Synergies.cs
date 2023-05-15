@@ -13,35 +13,14 @@ public class Synergies : LocalManager<Synergies>
         EYLAU
     }
 
-    #region Declarations
     [Foldout("Nuage d'Aragon")]
     public List<AragonCloud> ActiveClouds;
 
-    [Foldout("Eylau -> Nuage d'Aragon")]
-    [SerializeField] Pooler _chargedEylauPooler;
-    [Foldout("Muse -> Nuage d'Aragon")]
-    [SerializeField] Pooler _acidicProjectilePooler;
-
     [Foldout("Malades")]
     public List<EnemyHealth> Hospital;
-    [Foldout("Fugue -> Malades")]
-    [SerializeField]
-    Pooler _fugueMaladeShotsPooler;
-    [Foldout("Eylau -> Malades")]
-    [SerializeField]
-    Pooler _eylauMaladeVfxPooler;
-    [Foldout("Eylau -> Malades")]
-    [SerializeField] float _zapDamage = 2;
 
     [Foldout("Cimetière")]
     [SerializeField] Transform _eylauArea;
-    [Foldout("Muse -> Cimetière")]
-    [SerializeField] Pooler _explosionVfxPooler;
-    [Foldout("Muse -> Cimetière")]
-    [SerializeField] private float _explosionOffset = .02f;
-    [Foldout("Fugue -> Cimetière")]
-    [SerializeField] Pooler _blackHolePooler;
-    #endregion
 
     public void Synergize(SynergyProjectile bullet, Transform collider)
     {
@@ -105,6 +84,10 @@ public class Synergies : LocalManager<Synergies>
     }
 
     #region Muse -> Nuage
+
+    [Foldout("Muse -> Nuage d'Aragon")]
+    [SerializeField] Pooler _acidicProjectilePooler;
+
     public void MuseOnAragon(SynergyProjectile bullet)
     {
         Debug.Log("projectile transformé en projo acide");
@@ -115,6 +98,9 @@ public class Synergies : LocalManager<Synergies>
     #endregion
 
     #region Eylau -> Nuage
+    [Foldout("Eylau -> Nuage d'Aragon")]
+    [SerializeField] Pooler _chargedEylauPooler;
+
     public void EylauOnAragon(SynergyProjectile bullet)
     {
         SynergyProjectile shot = _chargedEylauPooler.Get().GetComponent<SynergyProjectile>();
@@ -128,6 +114,10 @@ public class Synergies : LocalManager<Synergies>
     #endregion
 
     #region Fugue -> Malade
+    [Foldout("Fugue -> Malades")]
+    [SerializeField]
+    Pooler _fugueMaladeShotsPooler;
+
     public void FugueOnMalade(Vector3 position)
     {
         FugueMaladeShot shot = _fugueMaladeShotsPooler.Get() as FugueMaladeShot;
@@ -138,6 +128,13 @@ public class Synergies : LocalManager<Synergies>
     #endregion
 
     #region Eylau -> Malade
+
+    [Foldout("Eylau -> Malades")]
+    [SerializeField]
+    Pooler _eylauMaladeVfxPooler;
+    [Foldout("Eylau -> Malades")]
+    [SerializeField] float _zapDamage = 2;
+
     public void EylauOnMalade(Vector3 position)
     {
         foreach (EnemyHealth enemy in Hospital)
@@ -155,6 +152,9 @@ public class Synergies : LocalManager<Synergies>
     #endregion
 
     #region Fugue -> Cimetière
+    [Foldout("Fugue -> Cimetière")]
+    [SerializeField] Pooler _blackHolePooler;
+
     public void FugueOnCimetiere(Vector3 position)
     {
         Debug.Log("Trou noir, voir avec jt pour attirer les ennemis au centre du cimetière");
@@ -175,41 +175,33 @@ public class Synergies : LocalManager<Synergies>
     #endregion
 
     #region Muse -> Cimetière
+    [Foldout("Muse -> Cimetière")]
+    [SerializeField] Pooler _explosionVfxPooler;
+    [Foldout("Muse -> Cimetière")]
+    [SerializeField] private float _explosionOffset = .02f;
+
     public void MuseOnCimetiere(Vector3 initialPos)
     {
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Synergies/MuseOnEyleau/Sound", 1, _eylauArea.gameObject);
 
         Vector3 endPos = initialPos + (_eylauArea.position - initialPos) * 2;
-        GameObject mario = new GameObject();
-        mario.transform.position = initialPos;
-        mario.transform.forward = (endPos - initialPos).normalized;
+        GameObject explosionPoint = new GameObject();
+        explosionPoint.transform.position = initialPos;
+        explosionPoint.transform.forward = (endPos - initialPos).normalized;
 
         int loops = 14;
         for (int i = 1; i < loops; i++)
         {
             float lerp = (float)i / (loops - 1);
-            mario.transform.Rotate(Vector3.forward * 45);
+            explosionPoint.transform.Rotate(Vector3.forward * 45);
 
-            mario.transform.position = Vector3.Lerp(initialPos, endPos, lerp);
+            explosionPoint.transform.position = Vector3.Lerp(initialPos, endPos, lerp);
             float radius = 5 * Mathf.Abs(Mathf.Sin(Mathf.PI * lerp));
-            SpawnAnExplosion(mario.transform.position + mario.transform.up * radius, lerp);
-            SpawnAnExplosion(mario.transform.position + mario.transform.right * radius, lerp);
-            SpawnAnExplosion(mario.transform.position - mario.transform.up * radius, lerp);
-            SpawnAnExplosion(mario.transform.position - mario.transform.right * radius, lerp);
-
-            lerp = ((float)i + 0.5f) / (loops - 1);
-
-            mario.transform.position = Vector3.Lerp(initialPos, endPos, lerp);
-            SpawnAnExplosion(mario.transform.position, lerp);
-
-            // // Vector3 explosionPosition = center + Vector3.down + Random.insideUnitSphere * Random.Range(2f, 5.5f);
-            // Vector3 explosionPosition = lerpedPos
-            // float distance = Vector3.Distance(explosionPosition, initialPos);
-            // SpawnAnExplosion(explosionPosition, distance);
-
-            // // explosionPosition = center + Vector3.down + Random.insideUnitSphere * Random.Range(5f, 6f);
-            // distance = Vector3.Distance(explosionPosition, initialPos);
-            // SpawnAnExplosion(explosionPosition, distance);
+            SpawnAnExplosion(explosionPoint.transform.position + explosionPoint.transform.up * radius, lerp);
+            SpawnAnExplosion(explosionPoint.transform.position + explosionPoint.transform.right * radius, lerp);
+            SpawnAnExplosion(explosionPoint.transform.position - explosionPoint.transform.up * radius, lerp);
+            SpawnAnExplosion(explosionPoint.transform.position - explosionPoint.transform.right * radius, lerp);
+            SpawnAnExplosion(explosionPoint.transform.position, lerp);
         }
     }
 

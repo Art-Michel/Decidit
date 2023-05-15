@@ -303,24 +303,28 @@ public class PlayerManager : LocalManager<PlayerManager>
         foreach (GameObject gun in Guns)
             gun.SetActive(false);
         Guns[3].SetActive(true);
+        SetHitmarkerColor(_eylauGunHitColor);
     }
     public void ForceEquipGun3()
     {
         foreach (GameObject gun in Guns)
             gun.SetActive(false);
         Guns[2].SetActive(true);
+        SetHitmarkerColor(_museGunHitColor);
     }
     public void ForceEquipGun2()
     {
         foreach (GameObject gun in Guns)
             gun.SetActive(false);
         Guns[1].SetActive(true);
+        SetHitmarkerColor(_fugueGunHitColor);
     }
     public void ForceEquipGun1()
     {
         foreach (GameObject gun in Guns)
             gun.SetActive(false);
         Guns[0].SetActive(true);
+        SetHitmarkerColor(new Color(1.0f, 1.0f, 1.0f));
     }
     #endregion
 
@@ -603,16 +607,28 @@ public class PlayerManager : LocalManager<PlayerManager>
     [SerializeField] private float _hitmarkerMaxAlpha;
     [Foldout("Hitmarker")]
     [SerializeField] private float _critHitmarkerMaxAlpha;
+    [Foldout("Hitmarker")]
+    [SerializeField] private Color _fugueGunHitColor;
+    [Foldout("Hitmarker")]
+    [SerializeField] private Color _museGunHitColor;
+    [Foldout("Hitmarker")]
+    [SerializeField] private Color _eylauGunHitColor;
     private float _currentHitmarkerMaxAlpha;
+    private Color _currentColor;
 
     private float _hitmarkerT = 1.0f;
+
+    public void SetHitmarkerColor(Color color)
+    {
+        _currentColor = color;
+    }
 
     public void Hitmarker()
     {
         _hitmarkerT = 0.0f;
         _currentHitmarkerMaxAlpha = _hitmarkerMaxAlpha;
         foreach (Image hitmarker in _hitmarkers)
-            hitmarker.color = Color.white;
+            hitmarker.color = _currentColor;
     }
 
     public void Crithitmarker()
