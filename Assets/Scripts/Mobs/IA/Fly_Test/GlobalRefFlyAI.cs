@@ -106,7 +106,7 @@ namespace State.FlyAI
             playerTransform = GameObject.FindWithTag("Player").transform;
         }
 
-        private void Start()
+        private void OnEnable()
         {
             transform.rotation = Quaternion.Euler(Vector3.zero);
         }
