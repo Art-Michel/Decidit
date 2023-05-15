@@ -179,42 +179,44 @@ public class Synergies : LocalManager<Synergies>
     {
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Synergies/MuseOnEyleau/Sound", 1, _eylauArea.gameObject);
 
-        Vector3 pos = _eylauArea.position;
-        int loops = 20;
-        for (int i = 0; i < loops; i++)
+        Vector3 endPos = initialPos + (_eylauArea.position - initialPos) * 2;
+        GameObject mario = new GameObject();
+        mario.transform.position = initialPos;
+        mario.transform.forward = (endPos - initialPos).normalized;
+
+        int loops = 14;
+        for (int i = 1; i < loops; i++)
         {
-            float x = (float)i / (loops - 1);
-            Vector3 dir = Random.insideUnitSphere;
+            float lerp = (float)i / (loops - 1);
+            mario.transform.Rotate(Vector3.forward * 45);
 
-            SpawnAnExplosion(pos + Vector3.down + Random.insideUnitSphere * Random.Range(2f, 5.5f), i);
-            SpawnAnExplosion(pos + Vector3.down + Random.insideUnitSphere * Random.Range(5f, 6f), i);
+            mario.transform.position = Vector3.Lerp(initialPos, endPos, lerp);
+            float radius = 5 * Mathf.Abs(Mathf.Sin(Mathf.PI * lerp));
+            SpawnAnExplosion(mario.transform.position + mario.transform.up * radius, lerp);
+            SpawnAnExplosion(mario.transform.position + mario.transform.right * radius, lerp);
+            SpawnAnExplosion(mario.transform.position - mario.transform.up * radius, lerp);
+            SpawnAnExplosion(mario.transform.position - mario.transform.right * radius, lerp);
+
+            lerp = ((float)i + 0.5f) / (loops - 1);
+
+            mario.transform.position = Vector3.Lerp(initialPos, endPos, lerp);
+            SpawnAnExplosion(mario.transform.position, lerp);
+
+            // // Vector3 explosionPosition = center + Vector3.down + Random.insideUnitSphere * Random.Range(2f, 5.5f);
+            // Vector3 explosionPosition = lerpedPos
+            // float distance = Vector3.Distance(explosionPosition, initialPos);
+            // SpawnAnExplosion(explosionPosition, distance);
+
+            // // explosionPosition = center + Vector3.down + Random.insideUnitSphere * Random.Range(5f, 6f);
+            // distance = Vector3.Distance(explosionPosition, initialPos);
+            // SpawnAnExplosion(explosionPosition, distance);
         }
-
-        //goofy!
-        // Vector3 endPos = initialPos + (_eylauArea.position - initialPos) * 2;
-        // Vector3 rand = Random.insideUnitSphere;
-        // Vector3 offset = Vector3.Cross((endPos - initialPos), rand).normalized * 4;
-        // Vector3 offset2 = Vector3.Cross((endPos - initialPos), offset).normalized * 4;
-
-        // int loops = 20;
-        // for (int i = 0; i < loops; i++)
-        // {
-        //     float x = (float)i / (loops - 1);
-
-        //     Vector3 pos = Vector3.Lerp(initialPos, endPos, x);
-        //     Vector3 mario = offset * Mathf.Sin(Mathf.PI * 2 * x);
-        //     Vector3 luigi = offset2 * Mathf.Cos(Mathf.PI * 2 * x);
-
-        //     // offset += Vector3.Cross((endPos - initialPos).normalized, offset.normalized) * 4 * Mathf.Sin(Mathf.PI * x);
-
-        //     SpawnAnExplosion(pos + mario + luigi, i);
-        // }
     }
 
-    private void SpawnAnExplosion(Vector3 pos, int i)
+    private void SpawnAnExplosion(Vector3 pos, float i)
     {
         MuseEylauExplosions exp = _explosionVfxPooler.Get().GetComponent<MuseEylauExplosions>();
-        exp.Setup(pos, i * _explosionOffset);
+        exp.Setup(pos + Vector3.down, i * _explosionOffset);
     }
     #endregion
 }
