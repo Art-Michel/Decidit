@@ -178,6 +178,7 @@ public class Arm : MonoBehaviour
         StartGlowingBriefly();
         if (_inputs.Actions.Skill.IsPressed() && !_inputs.Actions.Interact.IsPressed())
             PressSong();
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/ChantReady", 1f, gameObject);
     }
 
     protected void StartGlowingBriefly()
