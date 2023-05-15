@@ -101,6 +101,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         _colorPP.saturation.overrideState = true;
         MenuManager.Instance.StopMenuing();
         _isLockedAt60 = false;
+        _currentColor = _baseGunHitColor;
     }
 
     private void Update()
@@ -324,7 +325,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         foreach (GameObject gun in Guns)
             gun.SetActive(false);
         Guns[0].SetActive(true);
-        SetHitmarkerColor(new Color(1.0f, 1.0f, 1.0f));
+        SetHitmarkerColor(_baseGunHitColor);
     }
     #endregion
 
@@ -613,6 +614,8 @@ public class PlayerManager : LocalManager<PlayerManager>
     [SerializeField] private Color _museGunHitColor;
     [Foldout("Hitmarker")]
     [SerializeField] private Color _eylauGunHitColor;
+    [Foldout("Hitmarker")]
+    [SerializeField] private Color _baseGunHitColor;
     private float _currentHitmarkerMaxAlpha;
     private Color _currentColor;
 
