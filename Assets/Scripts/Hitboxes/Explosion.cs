@@ -43,7 +43,7 @@ public class Explosion : Hitbox
         base.Awake();
         _parentProjectile = transform.parent.GetComponent<Projectile>();
         _initialKnockbackForce = _knockbackForce;
-        _initialDamage = _damage;
+        _initialDamage = Damage;
     }
 
     void OnEnable()
@@ -60,7 +60,7 @@ public class Explosion : Hitbox
         _lifeT = _lifeSpan;
         _hitboxT = _hitboxSpan;
         _knockbackForce = _initialKnockbackForce;
-        _damage = (int)_initialDamage;
+        Damage = (int)_initialDamage;
         //!SFX Explosion 
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/MuseMalade/Explosion", 5f, gameObject);
         StartExplosionShake();
@@ -102,7 +102,7 @@ public class Explosion : Hitbox
 
         //Explosion gets weaker over time
         _knockbackForce = _initialKnockbackForce * Mathf.InverseLerp(0f, _hitboxSpan, _hitboxT);
-        _damage = Mathf.RoundToInt(_initialDamage * Mathf.InverseLerp(0f, _hitboxSpan, _hitboxT));
+        Damage = Mathf.RoundToInt(_initialDamage * Mathf.InverseLerp(0f, _hitboxSpan, _hitboxT));
 
         //Check for collisions with hitbox
     }

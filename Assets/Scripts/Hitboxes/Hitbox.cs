@@ -32,7 +32,7 @@ public class Hitbox : MonoBehaviour
     [Foldout("Stats")]
     [SerializeField] protected float _radius = .2f;
     [Foldout("Stats")]
-    [SerializeField] protected float _damage = 10;
+    public float Damage = 10;
     [Foldout("Stats")]
     [SerializeField] protected float _knockbackForce = 10f;
     [Foldout("Stats")]
@@ -118,16 +118,16 @@ public class Hitbox : MonoBehaviour
             if (_shouldSplashBloodOnHit)
             {
                 if (targetCollider.CompareTag("WeakHurtbox") && _canCriticalHit)
-                    health.TakeCriticalDamage(_damage, transform.position, -transform.forward);
+                    health.TakeCriticalDamage(Damage, transform.position, -transform.forward);
                 else
-                    health.TakeDamage(_damage, transform.position, -transform.forward);
+                    health.TakeDamage(Damage, transform.position, -transform.forward);
             }
             else
             {
                 if (targetCollider.CompareTag("WeakHurtbox") && _canCriticalHit)
-                    health.TakeCriticalDamage(_damage);
+                    health.TakeCriticalDamage(Damage);
                 else
-                    health.TakeDamage(_damage);
+                    health.TakeDamage(Damage);
             }
 
             if (_knockbackForce > 0f)

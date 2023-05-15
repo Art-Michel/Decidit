@@ -73,7 +73,7 @@ public class Synergies : LocalManager<Synergies>
                         EylauOnAragon(bullet);
                         break;
                     case Chants.MUSE:
-                        EylauOnMalade(bullet.transform.position, bullet.);
+                        EylauOnMalade(bullet.transform.position, bullet.Damage);
                         break;
                     case Chants.EYLAU:
                         //Nothing!
@@ -135,11 +135,11 @@ public class Synergies : LocalManager<Synergies>
     [Foldout("Eylau -> Malades")]
     [SerializeField] float _zapDamage = 2;
 
-    public void EylauOnMalade(Vector3 position)
+    public void EylauOnMalade(Vector3 position, float damage)
     {
         foreach (EnemyHealth enemy in Hospital)
         {
-            enemy.TakeDamage(_zapDamage);
+            enemy.TakeDamage(damage * _zapDamage);
             VisualEffect arc = _eylauMaladeVfxPooler.Get().GetComponent<VisualEffect>();
             arc.transform.position = Vector3.zero;
             arc.SetVector3("Start_Pos", position);
