@@ -12,6 +12,7 @@ public class TimerManager : LocalManager<TimerManager>
 
     void OnLevelWasLoaded()
     {
+        //SaveTimer();
         Scene scene = SceneManager.GetActiveScene();
 
         if (scene.name == "GamePath")
@@ -50,6 +51,10 @@ public class TimerManager : LocalManager<TimerManager>
     {
         if (!isInCorridor && !endGame)
             time += Time.deltaTime;
+
+        Debug.Log(bestTime[0]);
+        Debug.Log(bestTime[1]);
+        Debug.Log(bestTime[2]);
     }
 
     public void SaveTimer()
