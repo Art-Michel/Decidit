@@ -73,7 +73,7 @@ public class Synergies : LocalManager<Synergies>
                         EylauOnAragon(bullet);
                         break;
                     case Chants.MUSE:
-                        EylauOnMalade(bullet.transform.position);
+                        EylauOnMalade(bullet.transform.position, bullet.);
                         break;
                     case Chants.EYLAU:
                         //Nothing!
