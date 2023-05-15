@@ -60,7 +60,6 @@ namespace State.FlyAI
             if (baseMoveFlySO != null)
             {
                 baseMoveFlySO.newPos = childflyAI.TransformDirection(childflyAI.position + new Vector3(0, 9, 20));
-                Debug.Log(baseMoveFlySO.newPos);
                 baseMoveFlySO.newPosIsSet = true;
                 baseMoveFlySO.destinationFinal = baseMoveFlySO.newPos;
             }

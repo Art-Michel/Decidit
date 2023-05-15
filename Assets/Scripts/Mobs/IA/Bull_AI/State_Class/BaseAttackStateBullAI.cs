@@ -81,11 +81,6 @@ namespace State.AIBull
             RaycastHit hit = RaycastAIManager.instanceRaycast.RaycastAI(globalRef.RayAttackMiddle.position,
                                                                         dir,
                                                                         globalRef.rushBullSO.maskCheckCanRush, Color.red, 100f);
-            if(hit.transform != null)
-            {
-                Debug.Log(hit.distance);
-            }
-
             if(hit.transform.position == null)
             {
                 stateController.SetActiveState(StateControllerBull.AIState.BaseMove);
