@@ -30,6 +30,8 @@ namespace State.AIBull
 
         private void OnEnable()
         {
+            RestartAttack();
+
             if (globalRef != null)
             {
                 canAttak = false;
@@ -293,25 +295,19 @@ namespace State.AIBull
 
         void RestartAttack()
         {
-            Debug.Log("StartAttack");
             launchAttack = false;
-            attackDone = false;
             canAttak = false;
             isAttacking = false;
             attackDone = false;
+            attackLaunched = false;
             globalRef.baseAttackBullSO.curentDelayBeforeAttack = globalRef.baseAttackBullSO.maxDelayBeforeAttack;
         }
 
         private void OnDisable()
         {
-            launchAttack = false;
-            attackDone = false;
-            canAttak = false;
-            isAttacking = false;
-            attackDone = false;
+            RestartAttack();
             globalRef.agent.speed = globalRef.baseAttackBullSO.speed;
             globalRef.hitBoxAttack.gameObject.SetActive(false);
-            globalRef.baseAttackBullSO.curentDelayBeforeAttack = globalRef.baseAttackBullSO.maxDelayBeforeAttack;
             globalRef.baseAttackBullSO.speedRot = 0;
         }
     }

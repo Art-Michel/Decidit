@@ -27,9 +27,9 @@ namespace State.AIBull
         private void OnEnable()
         {
             globalRef.knockBackBullSO.currentCountKnockBack++;
-
             try
             {
+                AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Idle");
                 isFall = false;
                 isGround = false;
                 globalRef.agent.enabled = false;
@@ -99,7 +99,7 @@ namespace State.AIBull
 
             SetGravity();
             knockBackDirection = (knockBackDirection.normalized * (knockBackDirection.magnitude - friction * deltaTime));
-            move = new Vector3(knockBackDirection.x, knockBackDirection.y + (globalRef.rushBullSO.AIVelocity.y), knockBackDirection.z);
+            move = new Vector3(knockBackDirection.x, /*knockBackDirection.y + (globalRef.rushBullSO.AIVelocity.y)*/0, knockBackDirection.z);
             globalRef.characterController.Move(move * knockBackMultiplier * deltaTime);
         }
 
