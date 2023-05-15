@@ -31,7 +31,6 @@ public class TimerManager : LocalManager<TimerManager>
     private void Start()
     {
         PrintTimer();
-
         Scene scene = SceneManager.GetActiveScene();
     }
 
@@ -55,11 +54,14 @@ public class TimerManager : LocalManager<TimerManager>
 
     public void SaveTimer()
     {
+        Debug.Log("Save Timer");
+
         endGame = true;
-        if (time < bestTime[ApplyDifficulty.indexDifficulty])
+        if (time < bestTime[ApplyDifficulty.indexDifficulty] || bestTime[ApplyDifficulty.indexDifficulty] == 0)
         {
             bestTime[ApplyDifficulty.indexDifficulty] = time;
             SaveLoadManager.SaveTimer(this);
+            Debug.Log("Save Timer 2 ");
         }
     }
 }

@@ -59,7 +59,6 @@ namespace State.AICAC
             if (hit.transform != null)
             {
                 isGround = true;
-                Debug.Log(hit.transform.position);
             }
             else
                 isGround = false;
