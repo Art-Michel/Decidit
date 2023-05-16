@@ -21,6 +21,8 @@ public class Explosion : Hitbox
     [SerializeField] private PerlinShake.Params _shake;
 
     [Foldout("Explosion References")]
+    [SerializeField] private Light _light;
+    [Foldout("Explosion References")]
     [SerializeField] private GameObject _windBox;
     [Foldout("Explosion References")]
     [SerializeField] private VFX_Particle _explosionVfx;
@@ -35,6 +37,8 @@ public class Explosion : Hitbox
     private float _lifeT;
     private float _hitboxT;
 
+    private float _lightStrength;
+
     private float _initialKnockbackForce;
     private float _initialDamage;
 
@@ -48,6 +52,7 @@ public class Explosion : Hitbox
 
     void OnEnable()
     {
+        _lightStrength = _light.intensity;
         Reset();
     }
 
@@ -57,6 +62,7 @@ public class Explosion : Hitbox
             _windBox.SetActive(true);
 
         _hitboxIsActive = true;
+        _light.intensity = _lightStrength;
         _lifeT = _lifeSpan;
         _hitboxT = _hitboxSpan;
         _knockbackForce = _initialKnockbackForce;
@@ -103,6 +109,7 @@ public class Explosion : Hitbox
         //Explosion gets weaker over time
         _knockbackForce = _initialKnockbackForce * Mathf.InverseLerp(0f, _hitboxSpan, _hitboxT);
         Damage = Mathf.RoundToInt(_initialDamage * Mathf.InverseLerp(0f, _hitboxSpan, _hitboxT));
+        _light.intensity = _lightStrength * Mathf.InverseLerp(0, _hitboxSpan, _lifeT);
 
         //Check for collisions with hitbox
     }
