@@ -27,6 +27,8 @@ public class Projectile : Hitbox
     [Foldout("Properties")]
     [SerializeField][ShowIf("_bounces")][Range(0f, 1f)] protected float _bounciness;
     [Foldout("Properties")]
+    [SerializeField][ShowIf("_bounces")] protected string _bounceSoundPath;
+    [Foldout("Properties")]
     [SerializeField] private bool _explodesOnHit;
     [Foldout("References")]
     [SerializeField][ShowIf("_explodesOnHit")] private GameObject _explosion;
@@ -256,6 +258,7 @@ public class Projectile : Hitbox
 
     protected virtual void Bounce(RaycastHit hit)
     {
+        SoundManager.Instance.PlaySound(_bounceSoundPath, 1, gameObject);
         transform.position = hit.point + hit.normal * (_radius + 0.1f);
         _currentSpeed *= _bounciness;
         Direction = Vector3.Reflect(Direction, hit.normal).normalized;
