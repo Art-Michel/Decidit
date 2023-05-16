@@ -128,6 +128,7 @@ public class Room : MonoBehaviour
         // PlayerHealth.Instance.TrueHeal(1);
         SoundManager.Instance.ClearedSound();
         PlayerManager.Instance.StartSlowMo(0.01f, 2f);
+        PlayerManager.Instance.StartFlash(1.0f,1);
 
         //Progress in dungeon
         this.Exit.OpenDoor();

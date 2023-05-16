@@ -24,7 +24,6 @@ public class Synergies : LocalManager<Synergies>
 
     public void Synergize(SynergyProjectile bullet, Transform collider)
     {
-        SoundManager.Instance.PlaySound("event:/SFX_Controller/UniversalSound", 1f, collider.gameObject);
         // PlayerManager.Instance.StartSlowMo(0.0f, 0.1f);
         // SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/MuseMalade/Impact", 1f, gameObject);
 
@@ -40,7 +39,8 @@ public class Synergies : LocalManager<Synergies>
                         //Nothing!
                         break;
                     case Chants.MUSE:
-                        FugueOnMalade(bullet.transform.position);
+                        // FugueOnMalade(bullet.transform.position);
+                        //Nothing, since the synergy is about the bullets directly tracking the enemies;
                         break;
                     case Chants.EYLAU:
                         Vector3 position = bullet.transform.position;
@@ -90,6 +90,8 @@ public class Synergies : LocalManager<Synergies>
 
     public void MuseOnAragon(SynergyProjectile bullet)
     {
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/UniversalSound", 1f, gameObject);
+        PlayerManager.Instance.StartFlash(0.1f, 1);
         Debug.Log("projectile transformé en projo acide");
         // foreach (AragonCloud cloud in ActiveClouds)
         //     cloud.StartDisappearing();
@@ -103,6 +105,8 @@ public class Synergies : LocalManager<Synergies>
 
     public void EylauOnAragon(SynergyProjectile bullet)
     {
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/UniversalSound", 1f, gameObject);
+        PlayerManager.Instance.StartFlash(0.1f, 0.5f);
         SynergyProjectile shot = _chargedEylauPooler.Get().GetComponent<SynergyProjectile>();
         shot.Setup(bullet.transform.position, bullet.Direction);
         shot.ForceSynergized();
@@ -120,8 +124,10 @@ public class Synergies : LocalManager<Synergies>
 
     public void FugueOnMalade(Vector3 position)
     {
-        FugueMaladeShot shot = _fugueMaladeShotsPooler.Get() as FugueMaladeShot;
-        shot.Setup(Hospital, position);
+        // PlayerManager.Instance.StartFlash(0.1f);
+        // SoundManager.Instance.PlaySound("event:/SFX_Controller/UniversalSound", 1f, gameObject);
+        // FugueMaladeShot shot = _fugueMaladeShotsPooler.Get() as FugueMaladeShot;
+        // shot.Setup(Hospital, position);
         // foreach (EnemyHealth enemy in Hospital)
         //     enemy.RecoverFromSickness();
     }
@@ -137,6 +143,8 @@ public class Synergies : LocalManager<Synergies>
 
     public void EylauOnMalade(Vector3 position, float damage)
     {
+        PlayerManager.Instance.StartFlash(0.1f, 0.5f);
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/UniversalSound", 1f, gameObject);
         foreach (EnemyHealth enemy in Hospital)
         {
             enemy.TakeDamage(damage * _zapDamage);
@@ -157,6 +165,8 @@ public class Synergies : LocalManager<Synergies>
 
     public void FugueOnCimetiere(Vector3 position)
     {
+        PlayerManager.Instance.StartFlash(0.1f, 1);
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/UniversalSound", 1f, gameObject);
         Debug.Log("Trou noir, voir avec jt pour attirer les ennemis au centre du cimetière");
         Vector3 initialPos = new Vector3(_eylauArea.position.x, _eylauArea.position.y, _eylauArea.position.z);
         SpawnBlackHole(initialPos);
@@ -182,6 +192,8 @@ public class Synergies : LocalManager<Synergies>
 
     public void MuseOnCimetiere(Vector3 initialPos)
     {
+        PlayerManager.Instance.StartFlash(0.1f, 1);
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/UniversalSound", 1f, gameObject);
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Synergies/MuseOnEyleau/Sound", 1, _eylauArea.gameObject);
 
         Vector3 endPos = initialPos + (_eylauArea.position - initialPos) * 2;

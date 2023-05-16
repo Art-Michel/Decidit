@@ -29,6 +29,11 @@ public class PlayerManager : LocalManager<PlayerManager>
     [Foldout("Debugging")]
     [SerializeField] TextMeshProUGUI _timescaleDebugUi;
 
+    //Flashing
+    float _flashT;
+    float _flashInitialT;
+    float _flashStrength;
+
     //Controller Rumble
     float _rumbleT;
     float _rumbleInitialT;
@@ -108,6 +113,7 @@ public class PlayerManager : LocalManager<PlayerManager>
     {
         SlowMo();
         Rumble();
+        Flash();
         DisplayTimeScale();
         UpdateHitmarker();
 
@@ -399,6 +405,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         PlayerHealth.Instance.IsInvulnerable = true;
         StopRumbling();
         StopSlowMo();
+        StopFlash();
         _canPause = false;
     }
 
@@ -407,6 +414,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         PlayerHealth.Instance.IsInvulnerable = false;
         _isDying = false;
         _dieT = 0f;
+        StopFlash();
         StopRumbling();
         StopSlowMo();
         _colorPP.saturation.value = 0;
@@ -486,8 +494,6 @@ public class PlayerManager : LocalManager<PlayerManager>
 
         ////SoundManager.Instance.PlaySound("event:/SFX_Environement/SlowMo", 5f);
         Time.timeScale = Mathf.Lerp(_timeSpeed, 1, Mathf.InverseLerp(_slowMoInitialT, 0, _slowMoT));
-        float alpha = _flashCurve.Evaluate(Mathf.InverseLerp(_slowMoInitialT, 0, _slowMoT));
-        _flash.color = new Color(1.0f, 1.0f, 1.0f, alpha);
 
         _slowMoT -= Time.unscaledDeltaTime;
         if (_slowMoT < 0 && !_isDead)
@@ -496,9 +502,43 @@ public class PlayerManager : LocalManager<PlayerManager>
 
     private void StopSlowMo()
     {
-        _flash.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
         Time.timeScale = 1;
         _slowMoT = -1;
+    }
+    #endregion
+
+    #region Flash
+    public void StartFlash(float duration, float strength)
+    {
+        if (_timeStopped || _isPaused && _forceSlowMo)
+            return;
+
+        if (duration > _flashT)
+        {
+            _flashInitialT = duration;
+            _flashT = duration;
+        }
+
+        _flashStrength = strength;
+    }
+
+    private void Flash()
+    {
+        if (_timeStopped || _flashT < 0 || _isPaused && _forceSlowMo)
+            return;
+
+        float alpha = _flashCurve.Evaluate(Mathf.InverseLerp(_flashInitialT, 0, _flashT)) * _flashStrength;
+        _flash.color = new Color(1.0f, 1.0f, 1.0f, alpha);
+
+        _flashT -= Time.deltaTime;
+        if (_flashT < 0 && !_isDead)
+            StopFlash();
+    }
+
+    private void StopFlash()
+    {
+        _flash.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
+        _flashT = -1;
     }
     #endregion
 
