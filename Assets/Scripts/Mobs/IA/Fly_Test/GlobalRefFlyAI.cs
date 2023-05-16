@@ -115,7 +115,7 @@ namespace State.FlyAI
         {
             CheckHP();
 
-            if (isInSynergyAttraction)
+            if (isInSynergyAttraction && stateControllerFlyAI != null)
                 ActiveAttractionState();
         }
 

@@ -292,7 +292,9 @@ namespace State.WallAI
         public void StartAttack()
         {
             CalculateSpeedProjectile();
-            CheckCanFire();
+
+            if(this.gameObject.activeInHierarchy)
+                CheckCanFire();
         }
         public void EndAttack()
         {
