@@ -45,13 +45,25 @@ public class PlayerHealth : Health
     [SerializeField]
     private bool _hasSecondChance;
 
-    [Foldout("Stats")]
-    [Range(0, 1)]
-    [SerializeField]
     private float _hurtInvulnerability;
 
     private float _hurtInvulnerabilityT;
     private bool _isHurtInvulnerable;
+
+    [Foldout("Difficulty Modifiers")]
+    [SerializeField] private float _easyHp = 5;
+    [Foldout("Difficulty Modifiers")]
+    [SerializeField] private float _mediumHp = 3;
+    [Foldout("Difficulty Modifiers")]
+    [SerializeField] private float _hardHp = 2;
+
+    [Foldout("Difficulty Modifiers")]
+    [SerializeField] private float _easyInvulTime = 1.0f;
+    [Foldout("Difficulty Modifiers")]
+    [SerializeField] private float _mediumInvulTime = 0.4f;
+    [Foldout("Difficulty Modifiers")]
+    [SerializeField] private float _hardInvulTime = 0.2f;
+
 
     [SerializeField]
     private BounceShake.Params _hurtShake;
@@ -71,6 +83,7 @@ public class PlayerHealth : Health
 
     protected override void Awake()
     {
+        AdaptToDifficulty();
         if (Instance != null)
         {
             DestroyImmediate(this);
@@ -262,6 +275,25 @@ public class PlayerHealth : Health
     protected virtual void OnDestroy()
     {
         Instance = null;
+    }
+
+    private void AdaptToDifficulty()
+    {
+        switch (ApplyDifficulty.indexDifficulty)
+        {
+            case 0:
+                _maxHp = _easyHp;
+                _hurtInvulnerability = _easyInvulTime;
+                break;
+            case 1:
+                _maxHp = _mediumHp;
+                _hurtInvulnerability = _mediumInvulTime;
+                break;
+            case 2:
+                _maxHp = _hardHp;
+                _hurtInvulnerability = _hardInvulTime;
+                break;
+        }
     }
 
     /// <summary>
