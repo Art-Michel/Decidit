@@ -19,7 +19,7 @@ namespace State.AICAC
         [Header("Direction Movement")]
         [SerializeField] float offset;
         [SerializeField] LayerMask mask;
-        Vector3 destination;
+        [SerializeField] Vector3 destination;
         Vector3 dir;
         Vector3 left;
 
