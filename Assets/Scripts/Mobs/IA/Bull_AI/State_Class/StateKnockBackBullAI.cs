@@ -4,8 +4,12 @@ namespace State.AIBull
 {
     public class StateKnockBackBullAI : _StateBull
     {
+        [SerializeField] LayerMask maskObstacle;
+
         [SerializeField] private float friction;
         [SerializeField] private float knockBackMultiplier;
+        [SerializeField] private float forceYAxis;
+        [SerializeField] private float gravityMultiplier;
 
         [SerializeField] GlobalRefBullAI globalRef;
 
@@ -72,7 +76,7 @@ namespace State.AIBull
             {
                 ActiveIdleState();
             }
-            else if (globalRef.characterController.velocity.magnitude <= 1)
+            else if (globalRef.characterController.velocity.magnitude <= 1 && isGround)
             {
                 ActiveIdleState();
             }
@@ -85,8 +89,8 @@ namespace State.AIBull
 
         void CheckGround()
         {
-            RaycastHit hit = RaycastAIManager.instanceRaycast.RaycastAI(globalRef.transform.position, -globalRef.transform.up, 
-                                                                        globalRef.rushBullSO.maskCheckObstacle, Color.red, distDetectGround);
+            RaycastHit hit = RaycastAIManager.instanceRaycast.RaycastAI(globalRef.transform.position, -globalRef.transform.up,
+                                                                        maskObstacle, Color.red, distDetectGround);
             if (hit.transform != null)
                 isGround = true;
             else
@@ -99,7 +103,12 @@ namespace State.AIBull
 
             SetGravity();
             knockBackDirection = (knockBackDirection.normalized * (knockBackDirection.magnitude - friction * deltaTime));
-            move = new Vector3(knockBackDirection.x, /*knockBackDirection.y + (globalRef.rushBullSO.AIVelocity.y)*/0, knockBackDirection.z);
+
+            Vector2 Ymove = new Vector2(knockBackDirection.x, knockBackDirection.z);
+            Ymove = Ymove.normalized;
+
+           // move = new Vector3(knockBackDirection.x, /*knockBackDirection.y + (globalRef.rushBullSO.AIVelocity.y)*/0, knockBackDirection.z);
+            move = new Vector3(knockBackDirection.x, Ymove.magnitude * forceYAxis + (globalRef.rushBullSO.AIVelocity.y), knockBackDirection.z);
             globalRef.characterController.Move(move * knockBackMultiplier * deltaTime);
         }
 
@@ -107,7 +116,7 @@ namespace State.AIBull
         {
             if (!isGround)
             {
-                globalRef.rushBullSO.AIVelocity.y = globalRef.rushBullSO.AIVelocity.y - 9.8f * 4 * deltaTime;
+                globalRef.rushBullSO.AIVelocity.y = globalRef.rushBullSO.AIVelocity.y - 9.8f * gravityMultiplier * deltaTime;
             }
             else
             {
@@ -128,6 +137,7 @@ namespace State.AIBull
         {
             knockBackDirection = Vector3.zero;
             globalRef.agent.enabled = true;
+            globalRef.rushBullSO.AIVelocity.y = 0;
         }
     }
 }

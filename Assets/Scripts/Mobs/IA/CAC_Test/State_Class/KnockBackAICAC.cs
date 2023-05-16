@@ -6,6 +6,8 @@ namespace State.AICAC
     {
         [SerializeField] private float friction;
         [SerializeField] private float knockBackMultiplier;
+        [SerializeField] private float forceYAxis;
+        [SerializeField] private float gravityMultiplier;
 
         [SerializeField] GlobalRefAICAC globalRef;
 
@@ -60,7 +62,7 @@ namespace State.AICAC
                 knockBackDirection = Vector3.zero;
                 ActiveIdleState();
             }
-            else if (globalRef.characterController.velocity.magnitude <= 1)
+            else if (globalRef.characterController.velocity.magnitude <= 1 && isGround)
             {
                 knockBackDirection = Vector3.zero;
                 ActiveIdleState();
@@ -89,7 +91,10 @@ namespace State.AICAC
             SetGravity();
             knockBackDirection = (knockBackDirection.normalized * (knockBackDirection.magnitude - friction * deltaTime));
 
-            move = new Vector3(knockBackDirection.x, knockBackDirection.y + (globalRef.knockBackAICACSO.AIVelocity.y), knockBackDirection.z);
+            Vector2 Ymove = new Vector2(knockBackDirection.x, knockBackDirection.z);
+            Ymove = Ymove.normalized;
+            //move = new Vector3(knockBackDirection.x, knockBackDirection.y * 5 + (globalRef.knockBackAICACSO.AIVelocity.y), knockBackDirection.z);
+            move = new Vector3(knockBackDirection.x, Ymove.magnitude * forceYAxis + (globalRef.knockBackAICACSO.AIVelocity.y), knockBackDirection.z);
             globalRef.characterController.Move(move * knockBackMultiplier * deltaTime);
         }
 
@@ -97,7 +102,7 @@ namespace State.AICAC
         {
             if (!isGround)
             {
-                globalRef.knockBackAICACSO.AIVelocity.y = globalRef.knockBackAICACSO.AIVelocity.y - 9.8f * 4 * deltaTime;
+                globalRef.knockBackAICACSO.AIVelocity.y = globalRef.knockBackAICACSO.AIVelocity.y - 9.8f * gravityMultiplier * deltaTime;
             }
             else
             {
@@ -112,7 +117,9 @@ namespace State.AICAC
 
         private void OnDisable()
         {
+            knockBackDirection = Vector3.zero;
             globalRef.agent.enabled = true;
+            globalRef.knockBackAICACSO.AIVelocity.y = 0;
         }
     }
 }
