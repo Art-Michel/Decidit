@@ -28,6 +28,8 @@ public class PropsMenu : MonoBehaviour
 
     void Start()
     {
+        Time.timeScale = 1;
+
         m_EventSystem = EventSystem.current;
         StartCoroutine("SelectFirstButton");
 
@@ -36,6 +38,7 @@ public class PropsMenu : MonoBehaviour
         fond = transform.Find("Fond").GetComponent<Image>();
 
         Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
     }
 
     IEnumerator SelectFirstButton()

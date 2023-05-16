@@ -17,6 +17,7 @@ public class MenuManager : LocalManager<MenuManager>
     const int _dioramaGreen = 2;
     const int _dioramaRed = 3;
     const int _dioramaYellow = 4;
+    const int _props = 10;
 
     [Foldout("References")]
     [SerializeField] EventSystem _eventSys;
@@ -351,6 +352,11 @@ public class MenuManager : LocalManager<MenuManager>
     public void LoadDioramaYellow()
     {
         StartLoadingScene(_dioramaYellow);
+    }
+
+    public void LoadProps()
+    {
+        StartLoadingScene(_props);
     }
 
     #endregion
