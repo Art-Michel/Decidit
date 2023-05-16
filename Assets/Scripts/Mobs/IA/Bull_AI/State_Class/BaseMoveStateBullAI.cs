@@ -115,6 +115,11 @@ namespace State.AIBull
         #region Jump
         void ManageCurrentNavMeshLink()
         {
+            if (currentAnimName == "Run" && animTime > 1)
+            {
+                isOnNavLink = false;
+            }
+
             if (globalRef.agent.isOnOffMeshLink)
             {
                 lookForwardJump = true;
