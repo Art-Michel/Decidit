@@ -22,6 +22,7 @@ namespace State.AICAC
         [SerializeField] Vector3 destination;
         Vector3 dir;
         Vector3 left;
+        NavMeshQueryFilter filter;
 
         [Header("LookAt")]
         Vector3 direction;
@@ -56,6 +57,8 @@ namespace State.AICAC
         private void Start()
         {
             baseMoveAICACSO = globalRef.baseMoveAICACSO;
+            filter.agentTypeID = Get("GroundAI");
+            filter.areaMask = 1 << 0;
         }
 
         private void Update()
@@ -227,9 +230,10 @@ namespace State.AICAC
                             CoolDownAttack();
                         else
                         {
-                            dir = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer - globalRef.transform.position;
-                            left = Vector3.Cross(dir, Vector3.up).normalized;
-                            Vector3 playerPosAnticip = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer + (left * offset);
+                            /*  dir = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer - globalRef.transform.position;
+                              left = Vector3.Cross(dir, Vector3.up).normalized;
+                              Vector3 playerPosAnticip = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer + (left * offset);*/
+                            Vector3 playerPosAnticip = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer;
                             destination = CheckNavMeshPoint(playerPosAnticip);
                         }
 
@@ -259,9 +263,28 @@ namespace State.AICAC
             }
         }
 
+        int Get(string name)
+        {
+            for (int i = 0; i < NavMesh.GetSettingsCount(); ++i)
+            {
+                var settings = NavMesh.GetSettingsByIndex(i);
+
+                int agentTypeID = settings.agentTypeID;
+
+                var settingsName = NavMesh.GetSettingsNameFromID(agentTypeID);
+
+                if (settingsName == name)
+                {
+                    Debug.Log(settings.agentTypeID);
+                    return settings.agentTypeID;
+                }
+
+            }//end for
+            return 0;
+        }
         Vector3 CheckNavMeshPoint(Vector3 _destination)
         {
-            if (NavMesh.SamplePosition(_destination, out closestHit, 50, 1))
+            if (NavMesh.SamplePosition(_destination, out closestHit, 1, filter))
             {
                 _destination = closestHit.position;
                 Debug.Log(_destination + " / isOnNavMesh");
