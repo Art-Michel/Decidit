@@ -37,4 +37,6 @@ public class BaseMoveParameterAICAC : ScriptableObject
     [Header("Trigger Surround")]
     public float distStopSurroundNearSurround; // IA proche du joueur
     public float distStopSurroundNearPlayer; // IA proche du joueur
+    public float maxDelayBeforeSurround;
+    public float currentDelayBeforeSurround;
 }

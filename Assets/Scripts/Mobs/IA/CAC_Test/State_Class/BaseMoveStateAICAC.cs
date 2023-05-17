@@ -33,6 +33,7 @@ namespace State.AICAC
         [SerializeField] float currentRateRepath;
 
         [SerializeField] bool activeSurround;
+        [SerializeField] bool canSurround;
 
         [SerializeField] float distToCirclePos;
 
@@ -158,6 +159,19 @@ namespace State.AICAC
             }
         }
 
+        void DelayeforeCanSurround()
+        {
+            if(baseMoveAICACSO.currentDelayBeforeSurround > 0)
+            {
+                baseMoveAICACSO.currentDelayBeforeSurround -= Time.deltaTime;
+                canSurround = false;
+            }
+            else
+            {
+                canSurround = true;
+            }
+        }
+
         void BaseMovement()
         {
             if (isOnNavLink)
@@ -194,6 +208,7 @@ namespace State.AICAC
                 {
                     if (activeSurround)
                     {
+                        baseMoveAICACSO.currentDelayBeforeSurround = baseMoveAICACSO.maxDelayBeforeSurround;
                         if (Vector3.Distance(globalRef.destinationSurround, globalRef.transform.position) > baseMoveAICACSO.distStopSurroundNearPlayer &&
                             Vector3.Distance(globalRef.transform.position, CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer) > baseMoveAICACSO.distStopSurroundNearPlayer)
                         {
@@ -204,6 +219,8 @@ namespace State.AICAC
                     }
                     else
                     {
+                        DelayeforeCanSurround();
+
                         activeSurround = false;
 
                         if (baseMoveAICACSO.currentCoolDownAttack > 0)
@@ -218,7 +235,8 @@ namespace State.AICAC
 
                         if (Vector3.Distance(globalRef.playerTransform.position, globalRef.transform.position) > (globalRef.surroundManager.radius + baseMoveAICACSO.distStopSurroundNearPlayer))
                         {
-                            activeSurround = true;
+                            if(canSurround)
+                                activeSurround = true;
                         }
                     }
 
@@ -243,9 +261,14 @@ namespace State.AICAC
 
         Vector3 CheckNavMeshPoint(Vector3 _destination)
         {
-            if (NavMesh.SamplePosition(_destination, out closestHit, 1, 1))
+            if (NavMesh.SamplePosition(_destination, out closestHit, 50, 1))
             {
                 _destination = closestHit.position;
+                Debug.Log(_destination + " / isOnNavMesh");
+            }
+            else
+            {
+                Debug.Log(_destination + " / not on NavMesh");
             }
             return _destination;
         }
