@@ -596,11 +596,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8252760470148114166}
+  - component: {fileID: 7700298719691582849}
   - component: {fileID: 2339227931190500262}
   - component: {fileID: 5694359784491784783}
   - component: {fileID: 8450020954517348088}
   - component: {fileID: 8122749719293248141}
-  - component: {fileID: 7700298719691582849}
   m_Layer: 8
   m_Name: FugueMaladeShotPrefab
   m_TagString: Untagged
@@ -627,6 +627,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7700298719691582849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8252760470148114170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88ae98f78f66b0a41b7fdb171237df2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2339227931190500262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -643,7 +655,7 @@ MonoBehaviour:
   _fleshSplashVfxPooler: {fileID: 8450020954517348088}
   _shouldCollideWith:
     serializedVersion: 2
-    m_Bits: 32768
+    m_Bits: 295424
   _canHitThroughWalls: 0
   _shouldNotHitThrough:
     serializedVersion: 2
@@ -679,9 +691,9 @@ MonoBehaviour:
   _trailMaterial: {fileID: 0}
   _trailsVfx: {fileID: 0}
   _shouldLeaveImpact: 1
-  _bounces: 0
-  _bounciness: 0
-  _bounceSoundPath: 
+  _bounces: 1
+  _bounciness: 1
+  _bounceSoundPath: event:/SFX_Controller/Shoots/MuseMalade/Impact
   _explodesOnHit: 0
   _explosion: {fileID: 0}
   _speed: 100
@@ -748,15 +760,3 @@ MonoBehaviour:
   _shouldBeParent: 0
   _canCreateNewPrefabs: 1
   _defaultParent: {fileID: 0}
---- !u!114 &7700298719691582849
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8252760470148114170}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88ae98f78f66b0a41b7fdb171237df2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

@@ -242,7 +242,6 @@ public class EnemyHealth : Health
         if (IsSick)
             return;
 
-        Debug.Log(transform.name + ("got sick"));
         IsSick = true;
         if (!Synergies.Instance.Hospital.Contains(this))
             Synergies.Instance.Hospital.Add(this);
@@ -367,7 +366,6 @@ public class EnemyHealth : Health
 
         RecoverFromSickness();
         RecoverFromPoison();
-        Debug.Log(_eylau != null);
         if (_eylau != null)
         {
             _eylau.SetParent(null);

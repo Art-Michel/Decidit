@@ -111,7 +111,7 @@ public class Hitbox : MonoBehaviour
 
     protected virtual void Hit(Transform targetCollider)
     {
-        Debug.Log(transform.name + " hit " + targetCollider.transform.name);
+        // Debug.Log(transform.name + " hit " + targetCollider.transform.name);
         if (targetCollider.TryGetComponent<Hurtbox>(out Hurtbox hurtbox))
         {
             Health health = hurtbox.HealthComponent;
