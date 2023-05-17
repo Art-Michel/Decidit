@@ -50,7 +50,7 @@ public class Projectile : Hitbox
     protected Vector3 _lasterFramePosition;
     protected Vector3 _lastFramePosition;
     protected Vector3 _spaceTraveledLast2Frames;
-    private bool _isDisappearing;
+    protected bool _isDisappearing;
     private float _disappearanceT;
 
     public virtual void Setup(Vector3 position, Vector3 direction)

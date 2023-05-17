@@ -678,7 +678,7 @@ MonoBehaviour:
       falloffDegree: 1
       axesMultiplier: {x: 1, y: 1, z: 1}
   _radius: 0.2
-  Damage: 1
+  Damage: 0.75
   _knockbackForce: 0
   _knockbackAngle: {x: 0, y: 0, z: 0}
   _delayBetweenHits: 0
@@ -696,7 +696,7 @@ MonoBehaviour:
   _bounceSoundPath: event:/SFX_Controller/Shoots/MuseMalade/Impact
   _explodesOnHit: 0
   _explosion: {fileID: 0}
-  _speed: 100
+  _speed: 50
   _currentSpeed: 0
   _lifeSpan: 2
   _trailDelay: 0
@@ -714,6 +714,39 @@ MonoBehaviour:
   - {x: 0, y: 1, z: 0}
   - {x: -2, y: -1, z: 0}
   - {x: 2, y: -1, z: 0}
+  _speedCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.57289916
+      outSlope: 0.57289916
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.697366
+      value: 0.3995204
+      inSlope: 0.57289916
+      outSlope: 1.3014197
+      tangentMode: 5
+      weightedMode: 0
+      inWeight: 0.082798235
+      outWeight: 0.0408984
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0.025754895
+      outSlope: 0.025754895
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.19201885
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &5694359784491784783
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -11,11 +11,13 @@ public class FugueMaladeShot : FugueProjectile
     Vector3 _p1;
     Vector3 _p2;
     Transform _target;
+    [SerializeField] AnimationCurve _speedCurve;
 
     public override void Setup(Vector3 position, Vector3 direction, Vector3 cameraDirection)
     {
         base.Setup(position, direction, cameraDirection);
 
+        UpdateTarget();
         SetupBezier(position, direction);
 
         //Position Bezier2 à forward * 10
@@ -26,7 +28,7 @@ public class FugueMaladeShot : FugueProjectile
     {
         _t = 0;
         _p0 = position;
-        _p1 = position + direction * (Vector3.Distance(_p0, _p2));
+        _p1 = position + direction * (Vector3.Distance(_p0, _p2) / 2);
 
         UpdateTarget();
     }
@@ -35,12 +37,12 @@ public class FugueMaladeShot : FugueProjectile
     {
         if (_t < 1)
         {
-            _t += Time.deltaTime / Vector3.Distance(_p0, _p2) * _speed;
+            _t += (Time.deltaTime * _speed) / Vector3.Distance(_p0, _p2);
             Vector3 wantedPos = LerpPositionBezier();
             transform.position = wantedPos;
             Direction = (transform.position - _lastFramePosition).normalized;
         }
-        else
+        else if (!_isDisappearing)
         {
             StartDisappearing();
         }
@@ -81,12 +83,12 @@ public class FugueMaladeShot : FugueProjectile
         //(1-t)^2*P0 + 2(1-t)tP1 + t^2*P2
         //  u           u
         //   uu*P0 + 2 *u * t* P1 + tt * P2
-        float u = 1 - _t;
-        float tt = _t * _t;
+        float u = 1 - _speedCurve.Evaluate(_t);
+        float tt = _speedCurve.Evaluate(_t) * _speedCurve.Evaluate(_t);
         float uu = u * u;
 
         Vector3 point = uu * _p0;
-        point += 2 * u * _t * _p1;
+        point += 2 * u * _speedCurve.Evaluate(_t) * _p1;
         point += tt * _p2;
         return point;
     }
