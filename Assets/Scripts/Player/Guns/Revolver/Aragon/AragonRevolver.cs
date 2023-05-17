@@ -28,6 +28,8 @@ public class AragonRevolver : Revolver
 
         if (Synergies.Instance.Hospital.Count > 0)
         {
+            PlayerManager.Instance.StartFlash(0.1f, 1);
+            SoundManager.Instance.PlaySound("event:/SFX_Controller/UniversalSound", 1f, gameObject);
 
             FugueMaladeShot shot = Synergies.Instance.FugueMaladeShotsPooler.Get().GetComponent<FugueMaladeShot>();
             FugueMaladeShot shot2 = Synergies.Instance.FugueMaladeShotsPooler.Get().GetComponent<FugueMaladeShot>();
