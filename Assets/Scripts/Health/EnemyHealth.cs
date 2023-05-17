@@ -239,6 +239,9 @@ public class EnemyHealth : Health
 
     public void GetSick()
     {
+        if (IsSick)
+            return;
+
         Debug.Log(transform.name + ("got sick"));
         IsSick = true;
         if (!Synergies.Instance.Hospital.Contains(this))
@@ -252,8 +255,12 @@ public class EnemyHealth : Health
 
     public void RecoverFromSickness()
     {
+        if (!IsSick)
+            return;
+
         IsSick = false;
-        Synergies.Instance.Hospital.Remove(this);
+        if (Synergies.Instance.Hospital.Contains(this))
+            Synergies.Instance.Hospital.Remove(this);
         _sickIcon.enabled = false;
         _sickParticles.Stop();
         if (_sickboxes.Count > 0)

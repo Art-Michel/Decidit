@@ -119,8 +119,7 @@ public class Synergies : LocalManager<Synergies>
 
     #region Fugue -> Malade
     [Foldout("Fugue -> Malades")]
-    [SerializeField]
-    Pooler _fugueMaladeShotsPooler;
+    public Pooler FugueMaladeShotsPooler;
 
     public void FugueOnMalade(Vector3 position)
     {

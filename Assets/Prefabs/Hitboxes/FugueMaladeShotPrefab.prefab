@@ -596,9 +596,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8252760470148114166}
-  - component: {fileID: 8450020954517348088}
-  - component: {fileID: 5010378810308644989}
   - component: {fileID: 2339227931190500262}
+  - component: {fileID: 5694359784491784783}
+  - component: {fileID: 8450020954517348088}
+  - component: {fileID: 8122749719293248141}
+  - component: {fileID: 7700298719691582849}
   m_Layer: 8
   m_Name: FugueMaladeShotPrefab
   m_TagString: Untagged
@@ -625,6 +627,93 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2339227931190500262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8252760470148114170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e431a0c056453ac458b50d49cb114d15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _impactVfxPooler: {fileID: 8122749719293248141}
+  _fleshSplashVfxPooler: {fileID: 8450020954517348088}
+  _shouldCollideWith:
+    serializedVersion: 2
+    m_Bits: 32768
+  _canHitThroughWalls: 0
+  _shouldNotHitThrough:
+    serializedVersion: 2
+    m_Bits: 0
+  _canMultiHit: 0
+  _shouldSplashBloodOnHit: 1
+  _canCriticalHit: 1
+  _hitShake:
+    positionStrength: 0
+    rotationStrength: 0.4
+    axesMultiplier:
+      position: {x: 0, y: 0, z: 0}
+      eulerAngles: {x: 1, y: 1, z: 0}
+    freq: 35
+    numBounces: 7
+    randomness: 0.5
+    attenuation:
+      clippingDistance: 10
+      falloffScale: 50
+      falloffDegree: 1
+      axesMultiplier: {x: 1, y: 1, z: 1}
+  _radius: 0.2
+  Damage: 1
+  _knockbackForce: 0
+  _knockbackAngle: {x: 0, y: 0, z: 0}
+  _delayBetweenHits: 0
+  _pooledObject: {fileID: 7700298719691582849}
+  _mesh: {fileID: 7988620854853741856}
+  _trailRenderers:
+  - {fileID: 2125813706985504193}
+  - {fileID: 6933227755367276729}
+  - {fileID: 6329732634856931641}
+  _trailMaterial: {fileID: 0}
+  _trailsVfx: {fileID: 0}
+  _shouldLeaveImpact: 1
+  _bounces: 0
+  _bounciness: 0
+  _bounceSoundPath: 
+  _explodesOnHit: 0
+  _explosion: {fileID: 0}
+  _speed: 100
+  _currentSpeed: 0
+  _lifeSpan: 2
+  _trailDelay: 0
+  _impactScale: 1
+  Chant: 0
+  _synergiesLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  _centered: 0
+  _objects:
+  - {fileID: 219430632806917933}
+  - {fileID: 3382538931362058803}
+  - {fileID: 1247798486796425350}
+  _directions:
+  - {x: 0, y: 1, z: 0}
+  - {x: -2, y: -1, z: 0}
+  - {x: 2, y: -1, z: 0}
+--- !u!114 &5694359784491784783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8252760470148114170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88ae98f78f66b0a41b7fdb171237df2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8450020954517348088
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -642,7 +731,7 @@ MonoBehaviour:
   _shouldBeParent: 0
   _canCreateNewPrefabs: 1
   _defaultParent: {fileID: 0}
---- !u!114 &5010378810308644989
+--- !u!114 &8122749719293248141
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -651,41 +740,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 8252760470148114170}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0210dfaab9332e642aa36cf82470974a, type: 3}
+  m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _impactVfxPooler: {fileID: 0}
-  _fleshSplashVfxPooler: {fileID: 8450020954517348088}
-  _shouldCollideWith:
-    serializedVersion: 2
-    m_Bits: 32768
-  _canHitThroughWalls: 0
-  _shouldNotHitThrough:
-    serializedVersion: 2
-    m_Bits: 0
-  _canMultiHit: 0
-  _shouldSplashBloodOnHit: 1
-  _canCriticalHit: 0
-  _hitShake:
-    positionStrength: 0
-    rotationStrength: 0.3
-    axesMultiplier:
-      position: {x: 0, y: 0, z: 0}
-      eulerAngles: {x: 1, y: 1, z: 0}
-    freq: 50
-    numBounces: 6
-    randomness: 0.5
-    attenuation:
-      clippingDistance: 10
-      falloffScale: 50
-      falloffDegree: 1
-      axesMultiplier: {x: 1, y: 1, z: 1}
-  _radius: 0.2
-  Damage: 1
-  _knockbackForce: 0
-  _knockbackAngle: {x: 0, y: 0, z: 0}
-  _delayBetweenHits: 0
---- !u!114 &2339227931190500262
+  _prefab: {fileID: 6100483388153145145, guid: be9b7ac1b27e02642aa8b3146bc467ad, type: 3}
+  _initialCount: 4
+  _shouldBeParent: 0
+  _canCreateNewPrefabs: 1
+  _defaultParent: {fileID: 0}
+--- !u!114 &7700298719691582849
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -694,11 +757,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 8252760470148114170}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e431a0c056453ac458b50d49cb114d15, type: 3}
+  m_Script: {fileID: 11500000, guid: 88ae98f78f66b0a41b7fdb171237df2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _trails:
-  - {fileID: 2125813706985504193}
-  - {fileID: 6933227755367276729}
-  - {fileID: 6329732634856931641}
-  _speed: 70

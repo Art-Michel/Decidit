@@ -22,16 +22,31 @@ public class AragonRevolver : Revolver
         // for (int i = 0; i < _shotsDirections.Length; i++)
         //     SetShot(_shotsDirections[i], _offsets[i]);
         base.Shoot();
-        PooledObject shot = _pooler.Get();
-        shot.GetComponent<FugueProjectile>().Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized, _camera.forward);
 
         Vector3 rightDirection = ((_currentlyAimedAt - _canonPosition.position).normalized * _adjacentBulletsAngle + _camera.right).normalized;
-        PooledObject shot2 = _pooler.Get();
-        shot2.GetComponent<FugueProjectile>().Setup(_canonPosition.position, rightDirection, _camera.forward);
-
-        PooledObject shot3 = _pooler.Get();
         Vector3 leftDirection = ((_currentlyAimedAt - _canonPosition.position).normalized * _adjacentBulletsAngle - _camera.right).normalized;
-        shot3.GetComponent<FugueProjectile>().Setup(_canonPosition.position, leftDirection, _camera.forward);
+
+        if (Synergies.Instance.Hospital.Count > 0)
+        {
+
+            FugueMaladeShot shot = Synergies.Instance.FugueMaladeShotsPooler.Get().GetComponent<FugueMaladeShot>();
+            FugueMaladeShot shot2 = Synergies.Instance.FugueMaladeShotsPooler.Get().GetComponent<FugueMaladeShot>();
+            FugueMaladeShot shot3 = Synergies.Instance.FugueMaladeShotsPooler.Get().GetComponent<FugueMaladeShot>();
+
+            shot.Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized, _camera.forward);
+            shot2.Setup(_canonPosition.position, rightDirection, _camera.forward);
+            shot3.Setup(_canonPosition.position, leftDirection, _camera.forward);
+        }
+        else
+        {
+            FugueProjectile shot = _pooler.Get().GetComponent<FugueProjectile>();
+            FugueProjectile shot2 = _pooler.Get().GetComponent<FugueProjectile>();
+            FugueProjectile shot3 = _pooler.Get().GetComponent<FugueProjectile>();
+
+            shot.Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized, _camera.forward);
+            shot2.Setup(_canonPosition.position, rightDirection, _camera.forward);
+            shot3.Setup(_canonPosition.position, leftDirection, _camera.forward);
+        }
 
         Player.Instance.StartKickShake(_shootShake, transform.position);
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/FugueAragon/BaseShoot", 1f, gameObject);
