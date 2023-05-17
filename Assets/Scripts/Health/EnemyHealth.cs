@@ -241,7 +241,8 @@ public class EnemyHealth : Health
     {
         Debug.Log(transform.name + ("got sick"));
         IsSick = true;
-        Synergies.Instance.Hospital.Add(this);
+        if (!Synergies.Instance.Hospital.Contains(this))
+            Synergies.Instance.Hospital.Add(this);
         _sickIcon.enabled = true;
         _sickParticles.Play();
         if (_sickboxes.Count > 0)
@@ -252,6 +253,7 @@ public class EnemyHealth : Health
     public void RecoverFromSickness()
     {
         IsSick = false;
+        Synergies.Instance.Hospital.Remove(this);
         _sickIcon.enabled = false;
         _sickParticles.Stop();
         if (_sickboxes.Count > 0)
@@ -421,7 +423,6 @@ public class EnemyHealth : Health
 
     private void ActuallyDie()
     {
-        Synergies.Instance.Hospital.Remove(this);
         Destroy(gameObject);
     }
 
