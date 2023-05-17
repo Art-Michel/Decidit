@@ -12,16 +12,17 @@ public class BulletAI : Health
     MeshRenderer meshRenderer;
 
     [Header("Explosion")]
-    GameObject vfxExplosion;
+    [SerializeField] GameObject vfxExplosion;
     [SerializeField] float delayBeforeExplosion;
-
+    [SerializeField] Light lightExplosion;
 
     protected override void Awake()
     {
         base.Awake();
         rb = GetComponent<Rigidbody>();
-        vfxExplosion = transform.GetChild(0).gameObject;
+        //vfxExplosion = transform.GetChild(0).gameObject;
         meshRenderer = GetComponent<MeshRenderer>();
+        lightExplosion.enabled = false;
     }
 
     protected override void Start()
@@ -62,6 +63,7 @@ public class BulletAI : Health
         rb.velocity = Vector3.zero;
         meshRenderer.enabled = false;
         vfxExplosion.SetActive(true);
+        lightExplosion.enabled = true;
         Invoke("DestroyObject", 1f);
     }
 
