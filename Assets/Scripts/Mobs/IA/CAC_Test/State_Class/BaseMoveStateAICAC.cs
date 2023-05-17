@@ -230,10 +230,10 @@ namespace State.AICAC
                             CoolDownAttack();
                         else
                         {
-                            /*  dir = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer - globalRef.transform.position;
-                              left = Vector3.Cross(dir, Vector3.up).normalized;
-                              Vector3 playerPosAnticip = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer + (left * offset);*/
-                            Vector3 playerPosAnticip = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer;
+                            dir = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer - globalRef.transform.position;
+                            left = Vector3.Cross(dir, Vector3.up).normalized;
+                            Vector3 playerPosAnticip = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer + (left * offset);
+                            //Vector3 playerPosAnticip = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer;
                             destination = CheckNavMeshPoint(playerPosAnticip);
                         }
 
@@ -287,11 +287,6 @@ namespace State.AICAC
             if (NavMesh.SamplePosition(_destination, out closestHit, 1, filter))
             {
                 _destination = closestHit.position;
-                Debug.Log(_destination + " / isOnNavMesh");
-            }
-            else
-            {
-                Debug.Log(_destination + " / not on NavMesh");
             }
             return _destination;
         }
