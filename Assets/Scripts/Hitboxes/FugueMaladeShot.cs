@@ -26,7 +26,7 @@ public class FugueMaladeShot : FugueProjectile
     {
         _t = 0;
         _p0 = position;
-        _p1 = position + direction * (Vector3.Distance(_p0, _p2) / 2);
+        _p1 = position + direction * (Vector3.Distance(_p0, _p2));
 
         UpdateTarget();
     }
