@@ -23,11 +23,14 @@ public class AragonRevolver : Revolver
         //     SetShot(_shotsDirections[i], _offsets[i]);
         base.Shoot();
 
-        Vector3 rightDirection = ((_currentlyAimedAt - _canonPosition.position).normalized * _adjacentBulletsAngle + _camera.right).normalized;
-        Vector3 leftDirection = ((_currentlyAimedAt - _canonPosition.position).normalized * _adjacentBulletsAngle - _camera.right).normalized;
+        Vector3 rightDirection;
+        Vector3 leftDirection;
 
         if (Synergies.Instance.Hospital.Count > 0)
         {
+            rightDirection = ((_currentlyAimedAt - _canonPosition.position).normalized * (_adjacentBulletsAngle * 0.5f) + _camera.right).normalized;
+            leftDirection = ((_currentlyAimedAt - _canonPosition.position).normalized * (_adjacentBulletsAngle * 0.5f) - _camera.right).normalized;
+
             PlayerManager.Instance.StartFlash(0.1f, 1);
             SoundManager.Instance.PlaySound("event:/SFX_Controller/UniversalSound", 1f, gameObject);
 
@@ -35,12 +38,15 @@ public class AragonRevolver : Revolver
             FugueMaladeShot shot2 = Synergies.Instance.FugueMaladeShotsPooler.Get().GetComponent<FugueMaladeShot>();
             FugueMaladeShot shot3 = Synergies.Instance.FugueMaladeShotsPooler.Get().GetComponent<FugueMaladeShot>();
 
-            shot.Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized, _camera.forward);
-            shot2.Setup(_canonPosition.position, rightDirection, _camera.forward);
-            shot3.Setup(_canonPosition.position, leftDirection, _camera.forward);
+            shot.Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized, _camera.forward, true);
+            shot2.Setup(_canonPosition.position, rightDirection, _camera.forward, false);
+            shot3.Setup(_canonPosition.position, leftDirection, _camera.forward, false);
         }
         else
         {
+            rightDirection = ((_currentlyAimedAt - _canonPosition.position).normalized * _adjacentBulletsAngle + _camera.right).normalized;
+            leftDirection = ((_currentlyAimedAt - _canonPosition.position).normalized * _adjacentBulletsAngle - _camera.right).normalized;
+
             FugueProjectile shot = _pooler.Get().GetComponent<FugueProjectile>();
             FugueProjectile shot2 = _pooler.Get().GetComponent<FugueProjectile>();
             FugueProjectile shot3 = _pooler.Get().GetComponent<FugueProjectile>();
