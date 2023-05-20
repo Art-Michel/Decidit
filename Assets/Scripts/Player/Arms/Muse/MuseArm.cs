@@ -20,15 +20,20 @@ public class MuseArm : Arm
     Transform _canonPosition;
     [Foldout("References")]
     [SerializeField]
-
     LayerMask _mask;
 
+    private Projectile _missile;
     Vector3 _currentlyAimedAt;
 
     protected override void PressSong()
     {
-        base.PressSong();
-        this.ReleaseSong();
+        if (_missile == null || _missile.enabled == false)
+        {
+            base.PressSong();
+            this.ReleaseSong();
+        }
+        else
+            _missile.Explode(Vector3.up);
     }
 
     protected override void ReleaseSong()
@@ -58,9 +63,9 @@ public class MuseArm : Arm
         CheckLookedAt();
         _crossHairFull.SetActive(false);
         StopGlowing();
-        PooledObject shot = _pooler.Get();
-        shot.transform.rotation = transform.rotation;
-        shot.GetComponent<Projectile>().Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized, _cameraTransform.forward);
+        _missile = _pooler.Get().GetComponent<Projectile>();
+        _missile.transform.rotation = transform.rotation;
+        _missile.Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized, _cameraTransform.forward);
 
         Player.Instance.StartKickShake(_castShake, transform.position);
         ////PlaceHolderSoundManager.Instance.PlayMuseRocketLaunch();
