@@ -195,7 +195,6 @@ public class EnemyHealth : Health
         else if (globalRefWallAI != null)
             globalRefWallAI.CheckHP();
 
-        SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/HitMarker", .2f, gameObject);
         PlayerManager.Instance.Hitmarker();
         //Stop probation from counting down when hitting an enemy
         //PlayerHealth.Instance.ResetProbStartup();
@@ -222,7 +221,6 @@ public class EnemyHealth : Health
             globalRefWallAI.CheckHP();
 
         PlayerManager.Instance.Crithitmarker();
-        SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/HitMarkerHead", .8f, gameObject);
     }
 
     public override void Knockback(Vector3 direction)
