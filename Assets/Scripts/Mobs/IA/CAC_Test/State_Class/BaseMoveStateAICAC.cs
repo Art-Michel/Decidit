@@ -37,7 +37,7 @@ namespace State.AICAC
         [SerializeField] bool canSurround;
 
         [SerializeField] float distToCirclePos;
-
+        NavMeshPath path;
         public override void InitState(StateControllerAICAC stateController)
         {
             base.InitState(stateController);
@@ -235,6 +235,17 @@ namespace State.AICAC
                             Vector3 playerPosAnticip = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer + (left * offset);
                             //Vector3 playerPosAnticip = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer;
                             destination = CheckNavMeshPoint(playerPosAnticip);
+
+                            path = new NavMeshPath();
+                            globalRef.agent.CalculatePath(destination, path);
+                            if (path.status == NavMeshPathStatus.PathPartial)
+                            {
+                                Debug.Log(globalRef.gameObject.transform + " WrongPath");
+                            }   
+                            else
+                            {
+                                Debug.Log(globalRef.gameObject.transform + " GoodPath");
+                            }
                         }
 
                         if (Vector3.Distance(globalRef.playerTransform.position, globalRef.transform.position) > (globalRef.surroundManager.radius + baseMoveAICACSO.distStopSurroundNearPlayer))
