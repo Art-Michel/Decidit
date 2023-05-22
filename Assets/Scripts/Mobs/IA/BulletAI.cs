@@ -3,13 +3,16 @@ using UnityEngine;
 
 public class BulletAI : Health
 {
+    [Header("Value")]
     [SerializeField] float lifeTimeBullet;
     public int damageBullet;
     [SerializeField] bool isInEylau;
     Rigidbody rb;
     Vector3 velocityEylau;
     [SerializeField] float ratioEylau;
-    MeshRenderer meshRenderer;
+    [SerializeField] float rotationSpeed;
+    float rotationY;
+    [SerializeField] MeshRenderer meshRenderer;
 
     [Header("Explosion")]
     [SerializeField] GameObject vfxExplosion;
@@ -21,7 +24,6 @@ public class BulletAI : Health
         base.Awake();
         rb = GetComponent<Rigidbody>();
         //vfxExplosion = transform.GetChild(0).gameObject;
-        meshRenderer = GetComponent<MeshRenderer>();
         lightExplosion.enabled = false;
     }
 
@@ -29,6 +31,12 @@ public class BulletAI : Health
     {
         base.Start();
         StartCoroutine("DestroyBullet");
+    }
+
+    protected override void Update()
+    {
+        rotationY += rotationSpeed * Time.deltaTime;
+        transform.rotation = Quaternion.Euler(0, rotationY, 0);
     }
 
     IEnumerator DestroyBullet()
