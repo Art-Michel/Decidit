@@ -22,6 +22,16 @@ public class AragonRevolver : Revolver
         // for (int i = 0; i < _shotsDirections.Length; i++)
         //     SetShot(_shotsDirections[i], _offsets[i]);
         base.Shoot();
+        if (!sh1)
+        {
+            sh1 = true;
+            Animator.CrossFade("shoot", 0, 0);
+        }
+        else
+        {
+            sh1 = false;
+            Animator.CrossFade("shooot", 0, 0);
+        }
 
         Vector3 rightDirection;
         Vector3 leftDirection;
@@ -59,7 +69,6 @@ public class AragonRevolver : Revolver
         Player.Instance.StartKickShake(_shootShake, transform.position);
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/FugueAragon/BaseShoot", 1f, gameObject);
         _muzzleFlash.PlayAll();
-        Animator.CrossFade("shoot", 0.0f, 0);
     }
 
     // private void SetShot(Vector3 direction, float offsetLength)
