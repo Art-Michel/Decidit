@@ -35,6 +35,7 @@ public class SoundManager : LocalManager<SoundManager>
         //SFX.
     }
 
+    //Change la musique en mode boite de nuit 
     public void ClearedSound()
     {
         _theme.SetParameter("Sound", 1f);
@@ -43,5 +44,16 @@ public class SoundManager : LocalManager<SoundManager>
     public void FightingSound()
     {
         _theme.SetParameter("Sound", 0f);
+    }
+
+    //Change tous les sons en mode boite de nuit (pour le hit)
+    public void SoundAfterHit()
+    {
+        _theme.SetParameter("SoundHit", 1f);
+    }
+
+    public void SoundEndHit()
+    {
+        _theme.SetParameter("SoundHit", 0f);
     }
 }
