@@ -15,13 +15,16 @@ public class EylauArea : SynergyTrigger
     //Basic functionning
     [Foldout("References")][SerializeField] private LayerMask _shouldBuff;
     [Foldout("References")][SerializeField] private Material _material;
+    [Foldout("References")][SerializeField] private Light _light;
 
     [Foldout("Stats")] public float Radius = 8;
     [Foldout("Stats")][SerializeField] private float _lifeSpan;
     [Foldout("Stats")][SerializeField] private Vector3 _defaultScale;
     [Foldout("Stats")][SerializeField] private float _defaultAlpha;
+    [Foldout("Stats")][SerializeField] private float _defaultLightIntensity;
     [Foldout("Stats")][SerializeField] public bool IsActive;
     [Foldout("Stats")][SerializeField] private AnimationCurve _alphaAppearanceCurve;
+    [Foldout("Stats")][SerializeField] private AnimationCurve _lightAppearanceCurve;
     [Foldout("Stats")][SerializeField] private AnimationCurve _sizeAppearanceCurve;
     private float _lifeT;
     private bool _isPlayerInHere = false;
@@ -112,6 +115,7 @@ public class EylauArea : SynergyTrigger
         transform.localScale = _defaultScale * _sizeAppearanceCurve.Evaluate(_lifeT);
         float alpha = _defaultAlpha * _alphaAppearanceCurve.Evaluate(_lifeT);
         _material.SetFloat("_Opacity", alpha);
+        _light.intensity = _defaultLightIntensity * _lightAppearanceCurve.Evaluate(_lifeT);
     }
 
     //Synergizing
@@ -138,18 +142,20 @@ public class EylauArea : SynergyTrigger
     {
         _disappearanceT += Time.deltaTime * _explosionSpeed;
         transform.localScale = _defaultScale * _explosionSizeCurve.Evaluate(_disappearanceT);
-        float alpha = _defaultAlpha * _explosionSizeCurve.Evaluate(_disappearanceT);
+        float alpha = _defaultAlpha * _explosionDisappearanceCurve.Evaluate(_disappearanceT);
         _material.SetFloat("_Opacity", alpha);
+        _light.intensity = _defaultLightIntensity * alpha;
         if (_disappearanceT >= 1.0f)
             Disappear();
     }
 
     private void UpdateBlackHoleDisappearance()
     {
-        _disappearanceT += Time.deltaTime * _explosionSpeed;
+        _disappearanceT += Time.deltaTime * _blackHoleSpeed;
         transform.localScale = _defaultScale * _blackHoleSizeCurve.Evaluate(_disappearanceT);
         float alpha = _defaultAlpha * _blackHoleDisappearanceCurve.Evaluate(_disappearanceT);
         _material.SetFloat("_Opacity", alpha);
+        _light.intensity = _defaultLightIntensity * alpha;
         if (_disappearanceT >= 1.0f)
             Disappear();
     }
