@@ -113,6 +113,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{6257bf03-c23a-4dab-9e6e-c7d8bb1e5f86}">
+		<property name="volume">
+			<value>-6.5</value>
+		</property>
 		<relationship name="effectChain">
 			<destination>{65797850-34eb-4da3-b349-9e494e780c5d}</destination>
 		</relationship>
@@ -130,9 +133,6 @@
 	</object>
 	<object class="MixerBusPanner" id="{edc0ffbc-b81d-4264-b4bb-8e53b55f4486}" />
 	<object class="SingleSound" id="{7ce3b2e3-abfa-430c-a718-97339d4d24ce}">
-		<property name="start">
-			<value>0.20000000000000001</value>
-		</property>
 		<property name="length">
 			<value>0.5</value>
 		</property>
@@ -158,11 +158,8 @@
 		</relationship>
 	</object>
 	<object class="SingleSound" id="{e5c07345-8419-4bb4-9212-c4d65a63d6f3}">
-		<property name="start">
-			<value>0.20000000000000001</value>
-		</property>
 		<property name="length">
-			<value>1.3999999999999999</value>
+			<value>0.5</value>
 		</property>
 		<property name="timelockedOffset">
 			<value>0.079999999999999183</value>
@@ -186,11 +183,8 @@
 		</relationship>
 	</object>
 	<object class="SingleSound" id="{882a8f88-c18e-4e59-ae12-42a59317324a}">
-		<property name="start">
-			<value>0.20000000000000001</value>
-		</property>
 		<property name="length">
-			<value>1.3600000000000001</value>
+			<value>0.5</value>
 		</property>
 		<property name="timelockedOffset">
 			<value>0.040000000000000001</value>
@@ -216,7 +210,6 @@
 	<object class="MixerBusEffectChain" id="{65797850-34eb-4da3-b349-9e494e780c5d}">
 		<relationship name="effects">
 			<destination>{1a8fd838-b0a9-4321-8238-8f8830bd9057}</destination>
-			<destination>{aaf09970-f6f7-4a7e-b24f-0f13a52d6489}</destination>
 			<destination>{aba6928b-ceb7-4cac-8715-e0ec6c76781d}</destination>
 			<destination>{db638aee-10b0-40e3-a4bb-1a71a023bcfe}</destination>
 		</relationship>
@@ -226,14 +219,12 @@
 	<object class="MixerBusEffectChain" id="{b49f49fc-c4b1-4d22-ae3b-97dd5aca7b0e}">
 		<relationship name="effects">
 			<destination>{33c22015-3264-4fa0-bfff-72a4816a69b3}</destination>
-			<destination>{b97351fd-9cfc-4175-989e-f4a208b3ec12}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{717cffb8-a7f8-4f1c-b97c-6d6f245160a0}" />
 	<object class="MixerBusEffectChain" id="{0687cc51-a259-4517-b3fe-da3e113a37fc}">
 		<relationship name="effects">
 			<destination>{1da4c896-6fdd-4c06-b64c-1f94bae81367}</destination>
-			<destination>{574552ad-3da1-45fb-a674-f9bd7478322d}</destination>
 			<destination>{2b920519-88ce-4aad-ab47-8905fb7e504b}</destination>
 		</relationship>
 	</object>
@@ -241,16 +232,10 @@
 	<object class="MixerBusEffectChain" id="{bc7bea48-6568-4451-bca6-f837b4cf3c12}">
 		<relationship name="effects">
 			<destination>{4bfbf720-dc05-4f12-aafa-d60ba1a9c1a5}</destination>
-			<destination>{e767acfd-4fbc-41a9-9608-9ac4dc549bd4}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{5f191009-48ed-4d0b-b130-246fe45242c6}" />
 	<object class="MixerBusFader" id="{1a8fd838-b0a9-4321-8238-8f8830bd9057}" />
-	<object class="SFXReverbEffect" id="{aaf09970-f6f7-4a7e-b24f-0f13a52d6489}">
-		<property name="decayTime">
-			<value>1600</value>
-		</property>
-	</object>
 	<object class="SpatialiserEffect" id="{aba6928b-ceb7-4cac-8715-e0ec6c76781d}">
 		<property name="maximumDistance">
 			<value>80</value>
@@ -263,20 +248,13 @@
 		</relationship>
 	</object>
 	<object class="MixerBusFader" id="{33c22015-3264-4fa0-bfff-72a4816a69b3}" />
-	<object class="SFXReverbEffect" id="{b97351fd-9cfc-4175-989e-f4a208b3ec12}" />
 	<object class="MixerBusFader" id="{1da4c896-6fdd-4c06-b64c-1f94bae81367}" />
-	<object class="SFXReverbEffect" id="{574552ad-3da1-45fb-a674-f9bd7478322d}">
-		<property name="decayTime">
-			<value>2000</value>
-		</property>
-	</object>
 	<object class="ThreeEQEffect" id="{2b920519-88ce-4aad-ab47-8905fb7e504b}">
 		<property name="highGain">
 			<value>-44</value>
 		</property>
 	</object>
 	<object class="MixerBusFader" id="{4bfbf720-dc05-4f12-aafa-d60ba1a9c1a5}" />
-	<object class="SFXReverbEffect" id="{e767acfd-4fbc-41a9-9608-9ac4dc549bd4}" />
 	<object class="Automator" id="{90e2b860-7557-4f90-a1f9-da659af69e32}">
 		<property name="nameOfPropertyBeingAutomated">
 			<value>highGain</value>
