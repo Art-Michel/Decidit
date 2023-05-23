@@ -1138,12 +1138,12 @@ public class Player : LocalManager<Player>
 
     #region Bobbing
     [Foldout("Bobbing")][SerializeField] float _bobSinT;
-    [Foldout("Bobbing")][SerializeField] float _bobIntensity;
+    [Foldout("Bobbing")][SerializeField] float _bobIntensityY;
     [Foldout("Bobbing")][SerializeField] float _bobIntensityX;
     [Foldout("Bobbing")][SerializeField] float _bobSpeed;
     [Foldout("Bobbing")][SerializeField] float _bobTransitionSpeed;
 
-    float bobI;
+    float bobIy;
     float bobIx;
     bool _isBobbing;
     float _transitionBob;
@@ -1184,12 +1184,12 @@ public class Player : LocalManager<Player>
         else
             _transitionBob = Mathf.Clamp01(_transitionBob - Time.deltaTime * _bobTransitionSpeed);
 
+        bobIy = Mathf.Lerp(0, _bobIntensityY, _transitionBob);
         bobIx = Mathf.Lerp(0, _bobIntensityX, _transitionBob);
-        bobI = Mathf.Lerp(0, _bobIntensity, _transitionBob);
         _bobSinT += Time.deltaTime * _bobSpeed;
 
-        float sinY = -Mathf.Abs(bobI * Mathf.Sin(_bobSinT));
-        float sinX = bobI * Mathf.Cos(_bobSinT) * bobIx;
+        float sinY = -Mathf.Abs(bobIy * Mathf.Sin(_bobSinT));
+        float sinX = bobIy * Mathf.Cos(_bobSinT) * bobIx;
 
         CurrentGun.transform.localPosition = CurrentGun.InitialPos + Vector3.up * sinY + Vector3.right * sinX;
     }
@@ -1201,6 +1201,10 @@ public class Player : LocalManager<Player>
     //     bobIx = 0.0f;
     //     _isBobbing = false;
     // }
+    #endregion
+
+    #region GunFeedbacks
+
     #endregion
 
     #region Enable Disable

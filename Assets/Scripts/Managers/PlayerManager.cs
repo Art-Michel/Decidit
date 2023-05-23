@@ -105,6 +105,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         _colorPP = colorPP;
         _colorPP.saturation.overrideState = true;
         MenuManager.Instance.StopMenuing();
+        ForceEquipGun0();
         _isLockedAt60 = false;
         _currentColor = _baseGunHitColor;
     }
@@ -187,7 +188,7 @@ public class PlayerManager : LocalManager<PlayerManager>
 
     public void AltarEquipGun2()
     {
-        ForceEquipGun2();
+        ForceEquipGun1();
         if (DungeonGenerator.Instance != null)
             DungeonGenerator.Instance.ChoseAGun = true;
 
@@ -197,7 +198,7 @@ public class PlayerManager : LocalManager<PlayerManager>
 
     public void AltarEquipGun3()
     {
-        ForceEquipGun3();
+        ForceEquipGun2();
         if (DungeonGenerator.Instance != null)
             DungeonGenerator.Instance.ChoseAGun = true;
 
@@ -207,7 +208,7 @@ public class PlayerManager : LocalManager<PlayerManager>
 
     public void AltarEquipGun4()
     {
-        ForceEquipGun4();
+        ForceEquipGun3();
         if (DungeonGenerator.Instance != null)
             DungeonGenerator.Instance.ChoseAGun = true;
 
@@ -217,7 +218,7 @@ public class PlayerManager : LocalManager<PlayerManager>
 
     public void AltarEquipSkill2()
     {
-        ForceEquipSkill2();
+        ForceEquipSkill1();
         if (DungeonGenerator.Instance != null)
             DungeonGenerator.Instance.ChoseASkill = true;
 
@@ -227,7 +228,7 @@ public class PlayerManager : LocalManager<PlayerManager>
 
     public void AltarEquipSkill3()
     {
-        ForceEquipSkill3();
+        ForceEquipSkill2();
         if (DungeonGenerator.Instance != null)
             DungeonGenerator.Instance.ChoseASkill = true;
 
@@ -237,7 +238,7 @@ public class PlayerManager : LocalManager<PlayerManager>
 
     public void AltarEquipSkill4()
     {
-        ForceEquipSkill4();
+        ForceEquipSkill3();
         if (DungeonGenerator.Instance != null)
             DungeonGenerator.Instance.ChoseASkill = true;
 
@@ -281,60 +282,64 @@ public class PlayerManager : LocalManager<PlayerManager>
     #endregion
 
     #region ForceEquipping
-    public void ForceEquipSkill4()
+    public void ForceEquipSkill3()
     {
         foreach (GameObject arm in Arms)
             arm.SetActive(false);
         Arms[3].SetActive(true);
     }
-    public void ForceEquipSkill3()
+    public void ForceEquipSkill2()
     {
         foreach (GameObject arm in Arms)
             arm.SetActive(false);
         Arms[2].SetActive(true);
     }
-    public void ForceEquipSkill2()
+    public void ForceEquipSkill1()
     {
         foreach (GameObject arm in Arms)
             arm.SetActive(false);
         Arms[1].SetActive(true);
     }
-    public void ForceEquipSkill1()
+    public void ForceEquipSkill0()
     {
         foreach (GameObject arm in Arms)
             arm.SetActive(false);
         Arms[0].SetActive(true);
     }
-    public void ForceEquipGun4()
+    public void ForceEquipGun3()
     {
         foreach (GameObject gun in Guns)
             gun.SetActive(false);
         Guns[3].SetActive(true);
         SetHitmarkerColor(_eylauGunHitColor);
+        Guns[3].GetComponent<Revolver>().InitialPos = Guns[0].transform.localPosition;
         Player.Instance.CurrentGun = Guns[3].GetComponent<Revolver>();
-    }
-    public void ForceEquipGun3()
-    {
-        foreach (GameObject gun in Guns)
-            gun.SetActive(false);
-        Guns[2].SetActive(true);
-        SetHitmarkerColor(_museGunHitColor);
-        Player.Instance.CurrentGun = Guns[2].GetComponent<Revolver>();
     }
     public void ForceEquipGun2()
     {
         foreach (GameObject gun in Guns)
             gun.SetActive(false);
-        Guns[1].SetActive(true);
-        SetHitmarkerColor(_fugueGunHitColor);
-        Player.Instance.CurrentGun = Guns[1].GetComponent<Revolver>();
+        Guns[2].SetActive(true);
+        SetHitmarkerColor(_museGunHitColor);
+        Guns[2].GetComponent<Revolver>().InitialPos = Guns[0].transform.localPosition;
+        Player.Instance.CurrentGun = Guns[2].GetComponent<Revolver>();
     }
     public void ForceEquipGun1()
     {
         foreach (GameObject gun in Guns)
             gun.SetActive(false);
+        Guns[1].SetActive(true);
+        SetHitmarkerColor(_fugueGunHitColor);
+        Guns[1].GetComponent<Revolver>().InitialPos = Guns[0].transform.localPosition;
+        Player.Instance.CurrentGun = Guns[1].GetComponent<Revolver>();
+    }
+    public void ForceEquipGun0()
+    {
+        foreach (GameObject gun in Guns)
+            gun.SetActive(false);
         Guns[0].SetActive(true);
         SetHitmarkerColor(_baseGunHitColor);
+        Guns[0].GetComponent<Revolver>().InitialPos = Guns[0].transform.localPosition;
         Player.Instance.CurrentGun = Guns[0].GetComponent<Revolver>();
     }
     #endregion
