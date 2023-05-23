@@ -105,7 +105,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         _colorPP = colorPP;
         _colorPP.saturation.overrideState = true;
         MenuManager.Instance.StopMenuing();
-        ForceEquipGun0();
+        ForceEquipGun(0);
         _isLockedAt60 = false;
         _currentColor = _baseGunHitColor;
     }
@@ -186,9 +186,9 @@ public class PlayerManager : LocalManager<PlayerManager>
 
     #region Equipping
 
-    public void AltarEquipGun2()
+    public void AltarEquipGun(int i)
     {
-        ForceEquipGun1();
+        ForceEquipGun(i);
         if (DungeonGenerator.Instance != null)
             DungeonGenerator.Instance.ChoseAGun = true;
 
@@ -196,49 +196,9 @@ public class PlayerManager : LocalManager<PlayerManager>
         StopAltarMenuing();
     }
 
-    public void AltarEquipGun3()
+    public void AltarEquipSkill(int i)
     {
-        ForceEquipGun2();
-        if (DungeonGenerator.Instance != null)
-            DungeonGenerator.Instance.ChoseAGun = true;
-
-        _currentAltar.TurnOff();
-        StopAltarMenuing();
-    }
-
-    public void AltarEquipGun4()
-    {
-        ForceEquipGun3();
-        if (DungeonGenerator.Instance != null)
-            DungeonGenerator.Instance.ChoseAGun = true;
-
-        _currentAltar.TurnOff();
-        StopAltarMenuing();
-    }
-
-    public void AltarEquipSkill2()
-    {
-        ForceEquipSkill1();
-        if (DungeonGenerator.Instance != null)
-            DungeonGenerator.Instance.ChoseASkill = true;
-
-        _currentAltar.TurnOff();
-        StopAltarMenuing();
-    }
-
-    public void AltarEquipSkill3()
-    {
-        ForceEquipSkill2();
-        if (DungeonGenerator.Instance != null)
-            DungeonGenerator.Instance.ChoseASkill = true;
-
-        _currentAltar.TurnOff();
-        StopAltarMenuing();
-    }
-
-    public void AltarEquipSkill4()
-    {
-        ForceEquipSkill3();
+        ForceEquipSkill(i);
         if (DungeonGenerator.Instance != null)
             DungeonGenerator.Instance.ChoseASkill = true;
 
@@ -282,66 +242,23 @@ public class PlayerManager : LocalManager<PlayerManager>
     #endregion
 
     #region ForceEquipping
-    public void ForceEquipSkill3()
+
+    public void ForceEquipSkill(int i)
     {
         foreach (GameObject arm in Arms)
             arm.SetActive(false);
-        Arms[3].SetActive(true);
+        Arms[i].SetActive(true);
     }
-    public void ForceEquipSkill2()
-    {
-        foreach (GameObject arm in Arms)
-            arm.SetActive(false);
-        Arms[2].SetActive(true);
-    }
-    public void ForceEquipSkill1()
-    {
-        foreach (GameObject arm in Arms)
-            arm.SetActive(false);
-        Arms[1].SetActive(true);
-    }
-    public void ForceEquipSkill0()
-    {
-        foreach (GameObject arm in Arms)
-            arm.SetActive(false);
-        Arms[0].SetActive(true);
-    }
-    public void ForceEquipGun3()
+    public void ForceEquipGun(int i)
     {
         foreach (GameObject gun in Guns)
             gun.SetActive(false);
-        Guns[3].SetActive(true);
-        SetHitmarkerColor(_eylauGunHitColor);
-        Guns[3].GetComponent<Revolver>().InitialPos = Guns[0].transform.localPosition;
-        Player.Instance.CurrentGun = Guns[3].GetComponent<Revolver>();
-    }
-    public void ForceEquipGun2()
-    {
-        foreach (GameObject gun in Guns)
-            gun.SetActive(false);
-        Guns[2].SetActive(true);
-        SetHitmarkerColor(_museGunHitColor);
-        Guns[2].GetComponent<Revolver>().InitialPos = Guns[0].transform.localPosition;
-        Player.Instance.CurrentGun = Guns[2].GetComponent<Revolver>();
-    }
-    public void ForceEquipGun1()
-    {
-        foreach (GameObject gun in Guns)
-            gun.SetActive(false);
-        Guns[1].SetActive(true);
-        SetHitmarkerColor(_fugueGunHitColor);
-        Guns[1].GetComponent<Revolver>().InitialPos = Guns[0].transform.localPosition;
-        Player.Instance.CurrentGun = Guns[1].GetComponent<Revolver>();
-    }
-    public void ForceEquipGun0()
-    {
-        foreach (GameObject gun in Guns)
-            gun.SetActive(false);
-        Guns[0].SetActive(true);
+        Guns[i].SetActive(true);
         SetHitmarkerColor(_baseGunHitColor);
-        Guns[0].GetComponent<Revolver>().InitialPos = Guns[0].transform.localPosition;
-        Player.Instance.CurrentGun = Guns[0].GetComponent<Revolver>();
+        Guns[i].GetComponent<Revolver>().InitialPos = Guns[i].transform.localPosition;
+        Player.Instance.CurrentGun = Guns[i].GetComponent<Revolver>();
     }
+
     #endregion
 
     #region Pause unpause
