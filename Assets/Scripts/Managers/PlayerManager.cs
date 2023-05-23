@@ -188,6 +188,8 @@ public class PlayerManager : LocalManager<PlayerManager>
 
     public void AltarEquipGun(int i)
     {
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/ChoosingChant", 1f, gameObject);
+        
         ForceEquipGun(i);
         if (DungeonGenerator.Instance != null)
             DungeonGenerator.Instance.ChoseAGun = true;
@@ -198,6 +200,7 @@ public class PlayerManager : LocalManager<PlayerManager>
 
     public void AltarEquipSkill(int i)
     {
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/ChoosingChant", 1f, gameObject);
         ForceEquipSkill(i);
         if (DungeonGenerator.Instance != null)
             DungeonGenerator.Instance.ChoseASkill = true;
