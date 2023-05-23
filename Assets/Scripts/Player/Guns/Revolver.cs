@@ -98,6 +98,7 @@ public class Revolver : MonoBehaviour
         sh1 = false;
         Reloaded();
         InitialPos = transform.localPosition;
+        Player.Instance.CurrentGun = this;
     }
 
     void Update()

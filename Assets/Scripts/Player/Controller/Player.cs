@@ -40,6 +40,7 @@ public class Player : LocalManager<Player>
     PlayerInputMap _inputs;
     PlayerFSM _fsm;
     PlayerHealth _playerHealth;
+    public Revolver CurrentGun;
     #endregion
 
     #region Camera rotation variables
@@ -1190,10 +1191,7 @@ public class Player : LocalManager<Player>
         float sinY = -Mathf.Abs(bobI * Mathf.Sin(_bobSinT));
         float sinX = bobI * Mathf.Cos(_bobSinT) * bobIx;
 
-        foreach (GameObject gun in PlayerManager.Instance.Guns)
-        {
-            gun.transform.localPosition = gun.GetComponent<Revolver>().InitialPos + Vector3.up * sinY + Vector3.right * sinX;
-        }
+        CurrentGun.transform.localPosition = CurrentGun.InitialPos + Vector3.up * sinY + Vector3.right * sinX;
     }
 
     // public void DisableBob()

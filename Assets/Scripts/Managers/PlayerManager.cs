@@ -311,6 +311,7 @@ public class PlayerManager : LocalManager<PlayerManager>
             gun.SetActive(false);
         Guns[3].SetActive(true);
         SetHitmarkerColor(_eylauGunHitColor);
+        Player.Instance.CurrentGun = Guns[3].GetComponent<Revolver>();
     }
     public void ForceEquipGun3()
     {
@@ -318,6 +319,7 @@ public class PlayerManager : LocalManager<PlayerManager>
             gun.SetActive(false);
         Guns[2].SetActive(true);
         SetHitmarkerColor(_museGunHitColor);
+        Player.Instance.CurrentGun = Guns[2].GetComponent<Revolver>();
     }
     public void ForceEquipGun2()
     {
@@ -325,6 +327,7 @@ public class PlayerManager : LocalManager<PlayerManager>
             gun.SetActive(false);
         Guns[1].SetActive(true);
         SetHitmarkerColor(_fugueGunHitColor);
+        Player.Instance.CurrentGun = Guns[1].GetComponent<Revolver>();
     }
     public void ForceEquipGun1()
     {
@@ -332,6 +335,7 @@ public class PlayerManager : LocalManager<PlayerManager>
             gun.SetActive(false);
         Guns[0].SetActive(true);
         SetHitmarkerColor(_baseGunHitColor);
+        Player.Instance.CurrentGun = Guns[0].GetComponent<Revolver>();
     }
     #endregion
 
