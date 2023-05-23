@@ -171,7 +171,7 @@ public class Arm : MonoBehaviour
 
     }
 
-    public void Refilled()
+    protected void Refilled()
     {
         if (_crossHairFull)
             _crossHairFull.SetActive(true);
@@ -179,6 +179,12 @@ public class Arm : MonoBehaviour
         if (_inputs.Actions.Skill.IsPressed() && !_inputs.Actions.Interact.IsPressed())
             PressSong();
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/ChantReady", 1f, gameObject);
+    }
+
+    public void ForceRefill()
+    {
+        if (_fsm.CurrentState.Name == ArmStateList.RECOVERY)
+            _cooldownT = 0.0f;
     }
 
     protected void StartGlowingBriefly()

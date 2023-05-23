@@ -349,15 +349,15 @@ public class PlayerManager : LocalManager<PlayerManager>
 
     public void RechargeEverything()
     {
-        foreach (GameObject revolver in Guns)
-        {
-            if (revolver.activeInHierarchy)
-                revolver.GetComponent<Revolver>().Reloaded();
-        }
+        // foreach (GameObject revolver in Guns)
+        // {
+        //     if (revolver.activeInHierarchy)
+        //         revolver.GetComponent<Revolver>().Reloaded();
+        // }
         foreach (GameObject arm in Arms)
         {
             if (arm.activeInHierarchy)
-                arm.GetComponent<Arm>().Refilled();
+                arm.GetComponent<Arm>().ForceRefill();
         }
     }
 
