@@ -20,7 +20,7 @@ public class Synergies : LocalManager<Synergies>
     public List<EnemyHealth> Hospital;
 
     [Foldout("Cimetière")]
-    [SerializeField] Transform _eylauArea;
+    [SerializeField] EylauArea _eylauArea;
 
     public void Synergize(SynergyProjectile bullet, Transform collider)
     {
@@ -43,6 +43,8 @@ public class Synergies : LocalManager<Synergies>
                         //Nothing, since the synergy is about the bullets directly tracking the enemies;
                         break;
                     case Chants.EYLAU:
+                        if (!_eylauArea.IsActive)
+                            break;
                         Vector3 position = bullet.transform.position;
                         position.y += bullet.Direction.normalized.y * 8;
                         FugueOnCimetiere(position);
@@ -60,6 +62,8 @@ public class Synergies : LocalManager<Synergies>
                         //Nothing!
                         break;
                     case Chants.EYLAU:
+                        if (!_eylauArea.IsActive)
+                            break;
                         MuseOnCimetiere(bullet.transform.position);
                         bullet.Explode(bullet.transform.forward);
                         break;
@@ -166,8 +170,8 @@ public class Synergies : LocalManager<Synergies>
     {
         PlayerManager.Instance.StartFlash(0.1f, 1);
         SoundManager.Instance.PlaySound("event:/SFX_Controller/UniversalSound", 1f, gameObject);
-        Debug.Log("Trou noir, voir avec jt pour attirer les ennemis au centre du cimetière");
-        Vector3 initialPos = new Vector3(_eylauArea.position.x, _eylauArea.position.y, _eylauArea.position.z);
+        _eylauArea.StartBlackHoleDisappearance();
+        Vector3 initialPos = new Vector3(_eylauArea.transform.position.x, _eylauArea.transform.position.y, _eylauArea.transform.position.z);
         SpawnBlackHole(initialPos);
     }
 
@@ -195,7 +199,8 @@ public class Synergies : LocalManager<Synergies>
         SoundManager.Instance.PlaySound("event:/SFX_Controller/UniversalSound", 1f, gameObject);
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Synergies/MuseOnEyleau/Sound", 1, _eylauArea.gameObject);
 
-        Vector3 endPos = initialPos + (_eylauArea.position - initialPos) * 2;
+        _eylauArea.GetComponent<EylauArea>().StartExplosionDisappearance();
+        Vector3 endPos = initialPos + (_eylauArea.transform.position - initialPos) * 2;
         GameObject explosionPoint = new GameObject();
         explosionPoint.transform.position = initialPos;
         explosionPoint.transform.forward = (endPos - initialPos).normalized;
