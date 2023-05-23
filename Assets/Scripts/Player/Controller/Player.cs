@@ -340,6 +340,8 @@ public class Player : LocalManager<Player>
         HandleMovementAcceleration();
         UpdateGlobalMomentum();
 
+        // Bob();
+
         //State update
         if (_fsm.CurrentState != null)
             _fsm.CurrentState.StateUpdate();
@@ -1130,6 +1132,25 @@ public class Player : LocalManager<Player>
             PooledObject smoke = _smokeWrVfxPooler.Get();
             smoke.transform.position = _currentWall.point + _currentWall.normal * 0.05f + Vector3.down * 0.2f;
             smoke.transform.forward = _currentWall.normal;
+        }
+    }
+    #endregion
+
+    #region Bobbing
+    [Foldout("Bobbing")][SerializeField] float _sinT;
+    [Foldout("Bobbing")][SerializeField] float _bobIntensity;
+    [Foldout("Bobbing")][SerializeField] float _bobIntensityX;
+    [Foldout("Bobbing")][SerializeField] float _bobSpeed;
+    public void Bob()
+    {
+        _sinT += Time.deltaTime * _bobSpeed;
+
+        float sinY = -Mathf.Abs(_bobIntensity * Mathf.Sin(_sinT));
+        float sinX = _bobIntensity * Mathf.Cos(_sinT) * _bobIntensityX;
+
+        foreach (GameObject gun in PlayerManager.Instance.Guns)
+        {
+            gun.transform.localPosition = gun.GetComponent<Revolver>().InitialPos + Vector3.up * sinY + Vector3.right * sinX;
         }
     }
     #endregion

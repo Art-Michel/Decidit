@@ -34,6 +34,9 @@ public class Revolver : MonoBehaviour
     private RevolverFSM _fsm;
     protected Transform _camera;
 
+    [System.NonSerialized]
+    public Vector3 InitialPos;
+
     #endregion
 
     #region Stats Decleration
@@ -94,6 +97,7 @@ public class Revolver : MonoBehaviour
     {
         sh1 = false;
         Reloaded();
+        InitialPos = transform.localPosition;
     }
 
     void Update()
