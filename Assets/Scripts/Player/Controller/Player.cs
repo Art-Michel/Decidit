@@ -1203,10 +1203,6 @@ public class Player : LocalManager<Player>
     // }
     #endregion
 
-    #region GunFeedbacks
-
-    #endregion
-
     #region Enable Disable
     void OnEnable()
     {
