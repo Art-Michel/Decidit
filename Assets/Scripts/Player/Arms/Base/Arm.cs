@@ -227,10 +227,10 @@ public class Arm : MonoBehaviour
     #region Swaying
     public void Sway()
     {
-        float x = _inputs.Camera.Rotate.ReadValue<Vector2>().x * _mouseSwayAmountX;
-        float y = _inputs.Camera.Rotate.ReadValue<Vector2>().y * _mouseSwayAmountY;
-        x += _inputs.Camera.RotateX.ReadValue<float>() * _controllerSwayAmountX;
-        y += _inputs.Camera.RotateY.ReadValue<float>() * _controllerSwayAmountY;
+        float x = _inputs.Camera.Rotate.ReadValue<Vector2>().x * _mouseSwayAmountX * Time.deltaTime;
+        float y = _inputs.Camera.Rotate.ReadValue<Vector2>().y * _mouseSwayAmountY * Time.deltaTime;
+        x += _inputs.Camera.RotateX.ReadValue<float>() * _controllerSwayAmountX * Time.deltaTime;
+        y += _inputs.Camera.RotateY.ReadValue<float>() * _controllerSwayAmountY * Time.deltaTime;
 
         Quaternion rotationX = Quaternion.AngleAxis(-y, Vector3.right);
         Quaternion rotationY = Quaternion.AngleAxis(x, Vector3.up);

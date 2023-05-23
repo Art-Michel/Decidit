@@ -16,7 +16,7 @@ public class ArmStateIdle : ArmState
 
     public override void StateUpdate()
     {
-        _arm.Sway();
+        // _arm.Sway();
     }
 
     public override void Exit()
