@@ -239,7 +239,7 @@ public class EnemyHealth : Health
     {
         if (IsSick)
             return;
-
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/MuseMalade/Charm", 1f, gameObject);
         IsSick = true;
         if (!Synergies.Instance.Hospital.Contains(this))
             Synergies.Instance.Hospital.Add(this);
