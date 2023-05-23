@@ -340,12 +340,11 @@ public class Player : LocalManager<Player>
         HandleMovementAcceleration();
         UpdateGlobalMomentum();
 
-        // Bob();
-
         //State update
         if (_fsm.CurrentState != null)
             _fsm.CurrentState.StateUpdate();
 
+        Bob();
 
         //Final Movement Formula //I got lost with the deltatime stuff but i swear it works perfectly
         FinalMovement = (GlobalMomentum * Time.deltaTime)
@@ -1137,22 +1136,73 @@ public class Player : LocalManager<Player>
     #endregion
 
     #region Bobbing
-    [Foldout("Bobbing")][SerializeField] float _sinT;
+    [Foldout("Bobbing")][SerializeField] float _bobSinT;
     [Foldout("Bobbing")][SerializeField] float _bobIntensity;
     [Foldout("Bobbing")][SerializeField] float _bobIntensityX;
     [Foldout("Bobbing")][SerializeField] float _bobSpeed;
+    [Foldout("Bobbing")][SerializeField] float _bobTransitionSpeed;
+
+    float bobI;
+    float bobIx;
+    bool _isBobbing;
+    float _transitionBob;
+
+    // public void EnableBob()
+    // {
+    //     _sinT = 0.0f;
+    //     bobI = _bobIntensity;
+    //     bobIx = _bobIntensityX;
+    //     _isBobbing = true;
+    // }
+
+    public void CheckForBobbing()
+    {
+        if (_rawInputs.magnitude > 0)
+        {
+            if (!_isBobbing)
+                StartBobbing();
+        }
+        else if (_isBobbing)
+            StopBobbing();
+    }
+
+    public void StartBobbing()
+    {
+        _isBobbing = true;
+    }
+
+    public void StopBobbing()
+    {
+        _isBobbing = false;
+    }
+
     public void Bob()
     {
-        _sinT += Time.deltaTime * _bobSpeed;
+        if (_isBobbing)
+            _transitionBob = Mathf.Clamp01(_transitionBob + Time.deltaTime * _bobTransitionSpeed);
+        else
+            _transitionBob = Mathf.Clamp01(_transitionBob - Time.deltaTime * _bobTransitionSpeed);
 
-        float sinY = -Mathf.Abs(_bobIntensity * Mathf.Sin(_sinT));
-        float sinX = _bobIntensity * Mathf.Cos(_sinT) * _bobIntensityX;
+        bobIx = Mathf.Lerp(0, _bobIntensityX, _transitionBob);
+        bobI = Mathf.Lerp(0, _bobIntensity, _transitionBob);
+        _bobSinT += Time.deltaTime * _bobSpeed;
+
+        float sinY = -Mathf.Abs(bobI * Mathf.Sin(_bobSinT));
+        float sinX = bobI * Mathf.Cos(_bobSinT) * bobIx;
 
         foreach (GameObject gun in PlayerManager.Instance.Guns)
         {
             gun.transform.localPosition = gun.GetComponent<Revolver>().InitialPos + Vector3.up * sinY + Vector3.right * sinX;
         }
     }
+
+    // public void DisableBob()
+    // {
+    //     _sinT = 0.0f;
+    //     bobI = 0.0f;
+    //     bobIx = 0.0f;
+    //     _isBobbing = false;
+    // }
     #endregion
 
     #region Enable Disable

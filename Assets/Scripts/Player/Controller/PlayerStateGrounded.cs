@@ -14,13 +14,13 @@ public class PlayerStateGrounded : PlayerState
 
     public override void StateUpdate()
     {
+        _player.CheckForBobbing();
         _player.CheckForNoGround();
         _player.CheckForSteepSlope();
     }
 
     public override void Exit()
     {
-
+        _player.StopBobbing();
     }
-
 }
