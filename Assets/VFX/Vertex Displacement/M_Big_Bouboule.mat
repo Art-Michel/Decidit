@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_Big_Boule
-  m_Shader: {fileID: -6465566751694194690, guid: 007a6817ea658554081aafde8c702673,
+  m_Name: M_Big_Bouboule
+  m_Shader: {fileID: -6465566751694194690, guid: 1c1007930359f1447807b5e088c37c50,
     type: 3}
   m_ValidKeywords:
   - _DISABLE_SSR_TRANSPARENT
@@ -23,19 +23,11 @@ Material:
   - TransparentDepthPrepass
   - TransparentDepthPostpass
   - TransparentBackface
-  - MOTIONVECTORS
   - RayTracingPrepass
+  - MOTIONVECTORS
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _SampleTexture2D_1a513376830849d5bacd423f34506f9d_Texture_1:
-        m_Texture: {fileID: 2800000, guid: 6fd348d2c80b669418a76914e0aab4ff, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_20351b8db9bf4a43a9c7f23fcc3461f2_Texture_1:
-        m_Texture: {fileID: 2800000, guid: 6fd348d2c80b669418a76914e0aab4ff, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_65083f7b729e4d44bc070477b9afdebd_Texture_1:
         m_Texture: {fileID: 2800000, guid: b966f6e89f45cfd45af0b3d2e18628df, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -45,10 +37,6 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_beb8438b16d14f57b5d38fd729c59f80_Texture_1:
-        m_Texture: {fileID: 2800000, guid: 017642f1682f1ee4991facd06029c8aa, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_cba36ab7652948d89751db7bef9039fb_Texture_1:
         m_Texture: {fileID: 2800000, guid: 017642f1682f1ee4991facd06029c8aa, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -77,12 +65,12 @@ Material:
     - _CullMode: 2
     - _CullModeForward: 2
     - _DepthOffsetEnable: 0
-    - _Displacement_Amount: 3
+    - _Displacement_Amount: 0.2
     - _DoubleSidedEnable: 0
     - _DoubleSidedGIMode: 0
     - _DoubleSidedNormalMode: 2
     - _DstBlend: 0
-    - _EnableBlendModePreserveSpecularLighting: 0
+    - _EnableBlendModePreserveSpecularLighting: 1
     - _EnableFogOnTransparent: 1
     - _OpaqueCullMode: 2
     - _RayTracing: 0
@@ -91,7 +79,7 @@ Material:
     - _RefractionModel: 0
     - _RenderQueueType: 1
     - _RequireSplitLighting: 0
-    - _Speed: 0.04
+    - _Sin_amount: 0.2
     - _SrcBlend: 1
     - _StencilRef: 0
     - _StencilRefDepth: 8
@@ -120,9 +108,9 @@ Material:
     m_Colors:
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Speed: {r: 0.015, g: 0.02, b: 0, a: 0}
+    - _Speed: {r: 0.1, g: 0.23, b: 0, a: 0}
   m_BuildTextureStacks: []
---- !u!114 &7836773255352481296
+--- !u!114 &8595370633670707934
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
