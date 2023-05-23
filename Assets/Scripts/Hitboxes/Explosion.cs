@@ -109,7 +109,7 @@ public class Explosion : Hitbox
         //Explosion gets weaker over time
         _knockbackForce = _initialKnockbackForce * Mathf.InverseLerp(0f, _hitboxSpan, _hitboxT);
         Damage = Mathf.RoundToInt(_initialDamage * Mathf.InverseLerp(0f, _hitboxSpan, _hitboxT));
-        _light.intensity = _lightStrength * Mathf.InverseLerp(0, _hitboxSpan, _lifeT);
+        _light.intensity = _lightStrength * Mathf.InverseLerp(0, _lifeSpan, _lifeT);
 
         //Check for collisions with hitbox
     }
