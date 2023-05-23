@@ -18,6 +18,7 @@ public class BulletAI : Health
     [SerializeField] GameObject vfxExplosion;
     [SerializeField] float delayBeforeExplosion;
     [SerializeField] Light lightExplosion;
+    [SerializeField] Light lightTranslusance;
 
     protected override void Awake()
     {
@@ -69,9 +70,9 @@ public class BulletAI : Health
     void DelayBeforeExplosion()
     {
         rb.velocity = Vector3.zero;
+        lightTranslusance.enabled = false;
         meshRenderer.enabled = false;
         vfxExplosion.SetActive(true);
-        lightExplosion.enabled = true;
         Invoke("DestroyObject", 1f);
     }
 

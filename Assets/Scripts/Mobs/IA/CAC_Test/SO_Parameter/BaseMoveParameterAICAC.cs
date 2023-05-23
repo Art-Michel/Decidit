@@ -34,6 +34,12 @@ public class BaseMoveParameterAICAC : ScriptableObject
     public float jumpRate;
     public float offsetTransitionSmooth;
 
+    [Header("Trigger Anticip")]
+    public float maxDelayStopAnticip;
+    public float currentDelayStopAnticip;
+    public float maxDelayActiveAnticip;
+    public float currentDelayActiveAnticip;
+
     [Header("Trigger Surround")]
     public float distStopSurroundNearSurround; // IA proche du joueur
     public float distStopSurroundNearPlayer; // IA proche du joueur

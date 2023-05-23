@@ -23,6 +23,7 @@ namespace State.AICAC
         Vector3 dir;
         Vector3 left;
         NavMeshQueryFilter filter;
+        bool isAnticip;
 
         [Header("LookAt")]
         Vector3 direction;
@@ -230,22 +231,7 @@ namespace State.AICAC
                             CoolDownAttack();
                         else
                         {
-                            dir = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer - globalRef.transform.position;
-                            left = Vector3.Cross(dir, Vector3.up).normalized;
-                            Vector3 playerPosAnticip = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer + (left * offset);
-                            //Vector3 playerPosAnticip = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer;
-                            destination = CheckNavMeshPoint(playerPosAnticip);
-
-                            path = new NavMeshPath();
-                            globalRef.agent.CalculatePath(destination, path);
-                            if (path.status == NavMeshPathStatus.PathPartial)
-                            {
-                                Debug.Log(globalRef.gameObject.transform + " WrongPath");
-                            }   
-                            else
-                            {
-                                Debug.Log(globalRef.gameObject.transform + " GoodPath");
-                            }
+                            SwitchBetweenAnticipAndDumb();
                         }
 
                         if (Vector3.Distance(globalRef.playerTransform.position, globalRef.transform.position) > (globalRef.surroundManager.radius + baseMoveAICACSO.distStopSurroundNearPlayer))
@@ -272,6 +258,64 @@ namespace State.AICAC
                     stateControllerAICAC.SetActiveState(StateControllerAICAC.AIState.BaseAttack);
                 }
             }
+        }
+
+        void SwitchBetweenAnticipAndDumb()
+        {
+            Vector3 playerPosAnticip;
+
+            if (isAnticip)
+            {
+                if (Player.Instance.FinalMovement.magnitude > 0 && Input.GetAxis("Horizontal") != 0 ||
+                    Player.Instance.FinalMovement.magnitude > 0 && Input.GetAxis("Vertical") != 0)
+                {
+                    baseMoveAICACSO.currentDelayStopAnticip = baseMoveAICACSO.maxDelayStopAnticip;
+                    dir = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer - globalRef.transform.position;
+                    left = Vector3.Cross(dir, Vector3.up).normalized;
+                    playerPosAnticip = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer + (left * offset);
+                }
+                else if (baseMoveAICACSO.currentDelayStopAnticip <= 0)
+                {
+                    isAnticip = false;
+                    baseMoveAICACSO.currentDelayActiveAnticip = baseMoveAICACSO.maxDelayActiveAnticip;
+                    playerPosAnticip = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer;
+                }
+                else
+                {
+                    baseMoveAICACSO.currentDelayStopAnticip -= Time.deltaTime;
+                    dir = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer - globalRef.transform.position;
+                    left = Vector3.Cross(dir, Vector3.up).normalized;
+                    playerPosAnticip = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer + (left * offset);
+                }
+            }
+            else
+            {
+                if (baseMoveAICACSO.currentDelayActiveAnticip > 0)
+                {
+                    if (Player.Instance.FinalMovement.magnitude > 0 && Input.GetAxis("Horizontal") != 0 || 
+                        Player.Instance.FinalMovement.magnitude > 0 && Input.GetAxis("Vertical") != 0)
+                        baseMoveAICACSO.currentDelayActiveAnticip -= Time.deltaTime;
+
+                    playerPosAnticip = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer;
+                }
+                else if (baseMoveAICACSO.currentDelayActiveAnticip <= 0)
+                {
+                    baseMoveAICACSO.currentDelayStopAnticip = baseMoveAICACSO.maxDelayStopAnticip;
+                    dir = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer - globalRef.transform.position;
+                    left = Vector3.Cross(dir, Vector3.up).normalized;
+                    playerPosAnticip = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer + (left * offset);
+                    isAnticip = true;
+                }
+                else
+                {
+                    baseMoveAICACSO.currentDelayActiveAnticip -= Time.deltaTime;
+                    playerPosAnticip = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer;
+                }
+            }
+
+            destination = CheckNavMeshPoint(playerPosAnticip);
+            path = new NavMeshPath();
+            globalRef.agent.CalculatePath(destination, path);
         }
 
         int Get(string name)
