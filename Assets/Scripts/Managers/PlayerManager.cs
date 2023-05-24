@@ -252,6 +252,7 @@ public class PlayerManager : LocalManager<PlayerManager>
             arm.SetActive(false);
         Arms[i].SetActive(true);
         Player.Instance.CurrentArm = Arms[i].GetComponent<Arm>();
+        Player.Instance.InspectArm();
     }
     public void ForceEquipGun(int i)
     {
@@ -261,6 +262,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         SetHitmarkerColor(_baseGunHitColor);
         Guns[i].GetComponent<Revolver>().InitialPos = Guns[i].transform.localPosition;
         Player.Instance.CurrentGun = Guns[i].GetComponent<Revolver>();
+        Player.Instance.InspectWeapon();
     }
 
     #endregion
