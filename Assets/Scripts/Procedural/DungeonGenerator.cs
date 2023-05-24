@@ -23,19 +23,6 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
     [SerializeField] List<int> _scenesMedium;
     [SerializeField] List<int> _scenesHard;
 
-    [Foldout("Colors")]
-    [SerializeField] Color _easyColor;
-    [Foldout("Colors")]
-    [SerializeField] Color _mediumColor;
-    [Foldout("Colors")]
-    [SerializeField] Color _hardColor;
-    [Foldout("Colors")]
-    [SerializeField] float _colorTransitionSpeed;
-    [Foldout("Colors")]
-    [SerializeField] float _colorTransitionT;
-    const int _transitionMedium = 4;
-    const int _transitionHard = 8;
-
     [SerializeField] private List<List<Room>> _usableRooms;
     public List<RoomSetup> Corridors;
     public List<RoomSetup> CorridorsSpell;
@@ -59,6 +46,8 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
 
     void Update()
     {
+        if (_isColorTransitionning)
+            UpdateColorTransition();
     }
 
     void Start()
@@ -300,6 +289,24 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
         return _actualRooms.IndexOf(room);
     }
 
+    [Foldout("Colors")]
+    [SerializeField] Color _easyColor;
+    [Foldout("Colors")]
+    [SerializeField] Color _mediumColor;
+    [Foldout("Colors")]
+    [SerializeField] Color _hardColor;
+    [Foldout("Colors")]
+    [SerializeField] float _colorTransitionSpeed = 1.0f;
+    const int _transitionMedium = 2;
+    const int _transitionHard = 6;
+
+    bool _isColorTransitionning;
+    float _colorTransitionT;
+    Color _previousColor;
+    Color _nextColor;
+
+    [SerializeField] Light _fogLight;
+
     private void AdjustColor()
     {
         switch (CurrentRoom)
@@ -315,17 +322,30 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
 
     private void TransitionToMedium()
     {
-
-    }
-
-    UpdateTransition()
-    {
-
+        Debug.Log("TransitionToMedium");
+        _previousColor = _easyColor;
+        _nextColor = _mediumColor;
+        _isColorTransitionning = true;
+        _colorTransitionT = 0.0f;
     }
 
     private void TransitionToHard()
     {
+        Debug.Log("TransitionToHard");
+        _previousColor = _mediumColor;
+        _nextColor = _hardColor;
+        _isColorTransitionning = true;
+        _colorTransitionT = 0.0f;
+    }
 
+    private void UpdateColorTransition()
+    {
+        _colorTransitionT += Time.deltaTime * _colorTransitionSpeed;
+        _fogLight.color = Color.Lerp(_previousColor, _nextColor, _colorTransitionT);
+        if (_colorTransitionT >= 1.0f)
+        {
+            _isColorTransitionning = false;
+        }
     }
 
     /*    public void Endgame()
