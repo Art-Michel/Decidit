@@ -251,6 +251,15 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""HideUi"",
+                    ""type"": ""Button"",
+                    ""id"": ""42a87979-19f2-42f1-bdc2-de18ab35cc8e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -295,6 +304,17 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""DisplayDebug"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cb1fbd6b-f556-4c42-93d9-cc29df698fd1"",
+                    ""path"": ""<Keyboard>/f5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""HideUi"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1205,6 +1225,7 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
         m_Debugging_DisplayFramerate = m_Debugging.FindAction("DisplayFramerate", throwIfNotFound: true);
         m_Debugging_Slow = m_Debugging.FindAction("Slow", throwIfNotFound: true);
         m_Debugging_DisplayDebug = m_Debugging.FindAction("DisplayDebug", throwIfNotFound: true);
+        m_Debugging_HideUi = m_Debugging.FindAction("HideUi", throwIfNotFound: true);
         // Actions
         m_Actions = asset.FindActionMap("Actions", throwIfNotFound: true);
         m_Actions_Shoot = m_Actions.FindAction("Shoot", throwIfNotFound: true);
@@ -1358,6 +1379,7 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
     private readonly InputAction m_Debugging_DisplayFramerate;
     private readonly InputAction m_Debugging_Slow;
     private readonly InputAction m_Debugging_DisplayDebug;
+    private readonly InputAction m_Debugging_HideUi;
     public struct DebuggingActions
     {
         private @PlayerInputMap m_Wrapper;
@@ -1366,6 +1388,7 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
         public InputAction @DisplayFramerate => m_Wrapper.m_Debugging_DisplayFramerate;
         public InputAction @Slow => m_Wrapper.m_Debugging_Slow;
         public InputAction @DisplayDebug => m_Wrapper.m_Debugging_DisplayDebug;
+        public InputAction @HideUi => m_Wrapper.m_Debugging_HideUi;
         public InputActionMap Get() { return m_Wrapper.m_Debugging; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1387,6 +1410,9 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
             @DisplayDebug.started += instance.OnDisplayDebug;
             @DisplayDebug.performed += instance.OnDisplayDebug;
             @DisplayDebug.canceled += instance.OnDisplayDebug;
+            @HideUi.started += instance.OnHideUi;
+            @HideUi.performed += instance.OnHideUi;
+            @HideUi.canceled += instance.OnHideUi;
         }
 
         private void UnregisterCallbacks(IDebuggingActions instance)
@@ -1403,6 +1429,9 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
             @DisplayDebug.started -= instance.OnDisplayDebug;
             @DisplayDebug.performed -= instance.OnDisplayDebug;
             @DisplayDebug.canceled -= instance.OnDisplayDebug;
+            @HideUi.started -= instance.OnHideUi;
+            @HideUi.performed -= instance.OnHideUi;
+            @HideUi.canceled -= instance.OnHideUi;
         }
 
         public void RemoveCallbacks(IDebuggingActions instance)
@@ -1724,6 +1753,7 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
         void OnDisplayFramerate(InputAction.CallbackContext context);
         void OnSlow(InputAction.CallbackContext context);
         void OnDisplayDebug(InputAction.CallbackContext context);
+        void OnHideUi(InputAction.CallbackContext context);
     }
     public interface IActionsActions
     {

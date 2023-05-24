@@ -87,6 +87,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         _inputs.Debugging.Lock.started += _ => LockFramerate();
         _inputs.Debugging.Slow.started += _ => SlowDownTime();
         _inputs.Debugging.DisplayDebug.started += _ => ShowDebug();
+        _inputs.Debugging.HideUi.started += _ => HideUi();
         // _inputs.MenuNavigation.anyButton.started += _ => SwitchToController();
         // _inputs.MenuNavigation.moveMouse.started += _ => SwitchToMouse();
     }
@@ -95,6 +96,25 @@ public class PlayerManager : LocalManager<PlayerManager>
     {
 #if UNITY_EDITOR
         _DebuggingCanvas.SetActive(!_DebuggingCanvas.activeInHierarchy);
+#endif
+    }
+
+    private bool _uiVisible = true;
+    private void HideUi()
+    {
+#if UNITY_EDITOR
+        if (_uiVisible)
+            foreach (Canvas canva in GameObject.FindObjectsOfType<Canvas>())
+            {
+                canva.enabled = false;
+                _uiVisible = false;
+            }
+        else
+            foreach (Canvas canva in GameObject.FindObjectsOfType<Canvas>())
+            {
+                canva.enabled = true;
+                _uiVisible = true;
+            }
 #endif
     }
 
