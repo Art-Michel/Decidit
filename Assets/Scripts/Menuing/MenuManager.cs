@@ -17,7 +17,7 @@ public class MenuManager : LocalManager<MenuManager>
     const int _dioramaGreen = 2;
     const int _dioramaRed = 3;
     const int _dioramaYellow = 4;
-    const int _props = 10;
+    const int _props = 11;
 
     [Foldout("References")]
     [SerializeField] EventSystem _eventSys;
