@@ -23,6 +23,19 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
     [SerializeField] List<int> _scenesMedium;
     [SerializeField] List<int> _scenesHard;
 
+    [Foldout("Colors")]
+    [SerializeField] Color _easyColor;
+    [Foldout("Colors")]
+    [SerializeField] Color _mediumColor;
+    [Foldout("Colors")]
+    [SerializeField] Color _hardColor;
+    [Foldout("Colors")]
+    [SerializeField] float _colorTransitionSpeed;
+    [Foldout("Colors")]
+    [SerializeField] float _colorTransitionT;
+    const int _transitionMedium = 4;
+    const int _transitionHard = 8;
+
     [SerializeField] private List<List<Room>> _usableRooms;
     public List<RoomSetup> Corridors;
     public List<RoomSetup> CorridorsSpell;
@@ -279,11 +292,40 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
     public void SetCurrentRoom(Room room)
     {
         CurrentRoom = _actualRooms.IndexOf(room);
+        AdjustColor();
     }
 
     public int GetRoomIndex(Room room)
     {
         return _actualRooms.IndexOf(room);
+    }
+
+    private void AdjustColor()
+    {
+        switch (CurrentRoom)
+        {
+            case _transitionMedium:
+                TransitionToMedium();
+                break;
+            case _transitionHard:
+                TransitionToHard();
+                break;
+        }
+    }
+
+    private void TransitionToMedium()
+    {
+
+    }
+
+    UpdateTransition()
+    {
+
+    }
+
+    private void TransitionToHard()
+    {
+
     }
 
     /*    public void Endgame()
