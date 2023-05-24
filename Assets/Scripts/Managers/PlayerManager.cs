@@ -189,7 +189,7 @@ public class PlayerManager : LocalManager<PlayerManager>
     public void AltarEquipGun(int i)
     {
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/ChoosingChant", 1f, gameObject);
-        
+
         ForceEquipGun(i);
         if (DungeonGenerator.Instance != null)
             DungeonGenerator.Instance.ChoseAGun = true;
@@ -251,6 +251,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         foreach (GameObject arm in Arms)
             arm.SetActive(false);
         Arms[i].SetActive(true);
+        Player.Instance.CurrentArm = Arms[i].GetComponent<Arm>();
     }
     public void ForceEquipGun(int i)
     {

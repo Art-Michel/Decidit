@@ -339,6 +339,24 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""InspectWeapon"",
+                    ""type"": ""Button"",
+                    ""id"": ""97aa6240-30c0-4374-a685-8b1b92385894"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""InspectArm"",
+                    ""type"": ""Button"",
+                    ""id"": ""d24a81fd-5e15-4f1b-8847-560640e6d4b6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -438,6 +456,28 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3e18b522-f8c6-4614-8c0c-2783c46cd91b"",
+                    ""path"": ""<Keyboard>/v"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InspectWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""314a3b4b-c272-4c55-93e6-cf3182b378f3"",
+                    ""path"": ""<Keyboard>/b"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InspectArm"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1171,6 +1211,8 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
         m_Actions_Reload = m_Actions.FindAction("Reload", throwIfNotFound: true);
         m_Actions_Skill = m_Actions.FindAction("Skill", throwIfNotFound: true);
         m_Actions_Interact = m_Actions.FindAction("Interact", throwIfNotFound: true);
+        m_Actions_InspectWeapon = m_Actions.FindAction("InspectWeapon", throwIfNotFound: true);
+        m_Actions_InspectArm = m_Actions.FindAction("InspectArm", throwIfNotFound: true);
         // Camera
         m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
         m_Camera_RotateY = m_Camera.FindAction("RotateY", throwIfNotFound: true);
@@ -1386,6 +1428,8 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
     private readonly InputAction m_Actions_Reload;
     private readonly InputAction m_Actions_Skill;
     private readonly InputAction m_Actions_Interact;
+    private readonly InputAction m_Actions_InspectWeapon;
+    private readonly InputAction m_Actions_InspectArm;
     public struct ActionsActions
     {
         private @PlayerInputMap m_Wrapper;
@@ -1394,6 +1438,8 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
         public InputAction @Reload => m_Wrapper.m_Actions_Reload;
         public InputAction @Skill => m_Wrapper.m_Actions_Skill;
         public InputAction @Interact => m_Wrapper.m_Actions_Interact;
+        public InputAction @InspectWeapon => m_Wrapper.m_Actions_InspectWeapon;
+        public InputAction @InspectArm => m_Wrapper.m_Actions_InspectArm;
         public InputActionMap Get() { return m_Wrapper.m_Actions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1415,6 +1461,12 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
+            @InspectWeapon.started += instance.OnInspectWeapon;
+            @InspectWeapon.performed += instance.OnInspectWeapon;
+            @InspectWeapon.canceled += instance.OnInspectWeapon;
+            @InspectArm.started += instance.OnInspectArm;
+            @InspectArm.performed += instance.OnInspectArm;
+            @InspectArm.canceled += instance.OnInspectArm;
         }
 
         private void UnregisterCallbacks(IActionsActions instance)
@@ -1431,6 +1483,12 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
+            @InspectWeapon.started -= instance.OnInspectWeapon;
+            @InspectWeapon.performed -= instance.OnInspectWeapon;
+            @InspectWeapon.canceled -= instance.OnInspectWeapon;
+            @InspectArm.started -= instance.OnInspectArm;
+            @InspectArm.performed -= instance.OnInspectArm;
+            @InspectArm.canceled -= instance.OnInspectArm;
         }
 
         public void RemoveCallbacks(IActionsActions instance)
@@ -1673,6 +1731,8 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
         void OnReload(InputAction.CallbackContext context);
         void OnSkill(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnInspectWeapon(InputAction.CallbackContext context);
+        void OnInspectArm(InputAction.CallbackContext context);
     }
     public interface ICameraActions
     {

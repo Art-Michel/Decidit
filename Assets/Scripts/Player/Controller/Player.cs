@@ -41,6 +41,7 @@ public class Player : LocalManager<Player>
     PlayerFSM _fsm;
     PlayerHealth _playerHealth;
     public Revolver CurrentGun;
+    public Arm CurrentArm;
     #endregion
 
     #region Camera rotation variables
@@ -283,6 +284,8 @@ public class Player : LocalManager<Player>
         _inputs = new PlayerInputMap();
         _inputs.Movement.Jump.started += _ => PressJump();
         _inputs.Movement.Jump.canceled += _ => StopJumping();
+        _inputs.Actions.InspectWeapon.started += _ => InspectWeapon();
+        _inputs.Actions.InspectArm.started += _ => InspectArm();
     }
 
     private void Start()
@@ -1201,6 +1204,18 @@ public class Player : LocalManager<Player>
     //     bobIx = 0.0f;
     //     _isBobbing = false;
     // }
+    #endregion
+
+    #region Inspecting
+    public void InspectWeapon()
+    {
+        CurrentGun.Animator.CrossFade("inspect", .1f, 0);
+    }
+
+    public void InspectArm()
+    {
+        CurrentArm.Animator.CrossFade("inspect", .1f, 0);
+    }
     #endregion
 
     #region Enable Disable
