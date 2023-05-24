@@ -19630,7 +19630,7 @@ GameObject:
   - component: {fileID: 7602227159900808802}
   - component: {fileID: 1386281963034386549}
   m_Layer: 21
-  m_Name: Point Light
+  m_Name: CimetiereLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32455,12 +32455,12 @@ GameObject:
   - component: {fileID: 6844534314201115527}
   - component: {fileID: 7419688094756367708}
   m_Layer: 14
-  m_Name: Local Volumetric Fog
+  m_Name: Ceilng Fog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6844534314201115527
 Transform:
   m_ObjectHideFlags: 0
@@ -32469,7 +32469,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4996789111508958620}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 47.59804, z: 0}
+  m_LocalPosition: {x: 0, y: 80, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -32489,8 +32489,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parameters:
-    albedo: {r: 0.14658241, g: 0.16981131, b: 0.15881316, a: 1}
-    meanFreePath: 40
+    albedo: {r: 0, g: 0, b: 0, a: 1}
+    meanFreePath: 20
     anisotropy: 0
     volumeMask: {fileID: 0}
     textureScrollingSpeed: {x: 0, y: 0, z: 0}
@@ -32501,7 +32501,7 @@ MonoBehaviour:
     m_EditorPositiveFade: {x: 0, y: 0, z: 0}
     m_EditorNegativeFade: {x: 0, y: 0, z: 0}
     m_EditorAdvancedFade: 0
-    size: {x: 100, y: 300, z: 100}
+    size: {x: 400, y: 100, z: 400}
     invertFade: 0
     distanceFadeStart: 10000
     distanceFadeEnd: 10000
@@ -40275,6 +40275,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 603117771566878094}
     m_Modifications:
+    - target: {fileID: 7019780314798356974, guid: c42241cfed3ea19469905af7731854f9,
+        type: 3}
+      propertyPath: useVolumetric
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7019780315494282798, guid: c42241cfed3ea19469905af7731854f9,
         type: 3}
       propertyPath: m_RootOrder
@@ -42051,6 +42056,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 183938225}
     m_Modifications:
+    - target: {fileID: 5746206827116515870, guid: ffd7f2f70f432b9498e56b0f8a09f1ba,
+        type: 3}
+      propertyPath: useVolumetric
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7818780612837201625, guid: ffd7f2f70f432b9498e56b0f8a09f1ba,
         type: 3}
       propertyPath: m_Name
@@ -42258,6 +42268,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1447211705}
     m_Modifications:
+    - target: {fileID: 4106976751955591693, guid: bceb9beffeb3d134c943bfc70504fc85,
+        type: 3}
+      propertyPath: m_Name
+      value: CimetierePrecastLight
+      objectReference: {fileID: 0}
     - target: {fileID: 8086748823691685544, guid: bceb9beffeb3d134c943bfc70504fc85,
         type: 3}
       propertyPath: m_RootOrder
@@ -42447,17 +42462,17 @@ PrefabInstance:
     - target: {fileID: 3941903229797223227, guid: 8f37b6567d751f14988ba95b903baef4,
         type: 3}
       propertyPath: m_BoundingSphereOverride.w
-      value: 6403.797
+      value: -4.4634003e-35
       objectReference: {fileID: 0}
     - target: {fileID: 3941903229797223227, guid: 8f37b6567d751f14988ba95b903baef4,
         type: 3}
       propertyPath: m_BoundingSphereOverride.x
-      value: 0
+      value: 1.02e-43
       objectReference: {fileID: 0}
     - target: {fileID: 3941903229797223227, guid: 8f37b6567d751f14988ba95b903baef4,
         type: 3}
       propertyPath: m_BoundingSphereOverride.y
-      value: 1.345e-42
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3941903229797223236, guid: 8f37b6567d751f14988ba95b903baef4,
         type: 3}
@@ -42467,6 +42482,11 @@ PrefabInstance:
     - target: {fileID: 3941903229797223236, guid: 8f37b6567d751f14988ba95b903baef4,
         type: 3}
       propertyPath: m_ShapeRadius
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3941903229797223236, guid: 8f37b6567d751f14988ba95b903baef4,
+        type: 3}
+      propertyPath: useVolumetric
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3941903230122983533, guid: 8f37b6567d751f14988ba95b903baef4,
