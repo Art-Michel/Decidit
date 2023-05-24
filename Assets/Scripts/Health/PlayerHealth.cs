@@ -58,11 +58,11 @@ public class PlayerHealth : Health
     [SerializeField] private float _hardHp = 3;
 
     [Foldout("Difficulty Modifiers")]
-    [SerializeField] private float _easyInvulTime = 1.0f;
+    [SerializeField] private float _easyInvulTime = 0.6f;
     [Foldout("Difficulty Modifiers")]
-    [SerializeField] private float _mediumInvulTime = 0.4f;
+    [SerializeField] private float _mediumInvulTime = 0.3f;
     [Foldout("Difficulty Modifiers")]
-    [SerializeField] private float _hardInvulTime = 0.2f;
+    [SerializeField] private float _hardInvulTime = 0.1f;
 
 
     [SerializeField]
