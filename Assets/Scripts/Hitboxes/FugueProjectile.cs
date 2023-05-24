@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class FugueProjectile : SynergyProjectile
 {
-    [SerializeField] bool _centered;
+    [SerializeField] protected bool _centered;
     [SerializeField] ProjectileOscillator[] _objects;
     [SerializeField] Vector3[] _directions;
 

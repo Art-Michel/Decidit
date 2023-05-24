@@ -12,7 +12,6 @@ public class FugueMaladeShot : FugueProjectile
     Vector3 _p2;
     Transform _target;
     [SerializeField] AnimationCurve _speedCurve;
-    private bool _centered;
 
     public void Setup(Vector3 position, Vector3 direction, Vector3 cameraDirection, bool centered)
     {
