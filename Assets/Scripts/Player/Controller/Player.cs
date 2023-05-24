@@ -1207,14 +1207,24 @@ public class Player : LocalManager<Player>
     #endregion
 
     #region Inspecting
+    private bool _inspectedWeapon;
+    private bool _inspectedArm;
     public void InspectWeapon()
     {
-        CurrentGun.Animator.CrossFade("inspect", .1f, 0);
+        if (_inspectedWeapon)
+            CurrentGun.Animator.CrossFade("inspect1", .1f, 0);
+        else
+            CurrentGun.Animator.CrossFade("inspect", .1f, 0);
+        _inspectedWeapon = !_inspectedWeapon;
     }
 
     public void InspectArm()
     {
-        CurrentArm.Animator.CrossFade("inspect", .1f, 0);
+        if (_inspectedArm)
+            CurrentArm.Animator.CrossFade("inspect1", .1f, 0);
+        else
+            CurrentArm.Animator.CrossFade("inspect", .1f, 0);
+        _inspectedArm = !_inspectedArm;
     }
     #endregion
 
