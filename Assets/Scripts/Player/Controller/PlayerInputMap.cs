@@ -260,6 +260,15 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""HideGuns"",
+                    ""type"": ""Button"",
+                    ""id"": ""811c5b49-602b-45ba-9baa-9c3bceac7f4f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -315,6 +324,17 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""HideUi"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""89774bd1-0bd1-4bbe-b9c6-07e31f46aa7c"",
+                    ""path"": ""<Keyboard>/f6"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""HideGuns"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1226,6 +1246,7 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
         m_Debugging_Slow = m_Debugging.FindAction("Slow", throwIfNotFound: true);
         m_Debugging_DisplayDebug = m_Debugging.FindAction("DisplayDebug", throwIfNotFound: true);
         m_Debugging_HideUi = m_Debugging.FindAction("HideUi", throwIfNotFound: true);
+        m_Debugging_HideGuns = m_Debugging.FindAction("HideGuns", throwIfNotFound: true);
         // Actions
         m_Actions = asset.FindActionMap("Actions", throwIfNotFound: true);
         m_Actions_Shoot = m_Actions.FindAction("Shoot", throwIfNotFound: true);
@@ -1380,6 +1401,7 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
     private readonly InputAction m_Debugging_Slow;
     private readonly InputAction m_Debugging_DisplayDebug;
     private readonly InputAction m_Debugging_HideUi;
+    private readonly InputAction m_Debugging_HideGuns;
     public struct DebuggingActions
     {
         private @PlayerInputMap m_Wrapper;
@@ -1389,6 +1411,7 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
         public InputAction @Slow => m_Wrapper.m_Debugging_Slow;
         public InputAction @DisplayDebug => m_Wrapper.m_Debugging_DisplayDebug;
         public InputAction @HideUi => m_Wrapper.m_Debugging_HideUi;
+        public InputAction @HideGuns => m_Wrapper.m_Debugging_HideGuns;
         public InputActionMap Get() { return m_Wrapper.m_Debugging; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1413,6 +1436,9 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
             @HideUi.started += instance.OnHideUi;
             @HideUi.performed += instance.OnHideUi;
             @HideUi.canceled += instance.OnHideUi;
+            @HideGuns.started += instance.OnHideGuns;
+            @HideGuns.performed += instance.OnHideGuns;
+            @HideGuns.canceled += instance.OnHideGuns;
         }
 
         private void UnregisterCallbacks(IDebuggingActions instance)
@@ -1432,6 +1458,9 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
             @HideUi.started -= instance.OnHideUi;
             @HideUi.performed -= instance.OnHideUi;
             @HideUi.canceled -= instance.OnHideUi;
+            @HideGuns.started -= instance.OnHideGuns;
+            @HideGuns.performed -= instance.OnHideGuns;
+            @HideGuns.canceled -= instance.OnHideGuns;
         }
 
         public void RemoveCallbacks(IDebuggingActions instance)
@@ -1754,6 +1783,7 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
         void OnSlow(InputAction.CallbackContext context);
         void OnDisplayDebug(InputAction.CallbackContext context);
         void OnHideUi(InputAction.CallbackContext context);
+        void OnHideGuns(InputAction.CallbackContext context);
     }
     public interface IActionsActions
     {

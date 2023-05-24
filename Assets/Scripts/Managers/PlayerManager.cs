@@ -88,6 +88,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         _inputs.Debugging.Slow.started += _ => SlowDownTime();
         _inputs.Debugging.DisplayDebug.started += _ => ShowDebug();
         _inputs.Debugging.HideUi.started += _ => HideUi();
+        _inputs.Debugging.HideGuns.started += _ => HideGuns();
         // _inputs.MenuNavigation.anyButton.started += _ => SwitchToController();
         // _inputs.MenuNavigation.moveMouse.started += _ => SwitchToMouse();
     }
@@ -115,6 +116,26 @@ public class PlayerManager : LocalManager<PlayerManager>
                 canva.enabled = true;
                 _uiVisible = true;
             }
+#endif
+    }
+
+    private bool _gunsVisible = true;
+    private void HideGuns()
+    {
+#if UNITY_EDITOR
+        if (_gunsVisible)
+        {
+            Player.Instance.CurrentGun.Animator.gameObject.SetActive(false);
+            Player.Instance.CurrentArm.Animator.gameObject.SetActive(false);
+            _gunsVisible = false;
+        }
+        else
+        {
+            Player.Instance.CurrentGun.Animator.gameObject.SetActive(true);
+            Player.Instance.CurrentArm.Animator.gameObject.SetActive(true);
+            _gunsVisible = true;
+        }
+
 #endif
     }
 
