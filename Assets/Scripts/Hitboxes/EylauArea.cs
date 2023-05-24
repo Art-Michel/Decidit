@@ -70,6 +70,10 @@ public class EylauArea : SynergyTrigger
         _lifeT = 0.0f;
         _blackHoled = false;
         _blewUp = false;
+        transform.localScale = Vector3.zero;
+        float alpha = 1.0f;
+        _material.SetFloat("_Opacity", alpha);
+        _light.intensity = 0.0f;
 
         if (_isPlayerInHere)
             Player.Instance.StopEylauBuff();
@@ -256,5 +260,10 @@ public class EylauArea : SynergyTrigger
             Player.Instance.EylauMovementBuff();
         }
         _wasPlayerInHere = _isPlayerInHere;
+    }
+
+    void OnApplicationQuit()
+    {
+        Reset();
     }
 }
