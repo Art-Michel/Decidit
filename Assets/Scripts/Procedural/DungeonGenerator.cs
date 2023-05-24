@@ -297,8 +297,8 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
     [SerializeField] Color _hardColor;
     [Foldout("Colors")]
     [SerializeField] float _colorTransitionSpeed = 1.0f;
-    const int _transitionMedium = 2;
-    const int _transitionHard = 6;
+    const int _transitionMedium = 4;
+    const int _transitionHard = 8;
 
     bool _isColorTransitionning;
     float _colorTransitionT;
