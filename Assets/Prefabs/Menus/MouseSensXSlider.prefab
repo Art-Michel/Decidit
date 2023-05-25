@@ -36,7 +36,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 336.8, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 280.41, y: 50}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &5996831111398317002
 CanvasRenderer:
@@ -224,6 +224,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8881679309367081821}
   - component: {fileID: 9031353713950785538}
+  - component: {fileID: 5889536735090359002}
   m_Layer: 5
   m_Name: MouseSensXSlider
   m_TagString: Untagged
@@ -300,13 +301,38 @@ MonoBehaviour:
   m_FillRect: {fileID: 8086548837019174598}
   m_HandleRect: {fileID: 4598094749164050060}
   m_Direction: 0
-  m_MinValue: 0.1
+  m_MinValue: 1
   m_MaxValue: 100
-  m_WholeNumbers: 0
-  m_Value: 0.1
+  m_WholeNumbers: 1
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5889536735090359002}
+        m_TargetAssemblyTypeName: SliderValue, Assembly-CSharp
+        m_MethodName: AdjustValue
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &5889536735090359002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5634209180854994420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35f4e0e54765d724eaa9c3f3438b7353, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _valueTextMesh: {fileID: 8270455062692106698}
 --- !u!1 &6743738483620959081
 GameObject:
   m_ObjectHideFlags: 0

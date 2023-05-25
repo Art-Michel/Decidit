@@ -6,7 +6,7 @@ using FMOD;
 using UnityEngine.SceneManagement;
 using NaughtyAttributes;
 
-public class PlayerSettings : MonoBehaviour
+public class PlayerSettings : LocalManager<PlayerSettings>
 {
     #region VolumeSettingsVariablesFmod
     FMOD.Studio.Bus master;
@@ -33,8 +33,9 @@ public class PlayerSettings : MonoBehaviour
 
     Resolution resolution;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         //ça va chercher la magie que j'ai fait sur FMod
         LoadBus();
 
@@ -63,27 +64,24 @@ public class PlayerSettings : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        MasterVolumeUpdate();//Debug que tu pourra aussi elever
+        // MasterVolumeUpdate();//Debug que tu pourra aussi elever
     }
     #region VolumeFonctions
     public void MasterVolumeUpdate()//ToDoArt un slider qui appele la fonction connecté a la valeur MasterVolumeNumber
     {
         master.setVolume(masterVolumeNumber);//1 = 0Db donc la valeur normale donc 0 = plus de son
         master.getVolume(out masterVolumeNumber);//Debug qui affiche la current value du son
-        SavePrefs();
 
     }
     public void SFXVolumeUpdate()//ToDoArt un slider qui appele la fonction connecté a la valeur SFXVolumeNumber
     {
         SFX.setVolume(SFXVolumeNumber);//1 = 0Db donc la valeur normale donc 0 = plus de son
         SFX.getVolume(out SFXVolumeNumber);//Debug qui affiche la current value du son
-        SavePrefs();
     }
     public void MusicVolumeUpdate()//ToDoArt un slider qui appele la fonction connecté a la valeur MusicVolumeNumber
     {
         music.setVolume(musicVolumeNumber);//1 = 0Db donc la valeur normale donc 0 = plus de son
         music.getVolume(out musicVolumeNumber);//Debug qui affiche la current value du son
-        SavePrefs();
     }
     #endregion
 
@@ -159,25 +157,21 @@ public class PlayerSettings : MonoBehaviour
     public void ChangeMouseSensivityX(float x)
     {
         xSensivity = x;
-        SavePrefs();//Sauvegarde
     }
 
     public void ChangeMouseSensivityY(float y)
     {
         ySensivity = y;
-        SavePrefs();//Sauvegarde
     }
 
     public void ChangeControllerSensivityX(float x)
     {
         xControllerSensivity = x;
-        SavePrefs();//Sauvegarde
     }
 
     public void ChangeControllerSensivityY(float y)
     {
         yControllerSensivity = y;
-        SavePrefs();//Sauvegarde
     }
     #endregion
 

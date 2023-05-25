@@ -168,8 +168,13 @@ public class MenuManager : LocalManager<MenuManager>
 
         _eventSys.SetSelectedGameObject(null);
         if (CurrentMenu != null)
+        {
+            if (CurrentMenu.Id == Menus.Inputsettings || CurrentMenu.Id == Menus.AudioSettings || CurrentMenu.Id == Menus.Videosettings)
+                PlayerSettings.Instance.SavePrefs();
             CurrentMenu.gameObject.SetActive(false);
+        }
         CurrentMenu = null;
+
 
         //re enable everything
         if (Player.Instance != null)
@@ -241,6 +246,8 @@ public class MenuManager : LocalManager<MenuManager>
 
     public void OpenPreviousMenu()
     {
+        if (CurrentMenu.Id == Menus.Inputsettings || CurrentMenu.Id == Menus.AudioSettings || CurrentMenu.Id == Menus.Videosettings)
+            PlayerSettings.Instance.SavePrefs();
         if (CurrentMenu.PreviousMenu != null)
         {
             OpenSubmenu(CurrentMenu.PreviousMenu.Id, true);
@@ -261,17 +268,34 @@ public class MenuManager : LocalManager<MenuManager>
 
     public void OpenVideoSettings()
     {
+        SetSlidersToPlayerPrefs();
         OpenSubmenu(Menus.Videosettings, false);
     }
 
     public void OpenAudioSettings()
     {
+        SetSlidersToPlayerPrefs();
         OpenSubmenu(Menus.AudioSettings, false);
     }
 
     public void OpenInputSettings()
     {
+        SetSlidersToPlayerPrefs();
         OpenSubmenu(Menus.Inputsettings, false);
+    }
+
+    [SerializeField] Slider _mouseXSlider;
+    [SerializeField] Slider _mouseYSlider;
+    [SerializeField] Slider _controllerXSlider;
+    [SerializeField] Slider _controllerYSlider;
+
+    private void SetSlidersToPlayerPrefs()
+    {
+        Debug.Log("fsdgadfgdgfdvgdfgdf");
+        _mouseXSlider.value = PlayerPrefs.GetFloat("XSensivity");
+        _mouseYSlider.value = PlayerPrefs.GetFloat("YSensivity");
+        _controllerXSlider.value = PlayerPrefs.GetFloat("XControllerSensivity");
+        _controllerYSlider.value = PlayerPrefs.GetFloat("YControllerSensivity");
     }
 
     public void OpenCredits()
