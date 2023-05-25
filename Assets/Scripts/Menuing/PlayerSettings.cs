@@ -187,6 +187,6 @@ public class PlayerSettings : LocalManager<PlayerSettings>
     }
     private void OnApplicationQuit()
     {
-        SavePrefs();//babysitting anti con du Alt+F4
+        // SavePrefs();//babysitting anti con du Alt+F4
     }
 }
