@@ -95,15 +95,12 @@ public class PlayerManager : LocalManager<PlayerManager>
 
     private void ShowDebug()
     {
-#if UNITY_EDITOR
         _DebuggingCanvas.SetActive(!_DebuggingCanvas.activeInHierarchy);
-#endif
     }
 
     private bool _uiVisible = true;
     private void HideUi()
     {
-#if UNITY_EDITOR
         if (_uiVisible)
             foreach (Canvas canva in GameObject.FindObjectsOfType<Canvas>())
             {
@@ -116,13 +113,11 @@ public class PlayerManager : LocalManager<PlayerManager>
                 canva.enabled = true;
                 _uiVisible = true;
             }
-#endif
     }
 
     private bool _gunsVisible = true;
     private void HideGuns()
     {
-#if UNITY_EDITOR
         if (_gunsVisible)
         {
             Player.Instance.CurrentGun.Animator.gameObject.SetActive(false);
@@ -136,7 +131,6 @@ public class PlayerManager : LocalManager<PlayerManager>
             _gunsVisible = true;
         }
 
-#endif
     }
 
     private void Start()

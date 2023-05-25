@@ -1232,6 +1232,11 @@ public class Player : LocalManager<Player>
     void OnEnable()
     {
         _inputs.Enable();
+        //Get PlayerSettings
+        // _mouseSensitivityX = PlayerPrefs.GetFloat("XSensivity");
+        // _mouseSensitivityY = PlayerPrefs.GetFloat("YSensivity");
+        // _stickSensitivityX = PlayerPrefs.GetFloat("XControllerSensivity");
+        // _stickSensitivityY = PlayerPrefs.GetFloat("YControllerSensivity");
 
         //Buffer jump is jump was pressed when enabled
         if (_inputs.Movement.Jump.IsPressed()) PressJump();

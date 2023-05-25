@@ -23,11 +23,11 @@ public class PlayerSettings : MonoBehaviour
     #endregion
 
     #region SensivityVariables
-    float xSensivity = Mathf.Clamp(25f, 0.1f, 100f);
-    float ySensivity = Mathf.Clamp(25f, 0.1f, 100f);
+    float xSensivity;
+    float ySensivity;
 
-    float xControllerSensivity = Mathf.Clamp(25f, 0.1f, 100f);
-    float yControllerSensivity = Mathf.Clamp(25f, 0.1f, 100f);
+    float xControllerSensivity;
+    float yControllerSensivity;
 
     #endregion
 
@@ -156,19 +156,27 @@ public class PlayerSettings : MonoBehaviour
     #endregion
 
     #region SensivityFonctions
-    public void ChangeMouseSensivity(float x, float y)
+    public void ChangeMouseSensivityX(float x)
     {
         xSensivity = x;
-        ySensivity = y;
-        //ta fonction avec xSensivity pour x et ySensivity pour y
         SavePrefs();//Sauvegarde
     }
 
-    public void ChangeControllerSensivity(float x, float y)
+    public void ChangeMouseSensivityY(float y)
+    {
+        ySensivity = y;
+        SavePrefs();//Sauvegarde
+    }
+
+    public void ChangeControllerSensivityX(float x)
     {
         xControllerSensivity = x;
+        SavePrefs();//Sauvegarde
+    }
+
+    public void ChangeControllerSensivityY(float y)
+    {
         yControllerSensivity = y;
-        //ta fonction avec xSensivity pour x et ySensivity pour y
         SavePrefs();//Sauvegarde
     }
     #endregion
