@@ -334,21 +334,12 @@ public class Player : LocalManager<Player>
         MoveCameraWithMouse();
         //Shake();
 
-        //Ground Spherecast and Storage of its values
-        Physics.SphereCast(transform.position, _groundSpherecastRadius, -transform.up, out _groundHit, _groundSpherecastLength, _collisionMask);
-        //Ceiling Spherecast and Storage of its values
-        Physics.SphereCast(transform.position, _ceilingSpherecastRadius, transform.up, out _ceilingHit, _ceilingRaycastLength, _collisionMask);
-
         //Update Movement Vectors
         UpdateMovement();
         HandleMovementAcceleration();
         UpdateGlobalMomentum();
 
-        //State update
-        if (_fsm.CurrentState != null)
-            _fsm.CurrentState.StateUpdate();
-
-        Bob();
+        UpdateWeaponBobbing();
 
         //Final Movement Formula //I got lost with the deltatime stuff but i swear it works perfectly
         FinalMovement = (GlobalMomentum * Time.deltaTime)
@@ -365,6 +356,15 @@ public class Player : LocalManager<Player>
         //Apply Movement
         _previousPos = transform.position;
         ApplyMovementsToCharacter(FinalMovement);
+
+        //Ground Spherecast and Storage of its values
+        Physics.SphereCast(transform.position, _groundSpherecastRadius, -transform.up, out _groundHit, _groundSpherecastLength, _collisionMask);
+        //Ceiling Spherecast and Storage of its values
+        Physics.SphereCast(transform.position, _ceilingSpherecastRadius, transform.up, out _ceilingHit, _ceilingRaycastLength, _collisionMask);
+
+        //State update
+        if (_fsm.CurrentState != null)
+            _fsm.CurrentState.StateUpdate();
     }
 
     #region Debugs
@@ -1180,7 +1180,7 @@ public class Player : LocalManager<Player>
         _isBobbing = false;
     }
 
-    public void Bob()
+    public void UpdateWeaponBobbing()
     {
         if (_isBobbing)
             _transitionBob = Mathf.Clamp01(_transitionBob + Time.deltaTime * _bobTransitionSpeed);
