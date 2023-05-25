@@ -296,7 +296,8 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
     [Foldout("Colors")]
     [SerializeField] Color _hardColor;
     [Foldout("Colors")]
-    [SerializeField] float _colorTransitionSpeed = 0.25f;
+    [Tooltip("En secondes, combien de temps la transition de couleur va prendre")]
+    [SerializeField] float _colorTransitionSpeed = 4.0f;
     const int _transitionMedium = 3;
     const int _transitionHard = 7;
 
@@ -340,7 +341,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
 
     private void UpdateColorTransition()
     {
-        _colorTransitionT += Time.deltaTime * _colorTransitionSpeed;
+        _colorTransitionT += Time.deltaTime / _colorTransitionSpeed;
         _fogLight.color = Color.Lerp(_previousColor, _nextColor, _colorTransitionT);
         if (_colorTransitionT >= 1.0f)
         {
