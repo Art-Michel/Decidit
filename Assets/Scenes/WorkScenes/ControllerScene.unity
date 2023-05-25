@@ -9117,6 +9117,11 @@ MonoBehaviour:
   _actualRooms: []
   CurrentRoom: 0
   _roomsToBuild: []
+  _easyColor: {r: 0, g: 0, b: 0, a: 0}
+  _mediumColor: {r: 0, g: 0, b: 0, a: 0}
+  _hardColor: {r: 0, g: 0, b: 0, a: 0}
+  _colorTransitionSpeed: 0.25
+  _fogLight: {fileID: 0}
 --- !u!4 &982409762
 Transform:
   m_ObjectHideFlags: 0
@@ -20270,7 +20275,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!114 &2047409188
 MonoBehaviour:
@@ -20290,7 +20295,7 @@ MonoBehaviour:
   m_InnerSpotPercent: 79
   m_SpotIESCutoffPercent: 100
   m_LightDimmer: 1
-  m_VolumetricDimmer: 2.85
+  m_VolumetricDimmer: 16
   m_LightUnit: 2
   m_FadeDistance: 10000
   m_VolumetricFadeDistance: 10000
@@ -20346,9 +20351,9 @@ MonoBehaviour:
   m_ShadowResolution:
     m_Override: 512
     m_UseOverride: 0
-    m_Level: 1
+    m_Level: 0
   m_ShadowDimmer: 1
-  m_VolumetricShadowDimmer: 0.536
+  m_VolumetricShadowDimmer: 1
   m_ShadowFadeDistance: 10000
   m_UseContactShadow:
     m_Override: 0
@@ -20412,7 +20417,7 @@ Light:
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 1
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
