@@ -111,10 +111,12 @@ public class Synergies : LocalManager<Synergies>
     {
         SoundManager.Instance.PlaySound("event:/SFX_Controller/UniversalSound", 1f, gameObject);
         PlayerManager.Instance.StartFlash(0.1f, 0.5f);
-        SynergyProjectile shot = _chargedEylauPooler.Get().GetComponent<SynergyProjectile>();
-        shot.Setup(bullet.transform.position, bullet.Direction);
-        shot.ForceSynergized();
-        SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/CimetièreEyleau/MaxCharged", 1f, gameObject);
+
+        // old symergy (boost)
+        // SynergyProjectile shot = _chargedEylauPooler.Get().GetComponent<SynergyProjectile>();
+        // shot.Setup(bullet.transform.position, bullet.Direction);
+        // shot.ForceSynergized();
+        // SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/CimetièreEyleau/MaxCharged", 1f, gameObject);
         // foreach (AragonCloud cloud in ActiveClouds)
         // cloud.StartDisappearing();
         // ActiveClouds.Clear();
@@ -127,8 +129,9 @@ public class Synergies : LocalManager<Synergies>
 
     public void FugueOnMalade(Vector3 position)
     {
-        // PlayerManager.Instance.StartFlash(0.1f);
-        // SoundManager.Instance.PlaySound("event:/SFX_Controller/UniversalSound", 1f, gameObject);
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/UniversalSound", 1f, gameObject);
+        PlayerManager.Instance.StartFlash(0.1f, 0.5f);
+
         // FugueMaladeShot shot = _fugueMaladeShotsPooler.Get() as FugueMaladeShot;
         // shot.Setup(Hospital, position);
         // foreach (EnemyHealth enemy in Hospital)

@@ -12,7 +12,9 @@ public class AragonCloud : PooledObject
     [SerializeField] private bool _isActive;
     [SerializeField] private bool _isDisappearing;
     [SerializeField] float _maxLifeSpan = 4.0f;
-    [SerializeField] float _lifeSpan = 0.0f;
+    [SerializeField] float _lifeSpanT = 0.0f;
+
+    [SerializeField] VisualEffect _vfxGraph;
 
     void Awake()
     {
@@ -38,8 +40,8 @@ public class AragonCloud : PooledObject
         }
         else
         {
-            _lifeSpan -= Time.deltaTime;
-            if (_lifeSpan <= 0.0f && !_isDisappearing)
+            _lifeSpanT -= Time.deltaTime;
+            if (_lifeSpanT <= 0.0f && !_isDisappearing)
             {
                 StartDisappearing();
             }
@@ -52,12 +54,22 @@ public class AragonCloud : PooledObject
         }
     }
 
+    public void Swoosh(float delay)
+    {
+
+    }
+
+    public void Poisonify(float delay)
+    {
+
+    }
+
     private void Enable()
     {
         _boxCollider.enabled = true;
         _vfx.Reinit();
         _vfx.Play();
-        _lifeSpan = _maxLifeSpan;
+        _lifeSpanT = _maxLifeSpan;
         _isActive = true;
     }
 
@@ -66,7 +78,7 @@ public class AragonCloud : PooledObject
         _vfx.Stop();
         _isDisappearing = true;
         _boxCollider.enabled = false;
-        _lifeSpan = -1.0f;
+        _lifeSpanT = -1.0f;
     }
 
     private void Disable()
