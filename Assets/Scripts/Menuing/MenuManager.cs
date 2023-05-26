@@ -289,7 +289,7 @@ public class MenuManager : LocalManager<MenuManager>
     [SerializeField] Slider _controllerXSlider;
     [SerializeField] Slider _controllerYSlider;
 
-    private void SetSlidersToPlayerPrefs()
+    public void SetSlidersToPlayerPrefs()
     {
         Debug.Log("Loaded PlayerPrefs");
         _mouseXSlider.value = PlayerPrefs.GetFloat("XSensivity");

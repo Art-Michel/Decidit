@@ -443,8 +443,8 @@ public class Player : LocalManager<Player>
     {
         Vector2 mouseMovement = _inputs.Camera.Rotate.ReadValue<Vector2>()/* * Time.deltaTime */;
         // _cameraTargetYRotation = Mathf.Repeat(_cameraTargetYRotation, 360);
-        _cameraTargetYRotation += mouseMovement.x * _mouseSensitivityX * 0.01f * _mouseXInvertedValue * Time.timeScale;
-        _cameraTargetXRotation -= mouseMovement.y * _mouseSensitivityY * 0.01f * _mouseYInvertedValue * Time.timeScale;
+        _cameraTargetYRotation += mouseMovement.x * _mouseSensitivityX * 0.005f * _mouseXInvertedValue * Time.timeScale;
+        _cameraTargetXRotation -= mouseMovement.y * _mouseSensitivityY * 0.005f * _mouseYInvertedValue * Time.timeScale;
 
         _cameraTargetXRotation = Mathf.Clamp(_cameraTargetXRotation, -89.5f, 89.5f);
 

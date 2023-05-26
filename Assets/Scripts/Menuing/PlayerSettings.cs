@@ -156,22 +156,22 @@ public class PlayerSettings : LocalManager<PlayerSettings>
     #region SensivityFonctions
     public void ChangeMouseSensivityX(float x)
     {
-        xSensivity = x;
+        xSensivity = Mathf.Round(x * 10) / 10;
     }
 
     public void ChangeMouseSensivityY(float y)
     {
-        ySensivity = y;
+        ySensivity = Mathf.Round(y * 10) / 10;
     }
 
     public void ChangeControllerSensivityX(float x)
     {
-        xControllerSensivity = x;
+        xControllerSensivity = Mathf.Round(x * 10) / 10;
     }
 
     public void ChangeControllerSensivityY(float y)
     {
-        yControllerSensivity = y;
+        yControllerSensivity = Mathf.Round(y * 10) / 10;
     }
     #endregion
 
