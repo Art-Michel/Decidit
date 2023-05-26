@@ -291,6 +291,7 @@ public class MenuManager : LocalManager<MenuManager>
 
     private void SetSlidersToPlayerPrefs()
     {
+        Debug.Log("Loaded PlayerPrefs");
         _mouseXSlider.value = PlayerPrefs.GetFloat("XSensivity");
         _mouseYSlider.value = PlayerPrefs.GetFloat("YSensivity");
         _controllerXSlider.value = PlayerPrefs.GetFloat("XControllerSensivity");
