@@ -32,6 +32,17 @@ public class Room : MonoBehaviour
     }
 
     // [Button]
+    public void FindDoors()
+    {
+        _doors.Clear();
+        foreach (Door door in GetComponentsInChildren<Door>())
+        {
+            _doors.Add(door);
+            door.ThisDoorsRoom = this;
+        }
+    }
+    
+    // [Button]
     public void CountEnemies()
     {
         _enemiesList.Clear();
@@ -42,16 +53,6 @@ public class Room : MonoBehaviour
         }
     }
 
-    // [Button]
-    public void FindDoors()
-    {
-        _doors.Clear();
-        foreach (Door door in GetComponentsInChildren<Door>())
-        {
-            _doors.Add(door);
-            door.ThisDoorsRoom = this;
-        }
-    }
 
     public void EnableEnemies(bool b)
     {
