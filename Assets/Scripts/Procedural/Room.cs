@@ -10,7 +10,7 @@ public class Room : MonoBehaviour
     [Header("References")]
     [SerializeField] List<EnemyHealth> _enemiesList;
     [SerializeField] List<Door> _doors;
-    [SerializeField] GameObject [] _ennemiesParentList;
+    [SerializeField] GameObject[] _ennemiesParentList;
 
     public Door Entry => _doors[0];
     public Door Exit => _doors[1];
@@ -25,7 +25,7 @@ public class Room : MonoBehaviour
     {
         // this.transform.parent = DungeonGenerator.Instance.transform;
         _ennemiesParentList = GameObject.FindGameObjectsWithTag("ListEnnemies");
-        for(int i=0; i< _ennemiesParentList.Length; i++)
+        for (int i = 0; i < _ennemiesParentList.Length; i++)
         {
             _ennemiesParentList[i].SetActive(false);
         }
@@ -35,7 +35,7 @@ public class Room : MonoBehaviour
     public void CountEnemies()
     {
         _enemiesList.Clear();
-        foreach (EnemyHealth enemy in GetComponentsInChildren<EnemyHealth>(includeInactive: false))
+        foreach (EnemyHealth enemy in GetComponentsInChildren<EnemyHealth>(includeInactive: true))
         {
             _enemiesList.Add(enemy);
             enemy.Room = this;
@@ -72,6 +72,13 @@ public class Room : MonoBehaviour
                 enemyHealth.StartCoroutine("DissolveInverse");
             }
         }
+    }
+
+    private IEnumerator EnableEnemiesProgressively(List<EnemyHealth> enemies)
+    {
+
+
+        yield return null;
     }
 
     public void EnterRoom()
@@ -136,7 +143,7 @@ public class Room : MonoBehaviour
         // PlayerHealth.Instance.TrueHeal(1);
         SoundManager.Instance.ClearedSound();
         PlayerManager.Instance.StartSlowMo(0.01f, 2f);
-        PlayerManager.Instance.StartFlash(1.0f,1);
+        PlayerManager.Instance.StartFlash(1.0f, 1);
 
         //Progress in dungeon
         this.Exit.OpenDoor();
