@@ -10,7 +10,7 @@ public class Room : MonoBehaviour
     [Header("References")]
     [SerializeField] List<EnemyHealth> _enemiesList;
     [SerializeField] List<Door> _doors;
-    [SerializeField] GameObject[] _ennemiesParentList;
+    [SerializeField] TriggerActiveMobs[] _triggers;
 
     public Door Entry => _doors[0];
     public Door Exit => _doors[1];
@@ -23,12 +23,12 @@ public class Room : MonoBehaviour
 
     void Awake()
     {
-        // this.transform.parent = DungeonGenerator.Instance.transform;
-        _ennemiesParentList = GameObject.FindGameObjectsWithTag("ListEnnemies");
-        for (int i = 0; i < _ennemiesParentList.Length; i++)
-        {
-            _ennemiesParentList[i].SetActive(false);
-        }
+        // // this.transform.parent = DungeonGenerator.Instance.transform;
+        // _ennemiesParentList = GameObject.FindGameObjectsWithTag("ListEnnemies");
+        // for (int i = 0; i < _ennemiesParentList.Length; i++)
+        // {
+        //     _ennemiesParentList[i].SetActive(false);
+        // }
     }
 
     // [Button]
@@ -41,23 +41,29 @@ public class Room : MonoBehaviour
             door.ThisDoorsRoom = this;
         }
     }
-    
+
     // [Button]
     public void CountEnemies()
     {
         _enemiesList.Clear();
+
+        foreach (TriggerActiveMobs trigger in _triggers)
+        {
+            trigger.GetPool();
+        }
+
         foreach (EnemyHealth enemy in GetComponentsInChildren<EnemyHealth>(includeInactive: true))
         {
             _enemiesList.Add(enemy);
             enemy.Room = this;
+            // enemy.gameObject.SetActive(false);
         }
+        CurrentEnemiesInRoom = _enemiesList.Count;
     }
-
 
     public void EnableEnemies(bool b)
     {
-        CountEnemies();
-        CurrentEnemiesInRoom = _enemiesList.Count;
+        // CountEnemies();
         SoundManager.Instance.PlaySound("event:/SFX_Environement/StartFight", 1f, gameObject);
         SoundManager.Instance.FightingSound();
         foreach (EnemyHealth enemyHealth in _enemiesList)
@@ -86,6 +92,7 @@ public class Room : MonoBehaviour
     {
         DungeonGenerator.Instance.SetCurrentRoom(this);
         DungeonGenerator.Instance.GetRoom(-1).gameObject.SetActive(false);
+        CountEnemies();
         this.Entry.CloseDoor();
         Killplane.Instance.MoveSpawnPointTo(this.Entry.transform.position + this.Entry.transform.forward * 4.0f + Vector3.up * 2);
 
@@ -100,8 +107,8 @@ public class Room : MonoBehaviour
         {
             PlayerManager.Instance.RechargeEverything();
             SoundManager.Instance.PlaySound("event:/SFX_Environement/StartFight", 1f, gameObject);
-            _ennemiesParentList[UnityEngine.Random.Range(0, 2)].SetActive(true);
-            this.EnableEnemies(true);
+            // _ennemiesParentList[UnityEngine.Random.Range(0, 2)].SetActive(true);
+            // this.EnableEnemies(true);
             TimerManager.Instance.isInCorridor = false;
         }
     }

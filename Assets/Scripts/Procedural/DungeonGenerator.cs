@@ -251,7 +251,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
 
             //* Disable Room and its enemies
             lastDoor = roomInstance.Exit.transform;
-            roomInstance.EnableEnemies(false);
+            // roomInstance.EnableEnemies(false);
             roomInstance.gameObject.SetActive(false);
 
             _actualRooms.Add(roomInstance);
