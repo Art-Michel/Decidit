@@ -154,6 +154,7 @@ public class EnemyHealth : Health
 
     void OnEnable()
     {
+        SoundManager.Instance.PlaySound("event:/SFX_IA/SpawnIA", 1f, gameObject);
         // if (this.Room == null && DungeonGenerator.Instance != null)
         // Debug.LogError("Room non assignée: l'ennemi [" + transform.name + "] dans la salle [" + DungeonGenerator.Instance.GetRoom(0).transform.name + "]");
     }

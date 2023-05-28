@@ -64,6 +64,11 @@ public class TriggerActiveMobs : MonoBehaviour
         // int i = Random.Range(0, mobList.Count);
         // mobList[i].SetActive(true);
         _once = true;
+        foreach (Transform tr in _pools[_poolChosen].transform)
+        {
+            foreach (Transform tr2 in tr)
+                tr2.gameObject.SetActive(false);
+        }
         _pools[_poolChosen].SetActive(true);
         thisTriggersRoom.Triggers.Remove(this);
     }

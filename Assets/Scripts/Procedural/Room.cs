@@ -89,13 +89,6 @@ public class Room : MonoBehaviour
         // }
     }
 
-    private IEnumerator EnableEnemiesProgressively(List<EnemyHealth> enemies)
-    {
-
-
-        yield return null;
-    }
-
     public void EnterRoom()
     {
         DungeonGenerator.Instance.SetCurrentRoom(this);
