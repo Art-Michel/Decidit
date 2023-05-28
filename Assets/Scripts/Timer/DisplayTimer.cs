@@ -32,7 +32,7 @@ public class DisplayTimer : MonoBehaviour
 
         currentTime += Time.deltaTime;
         if (txt)
-            txt.text = FormatTime(currentTime);
+            txt.text = FormatTime(TimerManager.Instance.time);
     }
 
     string FormatTime(float time)
