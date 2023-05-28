@@ -4,7 +4,7 @@ using UnityEngine;
 public class TriggerActiveMobs : MonoBehaviour
 {
     private List<GameObject> _pools = new List<GameObject>();
-    private bool _once;
+    public bool _triggered { get; private set; }
     // BoxCollider _boxCollider;
     private int _poolChosen;
     [System.NonSerialized] public Room thisTriggersRoom;
@@ -59,7 +59,7 @@ public class TriggerActiveMobs : MonoBehaviour
     {
         // int i = Random.Range(0, mobList.Count);
         // mobList[i].SetActive(true);
-        _once = true;
+        _triggered = true;
         foreach (Transform tr in _pools[_poolChosen].transform)
         {
             foreach (Transform tr2 in tr)
@@ -71,7 +71,7 @@ public class TriggerActiveMobs : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && !_once)
+        if (other.CompareTag("Player") && !_triggered)
         {
             EnableMobs();
         }
