@@ -514,7 +514,7 @@ public class MenuManager : LocalManager<MenuManager>
         }
         else
         {
-            Debug.Log("Set to button under mouse: " + buttonUnderMouse.gameObject.name);
+            // Debug.Log("Set to button under mouse: " + buttonUnderMouse.gameObject.name);
             _eventSys.SetSelectedGameObject(buttonUnderMouse);
             return;
         }

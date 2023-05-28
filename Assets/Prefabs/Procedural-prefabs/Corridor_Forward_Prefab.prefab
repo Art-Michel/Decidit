@@ -195,8 +195,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8342968856343206261}
   - {fileID: 7365375678955713246}
+  - {fileID: 8342968856343206261}
   - {fileID: 7936565667892877418}
   - {fileID: 8554592704943062293}
   m_Father: {fileID: 0}
@@ -214,13 +214,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b06c4a844e38a34096c03859412570b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemiesList: []
   _doors:
   - {fileID: 8282895312108666615}
   - {fileID: 6032253216355085877}
-  _ennemiesParentList: []
+  Entry: {fileID: 0}
+  Exit: {fileID: 0}
   _isCorridor: 1
-  CurrentEnemiesInRoom: 0
 --- !u!1 &2140708897346728278
 GameObject:
   m_ObjectHideFlags: 0
@@ -337,7 +336,7 @@ Transform:
   - {fileID: 6604073331229811458}
   - {fileID: 7243992663549010882}
   m_Father: {fileID: 2482423375833261200}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &4709889904729305389
 GameObject:
@@ -1047,39 +1046,9 @@ MonoBehaviour:
   m_Mesh: {fileID: 0}
   m_VersionIndex: 2045
   m_IsSelectable: 1
-  m_SelectedFaces: 09000000
-  m_SelectedEdges:
-  - a: 50
-    b: 51
-  - a: 51
-    b: 52
-  - a: 52
-    b: 38
-  - a: 49
-    b: 50
-  - a: 38
-    b: 39
-  - a: 48
-    b: 49
-  - a: 39
-    b: 40
-  - a: 47
-    b: 48
-  - a: 40
-    b: 41
-  - a: 43
-    b: 44
-  - a: 44
-    b: 45
-  - a: 42
-    b: 43
-  - a: 45
-    b: 46
-  - a: 41
-    b: 42
-  - a: 46
-    b: 47
-  m_SelectedVertices: 32000000330000003400000026000000310000002700000030000000280000002f000000290000002b0000002c0000002d0000002a0000002e000000
+  m_SelectedFaces: 
+  m_SelectedEdges: []
+  m_SelectedVertices: 
 --- !u!114 &6442192268419089099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1287,7 +1256,7 @@ Transform:
   - {fileID: 7368250822813279948}
   - {fileID: 3945571749737847532}
   m_Father: {fileID: 2482423375833261200}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1507832362630281565
 PrefabInstance:

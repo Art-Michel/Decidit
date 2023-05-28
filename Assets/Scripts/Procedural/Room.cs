@@ -8,17 +8,16 @@ using System.Linq;
 public class Room : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] List<EnemyHealth> _enemiesList;
+    List<EnemyHealth> _enemiesList;
     [SerializeField] List<Door> _doors;
-    [SerializeField] TriggerActiveMobs[] _triggers;
+    [NonSerialized] public List<TriggerActiveMobs> Triggers;
 
-    public Door Entry => _doors[0];
-    public Door Exit => _doors[1];
+    public Door Entry;
+    public Door Exit;
 
-    [Header("Settings")]
     [SerializeField] private bool _isCorridor = false;
 
-    public int CurrentEnemiesInRoom;
+    [NonSerialized] public int CurrentEnemiesInRoom;
 
 
     void Awake()
@@ -34,23 +33,30 @@ public class Room : MonoBehaviour
     // [Button]
     public void FindDoors()
     {
-        _doors.Clear();
+        _doors = new List<Door>();
         foreach (Door door in GetComponentsInChildren<Door>())
         {
             _doors.Add(door);
             door.ThisDoorsRoom = this;
+        }
+        Entry = _doors[0];
+        Exit = _doors[1];
+    }
+
+    public void FindTriggers()
+    {
+        Triggers = new List<TriggerActiveMobs>();
+        foreach (TriggerActiveMobs trigger in GetComponentsInChildren<TriggerActiveMobs>())
+        {
+            Triggers.Add(trigger);
+            trigger.thisTriggersRoom = this;
         }
     }
 
     // [Button]
     public void CountEnemies()
     {
-        _enemiesList.Clear();
-
-        foreach (TriggerActiveMobs trigger in _triggers)
-        {
-            trigger.GetPool();
-        }
+        _enemiesList = new List<EnemyHealth>();
 
         foreach (EnemyHealth enemy in GetComponentsInChildren<EnemyHealth>(includeInactive: true))
         {
@@ -139,9 +145,31 @@ public class Room : MonoBehaviour
 
     public void CheckForEnemies()
     {
-        Debug.Log(CurrentEnemiesInRoom + " left in " + gameObject.name);
+        Debug.Log(CurrentEnemiesInRoom + "/" + _enemiesList.Count + " enemies still alive in " + gameObject.name);
         if (CurrentEnemiesInRoom <= 0)
+        {
             FinishRoom();
+            return;
+        }
+
+        bool anyMobAlive = false;
+        for (int i = 0; i < _enemiesList.Count; i++)
+        {
+            if (_enemiesList[i] != null)
+                anyMobAlive = anyMobAlive || (_enemiesList[i].gameObject.activeInHierarchy && !_enemiesList[i].IsDying);
+            Debug.Log(anyMobAlive);
+        }
+
+        if (CurrentEnemiesInRoom > 0 && !anyMobAlive)
+            EnableClosestTriggers();
+    }
+
+    private void EnableClosestTriggers()
+    {
+        TriggerActiveMobs[] closest = Triggers.OrderBy(t => (Vector3.Distance(t.transform.position, Player.Instance.transform.position))).ToArray();
+        closest[0].EnableMobs();
+        if (closest.Length > 0)
+            closest[1].EnableMobs();
     }
 
     private void FinishRoom()

@@ -3,10 +3,11 @@ using UnityEngine;
 
 public class TriggerActiveMobs : MonoBehaviour
 {
-    public List<GameObject> _pools = new List<GameObject>();
-    public bool _once;
+    [SerializeField] private List<GameObject> _pools = new List<GameObject>();
+    private bool _once;
     BoxCollider _boxCollider;
     [SerializeField] private int _poolChosen;
+    [System.NonSerialized] public Room thisTriggersRoom;
 
     [SerializeField] LayerMask mask;
 
@@ -20,7 +21,7 @@ public class TriggerActiveMobs : MonoBehaviour
     //     }
     // }
 
-    public void GetPool()
+    public void ChooseAPool()
     {
         _poolChosen = Random.Range(0, _pools.Count);
         for (int i = 0; i < _pools.Count; i++)
@@ -63,8 +64,8 @@ public class TriggerActiveMobs : MonoBehaviour
         // int i = Random.Range(0, mobList.Count);
         // mobList[i].SetActive(true);
         _once = true;
-
         _pools[_poolChosen].SetActive(true);
+        thisTriggersRoom.Triggers.Remove(this);
     }
 
     private void OnTriggerEnter(Collider other)

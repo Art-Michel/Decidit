@@ -80,12 +80,12 @@ namespace State.AICAC
 
         void CoolDownAttack()
         {
-            if(baseMoveAICACSO.currentCoolDownAttack >0)
+            if (baseMoveAICACSO.currentCoolDownAttack > 0)
             {
                 baseMoveAICACSO.currentCoolDownAttack -= Time.deltaTime;
                 destination = CheckNavMeshPoint(globalRef.destinationSurround);
-                
-                if (Vector3.Distance(destination, globalRef.transform.position) < baseMoveAICACSO.distStopSurroundNearPlayer || globalRef.agent.velocity.magnitude <1f)
+
+                if (Vector3.Distance(destination, globalRef.transform.position) < baseMoveAICACSO.distStopSurroundNearPlayer || globalRef.agent.velocity.magnitude < 1f)
                 {
                     baseMoveAICACSO.currentCoolDownAttack = 0;
                 }
@@ -165,7 +165,7 @@ namespace State.AICAC
 
         void DelayeforeCanSurround()
         {
-            if(baseMoveAICACSO.currentDelayBeforeSurround > 0)
+            if (baseMoveAICACSO.currentDelayBeforeSurround > 0)
             {
                 baseMoveAICACSO.currentDelayBeforeSurround -= Time.deltaTime;
                 canSurround = false;
@@ -188,7 +188,7 @@ namespace State.AICAC
             }
             else
             {
-                if(globalRef.offsetDestination !=0)
+                if (globalRef.offsetDestination != 0)
                 {
                     offset = Mathf.Lerp(offset, globalRef.offsetDestination, baseMoveAICACSO.offsetTransitionSmooth * Time.deltaTime);
                     offset = Mathf.Clamp(offset, -Mathf.Abs(globalRef.offsetDestination), Mathf.Abs(globalRef.offsetDestination));
@@ -201,10 +201,10 @@ namespace State.AICAC
                     Invoke("ActiveJump", baseMoveAICACSO.jumpRate);
                 }
             }
-            
+
             if (globalRef.agent.enabled && globalRef != null)
             {
-                if(currentRateRepath >0)
+                if (currentRateRepath > 0)
                 {
                     currentRateRepath -= Time.deltaTime;
                 }
@@ -236,12 +236,12 @@ namespace State.AICAC
 
                         if (Vector3.Distance(globalRef.playerTransform.position, globalRef.transform.position) > (globalRef.surroundManager.radius + baseMoveAICACSO.distStopSurroundNearPlayer))
                         {
-                            if(canSurround)
+                            if (canSurround)
                                 activeSurround = true;
                         }
                     }
 
-                    if(!isOnNavLink)
+                    if (!isOnNavLink)
                     {
                         SpeedAdjusting();
                         SlowSpeed(globalRef.isInEylau || globalRef.IsZap);
@@ -292,7 +292,7 @@ namespace State.AICAC
             {
                 if (baseMoveAICACSO.currentDelayActiveAnticip > 0)
                 {
-                    if (Player.Instance.FinalMovement.magnitude > 0 && Input.GetAxis("Horizontal") != 0 || 
+                    if (Player.Instance.FinalMovement.magnitude > 0 && Input.GetAxis("Horizontal") != 0 ||
                         Player.Instance.FinalMovement.magnitude > 0 && Input.GetAxis("Vertical") != 0)
                         baseMoveAICACSO.currentDelayActiveAnticip -= Time.deltaTime;
 
@@ -330,7 +330,7 @@ namespace State.AICAC
 
                 if (settingsName == name)
                 {
-                    Debug.Log(settings.agentTypeID);
+                    // Debug.Log(settings.agentTypeID);
                     return settings.agentTypeID;
                 }
 
@@ -386,7 +386,7 @@ namespace State.AICAC
 
         void SlowSpeed(bool active)
         {
-            if(active)
+            if (active)
             {
                 globalRef.agent.speed = baseMoveAICACSO.currentSpeed / globalRef.slowRatio;
             }
@@ -398,7 +398,7 @@ namespace State.AICAC
 
         void SmoothLookAt()
         {
-            if(lookForwardJump)
+            if (lookForwardJump)
             {
                 relativePos.x = linkDestination.x;
                 relativePos.y = 0;
@@ -408,7 +408,7 @@ namespace State.AICAC
                 Quaternion rotation = Quaternion.Slerp(globalRef.transform.rotation, Quaternion.LookRotation(relativePos, Vector3.up), baseMoveAICACSO.speedRot);
                 globalRef.transform.rotation = rotation;
             }
-            else if(!isOnNavLink)
+            else if (!isOnNavLink)
             {
                 // direction = globalRef.transform.position + globalRef.agent.desiredVelocity;
                 direction = globalRef.agent.desiredVelocity;
@@ -424,7 +424,7 @@ namespace State.AICAC
         }
         void SlowRotation(bool active)
         {
-            if(active)
+            if (active)
             {
                 if (baseMoveAICACSO.speedRot < (baseMoveAICACSO.maxSpeedRot / globalRef.slowRatio))
                 {

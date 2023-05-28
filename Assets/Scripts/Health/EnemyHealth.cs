@@ -46,7 +46,7 @@ public class EnemyHealth : Health
     float _appearT;
     bool _healthBarIsVisible;
     float _deathT;
-    bool _isDying;
+    public bool IsDying { get; private set; }
     float _enableT = 1f;
 
     [Foldout("Synergies")]
@@ -91,7 +91,7 @@ public class EnemyHealth : Health
         //_regenValue = _hp;
         _appearT = 0f;
         _canvasGroup.alpha = 0f;
-        _isDying = false;
+        IsDying = false;
 
         if (_sickboxes.Count > 0)
             foreach (Collider collider in _sickboxes)
@@ -167,7 +167,7 @@ public class EnemyHealth : Health
         AdjustScale();
         AdjustVisibility();
 
-        if (_isDying)
+        if (IsDying)
         {
             UpdateDeath();
             return;
@@ -313,7 +313,7 @@ public class EnemyHealth : Health
         if (_isPoisoned)
             _healthBarIsVisible = true;
         //If dying, we override the value to be false
-        if (_isDying)
+        if (IsDying)
         {
             _healthBarIsVisible = false;
             _disappearStartup = 0f;
@@ -343,7 +343,7 @@ public class EnemyHealth : Health
 
     protected override void Death()
     {
-        if (_isDying)
+        if (IsDying)
             return;
 
         //regen player
@@ -355,7 +355,7 @@ public class EnemyHealth : Health
 
 
         _deathT = _deathAnimationDuration;
-        _isDying = true;
+        IsDying = true;
         _deathVfx.Play();
         foreach (Collider collider in _hurtboxes)
         {

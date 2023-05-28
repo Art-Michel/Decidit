@@ -75,40 +75,43 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
         {
             //Load a scene
             SceneManager.LoadScene(_scenesEasy[i], LoadSceneMode.Additive);
-            Debug.Log("Loaded scene " + _scenesEasy[i]);
+            // Debug.Log("Loaded scene " + _scenesEasy[i]);
             yield return null;
 
             //Add scenes level to _usableRooms
             GameObject thatScenesRoot = GameObject.Find((_scenesEasy[i].ToString()));
             Room thatScenesRoom = thatScenesRoot.GetComponent<Room>();
             _usableRooms[0].Add(thatScenesRoom);
-            thatScenesRoom.FindDoors();
+            // thatScenesRoom.FindDoors();
+            // thatScenesRoom.FindTriggers();
         }
 
         _usableRooms.Add(new List<Room>());
         for (int i = 0; i < _scenesMedium.Count; i++)
         {
             SceneManager.LoadScene(_scenesMedium[i], LoadSceneMode.Additive);
-            Debug.Log("Loaded scene " + _scenesMedium[i]);
+            // Debug.Log("Loaded scene " + _scenesMedium[i]);
             yield return null;
 
             GameObject thatScenesRoot = GameObject.Find((_scenesMedium[i].ToString()));
             Room thatScenesRoom = thatScenesRoot.GetComponent<Room>();
             _usableRooms[1].Add(thatScenesRoom);
-            thatScenesRoom.FindDoors();
+            // thatScenesRoom.FindDoors();
+            // thatScenesRoom.FindTriggers();
         }
 
         _usableRooms.Add(new List<Room>());
         for (int i = 0; i < _scenesHard.Count; i++)
         {
             SceneManager.LoadScene(_scenesHard[i], LoadSceneMode.Additive);
-            Debug.Log("Loaded scene " + _scenesHard[i]);
+            // Debug.Log("Loaded scene " + _scenesHard[i]);
             yield return null;
 
             GameObject thatScenesRoot = GameObject.Find((_scenesHard[i].ToString()));
             Room thatScenesRoom = thatScenesRoot.GetComponent<Room>();
             _usableRooms[2].Add(thatScenesRoom);
-            thatScenesRoom.FindDoors();
+            // thatScenesRoom.FindDoors();
+            // thatScenesRoom.FindTriggers();
         }
 
         //old prefabs version
@@ -155,6 +158,12 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
 
         _roomsToBuild.Add(Corridors[Random.Range(0, Corridors.Count)].Get());
         _roomsToBuild.Add(_finalRoom.Get());
+
+        foreach (Room room in _roomsToBuild)
+        {
+            room.FindDoors();
+            room.FindTriggers();
+        }
         Build();
     }
 

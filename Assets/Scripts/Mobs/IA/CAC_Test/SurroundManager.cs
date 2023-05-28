@@ -12,7 +12,7 @@ namespace State.AICAC
 
         [Header("List AI Surround")]
         [SerializeField] List<GlobalRefAICAC> aiCACScriptsList = new List<GlobalRefAICAC>();
-       
+
         [Header("Angle Surround")]
         [SerializeField] float maxAngle;
         public float maxRadius;
@@ -79,7 +79,7 @@ namespace State.AICAC
             float angleStep = maxAngle / aiCACScriptsList.Count;
             Vector3 centerPosition = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer;
 
-            for (int i = 0; i <= aiCACScriptsList.Count-1; i++)
+            for (int i = 0; i <= aiCACScriptsList.Count - 1; i++)
             {
                 float unitDirXposition = centerPosition.x + Mathf.Sin((currentAnglePlacement * Mathf.PI) / 180) * radius;//radius;
                 float unitDirZposition = centerPosition.z + Mathf.Cos((currentAnglePlacement * Mathf.PI) / 180) * radius;//radius;
@@ -149,7 +149,7 @@ namespace State.AICAC
                     }
                     currentAnglePlacementAdjust2 += 1;
 
-                    if (adjustRadius < maxRadius && i == maxAngle-1)
+                    if (adjustRadius < maxRadius && i == maxAngle - 1)
                     {
                         adjustRadius++;
                     }
@@ -159,7 +159,7 @@ namespace State.AICAC
 
         bool PositionAreSame(List<Vector3> posYcircle)
         {
-            for (int i = 0; i < posYcircle.Count-1; i++)
+            for (int i = 0; i < posYcircle.Count - 1; i++)
             {
                 if ((int)posYcircle[i].y != (int)posYcircle[i + 1].y)
                 {
@@ -173,7 +173,7 @@ namespace State.AICAC
         {
             circleRenderer.positionCount = steps;
 
-            for(int currentStep =0; currentStep < steps; currentStep++)
+            for (int currentStep = 0; currentStep < steps; currentStep++)
             {
                 float circumFrequenceProgress = ((float)currentStep / steps);
 
@@ -185,8 +185,8 @@ namespace State.AICAC
                 float x = xScale * radius;
                 float z = zScale * radius;
 
-                Vector3 currentPosition = CheckNavMeshPoint(new Vector3(CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer.x + x, 
-                                                                         CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer.y, 
+                Vector3 currentPosition = CheckNavMeshPoint(new Vector3(CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer.x + x,
+                                                                         CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer.y,
                                                                          CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer.z + z));
                 circleRenderer.SetPosition(currentStep, currentPosition);
             }
@@ -204,7 +204,7 @@ namespace State.AICAC
 
                 if (settingsName == name)
                 {
-                    Debug.Log(settings.agentTypeID);
+                    // Debug.Log(settings.agentTypeID);
                     return settings.agentTypeID;
                 }
 
