@@ -21,6 +21,8 @@ namespace State.AIBull
 
         [SerializeField] float currentSpeed;
 
+        bool hitPlayer;
+
         public override void InitState(StateControllerBull stateController)
         {
             base.InitState(stateController);
@@ -125,7 +127,11 @@ namespace State.AIBull
                 }
                 else if(animTime <= 0.5f)
                 {
-                    globalRef.hitBoxAttack.gameObject.SetActive(true);
+                    if(!hitPlayer)
+                    {
+                        globalRef.hitBoxAttack.gameObject.SetActive(true);
+                        hitPlayer = true;
+                    }
                     if (Vector3.Distance(catchPlayerPos, globalRef.transform.position) > 1f)
                     {
                         currentSpeed = 15;
@@ -140,6 +146,7 @@ namespace State.AIBull
                 {
                     globalRef.hitBoxAttack.gameObject.SetActive(false);
                     currentSpeed = 0;
+                    hitPlayer = false;
                 }
             }
         }
