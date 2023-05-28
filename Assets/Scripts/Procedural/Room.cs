@@ -7,13 +7,12 @@ using System.Linq;
 
 public class Room : MonoBehaviour
 {
-    [Header("References")]
     List<EnemyHealth> _enemiesList;
-    [SerializeField] List<Door> _doors;
+    List<Door> _doors;
     [NonSerialized] public List<TriggerActiveMobs> Triggers;
 
-    public Door Entry;
-    public Door Exit;
+    [NonSerialized] public Door Entry;
+    [NonSerialized] public Door Exit;
 
     [SerializeField] private bool _isCorridor = false;
 

@@ -3,23 +3,19 @@ using UnityEngine;
 
 public class TriggerActiveMobs : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> _pools = new List<GameObject>();
+    private List<GameObject> _pools = new List<GameObject>();
     private bool _once;
-    BoxCollider _boxCollider;
-    [SerializeField] private int _poolChosen;
+    // BoxCollider _boxCollider;
+    private int _poolChosen;
     [System.NonSerialized] public Room thisTriggersRoom;
 
     [SerializeField] LayerMask mask;
 
-    // private void Start()
-    // {
-    //     boxCollider = GetComponent<BoxCollider>();
-
-    //     for (int i = 0; i < mobList.Count; i++)
-    //     {
-    //         mobList[i].SetActive(false);
-    //     }
-    // }
+    void Awake()
+    {
+        foreach (Transform tr in transform)
+            _pools.Add(tr.gameObject);
+    }
 
     public void ChooseAPool()
     {

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EnemyPool : MonoBehaviour
 {
-    [SerializeField] List<Transform> _children;
+    List<Transform> _children;
     const float _delay = 0.1f;
     float _t = 0.0f;
     float _target = 0.0f;
