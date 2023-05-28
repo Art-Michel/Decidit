@@ -6,7 +6,7 @@ using UnityEngine;
 public class EnemyPool : MonoBehaviour
 {
     List<Transform> _children;
-    const float _delay = 0.1f;
+    const float _delay = 0.15f;
     float _t = 0.0f;
     float _target = 0.0f;
     int _nextOneToSpawn = 0;
