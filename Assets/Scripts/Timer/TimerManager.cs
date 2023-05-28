@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class TimerManager : LocalManager<TimerManager>
 {
+    [SerializeField] int index;
     [SerializeField] public float time;
     public bool isInCorridor;
     public bool endGame;
@@ -41,10 +42,16 @@ public class TimerManager : LocalManager<TimerManager>
         bestTime = SaveLoadManager.LoadTimer().bestTime;
     }
 
-    [Button]
-    void DeletTimer()
+    public void ResetTimer(int index)
     {
-        SaveLoadManager.DeleteStatsTimer();
+        bestTime[index] = 0;
+        SaveLoadManager.SaveTimer(this);
+    }
+
+    [Button]
+    public void DeletTimer()
+    {
+        bestTime[index] = 0;
     }
 
     void Update()
