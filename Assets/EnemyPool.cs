@@ -14,10 +14,10 @@ public class EnemyPool : MonoBehaviour
     void Awake()
     {
         _children = new List<Transform>();
-        foreach (Transform tr in transform)
+        foreach (Transform child in transform)
         {
-            foreach (Transform tr2 in tr)
-                _children.Add(tr2);
+            foreach (Transform grandchild in child)
+                _children.Add(grandchild);
         }
     }
 
