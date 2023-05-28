@@ -161,7 +161,7 @@ public class Room : MonoBehaviour
     {
         TriggerActiveMobs[] closest = Triggers.OrderBy(t => (Vector3.Distance(t.transform.position, Player.Instance.transform.position))).ToArray();
         closest[0].EnableMobs();
-        if (closest.Length > 0)
+        if (closest.Length > 1)
             closest[1].EnableMobs();
     }
 
