@@ -50,6 +50,7 @@ public class Room : MonoBehaviour
         {
             Triggers.Add(trigger);
             trigger.thisTriggersRoom = this;
+            trigger.ChooseAPool();
         }
     }
 
@@ -67,24 +68,25 @@ public class Room : MonoBehaviour
         CurrentEnemiesInRoom = _enemiesList.Count;
     }
 
-    public void EnableEnemies(bool b)
+    public void StartBattleRoom()
     {
-        // CountEnemies();
+        TimerManager.Instance.isInCorridor = false;
+        PlayerManager.Instance.RechargeEverything();
         SoundManager.Instance.PlaySound("event:/SFX_Environement/StartFight", 1f, gameObject);
         SoundManager.Instance.FightingSound();
-        foreach (EnemyHealth enemyHealth in _enemiesList)
-        {
-            if (enemyHealth == null)
-            {
-                Debug.LogError("La room [" + this.gameObject.name + "] n'a pas d'ennemi assigné");
-            }
-            enemyHealth.gameObject.SetActive(b);
-            if (enemyHealth.isActiveAndEnabled)
-            {
-                enemyHealth.SetDissolve();
-                enemyHealth.StartCoroutine("DissolveInverse");
-            }
-        }
+        // foreach (EnemyHealth enemyHealth in _enemiesList)
+        // {
+        //     if (enemyHealth == null)
+        //     {
+        //         Debug.LogError("La room [" + this.gameObject.name + "] n'a pas d'ennemi assigné");
+        //     }
+        //     enemyHealth.gameObject.SetActive(b);
+        //     if (enemyHealth.isActiveAndEnabled)
+        //     {
+        //         enemyHealth.SetDissolve();
+        //         enemyHealth.StartCoroutine("DissolveInverse");
+        //     }
+        // }
     }
 
     private IEnumerator EnableEnemiesProgressively(List<EnemyHealth> enemies)
@@ -111,11 +113,9 @@ public class Room : MonoBehaviour
 
         else
         {
-            PlayerManager.Instance.RechargeEverything();
-            SoundManager.Instance.PlaySound("event:/SFX_Environement/StartFight", 1f, gameObject);
+            StartBattleRoom();
             // _ennemiesParentList[UnityEngine.Random.Range(0, 2)].SetActive(true);
             // this.EnableEnemies(true);
-            TimerManager.Instance.isInCorridor = false;
         }
     }
 
