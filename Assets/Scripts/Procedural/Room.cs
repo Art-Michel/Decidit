@@ -11,8 +11,8 @@ public class Room : MonoBehaviour
     List<Door> _doors;
     [NonSerialized] public List<TriggerActiveMobs> Triggers;
 
-    [NonSerialized] public Door Entry;
-    [NonSerialized] public Door Exit;
+    public Door Entry;
+    public Door Exit;
 
     [SerializeField] private bool _isCorridor = false;
 
