@@ -242,6 +242,7 @@ public class PlayerHealth : Health
 
     private void StartHurtInvul()
     {
+        SoundManager.Instance.ClearedSound();
         _hurtInvulnerabilityT = _hurtInvulnerability;
         _isHurtInvulnerable = true;
     }
@@ -252,6 +253,9 @@ public class PlayerHealth : Health
         if (_hurtInvulnerabilityT <= 0.0f)
         {
             _isHurtInvulnerable = false;
+            SoundManager.Instance.PlaySound("event:/SFX_Controller/InvulEnd", 1.0f, gameObject);
+            if (DungeonGenerator.Instance != null && DungeonGenerator.Instance.GetRoom().CurrentEnemiesInRoom > 0)
+                SoundManager.Instance.FightingSound();
         }
     }
 
