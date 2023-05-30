@@ -14,13 +14,16 @@ public class MuseArm : Arm
     [Foldout("Stats")]
     [SerializeField] protected float _launchShakeDuration;
 
-
+    [Foldout("References")]
+    [SerializeField]
+    private GameObject _cancelPrompt;
     [Foldout("References")]
     [SerializeField]
     Transform _canonPosition;
     [Foldout("References")]
     [SerializeField]
     LayerMask _mask;
+    private FMOD.Studio.EventInstance loopInstance;
 
     private Projectile _missile;
     Vector3 _currentlyAimedAt;
@@ -30,10 +33,10 @@ public class MuseArm : Arm
         if (_missile == null || _missile.enabled == false)
         {
             base.PressSong();
-            this.ReleaseSong();
+            // this.ReleaseSong();
         }
         else
-            _missile.Explode(Vector3.up);
+            _missile.Explode(_missile.transform.forward);
     }
 
     protected override void ReleaseSong()
@@ -48,6 +51,18 @@ public class MuseArm : Arm
 
     public override void StartPrevis()
     {
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/FugueAragon/StartPreveiw", 1f, gameObject);
+        loopInstance = FMODUnity.RuntimeManager.CreateInstance("event:/SFX_Controller/Chants/FugueAragon/DuringPreveiw");
+        base.StartPrevis();
+        _cancelPrompt.SetActive(true);
+        loopInstance.start();
+    }
+
+    public override void StopPrevis()
+    {
+        loopInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        loopInstance.release();
+        _cancelPrompt.SetActive(false);
     }
 
     public override void CheckLookedAt()
