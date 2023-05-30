@@ -61,8 +61,13 @@ public class MuseArm : Arm
     public override void StartActive()
     {
         CheckLookedAt();
+
         _crossHairFull.SetActive(false);
         StopGlowing();
+
+        for (int i = 0; i < _castFx.Length; i++)
+            _castFx[i].Reinit();
+
         _missile = _pooler.Get().GetComponent<Projectile>();
         _missile.transform.rotation = transform.rotation;
         _missile.Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized, _cameraTransform.forward);

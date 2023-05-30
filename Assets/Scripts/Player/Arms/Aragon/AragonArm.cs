@@ -126,6 +126,9 @@ public class AragonArm : Arm
         foreach (Image crosshair in _crossHairs)
             crosshair.fillAmount = 0.0f;
 
+        for (int i = 0; i < _castFx.Length; i++)
+            _castFx[i].Reinit();
+
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/FugueAragon/DashStart", 1f, gameObject);
 
         _player.PlayerHealth.IsInvulnerable = true;

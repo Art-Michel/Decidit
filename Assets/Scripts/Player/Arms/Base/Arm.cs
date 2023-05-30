@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using NaughtyAttributes;
 using CameraShake;
+using UnityEngine.VFX;
 
 public class Arm : MonoBehaviour
 {
@@ -25,6 +26,8 @@ public class Arm : MonoBehaviour
     [SerializeField] protected Transform _cameraTransform;
     [Foldout("References")]
     public Animator Animator;
+    [Foldout("References")]
+    [SerializeField] protected VisualEffect[] _castFx;
 
     [Foldout("Other")]
     [SerializeField] private float _smoothness = 10;

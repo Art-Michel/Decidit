@@ -112,6 +112,9 @@ public class EylauArm : Arm
         _crossHairFull.SetActive(false);
         StopGlowing();
 
+        for (int i = 0; i < _castFx.Length; i++)
+            _castFx[i].Reinit();
+
         if (_currentEnemy != null)
         {
             EnemyHealth health = _currentEnemy.transform.GetComponent<Hurtbox>().HealthComponent as EnemyHealth;
