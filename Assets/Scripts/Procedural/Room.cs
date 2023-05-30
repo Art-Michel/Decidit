@@ -15,6 +15,7 @@ public class Room : MonoBehaviour
     public Door Exit;
 
     [SerializeField] private bool _isCorridor = false;
+    [SerializeField] private int _triggersToActivateOnClear = 2;
 
     [NonSerialized] public int CurrentEnemiesInRoom;
 
@@ -159,9 +160,11 @@ public class Room : MonoBehaviour
     private void EnableClosestTriggers()
     {
         TriggerActiveMobs[] closest = Triggers.Where(t => !t._triggered).OrderBy(t => (Vector3.Distance(t.transform.position, Player.Instance.transform.position))).ToArray();
-        closest[0].EnableMobs();
-        if (closest.Length > 1)
-            closest[1].EnableMobs();
+        for (int i = 0; i < closest.Length; i++)
+        {
+            if (i < _triggersToActivateOnClear)
+                closest[i].EnableMobs();
+        }
     }
 
     private void FinishRoom()
