@@ -362,8 +362,12 @@ public class EnemyHealth : Health
         {
             collider.enabled = false;
         }
+        foreach (Collider collider in _sickboxes)
+        {
+            collider.enabled = false;
+        }
 
-        RecoverFromSickness();
+        // RecoverFromSickness();
         RecoverFromPoison();
         if (_eylau != null)
         {
@@ -427,6 +431,7 @@ public class EnemyHealth : Health
 
     private void ActuallyDie()
     {
+        RecoverFromSickness();
         Destroy(gameObject);
     }
 

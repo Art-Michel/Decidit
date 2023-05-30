@@ -153,13 +153,13 @@ public class Synergies : LocalManager<Synergies>
         SoundManager.Instance.PlaySound("event:/SFX_Controller/UniversalSound", 1f, gameObject);
         foreach (EnemyHealth enemy in Hospital)
         {
-            enemy.TakeDamage(damage * _zapDamage);
             VisualEffect arc = _eylauMaladeVfxPooler.Get().GetComponent<VisualEffect>();
             arc.transform.position = Vector3.zero;
             arc.SetVector3("Start_Pos", position);
             arc.SetVector3("End_Pos", enemy.transform.position);
             SoundManager.Instance.PlaySound("event:/SFX_Controller/Synergies/EyleauOnMuse/Sound", 1f, gameObject);
             enemy.ZapSlow();
+            enemy.TakeDamage(damage * _zapDamage);
             // enemy.RecoverFromSickness();
         }
     }
