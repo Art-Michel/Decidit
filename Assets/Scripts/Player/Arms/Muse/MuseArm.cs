@@ -51,11 +51,12 @@ public class MuseArm : Arm
 
     public override void StartPrevis()
     {
-        for (int i = 0; i < _castFx.Length; i++)
-        {
-            _precastFx[i].gameObject.SetActive(false);
-            _precastFx[i].gameObject.SetActive(true);
-        }
+        if (_precastFx.Length > 0)
+            for (int i = 0; i < _castFx.Length; i++)
+            {
+                _precastFx[i].gameObject.SetActive(false);
+                _precastFx[i].gameObject.SetActive(true);
+            }
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/FugueAragon/StartPreveiw", 1f, gameObject);
         loopInstance = FMODUnity.RuntimeManager.CreateInstance("event:/SFX_Controller/Chants/FugueAragon/DuringPreveiw");
         base.StartPrevis();

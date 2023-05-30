@@ -21,7 +21,7 @@ public class MuseArmStatePrevis : ArmState
 
     public override void Exit()
     {
-
+        _arm.StopPrevis();
     }
 
 }
