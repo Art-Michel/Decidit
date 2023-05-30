@@ -66,7 +66,10 @@ public class MuseArm : Arm
         StopGlowing();
 
         for (int i = 0; i < _castFx.Length; i++)
-            _castFx[i].Reinit();
+        {
+            _castFx[i].gameObject.SetActive(false);
+            _castFx[i].gameObject.SetActive(true);
+        }
 
         _missile = _pooler.Get().GetComponent<Projectile>();
         _missile.transform.rotation = transform.rotation;
