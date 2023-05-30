@@ -13,7 +13,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
     [SerializeField] int[] _difficultyPerRoom;
     private int _numberOfRooms;
     const int _firstPowerupAfterRoom = 0;
-    const int _secondPowerupAfterRoom = 2;
+    const int _secondPowerupAfterRoom = 1;
 
     [SerializeField] RoomSetup _starterRoom;
     [SerializeField] RoomSetup _finalRoom;
