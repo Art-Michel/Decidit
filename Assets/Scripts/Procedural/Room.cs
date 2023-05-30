@@ -7,9 +7,9 @@ using System.Linq;
 
 public class Room : MonoBehaviour
 {
-    List<EnemyHealth> _enemiesList;
+    [SerializeField] List<EnemyHealth> _enemiesList;
     List<Door> _doors;
-    [NonSerialized] public List<TriggerActiveMobs> Triggers;
+    public List<TriggerActiveMobs> Triggers;
 
     public Door Entry;
     public Door Exit;
