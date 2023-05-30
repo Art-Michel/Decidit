@@ -12,7 +12,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
     ////[SerializeField] float _dungeonRotation;
     [SerializeField] int[] _difficultyPerRoom;
     private int _numberOfRooms;
-    const int _firstPowerupAfterRoom = 1;
+    const int _firstPowerupAfterRoom = 0;
     const int _secondPowerupAfterRoom = 2;
 
     [SerializeField] RoomSetup _starterRoom;
