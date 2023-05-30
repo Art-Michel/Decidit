@@ -28,6 +28,8 @@ public class Arm : MonoBehaviour
     public Animator Animator;
     [Foldout("References")]
     [SerializeField] protected VisualEffect[] _castFx;
+    [Foldout("References")]
+    [SerializeField] protected VisualEffect[] _precastFx;
 
     [Foldout("Other")]
     [SerializeField] private float _smoothness = 10;

@@ -100,6 +100,11 @@ public class EylauArm : Arm
 
     public override void StopPrevis()
     {
+        for (int i = 0; i < _castFx.Length; i++)
+        {
+            _precastFx[i].gameObject.SetActive(false);
+            _precastFx[i].gameObject.SetActive(true);
+        }
         loopInstance.release();
         loopInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         _previs.SetActive(false);

@@ -90,6 +90,11 @@ public class AragonArm : Arm
 
     public override void StartPrevis()
     {
+        for (int i = 0; i < _castFx.Length; i++)
+        {
+            _precastFx[i].gameObject.SetActive(false);
+            _precastFx[i].gameObject.SetActive(true);
+        }
         base.StartPrevis();
         loopInstance = FMODUnity.RuntimeManager.CreateInstance("event:/SFX_Controller/Chants/FugueAragon/DuringPreveiw");
         loopInstance.start();
