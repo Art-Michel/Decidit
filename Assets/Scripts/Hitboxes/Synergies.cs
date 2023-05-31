@@ -141,7 +141,7 @@ public class Synergies : LocalManager<Synergies>
                 float dot = Vector3.Dot(dir, (center - enemyPos).normalized) * _curve.Evaluate(Mathf.InverseLerp(0, maxDist, distFromCenter));
 
                 Vector3 finalDir = (((enemyPos - center).normalized) + (dir * dot)).normalized;
-                enemy.Knockback(finalDirs * _knockbackStrength);
+                enemy.Knockback(finalDir * _knockbackStrength);
 
                 // Vector3 dir1 = Vector3.Normalize(end - start);
                 // Vector3 dir2 = Vector3.Normalize(start - end);
