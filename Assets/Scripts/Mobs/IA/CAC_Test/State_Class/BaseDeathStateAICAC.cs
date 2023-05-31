@@ -21,7 +21,8 @@ namespace State.AICAC
 
         void Death()
         {
-            //globalRef.aICACVarianteState.
+            globalRef.managerAnticipMoveTrash.RemoveRef(globalRef);
+            globalRef.managerSurroundTrash.RemoveRef(globalRef);
             AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Death");
             globalRef.transform.parent = null;
             globalRef.agent.speed = globalRef.deathAICACSO.stopSpeed;

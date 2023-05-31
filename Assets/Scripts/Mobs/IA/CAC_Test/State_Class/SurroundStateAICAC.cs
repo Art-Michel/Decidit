@@ -272,7 +272,6 @@ namespace State.AICAC
             globalRef.surroundAICACSO.right = false;
             globalRef.surroundAICACSO.left = false;
             currentRateRepath -= 0;
-            globalRef.aICACVarianteState.RemoveAISelectedSurround(globalRef);
             stateControllerAICAC.SetActiveState(StateControllerAICAC.AIState.BaseMove);
         }
     }

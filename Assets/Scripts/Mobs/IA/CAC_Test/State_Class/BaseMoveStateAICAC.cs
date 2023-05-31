@@ -234,7 +234,7 @@ namespace State.AICAC
                             SwitchBetweenAnticipAndDumb();
                         }
 
-                        if (Vector3.Distance(globalRef.playerTransform.position, globalRef.transform.position) > (globalRef.surroundManager.radius + baseMoveAICACSO.distStopSurroundNearPlayer))
+                        if (Vector3.Distance(globalRef.playerTransform.position, globalRef.transform.position) > (globalRef.managerSurroundTrash.radius + baseMoveAICACSO.distStopSurroundNearPlayer))
                         {
                             if (canSurround)
                                 activeSurround = true;

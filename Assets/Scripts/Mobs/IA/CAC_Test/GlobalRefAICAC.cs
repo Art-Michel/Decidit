@@ -11,11 +11,12 @@ namespace State.AICAC
         public Transform playerTransform;
         public Transform spawnSurroundDodge;
         public NavMeshAgent agent;
-        public AICACVarianteState aICACVarianteState;
         public EnemyHealth enemyHealth;
         public Material_Instances material_Instances;
         public float distPlayer;
         [SerializeField] StateControllerAICAC stateControllerTrashMob;
+        public ManagerAnticipMoveTrash managerAnticipMoveTrash;
+        public ManagerSurroundTrash managerSurroundTrash;
         //public AudioSource audioSourceTrashMob;
 
         [Header("Animation")]
@@ -40,7 +41,6 @@ namespace State.AICAC
         public Vector3 debugDestination;
         public AgentLinkMover agentLinkMover;
         public Vector3 destinationSurround;
-        public SurroundManager surroundManager;
 
         [Header("Ref KnockBack")]
         public CharacterController characterController;
@@ -77,11 +77,9 @@ namespace State.AICAC
             playerTransform = GameObject.FindWithTag("Player").transform.GetChild(0).transform;
             myAnimator = GetComponent<Animator>();
             spawnSurroundDodge = transform.Find("SpawnSurroundRay");
-            aICACVarianteState = transform.parent.GetComponent<AICACVarianteState>();
             enemyHealth = GetComponent<EnemyHealth>();
             material_Instances = GetComponent<Material_Instances>();
             agentLinkMover = GetComponent<AgentLinkMover>();
-            surroundManager = GetComponentInParent<SurroundManager>();
 
             switch (ApplyDifficulty.indexDifficulty)
             {
@@ -105,6 +103,12 @@ namespace State.AICAC
             surroundAICACSO = Instantiate(surroundAICACSO);
             knockBackAICACSO = Instantiate(knockBackAICACSO);
             AttractionSO = Instantiate(AttractionSO);
+        }
+
+        private void OnEnable()
+        {
+            managerAnticipMoveTrash.GetRef(this);
+            managerSurroundTrash.GetRef(this);
         }
 
         private void Update()
@@ -153,7 +157,7 @@ namespace State.AICAC
             if (enemyHealth._hp <= 0 && !isDead)
             {
                 isDead = true;
-                aICACVarianteState.SetListActiveAI();
+                //aICACVarianteState.SetListActiveAI();
                 ActiveState(StateControllerAICAC.AIState.BaseDeath);
             }
         }

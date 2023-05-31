@@ -82,7 +82,7 @@ namespace State.AICAC
                 SetOffsetAticipationDestination();
             }
 
-            if(activeSurround)
+            if (activeSurround)
             {
                 SetSurroundDirection();
 
