@@ -108,9 +108,15 @@ public class Synergies : LocalManager<Synergies>
     [Foldout("Eylau -> Nuage d'Aragon")]
     // [SerializeField] Pooler _chargedEylauPooler;
     [SerializeField] private float _radius = 7.0f;
+    [Foldout("Eylau -> Nuage d'Aragon")]
     [SerializeField] private LayerMask _enemiesMask;
+    [Foldout("Eylau -> Nuage d'Aragon")]
     [SerializeField] private List<Health> _enemies;
+    [Foldout("Eylau -> Nuage d'Aragon")]
     [SerializeField] private float _knockbackStrength = 10.0f;
+    [Foldout("Eylau -> Nuage d'Aragon")]
+    [SerializeField] AnimationCurve _curve;
+
     public void EylauOnAragon(SynergyProjectile bullet)
     {
         SoundManager.Instance.PlaySound("event:/SFX_Controller/UniversalSound", 1f, gameObject);
@@ -127,6 +133,16 @@ public class Synergies : LocalManager<Synergies>
                 _enemies.Add(health);
                 EnemyHealth enemy = health as EnemyHealth;
 
+                Vector3 enemyPos = enemy.transform.position;
+                Vector3 center = end - ((end - start) / 2);
+                Vector3 dir = (end - start).normalized;
+                float distFromCenter = (enemyPos - center).magnitude;
+                float maxDist = (start - center).magnitude + 2;
+                float dot = Vector3.Dot(dir, (center - enemyPos).normalized) * _curve.Evaluate(Mathf.InverseLerp(0, maxDist, distFromCenter));
+
+                Vector3 finalDir = (((enemyPos - center).normalized) + (dir * dot)).normalized;
+                enemy.Knockback(finalDirs * _knockbackStrength);
+
                 // Vector3 dir1 = Vector3.Normalize(end - start);
                 // Vector3 dir2 = Vector3.Normalize(start - end);
 
@@ -138,49 +154,9 @@ public class Synergies : LocalManager<Synergies>
                 // enemy.Knockback(direction * _knockbackStrength);
             }
         }
-
-
-        // old symergy (boost)
-        // SynergyProjectile shot = _chargedEylauPooler.Get().GetComponent<SynergyProjectile>();
-        // shot.Setup(bullet.transform.position, bullet.Direction);
-        // shot.ForceSynergized();
-        // SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/CimetièreEyleau/MaxCharged", 1f, gameObject);
-        // foreach (AragonCloud cloud in ActiveClouds)
-        // cloud.StartDisappearing();
-        // ActiveClouds.Clear();
     }
     #endregion
 
-    // [SerializeField] Transform _start;
-    // [SerializeField] Transform _end;
-    // [SerializeField] Transform _luigi;
-    // [SerializeField] TextMeshProUGUI _mario;
-    // Vector3 _finalDir;
-    // Vector3 _center;
-    // [SerializeField] AnimationCurve _curve;
-    // void Update()
-    // {
-    //     Vector3 pl = Player.Instance.transform.position;
-    //     // Vector3 dir1 = Vector3.Normalize(_end.position - _start.position);
-    //     // Vector3 dir2 = Vector3.Normalize(_start.position - _end.position);
-
-    //     // float distFromStart = Vector3.Distance((Player.Instance.transform.position), _start.position);
-    //     // float distFromEnd = Vector3.Distance((Player.Instance.transform.position), _end.position);
-    //     // float distFromCenter = Vector3.Lerp(dir1, dir2, Mathf.InverseLerp(0.0f, Vector3.Distance(_end.position, _start.position), distFromEnd - distFromStart)).magnitude;
-
-    //     // _mario.text = (Mathf.InverseLerp(0, Vector3.Distance(_end.position, _start.position), distFromStart - distFromEnd) * Vector3.Dot(dir1, ((Player.Instance.transform.position) - (_end.position - (_start.position / 2))))).ToString();
-    //     Vector3 _center = _end.position - ((_end.position - _start.position) / 2);
-    //     Vector3 dir = (_end.position - _start.position).normalized;
-    //     float dot = Vector3.Dot(dir, (_center - pl).normalized);
-    //     _mario.text = dot.ToString();
-
-    //     _finalDir = (((pl - _center).normalized) - (dir * dot)).normalized;
-    // }
-
-    // void OnDrawGizmos()
-    // {
-    //     Gizmos.DrawLine(_luigi.position, _luigi.position + _finalDir);
-    // }
 
     #region Fugue -> Malade
     [Foldout("Fugue -> Malades")]
