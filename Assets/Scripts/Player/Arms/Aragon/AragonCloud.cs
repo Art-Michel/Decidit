@@ -28,6 +28,7 @@ public class AragonCloud : PooledObject
         Synergies.Instance.ActiveClouds.Add(this);
         _delay = delay;
         _isActive = false;
+        _isDisappearing = false;
     }
 
     void Update()

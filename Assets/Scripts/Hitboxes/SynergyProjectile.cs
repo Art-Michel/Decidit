@@ -22,6 +22,7 @@ public class SynergyProjectile : Projectile
     public override void Setup(Vector3 position, Vector3 direction)
     {
         base.Setup(position, direction);
+        Debug.Log("yippeee");
         _synergized = false;
     }
 
