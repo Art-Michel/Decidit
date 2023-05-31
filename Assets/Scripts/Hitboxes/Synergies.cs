@@ -119,11 +119,14 @@ public class Synergies : LocalManager<Synergies>
 
     public void EylauOnAragon(SynergyProjectile bullet)
     {
+        Debug.Log("siu");
         SoundManager.Instance.PlaySound("event:/SFX_Controller/UniversalSound", 1f, gameObject);
         PlayerManager.Instance.StartFlash(0.1f, 0.5f);
 
         Vector3 start = ActiveClouds[0].transform.position;
         Vector3 end = ActiveClouds[ActiveClouds.Count - 1].transform.position;
+        bullet.ForceSynergized();
+
         foreach (Collider collider in Physics.OverlapCapsule(start, end, _radius, _enemiesMask))
         {
             Health health = collider.GetComponent<Hurtbox>().HealthComponent;
@@ -154,6 +157,10 @@ public class Synergies : LocalManager<Synergies>
                 // enemy.Knockback(direction * _knockbackStrength);
             }
         }
+        foreach (AragonCloud cloud in ActiveClouds)
+            cloud.StartDisappearing();
+        ActiveClouds.Clear();
+        _enemies.Clear();
     }
     #endregion
 
