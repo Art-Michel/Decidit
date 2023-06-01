@@ -7,10 +7,11 @@ public class AragonCloud : PooledObject
 {
     [SerializeField] private Collider _boxCollider;
     [SerializeField] private VisualEffect _vfx;
-    [SerializeField] private float _delay;
+    [SerializeField] private float _spawnDelay;
 
-    [SerializeField] private bool _isActive;
-    [SerializeField] private bool _isDisappearing;
+    [SerializeField] private bool _isNormal;
+    [SerializeField] private bool _isPoisonous;
+    [SerializeField] private bool _isWooshing;
     [SerializeField] float _maxLifeSpan = 4.0f;
     [SerializeField] float _lifeSpanT = 0.0f;
 
@@ -26,44 +27,38 @@ public class AragonCloud : PooledObject
         transform.position = position;
         transform.rotation = rotation;
         Synergies.Instance.ActiveClouds.Add(this);
-        _delay = delay;
-        _isActive = false;
-        _isDisappearing = false;
+        _spawnDelay = delay;
+        _lifeSpanT = 0.0f;
     }
 
     void Update()
     {
+        if (_isNormal)
+        {
 
-        if (!_isActive)
-        {
-            _delay -= Time.deltaTime;
-            if (_delay <= 0.0f)
-                Enable();
         }
-        else
+        else if (_isWooshing)
         {
-            _lifeSpanT -= Time.deltaTime;
-            if (_lifeSpanT <= 0.0f && !_isDisappearing)
-            {
-                StartDisappearing();
-            }
-            if (_isDisappearing && _vfx.aliveParticleCount <= 0)
-            {
-                Disable();
-                this.Pooler.Return(this);
-            }
+
+        }
+        else if (_isPoisonous)
+        {
 
         }
     }
 
     public void Swoosh(float delay)
     {
+        _isNormal = false;
+        _isWooshing = true;
         StartDisappearing();
     }
 
     public void Poisonify(float delay)
     {
-
+        _isNormal = false;
+        _isPoisonous = true;
+        StartDisappearing();
     }
 
     private void Enable()
@@ -72,13 +67,11 @@ public class AragonCloud : PooledObject
         _vfx.Reinit();
         _vfx.Play();
         _lifeSpanT = _maxLifeSpan;
-        _isActive = true;
     }
 
     public void StartDisappearing()
     {
         _vfx.Stop();
-        _isDisappearing = true;
         _boxCollider.enabled = false;
         _lifeSpanT = -1.0f;
     }
@@ -86,8 +79,5 @@ public class AragonCloud : PooledObject
     private void Disable()
     {
         _vfx.Stop();
-        _isActive = false;
-        _isDisappearing = false;
     }
-
 }

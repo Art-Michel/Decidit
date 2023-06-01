@@ -57,7 +57,7 @@ public class Synergies : LocalManager<Synergies>
                 switch (colliderChant)
                 {
                     case Chants.ARAGON:
-                        MuseOnAragon(bullet);
+                        MuseOnAragon(bullet, collider.GetComponent<AragonCloud>());
                         break;
                     case Chants.MUSE:
                         //Nothing!
@@ -92,15 +92,18 @@ public class Synergies : LocalManager<Synergies>
 
     [Foldout("Muse -> Nuage d'Aragon")]
     [SerializeField] Pooler _acidicProjectilePooler;
+    [Foldout("Muse -> Nuage d'Aragon")]
+    [SerializeField] float _delayBetweenClouds;
 
-    public void MuseOnAragon(SynergyProjectile bullet)
+    public void MuseOnAragon(SynergyProjectile bullet, AragonCloud hitCloud)
     {
         SoundManager.Instance.PlaySound("event:/SFX_Controller/UniversalSound", 1f, gameObject);
         PlayerManager.Instance.StartFlash(0.1f, 1);
         Debug.Log("projectile transformé en projo acide");
-        // foreach (AragonCloud cloud in ActiveClouds)
-        //     cloud.StartDisappearing();
-        // ActiveClouds.Clear();
+        int hitCloudNb = ActiveClouds.IndexOf(hitCloud);
+        foreach (AragonCloud cloud in ActiveClouds)
+            cloud.Poisonify((Mathf.Abs(hitCloudNb - ActiveClouds.IndexOf(cloud))) * _delayBetweenClouds);
+        ActiveClouds.Clear();
     }
     #endregion
 
@@ -169,7 +172,6 @@ public class Synergies : LocalManager<Synergies>
         yield return null;
     }
     #endregion
-
 
     #region Fugue -> Malade
     [Foldout("Fugue -> Malades")]
