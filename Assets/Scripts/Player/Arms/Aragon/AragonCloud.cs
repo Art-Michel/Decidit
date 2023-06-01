@@ -33,6 +33,7 @@ public class AragonCloud : PooledObject
 
     void Update()
     {
+
         if (!_isActive)
         {
             _delay -= Time.deltaTime;
@@ -57,7 +58,7 @@ public class AragonCloud : PooledObject
 
     public void Swoosh(float delay)
     {
-
+        StartDisappearing();
     }
 
     public void Poisonify(float delay)
