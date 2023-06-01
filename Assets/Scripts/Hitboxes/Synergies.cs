@@ -148,28 +148,24 @@ public class Synergies : LocalManager<Synergies>
                 _enemies.Add(health);
                 EnemyHealth enemy = health as EnemyHealth;
 
-                Vector3 enemyPos = enemy.transform.position;
+                Vector3 enemyPos = Player.Instance.transform.position;
                 Vector3 center = end - ((end - start) / 2);
                 Vector3 dir = (end - start).normalized;
                 float distFromCenter = (enemyPos - center).magnitude;
                 float maxDist = (start - center).magnitude + 2;
                 float dot = Vector3.Dot(dir, (center - enemyPos).normalized) * _curve.Evaluate(Mathf.InverseLerp(0, maxDist, distFromCenter));
 
-                Vector3 finalDir = (((enemyPos - center).normalized) + (dir * dot)).normalized;
+                Vector3 finalDir = (((enemyPos - center).normalized) + (dir.normalized * dot));
+                finalDir = finalDir.normalized;
                 enemy.KnockbackSynergie(finalDir * _knockbackStrength);
-
-                // Vector3 dir1 = Vector3.Normalize(end - start);
-                // Vector3 dir2 = Vector3.Normalize(start - end);
-
-                // float distFromStart = ((enemy.transform.position) - start).sqrMagnitude;
-                // float distFromEnd = ((enemy.transform.position) - end).sqrMagnitude;
-                // float distFromCenter = Vector3.Lerp(dir1, dir2, Mathf.InverseLerp(0, (end - start).sqrMagnitude), (distFromStart - distFromEnd));
-
-                // Vector3 direction = ;
-                // enemy.Knockback(direction * _knockbackStrength);
             }
         }
         yield return null;
+    }
+
+    void Update()
+    {
+
     }
     #endregion
 
