@@ -155,10 +155,40 @@ VisualEffect:
       - m_Value: 0
         m_Name: Fugue To Eylaw
         m_Overridden: 0
+      - m_Value: 1
+        m_Name: SmokeLifeSpan
+        m_Overridden: 0
+      - m_Value: 0.9
+        m_Name: SparksLifetime
+        m_Overridden: 0
+      - m_Value: 14
+        m_Name: SmokeSpawnRate
+        m_Overridden: 0
+      - m_Value: 11
+        m_Name: SparksSpawnRate
+        m_Overridden: 0
     m_Vector2f:
       m_Array: []
     m_Vector3f:
-      m_Array: []
+      m_Array:
+      - m_Value: {x: -0.1, y: -2, z: -0.1}
+        m_Name: SmokeUpMinVel
+        m_Overridden: 0
+      - m_Value: {x: 0.1, y: -1.5, z: 0.1}
+        m_Name: SmokeUpMaxVel
+        m_Overridden: 0
+      - m_Value: {x: -0.1, y: 1.5, z: -0.1}
+        m_Name: SmokeDownMinVel
+        m_Overridden: 0
+      - m_Value: {x: 0.1, y: 2, z: 0.1}
+        m_Name: SmokeDownMaxVel
+        m_Overridden: 0
+      - m_Value: {x: -0.1, y: 1.9, z: -0.1}
+        m_Name: SparksMinVel
+        m_Overridden: 0
+      - m_Value: {x: 0.1, y: 2.5, z: 0.1}
+        m_Name: SparksMaxVel
+        m_Overridden: 0
     m_Vector4f:
       m_Array: []
     m_Uint:
@@ -202,6 +232,68 @@ VisualEffect:
           m_NumAlphaKeys: 4
         m_Name: Fugue Smoke Gradient
         m_Overridden: 1
+      - m_Value:
+          serializedVersion: 2
+          key0: {r: 0.045842964, g: 2.9960785, b: 0, a: 0}
+          key1: {r: 0.0979441, g: 0.6698113, b: 0.14083417, a: 0.19607843}
+          key2: {r: 0, g: 0, b: 0, a: 1}
+          key3: {r: 0, g: 0, b: 0, a: 0.19607843}
+          key4: {r: 0, g: 0, b: 0, a: 0.19607843}
+          key5: {r: 0, g: 0, b: 0, a: 1}
+          key6: {r: 0, g: 0, b: 0, a: 0.19607843}
+          key7: {r: 0, g: 0, b: 0, a: 0}
+          ctime0: 21312
+          ctime1: 25058
+          ctime2: 0
+          ctime3: 0
+          ctime4: 0
+          ctime5: 0
+          ctime6: 0
+          ctime7: 0
+          atime0: 0
+          atime1: 11565
+          atime2: 15227
+          atime3: 17926
+          atime4: 26407
+          atime5: 29491
+          atime6: 32575
+          atime7: 36430
+          m_Mode: 0
+          m_NumColorKeys: 2
+          m_NumAlphaKeys: 8
+        m_Name: Muse Particle Gradient
+        m_Overridden: 0
+      - m_Value:
+          serializedVersion: 2
+          key0: {r: 3.129507, g: 3.7358491, b: 0.37162897, a: 0}
+          key1: {r: 0.43717274, g: 0.49999994, b: 0.09685863, a: 0.19607843}
+          key2: {r: 0, g: 0, b: 0, a: 1}
+          key3: {r: 0, g: 0, b: 0, a: 0.19607843}
+          key4: {r: 0, g: 0, b: 0, a: 0.19607843}
+          key5: {r: 0, g: 0, b: 0, a: 1}
+          key6: {r: 0, g: 0, b: 0, a: 0.19607843}
+          key7: {r: 0, g: 0, b: 0, a: 0}
+          ctime0: 18504
+          ctime1: 36430
+          ctime2: 0
+          ctime3: 0
+          ctime4: 0
+          ctime5: 0
+          ctime6: 0
+          ctime7: 0
+          atime0: 0
+          atime1: 11565
+          atime2: 15227
+          atime3: 17926
+          atime4: 26407
+          atime5: 29491
+          atime6: 32575
+          atime7: 36430
+          m_Mode: 0
+          m_NumColorKeys: 2
+          m_NumAlphaKeys: 8
+        m_Name: Eylaw Particle Gradient
+        m_Overridden: 0
     m_NamedObject:
       m_Array: []
     m_Bool:
@@ -254,9 +346,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _boxCollider: {fileID: 9169012392101283376}
   _vfx: {fileID: 58016900531296688}
-  _delay: 0
-  _isActive: 0
-  _isDisappearing: 0
-  _maxLifeSpan: 5
+  _spawnDelay: 0
+  _delayT: 0
+  _deathSpan: 1
+  _deathSpanT: 0
+  _isNormal: 0
+  _isPoisonous: 0
+  _isWooshing: 0
+  _isDying: 0
+  _normalLifeSpan: 4
   _lifeSpanT: 0
-  _vfxGraph: {fileID: 0}
+  _greenTransitionSpeed: 0.3
+  _greenTransitionDelay: 0
+  _poisonLifeSpan: 4
+  _eylauLifeSpan: 1
+  _eylauTransitionSpeed: 0.3

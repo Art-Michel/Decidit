@@ -57,7 +57,7 @@ public class Synergies : LocalManager<Synergies>
                 switch (colliderChant)
                 {
                     case Chants.ARAGON:
-                        MuseOnAragon(bullet, collider.GetComponent<AragonCloud>());
+                        MuseOnAragon(bullet, collider.GetComponentInParent<AragonCloud>());
                         break;
                     case Chants.MUSE:
                         //Nothing!
@@ -99,10 +99,13 @@ public class Synergies : LocalManager<Synergies>
     {
         SoundManager.Instance.PlaySound("event:/SFX_Controller/UniversalSound", 1f, gameObject);
         PlayerManager.Instance.StartFlash(0.1f, 1);
-        Debug.Log("projectile transformé en projo acide");
         int hitCloudNb = ActiveClouds.IndexOf(hitCloud);
+
         foreach (AragonCloud cloud in ActiveClouds)
+        {
             cloud.Poisonify((Mathf.Abs(hitCloudNb - ActiveClouds.IndexOf(cloud))) * _delayBetweenClouds);
+            Debug.Log(hitCloudNb);
+        }
         ActiveClouds.Clear();
     }
     #endregion
@@ -132,7 +135,7 @@ public class Synergies : LocalManager<Synergies>
         StartCoroutine(coroutine);
 
         foreach (AragonCloud cloud in ActiveClouds)
-            cloud.StartDisappearing();
+            cloud.Swoosh();
         ActiveClouds.Clear();
         _enemies.Clear();
     }
