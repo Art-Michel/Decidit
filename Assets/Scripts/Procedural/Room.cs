@@ -68,6 +68,30 @@ public class Room : MonoBehaviour
         CurrentEnemiesInRoom = _enemiesList.Count;
     }
 
+
+    [SerializeField] Material[] _blockingMats;
+
+    [Button]
+    public void ShowBlockingMeshes()
+    {
+
+        foreach (Material mat in _blockingMats)
+        {
+            foreach (MeshRenderer mr in GameObject.FindObjectsOfType<MeshRenderer>().Where(t => t.sharedMaterial == mat))
+                mr.enabled = true;
+        }
+    }
+    [Button]
+    public void HideBlockingMeshes()
+    {
+
+        foreach (Material mat in _blockingMats)
+        {
+            foreach (MeshRenderer mr in GameObject.FindObjectsOfType<MeshRenderer>().Where(t => t.sharedMaterial == mat))
+                mr.enabled = false;
+        }
+    }
+
     public void StartBattleRoom()
     {
         TimerManager.Instance.isInCorridor = false;
