@@ -41,12 +41,12 @@ namespace State.AIBull
                 knockBackDirection = globalRef.enemyHealth.KnockBackDir;
                 globalRef.characterController.Move(Vector3.zero);
 
-                if (globalRef.knockBackBullSO.currentCountKnockBack >= globalRef.knockBackBullSO.maxCountKnockBack)
+                /*if (globalRef.knockBackBullSO.currentCountKnockBack >= globalRef.knockBackBullSO.maxCountKnockBack)
                 {
                     ActiveRushState();
                     globalRef.knockBackBullSO.currentCountKnockBack = 0;
                     return;
-                }
+                }*/
             }
             catch
             {

@@ -56,6 +56,7 @@ namespace State.AIBull
         public Transform RayRushLeft;
         public Transform RayAttackMiddle;
         [SerializeField] GameObject refRushStateObj;
+        [SerializeField] GameObject refKnockBackStateObj;
         public bool forceRush;
 
         [Header("Ref BaseMove State")]
@@ -150,6 +151,13 @@ namespace State.AIBull
         public void ActiveKnockBackState()
         {
             if(enemyHealth._hp >0 && !refRushStateObj.activeInHierarchy)
+                ActiveState(StateControllerBull.AIState.KnockBack);
+        }
+        public void ActiveKnockBackSynergieState()
+        {
+            Debug.Log("Knock Back Synergie");
+
+            if (enemyHealth._hp > 0 && !refKnockBackStateObj.activeInHierarchy)
                 ActiveState(StateControllerBull.AIState.KnockBack);
         }
 

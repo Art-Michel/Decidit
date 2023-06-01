@@ -235,6 +235,17 @@ public class EnemyHealth : Health
         else if (globalRefFlyAI != null)
             globalRefFlyAI.ActiveKnockBackState();
     }
+    public void KnockbackSynergie(Vector3 direction)
+    {
+        KnockBackDir = direction;
+
+        if (globalRefBullAI != null)
+            globalRefBullAI.ActiveKnockBackSynergieState();
+        else if (globalRefAICAC != null)
+            globalRefAICAC.ActiveKnockBackState();
+        else if (globalRefFlyAI != null)
+            globalRefFlyAI.ActiveKnockBackState();
+    }
 
     public void GetSick()
     {
