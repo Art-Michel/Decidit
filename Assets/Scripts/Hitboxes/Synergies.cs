@@ -161,6 +161,7 @@ public class Synergies : LocalManager<Synergies>
                 Vector3 finalDir = (((enemyPos - center).normalized) + (dir.normalized * dot));
                 finalDir = finalDir.normalized;
                 enemy.KnockbackSynergie(finalDir * _knockbackStrength);
+                enemy.TakeDamage(2);
             }
         }
         yield return null;
