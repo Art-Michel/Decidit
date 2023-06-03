@@ -269,6 +269,15 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Teleport"",
+                    ""type"": ""Value"",
+                    ""id"": ""3d892fb9-0d4c-437f-9286-7758a61cb290"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -337,6 +346,61 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
                     ""action"": ""HideGuns"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""7731dc25-7243-4b09-9141-bfd7fd64b412"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Teleport"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""eb7c2529-f122-4476-bb59-69b635537e6d"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Teleport"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""86ad40d9-e3d5-4484-9cc2-2eb5eedfb190"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Teleport"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""b890b5cf-cd5b-43b2-aa3c-d828a42eec19"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Teleport"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""feebb8f6-b6a5-4676-86a9-727747a601de"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Teleport"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -1247,6 +1311,7 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
         m_Debugging_DisplayDebug = m_Debugging.FindAction("DisplayDebug", throwIfNotFound: true);
         m_Debugging_HideUi = m_Debugging.FindAction("HideUi", throwIfNotFound: true);
         m_Debugging_HideGuns = m_Debugging.FindAction("HideGuns", throwIfNotFound: true);
+        m_Debugging_Teleport = m_Debugging.FindAction("Teleport", throwIfNotFound: true);
         // Actions
         m_Actions = asset.FindActionMap("Actions", throwIfNotFound: true);
         m_Actions_Shoot = m_Actions.FindAction("Shoot", throwIfNotFound: true);
@@ -1402,6 +1467,7 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
     private readonly InputAction m_Debugging_DisplayDebug;
     private readonly InputAction m_Debugging_HideUi;
     private readonly InputAction m_Debugging_HideGuns;
+    private readonly InputAction m_Debugging_Teleport;
     public struct DebuggingActions
     {
         private @PlayerInputMap m_Wrapper;
@@ -1412,6 +1478,7 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
         public InputAction @DisplayDebug => m_Wrapper.m_Debugging_DisplayDebug;
         public InputAction @HideUi => m_Wrapper.m_Debugging_HideUi;
         public InputAction @HideGuns => m_Wrapper.m_Debugging_HideGuns;
+        public InputAction @Teleport => m_Wrapper.m_Debugging_Teleport;
         public InputActionMap Get() { return m_Wrapper.m_Debugging; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1439,6 +1506,9 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
             @HideGuns.started += instance.OnHideGuns;
             @HideGuns.performed += instance.OnHideGuns;
             @HideGuns.canceled += instance.OnHideGuns;
+            @Teleport.started += instance.OnTeleport;
+            @Teleport.performed += instance.OnTeleport;
+            @Teleport.canceled += instance.OnTeleport;
         }
 
         private void UnregisterCallbacks(IDebuggingActions instance)
@@ -1461,6 +1531,9 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
             @HideGuns.started -= instance.OnHideGuns;
             @HideGuns.performed -= instance.OnHideGuns;
             @HideGuns.canceled -= instance.OnHideGuns;
+            @Teleport.started -= instance.OnTeleport;
+            @Teleport.performed -= instance.OnTeleport;
+            @Teleport.canceled -= instance.OnTeleport;
         }
 
         public void RemoveCallbacks(IDebuggingActions instance)
@@ -1784,6 +1857,7 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
         void OnDisplayDebug(InputAction.CallbackContext context);
         void OnHideUi(InputAction.CallbackContext context);
         void OnHideGuns(InputAction.CallbackContext context);
+        void OnTeleport(InputAction.CallbackContext context);
     }
     public interface IActionsActions
     {

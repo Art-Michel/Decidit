@@ -107,6 +107,7 @@ public class Synergies : LocalManager<Synergies>
             Debug.Log(hitCloudNb);
         }
         ActiveClouds.Clear();
+        bullet.Explode(bullet.Direction);
     }
     #endregion
 

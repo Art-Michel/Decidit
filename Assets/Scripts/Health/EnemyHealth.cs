@@ -458,6 +458,7 @@ public class EnemyHealth : Health
         _poisonDuration = poisonDuration;
         _poisonTickT = _poisonTickRate;
         _hpUi.color = _poisonedHpColor;
+        SoundManager.Instance.PlaySound("event:/SFX_IA/PoisonDamage", 3f, gameObject);
     }
 
     private void SufferPoison()

@@ -89,6 +89,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         _inputs.Debugging.DisplayDebug.started += _ => ShowDebug();
         _inputs.Debugging.HideUi.started += _ => HideUi();
         _inputs.Debugging.HideGuns.started += _ => HideGuns();
+        _inputs.Debugging.Teleport.started += _ => Teleport();
         // _inputs.MenuNavigation.anyButton.started += _ => SwitchToController();
         // _inputs.MenuNavigation.moveMouse.started += _ => SwitchToMouse();
     }
@@ -599,6 +600,11 @@ public class PlayerManager : LocalManager<PlayerManager>
     public void PushPlayerTowardsSpawn()
     {
         Debug.Log("player is stuck");
+        if (DungeonGenerator.Instance)
+        {
+            Vector3 dir = DungeonGenerator.Instance.GetRoom().Entry.transform.position - Player.Instance.transform.position;
+            Player.Instance.transform.position = dir.normalized;
+        }
     }
     #endregion
 
@@ -657,6 +663,13 @@ public class PlayerManager : LocalManager<PlayerManager>
             return;
         _hitmarkerT += Time.deltaTime * _hitmarkerSpeed;
         _hitmarkerCanvasGroup.alpha = _hitmarkerCurve.Evaluate(_hitmarkerT) * _currentHitmarkerMaxAlpha;
+    }
+    #endregion
+
+    #region DebugTeleport
+    private void Teleport()
+    {
+
     }
     #endregion
 }
