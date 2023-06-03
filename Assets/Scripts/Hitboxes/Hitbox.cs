@@ -25,6 +25,8 @@ public class Hitbox : MonoBehaviour
     [SerializeField] private bool _shouldSplashBloodOnHit = false;
     [Foldout("Properties")]
     [SerializeField] private bool _canCriticalHit = true;
+    [Foldout("Properties")]
+    [SerializeField] private bool _isPoisonous = false;
 
     [SerializeField]
     private BounceShake.Params _hitShake;
@@ -147,6 +149,12 @@ public class Hitbox : MonoBehaviour
             }
             if (_hitShake.numBounces > 0)
                 PlayerManager.Instance.HitShake(_hitShake);
+
+            if (_isPoisonous)
+            {
+                EnemyHealth enemyHealth = health as EnemyHealth;
+                enemyHealth.Poison();
+            }
 
             Blacklist.Add(health.transform, _delayBetweenHits);
         }

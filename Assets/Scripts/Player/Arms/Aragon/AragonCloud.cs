@@ -41,6 +41,8 @@ public class AragonCloud : PooledObject
     [SerializeField] float _greenTransitionDelay = 0.0f;
     [Foldout("Poison")]
     [SerializeField] float _poisonLifeSpan = 4.0f;
+    [Foldout("Poison")]
+    [SerializeField] Hitbox _poisonBox;
 
     [Foldout("Swoosh")]
     [SerializeField] float _eylauLifeSpan = 1.0f;
@@ -77,6 +79,7 @@ public class AragonCloud : PooledObject
 
         _isNormal = true;
         _isPoisonous = false;
+        _poisonBox.enabled = false;
         _isWooshing = false;
         _isDying = false;
 
@@ -153,6 +156,7 @@ public class AragonCloud : PooledObject
 
         _boxCollider.enabled = false;
         _greenTransitionDelay = delay;
+        _poisonBox.enabled = true;
 
         // StartDisappearing(); //TODO
     }
@@ -162,6 +166,7 @@ public class AragonCloud : PooledObject
         _isNormal = false;
         _isWooshing = false;
         _isPoisonous = false;
+        _poisonBox.enabled = false;
         _isDying = true;
 
         _deathSpanT = 0.0f;
