@@ -153,7 +153,7 @@ public class Hitbox : MonoBehaviour
             if (_isPoisonous)
             {
                 EnemyHealth enemyHealth = health as EnemyHealth;
-                enemyHealth.Poison();
+                enemyHealth.Poison(5, 0.3f);
             }
 
             Blacklist.Add(health.transform, _delayBetweenHits);

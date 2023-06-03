@@ -158,10 +158,12 @@ public class Synergies : LocalManager<Synergies>
                 float maxDist = (start - center).magnitude + 2;
                 float dot = Vector3.Dot(dir, (center - enemyPos).normalized) * _curve.Evaluate(Mathf.InverseLerp(0, maxDist, distFromCenter));
 
-                Vector3 finalDir = (((enemyPos - center).normalized) + (dir.normalized * dot));
+                Vector3 toEnemy = (enemyPos - center);
+                toEnemy = new Vector3(toEnemy.x, 0, toEnemy.z).normalized;
+                Vector3 finalDir = (toEnemy + (dir.normalized * dot));
                 finalDir = finalDir.normalized;
                 enemy.KnockbackSynergie(finalDir * _knockbackStrength);
-                enemy.TakeDamage(2);
+                enemy.TakeDamage(1);
             }
         }
         yield return null;
