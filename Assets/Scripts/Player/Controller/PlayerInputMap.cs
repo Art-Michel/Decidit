@@ -278,6 +278,15 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""ForceInvul"",
+                    ""type"": ""Button"",
+                    ""id"": ""ca5506b5-e309-4379-b68d-ea8c34ea5780"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -401,6 +410,17 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
                     ""action"": ""Teleport"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7b8270dc-dc0d-40c6-9797-c69e36c1d591"",
+                    ""path"": ""<Keyboard>/f12"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ForceInvul"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1312,6 +1332,7 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
         m_Debugging_HideUi = m_Debugging.FindAction("HideUi", throwIfNotFound: true);
         m_Debugging_HideGuns = m_Debugging.FindAction("HideGuns", throwIfNotFound: true);
         m_Debugging_Teleport = m_Debugging.FindAction("Teleport", throwIfNotFound: true);
+        m_Debugging_ForceInvul = m_Debugging.FindAction("ForceInvul", throwIfNotFound: true);
         // Actions
         m_Actions = asset.FindActionMap("Actions", throwIfNotFound: true);
         m_Actions_Shoot = m_Actions.FindAction("Shoot", throwIfNotFound: true);
@@ -1468,6 +1489,7 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
     private readonly InputAction m_Debugging_HideUi;
     private readonly InputAction m_Debugging_HideGuns;
     private readonly InputAction m_Debugging_Teleport;
+    private readonly InputAction m_Debugging_ForceInvul;
     public struct DebuggingActions
     {
         private @PlayerInputMap m_Wrapper;
@@ -1479,6 +1501,7 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
         public InputAction @HideUi => m_Wrapper.m_Debugging_HideUi;
         public InputAction @HideGuns => m_Wrapper.m_Debugging_HideGuns;
         public InputAction @Teleport => m_Wrapper.m_Debugging_Teleport;
+        public InputAction @ForceInvul => m_Wrapper.m_Debugging_ForceInvul;
         public InputActionMap Get() { return m_Wrapper.m_Debugging; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1509,6 +1532,9 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
             @Teleport.started += instance.OnTeleport;
             @Teleport.performed += instance.OnTeleport;
             @Teleport.canceled += instance.OnTeleport;
+            @ForceInvul.started += instance.OnForceInvul;
+            @ForceInvul.performed += instance.OnForceInvul;
+            @ForceInvul.canceled += instance.OnForceInvul;
         }
 
         private void UnregisterCallbacks(IDebuggingActions instance)
@@ -1534,6 +1560,9 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
             @Teleport.started -= instance.OnTeleport;
             @Teleport.performed -= instance.OnTeleport;
             @Teleport.canceled -= instance.OnTeleport;
+            @ForceInvul.started -= instance.OnForceInvul;
+            @ForceInvul.performed -= instance.OnForceInvul;
+            @ForceInvul.canceled -= instance.OnForceInvul;
         }
 
         public void RemoveCallbacks(IDebuggingActions instance)
@@ -1858,6 +1887,7 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
         void OnHideUi(InputAction.CallbackContext context);
         void OnHideGuns(InputAction.CallbackContext context);
         void OnTeleport(InputAction.CallbackContext context);
+        void OnForceInvul(InputAction.CallbackContext context);
     }
     public interface IActionsActions
     {

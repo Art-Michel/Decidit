@@ -90,6 +90,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         _inputs.Debugging.HideUi.started += _ => HideUi();
         _inputs.Debugging.HideGuns.started += _ => HideGuns();
         _inputs.Debugging.Teleport.started += _ => Teleport();
+        _inputs.Debugging.ForceInvul.started += _ => ForceInvul();
         // _inputs.MenuNavigation.anyButton.started += _ => SwitchToController();
         // _inputs.MenuNavigation.moveMouse.started += _ => SwitchToMouse();
     }
@@ -670,6 +671,17 @@ public class PlayerManager : LocalManager<PlayerManager>
     private void Teleport()
     {
 
+    }
+    #endregion
+
+    #region DebugInvul
+
+    [Foldout("Debugging")]
+    [SerializeField] TextMeshProUGUI _invulPrompt;
+    private void ForceInvul()
+    {
+        PlayerHealth.Instance._isDebugInvulnerable = !PlayerHealth.Instance._isDebugInvulnerable;
+        _invulPrompt.enabled = PlayerHealth.Instance._isDebugInvulnerable;
     }
     #endregion
 }

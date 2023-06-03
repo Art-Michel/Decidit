@@ -49,6 +49,7 @@ public class PlayerHealth : Health
 
     private float _hurtInvulnerabilityT;
     private bool _isHurtInvulnerable;
+    public bool _isDebugInvulnerable;
 
     [Foldout("Difficulty Modifiers")]
     [SerializeField] private float _easyHp = 5;
@@ -124,7 +125,7 @@ public class PlayerHealth : Health
 
     public override void TakeDamage(float amount)
     {
-        if (IsInvulnerable || amount <= 0 || _isHurtInvulnerable)
+        if (IsInvulnerable || amount <= 0 || _isHurtInvulnerable || _isDebugInvulnerable)
             return;
 
         if (_hasSecondChance && amount >= _hp && _hp > 1)
@@ -308,4 +309,5 @@ public class PlayerHealth : Health
     {
         return _hp;
     }
+
 }
