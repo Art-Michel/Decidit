@@ -17,8 +17,8 @@ namespace State.AIBull
         NavMeshHit closestHit;
         Vector3 linkDestination;
         bool lookForwardJump;
-        bool hitPlayer;
-        bool disableOffsetDestination;
+        [SerializeField] bool hitPlayer;
+        [SerializeField] bool disableOffsetDestination;
 
         [SerializeField] float distDetectObstacle;
 
@@ -333,6 +333,7 @@ namespace State.AIBull
 
         private void OnDisable()
         {
+            disableOffsetDestination = false;
             globalRef.baseMoveBullSO.speedRot = 0;
             globalRef.agent.speed = globalRef.baseMoveBullSO.stopSpeed;
             ResetCoolDown();

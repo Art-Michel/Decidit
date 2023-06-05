@@ -71,9 +71,9 @@ public class Altar : MonoBehaviour, IInteractable
 
     void SetRandomChant()
     {
-        _chant = (Chants)Random.Range(0, 3);
+        //_chant = (Chants)Random.Range(0, 3);
         //Debug.Log(_chant);
-        //_chant = Chants.Muse;
+        _chant = Chants.Muse;
     }
 
     public void SetChant(Chants chant)
