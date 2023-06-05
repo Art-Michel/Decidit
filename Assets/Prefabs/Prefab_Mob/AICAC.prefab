@@ -1525,7 +1525,6 @@ GameObject:
   - component: {fileID: 1127582834}
   - component: {fileID: 686522204}
   - component: {fileID: 686522203}
-  - component: {fileID: 591862396}
   - component: {fileID: 591862406}
   - component: {fileID: -8431705195059145478}
   - component: {fileID: 1015992914697596655}
@@ -1738,7 +1737,7 @@ MonoBehaviour:
   managerSurroundTrash: {fileID: 0}
   myAnimator: {fileID: 7191828778966458702}
   globalRefAnimator: {fileID: 3995594547456311649}
-  animEventAICAC: {fileID: 591862396}
+  animEventAICAC: {fileID: 4362244148382185739}
   isInEylau: 0
   slowSpeedMove: 4
   slowSpeedRot: 4
@@ -1792,20 +1791,6 @@ MonoBehaviour:
   - {fileID: 1130150010}
   timeToEnable: 0
   currentState: 0
---- !u!114 &591862396
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3888318928632032895}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04da4fdd4981b364c9873d5f80611073, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  globalRef: {fileID: 686522204}
-  baseMoveState: {fileID: 118593778}
 --- !u!114 &591862406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3156,6 +3141,26 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 9160675273734784063}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4496138701041541518 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4702954227849045425, guid: 3fd4ee28b2a113e4f87ce44306fdc603,
+    type: 3}
+  m_PrefabInstance: {fileID: 9160675273734784063}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4362244148382185739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4496138701041541518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04da4fdd4981b364c9873d5f80611073, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  globalRef: {fileID: 686522204}
+  baseMoveState: {fileID: 118593778}
 --- !u!95 &7191828778966458702 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 2085100158257767793, guid: 3fd4ee28b2a113e4f87ce44306fdc603,
