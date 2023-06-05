@@ -75,7 +75,6 @@ namespace State.AICAC
         {
             agent = GetComponent<NavMeshAgent>();
             playerTransform = GameObject.FindWithTag("Player").transform.GetChild(0).transform;
-            myAnimator = GetComponent<Animator>();
             spawnSurroundDodge = transform.Find("SpawnSurroundRay");
             enemyHealth = GetComponent<EnemyHealth>();
             material_Instances = GetComponent<Material_Instances>();
