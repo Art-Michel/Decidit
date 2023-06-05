@@ -604,7 +604,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         if (DungeonGenerator.Instance)
         {
             Vector3 dir = DungeonGenerator.Instance.GetRoom().Entry.transform.position - Player.Instance.transform.position;
-            Player.Instance.transform.position = dir.normalized;
+            Player.Instance.transform.position += dir.normalized;
         }
     }
     #endregion

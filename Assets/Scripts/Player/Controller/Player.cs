@@ -980,7 +980,7 @@ public class Player : LocalManager<Player>
     //To keep the player from getting stuck inside walls
     public void FailSafe()
     {
-        if (CurrentlyAppliedGravity < -30 && (transform.position - _previousPos).magnitude == 0.0f)
+        if (CurrentlyAppliedGravity < -100 && (transform.position - _previousPos).magnitude == 0.0f)
             PlayerManager.Instance.PushPlayerTowardsSpawn();
     }
 
