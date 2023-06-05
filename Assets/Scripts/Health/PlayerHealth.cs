@@ -269,6 +269,8 @@ public class PlayerHealth : Health
 
     public override void Knockback(Vector3 direction)
     {
+        if (_isDebugInvulnerable)
+            return;
         _player.AddMomentum(direction);
     }
 
