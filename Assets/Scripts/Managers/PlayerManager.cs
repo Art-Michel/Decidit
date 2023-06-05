@@ -91,6 +91,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         _inputs.Debugging.HideGuns.started += _ => HideGuns();
         _inputs.Debugging.Teleport.started += _ => Teleport();
         _inputs.Debugging.ForceInvul.started += _ => ForceInvul();
+        _inputs.Debugging.ToggleInstakill.started += _ => ToggleInstakill();
         // _inputs.MenuNavigation.anyButton.started += _ => SwitchToController();
         // _inputs.MenuNavigation.moveMouse.started += _ => SwitchToMouse();
     }
@@ -682,6 +683,16 @@ public class PlayerManager : LocalManager<PlayerManager>
     {
         PlayerHealth.Instance._isDebugInvulnerable = !PlayerHealth.Instance._isDebugInvulnerable;
         _invulPrompt.enabled = PlayerHealth.Instance._isDebugInvulnerable;
+    }
+
+    [Foldout("Debugging")]
+    [SerializeField] TextMeshProUGUI _instaKillPrompt;
+    [Foldout("Debugging")]
+    public bool Instakill;
+    private void ToggleInstakill()
+    {
+        Instakill = !Instakill;
+        _instaKillPrompt.enabled = Instakill;
     }
     #endregion
 }

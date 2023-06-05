@@ -180,6 +180,8 @@ public class EnemyHealth : Health
 
     public override void TakeDamage(float amount)
     {
+        if (PlayerManager.Instance.Instakill)
+            amount *= 100;
 
         if (globalRefBullAI != null)
             globalRefBullAI.CheckHP();
@@ -204,6 +206,9 @@ public class EnemyHealth : Health
 
     public override void TakeCriticalDamage(float amount)
     {
+        if (PlayerManager.Instance.Instakill)
+            amount *= 100;
+
         base.TakeDamage(amount * 2);
 
         if (globalRefBullAI != null)

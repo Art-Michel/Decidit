@@ -287,6 +287,15 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ToggleInstakill"",
+                    ""type"": ""Button"",
+                    ""id"": ""b1530d2b-d4d2-4c70-aaff-e8c4b42376d2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -419,6 +428,17 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""ForceInvul"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7ea94a4c-15e3-4cd8-9e01-5ce62a75dd90"",
+                    ""path"": ""<Keyboard>/f10"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleInstakill"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1333,6 +1353,7 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
         m_Debugging_HideGuns = m_Debugging.FindAction("HideGuns", throwIfNotFound: true);
         m_Debugging_Teleport = m_Debugging.FindAction("Teleport", throwIfNotFound: true);
         m_Debugging_ForceInvul = m_Debugging.FindAction("ForceInvul", throwIfNotFound: true);
+        m_Debugging_ToggleInstakill = m_Debugging.FindAction("ToggleInstakill", throwIfNotFound: true);
         // Actions
         m_Actions = asset.FindActionMap("Actions", throwIfNotFound: true);
         m_Actions_Shoot = m_Actions.FindAction("Shoot", throwIfNotFound: true);
@@ -1490,6 +1511,7 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
     private readonly InputAction m_Debugging_HideGuns;
     private readonly InputAction m_Debugging_Teleport;
     private readonly InputAction m_Debugging_ForceInvul;
+    private readonly InputAction m_Debugging_ToggleInstakill;
     public struct DebuggingActions
     {
         private @PlayerInputMap m_Wrapper;
@@ -1502,6 +1524,7 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
         public InputAction @HideGuns => m_Wrapper.m_Debugging_HideGuns;
         public InputAction @Teleport => m_Wrapper.m_Debugging_Teleport;
         public InputAction @ForceInvul => m_Wrapper.m_Debugging_ForceInvul;
+        public InputAction @ToggleInstakill => m_Wrapper.m_Debugging_ToggleInstakill;
         public InputActionMap Get() { return m_Wrapper.m_Debugging; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1535,6 +1558,9 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
             @ForceInvul.started += instance.OnForceInvul;
             @ForceInvul.performed += instance.OnForceInvul;
             @ForceInvul.canceled += instance.OnForceInvul;
+            @ToggleInstakill.started += instance.OnToggleInstakill;
+            @ToggleInstakill.performed += instance.OnToggleInstakill;
+            @ToggleInstakill.canceled += instance.OnToggleInstakill;
         }
 
         private void UnregisterCallbacks(IDebuggingActions instance)
@@ -1563,6 +1589,9 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
             @ForceInvul.started -= instance.OnForceInvul;
             @ForceInvul.performed -= instance.OnForceInvul;
             @ForceInvul.canceled -= instance.OnForceInvul;
+            @ToggleInstakill.started -= instance.OnToggleInstakill;
+            @ToggleInstakill.performed -= instance.OnToggleInstakill;
+            @ToggleInstakill.canceled -= instance.OnToggleInstakill;
         }
 
         public void RemoveCallbacks(IDebuggingActions instance)
@@ -1888,6 +1917,7 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
         void OnHideGuns(InputAction.CallbackContext context);
         void OnTeleport(InputAction.CallbackContext context);
         void OnForceInvul(InputAction.CallbackContext context);
+        void OnToggleInstakill(InputAction.CallbackContext context);
     }
     public interface IActionsActions
     {
