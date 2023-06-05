@@ -150,14 +150,12 @@ namespace State.AIBull
 
         public void ActiveKnockBackState()
         {
-            if(enemyHealth._hp >0 && !refRushStateObj.activeInHierarchy)
+            if(enemyHealth._hp >0 && !refRushStateObj.activeInHierarchy && !agent.isOnOffMeshLink)
                 ActiveState(StateControllerBull.AIState.KnockBack);
         }
         public void ActiveKnockBackSynergieState()
         {
-            Debug.Log("Knock Back Synergie");
-
-            if (enemyHealth._hp > 0 && !refKnockBackStateObj.activeInHierarchy)
+            if (enemyHealth._hp > 0 && !refKnockBackStateObj.activeInHierarchy && !agent.isOnOffMeshLink)
                 ActiveState(StateControllerBull.AIState.KnockBack);
         }
 
