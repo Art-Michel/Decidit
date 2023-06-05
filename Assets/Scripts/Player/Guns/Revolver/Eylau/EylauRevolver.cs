@@ -81,7 +81,7 @@ public class EylauRevolver : Revolver
             shot.GetComponent<Projectile>().Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized);
 
             Player.Instance.StartKickShake(_shootShake, transform.position);
-            _muzzleFlash.PlayAll();
+            _muzzleFlash.Play();
         }
 
         else
@@ -97,7 +97,7 @@ public class EylauRevolver : Revolver
 
 
             Player.Instance.StartBounceShake(_laserShake, transform.position);
-            _muzzleFlash.PlayAll();
+            _muzzleFlash.Play();
             //Additionnal ammo cost
         }
 

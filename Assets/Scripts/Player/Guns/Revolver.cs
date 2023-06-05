@@ -18,7 +18,7 @@ public class Revolver : MonoBehaviour
     [Foldout("References")]
     [SerializeField] protected GameObject _ui;
     [Foldout("References")]
-    [SerializeField] protected VFX_Particle _muzzleFlash;
+    [SerializeField] protected VisualEffect _muzzleFlash;
     [Foldout("References")]
     [SerializeField] protected Image _reloadingWarning;
     [Foldout("References")]
