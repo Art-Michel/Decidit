@@ -61,7 +61,7 @@ public class AragonCloud : PooledObject
         Enable();
 
 
-        _vfx.SetFloat("WooshingMultiplier", 0);
+        // _vfx.SetFloat("IsWooshing", 0);
         _vfx.SetFloat("WooshingMultiplierMin", 0);
         _vfx.SetFloat("WooshingMultiplierMax", 0);
         _vfx.SetFloat("SmokeSpawnRate", 15);
