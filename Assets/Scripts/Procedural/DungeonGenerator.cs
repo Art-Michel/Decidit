@@ -307,8 +307,8 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
     [Foldout("Colors")]
     [Tooltip("En secondes, combien de temps la transition de couleur va prendre")]
     [SerializeField] float _colorTransitionSpeed = 4.0f;
-    const int _transitionMedium = 5;
-    const int _transitionHard = 9;
+    const int _transitionMedium = 3;
+    const int _transitionHard = 7;
 
     bool _isColorTransitionning;
     float _colorTransitionT;
