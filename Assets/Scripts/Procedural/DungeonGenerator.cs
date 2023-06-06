@@ -58,6 +58,8 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
 
         ChoseAGun = false;
         ChoseASkill = false;
+        SoundManager.Instance.ClearedSound();
+
     }
 
     IEnumerator SetUsableRooms()
