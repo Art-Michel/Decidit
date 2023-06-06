@@ -7,7 +7,7 @@ public class CameraPropsMenu : MonoBehaviour
     CinemachineVirtualCamera cineCam;
     CinemachinePOV cineCamPOV;
     Camera cam;
-    Vector2 baseRotCam;
+    public Vector2 baseRotCam;
 
     [Header("Zoom Parameter")]
     [SerializeField] float speedZoom;
