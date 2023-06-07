@@ -263,6 +263,15 @@ namespace State.AICAC
         void SwitchBetweenAnticipAndDumb()
         {
             Vector3 playerPosAnticip;
+            int currentOffset = (int)offset;
+
+            if (globalRef.distPlayer <= 15 && globalRef.distPlayer >= 8)
+                currentOffset = (int)offset / 2;
+            else if (globalRef.distPlayer <= 8)
+                currentOffset = 1;
+            else
+                currentOffset = (int)offset;
+
 
             if (isAnticip)
             {
@@ -272,7 +281,7 @@ namespace State.AICAC
                     baseMoveAICACSO.currentDelayStopAnticip = baseMoveAICACSO.maxDelayStopAnticip;
                     dir = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer - globalRef.transform.position;
                     left = Vector3.Cross(dir, Vector3.up).normalized;
-                    playerPosAnticip = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer + (left * offset);
+                    playerPosAnticip = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer + (left * currentOffset);
                 }
                 else if (baseMoveAICACSO.currentDelayStopAnticip <= 0)
                 {
@@ -285,7 +294,7 @@ namespace State.AICAC
                     baseMoveAICACSO.currentDelayStopAnticip -= Time.deltaTime;
                     dir = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer - globalRef.transform.position;
                     left = Vector3.Cross(dir, Vector3.up).normalized;
-                    playerPosAnticip = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer + (left * offset);
+                    playerPosAnticip = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer + (left * currentOffset);
                 }
             }
             else
@@ -303,7 +312,7 @@ namespace State.AICAC
                     baseMoveAICACSO.currentDelayStopAnticip = baseMoveAICACSO.maxDelayStopAnticip;
                     dir = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer - globalRef.transform.position;
                     left = Vector3.Cross(dir, Vector3.up).normalized;
-                    playerPosAnticip = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer + (left * offset);
+                    playerPosAnticip = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer + (left * currentOffset);
                     isAnticip = true;
                 }
                 else
@@ -313,6 +322,7 @@ namespace State.AICAC
                 }
             }
 
+            Debug.Log(currentOffset);
             destination = CheckNavMeshPoint(playerPosAnticip);
             path = new NavMeshPath();
             globalRef.agent.CalculatePath(destination, path);
