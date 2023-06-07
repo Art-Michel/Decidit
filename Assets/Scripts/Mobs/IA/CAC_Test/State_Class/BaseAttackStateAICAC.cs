@@ -8,7 +8,7 @@ namespace State.AICAC
         [SerializeField] Material_Instances material_Instances;
         BaseAttackParameterAICAC baseAttackAICACSO;
 
-        [SerializeField] Transform tongue;
+        [SerializeField] Transform Head;
 
         [SerializeField] bool endAttack;
 
@@ -42,8 +42,9 @@ namespace State.AICAC
 
         private void LateUpdate()
         {
-            if (baseAttackAICACSO.currentAttackRate <=0.1f)
-                tongue.LookAt(globalRef.playerTransform.position);
+
+            /*if (baseAttackAICACSO.currentAttackRate <= 0.1f)
+                Head.LookAt(globalRef.playerTransform.position);*/
         }
 
         public void BaseAttack()
