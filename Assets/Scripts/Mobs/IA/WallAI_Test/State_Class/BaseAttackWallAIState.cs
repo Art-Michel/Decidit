@@ -117,6 +117,7 @@ namespace State.WallAI
             {
                 if (baseAttackWallAISO.currentRafaleCount > 0)
                 {
+                    Debug.Log("Attack");
                     if (baseAttackWallAISO.bulletCount > 0)
                     {
                         StartCoroutine("LaunchProjectileAnticipation");
