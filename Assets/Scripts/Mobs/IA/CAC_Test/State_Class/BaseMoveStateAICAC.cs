@@ -67,7 +67,9 @@ namespace State.AICAC
 
         private void Update()
         {
-            if (Player.Instance._fsm.CurrentState.Name == PlayerStatesList.WALLRIDING || Player.Instance._fsm.CurrentState.Name == PlayerStatesList.GROUNDED)
+            if (Player.Instance._fsm.CurrentState.Name == PlayerStatesList.WALLRIDING ||
+                Player.Instance._fsm.CurrentState.Name == PlayerStatesList.JUMPING || 
+                Player.Instance._fsm.CurrentState.Name != PlayerStatesList.GROUNDED)
             {
                 PlayerPosition = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer;
             }
