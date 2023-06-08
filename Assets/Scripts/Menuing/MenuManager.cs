@@ -226,7 +226,8 @@ public class MenuManager : LocalManager<MenuManager>
     {
         foreach (Menus entry in _submenus.Keys)
         {
-            _submenus[entry].ResetFirstButton();
+            if (_submenus[entry] != null)
+                _submenus[entry].ResetFirstButton();
         }
     }
 
