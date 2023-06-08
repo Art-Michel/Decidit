@@ -50,7 +50,7 @@ public class Explosion : Hitbox
         _initialDamage = Damage;
     }
 
-    void OnEnable()
+    protected virtual void OnEnable()
     {
         _lightStrength = _light.intensity;
         Reset();
