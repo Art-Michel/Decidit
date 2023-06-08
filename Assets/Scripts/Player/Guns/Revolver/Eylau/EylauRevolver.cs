@@ -16,6 +16,8 @@ public class EylauRevolver : Revolver
     [SerializeField] private Pooler _chargedProjectilePooler;
     [Foldout("References")]
     [SerializeField] private Image _chargeUi;
+    [Foldout("References")]
+    [SerializeField] protected VisualEffect _chMuzzleFlash;
 
     [SerializeField] private BounceShake.Params _laserShake;
     [Foldout("Stats")]
@@ -98,6 +100,7 @@ public class EylauRevolver : Revolver
 
             Player.Instance.StartBounceShake(_laserShake, transform.position);
             _muzzleFlash.Play();
+            _chMuzzleFlash.Play();
             //Additionnal ammo cost
         }
 
