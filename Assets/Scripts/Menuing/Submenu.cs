@@ -10,4 +10,9 @@ public class Submenu : MonoBehaviour
     public GameObject FirstFirstButton;
 
     public GameObject[] GreyOuts;
+
+    public void ResetFirstButton()
+    {
+        FirstButton = FirstFirstButton;
+    }
 }

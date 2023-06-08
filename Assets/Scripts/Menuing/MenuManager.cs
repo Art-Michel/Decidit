@@ -135,7 +135,6 @@ public class MenuManager : LocalManager<MenuManager>
         EnableMenuInputs();
         _menuParent.SetActive(true);
         _eventSys.SetSelectedGameObject(null);
-        MenuManager.Instance.ResetFirstButton();
 
         //blur
         _postProcessVolume.enabled = true;
@@ -156,6 +155,8 @@ public class MenuManager : LocalManager<MenuManager>
             //Stop rumble
             PlayerManager.Instance.StopRumbling();
         }
+
+        ResetFirstButtons();
     }
 
     public void StopMenuing()
@@ -221,11 +222,11 @@ public class MenuManager : LocalManager<MenuManager>
         CurrentDevice = Devices.Mouse;
     }
 
-    public void ResetFirstButton()
+    public void ResetFirstButtons()
     {
-        foreach (var (key, value) in _submenus)
+        foreach (Menus entry in _submenus.Keys)
         {
-            _submenus[key].FirstButton = _submenus[key].FirstFirstButton;
+            _submenus[entry].ResetFirstButton();
         }
     }
 
