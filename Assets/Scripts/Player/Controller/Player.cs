@@ -38,7 +38,7 @@ public class Player : LocalManager<Player>
     [Foldout("References")]
     [SerializeField] VisualEffect _speedlines;
     PlayerInputMap _inputs;
-    PlayerFSM _fsm;
+   public PlayerFSM _fsm;
     PlayerHealth _playerHealth;
     public Revolver CurrentGun;
     public Arm CurrentArm;

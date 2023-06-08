@@ -39,6 +39,9 @@ namespace State.AICAC
 
         [SerializeField] float distToCirclePos;
         NavMeshPath path;
+
+        Vector3 PlayerPosition;
+
         public override void InitState(StateControllerAICAC stateController)
         {
             base.InitState(stateController);
@@ -64,6 +67,15 @@ namespace State.AICAC
 
         private void Update()
         {
+            if (Player.Instance._fsm.CurrentState.Name == PlayerStatesList.WALLRIDING || Player.Instance._fsm.CurrentState.Name == PlayerStatesList.GROUNDED)
+            {
+                PlayerPosition = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer;
+            }
+            else
+            {
+                PlayerPosition = globalRef.playerTransform.position;
+            }
+
             //sphereDebug.position = destination;
             //globalRef.agent.areaMask |= (1 << NavMesh.GetAreaFromName("Walkable"));
             //globalRef.agent.areaMask |= (1 << NavMesh.GetAreaFromName("Not Walkable"));
@@ -214,7 +226,7 @@ namespace State.AICAC
                     {
                         baseMoveAICACSO.currentDelayBeforeSurround = baseMoveAICACSO.maxDelayBeforeSurround;
                         if (Vector3.Distance(globalRef.destinationSurround, globalRef.transform.position) > baseMoveAICACSO.distStopSurroundNearPlayer &&
-                            Vector3.Distance(globalRef.transform.position, globalRef.playerTransform.position) > baseMoveAICACSO.distStopSurroundNearPlayer)
+                            Vector3.Distance(globalRef.transform.position, PlayerPosition) > baseMoveAICACSO.distStopSurroundNearPlayer)
                         {
                             path = new NavMeshPath();
                             globalRef.agent.CalculatePath(globalRef.destinationSurround, path);
@@ -240,7 +252,7 @@ namespace State.AICAC
                             SwitchBetweenAnticipAndDumb();
                         }
 
-                        if (Vector3.Distance(globalRef.playerTransform.position, globalRef.transform.position) > (globalRef.managerSurroundTrash.radius + baseMoveAICACSO.distStopSurroundNearPlayer))
+                        if (Vector3.Distance(PlayerPosition, globalRef.transform.position) > (globalRef.managerSurroundTrash.radius + baseMoveAICACSO.distStopSurroundNearPlayer))
                         {
                             if (canSurround)
                                 activeSurround = true;
@@ -257,7 +269,7 @@ namespace State.AICAC
                 }
             }
 
-            if (Vector3.Distance(globalRef.playerTransform.position, globalRef.transform.position) < baseMoveAICACSO.attackRange)//(globalRef.distPlayer < baseMoveAICACSO.attackRange)
+            if (Vector3.Distance(PlayerPosition, globalRef.transform.position) < baseMoveAICACSO.attackRange)//(globalRef.distPlayer < baseMoveAICACSO.attackRange)
             {
                 if (!isOnNavLink)
                 {
@@ -285,22 +297,22 @@ namespace State.AICAC
                     Player.Instance.FinalMovement.magnitude > 0 && Input.GetAxis("Vertical") != 0)
                 {
                     baseMoveAICACSO.currentDelayStopAnticip = baseMoveAICACSO.maxDelayStopAnticip;
-                    dir = globalRef.playerTransform.position - globalRef.transform.position;
+                    dir = PlayerPosition - globalRef.transform.position;
                     left = Vector3.Cross(dir, Vector3.up).normalized;
-                    playerPosAnticip = globalRef.playerTransform.position + (left * currentOffset);
+                    playerPosAnticip = PlayerPosition + (left * currentOffset);
                 }
                 else if (baseMoveAICACSO.currentDelayStopAnticip <= 0)
                 {
                     isAnticip = false;
                     baseMoveAICACSO.currentDelayActiveAnticip = baseMoveAICACSO.maxDelayActiveAnticip;
-                    playerPosAnticip = globalRef.playerTransform.position;
+                    playerPosAnticip = PlayerPosition;
                 }
                 else
                 {
                     baseMoveAICACSO.currentDelayStopAnticip -= Time.deltaTime;
-                    dir = globalRef.playerTransform.position - globalRef.transform.position;
+                    dir = PlayerPosition - globalRef.transform.position;
                     left = Vector3.Cross(dir, Vector3.up).normalized;
-                    playerPosAnticip = globalRef.playerTransform.position + (left * currentOffset);
+                    playerPosAnticip = PlayerPosition + (left * currentOffset);
                 }
             }
             else
@@ -311,20 +323,20 @@ namespace State.AICAC
                         Player.Instance.FinalMovement.magnitude > 0 && Input.GetAxis("Vertical") != 0)
                         baseMoveAICACSO.currentDelayActiveAnticip -= Time.deltaTime;
 
-                    playerPosAnticip = globalRef.playerTransform.position;
+                    playerPosAnticip = PlayerPosition;
                 }
                 else if (baseMoveAICACSO.currentDelayActiveAnticip <= 0)
                 {
                     baseMoveAICACSO.currentDelayStopAnticip = baseMoveAICACSO.maxDelayStopAnticip;
-                    dir = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer - globalRef.transform.position;
+                    dir = PlayerPosition - globalRef.transform.position;
                     left = Vector3.Cross(dir, Vector3.up).normalized;
-                    playerPosAnticip = globalRef.playerTransform.position + (left * currentOffset);
+                    playerPosAnticip = PlayerPosition + (left * currentOffset);
                     isAnticip = true;
                 }
                 else
                 {
                     baseMoveAICACSO.currentDelayActiveAnticip -= Time.deltaTime;
-                    playerPosAnticip = globalRef.playerTransform.position;
+                    playerPosAnticip = PlayerPosition;
                 }
             }
             destination = CheckNavMeshPoint(playerPosAnticip);
