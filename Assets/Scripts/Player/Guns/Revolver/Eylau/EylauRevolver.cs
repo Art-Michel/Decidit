@@ -17,7 +17,7 @@ public class EylauRevolver : Revolver
     [Foldout("References")]
     [SerializeField] private Image _chargeUi;
     [Foldout("References")]
-    [SerializeField] protected VisualEffect _chMuzzleFlash;
+    [SerializeField] protected VFX_Particle _chMuzzleFlash;
 
     [SerializeField] private BounceShake.Params _laserShake;
     [Foldout("Stats")]
@@ -83,7 +83,7 @@ public class EylauRevolver : Revolver
             shot.GetComponent<Projectile>().Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized);
 
             Player.Instance.StartKickShake(_shootShake, transform.position);
-            _muzzleFlash.Play();
+            _muzzleFlash.PlayAll();
         }
 
         else
@@ -99,8 +99,7 @@ public class EylauRevolver : Revolver
 
 
             Player.Instance.StartBounceShake(_laserShake, transform.position);
-            _muzzleFlash.Play();
-            _chMuzzleFlash.Play();
+            _chMuzzleFlash.PlayAll();
             //Additionnal ammo cost
         }
 

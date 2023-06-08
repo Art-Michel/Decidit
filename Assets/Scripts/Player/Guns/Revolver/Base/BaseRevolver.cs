@@ -64,7 +64,7 @@ public class BaseRevolver : Revolver
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/BaseShoot/BaseShoot", 1f, gameObject);
         Player.Instance.StartKickShake(_shootShake, transform.position);
 
-        _muzzleFlash.Play();
+        _muzzleFlash.PlayAll();
 
         if (!sh1)
         {

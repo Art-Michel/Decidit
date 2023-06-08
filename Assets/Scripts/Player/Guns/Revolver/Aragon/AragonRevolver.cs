@@ -68,7 +68,7 @@ public class AragonRevolver : Revolver
 
         Player.Instance.StartKickShake(_shootShake, transform.position);
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/FugueAragon/BaseShoot", 1f, gameObject);
-        _muzzleFlash.Play();
+        _muzzleFlash.PlayAll();
     }
 
     // private void SetShot(Vector3 direction, float offsetLength)
