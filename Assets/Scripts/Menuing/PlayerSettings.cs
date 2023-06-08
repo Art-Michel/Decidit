@@ -11,8 +11,10 @@ public class PlayerSettings : LocalManager<PlayerSettings>
     #region VolumeSettingsVariablesFmod
     FMOD.Studio.Bus master;
     [SerializeField] float masterVolumeNumber = 1f;
+
     FMOD.Studio.Bus SFX;
     [SerializeField] float SFXVolumeNumber = 1f;
+
     FMOD.Studio.Bus music;
     [SerializeField] float musicVolumeNumber = 1f;
     #endregion
@@ -67,19 +69,25 @@ public class PlayerSettings : LocalManager<PlayerSettings>
         // MasterVolumeUpdate();//Debug que tu pourra aussi elever
     }
     #region VolumeFonctions
-    public void MasterVolumeUpdate()//ToDoArt un slider qui appele la fonction connecté a la valeur MasterVolumeNumber
+    public void MasterVolumeUpdate(Slider slider)//ToDoArt un slider qui appele la fonction connecté a la valeur MasterVolumeNumber
     {
+        masterVolumeNumber = slider.value;
+
         master.setVolume(masterVolumeNumber);//1 = 0Db donc la valeur normale donc 0 = plus de son
         master.getVolume(out masterVolumeNumber);//Debug qui affiche la current value du son
 
     }
-    public void SFXVolumeUpdate()//ToDoArt un slider qui appele la fonction connecté a la valeur SFXVolumeNumber
+    public void SFXVolumeUpdate(Slider slider)//ToDoArt un slider qui appele la fonction connecté a la valeur SFXVolumeNumber
     {
+        SFXVolumeNumber = slider.value;
+
         SFX.setVolume(SFXVolumeNumber);//1 = 0Db donc la valeur normale donc 0 = plus de son
         SFX.getVolume(out SFXVolumeNumber);//Debug qui affiche la current value du son
     }
-    public void MusicVolumeUpdate()//ToDoArt un slider qui appele la fonction connecté a la valeur MusicVolumeNumber
+    public void MusicVolumeUpdate(Slider slider)//ToDoArt un slider qui appele la fonction connecté a la valeur MusicVolumeNumber
     {
+        musicVolumeNumber = slider.value;
+
         music.setVolume(musicVolumeNumber);//1 = 0Db donc la valeur normale donc 0 = plus de son
         music.getVolume(out musicVolumeNumber);//Debug qui affiche la current value du son
     }
