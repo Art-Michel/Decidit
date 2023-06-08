@@ -326,8 +326,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4133054445552840744}
-  - component: {fileID: 4804413388921371211}
   - component: {fileID: 4663864161350573083}
+  - component: {fileID: 7704560458409559825}
   m_Layer: 0
   m_Name: Explosion
   m_TagString: Untagged
@@ -353,73 +353,6 @@ Transform:
   m_Father: {fileID: 8465386666873793416}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4804413388921371211
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5177672588079378051}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41693efac2e83ce418196bccc842f112, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _impactVfxPooler: {fileID: 0}
-  _fleshSplashVfxPooler: {fileID: 0}
-  _shouldCollideWith:
-    serializedVersion: 2
-    m_Bits: 32768
-  _canHitThroughWalls: 0
-  _shouldNotHitThrough:
-    serializedVersion: 2
-    m_Bits: 0
-  _canMultiHit: 0
-  _shouldSplashBloodOnHit: 0
-  _canCriticalHit: 0
-  _hitShake:
-    positionStrength: 0
-    rotationStrength: 0
-    axesMultiplier:
-      position: {x: 1, y: 1, z: 0}
-      eulerAngles: {x: 0, y: 0, z: 1}
-    freq: 25
-    numBounces: 0
-    randomness: 0.5
-    attenuation:
-      clippingDistance: 10
-      falloffScale: 50
-      falloffDegree: 1
-      axesMultiplier: {x: 1, y: 1, z: 1}
-  _radius: 5
-  Damage: 1
-  _knockbackForce: 0
-  _knockbackAngle: {x: 0, y: 0, z: 0}
-  _delayBetweenHits: 0
-  _lifeSpan: 1
-  _hitboxSpan: 0.2
-  _shake:
-    strength:
-      position: {x: 0.25, y: 0.25, z: 0.2}
-      eulerAngles: {x: 5, y: 5, z: 0.8}
-    noiseModes:
-    - freq: 20
-      amplitude: 1
-    envelope:
-      attack: 60
-      sustain: 0
-      decay: 1
-      degree: 2
-    attenuation:
-      clippingDistance: 5
-      falloffScale: 40
-      falloffDegree: 1
-      axesMultiplier: {x: 1, y: 1, z: 1}
-  _light: {fileID: 1005900186550553126}
-  _windBox: {fileID: 9109925886092690631}
-  _explosionVfx: {fileID: 9125148645660124460}
-  _explosionAudioSource: {fileID: 4663864161350573083}
-  _explosionSfx: {fileID: 8300000, guid: fa3a4f7775a1c4247a3b32698a10ff92, type: 3}
 --- !u!82 &4663864161350573083
 AudioSource:
   m_ObjectHideFlags: 0
@@ -516,6 +449,78 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7704560458409559825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5177672588079378051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac99e13fe8d8d5845b15bcfa9d9ae66b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _impactVfxPooler: {fileID: 0}
+  _fleshSplashVfxPooler: {fileID: 0}
+  _shouldCollideWith:
+    serializedVersion: 2
+    m_Bits: 32768
+  _canHitThroughWalls: 0
+  _shouldNotHitThrough:
+    serializedVersion: 2
+    m_Bits: 0
+  _canMultiHit: 0
+  _shouldSplashBloodOnHit: 0
+  _canCriticalHit: 0
+  _isPoisonous: 0
+  _hitShake:
+    positionStrength: 0.05
+    rotationStrength: 0.1
+    axesMultiplier:
+      position: {x: 1, y: 1, z: 0}
+      eulerAngles: {x: 0, y: 0, z: 1}
+    freq: 25
+    numBounces: 15
+    randomness: 0.5
+    attenuation:
+      clippingDistance: 10
+      falloffScale: 50
+      falloffDegree: 1
+      axesMultiplier: {x: 1, y: 1, z: 1}
+  _radius: 5
+  Damage: 1
+  _knockbackForce: 0
+  _knockbackAngle: {x: 0, y: 0, z: 0}
+  _delayBetweenHits: 0
+  _lifeSpan: 1
+  _hitboxSpan: 0.2
+  _shake:
+    strength:
+      position: {x: 0.25, y: 0.25, z: 0.2}
+      eulerAngles: {x: 5, y: 5, z: 0.8}
+    noiseModes:
+    - freq: 12
+      amplitude: 1
+    envelope:
+      attack: 60
+      sustain: 0
+      decay: 1
+      degree: 2
+    attenuation:
+      clippingDistance: 5
+      falloffScale: 50
+      falloffDegree: 1
+      axesMultiplier: {x: 1, y: 1, z: 1}
+  _light: {fileID: 1005900186550553126}
+  _windBox: {fileID: 9109925886092690631}
+  _explosionVfx: {fileID: 9125148645660124460}
+  _explosionAudioSource: {fileID: 4663864161350573083}
+  _explosionSfx: {fileID: 8300000, guid: fa3a4f7775a1c4247a3b32698a10ff92, type: 3}
+  Chant: 1
+  _synergiesLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &5453217298790274398
 GameObject:
   m_ObjectHideFlags: 0
@@ -794,6 +799,7 @@ MonoBehaviour:
   _canMultiHit: 0
   _shouldSplashBloodOnHit: 0
   _canCriticalHit: 1
+  _isPoisonous: 0
   _hitShake:
     positionStrength: 0
     rotationStrength: 0
@@ -938,6 +944,7 @@ MonoBehaviour:
   _canMultiHit: 0
   _shouldSplashBloodOnHit: 0
   _canCriticalHit: 0
+  _isPoisonous: 0
   _hitShake:
     positionStrength: 0
     rotationStrength: 0

@@ -23,6 +23,7 @@ public class Synergies : LocalManager<Synergies>
     [Foldout("Cimetière")]
     [SerializeField] EylauArea _eylauArea;
 
+    #region Synergize with projectile
     public void Synergize(SynergyProjectile bullet, Transform collider)
     {
         // PlayerManager.Instance.StartSlowMo(0.0f, 0.1f);
@@ -87,6 +88,49 @@ public class Synergies : LocalManager<Synergies>
                 break;
         }
     }
+    #endregion
+
+    #region Synergize with hitbox
+    public void Synergize(SynergyHitbox hitbox, Transform collider)
+    {
+        Chants bulletChant = hitbox.Chant;
+        Chants colliderChant = collider.GetComponent<SynergyTrigger>().Chant;
+
+        switch (bulletChant)
+        {
+            case Chants.MUSE:
+                switch (colliderChant)
+                {
+                    case Chants.EYLAU:
+                        if (!_eylauArea.IsActive)
+                            break;
+                        MuseOnCimetiere(hitbox.transform.position);
+                        break;
+                }
+                break;
+        }
+    }
+
+    public void Synergize(SynergyExplosion hitbox, Transform collider)
+    {
+        Chants bulletChant = hitbox.Chant;
+        Chants colliderChant = collider.GetComponent<SynergyTrigger>().Chant;
+
+        switch (bulletChant)
+        {
+            case Chants.MUSE:
+                switch (colliderChant)
+                {
+                    case Chants.EYLAU:
+                        if (!_eylauArea.IsActive)
+                            break;
+                        MuseOnCimetiere(hitbox.transform.position);
+                        break;
+                }
+                break;
+        }
+    }
+    #endregion
 
     #region Muse -> Nuage
 
