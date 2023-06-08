@@ -135,6 +135,7 @@ public class MenuManager : LocalManager<MenuManager>
         EnableMenuInputs();
         _menuParent.SetActive(true);
         _eventSys.SetSelectedGameObject(null);
+        MenuManager.Instance.ResetFirstButton();
 
         //blur
         _postProcessVolume.enabled = true;
@@ -218,6 +219,14 @@ public class MenuManager : LocalManager<MenuManager>
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         CurrentDevice = Devices.Mouse;
+    }
+
+    public void ResetFirstButton()
+    {
+        foreach (var (key, value) in _submenus)
+        {
+            _submenus[key].FirstButton = _submenus[key].FirstFirstButton;
+        }
     }
 
     #region Submenu navigation

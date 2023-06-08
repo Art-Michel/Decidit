@@ -7,6 +7,7 @@ public class Submenu : MonoBehaviour
     public MenuManager.Menus Id;
     public Submenu PreviousMenu;
     public GameObject FirstButton;
+    public GameObject FirstFirstButton;
 
     public GameObject[] GreyOuts;
 }
