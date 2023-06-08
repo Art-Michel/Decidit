@@ -26,7 +26,7 @@ namespace State.AICAC
         bool isAnticip;
 
         [Header("LookAt")]
-        Vector3 direction;
+        [SerializeField] Vector3 direction;
         Vector3 relativePos;
         bool lookForwardJump;
 
@@ -216,7 +216,13 @@ namespace State.AICAC
                         if (Vector3.Distance(globalRef.destinationSurround, globalRef.transform.position) > baseMoveAICACSO.distStopSurroundNearPlayer &&
                             Vector3.Distance(globalRef.transform.position, CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer) > baseMoveAICACSO.distStopSurroundNearPlayer)
                         {
+                            path = new NavMeshPath();
+                            globalRef.agent.CalculatePath(globalRef.destinationSurround, path);
                             destination = CheckNavMeshPoint(globalRef.destinationSurround);
+                            if (globalRef.agent.velocity == Vector3.zero)
+                            {
+                                activeSurround = false;
+                            }
                         }
                         else
                             activeSurround = false;
@@ -245,7 +251,7 @@ namespace State.AICAC
                     {
                         SpeedAdjusting();
                         SlowSpeed(globalRef.isInEylau || globalRef.IsZap);
-                        globalRef.agent.SetDestination(destination);
+                        globalRef.agent.SetDestination(CheckNavMeshPoint(destination));
                     }
                     currentRateRepath = maxRateRepath;
                 }
@@ -321,8 +327,6 @@ namespace State.AICAC
                     playerPosAnticip = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer;
                 }
             }
-
-            Debug.Log(currentOffset);
             destination = CheckNavMeshPoint(playerPosAnticip);
             path = new NavMeshPath();
             globalRef.agent.CalculatePath(destination, path);
@@ -349,7 +353,7 @@ namespace State.AICAC
         }
         Vector3 CheckNavMeshPoint(Vector3 _destination)
         {
-            if (NavMesh.SamplePosition(_destination, out closestHit, 1, filter))
+            if (NavMesh.SamplePosition(_destination, out closestHit, 1000, filter))
             {
                 _destination = closestHit.position;
             }
@@ -421,6 +425,7 @@ namespace State.AICAC
             else if (!isOnNavLink)
             {
                 // direction = globalRef.transform.position + globalRef.agent.desiredVelocity;
+
                 direction = globalRef.agent.desiredVelocity;
 
                 relativePos.x = direction.x;
