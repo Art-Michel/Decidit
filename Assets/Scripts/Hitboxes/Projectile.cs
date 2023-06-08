@@ -51,7 +51,7 @@ public class Projectile : Hitbox
     protected Vector3 _lastFramePosition;
     protected Vector3 _spaceTraveledLast2Frames;
     protected bool _isDisappearing;
-    private float _disappearanceT;
+    [SerializeField] private float _disappearanceT;
 
     public virtual void Setup(Vector3 position, Vector3 direction)
     {
@@ -383,7 +383,7 @@ public class Projectile : Hitbox
             {
                 trail.emitting = false;
             }
-            _disappearanceT = _trailRenderers[0].time;
+            _disappearanceT = 1;
         }
 
         if (_trailMaterial)
@@ -402,7 +402,7 @@ public class Projectile : Hitbox
             Disappear();
     }
 
-    private void Disappear()
+    public void Disappear()
     {
         _isDisappearing = false;
         foreach (TrailRenderer trail in _trailRenderers)

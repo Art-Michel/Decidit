@@ -34,7 +34,7 @@ public class Explosion : Hitbox
 
     private bool _hitboxIsActive;
     private Projectile _parentProjectile;
-    private float _lifeT;
+    [SerializeField] private float _lifeT;
     private float _hitboxT;
 
     private float _lightStrength;
@@ -96,7 +96,7 @@ public class Explosion : Hitbox
         if (_lifeT <= 0)
         {
             gameObject.SetActive(false);
-            _parentProjectile.StartDisappearing();
+            _parentProjectile.Disappear();
         }
 
         //Explosion life span
