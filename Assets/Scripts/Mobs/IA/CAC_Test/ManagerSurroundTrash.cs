@@ -29,8 +29,12 @@ namespace State.AICAC
 
         List<Vector3> posCircle = new List<Vector3>();
 
+        Transform playerTransform;
+        Vector3 PlayerPosition;
+
         void Start()
         {
+            playerTransform = GameObject.FindWithTag("Player").transform.GetChild(0).transform;
             filter.agentTypeID = Get("GroundAI");
             filter.areaMask = 1 << 0;
 
@@ -73,6 +77,18 @@ namespace State.AICAC
                     adjustRadius--;
             }*/
 
+            if (Player.Instance._fsm.CurrentState.Name == PlayerStatesList.WALLRIDING ||
+               Player.Instance._fsm.CurrentState.Name == PlayerStatesList.JUMPING ||
+               Player.Instance._fsm.CurrentState.Name != PlayerStatesList.GROUNDED)
+            {
+                PlayerPosition = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer;
+            }
+            else
+            {
+                PlayerPosition = playerTransform.position;
+            }
+
+
             SetupPositionEnemy();
         }
 
@@ -87,7 +103,7 @@ namespace State.AICAC
             radius = adjustRadius - offsetRadius;
             currentAnglePlacement = 0f;
             float angleStep = maxAngle / aiCACScriptsList.Count;
-            Vector3 centerPosition = CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer;
+            Vector3 centerPosition = PlayerPosition;
 
             for (int i = 0; i <= aiCACScriptsList.Count - 1; i++)
             {
@@ -195,9 +211,9 @@ namespace State.AICAC
                 float x = xScale * radius;
                 float z = zScale * radius;
 
-                Vector3 currentPosition = CheckNavMeshPoint(new Vector3(CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer.x + x,
-                                                                         CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer.y,
-                                                                         CheckPlayerDownPos.instanceCheckPlayerPos.positionPlayer.z + z));
+                Vector3 currentPosition = CheckNavMeshPoint(new Vector3(PlayerPosition.x + x,
+                                                                         PlayerPosition.y,
+                                                                         PlayerPosition .z + z));
                 circleRenderer.SetPosition(currentStep, currentPosition);
             }
         }
