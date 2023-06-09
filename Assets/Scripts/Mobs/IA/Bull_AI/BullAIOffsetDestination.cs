@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+/*using System.Collections.Generic;
 using UnityEngine;
 
 namespace State.AIBull
@@ -64,4 +64,4 @@ namespace State.AIBull
             negativeOffeset = 0;
         }
     }
-}
+}*/

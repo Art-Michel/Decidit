@@ -389,7 +389,7 @@ namespace State.AIBull
 
         public void StopRush()
         {
-            if (!endRush)
+            if (!endRush && currentAnimName != "Dash Recovery")
             {
                 AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "RushAttack");
                 endRush = true;

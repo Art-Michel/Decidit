@@ -7,6 +7,9 @@ namespace State.AIBull
     {
         [SerializeField] GlobalRefBullAI globalRef;
         [SerializeField] float offsetYposPlayer;
+        NavMeshQueryFilter filter;
+        NavMeshPath path;
+        [SerializeField] Vector3 Destination;
 
         [Header("Nav Link")]
         [SerializeField] float maxDurationNavLink;
@@ -18,10 +21,10 @@ namespace State.AIBull
         Vector3 linkDestination;
         bool lookForwardJump;
         [SerializeField] bool hitPlayer;
-        [SerializeField] bool disableOffsetDestination;
 
         [SerializeField] float distDetectObstacle;
 
+        [Header("Animation")]
         AnimatorStateInfo animStateInfo;
         AnimatorClipInfo[] currentClipInfo;
         [SerializeField] string currentAnimName;
@@ -34,10 +37,14 @@ namespace State.AIBull
             state = StateControllerBull.AIState.BaseMove;
         }
 
+        private void Start()
+        {
+            filter.agentTypeID = GetNavMeshFilter("GroundAI");
+            filter.areaMask = 1 << 0;
+        }
+
         private void OnEnable()
         {
-            disableOffsetDestination = false;
-
             if (globalRef != null && globalRef.myAnimator != null)
                 AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Walk");
 
@@ -232,24 +239,50 @@ namespace State.AIBull
             float distPlayer = Vector3.Distance(globalRef.transform.position, globalRef.playerTransform.position);
             globalRef.agent.speed = globalRef.baseMoveBullSO.baseSpeed;
 
-            if(distPlayer > Mathf.Abs(globalRef.offsetDestination)+1 && hitPlayer && !disableOffsetDestination)
+            if(distPlayer > 10)
             {
-                newDestination = globalRef.playerTransform.position + (globalRef.playerTransform.right * globalRef.offsetDestination);
+                Vector3 dir = globalRef.playerTransform.position - globalRef.transform.position;
+                Vector3 left = Vector3.Cross(dir, Vector3.up).normalized;
+                newDestination = globalRef.playerTransform.position + (left * globalRef.offsetDestination);
+
+                //newDestination = globalRef.playerTransform.position + (globalRef.playerTransform.right * globalRef.offsetDestination);
             }
             else
             {
                 newDestination = globalRef.playerTransform.position;
-                disableOffsetDestination = true;
             }
 
             SlowSpeed(globalRef.isInEylau || globalRef.IsZap);
-            Vector3 destination = CheckNavMeshPoint(newDestination);
-            globalRef.agent.SetDestination(destination);
+
+            path = new NavMeshPath();
+            Destination = CheckNavMeshPoint(newDestination);
+            globalRef.agent.CalculatePath(Destination, path);
+            globalRef.agent.SetDestination(Destination);
+        }
+
+        int GetNavMeshFilter(string name)
+        {
+            for (int i = 0; i < NavMesh.GetSettingsCount(); ++i)
+            {
+                var settings = NavMesh.GetSettingsByIndex(i);
+
+                int agentTypeID = settings.agentTypeID;
+
+                var settingsName = NavMesh.GetSettingsNameFromID(agentTypeID);
+
+                if (settingsName == name)
+                {
+                    // Debug.Log(settings.agentTypeID);
+                    return settings.agentTypeID;
+                }
+
+            }//end for
+            return 0;
         }
         Vector3 CheckNavMeshPoint(Vector3 newDestination)
         {
             NavMeshHit closestHit;
-            if (NavMesh.SamplePosition(newDestination, out closestHit, 1, 1))
+            if (NavMesh.SamplePosition(newDestination, out closestHit, 1000, filter))
             {
                 newDestination = closestHit.position;
             }
@@ -333,7 +366,6 @@ namespace State.AIBull
 
         private void OnDisable()
         {
-            disableOffsetDestination = false;
             globalRef.baseMoveBullSO.speedRot = 0;
             globalRef.agent.speed = globalRef.baseMoveBullSO.stopSpeed;
             ResetCoolDown();

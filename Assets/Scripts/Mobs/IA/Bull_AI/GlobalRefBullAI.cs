@@ -14,11 +14,11 @@ namespace State.AIBull
         public EnemyHealth enemyHealth;
         public float distPlayer;
         public float offsetDestination;
-        public BullCount bullCount;
         public StateControllerBull stateControllerBull;
         public AgentLinkMover agentLinkMover;
         public CharacterController characterController;
-        public RushManager rushManager;
+        public ManagerShrednoss managerShrednoss;
+
         //public AudioSource audioSourceBull;
 
         [Header("Animation")]
@@ -39,7 +39,6 @@ namespace State.AIBull
         public bool IsZap;
 
         [Header("Debug Destination")]
-        public Transform sphereDebug;
         public LayerMask allMask;
 
         [Header("Ref BaseMove State")]
@@ -92,9 +91,7 @@ namespace State.AIBull
             playerTransform = GameObject.FindWithTag("Player").transform;
             enemyHealth = GetComponent<EnemyHealth>();
             material_Instances = GetComponent<Material_Instances>();
-            bullCount = GetComponentInParent<BullCount>();
             agentLinkMover = GetComponent<AgentLinkMover>();
-            rushManager = GetComponentInParent<RushManager>();
 
             baseIdleBullSO = Instantiate(baseIdleBullSO);
             baseAttackBullSO = Instantiate(baseAttackBullSO);
@@ -122,6 +119,11 @@ namespace State.AIBull
                     break;
             }
 
+        }
+
+        private void OnEnable()
+        {
+            managerShrednoss.GetRef(this);
         }
 
         void Update()

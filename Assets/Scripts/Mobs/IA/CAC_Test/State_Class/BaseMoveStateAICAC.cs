@@ -61,7 +61,7 @@ namespace State.AICAC
         private void Start()
         {
             baseMoveAICACSO = globalRef.baseMoveAICACSO;
-            filter.agentTypeID = Get("GroundAI");
+            filter.agentTypeID = GetNavMeshFilter("GroundAI");
             filter.areaMask = 1 << 0;
         }
 
@@ -346,7 +346,7 @@ namespace State.AICAC
             globalRef.agent.CalculatePath(destination, path);
         }
 
-        int Get(string name)
+        int GetNavMeshFilter(string name)
         {
             for (int i = 0; i < NavMesh.GetSettingsCount(); ++i)
             {
