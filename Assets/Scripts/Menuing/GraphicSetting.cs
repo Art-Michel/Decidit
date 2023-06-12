@@ -31,7 +31,7 @@ public class GraphicSetting : MonoBehaviour
 
     void Start()
     {
-        Screen.SetResolution((int)resolution[1].x, (int)resolution[1].y,
+        Screen.SetResolution((int)resolution[0].x, (int)resolution[0].y,
                     FullScreenMode.FullScreenWindow, Screen.currentResolution.refreshRate);
         //Screen.SetResolution((int)quatreK.x, (int)quatreK.y, false);
     }
