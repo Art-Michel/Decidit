@@ -304,6 +304,8 @@ namespace State.FlyAI
         {
             if (baseMoveFlySO.distDestinationFinal < 10 || dodgeObstacle)
             {
+
+
                 baseMoveFlySO.destinationFinal = RandomPointInBounds(globalRef.myCollider.bounds);
 
                 baseMoveFlySO.newPosIsSet = false;
@@ -345,7 +347,11 @@ namespace State.FlyAI
 
         void ApplyFlyingMove()
         {
-            baseMoveFlySO.distDestinationFinal = Vector3.Distance(flyAI.transform.position, baseMoveFlySO.destinationFinal);
+            Vector2 posIA = new Vector2(flyAI.transform.position.x, flyAI.transform.position.z);
+            Vector2 destination = new Vector2(baseMoveFlySO.destinationFinal.x, baseMoveFlySO.destinationFinal.z);
+            baseMoveFlySO.distDestinationFinal = Vector2.Distance(posIA, destination);
+
+            //baseMoveFlySO.distDestinationFinal = Vector3.Distance(flyAI.transform.position, baseMoveFlySO.destinationFinal);
 
             if (baseMoveFlySO.newPosIsSet)
             {
