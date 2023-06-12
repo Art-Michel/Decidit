@@ -5,7 +5,7 @@ using System.IO;
 
 public static class SaveLoadManager
 {
-    // Save Timer
+    #region SaveTImer
     public static void SaveTimer(TimerManager timerManager)
     {
         BinaryFormatter bf = new BinaryFormatter();
@@ -48,6 +48,37 @@ public static class SaveLoadManager
 
         return data.bestTime;
     }
+    #endregion
+
+    #region SaveSoundSetting
+    public static void SaveSoundSet(PlayerSettings playerSettings)
+    {
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = File.Create(Application.persistentDataPath + "/SoundSettings.dat");
+
+        SoundSettingData data = new SoundSettingData(playerSettings);
+
+        bf.Serialize(file, data);
+        file.Close();
+    }
+    public static SoundSettingData LoadSoundSet()
+    {
+        if (File.Exists(Application.persistentDataPath + "/SoundSettings.dat"))
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(Application.persistentDataPath + "/SoundSettings.dat", FileMode.Open);
+
+            SoundSettingData data = bf.Deserialize(file) as SoundSettingData;
+            file.Close();
+            return data;
+        }
+        else
+        {
+            Debug.LogWarning("no file found");
+            return null;
+        }
+    }
+    #endregion
 }
 
 [Serializable]
@@ -58,5 +89,20 @@ public class TimerData
     public TimerData(TimerManager timerManager)
     {
         bestTime = TimerManager.Instance.bestTime;
+    }
+}
+
+[Serializable]
+public class SoundSettingData
+{
+    public float masterVolumeNumber;
+    public float SFXVolumeNumber;
+    public float musicVolumeNumber;
+
+    public SoundSettingData(PlayerSettings playerSettings)
+    {
+        masterVolumeNumber = playerSettings.masterVolumeNumber;
+        SFXVolumeNumber = playerSettings.SFXVolumeNumber;
+        musicVolumeNumber = playerSettings.musicVolumeNumber;
     }
 }

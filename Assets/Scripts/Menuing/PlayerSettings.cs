@@ -10,13 +10,17 @@ public class PlayerSettings : LocalManager<PlayerSettings>
 {
     #region VolumeSettingsVariablesFmod
     FMOD.Studio.Bus master;
-    [SerializeField] float masterVolumeNumber = 1f;
+    [SerializeField]public float masterVolumeNumber = 1f;
 
     FMOD.Studio.Bus SFX;
-    [SerializeField] float SFXVolumeNumber = 1f;
+    [SerializeField] public float SFXVolumeNumber = 1f;
 
     FMOD.Studio.Bus music;
-    [SerializeField] float musicVolumeNumber = 1f;
+    [SerializeField] public float musicVolumeNumber = 1f;
+
+    [SerializeField] Slider sliderMasterVolumeNumber;
+    [SerializeField] Slider sliderSFXVolumeNumber;
+    [SerializeField] Slider slidermusicVolumeNumber;
     #endregion
 
     #region ResolutionsVariables
@@ -60,7 +64,7 @@ public class PlayerSettings : LocalManager<PlayerSettings>
     // Start is called before the first frame update
     void Start()
     {
-
+        LoadSoundSettings();
     }
 
     // Update is called once per frame
@@ -69,13 +73,23 @@ public class PlayerSettings : LocalManager<PlayerSettings>
         // MasterVolumeUpdate();//Debug que tu pourra aussi elever
     }
     #region VolumeFonctions
+    public void LoadSoundSettings()
+    {
+        sliderMasterVolumeNumber.value = SaveLoadManager.LoadSoundSet().masterVolumeNumber;
+        sliderSFXVolumeNumber.value = SaveLoadManager.LoadSoundSet().SFXVolumeNumber;
+        slidermusicVolumeNumber.value = SaveLoadManager.LoadSoundSet().musicVolumeNumber;
+
+        MasterVolumeUpdate(sliderMasterVolumeNumber);
+        SFXVolumeUpdate(sliderSFXVolumeNumber);
+        MusicVolumeUpdate(slidermusicVolumeNumber);
+    }
+
     public void MasterVolumeUpdate(Slider slider)//ToDoArt un slider qui appele la fonction connecté a la valeur MasterVolumeNumber
     {
         masterVolumeNumber = slider.value;
 
         master.setVolume(masterVolumeNumber);//1 = 0Db donc la valeur normale donc 0 = plus de son
         master.getVolume(out masterVolumeNumber);//Debug qui affiche la current value du son
-
     }
     public void SFXVolumeUpdate(Slider slider)//ToDoArt un slider qui appele la fonction connecté a la valeur SFXVolumeNumber
     {
@@ -103,17 +117,17 @@ public class PlayerSettings : LocalManager<PlayerSettings>
         PlayerPrefs.SetFloat("YSensivity", ySensivity);
         PlayerPrefs.SetFloat("XControllerSensivity", xControllerSensivity);
         PlayerPrefs.SetFloat("YControllerSensivity", yControllerSensivity);
-        PlayerPrefs.SetFloat("MasterBaseVolume", masterVolumeNumber);
+        /*PlayerPrefs.SetFloat("MasterBaseVolume", masterVolumeNumber);
         PlayerPrefs.SetFloat("SFXBaseVolume", SFXVolumeNumber);
-        PlayerPrefs.SetFloat("MusicBaseVolume", musicVolumeNumber);
+        PlayerPrefs.SetFloat("MusicBaseVolume", musicVolumeNumber);*/
         PlayerPrefs.Save();
         UnityEngine.Debug.Log("Save");
     }
     public void LoadPrefs()
     {
-        masterVolumeNumber = PlayerPrefs.GetFloat("MasterBaseVolume", masterVolumeNumber);
+      /*  masterVolumeNumber = PlayerPrefs.GetFloat("MasterBaseVolume", masterVolumeNumber);
         SFXVolumeNumber = PlayerPrefs.GetFloat("SFXBaseVolume", SFXVolumeNumber);
-        musicVolumeNumber = PlayerPrefs.GetFloat("MusicBaseVolume", musicVolumeNumber);
+        musicVolumeNumber = PlayerPrefs.GetFloat("MusicBaseVolume", musicVolumeNumber);*/
     }
 
     [Button]
@@ -193,8 +207,16 @@ public class PlayerSettings : LocalManager<PlayerSettings>
         SFX = FMODUnity.RuntimeManager.GetBus("bus:/SFX");
         music = FMODUnity.RuntimeManager.GetBus("bus:/Music");
     }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+        SaveLoadManager.SaveSoundSet(this);
+
+    }
     private void OnApplicationQuit()
     {
         // SavePrefs();//babysitting anti con du Alt+F4
+        SaveLoadManager.SaveSoundSet(this);
     }
 }
