@@ -38,15 +38,16 @@ public class Player : LocalManager<Player>
     [Foldout("References")]
     [SerializeField] VisualEffect _speedlines;
     PlayerInputMap _inputs;
-   public PlayerFSM _fsm;
+    public PlayerFSM _fsm;
     PlayerHealth _playerHealth;
     public Revolver CurrentGun;
     public Arm CurrentArm;
     #endregion
 
-    #region Camera rotation variables
+    #region Camera variables
     private float _cameraTargetYRotation;
     private float _cameraTargetXRotation;
+
     // float _shakeT;
     // float _shakeInitialT;
     // float _shakeIntensity;
@@ -89,13 +90,15 @@ public class Player : LocalManager<Player>
     int _controllerCameraYInvertedValue;
 
     //General
-    [SerializeField] float _cameraSmoothness = 100000;
+    float _cameraSmoothness = 1;
+    [Foldout("Camera Settings")]
+    [SerializeField] private float _defaultFov = 90;
     #endregion
 
     #region Jumping, Falling and Ground Detection variables
     [Foldout("Jumping Settings")]
     [Range(0, 100)][SerializeField] private float _baseJumpStrength = 14f;
-    public float CurrentJumpStrength;
+    [NonSerialized] public float CurrentJumpStrength;
     [Foldout("Falling Settings")]
     [Range(0, 50)][SerializeField] private float _airborneDrag = 3f;
     [Foldout("Falling Settings")]
@@ -113,7 +116,7 @@ public class Player : LocalManager<Player>
     [SerializeField] protected KickShake.Params _landShake;
 
     private const float _gravity = 9.81f;
-    public float CurrentlyAppliedGravity;
+    [NonSerialized] public float CurrentlyAppliedGravity;
     private Vector3 _steepSlopesMovement;
     private float _jumpBuffer = 0.0f;
     private RaycastHit _groundHit;
@@ -146,11 +149,11 @@ public class Player : LocalManager<Player>
     [SerializeField] private float _eylauUnfeedbacksSpeed = 3.0f;
     [Foldout("Eylau Settings")]
     [SerializeField] private Image _eylauVignette;
-
-    [SerializeField] private float _defaultFov;
-    [SerializeField] private float _eylauFeedbacksT;
-    [SerializeField] private bool _isInEylau;
+    [Foldout("Eylau Settings")]
     [SerializeField] private float _eylauBuffFactor = 1.0f;
+
+    private float _eylauFeedbacksT;
+    private bool _isInEylau;
     #endregion
 
     #region Movement Variables
@@ -217,7 +220,7 @@ public class Player : LocalManager<Player>
     Vector3 _rawInputs;
     private Vector3 _movementInputs; // X is Left-Right and Z is Backward-Forward
     private Vector3 _lastFrameMovementInputs;
-    public Vector3 GlobalMomentum;
+    [NonSerialized] public Vector3 GlobalMomentum;
     private float _movementAcceleration;
     private bool _isPressingADirection;
     private float _movementAccelerationT;
@@ -261,7 +264,7 @@ public class Player : LocalManager<Player>
     private float _wallJumpCooldown;
     private const float _wallJumpMaxCooldown = 0.25f;
     private float _wallrideMvtSpeedFactor = 1.0f;
-    public float WallRideSmokeIntervalT;
+    [NonSerialized] public float WallRideSmokeIntervalT;
 
     public Vector3 FinalMovement { get; private set; }
     #endregion
