@@ -162,7 +162,7 @@ public class Room : MonoBehaviour
 
     public void CheckForEnemies()
     {
-        Debug.Log(CurrentEnemiesInRoom + "/" + _enemiesList.Count + " enemies still alive in room '" + gameObject.name + "'");
+        // Debug.Log(CurrentEnemiesInRoom + "/" + _enemiesList.Count + " enemies still alive in room '" + gameObject.name + "'");
         if (CurrentEnemiesInRoom <= 0)
         {
             FinishRoom();
@@ -174,7 +174,7 @@ public class Room : MonoBehaviour
         {
             if (_enemiesList[i] != null)
                 anyMobAlive = anyMobAlive || (_enemiesList[i].gameObject.activeInHierarchy && !_enemiesList[i].IsDying);
-            Debug.Log(anyMobAlive);
+            // Debug.Log(anyMobAlive);
         }
 
         if (CurrentEnemiesInRoom > 0 && !anyMobAlive)
