@@ -12,7 +12,7 @@ public class BlackHole : PooledObject
     // [SerializeField] private float _lifeSpan = 1.0f;
     [SerializeField] private float _radius = 12.0f;
     // [SerializeField] private float _force = 10.0f;
-    [SerializeField] private ParticleSystem[] _vfxs;
+    [SerializeField] private VFX_Particle _vfx;
     [SerializeField] private LayerMask _layerMask;
 
     private List<GlobalRefAICAC> _vorasesInBH;
@@ -26,10 +26,7 @@ public class BlackHole : PooledObject
     public void Setup()
     {
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Synergies/AragonOnEyleau/Sound", 1f, gameObject);
-        foreach (ParticleSystem vfx in _vfxs)
-        {
-            vfx.Play();
-        }
+        _vfx.PlayAll();
 
         _isActive = true;
         _activeT = _activeTime;
@@ -55,13 +52,13 @@ public class BlackHole : PooledObject
         }
         else
         {
-            bool b = true;
-            foreach (ParticleSystem vfx in _vfxs)
-            {
-                b = b && vfx.particleCount <= 0;
-            }
-            if (b)
-                Pooler.Return(this);
+            // bool b = true;
+            // foreach (ParticleSystem vfx in _vfxs)
+            // {
+            //     b = b && vfx.particleCount <= 0;
+            // }
+            // if (b)
+            Pooler.Return(this);
         }
     }
 
@@ -122,8 +119,8 @@ public class BlackHole : PooledObject
     private void Disable()
     {
         _isActive = false;
-        foreach (ParticleSystem vfx in _vfxs)
-            vfx.Stop();
+        // foreach (ParticleSystem vfx in _vfxs)
+        // vfx.Stop();
 
         foreach (GlobalRefAICAC voras in _vorasesInBH)
             voras.isInSynergyAttraction = false;
