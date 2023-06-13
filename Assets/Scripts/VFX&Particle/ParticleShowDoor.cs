@@ -6,6 +6,15 @@ using NaughtyAttributes;
 
 public class ParticleShowDoor : MonoBehaviour
 {
+    [SerializeField] Vector3 offset;
+    float t = 0;
+    Vector3 vDest;
+    Vector3 origin;
+    [SerializeField] Vector3 p1;
+    [SerializeField] float speed;
+
+    bool isUp;
+
     #region REF DOOR
     [SerializeField] Transform endDoor;
     #endregion
@@ -14,14 +23,13 @@ public class ParticleShowDoor : MonoBehaviour
     [SerializeField] Vector3 startPos;
     [SerializeField] Vector3 startUpPos;
     [SerializeField] AnimationCurve curveUpMove;
-    [SerializeField] AnimationCurve curveMoveDoor;
+    //[SerializeField] AnimationCurve curveMoveDoor;
     #endregion
 
     #region Destination
     Vector3 upDestination;
     [SerializeField] Vector3 doorPosition;
     [SerializeField] float upMove;
-    [SerializeField] bool isUp;
     #endregion
 
     private void OnEnable()
@@ -50,11 +58,15 @@ public class ParticleShowDoor : MonoBehaviour
             time += Time.deltaTime;
             yield return null;
         }
+        //StartCoroutine(MoveDoor());
+        isUp = true;
         startUpPos = transform.position;
-        StartCoroutine(MoveDoor());
+        origin = startUpPos;
+        p1 = (doorPosition + origin) / 2;
+        p1 += offset;
     }
 
-    IEnumerator MoveDoor()
+   /* IEnumerator MoveDoor()
     {
         float time = 0;
         while (time < 1)
@@ -63,5 +75,27 @@ public class ParticleShowDoor : MonoBehaviour
             time += Time.deltaTime;
             yield return null;
         }
+    }*/
+
+    private void Update()
+    {
+        if (t <= 1 && isUp)
+        {
+            t += Time.deltaTime * speed;
+            transform.position = BezierCurve();
+            vDest = new Vector3(doorPosition.x, doorPosition.y, doorPosition.z);
+        }
+    }
+
+    Vector3 BezierCurve()
+    {
+        float u = 1 - t;
+        float tt = t * t;
+        float uu = u * u;
+
+        Vector3 point = uu * origin;
+        point += 2 * u * t * p1;
+        point += tt * vDest;
+        return point;
     }
 }
