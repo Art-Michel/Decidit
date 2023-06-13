@@ -17,7 +17,7 @@ namespace State.AICAC
         [SerializeField] StateControllerAICAC stateControllerTrashMob;
         public ManagerAnticipMoveTrash managerAnticipMoveTrash;
         public ManagerSurroundTrash managerSurroundTrash;
-        //public AudioSource audioSourceTrashMob;
+        public GameObject vfxShowDoor;
 
         [Header("Animation")]
         public Animator myAnimator;

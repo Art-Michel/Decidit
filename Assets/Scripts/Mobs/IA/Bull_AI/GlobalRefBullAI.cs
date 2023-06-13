@@ -18,8 +18,7 @@ namespace State.AIBull
         public AgentLinkMover agentLinkMover;
         public CharacterController characterController;
         public ManagerShrednoss managerShrednoss;
-
-        //public AudioSource audioSourceBull;
+        public GameObject vfxShowDoor;
 
         [Header("Animation")]
         public Animator myAnimator;

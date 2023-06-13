@@ -14,7 +14,7 @@ namespace State.FlyAI
         public StateControllerFlyAI stateControllerFlyAI;
         public EnemyHealth enemyHealth;
         public FlyMobAttackManager flyMobAttackManager;
-        //public AudioSource audioSourceFly;
+        public GameObject vfxShowDoor;
 
         [Header("Animation")]
         public Animator myAnimator;

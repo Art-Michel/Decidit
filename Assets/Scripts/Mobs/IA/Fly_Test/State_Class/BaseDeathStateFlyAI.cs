@@ -22,6 +22,9 @@ namespace State.FlyAI
 
         void Death()
         {
+            if (globalRef.enemyHealth.Room.CurrentEnemiesInRoom == 0)
+                globalRef.vfxShowDoor.SetActive(true);
+
             if (globalRef != null && globalRef.myAnimator != null)
                 AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Death");
 

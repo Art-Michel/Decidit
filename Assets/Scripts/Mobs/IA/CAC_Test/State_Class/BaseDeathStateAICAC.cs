@@ -21,6 +21,9 @@ namespace State.AICAC
 
         void Death()
         {
+            if (globalRef.enemyHealth.Room.CurrentEnemiesInRoom == 0)
+                globalRef.vfxShowDoor.SetActive(true);
+
             globalRef.managerAnticipMoveTrash.RemoveRef(globalRef);
             globalRef.managerSurroundTrash.RemoveRef(globalRef);
             AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Death");

@@ -24,6 +24,9 @@ namespace State.AIBull
 
         void Death()
         {
+            if (globalRef.enemyHealth.Room.CurrentEnemiesInRoom == 0)
+                globalRef.vfxShowDoor.SetActive(true);
+
             //AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Death");
             globalRef.managerShrednoss.RemoveRef(globalRef);
             AnimatorManager.instance.StopAnimation(globalRef.myAnimator);
