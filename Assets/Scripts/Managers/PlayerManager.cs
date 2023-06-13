@@ -350,14 +350,14 @@ public class PlayerManager : LocalManager<PlayerManager>
         ResumeGame();
     }
 
-    private void StopGame()
+    public void StopGame()
     {
         //timescale
         _timescaleBeforePausing = Time.timeScale;
         Time.timeScale = 0f;
     }
 
-    private void ResumeGame()
+    public void ResumeGame()
     {
         if (_timescaleBeforePausing != 0)
             Time.timeScale = _timescaleBeforePausing;

@@ -38,5 +38,6 @@ public class Tutorial : MonoBehaviour
     {
         _isStarting = false;
         MenuManager.Instance.StartMenuing();
+        PlayerManager.Instance.StopGame();
     }
 }
