@@ -165,6 +165,7 @@ public class Room : MonoBehaviour
         // Debug.Log(CurrentEnemiesInRoom + "/" + _enemiesList.Count + " enemies still alive in room '" + gameObject.name + "'");
         if (CurrentEnemiesInRoom <= 0)
         {
+            Debug.Log("FinishRoom");
             FinishRoom();
             return;
         }
