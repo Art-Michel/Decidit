@@ -10,7 +10,7 @@ public class ParticleShowDoor : MonoBehaviour
     float t = 0;
     Vector3 vDest;
     Vector3 origin;
-    [SerializeField] Vector3 p1;
+    Vector3 p1;
     [SerializeField] float speed;
 
     bool isUp;
@@ -20,15 +20,15 @@ public class ParticleShowDoor : MonoBehaviour
     #endregion
 
     #region Move
-    [SerializeField] Vector3 startPos;
-    [SerializeField] Vector3 startUpPos;
+    Vector3 startPos;
+    Vector3 startUpPos;
     [SerializeField] AnimationCurve curveUpMove;
     //[SerializeField] AnimationCurve curveMoveDoor;
     #endregion
 
     #region Destination
     Vector3 upDestination;
-    [SerializeField] Vector3 doorPosition;
+    Vector3 doorPosition;
     [SerializeField] float upMove;
     #endregion
 
