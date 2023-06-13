@@ -1192,7 +1192,7 @@ public class Player : LocalManager<Player>
 
         bobIy = Mathf.Lerp(0, _bobIntensityY, _transitionBob);
         bobIx = Mathf.Lerp(0, _bobIntensityX, _transitionBob);
-        _bobSinT += Time.deltaTime * _bobSpeed * Mathf.LerpUnclamped(0, _baseSpeed, _movementInputs.magnitude);
+        _bobSinT += Time.deltaTime * _bobSpeed;
 
         float sinY = -Mathf.Abs(bobIy * Mathf.Sin(_bobSinT));
         float sinX = bobIy * Mathf.Cos(_bobSinT) * bobIx;
