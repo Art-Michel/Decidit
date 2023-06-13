@@ -42,7 +42,7 @@ public class Altar : MonoBehaviour, IInteractable
     private bool _hasBeenUsed;
     private bool _isPlayerInside;
 
-    [SerializeField] static List<Altar> altarListScript = new List<Altar>();
+    [SerializeField] static List<Altar> _altarListScript = new List<Altar>();
 
     //[SerializeField] bool disableRandom;
 
@@ -53,7 +53,7 @@ public class Altar : MonoBehaviour, IInteractable
              altarListScript.Add(this);
              SetRandomChant();
          }*/
-        altarListScript.Add(this);
+        _altarListScript.Add(this);
         SetRandomChant();
         // Debug.Log(altarListScript.Count);
     }
@@ -101,9 +101,9 @@ public class Altar : MonoBehaviour, IInteractable
 
     void CheckIfSameSpell()
     {
-        while (altarListScript[0]._chant == altarListScript[1]._chant)
+        while (_altarListScript[0]._chant == _altarListScript[1]._chant)
         {
-            altarListScript[1]._chant = (Chants)Random.Range(0, 3);
+            _altarListScript[1]._chant = (Chants)Random.Range(0, 3);
         }
         //altarListScript[1]._chant = Chants.Cimetiere;
     }
@@ -162,10 +162,12 @@ public class Altar : MonoBehaviour, IInteractable
         PlayerHealth.Instance.TrueHeal(1);
         AestheticsParent.SetActive(false);
         _interactHitbox.enabled = false;
+        if (_altarListScript[1] == this)
+            TutorialManager.Instance.StartSynergyTutorial(Player.Instance.CurrentArm.Chant);
     }
 
     void OnDestroy()
     {
-        altarListScript.Clear();
+        _altarListScript.Clear();
     }
 }

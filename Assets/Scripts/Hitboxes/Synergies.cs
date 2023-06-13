@@ -9,6 +9,7 @@ public class Synergies : LocalManager<Synergies>
 {
     public enum Chants
     {
+        NONE,
         ARAGON,
         MUSE,
         EYLAU

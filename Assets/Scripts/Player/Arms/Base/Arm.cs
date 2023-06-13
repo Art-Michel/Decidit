@@ -53,6 +53,8 @@ public class Arm : MonoBehaviour
     [SerializeField] protected KickShake.Params _castShake;
     [Foldout("Stats")]
     [SerializeField] protected float _cooldown;
+    [Foldout("Properties")]
+    public Synergies.Chants Chant;
     protected float _cooldownT;
     #endregion 
 
