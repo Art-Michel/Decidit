@@ -274,6 +274,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
 
         EnableFirstRooms();
         MenuManager.Instance.StartUnfading(1.0f);
+        MenuManager.Instance.StopLoading();
     }
 
     private void EnableFirstRooms()

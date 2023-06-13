@@ -125,9 +125,9 @@ public class MenuManager : LocalManager<MenuManager>
             { Menus.FugueSelect, _fugueSelect },
             { Menus.MuseSelect, _museSelect },
             { Menus.CimetiereSelect, _cimetiereSelect },
-            { Menus.FugueTutorial, _cimetiereSelect },
+            { Menus.FugueTutorial, _fugueTuto },
             { Menus.MuseTutorial, _museTuto },
-            { Menus.EylauTutorial, _fugueTuto },
+            { Menus.EylauTutorial, _eylauTuto },
         };
         //Initialize Dictionnary
     }
@@ -447,6 +447,11 @@ public class MenuManager : LocalManager<MenuManager>
 
         DisableMenuInputs();
         Application.Quit();
+    }
+
+    public void StopLoading()
+    {
+        _loading.gameObject.SetActive(false);
     }
 
     public void StartFading(float length)
