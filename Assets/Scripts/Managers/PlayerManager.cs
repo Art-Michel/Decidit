@@ -352,6 +352,7 @@ public class PlayerManager : LocalManager<PlayerManager>
 
     public void StopGame()
     {
+        SoundManager.Instance.ClearedSound();
         //timescale
         _timescaleBeforePausing = Time.timeScale;
         Time.timeScale = 0f;
@@ -359,6 +360,7 @@ public class PlayerManager : LocalManager<PlayerManager>
 
     public void ResumeGame()
     {
+        SoundManager.Instance.SoundEndHit();
         if (_timescaleBeforePausing != 0)
             Time.timeScale = _timescaleBeforePausing;
         else
