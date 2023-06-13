@@ -23,7 +23,6 @@ public class ParticleShowDoor : MonoBehaviour
     Vector3 startPos;
     Vector3 startUpPos;
     [SerializeField] AnimationCurve curveUpMove;
-    //[SerializeField] AnimationCurve curveMoveDoor;
     #endregion
 
     #region Destination
@@ -58,25 +57,12 @@ public class ParticleShowDoor : MonoBehaviour
             time += Time.deltaTime;
             yield return null;
         }
-        //StartCoroutine(MoveDoor());
         isUp = true;
         startUpPos = transform.position;
         origin = startUpPos;
         p1 = (doorPosition + origin) / 2;
         p1 += offset;
     }
-
-   /* IEnumerator MoveDoor()
-    {
-        float time = 0;
-        while (time < 1)
-        {
-            transform.position = Vector3.Lerp(startUpPos, doorPosition, curveMoveDoor.Evaluate(time));
-            time += Time.deltaTime;
-            yield return null;
-        }
-    }*/
-
     private void Update()
     {
         if (t <= 1 && isUp)
