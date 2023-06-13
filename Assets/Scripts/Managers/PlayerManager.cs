@@ -52,7 +52,7 @@ public class PlayerManager : LocalManager<PlayerManager>
     bool _isLockedAt60;
 
     //Pausing
-    public bool _canPause = true;
+    public bool CanPause = true;
     float _timescaleBeforePausing;
     bool _isPaused;
     // [Foldout("Menu")]
@@ -259,7 +259,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         MenuManager.Instance.StartMenuing();
         MenuManager.Instance.OpenSubmenu(altar.MenuToOpen, false);
         _currentAltar = altar;
-        _canPause = false;
+        CanPause = false;
 
         if (DungeonGenerator.Instance != null)
         {
@@ -278,7 +278,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         Player.Instance.AllowMovement(true);
         Player.Instance.CharaCon.enabled = true;
         Player.Instance.ForceRotation(Player.Instance.Head);
-        _canPause = true;
+        CanPause = true;
     }
     #endregion
 
@@ -308,7 +308,7 @@ public class PlayerManager : LocalManager<PlayerManager>
     #region Pause unpause
     private void PressPause()
     {
-        if (!_canPause)
+        if (!CanPause)
             return;
 
         if (_isPaused)
@@ -376,7 +376,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         StopRumbling();
         StopSlowMo();
         StopFlash();
-        _canPause = false;
+        CanPause = false;
     }
 
     public void CancelDeath()
@@ -388,7 +388,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         StopRumbling();
         StopSlowMo();
         _colorPP.saturation.value = 0;
-        _canPause = true;
+        CanPause = true;
         //TODO Lucas un son quand on se ressuscite
     }
 
@@ -416,7 +416,7 @@ public class PlayerManager : LocalManager<PlayerManager>
     public void OnPlayerWin()
     {
         // _menu.SetActive(true);
-        _canPause = false;
+        CanPause = false;
         MenuManager.Instance.StartMenuing();
         MenuManager.Instance.OpenWin();
         StopGame();
