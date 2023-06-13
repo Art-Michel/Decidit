@@ -289,6 +289,7 @@ public class Player : LocalManager<Player>
         _inputs.Movement.Jump.canceled += _ => StopJumping();
         _inputs.Actions.InspectWeapon.started += _ => InspectWeapon();
         _inputs.Actions.InspectArm.started += _ => InspectArm();
+        _defaultFov = Camera.main.fieldOfView;
     }
 
     private void Start()
@@ -799,7 +800,6 @@ public class Player : LocalManager<Player>
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/CimetièreEyleau/BuffStart", 1f, gameObject);
         _isInEylau = true;
         _eylauBuffFactor = _eylauBuffMultiplier;
-        _defaultFov = Camera.main.fieldOfView;
     }
 
     public void EylauFeedbacks()
@@ -1192,7 +1192,7 @@ public class Player : LocalManager<Player>
 
         bobIy = Mathf.Lerp(0, _bobIntensityY, _transitionBob);
         bobIx = Mathf.Lerp(0, _bobIntensityX, _transitionBob);
-        _bobSinT += Time.deltaTime * _bobSpeed;
+        _bobSinT += Time.deltaTime * _bobSpeed * Mathf.LerpUnclamped(0, _baseSpeed, _movementInputs.magnitude);
 
         float sinY = -Mathf.Abs(bobIy * Mathf.Sin(_bobSinT));
         float sinX = bobIy * Mathf.Cos(_bobSinT) * bobIx;
