@@ -34,6 +34,13 @@ public class ParticleShowDoor : MonoBehaviour
     private void OnEnable()
     {
         GetDoorRef();
+
+        int i = Random.Range(0, 2);
+        if (i == 0)
+            offset.z *= 1;
+        else
+            offset.z *= -1;
+
         transform.parent = null;
         startPos = transform.position;
         upDestination = new Vector3(startPos.x, startPos.y + upMove, startPos.z);
