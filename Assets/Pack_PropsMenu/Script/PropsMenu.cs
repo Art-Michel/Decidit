@@ -69,10 +69,13 @@ public class PropsMenu : MonoBehaviour
                     rotationY -= rotSpeedY * Time.deltaTime * Input.GetAxis("Mouse X") /*Input.GetAxis("RightJoystickX")*/;
                     cloneProps.transform.localRotation = Quaternion.Euler(0, rotationY, 0);
 
-                    rotationX += rotSpeedX * Time.deltaTime * Input.GetAxis("Mouse Y");
-                    Debug.Log(cloneProps.transform);
-                    float yRot = cloneProps.transform.GetChild(0).transform.localRotation.eulerAngles.y;
-                    cloneProps.transform.GetChild(0).transform.localRotation = Quaternion.Euler(0, yRot, rotationX);
+                    if(cloneProps.name != "Empty_Altar_PropsMenu(Clone)")
+                    {
+                        rotationX += rotSpeedX * Time.deltaTime * Input.GetAxis("Mouse Y");
+                        Debug.Log(cloneProps.name);
+                        float yRot = cloneProps.transform.GetChild(0).transform.localRotation.eulerAngles.y;
+                        cloneProps.transform.GetChild(0).transform.localRotation = Quaternion.Euler(0, yRot, rotationX);
+                    }
                 }
             }
         }
