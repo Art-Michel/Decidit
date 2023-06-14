@@ -10,7 +10,7 @@ public class PlayerSettings : LocalManager<PlayerSettings>
 {
     #region VolumeSettingsVariablesFmod
     FMOD.Studio.Bus master;
-    [SerializeField]public float masterVolumeNumber = 1f;
+    [SerializeField] public float masterVolumeNumber = 1f;
 
     FMOD.Studio.Bus SFX;
     [SerializeField] public float SFXVolumeNumber = 1f;
@@ -125,9 +125,9 @@ public class PlayerSettings : LocalManager<PlayerSettings>
     }
     public void LoadPrefs()
     {
-      /*  masterVolumeNumber = PlayerPrefs.GetFloat("MasterBaseVolume", masterVolumeNumber);
-        SFXVolumeNumber = PlayerPrefs.GetFloat("SFXBaseVolume", SFXVolumeNumber);
-        musicVolumeNumber = PlayerPrefs.GetFloat("MusicBaseVolume", musicVolumeNumber);*/
+        /*  masterVolumeNumber = PlayerPrefs.GetFloat("MasterBaseVolume", masterVolumeNumber);
+          SFXVolumeNumber = PlayerPrefs.GetFloat("SFXBaseVolume", SFXVolumeNumber);
+          musicVolumeNumber = PlayerPrefs.GetFloat("MusicBaseVolume", musicVolumeNumber);*/
     }
 
     [Button]
@@ -201,6 +201,7 @@ public class PlayerSettings : LocalManager<PlayerSettings>
     {
 
     }
+
     public void LoadBus()
     {
         master = FMODUnity.RuntimeManager.GetBus("bus:/");

@@ -74,6 +74,9 @@ public class PlayerManager : LocalManager<PlayerManager>
     //Altar usage
     Altar _currentAltar = null;
 
+    //Tutorial
+    public static bool ShouldTutorial;
+
     PlayerInputMap _inputs;
     private bool _forceSlowMo;
     [SerializeField] private AnimationCurve _flashCurve;

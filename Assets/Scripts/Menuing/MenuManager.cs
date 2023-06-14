@@ -41,9 +41,7 @@ public class MenuManager : LocalManager<MenuManager>
     [SerializeField] Submenu _fugueSelect;
     [SerializeField] Submenu _museSelect;
     [SerializeField] Submenu _cimetiereSelect;
-    [SerializeField] Submenu _fugueTuto;
-    [SerializeField] Submenu _museTuto;
-    [SerializeField] Submenu _eylauTuto;
+    [SerializeField] Submenu _tutorial;
     public enum Menus
     {
         Main,
@@ -60,9 +58,7 @@ public class MenuManager : LocalManager<MenuManager>
         FugueSelect,
         MuseSelect,
         CimetiereSelect,
-        FugueTutorial,
-        MuseTutorial,
-        EylauTutorial
+        Tutorial
     }
 
     private Dictionary<Menus, Submenu> _submenus;
@@ -125,9 +121,7 @@ public class MenuManager : LocalManager<MenuManager>
             { Menus.FugueSelect, _fugueSelect },
             { Menus.MuseSelect, _museSelect },
             { Menus.CimetiereSelect, _cimetiereSelect },
-            { Menus.FugueTutorial, _fugueTuto },
-            { Menus.MuseTutorial, _museTuto },
-            { Menus.EylauTutorial, _eylauTuto },
+            { Menus.Tutorial, _tutorial },
         };
         //Initialize Dictionnary
     }
@@ -304,21 +298,6 @@ public class MenuManager : LocalManager<MenuManager>
         OpenSubmenu(Menus.Inputsettings, false);
     }
 
-    public void OpenSynergyFugueTutorial()
-    {
-        OpenSubmenu(Menus.FugueTutorial, false);
-    }
-
-    public void OpenSynergyMuseTutorial()
-    {
-        OpenSubmenu(Menus.MuseTutorial, false);
-    }
-
-    public void OpenSynergyEylauTutorial()
-    {
-        OpenSubmenu(Menus.EylauTutorial, false);
-    }
-
     [SerializeField] Slider _mouseXSlider;
     [SerializeField] Slider _mouseYSlider;
     [SerializeField] Slider _controllerXSlider;
@@ -378,6 +357,11 @@ public class MenuManager : LocalManager<MenuManager>
         OpenSubmenu(Menus.CimetiereSelect, false);
     }
 
+    public void OpenTutorialConfirm()
+    {
+        OpenSubmenu(Menus.Tutorial, false);
+    }
+
     #endregion
 
     #region Scene Loading
@@ -388,8 +372,9 @@ public class MenuManager : LocalManager<MenuManager>
         StartExiting();
     }
 
-    public void LoadGame()
+    public void LoadGame(bool tutorial)
     {
+        PlayerManager.ShouldTutorial = tutorial;
         StartLoadingScene(_gameIndex);
     }
 
