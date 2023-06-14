@@ -12,8 +12,7 @@ public class TutorialTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             TutorialManager.Instance.StartTutorial(_tutorialToOpen);
-            if (!_shouldReappear)
-                gameObject.SetActive(false);
+
         }
     }
 
@@ -22,6 +21,8 @@ public class TutorialTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             TutorialManager.Instance.StopTutorial(_tutorialToOpen);
+            if (!_shouldReappear)
+                gameObject.SetActive(false);
         }
     }
 }
