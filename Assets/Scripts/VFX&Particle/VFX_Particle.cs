@@ -14,7 +14,7 @@ public class VFX_Particle : MonoBehaviour
     [Button]
     public void PlayAll()
     {
-        _vfx.Play();
+        if (_vfx) _vfx.Play();
         foreach (ParticleSystem system in _particleSystems)
             system.Play();
     }
