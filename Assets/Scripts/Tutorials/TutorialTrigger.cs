@@ -5,14 +5,23 @@ using UnityEngine;
 public class TutorialTrigger : MonoBehaviour
 {
     [SerializeField] TutorialManager.Tutorials _tutorialToOpen;
+    [SerializeField] bool _shouldReappear = true;
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("started Tutorial");
         if (other.CompareTag("Player"))
         {
             TutorialManager.Instance.StartTutorial(_tutorialToOpen);
-            gameObject.SetActive(false);
+            if (!_shouldReappear)
+                gameObject.SetActive(false);
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            TutorialManager.Instance.StopTutorial(_tutorialToOpen);
         }
     }
 }

@@ -54,4 +54,12 @@ public class TutorialManager : LocalManager<TutorialManager>
 
         _tutoDictionary[tutorial].Enable();
     }
+
+    public void StopTutorial(Tutorials tutorial)
+    {
+        if (!PlayerManager.ShouldTutorial)
+            return;
+
+        _tutoDictionary[tutorial].Disable();
+    }
 }

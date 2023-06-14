@@ -6,53 +6,60 @@ using UnityEngine;
 public class Tutorial : MonoBehaviour
 {
     //Refs
+    // private PlayerInputMap _inputs;
     [SerializeField] CanvasGroup _canvas;
-    private PlayerInputMap _inputs;
     [SerializeField] AnimationCurve _appearanceCurve;
 
     //Delay
     [SerializeField] float _delay = 0.5f;
-    float _delayT = 0.0f;
-    bool _isStarting;
+    float _t = 0.0f;
+    bool _active;
 
     public void Enable()
     {
-        _inputs = new PlayerInputMap();
-        _inputs.Actions.Interact.started += _ => Dismiss();
-
-        _canvas.alpha = 0.0f;
         _canvas.gameObject.SetActive(true);
-        _isStarting = true;
-        _delayT = 0.0f;
+        _active = true;
+    }
+
+    public void Disable()
+    {
+        _active = false;
     }
 
     void Update()
     {
-        if (_isStarting)
+        if (_active)
             HandleStartup();
+        else
+            HandleDisappearance();
+
+        float i = Mathf.InverseLerp(0.0f, _delay, _t);
+        _canvas.alpha = _appearanceCurve.Evaluate(i);
     }
 
     private void HandleStartup()
     {
-        _delayT += Time.deltaTime;
-        float i = Mathf.InverseLerp(0.0f, _delay, _delayT);
-        _canvas.alpha = _appearanceCurve.Evaluate(i);
+        _t += Time.deltaTime;
+        _t = Mathf.Clamp(_t, 0, _delay);
 
-        if (_delayT >= _delay)
-            _isStarting = false;
     }
 
-    private void Dismiss()
+    private void HandleDisappearance()
     {
-        _canvas.gameObject.SetActive(false);
+        _t -= Time.deltaTime;
+        _t = Mathf.Clamp(_t, 0, _delay);
+
+        if (_t <= 0.0f)
+            gameObject.SetActive(false);
     }
 
-    void OnEnable()
-    {
-        _inputs.Enable();
-    }
-    void OnDisable()
-    {
-        _inputs.Disable();
-    }
+
+    //     void OnEnable()
+    //     {
+    //         _inputs.Enable();
+    //     }
+    //     void OnDisable()
+    //     {
+    //         _inputs.Disable();
+    //     }
 }
