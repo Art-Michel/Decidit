@@ -56,12 +56,12 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
     void Start()
     {
         _numberOfRooms = _difficultyPerRoom.Length;
+        SoundManager.Instance.ClearedSound();
         ResetDungeon();
         StartCoroutine(SetUsableRooms());
 
         ChoseAGun = false;
         ChoseASkill = false;
-        SoundManager.Instance.ClearedSound();
 
     }
 

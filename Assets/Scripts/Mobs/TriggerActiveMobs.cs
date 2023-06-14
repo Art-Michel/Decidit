@@ -59,6 +59,7 @@ public class TriggerActiveMobs : MonoBehaviour
     {
         // int i = Random.Range(0, mobList.Count);
         // mobList[i].SetActive(true);
+        thisTriggersRoom.CheckIfFirstTrigger();
         _triggered = true;
         foreach (Transform tr in _pools[_poolChosen].transform)
         {

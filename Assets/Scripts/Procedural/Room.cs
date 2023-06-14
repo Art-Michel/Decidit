@@ -96,7 +96,6 @@ public class Room : MonoBehaviour
         TimerManager.Instance.isInCorridor = false;
         PlayerManager.Instance.RechargeEverything();
         SoundManager.Instance.PlaySound("event:/SFX_Environement/StartFight", 1f, gameObject);
-        SoundManager.Instance.FightingSound();
         // foreach (EnemyHealth enemyHealth in _enemiesList)
         // {
         //     if (enemyHealth == null)
@@ -195,8 +194,8 @@ public class Room : MonoBehaviour
     {
         //Feedbacks
         SoundManager.Instance.PlaySound("event:/SFX_Environement/SlowMo", 1f, gameObject);
-        // PlayerHealth.Instance.TrueHeal(1);
         SoundManager.Instance.ClearedSound();
+        // PlayerHealth.Instance.TrueHeal(1);
         PlayerManager.Instance.StartSlowMo(0.01f, 2f);
         PlayerManager.Instance.StartFlash(1.0f, 1);
 
@@ -210,5 +209,11 @@ public class Room : MonoBehaviour
 
         // Break Timer
         TimerManager.Instance.isInCorridor = true;
+    }
+
+    public void CheckIfFirstTrigger()
+    {
+        if (_enemiesList.Count == CurrentEnemiesInRoom)
+            SoundManager.Instance.FightingSound();
     }
 }
