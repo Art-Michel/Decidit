@@ -52,6 +52,11 @@ public class TutorialManager : LocalManager<TutorialManager>
         if (!PlayerManager.ShouldTutorial)
             return;
 
+        if (Player.Instance.CurrentArm == PlayerManager.Instance.Arms[0] && tutorial == Tutorials.Arm)
+        {
+
+        }
+
         _tutoDictionary[tutorial].Enable();
     }
 

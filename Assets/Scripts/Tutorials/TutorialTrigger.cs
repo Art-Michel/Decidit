@@ -12,7 +12,6 @@ public class TutorialTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             TutorialManager.Instance.StartTutorial(_tutorialToOpen);
-
         }
     }
 
