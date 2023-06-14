@@ -364,7 +364,7 @@ public class EnemyHealth : Health
             return;
 
         //regen player
-        SoundManager.Instance.PlaySound("event:/SFX_IA/DeathIA", 3f, gameObject);
+        SoundManager.Instance.PlaySound("event:/SFX_IA/DeathIA", 1f, gameObject);
         Player.Instance.gameObject.GetComponent<PlayerHealth>().ProbRegen(1);
 
         //old
@@ -463,7 +463,7 @@ public class EnemyHealth : Health
         _poisonDuration = poisonDuration;
         _poisonTickT = _poisonTickRate;
         _hpUi.color = _poisonedHpColor;
-        SoundManager.Instance.PlaySound("event:/SFX_IA/PoisonDamage", 3f, gameObject);
+        SoundManager.Instance.PlaySound("event:/SFX_IA/Poisoned", 1f, gameObject);
     }
 
     private void SufferPoison()

@@ -136,7 +136,7 @@ public class PlayerHealth : Health
         ResetProbStartup();
 
         base.TakeDamage(amount);
-        SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/DamageTaken", 4f, gameObject);
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/DamageTaken", 1f, gameObject);
 
         //cool magic numbers proportionnal screenshake when getting hurt
         // float shakeIntensity = _playerHurtShakeMaxStrength * Mathf.InverseLerp(0.0f, 40.0f, amount + 10.0f);
@@ -169,7 +169,7 @@ public class PlayerHealth : Health
             ResetBarFillage(false);
 
             DisplayProbHealth();
-            SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/FullHeal", 3f, gameObject);
+            SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/FullHeal", 1f, gameObject);
             StartHealVignette();
             HandleLowHpVignette();
             if (PlayerManager.Instance._isDying)
@@ -184,7 +184,7 @@ public class PlayerHealth : Health
         if (_hp < _probHp)
         {
             base.ProbRegen(i);
-            SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/BaseHeal", 3f, gameObject);
+            SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/BaseHeal", 1f, gameObject);
             HandleLowHpVignette();
             StartHealVignette();
             if (PlayerManager.Instance._isDying)

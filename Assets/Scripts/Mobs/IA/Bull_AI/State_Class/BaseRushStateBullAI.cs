@@ -349,7 +349,7 @@ namespace State.AIBull
                     {
                         if (!canStartRush && currentAnimName == "PreDash")
                         {
-                            SoundManager.Instance.PlaySound("event:/SFX_IA/ShredNoss_SFX(Dash)/Attack", 10f, gameObject);
+                            SoundManager.Instance.PlaySound("event:/SFX_IA/ShredNoss_SFX(Dash)/Attack", 1f, gameObject);
                             ShowSoonAttack(false);
                             rushBullSO.speedRotLock = rushBullSO.maxSpeedRotLock;
                             AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Rush");

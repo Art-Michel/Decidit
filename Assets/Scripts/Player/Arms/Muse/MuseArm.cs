@@ -98,7 +98,7 @@ public class MuseArm : Arm
 
         Player.Instance.StartKickShake(_castShake, transform.position);
         ////PlaceHolderSoundManager.Instance.PlayMuseRocketLaunch();
-        SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/MuseMalade/Launch", 5f, gameObject);
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/MuseMalade/Launch", 1f, gameObject);
         //_muzzleFlash.PlayAll();
         base.StartActive();
         this.Animator.CrossFade("cast", 0, 0);

@@ -68,7 +68,7 @@ public class Explosion : Hitbox
         _knockbackForce = _initialKnockbackForce;
         Damage = _initialDamage;
         //!SFX Explosion 
-        SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/MuseMalade/Explosion", 5f, gameObject);
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/MuseMalade/Explosion", 1f, gameObject);
         StartExplosionShake();
         ClearBlacklist();
     }

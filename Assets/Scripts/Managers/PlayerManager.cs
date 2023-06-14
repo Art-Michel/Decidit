@@ -648,7 +648,7 @@ public class PlayerManager : LocalManager<PlayerManager>
 
     public void Hitmarker()
     {
-        SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/HitMarker", .2f, gameObject);
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/HitMarker", 1f, gameObject);
         _hitmarkerT = 0.0f;
         _currentHitmarkerMaxAlpha = _hitmarkerMaxAlpha;
         foreach (Image hitmarker in _hitmarkers)
