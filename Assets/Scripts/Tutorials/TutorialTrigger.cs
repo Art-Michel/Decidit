@@ -20,8 +20,14 @@ public class TutorialTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             TutorialManager.Instance.StopTutorial(_tutorialToOpen);
+
             if (!_shouldReappear)
                 gameObject.SetActive(false);
         }
+    }
+
+    void OnDisable()
+    {
+        TutorialManager.Instance.StopTutorial(_tutorialToOpen);
     }
 }
