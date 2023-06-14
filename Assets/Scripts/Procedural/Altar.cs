@@ -176,13 +176,13 @@ public class Altar : MonoBehaviour, IInteractable
                 switch (_chant)
                 {
                     case Chants.Fugue:
-                        TutorialManager.Instance.StartTutorial("fugue");
+                        TutorialManager.Instance.StartTutorial(TutorialManager.Tutorials.FugueSynergy);
                         break;
                     case Chants.Muse:
-                        TutorialManager.Instance.StartTutorial("muse");
+                        TutorialManager.Instance.StartTutorial(TutorialManager.Tutorials.MuseSynergy);
                         break;
                     case Chants.Cimetiere:
-                        TutorialManager.Instance.StartTutorial("eylau");
+                        TutorialManager.Instance.StartTutorial(TutorialManager.Tutorials.EylauSynergy);
                         break;
                 }
             }
