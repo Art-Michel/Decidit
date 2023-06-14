@@ -14,6 +14,7 @@ public class ParticleShowDoor : MonoBehaviour
     [SerializeField] float speed;
 
     bool isUp;
+    bool isOnDoor;
 
     #region REF DOOR
     [SerializeField] Transform endDoor;
@@ -78,6 +79,10 @@ public class ParticleShowDoor : MonoBehaviour
             transform.position = BezierCurve();
             vDest = new Vector3(doorPosition.x, doorPosition.y, doorPosition.z);
         }
+        else if(isUp)
+        {
+            isOnDoor = true;
+        }
     }
 
     Vector3 BezierCurve()
@@ -90,5 +95,13 @@ public class ParticleShowDoor : MonoBehaviour
         point += 2 * u * t * p1;
         point += tt * vDest;
         return point;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Player") && isOnDoor)
+        {
+            gameObject.SetActive(false);
+        }
     }
 }
