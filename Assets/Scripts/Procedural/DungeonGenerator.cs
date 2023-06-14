@@ -1,9 +1,11 @@
+using System.Net.Mime;
 using System.Collections.Specialized;
 using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using UnityEngine.UI;
 
 public class DungeonGenerator : LocalManager<DungeonGenerator>
 {
@@ -22,6 +24,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
     [SerializeField] List<int> _scenesEasy;
     [SerializeField] List<int> _scenesMedium;
     [SerializeField] List<int> _scenesHard;
+    [SerializeField] Image _loadingBar;
 
     [SerializeField] private List<List<Room>> _usableRooms;
     public List<RoomSetup> Corridors;
@@ -77,6 +80,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
         {
             //Load a scene
             SceneManager.LoadScene(_scenesEasy[i], LoadSceneMode.Additive);
+            _loadingBar.fillAmount = Mathf.InverseLerp(0, _scenesEasy.Count * 2, i * 2);
             // Debug.Log("Loaded scene " + _scenesEasy[i]);
             yield return null;
 
@@ -84,6 +88,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
             GameObject thatScenesRoot = GameObject.Find((_scenesEasy[i].ToString()));
             Room thatScenesRoom = thatScenesRoot.GetComponent<Room>();
             _usableRooms[0].Add(thatScenesRoom);
+            _loadingBar.fillAmount = Mathf.InverseLerp(0, _scenesEasy.Count * 2, i * 2 + 1);
             // thatScenesRoom.FindDoors();
             // thatScenesRoom.FindTriggers();
         }
