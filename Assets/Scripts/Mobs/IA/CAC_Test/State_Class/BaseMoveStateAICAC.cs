@@ -42,6 +42,13 @@ namespace State.AICAC
 
         Vector3 PlayerPosition;
 
+        [Header("Animation")]
+        AnimatorStateInfo animStateInfo;
+        AnimatorClipInfo[] currentClipInfo;
+        [SerializeField] string currentAnimName;
+        [SerializeField] float animTime;
+
+
         public override void InitState(StateControllerAICAC stateController)
         {
             base.InitState(stateController);
@@ -67,6 +74,13 @@ namespace State.AICAC
 
         private void Update()
         {
+            if (currentAnimName == "Voras_Run" && ApplyDifficulty.indexDifficulty ==2)
+                globalRef.myAnimator.speed = 2;
+            else
+            {
+                globalRef.myAnimator.speed = 1;
+            }
+
             if (Player.Instance._fsm.CurrentState.Name == PlayerStatesList.WALLRIDING ||
                 Player.Instance._fsm.CurrentState.Name == PlayerStatesList.JUMPING || 
                 Player.Instance._fsm.CurrentState.Name != PlayerStatesList.GROUNDED)
@@ -90,6 +104,15 @@ namespace State.AICAC
             ManageCurrentNavMeshLink();
 
             BaseMovement();
+        }
+
+        void ManageJumpAnimation()
+        {
+            currentClipInfo = globalRef.myAnimator.GetCurrentAnimatorClipInfo(0);
+            currentAnimName = currentClipInfo[0].clip.name;
+
+            animStateInfo = globalRef.myAnimator.GetCurrentAnimatorStateInfo(0);
+            animTime = animStateInfo.normalizedTime;
         }
 
         void CoolDownAttack()
