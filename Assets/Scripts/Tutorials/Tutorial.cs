@@ -10,6 +10,7 @@ public class Tutorial : MonoBehaviour
     [SerializeField] CanvasGroup _canvas;
     [SerializeField] AnimationCurve _appearanceCurve;
 
+    [SerializeField] float _minimumLifeSpan = 2.0f;
     //Delay
     [SerializeField] float _delay = 0.5f;
     float _t = 0.0f;
@@ -33,6 +34,7 @@ public class Tutorial : MonoBehaviour
         else
             HandleDisappearance();
 
+        _minimumLifeSpan -= Time.deltaTime;
         float i = Mathf.InverseLerp(0.0f, _delay, _t);
         _canvas.alpha = _appearanceCurve.Evaluate(i);
     }
@@ -46,13 +48,15 @@ public class Tutorial : MonoBehaviour
 
     private void HandleDisappearance()
     {
+        if (_minimumLifeSpan > 0)
+            return;
+
         _t -= Time.deltaTime;
         _t = Mathf.Clamp(_t, 0, _delay);
 
         if (_t <= 0.0f)
             gameObject.SetActive(false);
     }
-
 
     //     void OnEnable()
     //     {

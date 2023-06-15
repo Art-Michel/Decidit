@@ -75,7 +75,7 @@ public class PlayerManager : LocalManager<PlayerManager>
     Altar _currentAltar = null;
 
     //Tutorial
-    public static bool ShouldTutorial = true;
+    // public static bool ShouldTutorial = true;
 
     PlayerInputMap _inputs;
     private bool _forceSlowMo;

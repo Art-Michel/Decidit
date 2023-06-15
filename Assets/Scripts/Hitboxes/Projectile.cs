@@ -246,7 +246,7 @@ public class Projectile : Hitbox
                     Hit(hit.transform);
 
                 if (_shouldLeaveImpact)
-                    LeaveImpact(hit.transform, hit.point, false, hit.normal);
+                    LeaveImpact(hit.transform, hit.point, false);
                 //+ explostion if projectile should spawn an explosion.
                 if (_explodesOnHit)
                     Explode(hit.normal);

@@ -49,8 +49,8 @@ public class TutorialManager : LocalManager<TutorialManager>
 
     public void StartTutorial(Tutorials tutorial)
     {
-        if (!PlayerManager.ShouldTutorial)
-            return;
+        // if (!PlayerManager.ShouldTutorial)
+        //     return;
 
         if (Player.Instance.CurrentArm == PlayerManager.Instance.Arms[0] && tutorial == Tutorials.Arm)
             return;
@@ -61,8 +61,8 @@ public class TutorialManager : LocalManager<TutorialManager>
 
     public void StopTutorial(Tutorials tutorial)
     {
-        if (!PlayerManager.ShouldTutorial)
-            return;
+        // if (!PlayerManager.ShouldTutorial)
+        //     return;
 
         _tutoDictionary[tutorial].Disable();
     }

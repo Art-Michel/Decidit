@@ -373,9 +373,9 @@ public class MenuManager : LocalManager<MenuManager>
         StartExiting();
     }
 
-    public void LoadGame(bool tutorial)
+    public void LoadGame()
     {
-        PlayerManager.ShouldTutorial = tutorial;
+        // PlayerManager.ShouldTutorial = tutorial;
         StartLoadingScene(_gameIndex);
     }
 
