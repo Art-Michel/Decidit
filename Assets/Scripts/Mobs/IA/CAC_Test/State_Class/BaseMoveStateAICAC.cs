@@ -74,6 +74,7 @@ namespace State.AICAC
 
         private void Update()
         {
+            ManageJumpAnimation();
             if (currentAnimName == "Voras_Run" && ApplyDifficulty.indexDifficulty ==2)
                 globalRef.myAnimator.speed = 2;
             else
