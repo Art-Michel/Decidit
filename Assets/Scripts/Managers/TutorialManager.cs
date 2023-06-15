@@ -147,20 +147,14 @@ public class TutorialManager : LocalManager<TutorialManager>
         switch (Player.Instance.CurrentArm.Chant)
         {
             case Synergies.Chants.ARAGON:
-                if (_tutorialWasSeen[Tutorials.FugueSynergy])
-                    break;
                 _tutoDictionary[Tutorials.FugueSynergy].Disable();
                 break;
 
             case Synergies.Chants.EYLAU:
-                if (_tutorialWasSeen[Tutorials.EylauSynergy])
-                    break;
                 _tutoDictionary[Tutorials.EylauSynergy].Disable();
                 break;
 
             case Synergies.Chants.MUSE:
-                if (_tutorialWasSeen[Tutorials.MuseSynergy])
-                    break;
                 _tutoDictionary[Tutorials.MuseSynergy].Disable();
                 break;
         }
