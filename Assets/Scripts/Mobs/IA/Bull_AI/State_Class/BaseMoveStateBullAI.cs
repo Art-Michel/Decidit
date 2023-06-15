@@ -197,7 +197,7 @@ namespace State.AIBull
                     navLink = null;
                     maxDurationNavLink = globalRef.agentLinkMover._duration;
                 }
-                else if (CheckEndAnimation("Jump Recovery"))
+                else if (CheckEndAnimation("Jump Fall"))
                 {
                     Invoke("ActiveJump", 1f);
                     ReturnWalkState();
