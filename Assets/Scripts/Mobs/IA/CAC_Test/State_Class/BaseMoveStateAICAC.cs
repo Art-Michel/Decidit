@@ -118,9 +118,9 @@ namespace State.AICAC
         {
             if (globalRef.agent.isOnOffMeshLink)
             {
+                globalRef.agentLinkMover.enabled = true;
                 lookForwardJump = true;
                 globalRef.agent.autoTraverseOffMeshLink = false;
-                globalRef.agentLinkMover.enabled = true;
 
                 if (!isOnNavLink)
                 {
@@ -132,8 +132,15 @@ namespace State.AICAC
                 {
                     globalRef.agent.ActivateCurrentOffMeshLink(false);
                     navLink = globalRef.agent.navMeshOwner as NavMeshLink;
-                    globalRef.agentLinkMover.m_Curve.AddKey(0.5f, Mathf.Abs((navLink.endPoint.y - navLink.startPoint.y) / 1.5f));
-                    globalRef.agentLinkMover._height = Mathf.Abs((navLink.endPoint.y - navLink.startPoint.y) / 1.5f);
+                    if(navLink != null)
+                    {
+                        globalRef.agentLinkMover.m_Curve.AddKey(0.5f, Mathf.Abs((navLink.endPoint.y - navLink.startPoint.y) / 1.5f));
+                        globalRef.agentLinkMover._height = Mathf.Abs((navLink.endPoint.y - navLink.startPoint.y) / 1.5f);
+                    }
+                    else
+                    {
+                        globalRef.agentLinkMover._StopJump = false;
+                    }
                 }
 
                 if (globalRef.agentLinkMover._StopJump) // Lock Jump
