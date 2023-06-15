@@ -16,6 +16,11 @@ public class ParticleShowDoor : MonoBehaviour
     bool isUp;
     bool isOnDoor;
 
+    [Header("Trail Rotator")]
+    [SerializeField] float speedRot;
+    [SerializeField] float currentRot;
+    [SerializeField] Transform rotator;
+
     #region REF DOOR
     [SerializeField] Transform endDoor;
     #endregion
@@ -83,6 +88,14 @@ public class ParticleShowDoor : MonoBehaviour
         {
             isOnDoor = true;
         }
+
+        RotateTrail();
+    }
+
+    void RotateTrail()
+    {
+        currentRot -= speedRot * Time.deltaTime;
+        rotator.transform.localRotation = Quaternion.Euler(0, 0, currentRot);
     }
 
     Vector3 BezierCurve()
