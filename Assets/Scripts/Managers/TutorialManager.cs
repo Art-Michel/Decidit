@@ -1,3 +1,4 @@
+using System.Net.Http.Headers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -41,6 +42,7 @@ public class TutorialManager : LocalManager<TutorialManager>
         FugueSynergy,
         MuseSynergy,
         EylauSynergy,
+        Synergy
     }
 
     protected override void Awake()
@@ -63,26 +65,105 @@ public class TutorialManager : LocalManager<TutorialManager>
 
     public void StartTutorial(Tutorials tutorial)
     {
+
+        if (tutorial == Tutorials.Arm)
+            if (!ArmTutoCheck() || SynergyTutoCheck())
+                return;
+        if (tutorial == Tutorials.Synergy)
+            if (!SynergyTutoCheck())
+                return;
+            else
+            {
+                StartSynergyTutorial();
+                return;
+            }
+
         if (_tutorialWasSeen[tutorial])
             return;
-
-        if (Player.Instance.CurrentArm == PlayerManager.Instance.Arms[0] && tutorial == Tutorials.Arm)
-            return;
-
-        Debug.Log(Player.Instance.CurrentArm == PlayerManager.Instance.Arms[0]);
-        Debug.Log(Tutorials.Arm);
 
         //TODO Lucas Son tuto
         _tutoDictionary[tutorial].Enable();
         _tutorialWasSeen[tutorial] = true;
     }
 
+    private bool SynergyTutoCheck()
+    {
+        bool cond;
+        cond = Player.Instance.CurrentArm.gameObject != PlayerManager.Instance.Arms[0];
+        cond = cond && Player.Instance.CurrentGun.gameObject != PlayerManager.Instance.Guns[0];
+        return cond;
+    }
+
+    private void StartSynergyTutorial()
+    {
+        //TODO Lucas Son tuto
+        switch (Player.Instance.CurrentArm.Chant)
+        {
+            case Synergies.Chants.ARAGON:
+                if (_tutorialWasSeen[Tutorials.FugueSynergy])
+                    break;
+                _tutoDictionary[Tutorials.FugueSynergy].Enable();
+                _tutorialWasSeen[Tutorials.FugueSynergy] = true;
+                break;
+            case Synergies.Chants.EYLAU:
+                if (_tutorialWasSeen[Tutorials.EylauSynergy])
+                    break;
+                _tutoDictionary[Tutorials.EylauSynergy].Enable();
+                _tutorialWasSeen[Tutorials.EylauSynergy] = true;
+                break;
+            case Synergies.Chants.MUSE:
+                if (_tutorialWasSeen[Tutorials.MuseSynergy])
+                    break;
+                _tutoDictionary[Tutorials.MuseSynergy].Enable();
+                _tutorialWasSeen[Tutorials.MuseSynergy] = true;
+                break;
+        }
+    }
+
+    private bool ArmTutoCheck()
+    {
+        bool cond;
+        cond = Player.Instance.CurrentArm.gameObject != PlayerManager.Instance.Arms[0];
+        cond = cond && Player.Instance.CurrentGun.gameObject == PlayerManager.Instance.Guns[0];
+        return cond;
+    }
+
     public void StopTutorial(Tutorials tutorial)
     {
-        // if (!PlayerManager.ShouldTutorial)
-        //     return;
+        if (tutorial == Tutorials.Synergy)
+            if (!SynergyTutoCheck())
+                return;
+            else
+            {
+                StopSynergyTutorial();
+                return;
+            }
 
         _tutoDictionary[tutorial].Disable();
+    }
+
+    private void StopSynergyTutorial()
+    {
+        switch (Player.Instance.CurrentArm.Chant)
+        {
+            case Synergies.Chants.ARAGON:
+                if (_tutorialWasSeen[Tutorials.FugueSynergy])
+                    break;
+                _tutoDictionary[Tutorials.FugueSynergy].Disable();
+                break;
+
+            case Synergies.Chants.EYLAU:
+                if (_tutorialWasSeen[Tutorials.EylauSynergy])
+                    break;
+                _tutoDictionary[Tutorials.EylauSynergy].Disable();
+                break;
+
+            case Synergies.Chants.MUSE:
+                if (_tutorialWasSeen[Tutorials.MuseSynergy])
+                    break;
+                _tutoDictionary[Tutorials.MuseSynergy].Disable();
+                break;
+        }
     }
 
     public void ResetTutorials()

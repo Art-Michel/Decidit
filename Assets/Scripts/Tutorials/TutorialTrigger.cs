@@ -5,7 +5,7 @@ using UnityEngine;
 public class TutorialTrigger : MonoBehaviour
 {
     [SerializeField] TutorialManager.Tutorials _tutorialToOpen;
-    [SerializeField] bool _shouldReappear = true;
+    bool _wasDisabled = false;
 
     void OnTriggerEnter(Collider other)
     {
@@ -21,13 +21,14 @@ public class TutorialTrigger : MonoBehaviour
         {
             TutorialManager.Instance.StopTutorial(_tutorialToOpen);
 
-            if (!_shouldReappear)
-                gameObject.SetActive(false);
+            _wasDisabled = true;
+            gameObject.SetActive(false);
         }
     }
 
     void OnDisable()
     {
-        TutorialManager.Instance.StopTutorial(_tutorialToOpen);
+        if (!_wasDisabled)
+            TutorialManager.Instance.StopTutorial(_tutorialToOpen);
     }
 }
