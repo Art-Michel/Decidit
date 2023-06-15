@@ -260,6 +260,7 @@ public class MenuManager : LocalManager<MenuManager>
 
     public void OpenPreviousMenu()
     {
+        BackSound();
         if (CurrentMenu.Id == Menus.Inputsettings || CurrentMenu.Id == Menus.AudioSettings || CurrentMenu.Id == Menus.Videosettings)
             PlayerSettings.Instance.SavePrefs();
         if (CurrentMenu.PreviousMenu != null)
@@ -582,5 +583,24 @@ public class MenuManager : LocalManager<MenuManager>
         _lastSelectedObject = _eventSys.currentSelectedGameObject;
         _eventSys.SetSelectedGameObject(null);
     }
+    #endregion
+
+    #region Menu Sound effects
+
+    public void ClickSound()
+    {
+        SoundManager.Instance.PlaySound("event:/Menuing/Back", 1f, gameObject);
+    }
+
+    public void BackSound()
+    {
+        SoundManager.Instance.PlaySound("event:/Menuing/Back", 1f, gameObject);
+    }
+
+    public void MoveSound()
+    {
+        SoundManager.Instance.PlaySound("event:/Menuing/MooveSlider", 1f, gameObject);
+    }
+
     #endregion
 }

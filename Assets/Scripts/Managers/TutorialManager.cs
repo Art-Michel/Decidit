@@ -55,6 +55,7 @@ public class TutorialManager : LocalManager<TutorialManager>
         if (Player.Instance.CurrentArm == PlayerManager.Instance.Arms[0] && tutorial == Tutorials.Arm)
             return;
 
+        //TODO Lucas Son tuto
         _tutoDictionary[tutorial].Enable();
     }
 
