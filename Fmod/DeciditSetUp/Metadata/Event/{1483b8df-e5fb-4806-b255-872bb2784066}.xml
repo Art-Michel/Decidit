@@ -64,7 +64,7 @@
 			<destination>{cf55baf8-c998-41f5-861e-dc4f6d07e015}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{348f94ae-bbbe-4977-a7e6-e0b781bb9837}</destination>
+			<destination>{ec1bbf9e-320f-4ca3-a245-15090d5c9a6b}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{c1fb2bfe-60af-4d96-9f94-a4fd921b7b11}">
@@ -112,6 +112,9 @@
 		</property>
 		<relationship name="automators">
 			<destination>{444cbf47-c24d-4966-8a3a-73f583ce2cb4}</destination>
+		</relationship>
+		<relationship name="modulators">
+			<destination>{a1008cf2-af7c-402e-b724-d1a12d78ecf2}</destination>
 		</relationship>
 		<relationship name="effectChain">
 			<destination>{59e878e9-771f-4714-aa4f-d31f4c6844ab}</destination>
@@ -200,6 +203,17 @@
 		<relationship name="automationCurves">
 			<destination>{eb0c0d3c-36b0-4e89-aa70-c1cd067cc436}</destination>
 		</relationship>
+	</object>
+	<object class="LFOModulator" id="{a1008cf2-af7c-402e-b724-d1a12d78ecf2}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>volume</value>
+		</property>
+		<property name="depth">
+			<value>6</value>
+		</property>
+		<property name="direction">
+			<value>-100</value>
+		</property>
 	</object>
 	<object class="MixerBusEffectChain" id="{59e878e9-771f-4714-aa4f-d31f4c6844ab}">
 		<relationship name="effects">
