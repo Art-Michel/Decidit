@@ -15,6 +15,7 @@ public class TutorialManager : LocalManager<TutorialManager>
     [SerializeField] Tutorial _eylauTutorial;
 
     Dictionary<Tutorials, Tutorial> _tutoDictionary;
+    public static Dictionary<Tutorials, bool> _tutorialWasSeen;
 
     public enum Tutorials
     {
