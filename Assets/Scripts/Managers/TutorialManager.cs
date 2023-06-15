@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using NaughtyAttributes;
 using UnityEngine;
 
 public class TutorialManager : LocalManager<TutorialManager>
@@ -15,7 +17,18 @@ public class TutorialManager : LocalManager<TutorialManager>
     [SerializeField] Tutorial _eylauTutorial;
 
     Dictionary<Tutorials, Tutorial> _tutoDictionary;
-    public static Dictionary<Tutorials, bool> _tutorialWasSeen;
+    static Dictionary<Tutorials, bool> _tutorialWasSeen = new Dictionary<Tutorials, bool>
+    {
+        {Tutorials.Move, false},
+        {Tutorials.Jump, false},
+        {Tutorials.Walljump, false},
+        {Tutorials.Gun, false},
+        {Tutorials.Arm, false},
+        {Tutorials.Health, false},
+        {Tutorials.FugueSynergy, false},
+        {Tutorials.MuseSynergy, false},
+        {Tutorials.EylauSynergy, false},
+    };
 
     public enum Tutorials
     {
@@ -50,14 +63,18 @@ public class TutorialManager : LocalManager<TutorialManager>
 
     public void StartTutorial(Tutorials tutorial)
     {
-        // if (!PlayerManager.ShouldTutorial)
-        //     return;
+        if (_tutorialWasSeen[tutorial])
+            return;
 
         if (Player.Instance.CurrentArm == PlayerManager.Instance.Arms[0] && tutorial == Tutorials.Arm)
             return;
 
+        Debug.Log(Player.Instance.CurrentArm == PlayerManager.Instance.Arms[0]);
+        Debug.Log(Tutorials.Arm);
+
         //TODO Lucas Son tuto
         _tutoDictionary[tutorial].Enable();
+        _tutorialWasSeen[tutorial] = true;
     }
 
     public void StopTutorial(Tutorials tutorial)
@@ -66,6 +83,14 @@ public class TutorialManager : LocalManager<TutorialManager>
         //     return;
 
         _tutoDictionary[tutorial].Disable();
+    }
+
+    public void ResetTutorials()
+    {
+        foreach (Tutorials tutorial in _tutorialWasSeen.Keys)
+        {
+            _tutorialWasSeen[tutorial] = false;
+        }
     }
 
 }
