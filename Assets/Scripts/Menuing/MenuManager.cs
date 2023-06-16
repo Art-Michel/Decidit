@@ -240,7 +240,7 @@ public class MenuManager : LocalManager<MenuManager>
         if (_submenus[menu] == CurrentMenu)
             return;
 
-        if (CurrentMenu.Id == Menus.Inputsettings || CurrentMenu.Id == Menus.AudioSettings || CurrentMenu.Id == Menus.Videosettings)
+        if (CurrentMenu != null && (CurrentMenu.Id == Menus.Inputsettings || CurrentMenu.Id == Menus.AudioSettings || CurrentMenu.Id == Menus.Videosettings))
             PlayerSettings.Instance.SavePrefs();
 
         Submenu previousMenu = CurrentMenu;
