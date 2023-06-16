@@ -86,21 +86,21 @@ public class PlayerSettings : LocalManager<PlayerSettings>
 
     public void MasterVolumeUpdate(Slider slider)//ToDoArt un slider qui appele la fonction connecté a la valeur MasterVolumeNumber
     {
-        masterVolumeNumber = slider.value;
+        masterVolumeNumber = slider.value / 100;
 
         master.setVolume(masterVolumeNumber);//1 = 0Db donc la valeur normale donc 0 = plus de son
         master.getVolume(out masterVolumeNumber);//Debug qui affiche la current value du son
     }
     public void SFXVolumeUpdate(Slider slider)//ToDoArt un slider qui appele la fonction connecté a la valeur SFXVolumeNumber
     {
-        SFXVolumeNumber = slider.value;
+        SFXVolumeNumber = slider.value / 100;
 
         SFX.setVolume(SFXVolumeNumber);//1 = 0Db donc la valeur normale donc 0 = plus de son
         SFX.getVolume(out SFXVolumeNumber);//Debug qui affiche la current value du son
     }
     public void MusicVolumeUpdate(Slider slider)//ToDoArt un slider qui appele la fonction connecté a la valeur MusicVolumeNumber
     {
-        musicVolumeNumber = slider.value;
+        musicVolumeNumber = slider.value / 100;
 
         music.setVolume(musicVolumeNumber);//1 = 0Db donc la valeur normale donc 0 = plus de son
         music.getVolume(out musicVolumeNumber);//Debug qui affiche la current value du son
