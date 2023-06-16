@@ -5,7 +5,7 @@
 			<value>Charm</value>
 		</property>
 		<property name="outputFormat">
-			<value>2</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{a59030b3-e370-4ae6-81b6-d1ccb2bb9068}</destination>
@@ -159,8 +159,9 @@
 	<object class="MixerBusEffectChain" id="{f79e88d6-f460-4f26-8f1c-d4af7afb040e}">
 		<relationship name="effects">
 			<destination>{d44c8f4f-1d89-4917-a1c3-0bf8ae0100a0}</destination>
-			<destination>{af7f0d24-ced8-4c89-b2a6-92ed7e113459}</destination>
 			<destination>{a25fc3f8-2398-4597-9777-22508edc0131}</destination>
+			<destination>{63443107-97e3-4b1c-bf05-20cd390cafcb}</destination>
+			<destination>{b536bd0b-3c00-42b7-ada5-cc52ca70d032}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{f9df623b-bcb0-418b-aeb9-690689d908b7}" />
@@ -186,16 +187,27 @@
 		</relationship>
 	</object>
 	<object class="MixerBusFader" id="{d44c8f4f-1d89-4917-a1c3-0bf8ae0100a0}" />
-	<object class="SpatialiserEffect" id="{af7f0d24-ced8-4c89-b2a6-92ed7e113459}">
-		<property name="distanceRolloffType">
-			<value>4</value>
-		</property>
-	</object>
 	<object class="ThreeEQEffect" id="{a25fc3f8-2398-4597-9777-22508edc0131}">
 		<relationship name="automators">
 			<destination>{e98c82b2-2726-49d5-9820-4802395742f8}</destination>
 			<destination>{5a730d52-03fb-4f60-9c6f-52485d658189}</destination>
 		</relationship>
+	</object>
+	<object class="ChorusEffect" id="{63443107-97e3-4b1c-bf05-20cd390cafcb}">
+		<property name="rate">
+			<value>4.4000001</value>
+		</property>
+		<property name="depth">
+			<value>35.5</value>
+		</property>
+	</object>
+	<object class="LimiterEffect" id="{b536bd0b-3c00-42b7-ada5-cc52ca70d032}">
+		<property name="ceiling">
+			<value>-5.5</value>
+		</property>
+		<property name="release">
+			<value>400</value>
+		</property>
 	</object>
 	<object class="MixerBusFader" id="{05285960-3c72-4800-83e6-ff6612d335b8}" />
 	<object class="AutomationPoint" id="{3234a16b-1e86-44e7-893f-de9ac3d802ca}">

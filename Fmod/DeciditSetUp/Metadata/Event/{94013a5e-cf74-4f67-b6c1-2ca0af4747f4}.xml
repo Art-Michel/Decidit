@@ -102,6 +102,9 @@
 		<property name="timelockedOffset">
 			<value>0.10000000000000001</value>
 		</property>
+		<relationship name="fadeOutCurve">
+			<destination>{6ae7e739-0eb9-48b5-b76a-a789edbb3198}</destination>
+		</relationship>
 		<relationship name="audioFile">
 			<destination>{1036b6c8-4732-447f-bac4-c85d22fd685f}</destination>
 		</relationship>
@@ -117,9 +120,18 @@
 			<destination>{c0f3ea18-c5f1-483f-8c88-2b00ed22347d}</destination>
 			<destination>{ad25d67c-cf5a-42cf-beda-c8c3cc0f4d2a}</destination>
 			<destination>{5007db04-bfd8-4fe2-ae87-ff24360e3ed3}</destination>
+			<destination>{3616c8dd-9f7e-4003-9a44-65f403d42671}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{03a5cebb-683e-4808-b8a7-3c14b4cb2f2c}" />
+	<object class="FadeCurve" id="{6ae7e739-0eb9-48b5-b76a-a789edbb3198}">
+		<relationship name="startPoint">
+			<destination>{e3f74633-c6ae-4c7d-8f84-4b4c4293f497}</destination>
+		</relationship>
+		<relationship name="endPoint">
+			<destination>{24a0212a-3b8d-45dd-b5a8-adc37a9c5d27}</destination>
+		</relationship>
+	</object>
 	<object class="MixerBusFader" id="{82904fed-0408-41aa-b9b3-430bd7b938e2}" />
 	<object class="MixerBusFader" id="{c0f3ea18-c5f1-483f-8c88-2b00ed22347d}" />
 	<object class="PitchShifterEffect" id="{ad25d67c-cf5a-42cf-beda-c8c3cc0f4d2a}">
@@ -135,6 +147,33 @@
 			<destination>{a6646272-c5de-4f35-ab7b-02a1e3b411b4}</destination>
 			<destination>{61aa45f1-92cc-4855-af82-444acfb8a1f5}</destination>
 		</relationship>
+	</object>
+	<object class="LimiterEffect" id="{3616c8dd-9f7e-4003-9a44-65f403d42671}">
+		<property name="ceiling">
+			<value>-1.89999998</value>
+		</property>
+		<property name="release">
+			<value>1000</value>
+		</property>
+	</object>
+	<object class="AutomationPoint" id="{e3f74633-c6ae-4c7d-8f84-4b4c4293f497}">
+		<property name="position">
+			<value>0.059999999999999998</value>
+		</property>
+		<property name="value">
+			<value>1</value>
+		</property>
+		<property name="curveShape">
+			<value>-0.124480329</value>
+		</property>
+	</object>
+	<object class="AutomationPoint" id="{24a0212a-3b8d-45dd-b5a8-adc37a9c5d27}">
+		<property name="position">
+			<value>0.12</value>
+		</property>
+		<property name="value">
+			<value>0</value>
+		</property>
 	</object>
 	<object class="RandomizerModulator" id="{6b1705e8-3a61-4462-9874-9e136c9003e3}">
 		<property name="nameOfPropertyBeingModulated">

@@ -5,7 +5,7 @@
 			<value>BaseShootImpactFlesh</value>
 		</property>
 		<property name="outputFormat">
-			<value>2</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{1122f214-9f8a-4a41-b857-79a1b762b83b}</destination>
@@ -158,8 +158,8 @@
 			<destination>{a01602f1-675e-468d-899e-968ecbfbb5bd}</destination>
 			<destination>{9e79b27e-5a34-4991-ba61-c322ef0ee5ae}</destination>
 			<destination>{fab2a96c-dcd8-4265-97ad-ea84af2edc75}</destination>
-			<destination>{ba7161f9-e63f-4a53-927e-3fd88a4a0c3f}</destination>
 			<destination>{77823f14-f1c0-4acb-97ea-0630a35e6b62}</destination>
+			<destination>{4b42caf0-b15a-43d1-adc9-5941a087d689}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{326e02bf-ad30-4509-b0fa-3ecfc524b358}" />
@@ -198,19 +198,16 @@
 			<value>4.5</value>
 		</property>
 	</object>
-	<object class="SpatialiserEffect" id="{ba7161f9-e63f-4a53-927e-3fd88a4a0c3f}">
-		<property name="distanceRolloffType">
-			<value>4</value>
-		</property>
-		<property name="maximumDistance">
-			<value>80</value>
-		</property>
-	</object>
 	<object class="ThreeEQEffect" id="{77823f14-f1c0-4acb-97ea-0630a35e6b62}">
 		<relationship name="automators">
 			<destination>{d6e410d5-e595-48be-9563-df36a5cef156}</destination>
 			<destination>{0640ee79-e5ec-47a8-9e64-a26b63e48f79}</destination>
 		</relationship>
+	</object>
+	<object class="LimiterEffect" id="{4b42caf0-b15a-43d1-adc9-5941a087d689}">
+		<property name="ceiling">
+			<value>-3</value>
+		</property>
 	</object>
 	<object class="MixerBusFader" id="{efb04dbd-7678-4599-b615-4a2a77933159}" />
 	<object class="AutomationPoint" id="{c80200b2-7203-4865-bd1d-42305e1fdf3e}">
