@@ -63,27 +63,25 @@ public class TutorialManager : LocalManager<TutorialManager>
         };
     }
 
-    public void StartTutorial(Tutorials tutorial)
+    public bool StartTutorial(Tutorials tutorial)
     {
-
         if (tutorial == Tutorials.Arm)
             if (!ArmTutoCheck() || SynergyTutoCheck())
-                return;
+                return false;
         if (tutorial == Tutorials.Synergy)
             if (!SynergyTutoCheck())
-                return;
+                return false;
             else
-            {
-                StartSynergyTutorial();
-                return;
-            }
+                return StartSynergyTutorial();
 
         if (_tutorialWasSeen[tutorial])
-            return;
+            return false;
+
 
         //TODO Lucas Son tuto
         _tutoDictionary[tutorial].Enable();
         _tutorialWasSeen[tutorial] = true;
+        return true;
     }
 
     private bool SynergyTutoCheck()
@@ -94,30 +92,31 @@ public class TutorialManager : LocalManager<TutorialManager>
         return cond;
     }
 
-    private void StartSynergyTutorial()
+    private bool StartSynergyTutorial()
     {
         //TODO Lucas Son tuto
         switch (Player.Instance.CurrentArm.Chant)
         {
             case Synergies.Chants.ARAGON:
                 if (_tutorialWasSeen[Tutorials.FugueSynergy])
-                    break;
+                    return false;
                 _tutoDictionary[Tutorials.FugueSynergy].Enable();
                 _tutorialWasSeen[Tutorials.FugueSynergy] = true;
-                break;
+                return true;
             case Synergies.Chants.EYLAU:
                 if (_tutorialWasSeen[Tutorials.EylauSynergy])
-                    break;
+                    return false;
                 _tutoDictionary[Tutorials.EylauSynergy].Enable();
                 _tutorialWasSeen[Tutorials.EylauSynergy] = true;
-                break;
+                return true;
             case Synergies.Chants.MUSE:
                 if (_tutorialWasSeen[Tutorials.MuseSynergy])
-                    break;
+                    return false;
                 _tutoDictionary[Tutorials.MuseSynergy].Enable();
                 _tutorialWasSeen[Tutorials.MuseSynergy] = true;
-                break;
+                return true;
         }
+        return false;
     }
 
     private bool ArmTutoCheck()

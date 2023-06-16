@@ -5,19 +5,21 @@ using UnityEngine;
 public class TutorialTrigger : MonoBehaviour
 {
     [SerializeField] TutorialManager.Tutorials _tutorialToOpen;
-    bool _wasDisabled = false;
+    [SerializeField] bool _wasDisabled = false;
+    [SerializeField] bool _wasStarted = false;
 
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            TutorialManager.Instance.StartTutorial(_tutorialToOpen);
+            if (TutorialManager.Instance.StartTutorial(_tutorialToOpen))
+                _wasStarted = true;
         }
     }
 
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && _wasStarted)
         {
             TutorialManager.Instance.StopTutorial(_tutorialToOpen);
 
@@ -28,7 +30,7 @@ public class TutorialTrigger : MonoBehaviour
 
     void OnDisable()
     {
-        if (!_wasDisabled)
+        if (!_wasDisabled && _wasStarted)
             TutorialManager.Instance.StopTutorial(_tutorialToOpen);
     }
 }
