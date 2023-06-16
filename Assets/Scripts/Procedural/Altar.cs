@@ -163,30 +163,30 @@ public class Altar : MonoBehaviour, IInteractable
         AestheticsParent.SetActive(false);
         _interactHitbox.enabled = false;
 
-        //if second altar
-        if (_altarListScript[1] == this)
-        {
-            Debug.Log("this is indeed the second altar");
-            //and if player has both upgrades
-            bool cond = Player.Instance.CurrentArm != PlayerManager.Instance.Arms[0];
-            cond = cond && Player.Instance.CurrentGun != PlayerManager.Instance.Guns[0];
-            if (cond)
-            {
-                Debug.Log("player is upgraded enough");
-                switch (_chant)
-                {
-                    case Chants.Fugue:
-                        TutorialManager.Instance.StartTutorial(TutorialManager.Tutorials.FugueSynergy);
-                        break;
-                    case Chants.Muse:
-                        TutorialManager.Instance.StartTutorial(TutorialManager.Tutorials.MuseSynergy);
-                        break;
-                    case Chants.Cimetiere:
-                        TutorialManager.Instance.StartTutorial(TutorialManager.Tutorials.EylauSynergy);
-                        break;
-                }
-            }
-        }
+        // //if second altar
+        // if (_altarListScript[1] == this)
+        // {
+        //     Debug.Log("this is indeed the second altar");
+        //     //and if player has both upgrades
+        //     bool cond = Player.Instance.CurrentArm != PlayerManager.Instance.Arms[0];
+        //     cond = cond && Player.Instance.CurrentGun != PlayerManager.Instance.Guns[0];
+        //     if (cond)
+        //     {
+        //         Debug.Log("player is upgraded enough");
+        //         switch (_chant)
+        //         {
+        //             case Chants.Fugue:
+        //                 TutorialManager.Instance.StartTutorial(TutorialManager.Tutorials.FugueSynergy);
+        //                 break;
+        //             case Chants.Muse:
+        //                 TutorialManager.Instance.StartTutorial(TutorialManager.Tutorials.MuseSynergy);
+        //                 break;
+        //             case Chants.Cimetiere:
+        //                 TutorialManager.Instance.StartTutorial(TutorialManager.Tutorials.EylauSynergy);
+        //                 break;
+        //         }
+        //     }
+        // }
     }
 
     void OnDestroy()
