@@ -136,6 +136,9 @@
 		<property name="timelockedOffset">
 			<value>0.066000000000000003</value>
 		</property>
+		<relationship name="fadeInCurve">
+			<destination>{afc5c40a-d880-4391-b50d-ca1780dfbb97}</destination>
+		</relationship>
 		<relationship name="audioFile">
 			<destination>{b707d53c-ecd5-418e-9f74-f1e94fae410f}</destination>
 		</relationship>
@@ -212,10 +215,19 @@
 			<destination>{bd062637-0945-4ec8-b93b-c1c882b7080d}</destination>
 			<destination>{5218f34e-03a2-4c34-b71e-a32074035f0c}</destination>
 			<destination>{93627db6-0866-49c1-8c49-026706387429}</destination>
+			<destination>{d776f9d3-edbf-4596-8c20-b4ce27ed46fb}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{21474213-4a2c-459b-8f60-b7ce4e4acb65}" />
 	<object class="MixerBusFader" id="{1f63ebbe-faaf-48ac-912a-974441d0cd2a}" />
+	<object class="FadeCurve" id="{afc5c40a-d880-4391-b50d-ca1780dfbb97}">
+		<relationship name="startPoint">
+			<destination>{c31986a6-e406-4503-8452-4267de865e50}</destination>
+		</relationship>
+		<relationship name="endPoint">
+			<destination>{5b57d3e4-4104-422f-92a9-26fdff1aadcd}</destination>
+		</relationship>
+	</object>
 	<object class="MixerBusEffectChain" id="{2118556c-4224-4ae2-9e55-08d083f4c6e7}">
 		<relationship name="effects">
 			<destination>{5914aca1-78a1-4f9f-89a4-d993dad5a421}</destination>
@@ -250,10 +262,37 @@
 			<destination>{47543ecd-94db-48de-ad7a-a7e4c085c3f2}</destination>
 		</relationship>
 	</object>
+	<object class="LimiterEffect" id="{d776f9d3-edbf-4596-8c20-b4ce27ed46fb}">
+		<property name="ceiling">
+			<value>-4.0999999</value>
+		</property>
+		<property name="release">
+			<value>620</value>
+		</property>
+	</object>
+	<object class="AutomationPoint" id="{c31986a6-e406-4503-8452-4267de865e50}">
+		<property name="position">
+			<value>0</value>
+		</property>
+		<property name="value">
+			<value>0</value>
+		</property>
+		<property name="curveShape">
+			<value>-0.2547189</value>
+		</property>
+	</object>
+	<object class="AutomationPoint" id="{5b57d3e4-4104-422f-92a9-26fdff1aadcd}">
+		<property name="position">
+			<value>0.02</value>
+		</property>
+		<property name="value">
+			<value>1</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{5914aca1-78a1-4f9f-89a4-d993dad5a421}" />
 	<object class="DistortionEffect" id="{ac2c53f3-84ec-497d-b699-d13ee1358e57}">
 		<property name="level">
-			<value>0.719999969</value>
+			<value>0.414999992</value>
 		</property>
 	</object>
 	<object class="MixerBusFader" id="{9dee6039-f3fe-47a1-9501-2860a2aaf46a}" />
