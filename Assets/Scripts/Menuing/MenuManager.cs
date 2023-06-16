@@ -240,6 +240,9 @@ public class MenuManager : LocalManager<MenuManager>
         if (_submenus[menu] == CurrentMenu)
             return;
 
+        if (CurrentMenu.Id == Menus.Inputsettings || CurrentMenu.Id == Menus.AudioSettings || CurrentMenu.Id == Menus.Videosettings)
+            PlayerSettings.Instance.SavePrefs();
+
         Submenu previousMenu = CurrentMenu;
         CurrentMenu = _submenus[menu];
 
@@ -283,20 +286,20 @@ public class MenuManager : LocalManager<MenuManager>
 
     public void OpenVideoSettings()
     {
-        SetSlidersToPlayerPrefs();
         OpenSubmenu(Menus.Videosettings, false);
+        SetSlidersToPlayerPrefs();
     }
 
     public void OpenAudioSettings()
     {
-        SetSlidersToPlayerPrefs();
         OpenSubmenu(Menus.AudioSettings, false);
+        SetSlidersToPlayerPrefs();
     }
 
     public void OpenInputSettings()
     {
-        SetSlidersToPlayerPrefs();
         OpenSubmenu(Menus.Inputsettings, false);
+        SetSlidersToPlayerPrefs();
     }
 
     [SerializeField] Slider _mouseXSlider;
