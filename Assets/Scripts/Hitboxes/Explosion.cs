@@ -20,8 +20,8 @@ public class Explosion : Hitbox
     // [SerializeField] private float _shakeDuration = .5f;
     [SerializeField] private PerlinShake.Params _shake;
 
-    [Foldout("Explosion References")]
-    [SerializeField] private Light _light;
+    // [Foldout("Explosion References")]
+    // [SerializeField] private Light _light;
     [Foldout("Explosion References")]
     [SerializeField] private GameObject _windBox;
     [Foldout("Explosion References")]
@@ -37,7 +37,7 @@ public class Explosion : Hitbox
     [SerializeField] private float _lifeT;
     private float _hitboxT;
 
-    private float _lightStrength;
+    // private float _lightStrength;
 
     private float _initialKnockbackForce;
     private float _initialDamage;
@@ -52,7 +52,7 @@ public class Explosion : Hitbox
 
     protected virtual void OnEnable()
     {
-        _lightStrength = _light.intensity;
+        // _lightStrength = _light.intensity;
         Reset();
     }
 
@@ -62,12 +62,11 @@ public class Explosion : Hitbox
             _windBox.SetActive(true);
 
         _hitboxIsActive = true;
-        _light.intensity = _lightStrength;
+        // _light.intensity = _lightStrength;
         _lifeT = _lifeSpan;
         _hitboxT = _hitboxSpan;
         _knockbackForce = _initialKnockbackForce;
         Damage = _initialDamage;
-        //!SFX Explosion 
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/MuseMalade/Explosion", 1f, gameObject);
         StartExplosionShake();
         ClearBlacklist();
@@ -109,7 +108,7 @@ public class Explosion : Hitbox
         //Explosion gets weaker over time
         _knockbackForce = _initialKnockbackForce * Mathf.InverseLerp(0f, _hitboxSpan, _hitboxT);
         Damage = Mathf.RoundToInt(_initialDamage * Mathf.InverseLerp(0f, _hitboxSpan, _hitboxT));
-        _light.intensity = _lightStrength * Mathf.InverseLerp(0, _lifeSpan, _lifeT);
+        // _light.intensity = _lightStrength * Mathf.InverseLerp(0, _lifeSpan, _lifeT);
 
         //Check for collisions with hitbox
     }
