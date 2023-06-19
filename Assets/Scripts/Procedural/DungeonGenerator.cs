@@ -170,6 +170,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
         {
             room.FindDoors();
             room.FindTriggers();
+            room.Statify();
         }
         Build();
     }

@@ -13,6 +13,7 @@ public class Room : MonoBehaviour
 
     public Door Entry;
     public Door Exit;
+    [SerializeField] private GameObject _levelArtParent;
 
     [SerializeField] private bool _isCorridor = false;
     [SerializeField] private int _triggersToActivateOnClear = 2;
@@ -187,6 +188,15 @@ public class Room : MonoBehaviour
         {
             if (i < _triggersToActivateOnClear)
                 closest[i].EnableMobs();
+        }
+    }
+
+    internal void Statify()
+    {
+        if (_levelArtParent)
+        {
+            this._levelArtParent.isStatic = true;
+            StaticBatchingUtility.Combine(_levelArtParent);
         }
     }
 
