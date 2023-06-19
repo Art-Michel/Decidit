@@ -1410,8 +1410,6 @@ GameObject:
   - component: {fileID: 5407937164410842287}
   - component: {fileID: 5407937164311034899}
   - component: {fileID: 5160256997650002795}
-  - component: {fileID: 5887259138013280786}
-  - component: {fileID: 1154098350}
   m_Layer: 7
   m_Name: Empty_FlyAINavMesh_Position
   m_TagString: Ennemi
@@ -1476,7 +1474,7 @@ MonoBehaviour:
   enemyHealth: {fileID: 2067911473255968063}
   flyMobAttackManager: {fileID: 0}
   vfxShowDoor: {fileID: 1008568596267884792}
-  myAnimator: {fileID: 1154098350}
+  myAnimator: {fileID: 2740087774861499418}
   globalRefAnimator: {fileID: 5160256997650002795}
   characterController: {fileID: 484338305460112917}
   isInEylau: 0
@@ -1536,39 +1534,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentAnimName: 
---- !u!114 &5887259138013280786
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5407937164410842285}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec8fd75dde36aa54bb47abb4b72866c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseAttackWallAIState: {fileID: 1658454499507323760}
---- !u!95 &1154098350
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5407937164410842285}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: a8a2ed98e66ac054c90e70392310f7b3, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5407937164474220353
 GameObject:
   m_ObjectHideFlags: 0
@@ -2438,6 +2403,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2740087773714416187}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &2740087774861499418 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 1335959073, guid: 24134a3f15d88b146ac371d08cf982ef,
+    type: 3}
+  m_PrefabInstance: {fileID: 2740087773714416187}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7489707310588015439 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4753116533622649204, guid: 24134a3f15d88b146ac371d08cf982ef,
@@ -2450,6 +2421,25 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2740087773714416187}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &7834884226847533557 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5385644216719076302, guid: 24134a3f15d88b146ac371d08cf982ef,
+    type: 3}
+  m_PrefabInstance: {fileID: 2740087773714416187}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8094328732609790628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7834884226847533557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec8fd75dde36aa54bb47abb4b72866c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseAttackWallAIState: {fileID: 1658454499507323760}
 --- !u!1001 &3171615745874579641
 PrefabInstance:
   m_ObjectHideFlags: 0
