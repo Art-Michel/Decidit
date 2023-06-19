@@ -5,7 +5,7 @@
 			<value>Attack</value>
 		</property>
 		<property name="outputFormat">
-			<value>2</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{1a042a3f-622a-4e95-881d-3d0f4d70126d}</destination>
@@ -153,8 +153,8 @@
 	<object class="MixerBusEffectChain" id="{5698d9a4-f668-4bbd-80e1-e29761ae7955}">
 		<relationship name="effects">
 			<destination>{24037b98-4a7c-4a82-b4a0-2e615ef83a44}</destination>
-			<destination>{b18493ad-0a55-4767-89d7-299823fa3a27}</destination>
 			<destination>{d02c3cac-3d36-47d4-ad0a-ee61e18e32c5}</destination>
+			<destination>{d239f282-239a-4cf6-8cc8-df49d765311c}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{3b1a4447-926a-49d7-a8f5-69b926c8adc2}" />
@@ -180,19 +180,16 @@
 		</relationship>
 	</object>
 	<object class="MixerBusFader" id="{24037b98-4a7c-4a82-b4a0-2e615ef83a44}" />
-	<object class="SpatialiserEffect" id="{b18493ad-0a55-4767-89d7-299823fa3a27}">
-		<property name="distanceRolloffType">
-			<value>4</value>
-		</property>
-		<property name="maximumDistance">
-			<value>80</value>
-		</property>
-	</object>
 	<object class="ThreeEQEffect" id="{d02c3cac-3d36-47d4-ad0a-ee61e18e32c5}">
 		<relationship name="automators">
 			<destination>{8876005d-3c9b-4f11-99d8-60882c385422}</destination>
 			<destination>{e5ae9698-dbbf-466b-8c8e-c2b5ffbfa224}</destination>
 		</relationship>
+	</object>
+	<object class="ChorusEffect" id="{d239f282-239a-4cf6-8cc8-df49d765311c}">
+		<property name="rate">
+			<value>6</value>
+		</property>
 	</object>
 	<object class="MixerBusFader" id="{512efa06-19a8-4be0-b0d2-50b68159d160}" />
 	<object class="AutomationPoint" id="{1af8482c-5e4a-4acc-a53c-42c208e1ddbe}">

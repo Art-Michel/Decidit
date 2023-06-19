@@ -5,7 +5,7 @@
 			<value>DeathIA</value>
 		</property>
 		<property name="outputFormat">
-			<value>2</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{54073976-86c2-416b-9b84-1ec510049d92}</destination>
@@ -166,8 +166,9 @@
 			<destination>{e045da11-d9c1-431d-ab38-d0aa676f84cd}</destination>
 			<destination>{dfa2f2e8-b8a7-498d-b149-a59c1670c7ff}</destination>
 			<destination>{6b2401e1-39a2-49ab-af44-e01cc89d4c40}</destination>
-			<destination>{d5531fa7-5081-47ed-9a2c-2114a1e56f08}</destination>
 			<destination>{01e77704-8a77-4c84-b9fc-2cd96f580668}</destination>
+			<destination>{ce801ab3-02d0-47df-936d-4fba95ae297a}</destination>
+			<destination>{c58a9f62-c236-41c2-b69c-c57924791836}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{b330a8af-ce05-421f-b00c-448c19e2ab6c}" />
@@ -216,19 +217,30 @@
 			<value>1000</value>
 		</property>
 	</object>
-	<object class="SpatialiserEffect" id="{d5531fa7-5081-47ed-9a2c-2114a1e56f08}">
-		<property name="distanceRolloffType">
-			<value>4</value>
-		</property>
-		<property name="maximumDistance">
-			<value>80</value>
-		</property>
-	</object>
 	<object class="ThreeEQEffect" id="{01e77704-8a77-4c84-b9fc-2cd96f580668}">
 		<relationship name="automators">
 			<destination>{a7d64457-b5a4-4b58-ab1f-cf89f4f6460e}</destination>
 			<destination>{a3adc32f-6e69-4a76-88e0-9f3b54792cfc}</destination>
 		</relationship>
+	</object>
+	<object class="ChorusEffect" id="{ce801ab3-02d0-47df-936d-4fba95ae297a}">
+		<property name="rate">
+			<value>20</value>
+		</property>
+		<property name="depth">
+			<value>19.5</value>
+		</property>
+	</object>
+	<object class="LimiterEffect" id="{c58a9f62-c236-41c2-b69c-c57924791836}">
+		<property name="boost">
+			<value>7.30000019</value>
+		</property>
+		<property name="ceiling">
+			<value>-1.70000005</value>
+		</property>
+		<property name="release">
+			<value>5.20000029</value>
+		</property>
 	</object>
 	<object class="MixerBusFader" id="{c7dbf160-7daa-496d-a1b4-8a495f6a3af8}" />
 	<object class="AutomationPoint" id="{7fa780fc-7358-465c-9c66-4f044e1aaa2b}">

@@ -5,7 +5,7 @@
 			<value>Poisoned</value>
 		</property>
 		<property name="outputFormat">
-			<value>2</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{54073976-86c2-416b-9b84-1ec510049d92}</destination>
@@ -198,8 +198,8 @@
 		<relationship name="effects">
 			<destination>{75f0120b-9b0d-4e0e-abd4-69dd9943c63f}</destination>
 			<destination>{c9f46fef-8f51-4f3a-9992-8c96773a58f1}</destination>
-			<destination>{77d869a3-6616-4129-b226-9a4c4c62eee1}</destination>
 			<destination>{d7c5289a-dd91-4525-a816-91d890e54c8f}</destination>
+			<destination>{8089b6fb-7694-46d4-90df-c66941cf9a9e}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{69fc4e7a-3f3d-4113-a8ed-5bef975adf22}" />
@@ -207,7 +207,6 @@
 	<object class="MixerBusEffectChain" id="{b8fd73f3-b59d-49f9-8b26-1fd3086b8c18}">
 		<relationship name="effects">
 			<destination>{a4c22119-a7eb-4831-ba32-a4a7335b3242}</destination>
-			<destination>{aaf95882-cc46-4d74-8521-387e5cf973f2}</destination>
 			<destination>{2b802b16-6485-4ad5-a579-162245f3411a}</destination>
 			<destination>{30474733-c0dc-494e-ae63-72b5e6de9849}</destination>
 		</relationship>
@@ -241,26 +240,24 @@
 			<value>1900</value>
 		</property>
 	</object>
-	<object class="SpatialiserEffect" id="{77d869a3-6616-4129-b226-9a4c4c62eee1}">
-		<property name="distanceRolloffType">
-			<value>4</value>
-		</property>
-		<property name="maximumDistance">
-			<value>80</value>
-		</property>
-	</object>
 	<object class="ThreeEQEffect" id="{d7c5289a-dd91-4525-a816-91d890e54c8f}">
 		<relationship name="automators">
 			<destination>{565fec23-d5e2-4567-8d84-6230d2f84b55}</destination>
 			<destination>{4b593390-713e-4844-9c07-533c664a33f8}</destination>
 		</relationship>
 	</object>
-	<object class="MixerBusFader" id="{a4c22119-a7eb-4831-ba32-a4a7335b3242}" />
-	<object class="SFXReverbEffect" id="{aaf95882-cc46-4d74-8521-387e5cf973f2}">
-		<property name="decayTime">
-			<value>1000</value>
+	<object class="LimiterEffect" id="{8089b6fb-7694-46d4-90df-c66941cf9a9e}">
+		<property name="boost">
+			<value>8.80000019</value>
+		</property>
+		<property name="ceiling">
+			<value>-4</value>
+		</property>
+		<property name="release">
+			<value>70</value>
 		</property>
 	</object>
+	<object class="MixerBusFader" id="{a4c22119-a7eb-4831-ba32-a4a7335b3242}" />
 	<object class="PitchShifterEffect" id="{2b802b16-6485-4ad5-a579-162245f3411a}">
 		<property name="pitch">
 			<value>0.799999952</value>
