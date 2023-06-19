@@ -21,6 +21,8 @@ public class PlayerSettings : LocalManager<PlayerSettings>
     [SerializeField] Slider sliderMasterVolumeNumber;
     [SerializeField] Slider sliderSFXVolumeNumber;
     [SerializeField] Slider slidermusicVolumeNumber;
+
+    static bool once;
     #endregion
 
     #region ResolutionsVariables
@@ -45,11 +47,11 @@ public class PlayerSettings : LocalManager<PlayerSettings>
         //ça va chercher la magie que j'ai fait sur FMod
         LoadBus();
 
-        //Debug qui affiche la current value du son (Tu peux l'enlever quand tu aura fini)
+        /*//Debug qui affiche la current value du son (Tu peux l'enlever quand tu aura fini)
         master.getVolume(out masterVolumeNumber);
         SFX.getVolume(out SFXVolumeNumber);
         music.getVolume(out musicVolumeNumber);
-
+*/
         //chargement des settings
         LoadPrefs();
 
@@ -64,17 +66,24 @@ public class PlayerSettings : LocalManager<PlayerSettings>
     // Start is called before the first frame update
     void Start()
     {
+        //LoadSoundSettings();
+    }
+    private void OnEnable()
+    {
         LoadSoundSettings();
     }
-
     // Update is called once per frame
     void Update()
     {
         // MasterVolumeUpdate();//Debug que tu pourra aussi elever
     }
     #region VolumeFonctions
+
+    [Button]
     public void LoadSoundSettings()
     {
+        UnityEngine.Debug.Log(SaveLoadManager.LoadSoundSet().masterVolumeNumber);
+
         sliderMasterVolumeNumber.value = SaveLoadManager.LoadSoundSet().masterVolumeNumber;
         sliderSFXVolumeNumber.value = SaveLoadManager.LoadSoundSet().SFXVolumeNumber;
         slidermusicVolumeNumber.value = SaveLoadManager.LoadSoundSet().musicVolumeNumber;
@@ -86,21 +95,24 @@ public class PlayerSettings : LocalManager<PlayerSettings>
 
     public void MasterVolumeUpdate(Slider slider)//ToDoArt un slider qui appele la fonction connecté a la valeur MasterVolumeNumber
     {
-        masterVolumeNumber = slider.value / 100;
+        masterVolumeNumber = slider.value;
+
+        UnityEngine.Debug.Log(slider.value);
+        UnityEngine.Debug.Log(masterVolumeNumber);
 
         master.setVolume(masterVolumeNumber);//1 = 0Db donc la valeur normale donc 0 = plus de son
         master.getVolume(out masterVolumeNumber);//Debug qui affiche la current value du son
     }
     public void SFXVolumeUpdate(Slider slider)//ToDoArt un slider qui appele la fonction connecté a la valeur SFXVolumeNumber
     {
-        SFXVolumeNumber = slider.value / 100;
+        SFXVolumeNumber = slider.value;
 
         SFX.setVolume(SFXVolumeNumber);//1 = 0Db donc la valeur normale donc 0 = plus de son
         SFX.getVolume(out SFXVolumeNumber);//Debug qui affiche la current value du son
     }
     public void MusicVolumeUpdate(Slider slider)//ToDoArt un slider qui appele la fonction connecté a la valeur MusicVolumeNumber
     {
-        musicVolumeNumber = slider.value / 100;
+        musicVolumeNumber = slider.value;
 
         music.setVolume(musicVolumeNumber);//1 = 0Db donc la valeur normale donc 0 = plus de son
         music.getVolume(out musicVolumeNumber);//Debug qui affiche la current value du son
@@ -121,7 +133,7 @@ public class PlayerSettings : LocalManager<PlayerSettings>
         PlayerPrefs.SetFloat("SFXBaseVolume", SFXVolumeNumber);
         PlayerPrefs.SetFloat("MusicBaseVolume", musicVolumeNumber);*/
         PlayerPrefs.Save();
-        UnityEngine.Debug.Log("Save");
+       // UnityEngine.Debug.Log("Save");
     }
     public void LoadPrefs()
     {

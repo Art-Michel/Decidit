@@ -27,7 +27,6 @@ public class PrintTimerMenu : MonoBehaviour
     public void PrintTimer()
     {
         txt.text = "Best time:\n" + FormatTime(TimerManager.Instance.bestTime[index]);
-        Debug.Log(FormatTime(TimerManager.Instance.bestTime[index]));
     }
 
     public void ResetTimer()
