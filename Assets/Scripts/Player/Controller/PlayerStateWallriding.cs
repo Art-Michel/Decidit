@@ -32,6 +32,7 @@ public class PlayerStateWallriding : PlayerState
 
     public override void Exit()
     {
+        _player.ResetSlopeMovement();
         _player.ResetAcceleration();
         _player.ResetWallridingMovementSpeed();
     }
