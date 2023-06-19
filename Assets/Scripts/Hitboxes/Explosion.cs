@@ -31,6 +31,8 @@ public class Explosion : Hitbox
     [Foldout("Explosion References")]
     [SerializeField] private AudioClip _explosionSfx;
 
+    [Foldout("Explosion References")]
+    [SerializeField] protected string _explosionSound;
 
     private bool _hitboxIsActive;
     private Projectile _parentProjectile;
@@ -67,7 +69,7 @@ public class Explosion : Hitbox
         _hitboxT = _hitboxSpan;
         _knockbackForce = _initialKnockbackForce;
         Damage = _initialDamage;
-        SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/MuseMalade/Explosion", 1f, gameObject);
+        SoundManager.Instance.PlaySound(_explosionSound, 1f, gameObject);
         StartExplosionShake();
         ClearBlacklist();
     }

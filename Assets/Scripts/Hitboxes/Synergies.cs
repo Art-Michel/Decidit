@@ -298,7 +298,7 @@ public class Synergies : LocalManager<Synergies>
     {
         PlayerManager.Instance.StartFlash(0.1f, 1);
         SoundManager.Instance.PlaySound("event:/SFX_Controller/UniversalSound", 1f, gameObject);
-        SoundManager.Instance.PlaySound("event:/SFX_Controller/Synergies/MuseOnEyleau/Sound", 1, _eylauArea.gameObject);
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/MuseMalade/Impact", 1, _eylauArea.gameObject);
 
         _eylauArea.GetComponent<EylauArea>().StartExplosionDisappearance();
         Vector3 endPos = initialPos + (_eylauArea.transform.position - initialPos) * 2;

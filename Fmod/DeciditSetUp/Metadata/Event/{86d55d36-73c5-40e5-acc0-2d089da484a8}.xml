@@ -5,7 +5,7 @@
 			<value>DoorOpening</value>
 		</property>
 		<property name="outputFormat">
-			<value>2</value>
+			<value>0</value>
 		</property>
 		<relationship name="folder">
 			<destination>{c4cbbabf-3465-425c-9bf8-8352a60bf37d}</destination>
@@ -165,8 +165,8 @@
 			<destination>{72a000f9-bb71-4faf-9334-53b2476cb2d7}</destination>
 			<destination>{7e9bad8d-8971-49f5-a51d-5b61de6017f7}</destination>
 			<destination>{23b1af76-427a-4d19-91ca-ab3c89fca0cd}</destination>
-			<destination>{65f52aa8-0eb4-425b-b9ee-eabbe6e237e1}</destination>
 			<destination>{6295ef35-e780-4d43-899e-8e4ada304c60}</destination>
+			<destination>{e2cb547e-0f77-4519-926a-40078002a30e}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{37ec7a4b-1e23-4bf7-8ec0-a35fee95925e}" />
@@ -210,19 +210,19 @@
 			<value>0.810000002</value>
 		</property>
 	</object>
-	<object class="SpatialiserEffect" id="{65f52aa8-0eb4-425b-b9ee-eabbe6e237e1}">
-		<property name="distanceRolloffType">
-			<value>4</value>
-		</property>
-		<property name="maximumDistance">
-			<value>80</value>
-		</property>
-	</object>
 	<object class="ThreeEQEffect" id="{6295ef35-e780-4d43-899e-8e4ada304c60}">
 		<relationship name="automators">
 			<destination>{50eb8dac-8aa4-49e5-9e06-20917d4afd26}</destination>
 			<destination>{8a91eec9-90be-4d0a-88f3-78e762afabf6}</destination>
 		</relationship>
+	</object>
+	<object class="LimiterEffect" id="{e2cb547e-0f77-4519-926a-40078002a30e}">
+		<property name="boost">
+			<value>12</value>
+		</property>
+		<property name="release">
+			<value>600</value>
+		</property>
 	</object>
 	<object class="MixerBusFader" id="{767019fc-10a2-4f19-97d7-adef5c0bab23}" />
 	<object class="SFXReverbEffect" id="{4d240aac-b46d-4dab-afbc-a6418697af4c}">
