@@ -28,6 +28,8 @@ namespace State.FlyAI
             if (globalRef != null && globalRef.myAnimator != null)
                 AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Death");
 
+            globalRef.characterController.enabled = false;
+
             globalRef.agent.enabled = false;
             globalRef.colliderBaseAttack.SetActive(false);
 
