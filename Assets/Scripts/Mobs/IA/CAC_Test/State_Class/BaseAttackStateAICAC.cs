@@ -28,6 +28,8 @@ namespace State.AICAC
         {
             if(globalRef != null)
                 globalRef.agent.speed = 0;
+
+            SoundManager.Instance.PlaySound("event:/SFX_IA/Voras_SFX(Trash)/AttackPreview", 1f, gameObject);
         }
         private void Start()
         {
@@ -53,7 +55,6 @@ namespace State.AICAC
             {
                 // TODO lucas va te faire encul�
                 // PLAY SOUND PRE ATTACK TRASH MOB
-                SoundManager.Instance.PlaySound("event:/SFX_IA/Voras_SFX(Trash)/Attack", 1f, gameObject);
                 AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Attack");
                 baseAttackAICACSO.isAttacking = true;
                 baseAttackAICACSO.currentAttackRate = baseAttackAICACSO.maxAttackRate;

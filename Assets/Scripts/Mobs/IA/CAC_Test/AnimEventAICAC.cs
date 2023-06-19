@@ -13,18 +13,8 @@ namespace State.AICAC
         }*/
         void LaunchAttack()
         {
-            for (int i = 0; i < globalRef.material_Instances.Material.Length; i++)
-            {
-                globalRef.material_Instances.Material[0].color = globalRef.material_Instances.ColorBase;
-            }
-            globalRef.material_Instances.ChangeColorTexture(globalRef.material_Instances.ColorBase);
-
             globalRef.hitBox.SetActive(true);
-        }
-        void LaunchSoundAttack()
-        {
-            // PLAY SOUND ATTACK TRASHMOB
-            //SoundManager.instance.PlaySoundMobOneShot(globalRef.audioSourceTrashMob, SoundManager.instance.soundAndVolumeListTrashMob[1]);
+            SoundManager.Instance.PlaySound("event:/SFX_IA/Voras_SFX(Trash)/Attack", 1f, gameObject);
         }
         void EndAttack()
         {

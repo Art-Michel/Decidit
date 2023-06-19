@@ -392,6 +392,7 @@ namespace State.AIBull
             if (!endRush && currentAnimName != "Dash Recovery")
             {
                 AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "RushAttack");
+                Debug.Log("Sound End Rush");
                 SoundManager.Instance.PlaySound("event:/SFX_IA/ShredNoss_SFX(Dash)/Hit", 1f, gameObject);
                 endRush = true;
             }
