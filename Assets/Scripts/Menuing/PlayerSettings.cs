@@ -84,9 +84,9 @@ public class PlayerSettings : LocalManager<PlayerSettings>
     {
         UnityEngine.Debug.Log(SaveLoadManager.LoadSoundSet().masterVolumeNumber);
 
-        sliderMasterVolumeNumber.value = SaveLoadManager.LoadSoundSet().masterVolumeNumber;
-        sliderSFXVolumeNumber.value = SaveLoadManager.LoadSoundSet().SFXVolumeNumber;
-        slidermusicVolumeNumber.value = SaveLoadManager.LoadSoundSet().musicVolumeNumber;
+        sliderMasterVolumeNumber.value = SaveLoadManager.LoadSoundSet().masterVolumeNumber * 100;
+        sliderSFXVolumeNumber.value = SaveLoadManager.LoadSoundSet().SFXVolumeNumber * 100;
+        slidermusicVolumeNumber.value = SaveLoadManager.LoadSoundSet().musicVolumeNumber * 100;
 
         MasterVolumeUpdate(sliderMasterVolumeNumber);
         SFXVolumeUpdate(sliderSFXVolumeNumber);
@@ -95,7 +95,7 @@ public class PlayerSettings : LocalManager<PlayerSettings>
 
     public void MasterVolumeUpdate(Slider slider)//ToDoArt un slider qui appele la fonction connecté a la valeur MasterVolumeNumber
     {
-        masterVolumeNumber = slider.value;
+        masterVolumeNumber = slider.value / 100;
 
         UnityEngine.Debug.Log(slider.value);
         UnityEngine.Debug.Log(masterVolumeNumber);
@@ -105,14 +105,14 @@ public class PlayerSettings : LocalManager<PlayerSettings>
     }
     public void SFXVolumeUpdate(Slider slider)//ToDoArt un slider qui appele la fonction connecté a la valeur SFXVolumeNumber
     {
-        SFXVolumeNumber = slider.value;
+        SFXVolumeNumber = slider.value / 100;
 
         SFX.setVolume(SFXVolumeNumber);//1 = 0Db donc la valeur normale donc 0 = plus de son
         SFX.getVolume(out SFXVolumeNumber);//Debug qui affiche la current value du son
     }
     public void MusicVolumeUpdate(Slider slider)//ToDoArt un slider qui appele la fonction connecté a la valeur MusicVolumeNumber
     {
-        musicVolumeNumber = slider.value;
+        musicVolumeNumber = slider.value / 100;
 
         music.setVolume(musicVolumeNumber);//1 = 0Db donc la valeur normale donc 0 = plus de son
         music.getVolume(out musicVolumeNumber);//Debug qui affiche la current value du son
@@ -133,7 +133,7 @@ public class PlayerSettings : LocalManager<PlayerSettings>
         PlayerPrefs.SetFloat("SFXBaseVolume", SFXVolumeNumber);
         PlayerPrefs.SetFloat("MusicBaseVolume", musicVolumeNumber);*/
         PlayerPrefs.Save();
-       // UnityEngine.Debug.Log("Save");
+        // UnityEngine.Debug.Log("Save");
     }
     public void LoadPrefs()
     {
