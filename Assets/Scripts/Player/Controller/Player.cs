@@ -122,9 +122,9 @@ public class Player : LocalManager<Player>
     private RaycastHit _groundHit;
     private RaycastHit _ceilingHit;
     private const float _groundSpherecastLength = .75f; // _charaCon.height/2 - _charaCon.radius
-    private const float _ceilingRaycastLength = 1f; // _charaCon.height/2 + 0.1f margin to mitigate skin width
-    private const float _groundSpherecastRadius = .25f; // _charaCon.radius + 0.1f margin to mitigate skin width
-    private const float _ceilingSpherecastRadius = .25f; // _charaCon.radius
+    private const float _ceilingRaycastLength = 1.1f; // _charaCon.height/2 + 0.1f margin to mitigate skin width
+    private const float _groundSpherecastRadius = .27f; // _charaCon.radius + 0.1f margin to mitigate skin width
+    private const float _ceilingSpherecastRadius = .27f; // _charaCon.radius
     private bool _justJumped;
     private float _jumpCooldown;
     private const float _jumpMaxCooldown = 0.1f;
@@ -773,6 +773,9 @@ public class Player : LocalManager<Player>
     {
         WallrideDragFactor = Mathf.Clamp01(WallrideDragFactor + Time.deltaTime * _wallRideDragSpeed);
         CurrentlyAppliedGravity -= _gravity * _airborneDrag * WallrideDragFactor * Time.deltaTime;
+        Vector3 temp = Vector3.Cross(_groundHit.normal, Vector3.down);
+        Vector3 slopeDir = Vector3.Cross(temp, _groundHit.normal);
+        _steepSlopesMovement = (slopeDir + Vector3.down) * -CurrentlyAppliedGravity;
     }
 
     public void FallDownSlope()
