@@ -19,6 +19,7 @@ public class Tutorial : MonoBehaviour
     public void Enable()
     {
         _canvas.gameObject.SetActive(true);
+        SoundManager.Instance.PlaySound("event:/Menuing/Tuto", 1f, gameObject);
         _active = true;
     }
 
