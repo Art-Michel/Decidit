@@ -14,7 +14,7 @@ public class EylauArea : SynergyTrigger
 {
     //Basic functionning
     [Foldout("References")][SerializeField] private LayerMask _shouldBuff;
-    [Foldout("References")][SerializeField] private Material _material;
+    [Foldout("References")][SerializeField] private Material[] _materials;
     [Foldout("References")][SerializeField] private Light _light;
 
     [Foldout("Stats")] public float Radius = 8;
@@ -72,7 +72,8 @@ public class EylauArea : SynergyTrigger
         _blewUp = false;
         transform.localScale = Vector3.zero;
         float alpha = 1.0f;
-        _material.SetFloat("_Opacity", alpha);
+        foreach (Material mat in _materials)
+            mat.SetFloat("_Opacity", alpha);
         _light.intensity = 0.0f;
 
         if (_isPlayerInHere)
@@ -118,7 +119,8 @@ public class EylauArea : SynergyTrigger
     {
         transform.localScale = _defaultScale * _sizeAppearanceCurve.Evaluate(_lifeT);
         float alpha = _defaultAlpha * _alphaAppearanceCurve.Evaluate(_lifeT);
-        _material.SetFloat("_Opacity", alpha);
+        foreach (Material mat in _materials)
+            mat.SetFloat("_Opacity", alpha);
         _light.intensity = _defaultLightIntensity * _lightAppearanceCurve.Evaluate(_lifeT);
     }
 
@@ -147,7 +149,8 @@ public class EylauArea : SynergyTrigger
         _disappearanceT += Time.deltaTime * _explosionSpeed;
         transform.localScale = _defaultScale * _explosionSizeCurve.Evaluate(_disappearanceT);
         float alpha = _defaultAlpha * _explosionDisappearanceCurve.Evaluate(_disappearanceT);
-        _material.SetFloat("_Opacity", alpha);
+        foreach (Material mat in _materials)
+            mat.SetFloat("_Opacity", alpha);
         _light.intensity = _defaultLightIntensity * alpha;
         if (_disappearanceT >= 1.0f)
             Disappear();
@@ -158,7 +161,8 @@ public class EylauArea : SynergyTrigger
         _disappearanceT += Time.deltaTime * _blackHoleSpeed;
         transform.localScale = _defaultScale * _blackHoleSizeCurve.Evaluate(_disappearanceT);
         float alpha = _defaultAlpha * _blackHoleDisappearanceCurve.Evaluate(_disappearanceT);
-        _material.SetFloat("_Opacity", alpha);
+        foreach (Material mat in _materials)
+            mat.SetFloat("_Opacity", alpha);
         _light.intensity = _defaultLightIntensity * alpha;
         if (_disappearanceT >= 1.0f)
             Disappear();

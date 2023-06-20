@@ -2361,8 +2361,8 @@ Transform:
   m_GameObject: {fileID: 253444345}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.75, y: 1.75, z: 1.75}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 859588761}
   m_RootOrder: 0
@@ -2380,7 +2380,7 @@ MeshCollider:
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 7398509403596113055, guid: 47e78eca6cb4fd44fb0c5a1acf8139c9, type: 3}
+  m_Mesh: {fileID: 5574049612711823248, guid: 22103a7f0c331ed4ea404b943f0c4ff2, type: 3}
 --- !u!114 &253444348
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2409,7 +2409,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 253444345}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2422,7 +2422,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 710e59a994989524c845af67056fa1fe, type: 2}
+  - {fileID: 2100000, guid: 36d0696fed6e3a54c8cfebfe125e9265, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6657,7 +6657,9 @@ MonoBehaviour:
   _shouldBuff:
     serializedVersion: 2
     m_Bits: 16392
-  _material: {fileID: 2100000, guid: e7bba7eb2fcb65846bf1e4854b883509, type: 2}
+  _materials:
+  - {fileID: 2100000, guid: e7bba7eb2fcb65846bf1e4854b883509, type: 2}
+  - {fileID: 2100000, guid: 36d0696fed6e3a54c8cfebfe125e9265, type: 2}
   _light: {fileID: 7602227159900808802}
   Radius: 7
   _lifeSpan: 3
@@ -40785,6 +40787,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5660826624606811423, guid: ba969b15cffae2a438703e7059a8529e,
+        type: 3}
+      propertyPath: m_InitialEventName
+      value: Mario
+      objectReference: {fileID: 0}
+    - target: {fileID: 5660826624606811423, guid: ba969b15cffae2a438703e7059a8529e,
+        type: 3}
+      propertyPath: m_InitialEventNameOverriden
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7207597383645106772, guid: ba969b15cffae2a438703e7059a8529e,
         type: 3}
