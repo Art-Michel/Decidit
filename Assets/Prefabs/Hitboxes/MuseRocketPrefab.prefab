@@ -195,7 +195,7 @@ MonoBehaviour:
       falloffDegree: 1
       axesMultiplier: {x: 1, y: 1, z: 1}
   _windBox: {fileID: 3233619823266418932}
-  _explosionVfx: {fileID: 1384740453969195585}
+  _explosionVfx: {fileID: 0}
   _explosionAudioSource: {fileID: 0}
   _explosionSfx: {fileID: 0}
   _explosionSound: event:/SFX_Controller/Synergies/MuseOnEyleau/Sound
@@ -827,20 +827,25 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 7549074972380832480, guid: dc3fa47d878e944488d1887c1b5236c7,
+        type: 3}
+      propertyPath: _particleSystems.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7549074972380832480, guid: dc3fa47d878e944488d1887c1b5236c7,
+        type: 3}
+      propertyPath: _particleSystems.Array.data[0]
+      value: 
+      objectReference: {fileID: 7610689547752458866}
+    m_RemovedComponents:
+    - {fileID: 7549074972380832480, guid: dc3fa47d878e944488d1887c1b5236c7, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: dc3fa47d878e944488d1887c1b5236c7, type: 3}
---- !u!114 &1384740453969195585 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7549074972380832480, guid: dc3fa47d878e944488d1887c1b5236c7,
+--- !u!198 &7610689547752458866 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 1327080272166853331, guid: dc3fa47d878e944488d1887c1b5236c7,
     type: 3}
   m_PrefabInstance: {fileID: 8931805381638705313}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c30c554f267b3454e9668387cd834faf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &7610689549623330167 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1327080270279267798, guid: dc3fa47d878e944488d1887c1b5236c7,
