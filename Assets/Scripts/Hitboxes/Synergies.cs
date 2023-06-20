@@ -313,7 +313,7 @@ public class Synergies : LocalManager<Synergies>
             explosionPoint.transform.Rotate(Vector3.forward * 45);
 
             explosionPoint.transform.position = Vector3.Lerp(initialPos, endPos, lerp);
-            float radius = 5 * Mathf.Abs(Mathf.Sin(Mathf.PI * lerp));
+            float radius = 8 * Mathf.Abs(Mathf.Sin(Mathf.PI * lerp));
             SpawnAnExplosion(explosionPoint.transform.position + explosionPoint.transform.up * radius, lerp);
             SpawnAnExplosion(explosionPoint.transform.position + explosionPoint.transform.right * radius, lerp);
             SpawnAnExplosion(explosionPoint.transform.position - explosionPoint.transform.up * radius, lerp);
