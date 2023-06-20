@@ -117,6 +117,9 @@ namespace State.AIBull
                         SmoothLookAtPlayerRush();
                 }
             }
+
+            if (currentAnimName == "" && animTime > 1 && globalRef.characterController.velocity == Vector3.zero)
+                StopRush();
         }
         private void FixedUpdate()
         {

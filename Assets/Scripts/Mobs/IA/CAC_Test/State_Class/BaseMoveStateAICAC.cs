@@ -196,6 +196,7 @@ namespace State.AICAC
                 globalRef.agentLinkMover._StopJump = true;
                 baseMoveAICACSO.delayBeforeJump = baseMoveAICACSO.maxDelayBeforeJump;
                 lookForwardJump = false;
+                isOnNavLink = false;
 
                 if (navLink != null)
                 {

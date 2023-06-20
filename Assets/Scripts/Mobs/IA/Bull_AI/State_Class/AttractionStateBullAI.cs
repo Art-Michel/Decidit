@@ -36,6 +36,7 @@ namespace State.AIBull
             if (!globalRef.isInSynergyAttraction)
             {
                 applyGravity = true;
+                dirAttraction = Vector3.zero;
             }
             if(isGround)
             {
@@ -56,7 +57,7 @@ namespace State.AIBull
             {
                 dirAttraction = globalRef.AttractionSO.pointBlackHole - globalRef.transform.position;
                 dirAttraction = (dirAttraction.normalized * (dirAttraction.magnitude - globalRef.AttractionSO.friction * deltaTime));
-                move = new Vector3(dirAttraction.x, dirAttraction.y, dirAttraction.z);
+                move = new Vector3(dirAttraction.x, dirAttraction.y/2, dirAttraction.z);
             }
             else
             {
