@@ -287,7 +287,6 @@ public class PlayerManager : LocalManager<PlayerManager>
     #endregion
 
     #region ForceEquipping
-
     public void ForceEquipSkill(int i)
     {
         foreach (GameObject arm in Arms)
@@ -306,7 +305,6 @@ public class PlayerManager : LocalManager<PlayerManager>
         Player.Instance.CurrentGun = Guns[i].GetComponent<Revolver>();
         Player.Instance.InspectWeapon();
     }
-
     #endregion
 
     #region Pause unpause
