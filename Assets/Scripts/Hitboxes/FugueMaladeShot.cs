@@ -24,6 +24,7 @@ public class FugueMaladeShot : FugueProjectile
 
         //Position Bezier2 à forward * 10
         //Look for enemy
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/Synergies/AragonOnMuse/SoundOnHit", 1f, gameObject);
     }
 
     private void SetupBezier(Vector3 position, Vector3 direction)

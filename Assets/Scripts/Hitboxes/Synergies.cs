@@ -143,6 +143,7 @@ public class Synergies : LocalManager<Synergies>
     public void MuseOnAragon(SynergyProjectile bullet, AragonCloud hitCloud)
     {
         SoundManager.Instance.PlaySound("event:/SFX_Controller/UniversalSound", 1f, gameObject);
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/Synergies/MuseOnAragon/MuseOnAragonHit", 1f, gameObject);
         PlayerManager.Instance.StartFlash(0.1f, 1);
         int hitCloudNb = ActiveClouds.IndexOf(hitCloud);
 
