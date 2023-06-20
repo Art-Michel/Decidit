@@ -261,6 +261,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         Player.Instance.CharaCon.enabled = false;
         MenuManager.Instance.StartMenuing();
         MenuManager.Instance.OpenSubmenu(altar.MenuToOpen, false);
+        MenuManager.Instance.ClickSound();
         _currentAltar = altar;
         CanPause = false;
 
@@ -339,6 +340,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         _isPaused = true;
         // _menu.SetActive(true);
 
+        MenuManager.Instance.ClickSound();
         MenuManager.Instance.StartMenuing();
         MenuManager.Instance.OpenMain();
         StopGame();
@@ -349,6 +351,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         _isPaused = false;
         // _menu.SetActive(false);
 
+        MenuManager.Instance.ClickSound();
         MenuManager.Instance.StopMenuing();
         ResumeGame();
     }
