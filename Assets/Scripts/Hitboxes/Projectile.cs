@@ -232,8 +232,9 @@ public class Projectile : Hitbox
                 }
                 else
                 {
-                    if (_shouldLeaveImpact) LeaveImpact(hit.transform, hit.point, false, hit.normal);
-                    if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
+                    if (_shouldLeaveImpact)
+                        LeaveImpact(hit.transform, hit.point, false, hit.normal);
+                    if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground") || hit.transform.gameObject.layer == LayerMask.NameToLayer("Flesh")) //peut etre mettre cette merde dans Awake mdr
                         Bounce(hit);
                 }
             }
@@ -328,15 +329,12 @@ public class Projectile : Hitbox
             impactVfx.transform.position = point + normal * 0.05f;
             impactVfx.transform.localScale = Vector3.one * _impactScale;
 
-            if (Direction != Vector3.zero)
+            if (fromBehind)
+                impactVfx.transform.forward = normal;
+            else
             {
-                if (fromBehind)
-                    impactVfx.transform.forward = normal;
-                else
-                {
-                    SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/BaseShoot/BaseShootImpactObject", 1f, gameObject);
-                    impactVfx.transform.forward = -normal;
-                }
+                SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/BaseShoot/BaseShootImpactObject", 1f, gameObject);
+                impactVfx.transform.forward = -normal;
             }
         }
 
@@ -351,7 +349,7 @@ public class Projectile : Hitbox
             splashVfx.transform.position = point - Direction * 0.05f;
             splashVfx.transform.localScale = Vector3.one * _impactScale;
 
-            if (Direction != Vector3.zero)
+            if (Direction != Vector3.zero && !_bounces)
             {
                 if (fromBehind) // upside down for some reason
                     splashVfx.transform.forward = Direction;
@@ -359,6 +357,16 @@ public class Projectile : Hitbox
                 {
                     SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/BaseShoot/BaseShootImpactFlesh", 1f, gameObject);
                     splashVfx.transform.forward = -Direction;
+                }
+            }
+            else
+            {
+                if (fromBehind)
+                    splashVfx.transform.forward = normal;
+                else
+                {
+                    SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/BaseShoot/BaseShootImpactObject", 1f, gameObject);
+                    splashVfx.transform.forward = -normal;
                 }
             }
         }

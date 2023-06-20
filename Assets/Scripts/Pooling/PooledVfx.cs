@@ -7,10 +7,18 @@ public class PooledVfx : PooledObject
 {
     [SerializeField] float _lifeSpan;
     float _lifeT;
+    // private VFX_Particle _vfxparticle;
+
+    // void Awake()
+    // {
+    //     TryGetComponent<VFX_Particle>(out _vfxparticle);
+    // }
 
     void OnEnable()
     {
         _lifeT = _lifeSpan;
+        // if (_vfxparticle != null)
+        //     _vfxparticle.PlayAll();
     }
 
     void Update()

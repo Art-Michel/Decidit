@@ -2343,6 +2343,8 @@ GameObject:
   - component: {fileID: 253444346}
   - component: {fileID: 253444347}
   - component: {fileID: 253444348}
+  - component: {fileID: 3016968908508400324}
+  - component: {fileID: 5692716793378271870}
   m_Layer: 21
   m_Name: InsideWall
   m_TagString: Untagged
@@ -2392,6 +2394,56 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Chant: 3
+--- !u!33 &3016968908508400324
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 253444345}
+  m_Mesh: {fileID: 5574049612711823248, guid: 22103a7f0c331ed4ea404b943f0c4ff2, type: 3}
+--- !u!23 &5692716793378271870
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 253444345}
+  m_Enabled: 0
+  m_CastShadows: 0
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 257
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 710e59a994989524c845af67056fa1fe, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &258339028
 GameObject:
   m_ObjectHideFlags: 0
@@ -4131,7 +4183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58c0a38e812144f40bb4a78c30717bc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 8274879307854479454, guid: d521854542d23c44db515e5f8c607c5a, type: 3}
+  _prefab: {fileID: 6192375588695045024, guid: 6454c71bd7ccd8249b98347196bde709, type: 3}
   _initialCount: 4
   _shouldBeParent: 0
   _canCreateNewPrefabs: 1
@@ -6607,7 +6659,7 @@ MonoBehaviour:
     m_Bits: 16392
   _material: {fileID: 2100000, guid: e7bba7eb2fcb65846bf1e4854b883509, type: 2}
   _light: {fileID: 7602227159900808802}
-  Radius: 6
+  Radius: 7
   _lifeSpan: 3
   _defaultScale: {x: 1, y: 1, z: 1}
   _defaultAlpha: 1
@@ -6771,14 +6823,14 @@ MonoBehaviour:
       time: 0.12419732
       value: 1.0024663
       inSlope: -2.361875
-      outSlope: 1.3285688
+      outSlope: 5.3153787
       tangentMode: 69
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.03158647
     - serializedVersion: 3
       time: 0.5
-      value: 1.501746
+      value: 3
       inSlope: 0
       outSlope: 0
       tangentMode: 136
