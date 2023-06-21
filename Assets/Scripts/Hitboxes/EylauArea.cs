@@ -42,13 +42,16 @@ public class EylauArea : SynergyTrigger
     [Foldout("Explosion")][SerializeField] private AnimationCurve _explosionDisappearanceCurve;
     [Foldout("Explosion")][SerializeField] private AnimationCurve _explosionSizeCurve;
     [Foldout("Explosion")][SerializeField] private float _explosionSpeed;
+    [Foldout("Explosion")][SerializeField] private AnimationCurve _musificationCurve;
+    private float _musification;
 
     //Macron Explosion
     [Foldout("Blackhole")][SerializeField] private bool _blackHoled;
     [Foldout("Blackhole")][SerializeField] private AnimationCurve _blackHoleDisappearanceCurve;
     [Foldout("Blackhole")][SerializeField] private AnimationCurve _blackHoleSizeCurve;
     [Foldout("Blackhole")][SerializeField] private float _blackHoleSpeed;
-
+    [Foldout("Blackhole")][SerializeField] private AnimationCurve _fuguificationCurve;
+    private float _fuguification;
     float _disappearanceT;
 
     private void Awake()
@@ -72,8 +75,17 @@ public class EylauArea : SynergyTrigger
         _blewUp = false;
         transform.localScale = Vector3.zero;
         float alpha = 1.0f;
+        _fuguification = 0.0f;
+        _musification = 0.0f;
+
+        //Mat
         foreach (Material mat in _materials)
+        {
             mat.SetFloat("_Opacity", alpha);
+            mat.SetFloat("_Eylau_To_Fugue", _fuguification);
+            mat.SetFloat("_Eylau_To_Muse", _musification);
+        }
+
         _light.intensity = 0.0f;
 
         if (_isPlayerInHere)
@@ -143,14 +155,17 @@ public class EylauArea : SynergyTrigger
         // _defaultAlpha = 1;
     }
 
-
     private void UpdateExplosionDisappearance()
     {
         _disappearanceT += Time.deltaTime * _explosionSpeed;
         transform.localScale = _defaultScale * _explosionSizeCurve.Evaluate(_disappearanceT);
         float alpha = _defaultAlpha * _explosionDisappearanceCurve.Evaluate(_disappearanceT);
+        _musification = _musificationCurve.Evaluate(_disappearanceT);
         foreach (Material mat in _materials)
+        {
             mat.SetFloat("_Opacity", alpha);
+            mat.SetFloat("_Eylau_To_Muse", _musification);
+        }
         _light.intensity = _defaultLightIntensity * alpha;
         if (_disappearanceT >= 1.0f)
             Disappear();
@@ -161,8 +176,12 @@ public class EylauArea : SynergyTrigger
         _disappearanceT += Time.deltaTime * _blackHoleSpeed;
         transform.localScale = _defaultScale * _blackHoleSizeCurve.Evaluate(_disappearanceT);
         float alpha = _defaultAlpha * _blackHoleDisappearanceCurve.Evaluate(_disappearanceT);
+        _fuguification = _fuguificationCurve.Evaluate(_disappearanceT);
         foreach (Material mat in _materials)
+        {
             mat.SetFloat("_Opacity", alpha);
+            mat.SetFloat("_Eylau_To_Fugue", _fuguification);
+        }
         _light.intensity = _defaultLightIntensity * alpha;
         if (_disappearanceT >= 1.0f)
             Disappear();
