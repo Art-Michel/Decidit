@@ -280,6 +280,7 @@
 			<destination>{d77e06f4-3018-410b-bf16-64396e18d81b}</destination>
 			<destination>{445f31a5-3528-48f3-8db3-11d8657d5073}</destination>
 			<destination>{c732cc8c-0135-44cd-b615-360acf8b72a2}</destination>
+			<destination>{513d1433-386a-49d9-bb41-019854c5a1ba}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{696aa1da-bfed-46dd-8be1-fa8f9a5f830d}" />
@@ -294,8 +295,8 @@
 	<object class="MixerBusEffectChain" id="{0eaa1a9c-c8c4-4ad2-b72b-ea35e6822e20}">
 		<relationship name="effects">
 			<destination>{19380949-c4ac-4825-88ea-d34bbaefef8b}</destination>
-			<destination>{eda77713-003d-4dc4-b38b-2a88eebf4c3a}</destination>
 			<destination>{9484e309-3828-4597-a0e0-028a62bd4aed}</destination>
+			<destination>{a0b0d579-0886-4f2e-bd0c-b0da1373c6c2}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{15b32214-263a-4d61-ab82-2e29a05dc596}" />
@@ -380,6 +381,11 @@
 			<value>90</value>
 		</property>
 	</object>
+	<object class="SFXReverbEffect" id="{513d1433-386a-49d9-bb41-019854c5a1ba}">
+		<property name="decayTime">
+			<value>1300</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{88d030d5-1c0d-4acd-bebc-191998c6e7eb}" />
 	<object class="FlangerEffect" id="{c7972ff2-1c50-49e3-a8bf-494979967c6b}">
 		<property name="rate">
@@ -387,14 +393,20 @@
 		</property>
 	</object>
 	<object class="MixerBusFader" id="{19380949-c4ac-4825-88ea-d34bbaefef8b}" />
-	<object class="SFXReverbEffect" id="{eda77713-003d-4dc4-b38b-2a88eebf4c3a}">
-		<property name="decayTime">
-			<value>750</value>
-		</property>
-	</object>
 	<object class="PitchShifterEffect" id="{9484e309-3828-4597-a0e0-028a62bd4aed}">
 		<property name="pitch">
 			<value>0.799999952</value>
+		</property>
+	</object>
+	<object class="LimiterEffect" id="{a0b0d579-0886-4f2e-bd0c-b0da1373c6c2}">
+		<property name="boost">
+			<value>12</value>
+		</property>
+		<property name="ceiling">
+			<value>-3.79999995</value>
+		</property>
+		<property name="release">
+			<value>1000</value>
 		</property>
 	</object>
 	<object class="AutomationPoint" id="{b4cbd39a-14a7-476b-ae04-16524c81d2dd}">
