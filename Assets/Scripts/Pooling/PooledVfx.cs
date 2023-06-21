@@ -24,7 +24,7 @@ public class PooledVfx : PooledObject
     void Update()
     {
         _lifeT -= Time.deltaTime;
-        if (_lifeT <= 0)
+        if (_lifeT <= 0 && this.Pooler != null)
             this.Pooler.Return(this);
     }
 
