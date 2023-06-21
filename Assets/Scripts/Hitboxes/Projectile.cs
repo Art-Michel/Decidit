@@ -7,11 +7,12 @@ using NaughtyAttributes;
 [RequireComponent(typeof(PooledObject))]
 public class Projectile : Hitbox
 {
-
     [Foldout("References")]
     [SerializeField] private PooledObject _pooledObject;
     [Foldout("References")]
     [SerializeField] private GameObject _mesh;
+    [Foldout("References")]
+    [SerializeField] private GameObject[] _thingsToDisableOnHit;
     [Foldout("References")]
     [SerializeField] private TrailRenderer[] _trailRenderers;
     [Foldout("References")]
@@ -43,6 +44,8 @@ public class Projectile : Hitbox
     [SerializeField] private float _trailDelay = 0.025f;
     [Foldout("Stats")]
     [SerializeField] private float _impactScale = 1.0f;
+    [Foldout("Stats")]
+    [SerializeField] private float _disappearanceLength = 1;
     private float _lifeT;
     private float _trailDelayT;
     public Vector3 Direction { get; protected set; }
@@ -73,6 +76,8 @@ public class Projectile : Hitbox
         if (_trailsVfx)
             _trailsVfx.SetActive(false);
         _mesh.SetActive(false);
+        foreach (GameObject obj in _thingsToDisableOnHit)
+            obj.SetActive(false);
 
         _lasterFramePosition = position - direction * _radius * 2;
         _lastFramePosition = position - direction * _radius;
@@ -92,6 +97,8 @@ public class Projectile : Hitbox
     {
         base.Awake();
         _mesh.SetActive(false);
+        foreach (GameObject obj in _thingsToDisableOnHit)
+            obj.SetActive(false);
     }
 
     protected override void Update()
@@ -148,6 +155,8 @@ public class Projectile : Hitbox
                 if (_trailMaterial)
                     _trailMaterial.enabled = true;
                 _mesh.SetActive(true);
+                foreach (GameObject obj in _thingsToDisableOnHit)
+                    obj.SetActive(true);
                 if (_trailsVfx)
                     _trailsVfx.SetActive(true);
             }
@@ -379,6 +388,8 @@ public class Projectile : Hitbox
 
         _explosion.SetActive(true);
         _mesh.SetActive(false);
+        foreach (GameObject obj in _thingsToDisableOnHit)
+            obj.SetActive(false);
         this.enabled = false;
     }
 
@@ -388,19 +399,19 @@ public class Projectile : Hitbox
         if (_trailRenderers.Length > 0)
         {
             foreach (TrailRenderer trail in _trailRenderers)
-            {
                 trail.emitting = false;
-            }
-            _disappearanceT = 1;
+            _disappearanceT = _disappearanceLength;
         }
 
         if (_trailMaterial)
-        {
             _trailMaterial.enabled = false;
-        }
 
         if (_trailsVfx != null)
             _trailsVfx.SetActive(false);
+
+        _mesh.SetActive(false);
+        foreach (GameObject obj in _thingsToDisableOnHit)
+            obj.SetActive(false);
     }
 
     private void UpdateDisappearance()
@@ -414,9 +425,7 @@ public class Projectile : Hitbox
     {
         _isDisappearing = false;
         foreach (TrailRenderer trail in _trailRenderers)
-        {
             trail.enabled = false;
-        }
         _pooledObject.Pooler.Return(_pooledObject);
     }
 }

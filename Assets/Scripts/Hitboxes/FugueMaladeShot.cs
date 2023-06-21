@@ -60,7 +60,7 @@ public class FugueMaladeShot : FugueProjectile
             FindNewTarget();
             SetupBezier(transform.position, Direction);
         }
-        else
+        else if (!_isDisappearing)
         {
             StartDisappearing();
         }
@@ -76,7 +76,7 @@ public class FugueMaladeShot : FugueProjectile
     {
         if (_t < 1)
         {
-            _t += (Time.deltaTime * _speed) / Vector3.Distance(_p0, _p2);
+            _t += (Time.deltaTime * _speed);// / Vector3.Distance(_p0, _p2);
             Vector3 wantedPos = LerpPositionBezier();
             transform.position = wantedPos;
             Direction = (transform.position - _lastFramePosition).normalized;

@@ -370,6 +370,7 @@ public class EnemyHealth : Health
         //old
         //Player.Instance.gameObject.GetComponent<Health>().ProbRegen(1000);
 
+        RecoverFromSickness();
 
         _deathT = _deathAnimationDuration;
         IsDying = true;
@@ -447,7 +448,6 @@ public class EnemyHealth : Health
 
     private void ActuallyDie()
     {
-        RecoverFromSickness();
         Destroy(gameObject);
     }
 
