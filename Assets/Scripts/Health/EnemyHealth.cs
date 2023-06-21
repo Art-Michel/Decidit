@@ -70,7 +70,7 @@ public class EnemyHealth : Health
     private bool _isPoisoned = false;
     private float _currentPoisonStrength;
     private float _poisonTickT = 0.0f;
-    private const float _poisonTickRate = 0.18f;
+    private const float _poisonTickRate = 0.25f;
     private float _poisonDuration;
     private Color _normalHpColor;
     private Color _poisonedHpColor = new Color(0.6f, 0.8f, 0.1f, 1.0f);
