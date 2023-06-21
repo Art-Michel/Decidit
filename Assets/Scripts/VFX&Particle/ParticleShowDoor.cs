@@ -89,7 +89,8 @@ public class ParticleShowDoor : MonoBehaviour
             isOnDoor = true;
         }
 
-        RotateTrail();
+        if(!isOnDoor)
+            RotateTrail();
     }
 
     void RotateTrail()
