@@ -94,9 +94,7 @@ public class Room : MonoBehaviour
 
     public void StartBattleRoom()
     {
-        TimerManager.Instance.isInCorridor = false;
         PlayerManager.Instance.RechargeEverything();
-        SoundManager.Instance.PlaySound("event:/SFX_Environement/StartFight", 1f, gameObject);
         // foreach (EnemyHealth enemyHealth in _enemiesList)
         // {
         //     if (enemyHealth == null)
@@ -224,6 +222,11 @@ public class Room : MonoBehaviour
     public void CheckIfFirstTrigger()
     {
         if (_enemiesList.Count == CurrentEnemiesInRoom)
+        {
+            TimerManager.Instance.isInCorridor = false;
             SoundManager.Instance.FightingSound();
+            SoundManager.Instance.PlaySound("event:/SFX_Environement/StartFight", 1f, gameObject);
+        }
+
     }
 }
