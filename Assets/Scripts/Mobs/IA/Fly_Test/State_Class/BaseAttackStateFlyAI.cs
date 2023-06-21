@@ -182,6 +182,7 @@ namespace State.FlyAI
 
             if (baseAttackFlySO != null)
             {
+                AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Recovery");
                 baseAttackFlySO.speedRotationAIAttack = 0;
                 baseAttackFlySO.currentSpeedYAttack = 0;
                 globalRef.colliderBaseAttack.SetActive(false);

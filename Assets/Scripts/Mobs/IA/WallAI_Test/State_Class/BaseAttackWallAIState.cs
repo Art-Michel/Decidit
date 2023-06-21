@@ -56,7 +56,7 @@ namespace State.WallAI
                 CheckIfPlayerIsBack();
             else
             {
-                globalRef.myAnimator.speed = 0;
+                //globalRef.myAnimator.speed = 0;
             }
         }
 
@@ -67,11 +67,12 @@ namespace State.WallAI
             float dot = Vector3.Dot(playerForward, (globalRef.transform.position - globalRef.playerTransform.position).normalized);
             if (dot > 0.65f)
             {
-                globalRef.myAnimator.speed = 1;
+                //AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "LaunchAttack");
+               // globalRef.myAnimator.speed = 1;
             }
             else
             {
-                globalRef.myAnimator.speed = baseAttackWallAISO.speedSlowAnimAttack;
+                //globalRef.myAnimator.speed = baseAttackWallAISO.speedSlowAnimAttack;
             }
         }
 
@@ -82,6 +83,7 @@ namespace State.WallAI
                 activeAttack = true;
                 globalRef.agent.speed = baseAttackWallAISO.stopSpeed;
                 AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "LaunchAttack");
+                Debug.Log("Nike ta mère");
             }
         }
 
@@ -278,6 +280,7 @@ namespace State.WallAI
 
         private void OnDisable()
         {
+            AnimatorManager.instance.DisableAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "LaunchAttack");
             ResetBulletCount();
             ResetRafalCount();
             globalRef.myAnimator.speed = 1;
