@@ -6,8 +6,8 @@ using UnityEditor;
 
 public class InteractionRay : LocalManager<InteractionRay>
 {
-    [SerializeField] float _interactableDetectionRange = 10.0f;
-    [SerializeField] float _interactRange = 5.0f;
+    [SerializeField] float _interactableDetectionRange = 15.0f;
+    [SerializeField] float _interactRange = 8.0f;
     [SerializeField] private Transform _interactable;
     [SerializeField] private GameObject _interactionUI;
     [SerializeField] private bool _isCloseEnough;
