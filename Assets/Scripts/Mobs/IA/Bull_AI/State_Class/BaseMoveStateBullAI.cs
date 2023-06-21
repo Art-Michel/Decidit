@@ -196,6 +196,7 @@ namespace State.AIBull
                     DisableJump();
                     navLink.UpdateLink();
                     navLink = null;
+                    isOnNavLink = false;
                     maxDurationNavLink = globalRef.agentLinkMover._duration;
                 }
                 else if (CheckEndAnimation("Jump Fall"))

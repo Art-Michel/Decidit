@@ -85,19 +85,6 @@ namespace State.AIBull
                 if(!canStartRush)
                     SmoothLookAtPlayer();
 
-                if (!canStartRush)
-                {
-                    if (material_Instances.Material[0].mainTexture != material_Instances.TextureBase)
-                        ShowSoonAttack(true);
-                }
-                else
-                {
-                    if (material_Instances.Material[0].mainTexture == material_Instances.TextureBase)
-                    {
-                        ShowSoonAttack(false);
-                    }
-                }
-
                 if (canStartRush)
                 {
                     RushMovement();
@@ -267,10 +254,12 @@ namespace State.AIBull
                                                       rushBullSO.maskCheckObstacle, Color.red, distDetectObstacle);
             if (rushBullSO.hitObstacle.transform != null)
             {
-                if (delayInertieRushInWall > 0)
+                StopRush();
+
+                /*if (delayInertieRushInWall > 0)
                     delayInertieRushInWall -= Time.fixedDeltaTime;
                 else
-                    StopRush();
+                    StopRush();*/
             }
 
             if (indexRay < 2)
@@ -333,7 +322,6 @@ namespace State.AIBull
                     {
                         if (!canStartRush && currentAnimName == "PreDash")
                         {
-                            ShowSoonAttack(false);
                             rushBullSO.speedRotLock = rushBullSO.maxSpeedRotLock;
                             AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Rush");
                             canStartRush = true;
@@ -353,7 +341,6 @@ namespace State.AIBull
                         if (!canStartRush && currentAnimName == "PreDash")
                         {
                             SoundManager.Instance.PlaySound("event:/SFX_IA/ShredNoss_SFX(Dash)/Attack", 1f, gameObject);
-                            ShowSoonAttack(false);
                             rushBullSO.speedRotLock = rushBullSO.maxSpeedRotLock;
                             AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Rush");
                             canStartRush = true;
@@ -369,27 +356,6 @@ namespace State.AIBull
                 rushBullSO.speedRotRush += Time.deltaTime / rushBullSO.smoothRotRush;
             }
         }
-
-        void ShowSoonAttack(bool active)
-        {
-            if(active)
-            {
-                for (int i = 0; i < material_Instances.Material.Length; i++)
-                {
-                    material_Instances.Material[0].color = material_Instances.ColorPreAtatck;
-                }
-                material_Instances.ChangeColorTexture(material_Instances.ColorPreAtatck);
-            }
-            else
-            {
-                for (int i = 0; i < material_Instances.Material.Length; i++)
-                {
-                    material_Instances.Material[0].color = material_Instances.ColorBase;
-                }
-                material_Instances.ChangeColorTexture(material_Instances.ColorBase);
-            }
-        }
-
         public void StopRush()
         {
             if (!endRush && currentAnimName != "Dash Recovery")

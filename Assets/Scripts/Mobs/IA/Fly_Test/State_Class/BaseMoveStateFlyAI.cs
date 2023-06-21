@@ -304,8 +304,6 @@ namespace State.FlyAI
         {
             if (baseMoveFlySO.distDestinationFinal < 10 || dodgeObstacle)
             {
-
-
                 baseMoveFlySO.destinationFinal = RandomPointInBounds(globalRef.myCollider.bounds);
 
                 baseMoveFlySO.newPosIsSet = false;

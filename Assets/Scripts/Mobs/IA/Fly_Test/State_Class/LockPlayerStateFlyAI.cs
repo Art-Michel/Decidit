@@ -5,7 +5,6 @@ namespace State.FlyAI
     public class LockPlayerStateFlyAI : _StateFlyAI
     {
         [SerializeField] GlobalRefFlyAI globalRef;
-        [SerializeField] Material_Instances material_Instances;
         LockPlayerFlySO lockPlayerFlySO;
         BaseAttackFlySO baseAttackFlySO;
 
@@ -54,14 +53,6 @@ namespace State.FlyAI
             if (baseAttackFlySO.speedRotationAIAttack >= 1f)
             {
                 globalRef.flyMobAttackManager.ChooseAttackType(globalRef);
-            }
-            else
-            {
-                if (ThisStateIsActive())
-                {
-                    material_Instances.Material[0].color = material_Instances.ColorPreAtatck;
-                    material_Instances.ChangeColorTexture(material_Instances.ColorPreAtatck);
-                }
             }
         }
         public void SmoothLookAtYAxisAttack()
@@ -127,12 +118,6 @@ namespace State.FlyAI
         {
             if(baseAttackFlySO != null)
                 baseAttackFlySO.speedRotationAIAttack = 0;
-
-            for (int i = 0; i < material_Instances.Material.Length; i++)
-            {
-                material_Instances.Material[i].color = material_Instances.ColorBase;
-            }
-            material_Instances.ChangeColorTexture(material_Instances.ColorBase);
         }
     }
 }
