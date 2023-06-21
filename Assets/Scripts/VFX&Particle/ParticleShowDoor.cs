@@ -12,6 +12,7 @@ public class ParticleShowDoor : MonoBehaviour
     Vector3 origin;
     Vector3 p1;
     [SerializeField] float speed;
+    float distDoor;
 
     bool isUp;
     bool isOnDoor;
@@ -75,12 +76,13 @@ public class ParticleShowDoor : MonoBehaviour
         origin = startUpPos;
         p1 = (doorPosition + origin) / 2;
         p1 += offset;
+        distDoor = Vector3.Distance(transform.position, doorPosition);
     }
     private void Update()
     {
         if (t <= 1 && isUp)
         {
-            t += Time.deltaTime * speed;
+            t += Time.deltaTime * speed / distDoor;
             transform.position = BezierCurve();
             vDest = new Vector3(doorPosition.x, doorPosition.y, doorPosition.z);
         }
