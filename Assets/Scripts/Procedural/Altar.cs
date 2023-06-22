@@ -110,7 +110,7 @@ public class Altar : MonoBehaviour, IInteractable
     {
         if (DungeonGenerator.Instance.AltarListScript.Count > 0)
         {
-            while (DungeonGenerator.Instance.AltarListScript[0].Chant == DungeonGenerator.Instance.AltarListScript[1].Chant)
+            if (DungeonGenerator.Instance.AltarListScript[0].Chant == DungeonGenerator.Instance.AltarListScript[1].Chant)
             {
                 DungeonGenerator.Instance.AltarListScript[1].Chant = (Chants)Random.Range(0, 3);
                 Debug.Log("aaaaaaaa");
