@@ -85,27 +85,27 @@ public class PlayerManager : LocalManager<PlayerManager>
     {
         base.Awake();
         _inputs = new PlayerInputMap();
-        _inputs.Debugging.DisplayFramerate.started += _ => DisplayFramerate();
+        // _inputs.Debugging.DisplayFramerate.started += _ => DisplayFramerate();
         _inputs.MenuNavigation.Pause.started += _ => PressPause();
-        _inputs.Debugging.Lock.started += _ => LockFramerate();
+        // _inputs.Debugging.Lock.started += _ => LockFramerate();
         _inputs.Debugging.Slow.started += _ => SlowDownTime();
-        _inputs.Debugging.DisplayDebug.started += _ => ShowDebug();
+        // _inputs.Debugging.DisplayDebug.started += _ => ShowDebug();
         _inputs.Debugging.HideUi.started += _ => HideUi();
-        _inputs.Debugging.HideGuns.started += _ => HideGuns();
-        _inputs.Debugging.Teleport.started += _ => Teleport();
-        _inputs.Debugging.ForceInvul.started += _ => ForceInvul();
-        _inputs.Debugging.ToggleInstakill.started += _ => ToggleInstakill();
+        // _inputs.Debugging.HideGuns.started += _ => HideGuns();
+        // _inputs.Debugging.Teleport.started += _ => Teleport();
+        // _inputs.Debugging.ForceInvul.started += _ => ForceInvul();
+        // _inputs.Debugging.ToggleInstakill.started += _ => ToggleInstakill();
         // _inputs.MenuNavigation.anyButton.started += _ => SwitchToController();
         // _inputs.MenuNavigation.moveMouse.started += _ => SwitchToMouse();
     }
 
-    private void ShowDebug()
+    public void ShowDebug()
     {
         _DebuggingCanvas.SetActive(!_DebuggingCanvas.activeInHierarchy);
     }
 
     private bool _uiVisible = true;
-    private void HideUi()
+    public void HideUi()
     {
         if (_uiVisible)
             foreach (Canvas canva in GameObject.FindObjectsOfType<Canvas>())
@@ -122,7 +122,7 @@ public class PlayerManager : LocalManager<PlayerManager>
     }
 
     private bool _gunsVisible = true;
-    private void HideGuns()
+    public void HideGuns()
     {
         if (_gunsVisible)
         {
@@ -176,7 +176,7 @@ public class PlayerManager : LocalManager<PlayerManager>
             UpdateFramerate();
     }
 
-    private void SlowDownTime()
+    public void SlowDownTime()
     {
         if (Time.timeScale == 1.0f)
         {
@@ -190,7 +190,7 @@ public class PlayerManager : LocalManager<PlayerManager>
         }
     }
 
-    private void LockFramerate()
+    public void LockFramerate()
     {
         if (_isPaused)
             return;
@@ -430,7 +430,7 @@ public class PlayerManager : LocalManager<PlayerManager>
     #endregion
 
     #region Framerate Displayer
-    private void DisplayFramerate()
+    public void DisplayFramerate()
     {
         _fps.enabled = !_fps.enabled;
     }
@@ -684,7 +684,7 @@ public class PlayerManager : LocalManager<PlayerManager>
 
     [Foldout("Debugging")]
     [SerializeField] TextMeshProUGUI _invulPrompt;
-    private void ForceInvul()
+    public void ForceInvul()
     {
         PlayerHealth.Instance._isDebugInvulnerable = !PlayerHealth.Instance._isDebugInvulnerable;
         _invulPrompt.enabled = PlayerHealth.Instance._isDebugInvulnerable;
@@ -694,7 +694,7 @@ public class PlayerManager : LocalManager<PlayerManager>
     [SerializeField] TextMeshProUGUI _instaKillPrompt;
     [Foldout("Debugging")]
     public bool Instakill;
-    private void ToggleInstakill()
+    public void ToggleInstakill()
     {
         Instakill = !Instakill;
         _instaKillPrompt.enabled = Instakill;
