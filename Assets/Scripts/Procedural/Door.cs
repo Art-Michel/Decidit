@@ -8,6 +8,7 @@ public class Door : MonoBehaviour
     [SerializeField] GameObject _doorMesh;
     [SerializeField] GameObject _doorTrigger;
     public Room ThisDoorsRoom;
+    [SerializeField] Animator animatorDoor;
 
     [Header("Door Settings")]
     [SerializeField] bool _isExit;
@@ -16,6 +17,8 @@ public class Door : MonoBehaviour
 
     void Awake()
     {
+        animatorDoor = GetComponent<Animator>();
+
         // if (this.ThisDoorsRoom == null)
         // Debug.LogError("No assigned Rowwwwom! Click the 'Find Rooms' button in " + transform.parent.name);
     }
@@ -57,7 +60,8 @@ public class Door : MonoBehaviour
             return;
         }
 
-        _doorMesh.transform.localPosition = Vector3.zero;
+        animatorDoor.SetBool("Close", true);
+        // _doorMesh.transform.localPosition = Vector3.zero;
         //mettre animation ici à la place
 
         SoundManager.Instance.PlaySound("event:/SFX_Environement/DoorClosing", 1f, gameObject);
@@ -71,7 +75,8 @@ public class Door : MonoBehaviour
             return;
         }
 
-        _doorMesh.transform.localPosition = Vector3.up * 6;
+        animatorDoor.SetBool("Open", true);
+        //_doorMesh.transform.localPosition = Vector3.up * 6;
         //là aussi
 
         SoundManager.Instance.PlaySound("event:/SFX_Environement/DoorOpening", 1f, gameObject);

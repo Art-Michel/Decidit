@@ -306,6 +306,7 @@ GameObject:
   - component: {fileID: 1255218857605386549}
   - component: {fileID: 2763631564509306050}
   - component: {fileID: 3400579054218612287}
+  - component: {fileID: 8356984923906970102}
   m_Layer: 9
   m_Name: ExitDoor
   m_TagString: EntryDoor
@@ -347,6 +348,7 @@ MonoBehaviour:
   _doorMesh: {fileID: 8586773557221749975}
   _doorTrigger: {fileID: 9168907059992465552}
   ThisDoorsRoom: {fileID: 0}
+  animatorDoor: {fileID: 8356984923906970102}
   _isExit: 1
   HasBeenTriggered: 0
 --- !u!54 &3400579054218612287
@@ -365,6 +367,26 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!95 &8356984923906970102
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2028177106522401340}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b4d897ecacd15814d9cf08b7f2705c1f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &6173316584980664503
 GameObject:
   m_ObjectHideFlags: 0
