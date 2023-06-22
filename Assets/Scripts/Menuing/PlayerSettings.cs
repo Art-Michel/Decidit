@@ -82,7 +82,7 @@ public class PlayerSettings : LocalManager<PlayerSettings>
     [Button]
     public void LoadSoundSettings()
     {
-        UnityEngine.Debug.Log(SaveLoadManager.LoadSoundSet().masterVolumeNumber);
+        // UnityEngine.Debug.Log(SaveLoadManager.LoadSoundSet().masterVolumeNumber);
 
         sliderMasterVolumeNumber.value = SaveLoadManager.LoadSoundSet().masterVolumeNumber * 100;
         sliderSFXVolumeNumber.value = SaveLoadManager.LoadSoundSet().SFXVolumeNumber * 100;
@@ -97,8 +97,8 @@ public class PlayerSettings : LocalManager<PlayerSettings>
     {
         masterVolumeNumber = slider.value / 100;
 
-        UnityEngine.Debug.Log(slider.value);
-        UnityEngine.Debug.Log(masterVolumeNumber);
+        // UnityEngine.Debug.Log(slider.value);
+        // UnityEngine.Debug.Log(masterVolumeNumber);
 
         master.setVolume(masterVolumeNumber);//1 = 0Db donc la valeur normale donc 0 = plus de son
         master.getVolume(out masterVolumeNumber);//Debug qui affiche la current value du son

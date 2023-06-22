@@ -122,16 +122,18 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
             // thatScenesRoom.FindTriggers();
         }
 
-        // _usableRooms.Add(new List<Room>());
-        // for (int i = 0; i < 2; i++)
-        // {
-        //     SceneManager.LoadScene(_altarIndex, LoadSceneMode.Additive);
-        //     yield return null;
+        _usableRooms.Add(new List<Room>());
 
-        //     GameObject thatScenesRoot = GameObject.Find((_altarIndex.ToString()));
-        //     Room thatScenesRoom = thatScenesRoot.GetComponent<Room>();
-        //     _usableRooms[3].Add(thatScenesRoom);
-        // }
+        for (int i = 0; i < 1; i++)
+        {
+            SceneManager.LoadScene(_altarIndex, LoadSceneMode.Additive);
+            yield return null;
+
+            GameObject thatScenesRoot = GameObject.Find((_altarIndex.ToString()));
+            Room thatScenesRoom = thatScenesRoot.GetComponent<Room>();
+            _usableRooms[3].Add(thatScenesRoom);
+            _usableRooms[3].Add(thatScenesRoom);
+        }
 
 
         //old prefabs version
@@ -193,11 +195,13 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
         switch (indexRoom)
         {
             case _firstPowerupAfterRoom:
-                _roomsToBuild.Add(CorridorsSpell[Random.Range(0, CorridorsSpell.Count)].Get());
+                // _roomsToBuild.Add(CorridorsSpell[Random.Range(0, CorridorsSpell.Count)].Get());
+                _roomsToBuild.Add(_usableRooms[3][0]);
                 break;
 
             case _secondPowerupAfterRoom:
-                _roomsToBuild.Add(CorridorsSpell[Random.Range(0, CorridorsSpell.Count)].Get());
+                // _roomsToBuild.Add(CorridorsSpell[Random.Range(0, CorridorsSpell.Count)].Get());
+                _roomsToBuild.Add(_usableRooms[3][1]);
                 break;
 
             default:

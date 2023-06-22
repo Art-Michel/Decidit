@@ -19,7 +19,7 @@ public class Altar : MonoBehaviour, IInteractable
     [Foldout("References")]
     [SerializeField] private Collider _interactHitbox;
 
-    [SerializeField] public Chants _chant;
+    [SerializeField] public Chants Chant;
     [Foldout("References for each Chant")]
     [SerializeField] private GameObject[] AestheticsParentsPerSong;
     [Foldout("References for each Chant")]
@@ -43,6 +43,7 @@ public class Altar : MonoBehaviour, IInteractable
     private bool _isPlayerInside;
 
     [SerializeField] static List<Altar> _altarListScript = new List<Altar>();
+    [SerializeField] List<Altar> _altarList = new List<Altar>();
 
     //[SerializeField] bool disableRandom;
 
@@ -53,32 +54,35 @@ public class Altar : MonoBehaviour, IInteractable
              altarListScript.Add(this);
              SetRandomChant();
          }*/
-        _altarListScript.Add(this);
-        SetRandomChant();
         // Debug.Log(altarListScript.Count);
     }
 
     void Start()
     {
-        SetChant(_chant);
+        SetChant(Chant);
         _shouldMovePlayer = false;
         _hasBeenUsed = false;
         _isPlayerInside = false;
-        CheckIfSameSpell();
         /*if (!disableRandom)
             CheckIfSameSpell();*/
     }
 
+    void OnEnable()
+    {
+        SetRandomChant();
+        CheckIfSameSpell();
+    }
+
     void SetRandomChant()
     {
-        _chant = (Chants)Random.Range(0, 3);
+        Chant = (Chants)Random.Range(0, 3);
         //Debug.Log(_chant);
         //_chant = Chants.Muse;
     }
 
     public void SetChant(Chants chant)
     {
-        _chant = chant;
+        Chant = chant;
         switch (chant)
         {
             case Chants.Fugue:
@@ -99,11 +103,16 @@ public class Altar : MonoBehaviour, IInteractable
         }
     }
 
+    public void AddAltarToStaticList()
+    {
+        _altarListScript.Add(this);
+    }
+
     void CheckIfSameSpell()
     {
-        while (_altarListScript[0]._chant == _altarListScript[1]._chant)
+        while (_altarListScript[0].Chant == _altarListScript[1].Chant)
         {
-            _altarListScript[1]._chant = (Chants)Random.Range(0, 3);
+            _altarListScript[1].Chant = (Chants)Random.Range(0, 3);
         }
         //altarListScript[1]._chant = Chants.Cimetiere;
     }
@@ -130,6 +139,7 @@ public class Altar : MonoBehaviour, IInteractable
     {
         if (_shouldMovePlayer && !_hasBeenUsed)
             MovePlayer();
+        _altarList = _altarListScript;
     }
 
     private void StartMovingPlayer()

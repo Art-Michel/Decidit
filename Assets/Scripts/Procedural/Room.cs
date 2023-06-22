@@ -14,6 +14,7 @@ public class Room : MonoBehaviour
     public Door Entry;
     public Door Exit;
     [SerializeField] private GameObject _levelArtParent;
+    public GameObject Altar;
 
     [SerializeField] private bool _isCorridor = false;
     [SerializeField] private int _triggersToActivateOnClear = 2;
@@ -28,6 +29,8 @@ public class Room : MonoBehaviour
         // {
         //     _ennemiesParentList[i].SetActive(false);
         // }
+        if (this.Altar != null)
+            this.Altar.GetComponent<Altar>().AddAltarToStaticList();
     }
 
     // [Button]

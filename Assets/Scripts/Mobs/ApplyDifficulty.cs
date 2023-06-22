@@ -9,7 +9,7 @@ public class ApplyDifficulty : LocalManager<ApplyDifficulty>
     {
         base.Awake();
         indexDifficulty = 2;
-        Debug.Log(indexDifficulty);
+        Debug.Log("Difficulty is at " + indexDifficulty + "/2");
     }
 
     public void SelectDifficulty(int i)
