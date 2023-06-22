@@ -95,7 +95,7 @@ public class EylauRevolver : Revolver
             //Laser();
             SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/CimetièreEyleau/ChargedShoot", 1f, gameObject);
             shot = _chargedProjectilePooler.Get();
-            shot.GetComponent<Projectile>().Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized);
+            shot.GetComponent<Projectile>().Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized, _camera.forward);
 
 
             Player.Instance.StartBounceShake(_laserShake, transform.position);
