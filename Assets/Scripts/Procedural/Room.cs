@@ -113,10 +113,10 @@ public class Room : MonoBehaviour
         // }
     }
 
-    public void EnterRoom()
+    public void EnterRoom(float delayDisableLastRoom)
     {
         DungeonGenerator.Instance.SetCurrentRoom(this);
-        DungeonGenerator.Instance.GetRoom(-1).gameObject.SetActive(false);
+        Invoke("DisableLastRoom", delayDisableLastRoom);
         CountEnemies();
         this.Entry.CloseDoor();
         Killplane.Instance.MoveSpawnPointTo(this.Entry.transform.position + this.Entry.transform.forward * 4.0f + Vector3.up * 2);
@@ -134,6 +134,10 @@ public class Room : MonoBehaviour
             // _ennemiesParentList[UnityEngine.Random.Range(0, 2)].SetActive(true);
             // this.EnableEnemies(true);
         }
+    }
+    void DisableLastRoom()
+    {
+        DungeonGenerator.Instance.GetRoom(-1).gameObject.SetActive(false);
     }
 
     public void ExitRoom()

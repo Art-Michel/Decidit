@@ -9,6 +9,7 @@ public class Door : MonoBehaviour
     [SerializeField] GameObject _doorTrigger;
     public Room ThisDoorsRoom;
     [SerializeField] Animator animatorDoor;
+    [SerializeField] float delayCloseDoor;
 
     [Header("Door Settings")]
     [SerializeField] bool _isExit;
@@ -47,7 +48,7 @@ public class Door : MonoBehaviour
         }
         else
         {
-            this.ThisDoorsRoom.EnterRoom();
+            this.ThisDoorsRoom.EnterRoom(delayCloseDoor);
         }
         HasBeenTriggered = true;
     }
