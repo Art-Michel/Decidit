@@ -24,6 +24,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
     [SerializeField] List<int> _scenesEasy;
     [SerializeField] List<int> _scenesMedium;
     [SerializeField] List<int> _scenesHard;
+    [SerializeField] int _altarIndex;
     [SerializeField] Image _loadingBar;
 
     [SerializeField] private List<List<Room>> _usableRooms;
@@ -120,6 +121,18 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
             // thatScenesRoom.FindDoors();
             // thatScenesRoom.FindTriggers();
         }
+
+        // _usableRooms.Add(new List<Room>());
+        // for (int i = 0; i < 2; i++)
+        // {
+        //     SceneManager.LoadScene(_altarIndex, LoadSceneMode.Additive);
+        //     yield return null;
+
+        //     GameObject thatScenesRoot = GameObject.Find((_altarIndex.ToString()));
+        //     Room thatScenesRoom = thatScenesRoot.GetComponent<Room>();
+        //     _usableRooms[3].Add(thatScenesRoom);
+        // }
+
 
         //old prefabs version
         // for (int i = 0; i < RoomSets.Count; i++)
