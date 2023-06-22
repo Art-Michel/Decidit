@@ -26,6 +26,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
     [SerializeField] List<int> _scenesHard;
     [SerializeField] int _altarIndex;
     [SerializeField] Image _loadingBar;
+    public List<Altar> AltarListScript = new List<Altar>();
 
     [SerializeField] private List<List<Room>> _usableRooms;
     public List<RoomSetup> Corridors;
@@ -186,6 +187,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
             room.FindDoors();
             room.FindTriggers();
             room.Statify();
+            room.InitAltar();
         }
         Build();
     }

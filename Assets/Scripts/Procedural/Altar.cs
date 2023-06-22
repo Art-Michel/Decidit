@@ -42,9 +42,6 @@ public class Altar : MonoBehaviour, IInteractable
     private bool _hasBeenUsed;
     private bool _isPlayerInside;
 
-    [SerializeField] static List<Altar> _altarListScript = new List<Altar>();
-    [SerializeField] List<Altar> _altarList = new List<Altar>();
-
     //[SerializeField] bool disableRandom;
 
     void Awake()
@@ -105,15 +102,22 @@ public class Altar : MonoBehaviour, IInteractable
 
     public void AddAltarToStaticList()
     {
-        _altarListScript.Add(this);
+        DungeonGenerator.Instance.AltarListScript.Add(this);
+        Debug.Log(DungeonGenerator.Instance.AltarListScript.Count);
     }
 
     void CheckIfSameSpell()
     {
-        while (_altarListScript[0].Chant == _altarListScript[1].Chant)
+        if (DungeonGenerator.Instance.AltarListScript.Count > 0)
         {
-            _altarListScript[1].Chant = (Chants)Random.Range(0, 3);
+            while (DungeonGenerator.Instance.AltarListScript[0].Chant == DungeonGenerator.Instance.AltarListScript[1].Chant)
+            {
+                DungeonGenerator.Instance.AltarListScript[1].Chant = (Chants)Random.Range(0, 3);
+                Debug.Log("aaaaaaaa");
+            }
         }
+        else
+            Debug.LogError("Altar list empty");
         //altarListScript[1]._chant = Chants.Cimetiere;
     }
 
@@ -139,7 +143,6 @@ public class Altar : MonoBehaviour, IInteractable
     {
         if (_shouldMovePlayer && !_hasBeenUsed)
             MovePlayer();
-        _altarList = _altarListScript;
     }
 
     private void StartMovingPlayer()
@@ -199,8 +202,4 @@ public class Altar : MonoBehaviour, IInteractable
         // }
     }
 
-    void OnDestroy()
-    {
-        _altarListScript.Clear();
-    }
 }
