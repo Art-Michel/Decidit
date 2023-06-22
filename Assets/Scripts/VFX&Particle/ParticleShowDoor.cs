@@ -40,7 +40,8 @@ public class ParticleShowDoor : MonoBehaviour
 
     private void OnEnable()
     {
-        GetDoorRef();
+        if(endDoor == null)
+            GetDoorRef();
 
         int i = Random.Range(0, 2);
         if (i == 0)
