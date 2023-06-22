@@ -573,6 +573,8 @@ public class Player : LocalManager<Player>
     {
         if (_groundHit.transform != null)
         {
+            SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/Landing", 1f, gameObject);
+
             if (Vector3.Angle(transform.up, _groundHit.normal) < CharaCon.slopeLimit && !_justJumped)
                 _fsm.ChangeState(PlayerStatesList.GROUNDED);
         }
@@ -595,7 +597,7 @@ public class Player : LocalManager<Player>
 
     public void Land()
     {
-        SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/Landing", 1f, gameObject);
+        //SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/Landing", 1f, gameObject);
         Player.Instance.StartKickShake(_landShake, transform.position);
         //Reset many values when landing
         _currentFriction = _groundedFriction;
