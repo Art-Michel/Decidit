@@ -144,9 +144,9 @@ namespace State.AIBull
                 {
                     globalRef.agent.ActivateCurrentOffMeshLink(false);
                     navLink = globalRef.agent.navMeshOwner as NavMeshLink;
-                    linkDestination = navLink.transform.position - transform.position;
                     if (navLink != null)
                     {
+                        linkDestination = navLink.transform.position - transform.position;
                         globalRef.agentLinkMover.m_Curve.AddKey(0.5f, Mathf.Abs((navLink.endPoint.y - navLink.startPoint.y) / 1.5f));
                         globalRef.agentLinkMover._height = Mathf.Abs((navLink.endPoint.y - navLink.startPoint.y) / 1.5f);
                     }
@@ -196,7 +196,6 @@ namespace State.AIBull
                     DisableJump();
                     navLink.UpdateLink();
                     navLink = null;
-                    isOnNavLink = false;
                     maxDurationNavLink = globalRef.agentLinkMover._duration;
                 }
                 else if (CheckEndAnimation("Jump Fall"))
@@ -377,6 +376,7 @@ namespace State.AIBull
 
         private void OnDisable()
         {
+            isOnNavLink = false;
             globalRef.baseMoveBullSO.speedRot = 0;
             globalRef.agent.speed = globalRef.baseMoveBullSO.stopSpeed;
             variantMove = true;
