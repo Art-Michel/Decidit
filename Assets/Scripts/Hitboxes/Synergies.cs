@@ -244,17 +244,19 @@ public class Synergies : LocalManager<Synergies>
     #endregion
 
     #region Eylau -> Malade
-
     [Foldout("Eylau -> Malades")]
     [SerializeField]
     Pooler _eylauMaladeVfxPooler;
     [Foldout("Eylau -> Malades")]
     [SerializeField] float _zapDamage = 2;
+    [Foldout("Eylau -> Malades")]
+    [SerializeField] PerlinShake.Params _zapShake;
 
     public void EylauOnMalade(Vector3 position, float damage)
     {
         PlayerManager.Instance.StartFlash(0.1f, 0.5f);
         SoundManager.Instance.PlaySound("event:/SFX_Controller/UniversalSound", 1f, gameObject);
+        Player.Instance.StartPerlinShake(_zapShake, position);
         foreach (EnemyHealth enemy in Hospital)
         {
             VisualEffect arc = _eylauMaladeVfxPooler.Get().GetComponent<VisualEffect>();

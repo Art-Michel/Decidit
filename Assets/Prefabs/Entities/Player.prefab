@@ -12566,7 +12566,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4f7604330b528442885cea72a352262, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AudioListener: {fileID: 0}
+  AudioListener: {fileID: 1714128326}
   _theme: {fileID: 2133575062}
 --- !u!1 &2146662903
 GameObject:
@@ -38714,6 +38714,23 @@ MonoBehaviour:
   FugueMaladeShotsPooler: {fileID: 8987954254379614151}
   _eylauMaladeVfxPooler: {fileID: 1318935206921317367}
   _zapDamage: 1
+  _zapShake:
+    strength:
+      position: {x: 0.2, y: 0.2, z: 0.2}
+      eulerAngles: {x: 4, y: 4, z: 1.5}
+    noiseModes:
+    - freq: 40
+      amplitude: 1
+    envelope:
+      attack: 30
+      sustain: 0.2
+      decay: 2
+      degree: 2
+    attenuation:
+      clippingDistance: 10
+      falloffScale: 50
+      falloffDegree: 1
+      axesMultiplier: {x: 1, y: 1, z: 1}
   _blackHolePooler: {fileID: 6132128469779753373}
   _explosionVfxPooler: {fileID: 815437305338456706}
   _explosionOffset: 0.6
@@ -38726,7 +38743,7 @@ MonoBehaviour:
       amplitude: 1
     envelope:
       attack: 20
-      sustain: 1
+      sustain: 0.6
       decay: 1
       degree: 2
     attenuation:
