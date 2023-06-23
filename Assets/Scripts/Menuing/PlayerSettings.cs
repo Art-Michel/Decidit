@@ -31,11 +31,11 @@ public class PlayerSettings : LocalManager<PlayerSettings>
     #endregion
 
     #region SensivityVariables
-    float xSensivity;
-    float ySensivity;
+    float xSensivity = 10;
+    float ySensivity = 10;
 
-    float xControllerSensivity;
-    float yControllerSensivity;
+    float xControllerSensivity = 20;
+    float yControllerSensivity = 20;
 
     #endregion
 
