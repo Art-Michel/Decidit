@@ -23,13 +23,6 @@ public class Room : MonoBehaviour
 
     void Awake()
     {
-        // // this.transform.parent = DungeonGenerator.Instance.transform;
-        // _ennemiesParentList = GameObject.FindGameObjectsWithTag("ListEnnemies");
-        // for (int i = 0; i < _ennemiesParentList.Length; i++)
-        // {
-        //     _ennemiesParentList[i].SetActive(false);
-        // }
-        // InitAltar();
     }
 
     public void InitAltar()
@@ -40,7 +33,6 @@ public class Room : MonoBehaviour
         }
     }
 
-    // [Button]
     public void FindDoors()
     {
         _doors = new List<Door>();
@@ -64,7 +56,6 @@ public class Room : MonoBehaviour
         }
     }
 
-    // [Button]
     public void CountEnemies()
     {
         _enemiesList = new List<EnemyHealth>();
@@ -73,7 +64,6 @@ public class Room : MonoBehaviour
         {
             _enemiesList.Add(enemy);
             enemy.Room = this;
-            // enemy.gameObject.SetActive(false);
         }
         CurrentEnemiesInRoom = _enemiesList.Count;
     }
@@ -105,19 +95,6 @@ public class Room : MonoBehaviour
     public void StartBattleRoom()
     {
         PlayerManager.Instance.RechargeEverything();
-        // foreach (EnemyHealth enemyHealth in _enemiesList)
-        // {
-        //     if (enemyHealth == null)
-        //     {
-        //         Debug.LogError("La room [" + this.gameObject.name + "] n'a pas d'ennemi assigné");
-        //     }
-        //     enemyHealth.gameObject.SetActive(b);
-        //     if (enemyHealth.isActiveAndEnabled)
-        //     {
-        //         enemyHealth.SetDissolve();
-        //         enemyHealth.StartCoroutine("DissolveInverse");
-        //     }
-        // }
     }
 
     public void EnterRoom(float delayDisableLastRoom)
@@ -138,8 +115,6 @@ public class Room : MonoBehaviour
         else
         {
             StartBattleRoom();
-            // _ennemiesParentList[UnityEngine.Random.Range(0, 2)].SetActive(true);
-            // this.EnableEnemies(true);
         }
     }
     void DisableLastRoom()
@@ -173,7 +148,7 @@ public class Room : MonoBehaviour
 
     public void CheckForEnemies()
     {
-        // Debug.Log(CurrentEnemiesInRoom + "/" + _enemiesList.Count + " enemies still alive in room '" + gameObject.name + "'");
+        Debug.Log(CurrentEnemiesInRoom + "/" + _enemiesList.Count + " enemies still alive in room '" + gameObject.name + "'.");
         if (CurrentEnemiesInRoom <= 0)
         {
             Debug.Log("FinishRoom");

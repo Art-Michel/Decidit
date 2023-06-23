@@ -19,9 +19,6 @@ public class Door : MonoBehaviour
     void Awake()
     {
         animatorDoor = GetComponent<Animator>();
-
-        // if (this.ThisDoorsRoom == null)
-        // Debug.LogError("No assigned Rowwwwom! Click the 'Find Rooms' button in " + transform.parent.name);
     }
 
     void Start()
@@ -62,8 +59,6 @@ public class Door : MonoBehaviour
         }
 
         animatorDoor.SetBool("Close", true);
-        // _doorMesh.transform.localPosition = Vector3.zero;
-        //mettre animation ici à la place
 
         SoundManager.Instance.PlaySound("event:/SFX_Environement/DoorClosing", 1f, gameObject);
     }
@@ -79,9 +74,6 @@ public class Door : MonoBehaviour
         if (ThisDoorsRoom.Altar != null)
             ThisDoorsRoom.Altar.SetActive(true);
         animatorDoor.SetBool("Open", true);
-        //_doorMesh.transform.localPosition = Vector3.up * 6;
-
-        //là aussi
 
         SoundManager.Instance.PlaySound("event:/SFX_Environement/DoorOpening", 1f, gameObject);
     }
