@@ -125,6 +125,7 @@ public class PlayerHealth : Health
 
     public override void TakeDamage(float amount)
     {
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/DamageTaken", 1f, gameObject);
         if (IsInvulnerable || amount <= 0 || _isHurtInvulnerable || _isDebugInvulnerable)
             return;
 
@@ -136,7 +137,6 @@ public class PlayerHealth : Health
         ResetProbStartup();
 
         base.TakeDamage(amount);
-        SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/DamageTaken", 1f, gameObject);
 
         //cool magic numbers proportionnal screenshake when getting hurt
         // float shakeIntensity = _playerHurtShakeMaxStrength * Mathf.InverseLerp(0.0f, 40.0f, amount + 10.0f);
