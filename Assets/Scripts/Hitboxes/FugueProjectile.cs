@@ -18,6 +18,12 @@ public class FugueProjectile : SynergyProjectile
         SetupOscillatingTrails();
     }
 
+    protected override void Bounce(RaycastHit hit)
+    {
+        this.Damage += 0.35f;
+        base.Bounce(hit);
+    }
+
     void SetupOscillatingTrails()
     {
         for (int i = 0; i < _objects.Length; i++)

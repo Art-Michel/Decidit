@@ -322,7 +322,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
         Altar.Chants chant1 = (Altar.Chants)Random.Range(0, 3);
         if (chant0 == chant1)
         {
-            Debug.Log("Same chant in both altars, reroling...");
+            Debug.Log("Same chant in both altars, rerolling...");
             AssignChantToAltars();
             return;
         }

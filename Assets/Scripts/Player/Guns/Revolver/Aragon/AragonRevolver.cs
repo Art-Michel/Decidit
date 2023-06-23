@@ -9,6 +9,8 @@ public class AragonRevolver : Revolver
     [SerializeField] private float _adjacentBulletsAngle = 8.0f;
     [Foldout("References")]
     [SerializeField] Pooler _pooler;
+    [SerializeField] float _centralDamage = 0.75f;
+    [SerializeField] float _sideDamage = 0.5f;
 
     // [Foldout("BulletsDirection")]
     // [SerializeField] bool _shotsAreCentered;
@@ -64,9 +66,9 @@ public class AragonRevolver : Revolver
             FugueProjectile shot2 = _pooler.Get().GetComponent<FugueProjectile>();
             FugueProjectile shot3 = _pooler.Get().GetComponent<FugueProjectile>();
 
-            shot.Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized, _camera.forward, 1);
-            shot2.Setup(_canonPosition.position, rightDirection, _camera.forward, 0.5f);
-            shot3.Setup(_canonPosition.position, leftDirection, _camera.forward, 0.5f);
+            shot.Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized, _camera.forward, _centralDamage);
+            shot2.Setup(_canonPosition.position, rightDirection, _camera.forward, _sideDamage);
+            shot3.Setup(_canonPosition.position, leftDirection, _camera.forward, _sideDamage);
         }
 
         Player.Instance.StartKickShake(_shootShake, transform.position);

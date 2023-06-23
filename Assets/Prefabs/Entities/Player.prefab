@@ -1825,6 +1825,8 @@ MonoBehaviour:
   _controllerSwayAmountY: -3
   _adjacentBulletsAngle: 10
   _pooler: {fileID: 2200446483770630233}
+  _centralDamage: 0.5
+  _sideDamage: 0.25
 --- !u!114 &8072250455143683778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9381,7 +9383,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.1764706}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.1764706}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -9419,10 +9421,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0, g: 0, b: 0, a: 0.78431374}
-    m_HighlightedColor: {r: 0.2627451, g: 0.2627451, b: 0.2627451, a: 0.78431374}
-    m_PressedColor: {r: 0.6509804, g: 0.6509804, b: 0.6509804, a: 0.78431374}
-    m_SelectedColor: {r: 0.3137255, g: 0.3137255, b: 0.3137255, a: 0}
+    m_NormalColor: {r: 0, g: 0, b: 0, a: 1}
+    m_HighlightedColor: {r: 0.2627451, g: 0.2627451, b: 0.2627451, a: 1}
+    m_PressedColor: {r: 0.764151, g: 0.764151, b: 0.764151, a: 1}
+    m_SelectedColor: {r: 0.3137255, g: 0.3137255, b: 0.3137255, a: 1}
     m_DisabledColor: {r: 0, g: 0, b: 0, a: 0}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -9438,13 +9440,13 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 46159477}
+  m_TargetGraphic: {fileID: 1516602545}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2007368073}
         m_TargetAssemblyTypeName: PlayerManager, Assembly-CSharp
-        m_MethodName: ForceEquipSkill
+        m_MethodName: ForceEquipGun
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10305,7 +10307,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.1764706}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.1764706}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -10343,10 +10345,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0, g: 0, b: 0, a: 0.78431374}
-    m_HighlightedColor: {r: 0.2627451, g: 0.2627451, b: 0.2627451, a: 0.78431374}
-    m_PressedColor: {r: 0.6509804, g: 0.6509804, b: 0.6509804, a: 0.78431374}
-    m_SelectedColor: {r: 0.3137255, g: 0.3137255, b: 0.3137255, a: 0}
+    m_NormalColor: {r: 0, g: 0, b: 0, a: 1}
+    m_HighlightedColor: {r: 0.2627451, g: 0.2627451, b: 0.2627451, a: 1}
+    m_PressedColor: {r: 0.764151, g: 0.764151, b: 0.764151, a: 1}
+    m_SelectedColor: {r: 0.3137255, g: 0.3137255, b: 0.3137255, a: 1}
     m_DisabledColor: {r: 0, g: 0, b: 0, a: 0}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -10362,18 +10364,18 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 46159477}
+  m_TargetGraphic: {fileID: 1802936742}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2007368073}
         m_TargetAssemblyTypeName: PlayerManager, Assembly-CSharp
-        m_MethodName: ForceEquipSkill
+        m_MethodName: ForceEquipGun
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -11837,7 +11839,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.1764706}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.1764706}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -11875,10 +11877,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0, g: 0, b: 0, a: 0.78431374}
-    m_HighlightedColor: {r: 0.2627451, g: 0.2627451, b: 0.2627451, a: 0.78431374}
-    m_PressedColor: {r: 0.6509804, g: 0.6509804, b: 0.6509804, a: 0.78431374}
-    m_SelectedColor: {r: 0.3137255, g: 0.3137255, b: 0.3137255, a: 0}
+    m_NormalColor: {r: 0, g: 0, b: 0, a: 1}
+    m_HighlightedColor: {r: 0.2627451, g: 0.2627451, b: 0.2627451, a: 1}
+    m_PressedColor: {r: 0.764151, g: 0.764151, b: 0.764151, a: 1}
+    m_SelectedColor: {r: 0.3137255, g: 0.3137255, b: 0.3137255, a: 1}
     m_DisabledColor: {r: 0, g: 0, b: 0, a: 0}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -11894,18 +11896,18 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 46159477}
+  m_TargetGraphic: {fileID: 2046084782}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2007368073}
         m_TargetAssemblyTypeName: PlayerManager, Assembly-CSharp
-        m_MethodName: ForceEquipSkill
+        m_MethodName: ForceEquipGun
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -12043,7 +12045,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.1764706}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.1764706}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -12081,10 +12083,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0, g: 0, b: 0, a: 0.78431374}
-    m_HighlightedColor: {r: 0.2627451, g: 0.2627451, b: 0.2627451, a: 0.78431374}
-    m_PressedColor: {r: 0.6509804, g: 0.6509804, b: 0.6509804, a: 0.78431374}
-    m_SelectedColor: {r: 0.3137255, g: 0.3137255, b: 0.3137255, a: 0}
+    m_NormalColor: {r: 0, g: 0, b: 0, a: 1}
+    m_HighlightedColor: {r: 0.2627451, g: 0.2627451, b: 0.2627451, a: 1}
+    m_PressedColor: {r: 0.764151, g: 0.764151, b: 0.764151, a: 1}
+    m_SelectedColor: {r: 0.3137255, g: 0.3137255, b: 0.3137255, a: 1}
     m_DisabledColor: {r: 0, g: 0, b: 0, a: 0}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -12100,18 +12102,18 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 46159477}
+  m_TargetGraphic: {fileID: 2100964685}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2007368073}
         m_TargetAssemblyTypeName: PlayerManager, Assembly-CSharp
-        m_MethodName: ForceEquipSkill
+        m_MethodName: ForceEquipGun
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -12534,11 +12536,11 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: 1555426421
-      Data2: 1171872112
-      Data3: -442805324
-      Data4: 1559819825
-    Path: event:/Theme/GameTheme 2
+      Data1: 110212076
+      Data2: 1203737606
+      Data3: 309758397
+      Data4: 1800271239
+    Path: event:/Theme/GameTheme
   Event: 
   PlayEvent: 1
   StopEvent: 2
@@ -26262,7 +26264,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -22, y: -22}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3376589843436967254
 CanvasRenderer:
@@ -26285,7 +26287,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.78431374}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -27280,7 +27282,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -22, y: -22}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5504391791696169001
 CanvasRenderer:
@@ -27303,7 +27305,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.78431374}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -33137,7 +33139,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -22, y: -22}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &663288532772402909
 CanvasRenderer:
@@ -33160,7 +33162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.78431374}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -39337,7 +39339,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -22, y: -22}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1589091629566661407
 CanvasRenderer:
@@ -39360,7 +39362,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.78431374}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -43599,6 +43601,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4961121849532513550}
     m_Modifications:
+    - target: {fileID: 788090695395620493, guid: 53c84e8873d84df4384196cde47a047f,
+        type: 3}
+      propertyPath: m_InitialEventName
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 788090695395620493, guid: 53c84e8873d84df4384196cde47a047f,
+        type: 3}
+      propertyPath: m_InitialEventNameOverriden
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1363054162952295021, guid: 53c84e8873d84df4384196cde47a047f,
         type: 3}
       propertyPath: m_RootOrder
@@ -46252,6 +46264,16 @@ PrefabInstance:
         type: 3}
       propertyPath: LightsModule.intensityCurve.scalar
       value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6805565275164014366, guid: aea7d261133efa14e8dfdfe6e4d9849a,
+        type: 3}
+      propertyPath: m_InitialEventName
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6805565275164014366, guid: aea7d261133efa14e8dfdfe6e4d9849a,
+        type: 3}
+      propertyPath: m_InitialEventNameOverriden
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8884424220432478581, guid: aea7d261133efa14e8dfdfe6e4d9849a,
         type: 3}
@@ -51810,6 +51832,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8926484042661614526, guid: 34395ac817be6c64fbb0885313569915,
         type: 3}
+    - target: {fileID: 7215806505347947600, guid: e38d06dd0bae15f46841d86b8f1b29b6,
+        type: 3}
+      propertyPath: m_InitialEventName
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7215806505347947600, guid: e38d06dd0bae15f46841d86b8f1b29b6,
+        type: 3}
+      propertyPath: m_InitialEventNameOverriden
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9114271981452720325, guid: e38d06dd0bae15f46841d86b8f1b29b6,
         type: 3}
       propertyPath: m_Enabled
@@ -52111,6 +52143,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 7215806505347947600, guid: e38d06dd0bae15f46841d86b8f1b29b6,
+        type: 3}
+      propertyPath: m_InitialEventName
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7215806505347947600, guid: e38d06dd0bae15f46841d86b8f1b29b6,
+        type: 3}
+      propertyPath: m_InitialEventNameOverriden
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9114271981452720325, guid: e38d06dd0bae15f46841d86b8f1b29b6,
         type: 3}
@@ -55131,6 +55173,16 @@ PrefabInstance:
         type: 3}
       propertyPath: LightsModule.intensityCurve.scalar
       value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 6790916931472787067, guid: 230d270bc2477f041833d1e36bded2e3,
+        type: 3}
+      propertyPath: m_InitialEventName
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6790916931472787067, guid: 230d270bc2477f041833d1e36bded2e3,
+        type: 3}
+      propertyPath: m_InitialEventNameOverriden
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7708298237352039148, guid: 230d270bc2477f041833d1e36bded2e3,
         type: 3}
