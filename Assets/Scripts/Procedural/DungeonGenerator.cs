@@ -338,6 +338,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
         _actualRooms[0].Exit.OpenDoor();
         _actualRooms[1].gameObject.SetActive(true);
         _actualRooms[1].Entry.OpenDoor();
+        SetCurrentRoom(_actualRooms[0]);
     }
 
     public Room GetRoom(int i = 0)
@@ -379,6 +380,10 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
     {
         switch (CurrentRoom)
         {
+            case 0:
+                _isColorTransitionning = false;
+                _fogLight.color = _easyColor;
+                break;
             case _transitionMedium:
                 TransitionToMedium();
                 break;
