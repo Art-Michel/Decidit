@@ -26,7 +26,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
     [SerializeField] List<int> _scenesHard;
     [SerializeField] int _altarIndex;
     [SerializeField] Image _loadingBar;
-    public List<Altar> AltarListScript = new List<Altar>();
+    public List<Altar> AltarList = new List<Altar>();
 
     [SerializeField] private List<List<Room>> _usableRooms;
     public List<RoomSetup> Corridors;
@@ -301,6 +301,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
             lastDoor = roomInstance.Exit.transform;
             // roomInstance.EnableEnemies(false);
             roomInstance.gameObject.SetActive(false);
+            roomInstance.InitAltar();
 
             _actualRooms.Add(roomInstance);
         }
@@ -309,9 +310,26 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
             foreach (Room room in rooms)
                 room.gameObject.SetActive(false);
 
+        AssignChantToAltars();
         EnableFirstRooms();
         MenuManager.Instance.StartUnfading(1.0f);
         MenuManager.Instance.StopLoading();
+    }
+
+    private void AssignChantToAltars()
+    {
+        Altar.Chants chant0 = (Altar.Chants)Random.Range(0, 3);
+        Altar.Chants chant1 = (Altar.Chants)Random.Range(0, 3);
+        if (chant0 == chant1)
+        {
+            Debug.Log("Same chant in both altars, reroling...");
+            AssignChantToAltars();
+            return;
+        }
+        Debug.Log("You will get " + chant0.ToString() + " and " + chant1.ToString());
+
+        AltarList[0].SetChant(chant0);
+        AltarList[1].SetChant(chant1);
     }
 
     private void EnableFirstRooms()

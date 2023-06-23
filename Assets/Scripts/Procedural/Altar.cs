@@ -44,6 +44,7 @@ public class Altar : MonoBehaviour, IInteractable
 
     //[SerializeField] bool disableRandom;
 
+
     void Start()
     {
         SetChant(Chant);
@@ -54,18 +55,18 @@ public class Altar : MonoBehaviour, IInteractable
             CheckIfSameSpell();*/
     }
 
-    void OnEnable()
-    {
+    // void OnEnable()
+    // {
         // SetRandomChant();
         // CheckIfSameSpell();
-    }
+    // }
 
-    void SetRandomChant()
-    {
-        Chant = (Chants)Random.Range(0, 3);
-        //Debug.Log(_chant);
-        //_chant = Chants.Muse;
-    }
+    // void SetRandomChant()
+    // {
+    //     Chant = (Chants)Random.Range(0, 3);
+    //     //Debug.Log(_chant);
+    //     //_chant = Chants.Muse;
+    // }
 
     public void SetChant(Chants chant)
     {
@@ -93,10 +94,7 @@ public class Altar : MonoBehaviour, IInteractable
     public void AddAltarToStaticList()
     {
         if (DungeonGenerator.Instance != null)
-        {
-            DungeonGenerator.Instance.AltarListScript.Add(this);
-            Debug.Log(DungeonGenerator.Instance.AltarListScript.Count);
-        }
+            DungeonGenerator.Instance.AltarList.Add(this);
     }
 
     // void CheckIfSameSpell()
