@@ -100,7 +100,9 @@ public class Room : MonoBehaviour
     public void EnterRoom(float delayDisableLastRoom)
     {
         DungeonGenerator.Instance.SetCurrentRoom(this);
-        Invoke("DisableLastRoom", delayDisableLastRoom);
+        GameObject _lastRoom = DungeonGenerator.Instance.GetRoom(-1).gameObject;
+        StartCoroutine(DisableLastRoom(_lastRoom, delayDisableLastRoom));
+
         CountEnemies();
         this.Entry.CloseDoor();
         Killplane.Instance.MoveSpawnPointTo(this.Entry.transform.position + this.Entry.transform.forward * 4.0f + Vector3.up * 2);
@@ -117,9 +119,11 @@ public class Room : MonoBehaviour
             StartBattleRoom();
         }
     }
-    void DisableLastRoom()
+    IEnumerator DisableLastRoom(GameObject lastRoom, float delay)
     {
-        DungeonGenerator.Instance.GetRoom(-1).gameObject.SetActive(false);
+        yield return new WaitForSeconds(delay);
+        lastRoom.SetActive(false);
+        yield break;
     }
 
     public void ExitRoom()
