@@ -8,9 +8,9 @@ public class RocketExplosion : Explosion
     protected override void Hit(Transform targetCollider)
     {
         Debug.Log("ExplHit");
-        base.Hit(targetCollider);
         EnemyHealth enemyHealth = targetCollider.GetComponent<Hurtbox>().HealthComponent as EnemyHealth;
         if (enemyHealth)
             enemyHealth.GetSick();
+        base.Hit(targetCollider);
     }
 }

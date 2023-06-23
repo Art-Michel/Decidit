@@ -240,6 +240,7 @@ public class EnemyHealth : Health
         else if (globalRefFlyAI != null)
             globalRefFlyAI.ActiveKnockBackState();
     }
+
     public void KnockbackSynergie(Vector3 direction)
     {
         KnockBackDir = direction;
@@ -258,8 +259,7 @@ public class EnemyHealth : Health
             return;
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/MuseMalade/Charm", 1f, gameObject);
         IsSick = true;
-        if (!Synergies.Instance.Hospital.Contains(this))
-            Synergies.Instance.Hospital.Add(this);
+        Synergies.Instance.Hospital.Add(this);
         _sickIcon.enabled = true;
         _sickParticles.Play();
         if (_sickboxes.Count > 0)
@@ -370,8 +370,8 @@ public class EnemyHealth : Health
         //old
         //Player.Instance.gameObject.GetComponent<Health>().ProbRegen(1000);
 
+        Debug.Log(transform.name + " just died");
         RecoverFromSickness();
-
         _deathT = _deathAnimationDuration;
         IsDying = true;
         _deathVfx.Play();
@@ -384,7 +384,6 @@ public class EnemyHealth : Health
             collider.enabled = false;
         }
 
-        // RecoverFromSickness();
         RecoverFromPoison();
         if (_eylau != null)
         {
@@ -449,6 +448,7 @@ public class EnemyHealth : Health
 
     private void ActuallyDie()
     {
+
         Destroy(gameObject);
     }
 

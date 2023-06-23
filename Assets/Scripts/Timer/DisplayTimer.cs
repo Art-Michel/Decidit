@@ -31,7 +31,7 @@ public class DisplayTimer : MonoBehaviour
             txt.text = System.TimeSpan.FromSeconds((int)TimerManager.Instance.time).ToString();*/
 
         currentTime += Time.deltaTime;
-        if (txt)
+        if (txt && TimerManager.Instance != null)
             txt.text = FormatTime(TimerManager.Instance.time);
     }
 

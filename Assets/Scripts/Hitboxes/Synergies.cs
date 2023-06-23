@@ -21,7 +21,8 @@ public class Synergies : LocalManager<Synergies>
 
     [Foldout("Malades")]
     public List<EnemyHealth> Hospital;
-
+    [Foldout("Malades")]
+    public List<EnemyHealth> _targets;
     [Foldout("Cimetière")]
     [SerializeField] EylauArea _eylauArea;
 
@@ -257,14 +258,16 @@ public class Synergies : LocalManager<Synergies>
         PlayerManager.Instance.StartFlash(0.1f, 0.5f);
         SoundManager.Instance.PlaySound("event:/SFX_Controller/UniversalSound", 1f, gameObject);
         Player.Instance.StartPerlinShake(_zapShake, position);
-        List<EnemyHealth> _targets = Hospital;
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/Synergies/EyleauOnMuse/Sound", 1f, gameObject);
+
+        _targets = new List<EnemyHealth>();
+        Hospital.ForEach(item => _targets.Add(item));
         foreach (EnemyHealth enemy in _targets)
         {
             VisualEffect arc = _eylauMaladeVfxPooler.Get().GetComponent<VisualEffect>();
             arc.transform.position = Vector3.zero;
             arc.SetVector3("Start_Pos", position);
             arc.SetVector3("End_Pos", enemy.transform.position);
-            SoundManager.Instance.PlaySound("event:/SFX_Controller/Synergies/EyleauOnMuse/Sound", 1f, gameObject);
             enemy.ZapSlow();
             enemy.TakeDamage(damage * _zapDamage);
             // enemy.RecoverFromSickness();
