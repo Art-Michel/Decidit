@@ -41,7 +41,7 @@ public class EnemyHealth : Health
     [Foldout("Ui Values")]
     [SerializeField][Range(0f, 2f)] float _disappearMaxStartup = 1f;
     [Foldout("Ui Values")]
-    [SerializeField][Range(0f, 2f)] float _deathAnimationDuration = 1f;
+    float _deathAnimationDuration = 1.5f;
     float _disappearStartup;
     float _appearT;
     bool _healthBarIsVisible;

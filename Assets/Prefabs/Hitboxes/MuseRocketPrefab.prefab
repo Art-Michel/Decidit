@@ -182,7 +182,7 @@ MonoBehaviour:
       position: {x: 0.4, y: 0.4, z: 0}
       eulerAngles: {x: 8, y: 8, z: 2}
     noiseModes:
-    - freq: 30
+    - freq: 40
       amplitude: 1
     envelope:
       attack: 40
@@ -190,8 +190,8 @@ MonoBehaviour:
       decay: 1
       degree: 2
     attenuation:
-      clippingDistance: 5
-      falloffScale: 100
+      clippingDistance: 8
+      falloffScale: 80
       falloffDegree: 1
       axesMultiplier: {x: 1, y: 1, z: 1}
   _windBox: {fileID: 3233619823266418932}
@@ -511,6 +511,7 @@ MonoBehaviour:
   _delayBetweenHits: 0
   _pooledObject: {fileID: 3673482139296001559}
   _mesh: {fileID: 4916648573247979232}
+  _thingsToDisableOnHit: []
   _trailRenderers: []
   _trailMaterial: {fileID: 0}
   _trailsVfx: {fileID: 0}
@@ -525,6 +526,7 @@ MonoBehaviour:
   _lifeSpan: 5
   _trailDelay: 0.025
   _impactScale: 1
+  _disappearanceLength: 1
   _disappearanceT: 0
 --- !u!1 &3233619823266418932
 GameObject:
