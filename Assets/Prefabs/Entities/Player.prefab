@@ -12287,7 +12287,7 @@ MonoBehaviour:
       falloffScale: 50
       falloffDegree: 1
       axesMultiplier: {x: 1, y: 1, z: 1}
-  _chargeSpeed: 1
+  _chargeSpeed: 0.8
   _chargedWeaponShakeIntensity: 0.001
   _laserAdditionalRecoil: 0.5
 --- !u!114 &9161445646862943683
@@ -38694,12 +38694,46 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  _wooshShake:
+    strength:
+      position: {x: 0.2, y: 0.2, z: 0.1}
+      eulerAngles: {x: 5, y: 5, z: 1}
+    noiseModes:
+    - freq: 30
+      amplitude: 1
+    envelope:
+      attack: 30
+      sustain: 0.24
+      decay: 1
+      degree: 2
+    attenuation:
+      clippingDistance: 10
+      falloffScale: 50
+      falloffDegree: 1
+      axesMultiplier: {x: 1, y: 1, z: 1}
   FugueMaladeShotsPooler: {fileID: 8987954254379614151}
   _eylauMaladeVfxPooler: {fileID: 1318935206921317367}
   _zapDamage: 1
   _blackHolePooler: {fileID: 6132128469779753373}
   _explosionVfxPooler: {fileID: 815437305338456706}
   _explosionOffset: 0.6
+  _boomShake:
+    strength:
+      position: {x: 0.2, y: 0.2, z: 0.2}
+      eulerAngles: {x: 5, y: 5, z: 2}
+    noiseModes:
+    - freq: 30
+      amplitude: 1
+    envelope:
+      attack: 20
+      sustain: 1
+      decay: 1
+      degree: 2
+    attenuation:
+      clippingDistance: 10
+      falloffScale: 50
+      falloffDegree: 1
+      axesMultiplier: {x: 1, y: 1, z: 1}
 --- !u!114 &4929029903169623021
 MonoBehaviour:
   m_ObjectHideFlags: 0

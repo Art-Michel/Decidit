@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using CameraShake;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -140,6 +141,7 @@ public class Synergies : LocalManager<Synergies>
     [Foldout("Muse -> Nuage d'Aragon")]
     [SerializeField] float _delayBetweenClouds;
 
+
     public void MuseOnAragon(SynergyProjectile bullet, AragonCloud hitCloud)
     {
         SoundManager.Instance.PlaySound("event:/SFX_Controller/UniversalSound", 1f, gameObject);
@@ -168,6 +170,8 @@ public class Synergies : LocalManager<Synergies>
     [SerializeField] private float _knockbackStrength = 10.0f;
     [Foldout("Eylau -> Nuage d'Aragon")]
     [SerializeField] AnimationCurve _curve;
+    [Foldout("Eylau -> Nuage d'Aragon")]
+    [SerializeField] PerlinShake.Params _wooshShake;
 
     public void EylauOnAragon(SynergyProjectile bullet)
     {
@@ -177,6 +181,7 @@ public class Synergies : LocalManager<Synergies>
 
         Vector3 start = ActiveClouds[0].transform.position;
         Vector3 end = ActiveClouds[ActiveClouds.Count - 1].transform.position;
+        Player.Instance.StartPerlinShake(_wooshShake, start + ((end - start) / 2));
         bullet.ForceSynergized();
         IEnumerator coroutine = WooshEm(start, end);
         StartCoroutine(coroutine);
@@ -294,6 +299,8 @@ public class Synergies : LocalManager<Synergies>
     [SerializeField] Pooler _explosionVfxPooler;
     [Foldout("Muse -> Cimetière")]
     [SerializeField] private float _explosionOffset = .02f;
+    [Foldout("Muse -> Cimetière")]
+    [SerializeField] PerlinShake.Params _boomShake;
 
     public void MuseOnCimetiere(Vector3 initialPos)
     {
@@ -306,6 +313,7 @@ public class Synergies : LocalManager<Synergies>
         GameObject explosionPoint = new GameObject();
         explosionPoint.transform.position = initialPos;
         explosionPoint.transform.forward = (endPos - initialPos).normalized;
+        Player.Instance.StartPerlinShake(_boomShake, _eylauArea.transform.position);
 
         int loops = 14;
         for (int i = 1; i < loops; i++)

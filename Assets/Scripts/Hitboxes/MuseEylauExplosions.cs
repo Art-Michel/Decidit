@@ -13,7 +13,7 @@ public class MuseEylauExplosions : PooledObject
     [SerializeField] Hitbox _hitbox;
     bool _hasExploded;
     [SerializeField]
-    private BounceShake.Params _spawnShake;
+    // private BounceShake.Params _spawnShake;
 
 
     public void Setup(Vector3 position, float delay)
@@ -36,7 +36,7 @@ public class MuseEylauExplosions : PooledObject
                 _vfx.Play();
                 _vfx2.Play();
                 _hitbox.enabled = true;
-                Player.Instance.StartBounceShake(_spawnShake, transform.position);
+                // Player.Instance.StartBounceShake(_spawnShake, transform.position);
             }
         }
         else
