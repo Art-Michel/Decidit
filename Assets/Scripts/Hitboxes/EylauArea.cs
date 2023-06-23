@@ -16,6 +16,7 @@ public class EylauArea : SynergyTrigger
     [Foldout("References")][SerializeField] private LayerMask _shouldBuff;
     [Foldout("References")][SerializeField] private Material[] _materials;
     [Foldout("References")][SerializeField] private Light _light;
+    [Foldout("References")][SerializeField] private Collider[] _cols;
 
     [Foldout("Stats")] public float Radius = 8;
     [Foldout("Stats")][SerializeField] private float _lifeSpan;
@@ -64,8 +65,15 @@ public class EylauArea : SynergyTrigger
 
     private void OnEnable()
     {
+        EnableHitboxes();
         Reset();
         IsActive = true;
+    }
+
+    private void EnableHitboxes()
+    {
+        foreach (Collider col in _cols)
+            col.enabled = true;
     }
 
     public void Reset()
@@ -88,6 +96,17 @@ public class EylauArea : SynergyTrigger
 
         _light.intensity = 0.0f;
 
+        ClearBuffsAndDebuffs();
+    }
+
+    private void DisableHitboxes()
+    {
+        foreach (Collider col in _cols)
+            col.enabled = false;
+    }
+
+    private void ClearBuffsAndDebuffs()
+    {
         if (_isPlayerInHere)
             Player.Instance.StopEylauBuff();
 
@@ -142,6 +161,8 @@ public class EylauArea : SynergyTrigger
         _disappearanceT = 0.0f;
         _blackHoled = true;
         IsActive = false;
+        ClearBuffsAndDebuffs();
+        DisableHitboxes();
         // _defaultScale = transform.localScale;
         // _defaultAlpha = 1;
     }
@@ -151,6 +172,8 @@ public class EylauArea : SynergyTrigger
         _disappearanceT = 0.0f;
         _blewUp = true;
         IsActive = false;
+        ClearBuffsAndDebuffs();
+        DisableHitboxes();
         // _defaultScale = transform.localScale;
         // _defaultAlpha = 1;
     }
