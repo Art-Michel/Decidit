@@ -257,7 +257,8 @@ public class Synergies : LocalManager<Synergies>
         PlayerManager.Instance.StartFlash(0.1f, 0.5f);
         SoundManager.Instance.PlaySound("event:/SFX_Controller/UniversalSound", 1f, gameObject);
         Player.Instance.StartPerlinShake(_zapShake, position);
-        foreach (EnemyHealth enemy in Hospital)
+        List<EnemyHealth> _targets = Hospital;
+        foreach (EnemyHealth enemy in _targets)
         {
             VisualEffect arc = _eylauMaladeVfxPooler.Get().GetComponent<VisualEffect>();
             arc.transform.position = Vector3.zero;

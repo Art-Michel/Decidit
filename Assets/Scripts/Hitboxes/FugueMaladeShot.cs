@@ -43,7 +43,8 @@ public class FugueMaladeShot : FugueProjectile
         else
             startingPoint = transform.position + Direction * 10;
 
-        EnemyHealth[] newTargets = Synergies.Instance.Hospital.OrderBy(h => (Vector3.Distance(h.transform.position, startingPoint))).ToArray();
+        List<EnemyHealth> urgences = Synergies.Instance.Hospital;
+        EnemyHealth[] newTargets = urgences.OrderBy(h => (Vector3.Distance(h.transform.position, startingPoint))).ToArray();
 
         _target = newTargets[0].transform;
         _p2 = _target.position;

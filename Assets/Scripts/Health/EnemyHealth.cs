@@ -271,12 +271,7 @@ public class EnemyHealth : Health
     {
         if (!IsSick)
             return;
-        StartCoroutine(RecoverDelayed());
-    }
 
-    private IEnumerator RecoverDelayed()
-    {
-        yield return new WaitForSecondsRealtime(0.1f);
         IsSick = false;
         if (Synergies.Instance.Hospital.Contains(this))
             Synergies.Instance.Hospital.Remove(this);
@@ -285,7 +280,6 @@ public class EnemyHealth : Health
         if (_sickboxes.Count > 0)
             foreach (Collider collider in _sickboxes)
                 collider.enabled = false;
-        yield return null;
     }
 
     public void ZapSlow()
