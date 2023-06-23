@@ -29,6 +29,7 @@ public class Room : MonoBehaviour
         // {
         //     _ennemiesParentList[i].SetActive(false);
         // }
+        // InitAltar();
     }
 
     public void InitAltar()

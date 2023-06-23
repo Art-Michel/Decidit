@@ -76,13 +76,18 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
         }
 
         //* basically a new instance of the rooms setup so we can delete a room once it has been instanced in order to avoid repeats.
+        int scenesToLoad = _scenesEasy.Count + _scenesMedium.Count + _scenesHard.Count + 2;
+        int scenesLoaded = 0;
+        _loadingBar.fillAmount = Mathf.InverseLerp(0, scenesToLoad, scenesLoaded);
+
         _usableRooms = new List<List<Room>>();
         _usableRooms.Add(new List<Room>());
         for (int i = 0; i < _scenesEasy.Count; i++)
         {
             //Load a scene
             SceneManager.LoadScene(_scenesEasy[i], LoadSceneMode.Additive);
-            _loadingBar.fillAmount = Mathf.InverseLerp(0, _scenesEasy.Count * 2, i * 2);
+            scenesLoaded++;
+            _loadingBar.fillAmount = Mathf.InverseLerp(0, scenesToLoad, scenesLoaded);
             // Debug.Log("Loaded scene " + _scenesEasy[i]);
             yield return null;
 
@@ -90,7 +95,6 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
             GameObject thatScenesRoot = GameObject.Find((_scenesEasy[i].ToString()));
             Room thatScenesRoom = thatScenesRoot.GetComponent<Room>();
             _usableRooms[0].Add(thatScenesRoom);
-            _loadingBar.fillAmount = Mathf.InverseLerp(0, _scenesEasy.Count * 2, i * 2 + 1);
             // thatScenesRoom.FindDoors();
             // thatScenesRoom.FindTriggers();
         }
@@ -99,6 +103,8 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
         for (int i = 0; i < _scenesMedium.Count; i++)
         {
             SceneManager.LoadScene(_scenesMedium[i], LoadSceneMode.Additive);
+            scenesLoaded++;
+            _loadingBar.fillAmount = Mathf.InverseLerp(0, scenesToLoad, scenesLoaded);
             // Debug.Log("Loaded scene " + _scenesMedium[i]);
             yield return null;
 
@@ -113,6 +119,8 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
         for (int i = 0; i < _scenesHard.Count; i++)
         {
             SceneManager.LoadScene(_scenesHard[i], LoadSceneMode.Additive);
+            scenesLoaded++;
+            _loadingBar.fillAmount = Mathf.InverseLerp(0, scenesToLoad, scenesLoaded);
             // Debug.Log("Loaded scene " + _scenesHard[i]);
             yield return null;
 
@@ -128,6 +136,8 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
         for (int i = 0; i < 1; i++)
         {
             SceneManager.LoadScene(_altarIndex, LoadSceneMode.Additive);
+            scenesLoaded++;
+            _loadingBar.fillAmount = Mathf.InverseLerp(0, scenesToLoad, scenesLoaded);
             yield return null;
 
             GameObject thatScenesRoot = GameObject.Find((_altarIndex.ToString()));
@@ -187,7 +197,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
             room.FindDoors();
             room.FindTriggers();
             room.Statify();
-            room.InitAltar();
+            // room.InitAltar();
         }
         Build();
     }
@@ -198,12 +208,14 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
         {
             case _firstPowerupAfterRoom:
                 // _roomsToBuild.Add(CorridorsSpell[Random.Range(0, CorridorsSpell.Count)].Get());
-                _roomsToBuild.Add(_usableRooms[3][0]);
+                Room altarRoom = _usableRooms[3][0];
+                _roomsToBuild.Add(altarRoom);
                 break;
 
             case _secondPowerupAfterRoom:
                 // _roomsToBuild.Add(CorridorsSpell[Random.Range(0, CorridorsSpell.Count)].Get());
-                _roomsToBuild.Add(_usableRooms[3][1]);
+                Room altarRoom2 = _usableRooms[3][1];
+                _roomsToBuild.Add(altarRoom2);
                 break;
 
             default:

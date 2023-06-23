@@ -44,16 +44,6 @@ public class Altar : MonoBehaviour, IInteractable
 
     //[SerializeField] bool disableRandom;
 
-    void Awake()
-    {
-        /* if(!disableRandom)
-         {
-             altarListScript.Add(this);
-             SetRandomChant();
-         }*/
-        // Debug.Log(altarListScript.Count);
-    }
-
     void Start()
     {
         SetChant(Chant);
@@ -66,8 +56,8 @@ public class Altar : MonoBehaviour, IInteractable
 
     void OnEnable()
     {
-        SetRandomChant();
-        CheckIfSameSpell();
+        // SetRandomChant();
+        // CheckIfSameSpell();
     }
 
     void SetRandomChant()
@@ -102,24 +92,27 @@ public class Altar : MonoBehaviour, IInteractable
 
     public void AddAltarToStaticList()
     {
-        DungeonGenerator.Instance.AltarListScript.Add(this);
-        Debug.Log(DungeonGenerator.Instance.AltarListScript.Count);
+        if (DungeonGenerator.Instance != null)
+        {
+            DungeonGenerator.Instance.AltarListScript.Add(this);
+            Debug.Log(DungeonGenerator.Instance.AltarListScript.Count);
+        }
     }
 
-    void CheckIfSameSpell()
-    {
-        if (DungeonGenerator.Instance.AltarListScript.Count > 0)
-        {
-            if (DungeonGenerator.Instance.AltarListScript[0].Chant == DungeonGenerator.Instance.AltarListScript[1].Chant)
-            {
-                DungeonGenerator.Instance.AltarListScript[1].Chant = (Chants)Random.Range(0, 3);
-                Debug.Log("aaaaaaaa");
-            }
-        }
-        else
-            Debug.LogError("Altar list empty");
-        //altarListScript[1]._chant = Chants.Cimetiere;
-    }
+    // void CheckIfSameSpell()
+    // {
+    //     if (DungeonGenerator.Instance.AltarListScript.Count > 0)
+    //     {
+    //         if (DungeonGenerator.Instance.AltarListScript[0].Chant == DungeonGenerator.Instance.AltarListScript[1].Chant)
+    //         {
+    //             DungeonGenerator.Instance.AltarListScript[1].Chant = (Chants)Random.Range(0, 3);
+    //             Debug.Log("aaaaaaaa");
+    //         }
+    //     }
+    //     else
+    //         Debug.LogError("Altar list empty");
+    //     //altarListScript[1]._chant = Chants.Cimetiere;
+    // }
 
     public void Interact()
     {
