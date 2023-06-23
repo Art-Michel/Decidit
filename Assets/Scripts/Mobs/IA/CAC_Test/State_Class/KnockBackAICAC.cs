@@ -67,6 +67,12 @@ namespace State.AICAC
                 knockBackDirection = Vector3.zero;
                 ActiveIdleState();
             }
+
+            if (isFall)
+                if (globalRef.characterController.isGrounded)
+                {
+                    isGround = true;
+                }
         }
 
         private void FixedUpdate()
