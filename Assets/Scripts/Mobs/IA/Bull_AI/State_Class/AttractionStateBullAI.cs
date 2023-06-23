@@ -9,6 +9,7 @@ namespace State.AIBull
         float deltaTime;
         [SerializeField] bool applyGravity;
         [SerializeField] bool isGround;
+        [SerializeField] bool hitGround;
         [SerializeField] float distDetectGround;
         [SerializeField] float distDestination;
         float velocityY;
@@ -42,13 +43,27 @@ namespace State.AIBull
             {
                 stateController.SetActiveState(StateControllerBull.AIState.Idle);
             }
+
+            if(applyGravity)
+                if(globalRef.characterController.isGrounded)
+                {
+                    hitGround = true;
+                    isGround = true;
+                }
         }
 
-        private void FixedUpdate()
+/*        private void FixedUpdate()
         {
-            if(applyGravity)
-                CheckGround();
-        }
+            if (!hitGround)
+            {
+                if (applyGravity)
+                    CheckGround();
+            }
+            else
+            {
+                isGround = true;
+            }
+        }*/
 
         void ApplyAttraction()
         {
@@ -94,6 +109,16 @@ namespace State.AIBull
             globalRef.agent.enabled = true;
             applyGravity = false;
             isGround = false;
+            hitGround = false;
+        }
+
+        void OnControllerColliderHit(ControllerColliderHit hit)
+        {
+            if(hit.transform.gameObject.layer == 9 && applyGravity)
+            {
+                hitGround = true;
+                isGround = true;
+            }
         }
     }
 }

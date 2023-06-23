@@ -109,6 +109,8 @@ MonoBehaviour:
   activeSurround: 0
   canSurround: 0
   distToCirclePos: 0
+  currentAnimName: 
+  animTime: 0
 --- !u!1 &279298340
 GameObject:
   m_ObjectHideFlags: 0
@@ -1651,7 +1653,6 @@ MonoBehaviour:
   _appearSpeed: 15
   _disappearSpeed: 1.7
   _disappearMaxStartup: 0.3
-  _deathAnimationDuration: 1
   IsSick: 0
   _sickParticles: {fileID: 5956351352188734152}
   _sickIcon: {fileID: 30774901782192125}
@@ -1859,13 +1860,13 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 0.5
-  m_Radius: 0.5
+  m_Height: 1
+  m_Radius: 0.76
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: -0.42, z: 0}
+  m_Center: {x: 0, y: -0.27, z: 0}
 --- !u!1 &6556294861081395601
 GameObject:
   m_ObjectHideFlags: 0
@@ -1991,6 +1992,7 @@ MonoBehaviour:
   distDestination: 0
   distDetectGround: 1.1
   isGround: 0
+  hitGround: 0
   applyGravity: 0
 --- !u!1 &7560990324559214128
 GameObject:

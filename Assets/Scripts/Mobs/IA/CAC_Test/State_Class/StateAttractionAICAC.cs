@@ -12,6 +12,7 @@ namespace State.AICAC
         [Header("Attraction Active")]
         [SerializeField] float distDetectGround;
         [SerializeField] bool isGround;
+        [SerializeField] bool hitGround;
         [SerializeField] bool applyGravity;
 
         float deltaTime;
@@ -44,13 +45,27 @@ namespace State.AICAC
             {
                 ActiveMoveState();
             }
+
+            if (applyGravity)
+                if (globalRef.characterController.isGrounded)
+                {
+                    hitGround = true;
+                    isGround = true;
+                }
         }
 
-        private void FixedUpdate()
+        /*private void FixedUpdate()
         {
-            if(applyGravity)
-                CheckGround();
-        }
+            if (!hitGround)
+            {
+                if (applyGravity)
+                    CheckGround();
+            }
+            else
+            {
+                isGround = true;
+            }
+        }*/
 
         void CheckGround()
         {
@@ -106,6 +121,16 @@ namespace State.AICAC
             globalRef.agent.enabled = true;
             isGround = false;
             applyGravity = false;
+            hitGround = false;
+        }
+
+        void OnControllerColliderHit(ControllerColliderHit hit)
+        {
+            if (hit.transform.gameObject.layer == 9 && applyGravity)
+            {
+                hitGround = true;
+                isGround = true;
+            }
         }
     }
 }
