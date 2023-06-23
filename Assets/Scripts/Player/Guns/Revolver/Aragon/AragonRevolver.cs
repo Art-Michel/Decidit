@@ -36,6 +36,7 @@ public class AragonRevolver : Revolver
         Vector3 rightDirection;
         Vector3 leftDirection;
 
+        //Shoot homing bullets
         if (Synergies.Instance.Hospital.Count > 0)
         {
             rightDirection = ((_currentlyAimedAt - _canonPosition.position).normalized * (_adjacentBulletsAngle * 0.5f) + _camera.right).normalized;
@@ -52,6 +53,8 @@ public class AragonRevolver : Revolver
             shot2.Setup(_canonPosition.position, rightDirection, _camera.forward, false);
             shot3.Setup(_canonPosition.position, leftDirection, _camera.forward, false);
         }
+
+        //Shoot normal Bullets
         else
         {
             rightDirection = ((_currentlyAimedAt - _canonPosition.position).normalized * _adjacentBulletsAngle + _camera.right).normalized;
@@ -61,9 +64,9 @@ public class AragonRevolver : Revolver
             FugueProjectile shot2 = _pooler.Get().GetComponent<FugueProjectile>();
             FugueProjectile shot3 = _pooler.Get().GetComponent<FugueProjectile>();
 
-            shot.Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized, _camera.forward);
-            shot2.Setup(_canonPosition.position, rightDirection, _camera.forward);
-            shot3.Setup(_canonPosition.position, leftDirection, _camera.forward);
+            shot.Setup(_canonPosition.position, (_currentlyAimedAt - _canonPosition.position).normalized, _camera.forward, 1);
+            shot2.Setup(_canonPosition.position, rightDirection, _camera.forward, 0.5f);
+            shot3.Setup(_canonPosition.position, leftDirection, _camera.forward, 0.5f);
         }
 
         Player.Instance.StartKickShake(_shootShake, transform.position);

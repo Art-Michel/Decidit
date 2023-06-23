@@ -10,10 +10,11 @@ public class FugueProjectile : SynergyProjectile
     [SerializeField] ProjectileOscillator[] _objects;
     [SerializeField] Vector3[] _directions;
 
-    public override void Setup(Vector3 position, Vector3 direction, Vector3 cameraDirection)
+    public void Setup(Vector3 position, Vector3 direction, Vector3 cameraDirection, float damage)
     {
         base.Setup(position, direction, cameraDirection);
         transform.rotation = Camera.main.transform.parent.rotation;
+        this.Damage = damage;
         SetupOscillatingTrails();
     }
 
