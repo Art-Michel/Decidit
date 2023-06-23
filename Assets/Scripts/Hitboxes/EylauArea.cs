@@ -9,6 +9,7 @@ using State.AICAC;
 using State.FlyAI;
 using State.WallAI;
 using NaughtyAttributes;
+using CameraShake;
 
 public class EylauArea : SynergyTrigger
 {
@@ -52,8 +53,11 @@ public class EylauArea : SynergyTrigger
     [Foldout("Blackhole")][SerializeField] private AnimationCurve _blackHoleSizeCurve;
     [Foldout("Blackhole")][SerializeField] private float _blackHoleSpeed;
     [Foldout("Blackhole")][SerializeField] private AnimationCurve _fuguificationCurve;
+    [Foldout("Blackhole")][SerializeField] private PerlinShake.Params _blackHole1;
+    [Foldout("Blackhole")][SerializeField] private PerlinShake.Params _blackHole2;
     private float _fuguification;
-    float _disappearanceT;
+    private bool _shook;
+    private float _disappearanceT;
 
     private void Awake()
     {
@@ -158,6 +162,8 @@ public class EylauArea : SynergyTrigger
     //Synergizing
     public void StartBlackHoleDisappearance()
     {
+        Player.Instance.StartPerlinShake(_blackHole1, transform.position);
+        _shook = false;
         _disappearanceT = 0.0f;
         _blackHoled = true;
         IsActive = false;
@@ -206,6 +212,11 @@ public class EylauArea : SynergyTrigger
             mat.SetFloat("_Eylau_To_Fugue", _fuguification);
         }
         _light.intensity = _defaultLightIntensity * alpha;
+        if (_disappearanceT >= 0.5f && !_shook)
+        {
+            Player.Instance.StartPerlinShake(_blackHole2, transform.position);
+            _shook = true;
+        }
         if (_disappearanceT >= 1.0f)
             Disappear();
     }
