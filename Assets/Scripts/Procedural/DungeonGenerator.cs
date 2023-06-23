@@ -390,7 +390,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
 
     private void TransitionToMedium()
     {
-        Debug.Log("TransitionToMedium");
+        // Debug.Log("TransitionToMedium");
         _previousColor = _easyColor;
         _nextColor = _mediumColor;
         _isColorTransitionning = true;
