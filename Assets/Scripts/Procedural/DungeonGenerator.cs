@@ -25,6 +25,9 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
     [SerializeField] List<int> _scenesMedium;
     [SerializeField] List<int> _scenesHard;
     [SerializeField] int _altarIndex;
+    [SerializeField] int _corridorIndex;
+    [SerializeField] int _startIndex;
+    [SerializeField] int _endIndex;
     [SerializeField] Image _loadingBar;
     public List<Altar> AltarList = new List<Altar>();
 
@@ -76,7 +79,9 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
         }
 
         //* basically a new instance of the rooms setup so we can delete a room once it has been instanced in order to avoid repeats.
-        int scenesToLoad = _scenesEasy.Count + _scenesMedium.Count + _scenesHard.Count + 2;
+        int scenesToLoad = _scenesEasy.Count + _scenesMedium.Count + _scenesHard.Count + 6; // 2 altars, 2 corridors, start, and End
+        scenesToLoad--;
+
         int scenesLoaded = 0;
         _loadingBar.fillAmount = Mathf.InverseLerp(0, scenesToLoad, scenesLoaded);
 
@@ -132,7 +137,6 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
         }
 
         _usableRooms.Add(new List<Room>());
-
         for (int i = 0; i < 1; i++)
         {
             SceneManager.LoadScene(_altarIndex, LoadSceneMode.Additive);
@@ -146,17 +150,47 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
             _usableRooms[3].Add(thatScenesRoom);
         }
 
+        _usableRooms.Add(new List<Room>());
+        for (int i = 0; i < 1; i++)
+        {
+            SceneManager.LoadScene(_corridorIndex, LoadSceneMode.Additive);
+            scenesLoaded++;
+            _loadingBar.fillAmount = Mathf.InverseLerp(0, scenesToLoad, scenesLoaded);
+            yield return null;
 
-        //old prefabs version
-        // for (int i = 0; i < RoomSets.Count; i++)
-        // {
-        //     _usableRooms.Add(new List<Room>());
-        //     foreach (Room room in RoomSets[i].rooms)
-        //     {
-        //         _usableRooms[i].Add(room);
-        //     }
-        // }
+            GameObject thatScenesRoot = GameObject.Find((_corridorIndex.ToString()));
+            Room thatScenesRoom = thatScenesRoot.GetComponent<Room>();
+            _usableRooms[4].Add(thatScenesRoom);
+            _usableRooms[4].Add(thatScenesRoom);
+        }
 
+        _usableRooms.Add(new List<Room>());
+        for (int i = 0; i < 1; i++)
+        {
+            SceneManager.LoadScene(_startIndex, LoadSceneMode.Additive);
+            scenesLoaded++;
+            _loadingBar.fillAmount = Mathf.InverseLerp(0, scenesToLoad, scenesLoaded);
+            yield return null;
+
+            GameObject thatScenesRoot = GameObject.Find((_startIndex.ToString()));
+            Room thatScenesRoom = thatScenesRoot.GetComponent<Room>();
+            _usableRooms[5].Add(thatScenesRoom);
+        }
+
+        _usableRooms.Add(new List<Room>());
+        for (int i = 0; i < 1; i++)
+        {
+            SceneManager.LoadScene(_endIndex, LoadSceneMode.Additive);
+            scenesLoaded++;
+            _loadingBar.fillAmount = Mathf.InverseLerp(0, scenesToLoad, scenesLoaded);
+            yield return null;
+
+            GameObject thatScenesRoot = GameObject.Find((_endIndex.ToString()));
+            Room thatScenesRoom = thatScenesRoot.GetComponent<Room>();
+            _usableRooms[6].Add(thatScenesRoom);
+        }
+
+        _loadingBar.fillAmount = 1;
         Generate();
         yield return null;
     }
@@ -169,8 +203,8 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
             _seed = Random.Range(0, 1000);
         Random.InitState(_seed);
 
-        _roomsToBuild = new List<Room>(_numberOfRooms + 2 + (_numberOfRooms + 1));
-        _roomsToBuild.Add(_starterRoom.Get());
+        _roomsToBuild = new List<Room>();//(_numberOfRooms + 2 + (_numberOfRooms + 1));
+        _roomsToBuild.Add(_usableRooms[5][0]);
 
         int stackCount = Mathf.RoundToInt(_numberOfRooms / 3f);
         for (int i = 0; i < _numberOfRooms; i++)
@@ -189,8 +223,10 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
             stackCount--;
         }
 
-        _roomsToBuild.Add(Corridors[Random.Range(0, Corridors.Count)].Get());
-        _roomsToBuild.Add(_finalRoom.Get());
+        // _roomsToBuild.Add(Corridors[Random.Range(0, Corridors.Count)].Get());
+        SelectCorridor(999);
+        _roomsToBuild.Add(_usableRooms[6][0]);
+
 
         foreach (Room room in _roomsToBuild)
         {
@@ -219,7 +255,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
                 break;
 
             default:
-                _roomsToBuild.Add(Corridors[Random.Range(0, Corridors.Count)].Get());
+                _roomsToBuild.Add(_usableRooms[4][Random.Range(0, _usableRooms[4].Count)]);
                 break;
         }
     }

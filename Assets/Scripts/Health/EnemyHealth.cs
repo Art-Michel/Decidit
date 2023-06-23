@@ -438,7 +438,7 @@ public class EnemyHealth : Health
         _deathT -= Time.deltaTime;
         for (int i = 0; i < _material.Length; i++)
         {
-            float f = Mathf.InverseLerp(_deathAnimationDuration, 0.36f, _deathT);
+            float f = Mathf.InverseLerp(_deathAnimationDuration + 0.4f, 0.0f, _deathT + 0.4f);
             _material[i].SetFloat("_clip", f);
         }
         if (_deathT <= 0)
