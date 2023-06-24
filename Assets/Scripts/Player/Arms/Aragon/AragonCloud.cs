@@ -141,8 +141,8 @@ public class AragonCloud : PooledObject
         _lifeSpanT = 0.0f;
 
         _boxCollider.enabled = false;
-        _vfx.SetFloat("WooshingMultiplierMin", 15);
-        _vfx.SetFloat("WooshingMultiplierMax", 20);
+        _vfx.SetFloat("WooshingMultiplierMin", 6);
+        _vfx.SetFloat("WooshingMultiplierMax", 9);
         _vfx.SetFloat("SmokeSpawnRate", 25);
         _vfx.SetFloat("SparksSpawnRate", 20);
         transform.Rotate(new Vector3(0, 0, 90));

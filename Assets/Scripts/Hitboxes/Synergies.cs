@@ -173,6 +173,8 @@ public class Synergies : LocalManager<Synergies>
     [SerializeField] AnimationCurve _curve;
     [Foldout("Eylau -> Nuage d'Aragon")]
     [SerializeField] PerlinShake.Params _wooshShake;
+    [Foldout("Eylau -> Nuage d'Aragon")]
+    [SerializeField] Pooler _wooshVfx;
 
     public void EylauOnAragon(SynergyProjectile bullet)
     {
@@ -184,6 +186,11 @@ public class Synergies : LocalManager<Synergies>
         Vector3 end = ActiveClouds[ActiveClouds.Count - 1].transform.position;
         Player.Instance.StartPerlinShake(_wooshShake, start + ((end - start) / 2));
         bullet.ForceSynergized();
+
+        PooledObject po = _wooshVfx.Get();
+        po.transform.position = start + ((end - start) / 2);
+        po.transform.forward = (end - start).normalized;
+
         IEnumerator coroutine = WooshEm(start, end);
         StartCoroutine(coroutine);
 
