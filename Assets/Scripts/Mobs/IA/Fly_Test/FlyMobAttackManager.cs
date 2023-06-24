@@ -10,7 +10,7 @@ namespace State.FlyAI
 
         void SetAIVariantAttackRange(GlobalRefFlyAI globalRef)
         {
-            if(!SpreadShotActive)
+            if (!SpreadShotActive)
             {
                 globalRef.SpreadShot = true;
                 SpreadShotActive = true;

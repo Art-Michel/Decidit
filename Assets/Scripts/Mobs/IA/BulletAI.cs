@@ -24,8 +24,13 @@ public class BulletAI : Health
     {
         base.Awake();
         rb = GetComponent<Rigidbody>();
-        //vfxExplosion = transform.GetChild(0).gameObject;
         lightExplosion.enabled = false;
+    }
+
+    private void OnEnable()
+    {
+        meshRenderer.enabled = true;
+        lightTranslusance.enabled = true;
     }
 
     protected override void Start()
@@ -79,6 +84,14 @@ public class BulletAI : Health
     void DestroyObject()
     {
         gameObject.SetActive(false);
+        vfxExplosion.SetActive(false);
+    }
+
+    public void OnDisable()
+    {
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        rb.useGravity = false;
     }
 
     private void OnTriggerExit(Collider other)

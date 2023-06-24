@@ -15,6 +15,7 @@ namespace State.FlyAI
         public EnemyHealth enemyHealth;
         public FlyMobAttackManager flyMobAttackManager;
         public GameObject vfxShowDoor;
+        public PoolBullet poolBullet;
 
         [Header("Animation")]
         public Animator myAnimator;

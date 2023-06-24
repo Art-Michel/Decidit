@@ -83,7 +83,6 @@ namespace State.WallAI
                 activeAttack = true;
                 globalRef.agent.speed = baseAttackWallAISO.stopSpeed;
                 AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "LaunchAttack");
-                Debug.Log("Nike ta mère");
             }
         }
 
@@ -119,7 +118,6 @@ namespace State.WallAI
             {
                 if (baseAttackWallAISO.currentRafaleCount > 0)
                 {
-                    Debug.Log("Attack");
                     if (baseAttackWallAISO.bulletCount > 0)
                     {
                         StartCoroutine("LaunchProjectileAnticipation");
@@ -150,9 +148,13 @@ namespace State.WallAI
             if (baseAttackWallAISO.bulletCount > 0)
             {
                 globalRef.spawnBullet.LookAt(baseAttackWallAISO.playerPredicDir);
-                Rigidbody cloneBullet = Instantiate(baseAttackWallAISO.bulletPrefab, globalRef.spawnBullet.position, globalRef.spawnBullet.rotation);
-                cloneBullet.AddRelativeForce(Vector3.forward * CalculateSpeedProjectile(), ForceMode.VelocityChange);
+                //Rigidbody cloneBullet = Instantiate(baseAttackWallAISO.bulletPrefab, globalRef.spawnBullet.position, globalRef.spawnBullet.rotation);
+                //cloneBullet.AddRelativeForce(Vector3.forward * CalculateSpeedProjectile(), ForceMode.VelocityChange);
+
+                globalRef.poolBullet.CallBullet(globalRef.spawnBullet.position, globalRef.spawnBullet.rotation, 
+                                                Vector3.forward * CalculateSpeedProjectile(), ForceMode.VelocityChange);
                 baseAttackWallAISO.bulletCount--;
+
                 //SoundManager.instance.PlaySoundMobOneShot(globalRef.audioSourceWallMob, SoundManager.instance.soundAndVolumeWallMob[4]);
                 //PLAY SOUND SHOOT WALL AI
                 // TO DO lucas va te faire encul�
@@ -187,12 +189,12 @@ namespace State.WallAI
             globalRef.spawnBullet.LookAt(globalRef.playerTransform.position);
             for (int i = 0; i < baseAttackWallAISO.maxBulletCountSpread; i++)
             {
-                //bullets[i].y += baseAttackWallAISO.spreadangle;
-
-                Rigidbody cloneBullet = Instantiate(baseAttackWallAISO.bulletPrefab, globalRef.spawnBullet.position, globalRef.spawnBullet.rotation);
-                //cloneBullet.transform.rotation = Quaternion.RotateTowards(cloneBullet.transform.rotation, bullets[i], baseAttackWallAISO.spreadangle);
-                cloneBullet.transform.rotation = Quaternion.Euler(cloneBullet.transform.eulerAngles.x, cloneBullet.transform.eulerAngles.y + currentAngle, cloneBullet.transform.eulerAngles.z);
-                cloneBullet.AddForce(cloneBullet.transform.forward * baseAttackWallAISO.forceBulletSpread, ForceMode.VelocityChange);
+                //Rigidbody cloneBullet = Instantiate(baseAttackWallAISO.bulletPrefab, globalRef.spawnBullet.position, globalRef.spawnBullet.rotation);
+                //cloneBullet.transform.rotation = Quaternion.Euler(cloneBullet.transform.eulerAngles.x, cloneBullet.transform.eulerAngles.y + currentAngle, cloneBullet.transform.eulerAngles.z);
+                //cloneBullet.AddForce(cloneBullet.transform.forward * baseAttackWallAISO.forceBulletSpread, ForceMode.VelocityChange);
+                globalRef.poolBullet.CallBulletSpread(globalRef.spawnBullet.position, globalRef.spawnBullet.rotation,
+                                                baseAttackWallAISO.forceBulletSpread, ForceMode.VelocityChange, bullets[i], baseAttackWallAISO.spreadangle, currentAngle);
+                baseAttackWallAISO.bulletCount--;
 
                 if (i % 2 == 0)
                 {
