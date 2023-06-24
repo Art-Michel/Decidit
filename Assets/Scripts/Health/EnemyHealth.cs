@@ -41,7 +41,7 @@ public class EnemyHealth : Health
     [Foldout("Ui Values")]
     [SerializeField][Range(0f, 2f)] float _disappearMaxStartup = 1f;
     [Foldout("Ui Values")]
-    float _deathAnimationDuration = 1.5f;
+    float _deathAnimationDuration = 1.15f;
     float _disappearStartup;
     float _appearT;
     bool _healthBarIsVisible;
@@ -437,7 +437,7 @@ public class EnemyHealth : Health
         _deathT -= Time.deltaTime;
         for (int i = 0; i < _material.Length; i++)
         {
-            float f = Mathf.InverseLerp(_deathAnimationDuration + 0.4f, 0.0f, _deathT + 0.4f);
+            float f = Mathf.InverseLerp(_deathAnimationDuration, 0.0f, _deathT) + 0.36f;
             _material[i].SetFloat("_clip", f);
         }
         if (_deathT <= 0)
