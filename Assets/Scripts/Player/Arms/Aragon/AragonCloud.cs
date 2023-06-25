@@ -9,7 +9,7 @@ public class AragonCloud : PooledObject
     [Foldout("Refs")]
     [SerializeField] private Collider _boxCollider;
     [Foldout("Refs")]
-    [SerializeField] private VisualEffect _vfx;
+    [SerializeField] private VisualEffect[] _vfx;
 
     [Foldout("Spawn")]
     [SerializeField] private float _spawnDelay;
@@ -62,20 +62,26 @@ public class AragonCloud : PooledObject
 
 
         // _vfx.SetFloat("IsWooshing", 0);
-        _vfx.SetFloat("WooshingMultiplierMin", 0);
-        _vfx.SetFloat("WooshingMultiplierMax", 0);
-        _vfx.SetFloat("SmokeSpawnRate", 15);
-        _vfx.SetFloat("SparksSpawnRate", 12);
+        _vfx[0].SetFloat("WooshingMultiplierMin", 0);
+        _vfx[0].SetFloat("WooshingMultiplierMax", 0);
+        _vfx[0].SetFloat("SmokeSpawnRate", 15);
+        _vfx[0].SetFloat("SparksSpawnRate", 12);
 
-        _vfx.SetFloat("Fugue To Muse", 0);
-        _vfx.SetFloat("Fugue To Eylaw", 0);
+        foreach (VisualEffect vfx in _vfx)
+        {
+            vfx.SetFloat("Fugue To Muse", 0);
+            vfx.SetFloat("Fugue To Eylaw", 0);
+        }
     }
 
     private void Enable()
     {
         _boxCollider.enabled = true;
-        _vfx.Reinit();
-        _vfx.Play();
+        foreach (VisualEffect vfx in _vfx)
+        {
+            vfx.Reinit();
+            vfx.Play();
+        }
 
         _isNormal = true;
         _isPoisonous = false;
@@ -100,7 +106,9 @@ public class AragonCloud : PooledObject
         {
             _lifeSpanT += Time.deltaTime;
             float colorLerp = Mathf.InverseLerp(0, _eylauTransitionSpeed, _lifeSpanT);
-            _vfx.SetFloat("Fugue To Eylaw", colorLerp);
+            foreach (VisualEffect vfx in _vfx)
+                vfx.SetFloat("Fugue To Eylaw", colorLerp);
+
 
             if (_lifeSpanT >= _eylauLifeSpan)
             {
@@ -111,7 +119,8 @@ public class AragonCloud : PooledObject
         {
             _lifeSpanT += Time.deltaTime;
             float colorLerp = Mathf.InverseLerp(_greenTransitionDelay, _greenTransitionDelay + _greenTransitionSpeed, _lifeSpanT);
-            _vfx.SetFloat("Fugue To Muse", colorLerp);
+            foreach (VisualEffect vfx in _vfx)
+                vfx.SetFloat("Fugue To Muse", colorLerp);
 
             if (_lifeSpanT >= _poisonLifeSpan)
             {
@@ -141,10 +150,10 @@ public class AragonCloud : PooledObject
         _lifeSpanT = 0.0f;
 
         _boxCollider.enabled = false;
-        _vfx.SetFloat("WooshingMultiplierMin", 6);
-        _vfx.SetFloat("WooshingMultiplierMax", 9);
-        _vfx.SetFloat("SmokeSpawnRate", 25);
-        _vfx.SetFloat("SparksSpawnRate", 20);
+        _vfx[0].SetFloat("WooshingMultiplierMin", 6);
+        _vfx[0].SetFloat("WooshingMultiplierMax", 9);
+        _vfx[0].SetFloat("SmokeSpawnRate", 25);
+        _vfx[0].SetFloat("SparksSpawnRate", 20);
         transform.Rotate(new Vector3(0, 0, 90));
     }
 
@@ -170,7 +179,8 @@ public class AragonCloud : PooledObject
         _isDying = true;
 
         _deathSpanT = 0.0f;
-        _vfx.Stop();
+        foreach (VisualEffect vfx in _vfx)
+            vfx.Stop();
         _boxCollider.enabled = false;
     }
 
