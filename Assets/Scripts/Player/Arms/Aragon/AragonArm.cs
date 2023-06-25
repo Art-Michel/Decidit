@@ -91,10 +91,11 @@ public class AragonArm : Arm
     public override void StartPrevis()
     {
         if (_precastFx.Length > 0)
-            for (int i = 0; i < _castFx.Length; i++)
+            for (int i = 0; i < _precastFx.Length; i++)
             {
-                _precastFx[i].gameObject.SetActive(false);
-                _precastFx[i].gameObject.SetActive(true);
+                _precastFx[i].Reinit();
+                _precastFx[i].Play();
+
             }
         base.StartPrevis();
         loopInstance = FMODUnity.RuntimeManager.CreateInstance("event:/SFX_Controller/Chants/FugueAragon/DuringPreveiw");
@@ -133,7 +134,10 @@ public class AragonArm : Arm
             crosshair.fillAmount = 0.0f;
 
         for (int i = 0; i < _castFx.Length; i++)
+        {
             _castFx[i].Reinit();
+            _castFx[i].Play();
+        }
 
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/FugueAragon/DashStart", 1f, gameObject);
 
@@ -274,7 +278,7 @@ public class AragonArm : Arm
         {
             if (collider.transform.TryGetComponent<Door>(out Door door))
                 door.Trigger();
-            else if (collider.transform.parent.TryGetComponent<Door>(out Door door2))
+            else if (collider.transform.parent != null && collider.transform.parent.TryGetComponent<Door>(out Door door2))
                 door2.Trigger();
             else
                 Debug.LogWarning("crossed a trigger without a door");

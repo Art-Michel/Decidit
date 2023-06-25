@@ -52,10 +52,10 @@ public class MuseArm : Arm
     public override void StartPrevis()
     {
         if (_precastFx.Length > 0)
-            for (int i = 0; i < _castFx.Length; i++)
+            for (int i = 0; i < _precastFx.Length; i++)
             {
-                _precastFx[i].gameObject.SetActive(false);
-                _precastFx[i].gameObject.SetActive(true);
+                _precastFx[i].Reinit();
+                _precastFx[i].Play();
             }
         SoundManager.Instance.PlaySound("event:/SFX_Controller/Chants/FugueAragon/StartPreveiw", 1f, gameObject);
         loopInstance = FMODUnity.RuntimeManager.CreateInstance("event:/SFX_Controller/Chants/FugueAragon/DuringPreveiw");
@@ -88,8 +88,8 @@ public class MuseArm : Arm
 
         for (int i = 0; i < _castFx.Length; i++)
         {
-            _castFx[i].gameObject.SetActive(false);
-            _castFx[i].gameObject.SetActive(true);
+            _castFx[i].Reinit();
+            _castFx[i].Play();
         }
 
         _missile = _pooler.Get().GetComponent<Projectile>();

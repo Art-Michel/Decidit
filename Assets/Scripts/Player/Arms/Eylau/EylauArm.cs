@@ -101,10 +101,10 @@ public class EylauArm : Arm
     public override void StopPrevis()
     {
         if (_precastFx.Length > 0)
-            for (int i = 0; i < _castFx.Length; i++)
+            for (int i = 0; i < _precastFx.Length; i++)
             {
-                _precastFx[i].gameObject.SetActive(false);
-                _precastFx[i].gameObject.SetActive(true);
+                _precastFx[i].Reinit();
+                _precastFx[i].Play();
             }
         loopInstance.release();
         loopInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
@@ -119,7 +119,10 @@ public class EylauArm : Arm
         StopGlowing();
 
         for (int i = 0; i < _castFx.Length; i++)
+        {
             _castFx[i].Reinit();
+            _castFx[i].Play();
+        }
 
         if (_currentEnemy != null)
         {
