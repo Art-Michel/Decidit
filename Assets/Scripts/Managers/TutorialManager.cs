@@ -161,10 +161,18 @@ public class TutorialManager : LocalManager<TutorialManager>
 
     public void ResetTutorials()
     {
-        foreach (Tutorials tutorial in _tutorialWasSeen.Keys)
-        {
-            _tutorialWasSeen[tutorial] = false;
-        }
+        _tutorialWasSeen = new Dictionary<Tutorials, bool>
+    {
+        {Tutorials.Move, false},
+        {Tutorials.Jump, false},
+        {Tutorials.Walljump, false},
+        {Tutorials.Gun, false},
+        {Tutorials.Arm, false},
+        {Tutorials.Health, false},
+        {Tutorials.FugueSynergy, false},
+        {Tutorials.MuseSynergy, false},
+        {Tutorials.EylauSynergy, false},
+    };
     }
 
 }
