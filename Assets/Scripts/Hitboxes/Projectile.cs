@@ -230,9 +230,15 @@ public class Projectile : Hitbox
                 if (hit.transform.gameObject.layer == LayerMask.NameToLayer("EnemyHurtbox"))
                 {
                     if (hit.transform.TryGetComponent<Hurtbox>(out Hurtbox hurtbox))
+                    {
                         Hit(hurtbox.transform);
+                        LeaveImpact(hit.transform, transform.forward, false, hit.normal);
+                    }
                     else
-                        Hit(hit.transform);
+                    {
+                        Hit(hurtbox.transform);
+                        LeaveImpact(hit.transform, transform.forward, false, hit.normal);
+                    }
                     //+ explostion if projectile should spawn an explosion.
                     if (_explodesOnHit)
                         Explode(hit.normal);
@@ -251,9 +257,15 @@ public class Projectile : Hitbox
             else
             {
                 if (hit.transform.TryGetComponent<Hurtbox>(out Hurtbox hurtbox))
+                {
                     Hit(hurtbox.transform);
+                    LeaveImpact(hit.transform, transform.forward, false, hit.normal);
+                }
                 else
+                {
                     Hit(hit.transform);
+                    LeaveImpact(hit.transform, transform.forward, false, hit.normal);
+                }
 
                 if (_shouldLeaveImpact)
                     LeaveImpact(hit.transform, hit.point, false);
@@ -279,7 +291,7 @@ public class Projectile : Hitbox
     private void LeaveImpact(Transform obj, Vector3 point, bool fromBehind)
     {
         //wall or ground
-        if (obj.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        if (obj.gameObject.layer == LayerMask.NameToLayer("Ground") || obj.gameObject.layer == LayerMask.NameToLayer("EnemyHurtbox"))
         {
             PooledObject impactVfx = _impactVfxPooler.Get();
             //Hard limit for impacts so we don't get 10000 vfx and sfx when going through many walls
