@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
-
+using UnityEngine.VFX;
 
 public class ParticleShowDoor : MonoBehaviour
 {
@@ -36,6 +36,13 @@ public class ParticleShowDoor : MonoBehaviour
     Vector3 upDestination;
     Vector3 doorPosition;
     [SerializeField] float upMove;
+    #endregion
+
+    #region Emiting
+    [SerializeField] VisualEffect visualEffect;
+    [SerializeField] TrailRenderer trail1;
+    [SerializeField] GameObject trail2;
+    [SerializeField] GameObject lightFX;
     #endregion
 
     private void OnEnable()
@@ -90,7 +97,11 @@ public class ParticleShowDoor : MonoBehaviour
         else if(isUp)
         {
             isOnDoor = true;
-            gameObject.SetActive(false);
+            visualEffect.Stop();
+            trail1.enabled = false;
+            trail2.SetActive(false);
+            lightFX.SetActive(false);
+            rotator.gameObject.SetActive(false);
         }
 
         if(!isOnDoor)
