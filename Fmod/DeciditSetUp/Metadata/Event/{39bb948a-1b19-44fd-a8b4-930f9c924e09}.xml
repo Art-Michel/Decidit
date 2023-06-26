@@ -5,7 +5,7 @@
 			<value>SFX_PLAYER_Weapons_Aragon_Reload</value>
 		</property>
 		<property name="outputFormat">
-			<value>0</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{b3f28272-2cea-482b-9bbe-f1c2bff4b0a2}</destination>
@@ -82,7 +82,11 @@
 			<destination>{65bd795e-1f71-49d7-adb5-c55536229915}</destination>
 		</relationship>
 	</object>
-	<object class="MultiSound" id="{21082b5c-3018-458e-87df-316b1895ce3e}" />
+	<object class="MultiSound" id="{21082b5c-3018-458e-87df-316b1895ce3e}">
+		<relationship name="sounds">
+			<destination>{66c90626-9821-4502-82da-f3c15ecbf72b}</destination>
+		</relationship>
+	</object>
 	<object class="MixerBusEffectChain" id="{71b7ecb2-d216-49db-a3a8-21bab2d5d6fe}">
 		<relationship name="effects">
 			<destination>{0f5ad3db-c5b2-4f4c-8d39-9c699836590d}</destination>
@@ -95,6 +99,34 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{28f26110-0989-49e4-be1f-5daf9f5d87bc}" />
+	<object class="MultiSound" id="{66c90626-9821-4502-82da-f3c15ecbf72b}">
+		<relationship name="sounds">
+			<destination>{5451e65f-9a9b-481f-952c-9b4dd618a4be}</destination>
+			<destination>{64b3fb0f-15c7-482e-b399-c1b0e6dd4fab}</destination>
+			<destination>{ad2471f4-efe2-488c-a2f4-3c761f33fb16}</destination>
+			<destination>{f4270d65-b21a-4dfe-97c2-3e6a30f85ea8}</destination>
+		</relationship>
+	</object>
 	<object class="MixerBusFader" id="{0f5ad3db-c5b2-4f4c-8d39-9c699836590d}" />
 	<object class="MixerBusFader" id="{8dfc4c9f-c5cd-451f-ae20-5ac021a8ac69}" />
+	<object class="SingleSound" id="{5451e65f-9a9b-481f-952c-9b4dd618a4be}">
+		<relationship name="audioFile">
+			<destination>{68e0fbd8-5e99-4982-be3e-a3f4e708d87b}</destination>
+		</relationship>
+	</object>
+	<object class="SingleSound" id="{64b3fb0f-15c7-482e-b399-c1b0e6dd4fab}">
+		<relationship name="audioFile">
+			<destination>{5c2d9279-f152-4283-8b0b-e10142472753}</destination>
+		</relationship>
+	</object>
+	<object class="SingleSound" id="{ad2471f4-efe2-488c-a2f4-3c761f33fb16}">
+		<relationship name="audioFile">
+			<destination>{ccc51b93-7040-4061-beda-de50207c46bf}</destination>
+		</relationship>
+	</object>
+	<object class="SingleSound" id="{f4270d65-b21a-4dfe-97c2-3e6a30f85ea8}">
+		<relationship name="audioFile">
+			<destination>{8cbdcd16-1055-4cc0-9f4d-4f3c0a13de03}</destination>
+		</relationship>
+	</object>
 </objects>
