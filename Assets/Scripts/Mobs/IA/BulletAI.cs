@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class BulletAI : Health
 {
@@ -12,25 +13,16 @@ public class BulletAI : Health
     [SerializeField] float ratioEylau;
     [SerializeField] float rotationSpeed;
     float rotationY;
-    [SerializeField] MeshRenderer meshRenderer;
+    [SerializeField] VisualEffect VFX;
 
     [Header("Explosion")]
     [SerializeField] GameObject vfxExplosion;
     [SerializeField] float delayBeforeExplosion;
-    [SerializeField] Light lightExplosion;
-    [SerializeField] Light lightTranslusance;
 
     protected override void Awake()
     {
         base.Awake();
         rb = GetComponent<Rigidbody>();
-        lightExplosion.enabled = false;
-    }
-
-    private void OnEnable()
-    {
-        meshRenderer.enabled = true;
-        lightTranslusance.enabled = true;
     }
 
     protected override void Start()
@@ -41,8 +33,8 @@ public class BulletAI : Health
 
     protected override void Update()
     {
-        rotationY += rotationSpeed * Time.deltaTime;
-        transform.rotation = Quaternion.Euler(0, rotationY, 0);
+       /* rotationY += rotationSpeed * Time.deltaTime;
+        transform.rotation = Quaternion.Euler(0, rotationY, 0);*/
     }
 
     IEnumerator DestroyBullet()
@@ -76,8 +68,7 @@ public class BulletAI : Health
     void DelayBeforeExplosion()
     {
         rb.velocity = Vector3.zero;
-        lightTranslusance.enabled = false;
-        meshRenderer.enabled = false;
+        VFX.Stop();
         vfxExplosion.SetActive(true);
         Invoke("DestroyObject", 1f);
     }
