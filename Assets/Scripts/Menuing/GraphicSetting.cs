@@ -29,10 +29,27 @@ public class GraphicSetting : MonoBehaviour
         }
     }
 
+    public void EnableVSync()
+    {
+        int index = dropdownResolution.value;
+
+        switch (index)
+        {
+            case 0:
+                QualitySettings.vSyncCount = 1;
+                break;
+            case 1:
+                QualitySettings.vSyncCount = 0;
+                break;
+        }
+    }
+
     void Start()
     {
         Screen.SetResolution((int)resolution[0].x, (int)resolution[0].y,
                     FullScreenMode.FullScreenWindow, Screen.currentResolution.refreshRate);
+
+        QualitySettings.vSyncCount = 1;
         //Screen.SetResolution((int)quatreK.x, (int)quatreK.y, false);
     }
 
