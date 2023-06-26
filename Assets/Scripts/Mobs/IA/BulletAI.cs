@@ -67,9 +67,10 @@ public class BulletAI : Health
         }
     }
 
-    public override void TakeDamage(float damage)
+    public override bool TakeDamage(float damage)
     {
         Invoke("DelayBeforeExplosion", delayBeforeExplosion);
+        return true;
     }
 
     void DelayBeforeExplosion()

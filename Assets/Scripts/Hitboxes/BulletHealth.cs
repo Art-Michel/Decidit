@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class BulletHealth : Health
 {
-    public override void TakeDamage(float damage)
+    public override bool TakeDamage(float damage)
     {
+        return true;
         //Explose
     }
 }

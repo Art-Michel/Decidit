@@ -114,22 +114,23 @@ public class Hitbox : MonoBehaviour
     protected virtual void Hit(Transform targetCollider)
     {
         // Debug.Log(transform.name + " hit " + targetCollider.transform.name);
+        bool didDamage = false;
         if (targetCollider.TryGetComponent<Hurtbox>(out Hurtbox hurtbox))
         {
             Health health = hurtbox.HealthComponent;
             if (_shouldSplashBloodOnHit)
             {
                 if (targetCollider.CompareTag("WeakHurtbox") && _canCriticalHit)
-                    health.TakeCriticalDamage(Damage, transform.position, -transform.forward);
+                    didDamage = health.TakeCriticalDamage(Damage, transform.position, -transform.forward);
                 else
-                    health.TakeDamage(Damage, transform.position, -transform.forward);
+                    didDamage = health.TakeDamage(Damage, transform.position, -transform.forward);
             }
             else
             {
                 if (targetCollider.CompareTag("WeakHurtbox") && _canCriticalHit)
-                    health.TakeCriticalDamage(Damage);
+                    didDamage = health.TakeCriticalDamage(Damage);
                 else
-                    health.TakeDamage(Damage);
+                    didDamage = health.TakeDamage(Damage);
             }
 
             if (_knockbackForce > 0f)
@@ -157,9 +158,18 @@ public class Hitbox : MonoBehaviour
             }
 
             Blacklist.Add(health.transform, _delayBetweenHits);
+
+            if (didDamage)
+            {
+                PlayerHealth plh = health as PlayerHealth;
+                if (plh != null)
+                    plh.DirectionalHurtSound(gameObject);
+            }
         }
         else
             Blacklist.Add(targetCollider, _delayBetweenHits);
+
+
     }
 
     Vector3 MakeDirectionRelative(Vector3 direction)

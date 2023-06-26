@@ -151,11 +151,11 @@ public class PlayerHealth : Health
         UpdateChangeLifeFrame();
     }
 
-    public override void TakeDamage(float amount)
+    public override bool TakeDamage(float amount)
     {
-        SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/DamageTaken", 1f, gameObject);
+        // SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/DamageTaken", 1f, gameObject);
         if (IsInvulnerable || amount <= 0 || _isHurtInvulnerable || _isDebugInvulnerable)
-            return;
+            return false;
 
         if (_hasSecondChance && amount >= _hp && _hp > 1)
             amount = _hp - 1;
@@ -166,14 +166,18 @@ public class PlayerHealth : Health
 
         base.TakeDamage(amount);
 
-        //cool magic numbers proportionnal screenshake when getting hurt
-        // float shakeIntensity = _playerHurtShakeMaxStrength * Mathf.InverseLerp(0.0f, 40.0f, amount + 10.0f);
         Player.Instance.StartBounceShake(_hurtShake, transform.position);
 
         HandleLowHpVignette();
         StartDamageVignette(amount);
         StartHurtInvul();
         DisplayProbHealth();
+        return true;
+    }
+
+    public void DirectionalHurtSound(GameObject go)
+    {
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/CharactersNoises/DamageTaken", 1f, go);
     }
 
     public void ResetProbStartup()

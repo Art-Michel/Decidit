@@ -60,10 +60,10 @@ public class Health : MonoBehaviour
         DisplayHealth();
     }
 
-    public virtual void TakeDamage(float damage)
+    public virtual bool TakeDamage(float damage)
     {
         if (IsInvulnerable)
-            return;
+            return false;
 
         _hpBefore = Mathf.InverseLerp(0, _maxHp, _hp);
         _hp -= damage;
@@ -76,26 +76,28 @@ public class Health : MonoBehaviour
         {
             _hp = 0f;
             Death();
-            return;
         }
-
+        return true;
     }
 
-    public virtual void TakeCriticalDamage(float damage)
+    public virtual bool TakeCriticalDamage(float damage)
     {
         TakeDamage(damage * 3);
+        return true;
     }
 
-    public void TakeDamage(float amount, Vector3 position, Vector3 forward)
+    public bool TakeDamage(float amount, Vector3 position, Vector3 forward)
     {
         this.TakeDamage(amount);
         SplashBlood(position, forward);
+        return true;
     }
 
-    public void TakeCriticalDamage(float amount, Vector3 position, Vector3 forward)
+    public bool TakeCriticalDamage(float amount, Vector3 position, Vector3 forward)
     {
         this.TakeCriticalDamage(amount);
         SplashBlood(position, forward);
+        return true;
     }
 
     public virtual void Knockback(Vector3 direction)

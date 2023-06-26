@@ -178,7 +178,7 @@ public class EnemyHealth : Health
             SufferPoison();
     }
 
-    public override void TakeDamage(float amount)
+    public override bool TakeDamage(float amount)
     {
         if (PlayerManager.Instance.Instakill)
             amount *= 100;
@@ -202,9 +202,10 @@ public class EnemyHealth : Health
         //Stop probation from counting down when hitting an enemy
         //PlayerHealth.Instance.ResetProbStartup();
         base.TakeDamage(amount);
+        return true;
     }
 
-    public override void TakeCriticalDamage(float amount)
+    public override bool TakeCriticalDamage(float amount)
     {
         if (PlayerManager.Instance.Instakill)
             amount *= 100;
@@ -227,6 +228,7 @@ public class EnemyHealth : Health
             globalRefWallAI.CheckHP();
 
         PlayerManager.Instance.Crithitmarker();
+        return true;
     }
 
     public override void Knockback(Vector3 direction)
