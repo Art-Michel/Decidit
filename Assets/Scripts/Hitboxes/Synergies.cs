@@ -191,7 +191,7 @@ public class Synergies : LocalManager<Synergies>
         po.transform.position = start + ((end - start) / 2);
         po.transform.forward = (end - start).normalized;
 
-        IEnumerator coroutine = WooshEm(start, end);
+        IEnumerator coroutine = WooshEm(start, end, bullet);
         StartCoroutine(coroutine);
 
         foreach (AragonCloud cloud in ActiveClouds)
@@ -200,7 +200,7 @@ public class Synergies : LocalManager<Synergies>
         _enemies.Clear();
     }
 
-    private IEnumerator WooshEm(Vector3 start, Vector3 end)
+    private IEnumerator WooshEm(Vector3 start, Vector3 end, SynergyProjectile bullet)
     {
         yield return new WaitForSeconds(0.5f);
         foreach (Collider collider in Physics.OverlapCapsule(start, end, _radius, _enemiesMask))
@@ -223,7 +223,7 @@ public class Synergies : LocalManager<Synergies>
                 Vector3 finalDir = (toEnemy + (dir.normalized * dot));
                 finalDir = finalDir.normalized;
                 enemy.KnockbackSynergie(finalDir * _knockbackStrength);
-                enemy.TakeDamage(1);
+                enemy.TakeDamage(Mathf.Clamp(bullet.Damage, 0.5f, 1.0f));
             }
         }
         yield return null;
