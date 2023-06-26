@@ -76,6 +76,12 @@ public class AragonRevolver : Revolver
         _muzzleFlash.PlayAll();
     }
 
+    public override void StartReload()
+    {
+        SoundManager.Instance.PlaySound("event:/Alexis/SFX/SFX_PLAYER/SFX_PLAYER_Weapons/SFX_PLAYER_Weapons_Aragon/SFX_PLAYER_Weapons_Aragon_Reload", 1f, gameObject);
+        base.StartReload();
+    }
+
     // private void SetShot(Vector3 direction, float offsetLength)
     // {
     //     direction = direction.normalized;

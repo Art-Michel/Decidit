@@ -30,4 +30,10 @@ public class MuseRevolver : Revolver
             Animator.CrossFade("shooot", 0, 0);
         }
     }
+
+    public override void StartReload()
+    {
+        SoundManager.Instance.PlaySound("event:/Alexis/SFX/SFX_PLAYER/SFX_PLAYER_Weapons/SFX_PLAYER_Weapons_Muse/SFX_PLAYER_Weapons_Muse_Reload", 1f, gameObject);
+        base.StartReload();
+    }
 }

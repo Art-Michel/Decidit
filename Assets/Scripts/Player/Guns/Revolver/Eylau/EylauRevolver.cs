@@ -214,4 +214,10 @@ public class EylauRevolver : Revolver
         base.OnEnable();
         //ResetChargeLevel();
     }
+
+    public override void StartReload()
+    {
+        SoundManager.Instance.PlaySound("event:/Alexis/SFX/SFX_PLAYER/SFX_PLAYER_Weapons/SFX_PLAYER_Weapons_Eylau/SFX_PLAYER_Weapons_Eylau_Reload", 1f, gameObject);
+        base.StartReload();
+    }
 }

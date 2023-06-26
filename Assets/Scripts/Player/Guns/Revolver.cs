@@ -258,18 +258,14 @@ public class Revolver : MonoBehaviour
     }
 
     // Initiate reloading
-    public void StartReload()
+    public virtual void StartReload()
     {
         ClearBuffer();
         Animator.CrossFade("reload", 0.0f, 0);
         _reloadT = _reloadMaxTime;
         _reloadingWarning.fillAmount = 0f;
         _reloadingWarning.enabled = true;
-        ////PlaceHolderSoundManager.Instance.PlayReload();
-        SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/BaseShoot/Realod", 1f, gameObject);
-        //event:/Alexis/SFX/SFX_PLAYER/SFX_PLAYER_Weapons/SFX_PLAYER_Weapons_Aragon/SFX_PLAYER_Weapons_Aragon_Reload (ARAGON)
-        //event:/Alexis/SFX/SFX_PLAYER/SFX_PLAYER_Weapons/SFX_PLAYER_Weapons_Eylau/SFX_PLAYER_Weapons_Eylau_Reload (EYLEAU)
-        //event:/Alexis/SFX/SFX_PLAYER/SFX_PLAYER_Weapons/SFX_PLAYER_Weapons_Muse/SFX_PLAYER_Weapons_Muse_Reload (MUSE)
+
     }
     // update reloading state
     public void Reloading()

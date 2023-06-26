@@ -82,4 +82,10 @@ public class BaseRevolver : Revolver
     {
 
     }
+
+    public override void StartReload()
+    {
+        SoundManager.Instance.PlaySound("event:/SFX_Controller/Shoots/BaseShoot/Realod", 1f, gameObject);
+        base.StartReload();
+    }
 }
