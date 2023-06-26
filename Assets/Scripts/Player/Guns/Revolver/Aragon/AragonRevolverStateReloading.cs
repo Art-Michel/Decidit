@@ -12,7 +12,7 @@ public class AragonRevolverStateReloading : RevolverState
     public override void Begin()
     {
         //animation
-        _revolver.StartReloadFugue();
+        _revolver.StartReload();
     }
 
     public override void StateUpdate()

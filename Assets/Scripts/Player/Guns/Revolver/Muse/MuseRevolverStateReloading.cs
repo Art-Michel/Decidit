@@ -12,7 +12,7 @@ public class MuseRevolverStateReloading : RevolverState
     public override void Begin()
     {
         //animation
-        _revolver.StartReloadMuse();
+        _revolver.StartReload();
     }
 
     public override void StateUpdate()
