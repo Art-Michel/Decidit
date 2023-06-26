@@ -23,6 +23,7 @@ public class PropsMenu : MonoBehaviour
     [SerializeField] float rotSpeedY;
     [SerializeField] float rotationX;
     [SerializeField] float rotSpeedX;
+    [SerializeField] bool canRotateY;
 
     [SerializeField] List<GameObject> buttonList = new List<GameObject>();
 
@@ -69,7 +70,7 @@ public class PropsMenu : MonoBehaviour
                     rotationY -= rotSpeedY * Time.deltaTime * Input.GetAxis("Mouse X") /*Input.GetAxis("RightJoystickX")*/;
                     cloneProps.transform.localRotation = Quaternion.Euler(0, rotationY, 0);
 
-                    if(cloneProps.name != "Empty_Altar_PropsMenu(Clone)")
+                    if(canRotateY)
                     {
                         rotationX += rotSpeedX * Time.deltaTime * Input.GetAxis("Mouse Y");
                         float yRot = cloneProps.transform.GetChild(0).transform.localRotation.eulerAngles.y;
