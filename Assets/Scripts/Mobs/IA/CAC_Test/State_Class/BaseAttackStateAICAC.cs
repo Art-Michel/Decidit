@@ -29,7 +29,7 @@ namespace State.AICAC
             if(globalRef != null)
                 globalRef.agent.speed = 0;
 
-            SoundManager.Instance.PlaySound("event:/SFX_IA/Voras_SFX(Trash)/AttackPreview", 1f, gameObject);
+            SoundManager.Instance.PlaySound("event:/Alexis/SFX/SFX_MOBS/SFX_MOBS_Voras/SFX_MOBS_Voras_Spawn", 1f, gameObject);
         }
         private void Start()
         {

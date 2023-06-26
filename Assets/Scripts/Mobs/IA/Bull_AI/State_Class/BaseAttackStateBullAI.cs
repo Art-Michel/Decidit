@@ -218,6 +218,7 @@ namespace State.AIBull
         void Attack()
         {
             isAttacking = true;
+            SoundManager.Instance.PlaySound("event:/Alexis/SFX/SFX_MOBS/SFX_MOBS_Rusher/SFX_MOBS_Rusher_Attack", 1f, gameObject);
             AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Attack");
             if (globalRef.material_Instances.Material[0].mainTexture == globalRef.material_Instances.TextureBase)
                 ShowSoonAttack(false);

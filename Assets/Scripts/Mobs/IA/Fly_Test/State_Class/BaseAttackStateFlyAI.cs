@@ -51,7 +51,6 @@ namespace State.FlyAI
                 AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "Rush");
 
             //PLAY SOUND PRE ATTACK FLY
-            // TODO lucas va te faire encul�
         }
 
 
