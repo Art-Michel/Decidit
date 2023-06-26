@@ -90,6 +90,7 @@ public class ParticleShowDoor : MonoBehaviour
         else if(isUp)
         {
             isOnDoor = true;
+            gameObject.SetActive(false);
         }
 
         if(!isOnDoor)
