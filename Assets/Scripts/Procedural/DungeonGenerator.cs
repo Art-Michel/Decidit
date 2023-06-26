@@ -436,6 +436,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
         _nextColor = _mediumColor;
         _isColorTransitionning = true;
         _colorTransitionT = 0.0f;
+        PlayerHealth.Instance.StartChangeLifeFrame(1);
     }
 
     private void TransitionToHard()
@@ -445,6 +446,7 @@ public class DungeonGenerator : LocalManager<DungeonGenerator>
         _nextColor = _hardColor;
         _isColorTransitionning = true;
         _colorTransitionT = 0.0f;
+        PlayerHealth.Instance.StartChangeLifeFrame(2);
     }
 
     private void UpdateColorTransition()

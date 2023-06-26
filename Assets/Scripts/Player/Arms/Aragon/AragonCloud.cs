@@ -109,7 +109,6 @@ public class AragonCloud : PooledObject
             foreach (VisualEffect vfx in _vfx)
                 vfx.SetFloat("Fugue To Eylaw", colorLerp);
 
-
             if (_lifeSpanT >= _eylauLifeSpan)
             {
                 StartDisappearing();

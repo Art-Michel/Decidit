@@ -8,6 +8,33 @@ public class PlayerHealth : Health
 {
     public static PlayerHealth Instance;
 
+    [Foldout("Health Frame")]
+    [SerializeField] private Sprite[] _easyFrames;
+    [Foldout("Health Frame")]
+    [SerializeField] private Sprite[] _mediumFrames;
+    [Foldout("Health Frame")]
+    [SerializeField] private Sprite[] _hardFrames;
+    private Sprite[] _currentFrames;
+    [Foldout("Health Frame")]
+    [SerializeField] private Image _currentFrame;
+    [Foldout("Health Frame")]
+    [SerializeField] private Image _previousFrame;
+    [Foldout("Health Frame")]
+    [SerializeField] float _lifeUiChangeSpeed = 0.0f;
+    float _lifeUiChangeT = 0.0f;
+
+    [Foldout("Health Frame Dividers")]
+    [SerializeField] private Sprite[] _easyDividers;
+    [Foldout("Health Frame Dividers")]
+    [SerializeField] private Sprite[] _mediumDividers;
+    [Foldout("Health Frame Dividers")]
+    [SerializeField] private Sprite[] _hardDividers;
+    private Sprite[] _currentDividers;
+    [Foldout("Health Frame Dividers")]
+    [SerializeField] private Image _currentDivider;
+    [Foldout("Health Frame Dividers")]
+    [SerializeField] private Image _previousDivider;
+
 
     [Foldout("References")]
     [SerializeField] Player _player;
@@ -121,6 +148,7 @@ public class PlayerHealth : Health
         if (_isHealing) HandleHealVignette();
         if (_isBeingDamaged) HandleDamageVignette();
         if (_isHurtInvulnerable) HandleHurtInvul();
+        UpdateChangeLifeFrame();
     }
 
     public override void TakeDamage(float amount)
@@ -291,17 +319,52 @@ public class PlayerHealth : Health
         {
             case 0:
                 _maxHp = _easyHp;
+                _currentFrames = _easyFrames;
+                _currentDividers = _easyDividers;
                 _hurtInvulnerability = _easyInvulTime;
                 break;
             case 1:
                 _maxHp = _mediumHp;
+                _currentFrames = _mediumFrames;
+                _currentDividers = _mediumDividers;
                 _hurtInvulnerability = _mediumInvulTime;
                 break;
             case 2:
                 _maxHp = _hardHp;
+                _currentFrames = _hardFrames;
+                _currentDividers = _hardDividers;
                 _hurtInvulnerability = _hardInvulTime;
                 break;
         }
+
+        _currentDivider.sprite = _currentDividers[0];
+        _currentFrame.sprite = _currentFrames[0];
+        StartChangeLifeFrame(0);
+    }
+
+    public void StartChangeLifeFrame(int advance)
+    {
+        _previousFrame.sprite = _currentFrame.sprite;
+        _previousDivider.sprite = _currentDivider.sprite;
+
+        _currentFrame.sprite = _currentFrames[advance];
+        _currentDivider.sprite = _currentDividers[advance];
+
+        _previousFrame.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+        _currentFrame.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
+
+        _lifeUiChangeT = 0.0f;
+    }
+
+    private void UpdateChangeLifeFrame()
+    {
+        if (_lifeUiChangeT >= 1)
+            return;
+
+        _lifeUiChangeT += Time.deltaTime * _lifeUiChangeSpeed;
+
+        _previousFrame.color = new Color(1.0f, 1.0f, 1.0f, 1.0f - _lifeUiChangeT);
+        _currentFrame.color = new Color(1.0f, 1.0f, 1.0f, _lifeUiChangeT);
     }
 
     /// <summary>
