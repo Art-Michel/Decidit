@@ -20,7 +20,7 @@ public class FugueProjectile : SynergyProjectile
 
     protected override void Bounce(RaycastHit hit)
     {
-        this.Damage += 0.35f;
+        this.Damage += 0.5f;
         base.Bounce(hit);
     }
 

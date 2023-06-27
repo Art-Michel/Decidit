@@ -180,6 +180,7 @@ public class Projectile : Hitbox
                         //Reset direction to camera direction in order to cancel the fact we initially sent the
                         //projectile slightly angled to compensate the gun's offset
                         Direction = _cameraDirection;
+                        Damage -= 0.75f;
                     }
                 }
                 else if (!AlreadyHit(hit.transform))
