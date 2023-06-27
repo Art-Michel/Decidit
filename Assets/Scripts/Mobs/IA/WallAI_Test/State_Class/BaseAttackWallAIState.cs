@@ -158,8 +158,7 @@ namespace State.WallAI
                 //SoundManager.instance.PlaySoundMobOneShot(globalRef.audioSourceWallMob, SoundManager.instance.soundAndVolumeWallMob[4]);
                 //PLAY SOUND SHOOT WALL AI
                 // TO DO lucas va te faire encul�
-                SoundManager.Instance.PlaySound("event:/Alexis/SFX/SFX_MOBS/SFX_MOBS_Flying/SFX_MOBS_Flying_Attack", 1f, gameObject);
-                StartCoroutine("LaunchProjectileAnticipation");
+                SoundManager.Instance.PlaySound("event:/SFX_IA/Menas_SFX(Mur)/Shoot");
                 yield break;
             }
             else
