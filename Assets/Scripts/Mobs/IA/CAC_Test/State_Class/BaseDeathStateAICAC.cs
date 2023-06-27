@@ -21,12 +21,9 @@ namespace State.AICAC
 
         void Death()
         {
-            Debug.Log(globalRef.enemyHealth.Room.CurrentEnemiesInRoom);
-
             if (globalRef.enemyHealth.Room.CurrentEnemiesInRoom == 0)
             {
                 globalRef.vfxShowDoor.SetActive(true);
-                Debug.Log("Active VFX ShowDoor");
             }
 
             globalRef.managerAnticipMoveTrash.RemoveRef(globalRef);

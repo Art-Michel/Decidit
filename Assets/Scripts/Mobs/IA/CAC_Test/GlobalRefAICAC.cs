@@ -157,6 +157,8 @@ namespace State.AICAC
             if (enemyHealth._hp <= 0 && !isDead)
             {
                 isDead = true;
+                myAnimator.speed = 0;
+                hitBox.gameObject.SetActive(false);
                 //aICACVarianteState.SetListActiveAI();
                 ActiveState(StateControllerAICAC.AIState.BaseDeath);
             }

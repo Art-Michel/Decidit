@@ -40,6 +40,10 @@ namespace State.AICAC
         {
             BaseAttack();
             SmoothLookAt();
+
+            if(globalRef.enemyHealth._hp <= 0)
+                globalRef.hitBox.gameObject.SetActive(false);
+
         }
 
         private void LateUpdate()
@@ -65,10 +69,6 @@ namespace State.AICAC
                 {
                     stateControllerAICAC.SetActiveState(StateControllerAICAC.AIState.BaseMove);
                     return;
-                }
-                else if (material_Instances.Material[0].mainTexture != material_Instances.TextureBase)
-                {
-                    material_Instances.ChangeColorTexture(material_Instances.ColorPreAtatck);
                 }
                 /*if(globalRef.distPlayer < baseAttackAICACSO.attackRange && baseAttackAICACSO.currentAttackRate == baseAttackAICACSO.maxAttackRate)
                 {
@@ -118,10 +118,6 @@ namespace State.AICAC
 
         private void OnDisable()
         {
-            if(material_Instances != null)
-            {
-                material_Instances.ChangeColorTexture(material_Instances.ColorBase);
-            }
             if(baseAttackAICACSO != null)
             {
                 baseAttackAICACSO.currentAttackRate = baseAttackAICACSO.maxAttackRate;

@@ -172,6 +172,8 @@ namespace State.AIBull
             if (enemyHealth._hp <= 0 && !isDead)
             {
                 ActiveState(StateControllerBull.AIState.Death);
+                hitBoxAttack.gameObject.SetActive(false);
+                hitBoxRush.gameObject.SetActive(false);
                 isDead = true;
             }
         }

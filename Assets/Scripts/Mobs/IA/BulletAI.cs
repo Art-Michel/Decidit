@@ -14,6 +14,7 @@ public class BulletAI : Health
     [SerializeField] float rotationSpeed;
     float rotationY;
     [SerializeField] VisualEffect VFX;
+    [SerializeField] GameObject VFXObject;
 
     [Header("Explosion")]
     [SerializeField] GameObject vfxExplosion;
@@ -28,6 +29,11 @@ public class BulletAI : Health
     protected override void Start()
     {
         base.Start();
+    }
+
+    private void OnEnable()
+    {
+        VFXObject.SetActive(true);
         StartCoroutine("DestroyBullet");
     }
 
@@ -70,13 +76,19 @@ public class BulletAI : Health
         rb.velocity = Vector3.zero;
         VFX.Stop();
         vfxExplosion.SetActive(true);
-        Invoke("DestroyObject", 1f);
+        Invoke("DisableObject", 0.02f);
     }
 
-    void DestroyObject()
+    void DisableObject()
     {
-        gameObject.SetActive(false);
+        VFXObject.SetActive(false);
+        Invoke("disableVFXExplosion", 1f);
+    }
+
+    void disableVFXExplosion()
+    {
         vfxExplosion.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     public void OnDisable()
