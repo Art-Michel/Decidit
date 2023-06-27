@@ -460,6 +460,8 @@ public class EnemyHealth : Health
         if (_isPoisoned)
             return;
 
+        foreach (Material material in _material)
+            material.SetInt("_Posion_Boolean", 1);
         _isPoisoned = true;
         _currentPoisonStrength = damagePerTick;
         _poisonDuration = poisonDuration;
@@ -489,6 +491,8 @@ public class EnemyHealth : Health
     {
         _isPoisoned = false;
         _hpUi.color = _normalHpColor;
+        foreach (Material material in _material)
+            material.SetInt("_Posion_Boolean", 0);
     }
     #endregion
 }
