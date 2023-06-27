@@ -28,6 +28,7 @@ Material:
   m_ValidKeywords:
   - _ALPHATEST_ON
   - _ALPHATOMASK_ON
+  - _DOUBLESIDED_ON
   - _ENABLE_FOG_ON_TRANSPARENT
   - _MASKMAP
   - _MATERIAL_FEATURE_TRANSMISSION
@@ -42,14 +43,13 @@ Material:
   - _NORMALMAP_TANGENT_SPACE3
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
-  m_DoubleSidedGI: 0
+  m_DoubleSidedGI: 1
   m_CustomRenderQueue: 3000
   stringTagMap:
     RenderType: Transparent
   disabledShaderPasses:
   - RayTracingPrepass
   - MOTIONVECTORS
-  - TransparentBackface
   - TransparentDepthPostpass
   m_SavedProperties:
     serializedVersion: 3
@@ -341,7 +341,7 @@ Material:
     - _Anisotropy: 0
     - _BlendMode: 4
     - _CoatMask: 0
-    - _CullMode: 2
+    - _CullMode: 0
     - _CullModeForward: 2
     - _Cutoff: 0
     - _DepthOffsetEnable: 0
@@ -373,7 +373,7 @@ Material:
     - _DisplacementLockObjectScale: 1
     - _DisplacementLockTilingScale: 1
     - _DisplacementMode: 0
-    - _DoubleSidedEnable: 0
+    - _DoubleSidedEnable: 1
     - _DoubleSidedGIMode: 0
     - _DoubleSidedNormalMode: 1
     - _DstBlend: 10
@@ -542,7 +542,7 @@ Material:
     - _Thickness2: 1
     - _Thickness3: 1
     - _TransmissionEnable: 1
-    - _TransparentBackfaceEnable: 0
+    - _TransparentBackfaceEnable: 1
     - _TransparentCullMode: 2
     - _TransparentDepthPostpassEnable: 0
     - _TransparentDepthPrepassEnable: 1
