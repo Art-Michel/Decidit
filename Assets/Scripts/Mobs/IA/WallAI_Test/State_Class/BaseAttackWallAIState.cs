@@ -43,43 +43,18 @@ namespace State.WallAI
         {
             SmoothLookAtYAxisAttack();
 
-            if (!activeAttack && baseAttackWallAISO.currentRafaleCount > 0 && baseAttackWallAISO.currentShootCount > 0)
+            if (!activeAttack && baseAttackWallAISO.currentRafaleCount > 1 && baseAttackWallAISO.currentShootCount > 0)
             {
-                LaunchAttack();
+                if(baseAttackWallAISO.bulletCount >0 || baseAttackWallAISO.bulletCountSpread >0) LaunchAttack();
             }
-            else
-            {
-                StopAttack();
-            }
-
-            if(!isFiring)
-                CheckIfPlayerIsBack();
-            else
-            {
-                //globalRef.myAnimator.speed = 0;
-            }
-        }
-
-        void CheckIfPlayerIsBack()
-        {
-            Vector3 playerForward = globalRef.playerTransform.GetChild(0).forward;
-
-            float dot = Vector3.Dot(playerForward, (globalRef.transform.position - globalRef.playerTransform.position).normalized);
-            if (dot > 0.65f)
-            {
-                //AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "LaunchAttack");
-               // globalRef.myAnimator.speed = 1;
-            }
-            else
-            {
-                //globalRef.myAnimator.speed = baseAttackWallAISO.speedSlowAnimAttack;
-            }
+            else StopAttack();
         }
 
         void LaunchAttack()
         {
             if(this.enabled)
             {
+                Debug.Log("LaunchAttack");
                 activeAttack = true;
                 globalRef.agent.speed = baseAttackWallAISO.stopSpeed;
                 AnimatorManager.instance.SetAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "LaunchAttack");
@@ -124,10 +99,9 @@ namespace State.WallAI
                     }
                     else
                     {
-                        if (baseAttackWallAISO.bulletCount <= 0 && baseAttackWallAISO.currentRafaleCount > 0)
-                        {
-                            ResetBulletCount();
-                        }
+                        ResetBulletCount();
+                        baseAttackWallAISO.currentRafaleCount--;
+                        StartCoroutine("LaunchProjectileAnticipation");
                     }
                 }
             }
@@ -147,33 +121,21 @@ namespace State.WallAI
 
             if (baseAttackWallAISO.bulletCount > 0)
             {
+                if(baseAttackWallAISO.currentRafaleCount == 1)
+                    AnimatorManager.instance.DisableAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "LaunchAttack");
+
                 globalRef.spawnBullet.LookAt(baseAttackWallAISO.playerPredicDir);
                 //Rigidbody cloneBullet = Instantiate(baseAttackWallAISO.bulletPrefab, globalRef.spawnBullet.position, globalRef.spawnBullet.rotation);
                 //cloneBullet.AddRelativeForce(Vector3.forward * CalculateSpeedProjectile(), ForceMode.VelocityChange);
 
                 globalRef.poolBullet.CallBullet(globalRef.spawnBullet.position, globalRef.spawnBullet.rotation, 
                                                 Vector3.forward * CalculateSpeedProjectile(), ForceMode.VelocityChange);
-                baseAttackWallAISO.bulletCount--;
 
-                //SoundManager.instance.PlaySoundMobOneShot(globalRef.audioSourceWallMob, SoundManager.instance.soundAndVolumeWallMob[4]);
+                baseAttackWallAISO.bulletCount--;
+                SoundManager.Instance.PlaySound("event:/SFX_IA/Menas_SFX(Mur)/Shoot", 1f, gameObject);
+                StartCoroutine("LaunchProjectileAnticipation");
                 //PLAY SOUND SHOOT WALL AI
                 // TO DO lucas va te faire encul�
-                SoundManager.Instance.PlaySound("event:/SFX_IA/Menas_SFX(Mur)/Shoot", 1f , gameObject);
-                yield break;
-            }
-            else
-            {
-                isFiring = false;
-
-                if (baseAttackWallAISO.bulletCount <= 0 && baseAttackWallAISO.currentRafaleCount > 0)
-                {
-                    ResetBulletCount();
-                }
-
-                if (baseAttackWallAISO.currentRafaleCount>0)
-                    baseAttackWallAISO.currentRafaleCount--;
-
-                StopCoroutine("LaunchProjectileAnticipation");
                 yield break;
             }
         }
@@ -226,11 +188,13 @@ namespace State.WallAI
 
         void StopAttack()
         {
-            if (baseAttackWallAISO.currentRafaleCount <= 0 || baseAttackWallAISO.currentShootCount <=0)
+            if (baseAttackWallAISO.currentRafaleCount <= 1 || baseAttackWallAISO.currentShootCount <=0)
             {
                 AnimatorManager.instance.DisableAnimation(globalRef.myAnimator, globalRef.globalRefAnimator, "LaunchAttack");
                 activeAttack = false;
-                ReturnBaseMove();
+
+                if(baseAttackWallAISO.bulletCount <=0 || baseAttackWallAISO.bulletCountSpread <=0)
+                    ReturnBaseMove();
             }
         }
 
