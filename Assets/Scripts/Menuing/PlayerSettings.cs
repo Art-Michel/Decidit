@@ -83,10 +83,19 @@ public class PlayerSettings : LocalManager<PlayerSettings>
     public void LoadSoundSettings()
     {
         // UnityEngine.Debug.Log(SaveLoadManager.LoadSoundSet().masterVolumeNumber);
-
-        sliderMasterVolumeNumber.value = SaveLoadManager.LoadSoundSet().masterVolumeNumber * 100;
-        sliderSFXVolumeNumber.value = SaveLoadManager.LoadSoundSet().SFXVolumeNumber * 100;
-        slidermusicVolumeNumber.value = SaveLoadManager.LoadSoundSet().musicVolumeNumber * 100;
+        
+        if(SaveLoadManager.LoadSoundSet()!= null)
+        {
+            sliderMasterVolumeNumber.value = SaveLoadManager.LoadSoundSet().masterVolumeNumber * 100;
+            sliderSFXVolumeNumber.value = SaveLoadManager.LoadSoundSet().SFXVolumeNumber * 100;
+            slidermusicVolumeNumber.value = SaveLoadManager.LoadSoundSet().musicVolumeNumber * 100;
+        }
+        else
+        {
+            sliderMasterVolumeNumber.value = SaveLoadManager.LoadSoundSet().masterVolumeNumber * 50;
+            sliderSFXVolumeNumber.value = SaveLoadManager.LoadSoundSet().SFXVolumeNumber * 50;
+            slidermusicVolumeNumber.value = SaveLoadManager.LoadSoundSet().musicVolumeNumber * 50;
+        }
 
         MasterVolumeUpdate(sliderMasterVolumeNumber);
         SFXVolumeUpdate(sliderSFXVolumeNumber);
@@ -123,12 +132,30 @@ public class PlayerSettings : LocalManager<PlayerSettings>
     public void SavePrefs()
     {
         //TMTC ça save
-        PlayerPrefs.GetFloat("ResolutionWidith", resolution.width);
-        PlayerPrefs.GetFloat("ResolutionHeight", resolution.height);
-        PlayerPrefs.SetFloat("XSensivity", xSensivity);
-        PlayerPrefs.SetFloat("YSensivity", ySensivity);
-        PlayerPrefs.SetFloat("XControllerSensivity", xControllerSensivity);
-        PlayerPrefs.SetFloat("YControllerSensivity", yControllerSensivity);
+        if (PlayerPrefs.HasKey("ResolutionWidith"))
+            PlayerPrefs.GetFloat("ResolutionWidith", resolution.width);
+        else PlayerPrefs.GetFloat("ResolutionWidith", 1920f);
+
+        if (PlayerPrefs.HasKey("ResolutionHeight"))
+            PlayerPrefs.GetFloat("ResolutionHeight", resolution.height);
+        else PlayerPrefs.GetFloat("ResolutionHeight", 1080f);
+
+        if (PlayerPrefs.HasKey("XSensivity"))
+            PlayerPrefs.SetFloat("XSensivity", xSensivity);
+        else PlayerPrefs.SetFloat("XSensivity", 10f);
+
+        if (PlayerPrefs.HasKey("YSensivity"))
+            PlayerPrefs.SetFloat("YSensivity", ySensivity);
+        else PlayerPrefs.SetFloat("YSensivity", 10f);
+
+        if (PlayerPrefs.HasKey("XControllerSensivity"))
+            PlayerPrefs.SetFloat("XControllerSensivity", xControllerSensivity);
+        else PlayerPrefs.SetFloat("XControllerSensivity", 10f);
+
+        if (PlayerPrefs.HasKey("YControllerSensivity"))
+            PlayerPrefs.SetFloat("YControllerSensivity", yControllerSensivity);
+        else PlayerPrefs.SetFloat("YControllerSensivity", 10f);
+
         /*PlayerPrefs.SetFloat("MasterBaseVolume", masterVolumeNumber);
         PlayerPrefs.SetFloat("SFXBaseVolume", SFXVolumeNumber);
         PlayerPrefs.SetFloat("MusicBaseVolume", musicVolumeNumber);*/
