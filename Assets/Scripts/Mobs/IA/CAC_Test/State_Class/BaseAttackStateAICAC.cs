@@ -38,10 +38,12 @@ namespace State.AICAC
 
         private void Update()
         {
-            BaseAttack();
-            SmoothLookAt();
-
-            if(globalRef.enemyHealth._hp <= 0)
+            if (globalRef.enemyHealth._hp > 0)
+            {
+                BaseAttack();
+                SmoothLookAt();
+            }
+            else
                 globalRef.hitBox.gameObject.SetActive(false);
 
         }

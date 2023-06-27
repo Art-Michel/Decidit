@@ -127,6 +127,9 @@ namespace State.AICAC
                 myAnimator.speed = 1 / (slowRatio / 2);
             else
                 myAnimator.speed = 1;
+
+            if(enemyHealth._hp<=0)
+                hitBox.gameObject.SetActive(false);
         }
 
         public void ActiveState(StateControllerAICAC.AIState newState)
