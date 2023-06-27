@@ -148,7 +148,8 @@ namespace State.AICAC
 
         public void ActiveAttractionState()
         {
-            ActiveState(StateControllerAICAC.AIState.Attraction);
+            if(enemyHealth._hp > 0)
+                ActiveState(StateControllerAICAC.AIState.Attraction);
         }
 
         public void CheckHP()

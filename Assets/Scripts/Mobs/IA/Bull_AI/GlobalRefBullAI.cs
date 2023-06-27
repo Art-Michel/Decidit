@@ -163,7 +163,8 @@ namespace State.AIBull
 
         public void ActiveAttractionState()
         {
-            ActiveState(StateControllerBull.AIState.Attraction);
+            if (enemyHealth._hp > 0)
+                ActiveState(StateControllerBull.AIState.Attraction);
         }
 
         public void CheckHP()

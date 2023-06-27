@@ -147,7 +147,8 @@ namespace State.FlyAI
 
         public void ActiveAttractionState()
         {
-            ActiveState(StateControllerFlyAI.AIState.Attraction);
+            if(enemyHealth._hp > 0)
+                ActiveState(StateControllerFlyAI.AIState.Attraction);
         }
 
         public void CheckHP()
