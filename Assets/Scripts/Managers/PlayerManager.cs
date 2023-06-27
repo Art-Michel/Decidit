@@ -276,6 +276,7 @@ public class PlayerManager : LocalManager<PlayerManager>
 
     public void StopAltarMenuing()
     {
+        TutorialVideoManager.Instance.StopClips();
         _currentAltar = null;
         MenuManager.Instance.StopMenuing();
         Player.Instance.PlayerHealth.IsInvulnerable = false;

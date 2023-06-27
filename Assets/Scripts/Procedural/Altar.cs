@@ -87,6 +87,7 @@ public class Altar : MonoBehaviour, IInteractable
         if (!_hasBeenUsed)
         {
             PlayerManager.Instance.StartAltarMenuing(this);
+            TutorialVideoManager.Instance.StartClips(this.Chant);
             StartMovingPlayer();
             // _isPlayerInside = true;
         }
