@@ -49,6 +49,7 @@ namespace State.AIBull
         public Hitbox hitBoxAttack;
         public BoxCollider detectOtherAICollider;
         public bool launchRush;
+        public Transform[] RayRush;
         public Transform RayRushRight;
         public Transform RayRushMiddle;
         public Transform RayRushLeft;

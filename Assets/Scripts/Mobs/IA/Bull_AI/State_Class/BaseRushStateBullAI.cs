@@ -237,13 +237,31 @@ namespace State.AIBull
                 switch (indexRay)
                 {
                     case 0:
-                        CheckWall(globalRef.RayRushRight);
+                        CheckWall(globalRef.RayRush[indexRay]);
                         break;
                     case 1:
-                        CheckWall(globalRef.RayRushMiddle);
+                        CheckWall(globalRef.RayRush[indexRay]);
                         break;
                     case 2:
-                        CheckWall(globalRef.RayRushLeft);
+                        CheckWall(globalRef.RayRush[indexRay]);
+                        break;
+                    case 3:
+                        CheckWall(globalRef.RayRush[indexRay]);
+                        break;
+                    case 4:
+                        CheckWall(globalRef.RayRush[indexRay]);
+                        break;
+                    case 5:
+                        CheckWall(globalRef.RayRush[indexRay]);
+                        break;
+                    case 6:
+                        CheckWall(globalRef.RayRush[indexRay]);
+                        break;
+                    case 7:
+                        CheckWall(globalRef.RayRush[indexRay]);
+                        break;
+                    case 8:
+                        CheckWall(globalRef.RayRush[indexRay]);
                         break;
                 }
             }
@@ -262,7 +280,7 @@ namespace State.AIBull
                     StopRush();*/
             }
 
-            if (indexRay < 2)
+            if (indexRay < globalRef.RayRush.Length-1)
                 indexRay++;
             else
                 indexRay = 0;

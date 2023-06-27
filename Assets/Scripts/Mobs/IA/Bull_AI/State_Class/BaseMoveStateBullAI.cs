@@ -11,6 +11,7 @@ namespace State.AIBull
         NavMeshPath path;
         [SerializeField] Vector3 Destination;
         [SerializeField] bool variantMove;
+        [SerializeField] float y_DistPlayer;
 
         [Header("Nav Link")]
         [SerializeField] float maxDurationNavLink;
@@ -245,9 +246,19 @@ namespace State.AIBull
         {
             Vector3 newDestination;
             float distPlayer = Vector3.Distance(globalRef.transform.position, globalRef.playerTransform.position);
+            y_DistPlayer = (globalRef.transform.position.y - globalRef.playerTransform.position.y);
             globalRef.agent.speed = globalRef.baseMoveBullSO.baseSpeed;
 
-            if(distPlayer > 10 && variantMove)
+            if (y_DistPlayer < -1)
+            {
+                variantMove = false;
+            }
+            else if(hitPlayer || y_DistPlayer > -0.4)
+            {
+                variantMove = true;
+            }
+
+            if (distPlayer > 10 && variantMove)
             {
                 Vector3 dir = globalRef.playerTransform.position - globalRef.transform.position;
                 Vector3 left = Vector3.Cross(dir, Vector3.up).normalized;
@@ -294,6 +305,7 @@ namespace State.AIBull
             }
             return newDestination;
         }
+
         void SlowSpeed(bool active)
         {
             if (active)
@@ -312,10 +324,6 @@ namespace State.AIBull
         {
             if(globalRef.distPlayer < globalRef.rushBullSO.rushDistance && globalRef.distPlayer > globalRef.baseAttackBullSO.distLaunchAttackState && hitPlayer && !isOnNavLink)
                 stateController.SetActiveState(StateControllerBull.AIState.Rush);
-
-            if (!hitPlayer)
-                variantMove = false;
-
         }
 
         void SmoothLookAtPlayer()
