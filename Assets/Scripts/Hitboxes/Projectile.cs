@@ -342,7 +342,9 @@ public class Projectile : Hitbox
         //wall or ground
         if (obj.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
-            PooledObject impactVfx = _impactVfxPooler.Get();
+            PooledObject impactVfx = null;
+            if (_impactVfxPooler != null)
+                impactVfx = _impactVfxPooler.Get();
             //Hard limit for impacts so we don't get 10000 vfx and sfx when going through many walls
             if (impactVfx == null)
                 return;
@@ -362,7 +364,9 @@ public class Projectile : Hitbox
         //flesh
         else if (obj.gameObject.layer == LayerMask.NameToLayer("Flesh"))
         {
-            PooledObject splashVfx = _fleshSplashVfxPooler.Get();
+            PooledObject splashVfx = null;
+            if (_fleshSplashVfxPooler != null)
+                splashVfx = _fleshSplashVfxPooler.Get();
             //Hard limit for impacts so we don't get 10000 vfx and sfx when going through many walls
             if (splashVfx == null)
                 return;
