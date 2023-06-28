@@ -180,7 +180,7 @@ public class Projectile : Hitbox
                         //Reset direction to camera direction in order to cancel the fact we initially sent the
                         //projectile slightly angled to compensate the gun's offset
                         Direction = _cameraDirection;
-                        Damage -= 1f;
+                        Damage = Mathf.Clamp(Damage - 2.0f, 1.0f, 5.0f);
                     }
                 }
                 else if (!AlreadyHit(hit.transform))

@@ -78,7 +78,6 @@ public class TutorialManager : LocalManager<TutorialManager>
             return false;
 
 
-        //TODO Lucas Son tuto
         _tutoDictionary[tutorial].Enable();
         _tutorialWasSeen[tutorial] = true;
         return true;
@@ -94,7 +93,6 @@ public class TutorialManager : LocalManager<TutorialManager>
 
     private bool StartSynergyTutorial()
     {
-        //TODO Lucas Son tuto
         switch (Player.Instance.CurrentArm.Chant)
         {
             case Synergies.Chants.ARAGON:
