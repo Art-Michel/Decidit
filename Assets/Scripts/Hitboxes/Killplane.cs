@@ -50,6 +50,9 @@ public class Killplane : LocalManager<Killplane>
         }
 
         else
-            entity.transform.position = _spawnPoint.position;
+        {
+            entity.GetComponentInChildren<Health>().TakeDamage(9);
+            Debug.Log("Thanos snapped " + entity.transform.name);
+        }
     }
 }
