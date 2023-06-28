@@ -27,6 +27,8 @@ public class PropsMenu : MonoBehaviour
 
     [SerializeField] List<GameObject> buttonList = new List<GameObject>();
 
+    [SerializeField] CameraPropsMenu camePropsMenu;
+    [SerializeField] bool zoomGun;
     void Start()
     {
         Time.timeScale = 1;
@@ -40,6 +42,8 @@ public class PropsMenu : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
+
+        camePropsMenu = GameObject.Find("CM vcam1").GetComponent<CameraPropsMenu>();
     }
 
     IEnumerator SelectFirstButton()
@@ -127,6 +131,8 @@ public class PropsMenu : MonoBehaviour
             ResetRotation();
             cloneProps.transform.localPosition = Vector3.zero;
             cloneProps.transform.localScale = new Vector3(1, 1, 1);
+
+            camePropsMenu.zoomMax = zoomGun;
         }
     }
 

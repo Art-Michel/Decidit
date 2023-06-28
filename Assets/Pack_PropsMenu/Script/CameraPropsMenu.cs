@@ -11,8 +11,11 @@ public class CameraPropsMenu : MonoBehaviour
 
     [Header("Zoom Parameter")]
     [SerializeField] float speedZoom;
-    [SerializeField] Vector2 zoomMinMax;
+    [SerializeField] Vector2 zoomMinMax_Base;
+    [SerializeField] Vector2 zoomMinMax_Max;
+    [SerializeField] Vector2 zoomMinMax_Current;
     float currenZoomRation;
+    public bool zoomMax;
 
     void Awake()
     {
@@ -20,13 +23,18 @@ public class CameraPropsMenu : MonoBehaviour
         cineCam = GetComponent<CinemachineVirtualCamera>();
         cineCamPOV = cineCam.GetCinemachineComponent<CinemachinePOV>();
         baseRotCam = new Vector2(cineCamPOV.m_HorizontalAxis.Value, cineCamPOV.m_VerticalAxis.Value);
-        currenZoomRation = zoomMinMax.y;
+        currenZoomRation = zoomMinMax_Current.y;
     }
 
     void Update()
     {
         Zoom();
         RotationCam();
+
+        if (zoomMax)
+            zoomMinMax_Current = zoomMinMax_Max;
+        else
+            zoomMinMax_Current = zoomMinMax_Base;
     }
 
     void RotationCam()
@@ -47,19 +55,19 @@ public class CameraPropsMenu : MonoBehaviour
     {
         if (Input.GetAxis("Mouse ScrollWheel") > 0)
         {
-            if (cineCam.m_Lens.FieldOfView > zoomMinMax.x)
+            if (cineCam.m_Lens.FieldOfView > zoomMinMax_Current.x)
                 currenZoomRation -= Time.deltaTime * speedZoom;
             else
-                currenZoomRation = zoomMinMax.x;
+                currenZoomRation = zoomMinMax_Current.x;
         }
         else if (Input.GetAxis("Mouse ScrollWheel") < 0)
         {
-            if (cineCam.m_Lens.FieldOfView < zoomMinMax.y)
+            if (cineCam.m_Lens.FieldOfView < zoomMinMax_Current.y)
                 currenZoomRation += Time.deltaTime * speedZoom;
             else
-                currenZoomRation = zoomMinMax.y;
+                currenZoomRation = zoomMinMax_Current.y;
         }
-        currenZoomRation = Mathf.Clamp(currenZoomRation, zoomMinMax.x, zoomMinMax.y);
+        currenZoomRation = Mathf.Clamp(currenZoomRation, zoomMinMax_Current.x, zoomMinMax_Current.y);
         cineCam.m_Lens.FieldOfView = currenZoomRation;
     }
 
@@ -68,6 +76,6 @@ public class CameraPropsMenu : MonoBehaviour
         Debug.Log("ResetCam");
         cineCamPOV.m_HorizontalAxis.Value = baseRotCam.x;
         cineCamPOV.m_VerticalAxis.Value = baseRotCam.y;
-        currenZoomRation = zoomMinMax.y;
+        currenZoomRation = zoomMinMax_Current.y;
     }       
 }
