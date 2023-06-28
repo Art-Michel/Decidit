@@ -76,7 +76,7 @@ public class BulletAI : Health
         rb.velocity = Vector3.zero;
         VFX.Stop();
         vfxExplosion.SetActive(true);
-        Invoke("DisableObject", 0.02f);
+        Invoke("DisableObject", 0.001f);
     }
 
     void DisableObject()
