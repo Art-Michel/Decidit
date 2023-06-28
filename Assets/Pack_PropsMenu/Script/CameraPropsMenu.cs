@@ -30,11 +30,6 @@ public class CameraPropsMenu : MonoBehaviour
     {
         Zoom();
         RotationCam();
-
-        if (zoomMax)
-            zoomMinMax_Current = zoomMinMax_Max;
-        else
-            zoomMinMax_Current = zoomMinMax_Base;
     }
 
     void RotationCam()
@@ -74,6 +69,11 @@ public class CameraPropsMenu : MonoBehaviour
     public void ResetCam()
     {
         Debug.Log("ResetCam");
+        if (zoomMax)
+            zoomMinMax_Current = zoomMinMax_Max;
+        else
+            zoomMinMax_Current = zoomMinMax_Base;
+
         cineCamPOV.m_HorizontalAxis.Value = baseRotCam.x;
         cineCamPOV.m_VerticalAxis.Value = baseRotCam.y;
         currenZoomRation = zoomMinMax_Current.y;

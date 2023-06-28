@@ -26,9 +26,8 @@ public class PropsMenu : MonoBehaviour
     [SerializeField] bool canRotateY;
 
     [SerializeField] List<GameObject> buttonList = new List<GameObject>();
-
-    [SerializeField] CameraPropsMenu camePropsMenu;
     [SerializeField] bool zoomGun;
+
     void Start()
     {
         Time.timeScale = 1;
@@ -42,8 +41,6 @@ public class PropsMenu : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
-
-        camePropsMenu = GameObject.Find("CM vcam1").GetComponent<CameraPropsMenu>();
     }
 
     IEnumerator SelectFirstButton()
@@ -76,6 +73,7 @@ public class PropsMenu : MonoBehaviour
 
                     if(canRotateY)
                     {
+                        rotationX = cloneProps.transform.GetChild(0).transform.localEulerAngles.z;
                         rotationX += rotSpeedX * Time.deltaTime * Input.GetAxis("Mouse Y");
                         float yRot = cloneProps.transform.GetChild(0).transform.localRotation.eulerAngles.y;
                         cloneProps.transform.GetChild(0).transform.localRotation = Quaternion.Euler(0, yRot, rotationX);
@@ -93,8 +91,8 @@ public class PropsMenu : MonoBehaviour
             {
                 transform.Find("Unselected").gameObject.SetActive(false);
                 transform.Find("Selected").gameObject.SetActive(true);
-                loreText.enabled = true;
-                fond.enabled = true;
+                //loreText.enabled = true;
+                //fond.enabled = true;
                 isActive = true;
             }
         }
@@ -104,8 +102,8 @@ public class PropsMenu : MonoBehaviour
             {
                 transform.Find("Unselected").gameObject.SetActive(true);
                 transform.Find("Selected").gameObject.SetActive(false);
-                loreText.enabled = false;
-                fond.enabled = false;
+                //loreText.enabled = false;
+               //fond.enabled = false;
                 isActive = false;
             }
         }
@@ -115,8 +113,6 @@ public class PropsMenu : MonoBehaviour
     {
         if (cloneProps == null)
         {
-            CameraPropsMenu.instance.ResetCam();
-
             if (spawnProps.childCount > 0)
             {
                 for (int i = 0; i < spawnProps.childCount; i++)
@@ -125,14 +121,15 @@ public class PropsMenu : MonoBehaviour
                 }
             }
             cloneProps = Instantiate(prefabProps);
-            loreText.enabled = true;
-            fond.enabled = true;
+            //loreText.enabled = true;
+           // fond.enabled = true;
             cloneProps.transform.parent = spawnProps;
             ResetRotation();
             cloneProps.transform.localPosition = Vector3.zero;
             cloneProps.transform.localScale = new Vector3(1, 1, 1);
 
-            camePropsMenu.zoomMax = zoomGun;
+            CameraPropsMenu.instance.zoomMax = zoomGun;
+            CameraPropsMenu.instance.ResetCam();
         }
     }
 
