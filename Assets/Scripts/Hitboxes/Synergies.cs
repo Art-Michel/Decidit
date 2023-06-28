@@ -256,8 +256,6 @@ public class Synergies : LocalManager<Synergies>
     [SerializeField]
     Pooler _eylauMaladeVfxPooler;
     [Foldout("Eylau -> Malades")]
-    [SerializeField] float _zapDamage = 2;
-    [Foldout("Eylau -> Malades")]
     [SerializeField] PerlinShake.Params _zapShake;
 
     public void EylauOnMalade(Vector3 position, float damage)
@@ -276,7 +274,7 @@ public class Synergies : LocalManager<Synergies>
             arc.SetVector3("Start_Pos", position);
             arc.SetVector3("End_Pos", enemy.transform.position);
             enemy.ZapSlow();
-            enemy.TakeDamage(damage * _zapDamage);
+            enemy.TakeDamage(Mathf.Clamp(damage, 0.75f, 1.5f));
             // enemy.RecoverFromSickness();
         }
     }
