@@ -2,10 +2,12 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
 using System;
+using UnityEngine.UI;
 
 public class DisplayTimer : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI txt;
+    [SerializeField] Image txt2;
     PlayerInputMap _inputs;
     float currentTime;
 
@@ -49,9 +51,15 @@ public class DisplayTimer : MonoBehaviour
     private void EnableScore()
     {
         if (!TimerManager.Instance.endGame)
+        {
             txt.enabled = !txt.enabled;
+            txt2.enabled = txt.enabled;
+        }
         else
+        {
             txt.enabled = true;
+            txt2.enabled = true;
+        }
     }
 
     void OnEnable()
