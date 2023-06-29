@@ -46,6 +46,7 @@ public class Projectile : Hitbox
     [SerializeField] private float _impactScale = 1.0f;
     [Foldout("Stats")]
     [SerializeField] private float _disappearanceLength = 1;
+    private float _baseDamage;
     private float _lifeT;
     private float _trailDelayT;
     public Vector3 Direction { get; protected set; }
@@ -83,6 +84,7 @@ public class Projectile : Hitbox
         _lastFramePosition = position - direction * _radius;
         _spaceTraveledLast2Frames = position - _lasterFramePosition;
         _currentSpeed = _speed;
+        Damage = _baseDamage;
         this.enabled = true;
     }
 
@@ -96,6 +98,7 @@ public class Projectile : Hitbox
     protected override void Awake()
     {
         base.Awake();
+        _baseDamage = Damage;
         _mesh.SetActive(false);
         foreach (GameObject obj in _thingsToDisableOnHit)
             obj.SetActive(false);
@@ -180,7 +183,7 @@ public class Projectile : Hitbox
                         //Reset direction to camera direction in order to cancel the fact we initially sent the
                         //projectile slightly angled to compensate the gun's offset
                         Direction = _cameraDirection;
-                        Damage = Mathf.Clamp(Damage - 2.0f, 1.0f, 5.0f);
+                        Damage = Mathf.Clamp(Damage - 2.0f, 1.5f, 5.0f);
                     }
                 }
                 else if (!AlreadyHit(hit.transform))
