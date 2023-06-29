@@ -142,19 +142,35 @@ public class PlayerSettings : LocalManager<PlayerSettings>
 
         if (PlayerPrefs.HasKey("XSensivity"))
             PlayerPrefs.SetFloat("XSensivity", xSensivity);
-        else PlayerPrefs.SetFloat("XSensivity", 10f);
+        else
+        {
+            xSensivity = 10f;
+            PlayerPrefs.SetFloat("XSensivity", xSensivity);
+        }
 
         if (PlayerPrefs.HasKey("YSensivity"))
             PlayerPrefs.SetFloat("YSensivity", ySensivity);
-        else PlayerPrefs.SetFloat("YSensivity", 10f);
+        else
+        {
+            ySensivity = 10;
+            PlayerPrefs.SetFloat("YSensivity", ySensivity);
+        }
 
         if (PlayerPrefs.HasKey("XControllerSensivity"))
             PlayerPrefs.SetFloat("XControllerSensivity", xControllerSensivity);
-        else PlayerPrefs.SetFloat("XControllerSensivity", 10f);
+        else 
+        {
+            xControllerSensivity = 10f;
+            PlayerPrefs.SetFloat("XControllerSensivity", xControllerSensivity);
+        }
 
         if (PlayerPrefs.HasKey("YControllerSensivity"))
             PlayerPrefs.SetFloat("YControllerSensivity", yControllerSensivity);
-        else PlayerPrefs.SetFloat("YControllerSensivity", 10f);
+        else
+        {
+            yControllerSensivity = 10f;
+            PlayerPrefs.SetFloat("YControllerSensivity", yControllerSensivity);
+        }
 
         /*PlayerPrefs.SetFloat("MasterBaseVolume", masterVolumeNumber);
         PlayerPrefs.SetFloat("SFXBaseVolume", SFXVolumeNumber);

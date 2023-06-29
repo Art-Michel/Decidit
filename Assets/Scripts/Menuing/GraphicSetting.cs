@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +5,7 @@ public class GraphicSetting : MonoBehaviour
 {
     [SerializeField] Vector2[] resolution;
     [SerializeField] Dropdown dropdownResolution;
+    [SerializeField] Dropdown dropdownVSync;
 
     public void SetQualityLevelDropdown()
     {
@@ -31,15 +30,15 @@ public class GraphicSetting : MonoBehaviour
 
     public void EnableVSync()
     {
-        int index = dropdownResolution.value;
+        int index = dropdownVSync.value;
 
         switch (index)
         {
             case 0:
-                QualitySettings.vSyncCount = 1;
+                QualitySettings.vSyncCount = 0;
                 break;
             case 1:
-                QualitySettings.vSyncCount = 0;
+                QualitySettings.vSyncCount = 1;
                 break;
         }
     }
@@ -49,13 +48,6 @@ public class GraphicSetting : MonoBehaviour
         Screen.SetResolution((int)resolution[0].x, (int)resolution[0].y,
                     FullScreenMode.FullScreenWindow, Screen.currentResolution.refreshRate);
 
-        QualitySettings.vSyncCount = 1;
-        //Screen.SetResolution((int)quatreK.x, (int)quatreK.y, false);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        QualitySettings.vSyncCount = 0;
     }
 }
